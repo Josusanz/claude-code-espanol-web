@@ -1,0 +1,94 @@
+---
+title: Agentes paralelos
+---
+
+import { Callout } from 'nextra/components'
+
+# Lección 1.5: Agentes Paralelos
+
+## El concepto
+
+Imagina que pudieras **clonar a Claude**. Un Claude trabaja en tu documento, otro busca información, otro revisa errores... todos al mismo tiempo.
+
+Eso son los **agentes paralelos**.
+
+## ¿Cuándo usarlos?
+
+| Situación | Sin agentes | Con agentes |
+|-----------|-------------|-------------|
+| Resumir 10 documentos | Uno por uno | Todos a la vez |
+| Buscar en 5 carpetas | Secuencial | Simultáneo |
+| Generar 3 versiones | Una, luego otra | Las 3 juntas |
+
+## Ejemplo práctico
+
+Sin agentes paralelos:
+```
+Resume documento1.pdf
+[espera]
+Resume documento2.pdf
+[espera]
+Resume documento3.pdf
+```
+
+Con agentes paralelos:
+```
+Resume todos los PDFs de esta carpeta
+```
+
+Claude automáticamente distribuye el trabajo entre varios agentes.
+
+## Cómo activarlos
+
+No necesitas hacer nada especial. Cuando la tarea lo amerita, Claude decide usar agentes paralelos automáticamente.
+
+Puedes sugerirlo explícitamente:
+```
+Procesa estos 20 archivos en paralelo
+```
+
+## Casos de uso reales
+
+<Callout emoji="📋">
+  "Tengo 50 currículums. Identifica los 5 mejores candidatos para el puesto de desarrollador."
+</Callout>
+
+<Callout emoji="📸">
+  "Renombra todas las fotos de esta carpeta según la fecha en que fueron tomadas."
+</Callout>
+
+<Callout emoji="📝">
+  "Genera 5 versiones diferentes de este email de marketing."
+</Callout>
+
+## Limitaciones
+
+<Callout type="warning">
+  Los agentes paralelos **no comparten contexto** entre sí. Cada uno trabaja de forma independiente.
+  
+  Si necesitas que colaboren entre ellos, usa sub-agentes (siguiente lección).
+</Callout>
+
+## Monitoreo
+
+Cuando Claude usa agentes paralelos, verás algo así:
+```
+[Agente 1] Procesando archivo1.pdf...
+[Agente 2] Procesando archivo2.pdf...
+[Agente 3] Procesando archivo3.pdf...
+```
+
+---
+
+## Lo que aprendiste
+
+- ✅ Qué son los agentes paralelos
+- ✅ Cuándo se activan automáticamente
+- ✅ Cómo sugerirlos explícitamente
+- ✅ Sus limitaciones (sin contexto compartido)
+
+<div className="mt-8 text-center">
+  <a href="/fundamentos/subagentes" className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+    Siguiente: Sub-agentes →
+  </a>
+</div>

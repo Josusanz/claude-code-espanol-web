@@ -1,0 +1,151 @@
+---
+title: Instalación de Claude Code
+---
+
+import { Callout, Tabs, Steps } from 'nextra/components'
+
+# Instalación de Claude Code
+
+La instalación toma aproximadamente **15 minutos**. Sigue estos pasos según tu sistema operativo.
+
+## Requisitos previos
+
+<Callout type="warning">
+  Necesitas una suscripción a **Claude Pro o Max** ($20/mes mínimo) para usar Claude Code.
+  
+  👉 [Suscribirse a Claude Pro](https://claude.ai/)
+</Callout>
+
+## Instalación por sistema operativo
+
+<Tabs items={['macOS', 'Windows', 'Linux']}>
+  <Tabs.Tab>
+    ### macOS
+    
+    <Steps>
+    ### Abre la Terminal
+    
+    Busca "Terminal" en Spotlight (Cmd + Espacio) o encuéntrala en Aplicaciones → Utilidades.
+    
+    ### Ejecuta el instalador
+    
+    Copia y pega este comando:
+    
+    ```bash
+    curl -fsSL https://claude.ai/install | sh
+    ```
+    
+    ### Sigue las instrucciones
+    
+    El instalador te pedirá tu contraseña de administrador y te guiará por el proceso.
+    
+    ### Verifica la instalación
+    
+    ```bash
+    claude --version
+    ```
+    
+    Si ves un número de versión (ej: `1.0.68`), ¡listo!
+    </Steps>
+  </Tabs.Tab>
+  
+  <Tabs.Tab>
+    ### Windows
+    
+    <Steps>
+    ### Abre PowerShell como Administrador
+    
+    Haz clic derecho en el menú de inicio → "Windows PowerShell (Admin)"
+    
+    ### Ejecuta el instalador
+    
+    Copia y pega este comando:
+    
+    ```powershell
+    irm https://claude.ai/install.ps1 | iex
+    ```
+    
+    ### Sigue las instrucciones
+    
+    El instalador te guiará por el proceso.
+    
+    ### Verifica la instalación
+    
+    Abre una nueva ventana de PowerShell y escribe:
+    
+    ```powershell
+    claude --version
+    ```
+    
+    Si ves un número de versión, ¡listo!
+    </Steps>
+  </Tabs.Tab>
+  
+  <Tabs.Tab>
+    ### Linux
+    
+    <Steps>
+    ### Abre la terminal
+    
+    Usa tu emulador de terminal favorito.
+    
+    ### Ejecuta el instalador
+    
+    ```bash
+    curl -fsSL https://claude.ai/install | sh
+    ```
+    
+    ### Sigue las instrucciones
+    
+    Puede que necesites `sudo` dependiendo de tu distribución.
+    
+    ### Verifica la instalación
+    
+    ```bash
+    claude --version
+    ```
+    </Steps>
+  </Tabs.Tab>
+</Tabs>
+
+## Primer inicio de Claude Code
+
+Una vez instalado, escribe `claude` en tu terminal:
+
+```bash
+claude
+```
+
+La primera vez te pedirá:
+1. **Iniciar sesión** con tu cuenta de Anthropic
+2. **Aceptar los términos** de uso
+
+<Callout type="info" emoji="💡">
+  **Tip:** Si tienes problemas de permisos, puedes usar:
+  ```bash
+  claude --dangerously-skip-permissions
+  ```
+  Esto omite las confirmaciones de seguridad (úsalo con precaución).
+</Callout>
+
+## Problemas comunes
+
+### "command not found: claude"
+
+Cierra y vuelve a abrir la terminal. Si persiste, revisa que la instalación se completó correctamente.
+
+### Error de autenticación
+
+Asegúrate de tener una suscripción activa a Claude Pro o Max.
+
+### Lentitud al iniciar
+
+Normal en el primer inicio. Las siguientes veces será más rápido.
+
+---
+
+<div className="mt-8 text-center">
+  <a href="/empezar/descargar" className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-lg font-semibold">
+    Siguiente: Descargar el curso →
+  </a>
+</div>

@@ -1,0 +1,89 @@
+---
+title: Exploración de archivos
+---
+
+import { Callout, Steps } from 'nextra/components'
+
+# Lección 1.2: Exploración de archivos
+
+En esta lección aprenderás a navegar y explorar archivos usando Claude Code.
+
+## El símbolo @ mágico
+
+En Claude Code, el símbolo `@` es tu mejor amigo. Cuando escribes `@archivo.txt`, le estás diciendo a Claude: "Oye, quiero que mires este archivo".
+
+```
+@archivo.txt              → Mira este archivo específico
+@carpeta/                 → Explora esta carpeta
+@archivo.txt "resúmelo"   → Haz algo con este archivo
+```
+
+## Comandos básicos de navegación
+
+| Comando | Qué hace | Ejemplo |
+|---------|----------|---------|
+| `ls` | Lista archivos | `ls materiales/` |
+| `cd` | Cambia de carpeta | `cd materiales` |
+| `pwd` | Muestra ubicación actual | `pwd` |
+| `cat` | Muestra contenido | `cat archivo.txt` |
+
+<Callout type="info">
+  **No necesitas memorizar estos comandos.** Simplemente dile a Claude "muéstrame qué hay en esta carpeta" y él usará el comando correcto.
+</Callout>
+
+## Ejercicio práctico
+
+<Steps>
+### Explora la estructura
+
+Dile a Claude:
+```
+Muéstrame la estructura de carpetas de este proyecto
+```
+
+### Lee un archivo
+
+```
+@materiales/ejercicios/bienvenida.md - ¿Qué dice este archivo?
+```
+
+### Busca archivos
+
+```
+¿Hay algún archivo que contenga la palabra "secreto"?
+```
+</Steps>
+
+## Arrastra y suelta
+
+También puedes **arrastrar archivos directamente** a la ventana de Claude Code. Los reconocerá automáticamente.
+
+Esto es especialmente útil para:
+- Imágenes que quieres analizar
+- PDFs que quieres resumir
+- Archivos que están en otras carpetas
+
+## Conceptos clave
+
+<Callout emoji="💡">
+  Con `@` puedes apuntar a cualquier archivo o carpeta. Es como señalar con el dedo y decir "mira esto".
+</Callout>
+
+<Callout emoji="💡">
+  Claude puede leer casi cualquier tipo de archivo: texto, código, PDFs, imágenes, hojas de cálculo...
+</Callout>
+
+---
+
+## Lo que aprendiste
+
+- ✅ Usar `@` para referenciar archivos
+- ✅ Comandos básicos de navegación
+- ✅ Drag & drop de archivos
+- ✅ Explorar estructuras de carpetas
+
+<div className="mt-8 text-center">
+  <a href="/fundamentos/crear-archivos" className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+    Siguiente: Crear archivos →
+  </a>
+</div>

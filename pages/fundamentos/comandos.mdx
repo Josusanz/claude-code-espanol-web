@@ -1,0 +1,124 @@
+---
+title: Comandos slash
+---
+
+import { Callout, FileTree } from 'nextra/components'
+
+# Lección 1.4: Comandos Slash
+
+Los comandos slash son **atajos personalizados** que puedes crear para tareas que haces frecuentemente.
+
+## ¿Qué son?
+
+En lugar de escribir instrucciones largas cada vez, creas un comando que las ejecuta por ti.
+
+```
+/resumen    → Resume cualquier texto
+/corregir   → Corrige gramática y ortografía
+/traducir   → Traduce al inglés
+```
+
+## ¿Dónde se guardan?
+
+<FileTree>
+  <FileTree.Folder name=".claude" defaultOpen>
+    <FileTree.Folder name="commands" defaultOpen>
+      <FileTree.File name="resumen.md" />
+      <FileTree.File name="corregir.md" />
+      <FileTree.File name="traducir.md" />
+    </FileTree.Folder>
+  </FileTree.Folder>
+</FileTree>
+
+**El nombre del archivo = el nombre del comando.**
+
+`resumen.md` → se ejecuta con `/resumen`
+
+## Anatomía de un comando
+
+```markdown
+---
+description: Resume cualquier texto de forma concisa
+---
+
+Lee el siguiente texto y crea un resumen de máximo 3 párrafos.
+Destaca los puntos más importantes.
+
+Texto a resumir: $ARGUMENTS
+```
+
+### Partes importantes:
+
+| Parte | Función |
+|-------|---------|
+| `description` | Aparece en el menú de ayuda |
+| Contenido | Instrucciones para Claude |
+| `$ARGUMENTS` | Lo que escribas después del comando |
+
+## Ejemplo: crear /motivame
+
+```markdown
+---
+description: Te da una frase motivacional personalizada
+---
+
+Genera una frase motivacional corta y poderosa.
+Que sea original, no uses clichés.
+Incluye un emoji al principio.
+```
+
+Guárdalo como `.claude/commands/motivame.md` y úsalo:
+
+```
+/motivame
+```
+
+## Comandos con argumentos
+
+```markdown
+---
+description: Traduce texto al idioma especificado
+---
+
+Traduce el siguiente texto al idioma indicado:
+
+$ARGUMENTS
+```
+
+Uso:
+```
+/traducir inglés: Hola, ¿cómo estás?
+```
+
+## Comandos avanzados
+
+Puedes especificar permisos y modelo:
+
+```markdown
+---
+description: Analiza seguridad del código
+allowed-tools: Read, Grep, Glob
+model: claude-sonnet-4-5-20250929
+---
+
+Analiza este código buscando vulnerabilidades...
+```
+
+<Callout emoji="💡">
+  Los comandos slash son tu forma de enseñarle a Claude nuevos trucos. Una vez creados, los tienes para siempre.
+</Callout>
+
+---
+
+## Lo que aprendiste
+
+- ✅ Qué son los comandos slash
+- ✅ Cómo crear comandos personalizados
+- ✅ Usar $ARGUMENTS para parámetros
+- ✅ Opciones avanzadas (permisos, modelo)
+
+<div className="mt-8 text-center">
+  <a href="/fundamentos/agentes" className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+    Siguiente: Agentes paralelos →
+  </a>
+</div>

@@ -1,0 +1,120 @@
+---
+title: Sub-agentes personalizados
+---
+
+import { Callout, FileTree } from 'nextra/components'
+
+# Lección 1.6: Sub-agentes
+
+## Tu equipo de expertos virtuales
+
+¿Y si pudieras tener un equipo de expertos disponible 24/7?
+
+- Un **editor** que revisa tu escritura
+- Un **crítico** que cuestiona tus ideas
+- Un **coach** que te da perspectiva
+- Un **simplificador** que explica todo claramente
+
+Los sub-agentes son **versiones especializadas de Claude** con personalidades y habilidades específicas.
+
+## Diferencia con comandos slash
+
+| Comando slash | Sub-agente |
+|---------------|------------|
+| Receta que se ejecuta una vez | Personalidad permanente |
+| Instrucciones para una tarea | Forma de pensar y responder |
+| Se activa con `/comando` | Se invoca por nombre o contexto |
+
+## Estructura de un sub-agente
+
+<FileTree>
+  <FileTree.Folder name=".claude" defaultOpen>
+    <FileTree.Folder name="agents" defaultOpen>
+      <FileTree.Folder name="editor" defaultOpen>
+        <FileTree.File name="AGENT.md" />
+      </FileTree.Folder>
+      <FileTree.Folder name="critico" defaultOpen>
+        <FileTree.File name="AGENT.md" />
+      </FileTree.Folder>
+    </FileTree.Folder>
+  </FileTree.Folder>
+</FileTree>
+
+## Ejemplo: Editor Literario
+
+```markdown
+# Editor Literario
+
+Eres un editor profesional con 20 años de experiencia.
+
+## Tu personalidad
+- Directo pero amable
+- Enfocado en claridad y fluidez
+- Nunca cambias el estilo del autor, lo mejoras
+
+## Cuando revises texto:
+1. Identifica problemas de claridad
+2. Señala repeticiones innecesarias
+3. Sugiere mejoras concretas
+4. Celebra lo que funciona bien
+
+## Formato de respuesta
+- Usa viñetas para feedback específico
+- Incluye ejemplos de cómo mejorar
+```
+
+## Ejemplo: El Abogado del Diablo
+
+```markdown
+# Abogado del Diablo
+
+Tu rol es cuestionar ideas para fortalecerlas.
+
+## Cómo trabajas
+- Encuentras puntos débiles en argumentos
+- Presentas contraargumentos
+- Identificas suposiciones no verificadas
+- SIEMPRE terminas con sugerencias constructivas
+
+## Tono
+- Respetuoso pero incisivo
+- Nunca descalificas, solo cuestionas
+```
+
+## Múltiples perspectivas
+
+Lo potente es **combinar sub-agentes**:
+
+```
+Pasa este texto por el editor, luego por el crítico, 
+y finalmente dame una versión que incorpore ambos feedbacks.
+```
+
+<Callout emoji="💡">
+  Los sub-agentes son persistentes. Una vez creados, están ahí cuando los necesites. Son tu equipo personal.
+</Callout>
+
+---
+
+## Ideas de sub-agentes
+
+- 🎯 **Mentor de productividad** - Organiza tu día
+- 📝 **Copywriter** - Mejora textos de marketing
+- 🔍 **Investigador** - Busca información exhaustivamente
+- 🎨 **Director creativo** - Evalúa diseño y estética
+- 📊 **Analista** - Examina datos y encuentra patrones
+
+---
+
+## Lo que aprendiste
+
+- ✅ Qué son los sub-agentes
+- ✅ Diferencia con comandos slash
+- ✅ Cómo crear un sub-agente
+- ✅ Combinar múltiples perspectivas
+
+<div className="mt-8 text-center">
+  <a href="/fundamentos/memoria" className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+    Siguiente: Memoria (CLAUDE.md) →
+  </a>
+</div>

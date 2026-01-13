@@ -1,0 +1,139 @@
+---
+title: Recursos y Referencias
+---
+
+import { Callout, Tabs } from 'nextra/components'
+
+# Recursos y Referencias
+
+## Guía Rápida de Comandos
+
+### Comandos de terminal
+
+| Comando | Qué hace | Ejemplo |
+|---------|----------|---------|
+| `ls` | Lista archivos | `ls materiales/` |
+| `cd` | Cambia carpeta | `cd proyecto` |
+| `pwd` | Ubicación actual | `pwd` |
+| `cat` | Muestra archivo | `cat notas.md` |
+| `mkdir` | Crea carpeta | `mkdir nueva` |
+
+### Símbolos especiales en Claude Code
+
+| Símbolo | Uso |
+|---------|-----|
+| `@archivo` | Referenciar archivo |
+| `/comando` | Ejecutar comando slash |
+| `$ARGUMENTS` | Parámetros en comandos |
+
+### Atajos de teclado
+
+| Atajo | Acción |
+|-------|--------|
+| `Ctrl+C` | Cancelar |
+| `Tab` | Autocompletar |
+| `↑ / ↓` | Historial |
+| `Ctrl+L` | Limpiar pantalla |
+
+## Plantillas
+
+<Tabs items={['CLAUDE.md', 'Comando Slash', 'Sub-agente']}>
+  <Tabs.Tab>
+```markdown
+# Mi Proyecto
+
+## Descripción
+[Qué hace este proyecto]
+
+## Contexto
+- Mi rol: [...]
+- Objetivo: [...]
+
+## Preferencias
+- Idioma: Español
+- Tono: [formal/informal]
+
+## Reglas
+- [Hacer siempre...]
+- [Evitar...]
+```
+  </Tabs.Tab>
+  
+  <Tabs.Tab>
+```markdown
+---
+description: Breve descripción del comando
+---
+
+Instrucciones para Claude.
+
+Si hay argumentos: $ARGUMENTS
+```
+  </Tabs.Tab>
+  
+  <Tabs.Tab>
+```markdown
+# Nombre del Agente
+
+Eres [rol/personalidad].
+
+## Tu forma de trabajar
+- [Comportamiento 1]
+- [Comportamiento 2]
+
+## Formato de respuesta
+- [Cómo estructurar respuestas]
+```
+  </Tabs.Tab>
+</Tabs>
+
+## Enlaces útiles
+
+- 📚 [Documentación oficial de Claude Code](https://docs.anthropic.com/claude-code)
+- 🐙 [Repositorio de este curso](https://github.com/TU-USUARIO/claude-code-espanol)
+- 💬 [Comunidad de Claude](https://claude.ai/community)
+
+## Preguntas frecuentes
+
+<Callout type="info">
+  **¿Cuánto cuesta Claude Code?**
+  
+  Necesitas Claude Pro ($20/mes) o Claude Max (precios variables).
+</Callout>
+
+<Callout type="info">
+  **¿Funciona offline?**
+  
+  No, requiere conexión a internet para comunicarse con los servidores de Anthropic.
+</Callout>
+
+<Callout type="info">
+  **¿Puedo usar Claude Code para trabajo comercial?**
+  
+  Sí, pero revisa los términos de servicio de Anthropic para casos específicos.
+</Callout>
+
+<Callout type="info">
+  **¿Es seguro darle acceso a mis archivos?**
+  
+  Claude Code opera localmente y los archivos no se envían a servidores externos excepto el contenido necesario para procesar tus solicitudes.
+</Callout>
+
+## Solución de problemas
+
+### "command not found: claude"
+Cierra y abre la terminal. Si persiste, reinstala Claude Code.
+
+### Claude no lee mis archivos
+Verifica que estás en la carpeta correcta con `pwd`.
+
+### Los comandos slash no aparecen
+Asegúrate de que están en `.claude/commands/` con extensión `.md`.
+
+---
+
+<div className="mt-8 text-center">
+  <p className="text-gray-600 dark:text-gray-400">
+    ¿Falta algo? <a href="https://github.com/TU-USUARIO/claude-code-espanol/issues" className="text-blue-600 hover:underline">Abre un issue</a>
+  </p>
+</div>

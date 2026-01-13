@@ -1,0 +1,146 @@
+---
+title: Memoria del proyecto (CLAUDE.md)
+---
+
+import { Callout, Steps } from 'nextra/components'
+
+# Lección 1.7: Memoria del Proyecto
+
+## El problema
+
+Cada vez que inicias una nueva sesión con Claude, **empieza de cero**. No recuerda lo que hicieron ayer.
+
+## La solución: CLAUDE.md
+
+El archivo `CLAUDE.md` es como **dejarle notas a Claude**. Cada vez que abres el proyecto, las lee primero.
+
+<Callout emoji="🧠">
+  CLAUDE.md es el "cerebro" de tu proyecto. Define quién eres, qué estás haciendo, y cómo quieres que Claude te ayude.
+</Callout>
+
+## ¿Qué poner en CLAUDE.md?
+
+### 1. Contexto del proyecto
+```markdown
+# Mi Proyecto
+
+Este es un blog sobre productividad personal.
+El público objetivo son profesionales de 25-40 años.
+```
+
+### 2. Reglas importantes
+```markdown
+## Reglas
+- Siempre tutear al lector
+- Usar máximo 2 emojis por artículo
+- Evitar jerga técnica
+```
+
+### 3. Preferencias de comunicación
+```markdown
+## Preferencias
+- Idioma: Español de España
+- Tono: Cercano pero profesional
+- Formato: Párrafos cortos
+```
+
+### 4. Información clave
+```markdown
+## Datos importantes
+- Mi nombre: Ana
+- Mi empresa: Productiva SL
+- Competidores: X, Y, Z
+```
+
+## Plantilla completa
+
+```markdown
+# [Nombre del Proyecto]
+
+## Descripción
+[Qué es este proyecto y para qué sirve]
+
+## Mi contexto
+- Rol: [Tu rol]
+- Objetivo: [Qué quieres lograr]
+
+## Preferencias
+- Idioma: Español
+- Tono: [formal/informal/técnico]
+- Formato: [listas/párrafos/mixto]
+
+## Reglas
+- [Hacer siempre...]
+- [Evitar...]
+
+## Información clave
+- [Términos específicos]
+- [Nombres importantes]
+- [Contexto relevante]
+```
+
+## Dónde colocar el archivo
+
+El `CLAUDE.md` va en la **raíz de tu carpeta de proyecto**:
+
+```
+mi-proyecto/
+├── CLAUDE.md          ← Aquí
+├── src/
+├── docs/
+└── ...
+```
+
+Claude lo lee automáticamente cuando trabajas en esa carpeta.
+
+## Ejemplo real del curso
+
+Este mismo curso tiene su propio CLAUDE.md que:
+- Define la estructura de lecciones
+- Establece el tono del tutor
+- Lista los comandos disponibles
+- Guía cómo responder a errores
+
+<Steps>
+### Crea tu CLAUDE.md
+
+Piensa en un proyecto tuyo y crea un CLAUDE.md para él.
+
+### Pruébalo
+
+Abre Claude Code en esa carpeta y hazle una pregunta sobre el proyecto.
+
+### Itera
+
+Ajusta el CLAUDE.md según los resultados que obtengas.
+</Steps>
+
+---
+
+## 🎉 ¡Felicidades!
+
+Has completado el **Módulo 1: Fundamentos**.
+
+### Lo que ahora sabes:
+- ✅ Qué es Claude Code y su potencial
+- ✅ Explorar archivos con @
+- ✅ Crear y modificar contenido
+- ✅ Usar y crear comandos slash
+- ✅ Trabajar con agentes paralelos
+- ✅ Crear sub-agentes especializados
+- ✅ Configurar memoria de proyecto
+
+### Próximos pasos:
+1. Crea un CLAUDE.md para tu proyecto más importante
+2. Diseña 2-3 comandos slash para tareas frecuentes
+3. Experimenta creando un sub-agente
+
+<div className="mt-8 p-6 bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20 rounded-lg text-center">
+  <p className="text-lg font-semibold">¿Quieres más?</p>
+  <p className="text-gray-600 dark:text-gray-400 mb-4">
+    El Módulo 2 con proyectos prácticos está en camino.
+  </p>
+  <a href="/" className="inline-block px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+    Volver al inicio
+  </a>
+</div>

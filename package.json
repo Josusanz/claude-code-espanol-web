@@ -1,0 +1,31 @@
+{
+  "name": "claude-code-espanol",
+  "version": "1.0.0",
+  "description": "Aprende Claude Code en Español - Curso interactivo gratuito",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TU-USUARIO/claude-code-espanol.git"
+  },
+  "keywords": [
+    "claude",
+    "claude-code",
+    "ai",
+    "español",
+    "curso",
+    "tutorial"
+  ],
+  "author": "Josu",
+  "license": "CC-BY-NC-SA-4.0",
+  "dependencies": {
+    "next": "^14",
+    "nextra": "^3",
+    "nextra-theme-docs": "^3",
+    "react": "^18",
+    "react-dom": "^18"
+  }
+}
