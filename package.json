@@ -1,6 +1,6 @@
 {
   "name": "claude-code-espanol",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Aprende Claude Code en Español - Curso interactivo gratuito",
   "scripts": {
     "dev": "next dev",
@@ -19,7 +19,7 @@
     "curso",
     "tutorial"
   ],
-  "author": "Josu",
+  "author": "Josu Sanz",
   "license": "CC-BY-NC-SA-4.0",
   "dependencies": {
     "next": "^14",

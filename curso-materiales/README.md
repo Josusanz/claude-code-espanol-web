@@ -134,7 +134,7 @@ Debes:
 
 ## 👨‍💻 Autor
 
-**Josu** - [Yenze.io](https://yenze.io) | [Sacred Events](https://sacred.events)
+**Josu Sanz** - [Yenze.io](https://yenze.io) | [Sacred Events](https://sacred.events)
 
 Ingeniero mecánico reconvertido a desarrollador full-stack. Creando puentes entre tecnología y humanidad.
 

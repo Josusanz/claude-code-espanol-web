@@ -14,7 +14,7 @@ const config: DocsThemeConfig = {
   footer: {
     content: (
       <span>
-        © {new Date().getFullYear()} Josu. Licencia{' '}
+        © 2026 Josu Sanz. Licencia{' '}
         <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
           CC BY-NC-SA 4.0
         </a>

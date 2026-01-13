@@ -4,7 +4,7 @@
 
 Este es un curso interactivo para aprender Claude Code **completamente en español**. El curso está diseñado para personas sin experiencia técnica que quieren dominar esta herramienta.
 
-**Creador:** Josu (Yenze.io / Sacred Events)
+**Creador:** Josu Sanz (Yenze.io / Sacred Events)
 **Idioma:** Español
 **Nivel:** Principiante a intermedio
 **Duración estimada:** 4-6 horas

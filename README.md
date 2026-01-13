@@ -114,7 +114,7 @@ Puedes compartir y adaptar el contenido para fines no comerciales, dando crédit
 
 ## 👨‍💻 Autor
 
-**Josu**
+**Josu Sanz**
 
 - 🌐 [Yenze.io](https://yenze.io) - Visual builder para landing pages con IA
 - 🌿 [Sacred Events](https://sacred.events) - Retiros transformacionales en Perú
