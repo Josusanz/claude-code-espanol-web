@@ -296,3 +296,14 @@ a {
 a:hover {
   text-decoration: underline;
 }
+
+/* Forzar icono de GitHub en negro */
+a[href*="github.com"] svg {
+  color: #000 !important;
+  fill: #000 !important;
+}
+
+.dark a[href*="github.com"] svg {
+  color: #fff !important;
+  fill: #fff !important;
+}
