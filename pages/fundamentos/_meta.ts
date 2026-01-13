@@ -5,5 +5,6 @@ export default {
   "comandos": "1.4 Comandos slash",
   "agentes": "1.5 Agentes paralelos",
   "subagentes": "1.6 Sub-agentes",
-  "memoria": "1.7 Memoria (CLAUDE.md)"
+  "memoria": "1.7 Memoria (CLAUDE.md)",
+  "proximos-pasos": "1.8 Próximos pasos"
 }

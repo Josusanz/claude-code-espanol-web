@@ -16,14 +16,15 @@ Muestra el estado actual del alumno de forma visual y motivadora.
 📚 MÓDULO 1: FUNDAMENTOS
 
 [✅] Lección 1 - Qué es Claude Code
-[✅] Lección 2 - Navegación y archivos  
+[✅] Lección 2 - Navegación y archivos
 [⬜] Lección 3 - Crear y modificar
 [⬜] Lección 4 - Comandos slash
 [⬜] Lección 5 - Agentes paralelos
 [⬜] Lección 6 - Sub-agentes
 [⬜] Lección 7 - Memoria (CLAUDE.md)
+[⬜] Lección 8 - Próximos pasos
 
-Progreso: ██████░░░░░░░░░ 28%
+Progreso: █████░░░░░░░░░░ 25%
 ```
 
 3. **Recomienda la siguiente lección**
