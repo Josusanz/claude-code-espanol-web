@@ -6,16 +6,18 @@ const config: DocsThemeConfig = {
     <div style={{
       display: 'flex',
       alignItems: 'center',
-      gap: '0.5rem',
+      gap: '0.75rem',
       fontWeight: 800,
-      fontSize: '1.25rem',
-      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-      WebkitBackgroundClip: 'text',
-      WebkitTextFillColor: 'transparent',
-      backgroundClip: 'text'
+      fontSize: '1.1rem'
     }}>
-      <span style={{ fontSize: '1.5rem' }}>🇪🇸</span>
-      Claude Code en Español
+      <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="2" y="6" width="28" height="20" rx="2" stroke="currentColor" strokeWidth="2.5" fill="none"/>
+        <path d="M6 12 L10 16 L6 20" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+        <line x1="14" y1="18" x2="22" y2="18" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
+      </svg>
+      <span style={{ color: 'inherit' }}>
+        Claude Code en Español
+      </span>
     </div>
   ),
   project: {
@@ -57,7 +59,8 @@ const config: DocsThemeConfig = {
       <meta property="og:title" content="Claude Code en Español" />
       <meta property="og:description" content="Aprende Claude Code completamente en español. Curso interactivo gratuito para personas sin experiencia técnica." />
       <meta name="twitter:card" content="summary_large_image" />
-      <link rel="icon" href="/favicon.ico" />
+      <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+      <link rel="alternate icon" href="/favicon.ico" />
       <title>Claude Code en Español</title>
     </>
   ),
