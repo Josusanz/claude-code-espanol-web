@@ -8,9 +8,9 @@ const config: DocsThemeConfig = {
     </span>
   ),
   project: {
-    link: 'https://github.com/TU-USUARIO/claude-code-espanol',
+    link: 'https://github.com/Josusanz/claude-code-espanol-web',
   },
-  docsRepositoryBase: 'https://github.com/TU-USUARIO/claude-code-espanol/tree/main',
+  docsRepositoryBase: 'https://github.com/Josusanz/claude-code-espanol-web/tree/main',
   footer: {
     content: (
       <span>
@@ -28,11 +28,16 @@ const config: DocsThemeConfig = {
       <meta property="og:description" content="Aprende Claude Code completamente en español. Curso interactivo gratuito para personas sin experiencia técnica." />
       <meta name="twitter:card" content="summary_large_image" />
       <link rel="icon" href="/favicon.ico" />
+      <title>Claude Code en Español</title>
     </>
   ),
-  useNextSeoProps() {
-    return {
-      titleTemplate: '%s – Claude Code en Español'
+  themeSwitch: {
+    useOptions() {
+      return {
+        light: 'Claro',
+        dark: 'Oscuro',
+        system: 'Sistema'
+      }
     }
   },
   sidebar: {
@@ -57,8 +62,6 @@ const config: DocsThemeConfig = {
   gitTimestamp: ({ timestamp }) => (
     <span>Última actualización: {timestamp.toLocaleDateString('es-ES')}</span>
   ),
-  primaryHue: 210,
-  primarySaturation: 100,
 }
 
 export default config

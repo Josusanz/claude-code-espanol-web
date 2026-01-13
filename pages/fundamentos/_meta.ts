@@ -1,4 +1,4 @@
-{
+export default {
   "que-es": "1.1 ¿Qué es Claude Code?",
   "exploracion": "1.2 Exploración de archivos",
   "crear-archivos": "1.3 Crear y modificar",

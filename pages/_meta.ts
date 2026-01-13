@@ -1,0 +1,22 @@
+export default {
+  index: {
+    title: "Inicio",
+    type: "page"
+  },
+  empezar: {
+    title: "🚀 Empezar",
+    type: "page"
+  },
+  fundamentos: {
+    title: "📚 Módulo 1: Fundamentos",
+    type: "page"
+  },
+  proyectos: {
+    title: "🛠️ Módulo 2: Proyectos",
+    type: "page"
+  },
+  recursos: {
+    title: "📋 Recursos",
+    type: "page"
+  }
+}
