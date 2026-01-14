@@ -122,7 +122,7 @@ export default function PremiumPage() {
               </ul>
 
               <a
-                href="https://buy.stripe.com/14A3cwbKXh201XdcuVaIM05"
+                href="https://yenze.lemonsqueezy.com/checkout/buy/ad2dd995-abce-41a0-be77-1420f8d0bb4a"
                 className="block w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-4 px-8 rounded-2xl shadow-lg shadow-amber-500/20 hover:shadow-amber-500/30 transform hover:-translate-y-0.5 transition-all duration-200 text-center"
               >
                 <span className="flex items-center justify-center gap-2">
@@ -298,7 +298,7 @@ export default function PremiumPage() {
               </p>
 
               <a
-                href="https://buy.stripe.com/14A3cwbKXh201XdcuVaIM05"
+                href="https://yenze.lemonsqueezy.com/checkout/buy/ad2dd995-abce-41a0-be77-1420f8d0bb4a"
                 className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-4 px-10 rounded-2xl shadow-lg shadow-amber-500/20 hover:shadow-amber-500/30 transform hover:-translate-y-0.5 transition-all duration-200"
               >
                 <span className="material-symbols-outlined">shopping_cart</span>
