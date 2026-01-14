@@ -62,12 +62,23 @@ export default function PremiumPage() {
                 </span>
               </Link>
 
-              <Link
-                href="/"
-                className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white text-sm font-medium"
-              >
-                Volver al inicio
-              </Link>
+              <div className="flex items-center gap-6">
+                <a
+                  href="https://yenze.lemonsqueezy.com/affiliates"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 text-sm font-medium"
+                >
+                  <span className="material-symbols-outlined text-lg">handshake</span>
+                  Afiliados 20%
+                </a>
+                <Link
+                  href="/"
+                  className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white text-sm font-medium"
+                >
+                  Volver al inicio
+                </Link>
+              </div>
             </div>
           </div>
         </nav>
