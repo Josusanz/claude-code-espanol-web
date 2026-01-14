@@ -246,22 +246,57 @@ export default function CursoPremiumPage() {
               {/* Instrucciones */}
               <div className="bg-slate-100 rounded-2xl p-6">
                 <h2 className="font-bold text-slate-900 mb-4">Como empezar el curso</h2>
-                <ol className="space-y-3 text-slate-700">
-                  <li className="flex gap-3">
-                    <span className="font-bold text-amber-600">1.</span>
-                    Descarga el ZIP y descomprimelo en una carpeta
+                <ol className="space-y-4 text-slate-700">
+                  <li>
+                    <div className="flex gap-3 mb-2">
+                      <span className="font-bold text-amber-600">1.</span>
+                      <span>Descarga el ZIP con el boton de arriba</span>
+                    </div>
                   </li>
-                  <li className="flex gap-3">
-                    <span className="font-bold text-amber-600">2.</span>
-                    Abre la terminal en esa carpeta
+                  <li>
+                    <div className="flex gap-3 mb-2">
+                      <span className="font-bold text-amber-600">2.</span>
+                      <span>Abre la terminal y navega a tu carpeta de Descargas:</span>
+                    </div>
+                    <div className="bg-slate-900 text-slate-100 p-3 rounded-lg font-mono text-sm ml-6 overflow-x-auto">
+                      cd ~/Downloads
+                    </div>
                   </li>
-                  <li className="flex gap-3">
-                    <span className="font-bold text-amber-600">3.</span>
-                    Ejecuta <code className="bg-slate-200 px-2 py-0.5 rounded">claude</code>
+                  <li>
+                    <div className="flex gap-3 mb-2">
+                      <span className="font-bold text-amber-600">3.</span>
+                      <span>Descomprime el ZIP:</span>
+                    </div>
+                    <div className="bg-slate-900 text-slate-100 p-3 rounded-lg font-mono text-sm ml-6 overflow-x-auto">
+                      unzip claude-code-course-builder-main.zip
+                    </div>
                   </li>
-                  <li className="flex gap-3">
-                    <span className="font-bold text-amber-600">4.</span>
-                    Escribe <code className="bg-slate-200 px-2 py-0.5 rounded">/modulo-1</code> para comenzar
+                  <li>
+                    <div className="flex gap-3 mb-2">
+                      <span className="font-bold text-amber-600">4.</span>
+                      <span>Entra en la carpeta del curso:</span>
+                    </div>
+                    <div className="bg-slate-900 text-slate-100 p-3 rounded-lg font-mono text-sm ml-6 overflow-x-auto">
+                      cd claude-code-course-builder-main
+                    </div>
+                  </li>
+                  <li>
+                    <div className="flex gap-3 mb-2">
+                      <span className="font-bold text-amber-600">5.</span>
+                      <span>Inicia Claude Code:</span>
+                    </div>
+                    <div className="bg-slate-900 text-slate-100 p-3 rounded-lg font-mono text-sm ml-6 overflow-x-auto">
+                      claude
+                    </div>
+                  </li>
+                  <li>
+                    <div className="flex gap-3 mb-2">
+                      <span className="font-bold text-amber-600">6.</span>
+                      <span>Escribe el comando para comenzar el primer modulo:</span>
+                    </div>
+                    <div className="bg-slate-900 text-slate-100 p-3 rounded-lg font-mono text-sm ml-6 overflow-x-auto">
+                      /modulo-1
+                    </div>
                   </li>
                 </ol>
               </div>
