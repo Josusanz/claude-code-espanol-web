@@ -51,10 +51,10 @@ export default function LandingPage() {
           background: #020617;
         }
         .hero-gradient {
-          background: radial-gradient(circle at top center, rgba(79, 70, 229, 0.08) 0%, transparent 70%);
+          background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(79, 70, 229, 0.12) 0%, transparent 100%);
         }
         .dark .hero-gradient {
-          background: radial-gradient(circle at top center, rgba(79, 70, 229, 0.15) 0%, transparent 70%);
+          background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(79, 70, 229, 0.2) 0%, transparent 100%);
         }
       `}</style>
 
@@ -117,11 +117,12 @@ export default function LandingPage() {
           </div>
         </nav>
 
-        {/* Hero Section */}
-        <main className="relative overflow-hidden pb-24 lg:pb-32 bg-slate-50 dark:bg-slate-950">
-          <div className="absolute top-0 inset-x-0 h-[800px] hero-gradient pointer-events-none"></div>
+        {/* Hero Gradient - positioned right after nav */}
+        <div className="absolute top-16 inset-x-0 h-[600px] hero-gradient pointer-events-none z-0"></div>
 
-          <div className="relative max-w-4xl mx-auto px-6 text-center">
+        {/* Hero Section */}
+        <main className="relative overflow-hidden pb-24 lg:pb-32 bg-transparent">
+          <div className="relative max-w-4xl mx-auto px-6 text-center z-10">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 dark:bg-indigo-600/10 border border-blue-100 dark:border-indigo-600/20 text-blue-600 dark:text-blue-400 text-sm font-semibold mb-6 shadow-sm">
               <span>✨</span>
               Primer curso completo en español
