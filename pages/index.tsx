@@ -1,9 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 
 export default function LandingPage() {
   const [isDark, setIsDark] = useState(false)
+  const [terminalStep, setTerminalStep] = useState(0)
+  const [typedCommand, setTypedCommand] = useState('')
+  const [typedResponse, setTypedResponse] = useState('')
+  const terminalRef = useRef<HTMLDivElement>(null)
+  const hasAnimated = useRef(false)
+
+  const command = 'claude "crea una landing page en español"'
+  const response = '¡Hola! He analizado tu solicitud. Estoy creando una landing page profesional en español optimizada para conversión. ¿Deseas que añada soporte para modo oscuro?'
 
   useEffect(() => {
     // Check for preferred color scheme
@@ -12,6 +20,55 @@ export default function LandingPage() {
       document.documentElement.classList.add('dark')
     }
   }, [])
+
+  // Terminal animation with Intersection Observer
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !hasAnimated.current) {
+          hasAnimated.current = true
+          startTerminalAnimation()
+        }
+      },
+      { threshold: 0.5 }
+    )
+
+    if (terminalRef.current) {
+      observer.observe(terminalRef.current)
+    }
+
+    return () => observer.disconnect()
+  }, [])
+
+  const startTerminalAnimation = () => {
+    // Step 1: Type command
+    let i = 0
+    const typeCommand = setInterval(() => {
+      if (i < command.length) {
+        setTypedCommand(command.slice(0, i + 1))
+        i++
+      } else {
+        clearInterval(typeCommand)
+        // Step 2: Show "thinking" messages
+        setTimeout(() => setTerminalStep(1), 300)
+        setTimeout(() => setTerminalStep(2), 1000)
+        setTimeout(() => {
+          setTerminalStep(3)
+          // Step 3: Type response
+          let j = 0
+          const typeResponse = setInterval(() => {
+            if (j < response.length) {
+              setTypedResponse(response.slice(0, j + 1))
+              j++
+            } else {
+              clearInterval(typeResponse)
+              setTimeout(() => setTerminalStep(4), 500)
+            }
+          }, 15)
+        }, 1800)
+      }
+    }, 40)
+  }
 
   const toggleDarkMode = () => {
     setIsDark(!isDark)
@@ -54,6 +111,13 @@ export default function LandingPage() {
         }
         .dark .hero-section {
           background: linear-gradient(180deg, rgba(79, 70, 229, 0.15) 0%, rgba(79, 70, 229, 0.05) 30%, transparent 60%);
+        }
+        @keyframes fade-in {
+          from { opacity: 0; transform: translateY(4px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+          animation: fade-in 0.3s ease-out forwards;
         }
       `}</style>
 
@@ -190,8 +254,8 @@ export default function LandingPage() {
               </p>
             </div>
 
-            {/* Terminal Demo */}
-            <div className="mt-24 relative">
+            {/* Terminal Demo - Interactive */}
+            <div className="mt-24 relative" ref={terminalRef}>
               <div className="absolute -inset-4 bg-gradient-to-tr from-indigo-600/20 to-purple-500/20 blur-3xl opacity-50"></div>
               <div className="relative bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden aspect-[16/9] flex flex-col">
                 <div className="h-10 border-b border-slate-200 dark:border-slate-800 flex items-center px-4 gap-2 bg-slate-50 dark:bg-slate-900/50">
@@ -201,29 +265,53 @@ export default function LandingPage() {
                     <div className="w-3 h-3 rounded-full bg-emerald-400"></div>
                   </div>
                   <div className="flex-1 text-center">
-                    <span className="text-[10px] text-slate-400 font-medium">claude-code-tutorial — 120x45</span>
+                    <span className="text-[10px] text-slate-400 font-medium">Terminal — claude-code</span>
                   </div>
                 </div>
-                <div className="flex-1 p-6 text-left font-mono text-sm bg-slate-950 text-slate-100">
+                <div className="flex-1 p-6 text-left font-mono text-sm bg-slate-950 text-slate-100 overflow-hidden">
+                  {/* Command line */}
                   <div className="flex gap-3 mb-4">
                     <span className="text-emerald-500">➜</span>
-                    <span className="text-blue-400">~</span>
-                    <span className="text-white">claude launch-project "landing-page-espanol"</span>
-                  </div>
-                  <div className="text-slate-400 mb-2">Analyzing project structure...</div>
-                  <div className="text-slate-400 mb-2">Claude is thinking...</div>
-                  <div className="flex gap-3 text-slate-200 mb-4 bg-slate-800/50 p-3 rounded-lg border border-slate-700">
-                    <span className="text-purple-400">Claude:</span>
-                    <span>
-                      ¡Hola! He analizado tu solicitud. Estoy creando una landing page profesional en español
-                      optimizada para conversión. ¿Deseas que añada soporte para modo oscuro?
+                    <span className="text-blue-400">~/proyecto</span>
+                    <span className="text-white">
+                      {typedCommand}
+                      {terminalStep === 0 && <span className="inline-block h-4 w-2 bg-slate-400 animate-pulse ml-0.5"></span>}
                     </span>
                   </div>
-                  <div className="flex gap-3">
-                    <span className="text-emerald-500">➜</span>
-                    <span className="text-blue-400">~</span>
-                    <span className="inline-block h-5 w-2 bg-slate-400 animate-pulse"></span>
-                  </div>
+
+                  {/* Thinking messages */}
+                  {terminalStep >= 1 && (
+                    <div className="text-slate-400 mb-2 animate-fade-in">
+                      <span className="text-yellow-500">●</span> Analizando estructura del proyecto...
+                    </div>
+                  )}
+                  {terminalStep >= 2 && (
+                    <div className="text-slate-400 mb-4 animate-fade-in">
+                      <span className="text-yellow-500">●</span> Claude está pensando...
+                    </div>
+                  )}
+
+                  {/* Claude response */}
+                  {terminalStep >= 3 && (
+                    <div className="text-slate-200 mb-4 bg-slate-800/50 p-4 rounded-lg border border-slate-700 animate-fade-in">
+                      <div className="flex gap-2 items-start">
+                        <span className="text-purple-400 font-semibold shrink-0">Claude:</span>
+                        <span className="leading-relaxed">
+                          {typedResponse}
+                          {terminalStep === 3 && <span className="inline-block h-4 w-2 bg-purple-400 animate-pulse ml-0.5"></span>}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* New prompt */}
+                  {terminalStep >= 4 && (
+                    <div className="flex gap-3 animate-fade-in">
+                      <span className="text-emerald-500">➜</span>
+                      <span className="text-blue-400">~/proyecto</span>
+                      <span className="inline-block h-4 w-2 bg-slate-400 animate-pulse"></span>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
