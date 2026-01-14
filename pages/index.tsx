@@ -112,24 +112,6 @@ export default function LandingPage() {
           </div>
         </nav>
 
-        {/* Promo Banner */}
-        <div className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-2.5 text-center text-sm">
-          <div className="max-w-7xl mx-auto px-4 flex items-center justify-center gap-2">
-            <span className="material-symbols-outlined text-lg">campaign</span>
-            <span>
-              <strong>Claude Pro requerido:</strong> Obtén acceso ilimitado por $20/mes.
-            </span>
-            <a
-              href="https://claude.ai/upgrade"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="ml-2 underline underline-offset-2 hover:text-indigo-100 transition-colors font-medium"
-            >
-              Más info →
-            </a>
-          </div>
-        </div>
-
         {/* Hero Section */}
         <main className="relative overflow-hidden pt-12 pb-24 lg:pt-20 lg:pb-32 bg-slate-50 dark:bg-slate-950">
           <div className="absolute top-0 inset-x-0 h-[800px] hero-gradient pointer-events-none"></div>
