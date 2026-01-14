@@ -39,7 +39,6 @@ export default function LandingPage() {
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
-        <script async src="https://f.convertkit.com/ckjs/ck.5.js"></script>
       </Head>
 
       <style jsx global>{`
@@ -166,31 +165,7 @@ export default function LandingPage() {
               <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
                 Recibe actualizaciones del curso y recursos exclusivos:
               </p>
-              <form
-                action="https://app.kit.com/forms/8973548/subscriptions"
-                method="post"
-                data-sv-form="8973548"
-                data-uid="aa9e9cb20f"
-                data-format="inline"
-                data-version="5"
-                data-options='{"settings":{"after_subscribe":{"action":"message","success_message":"¡Gracias! Revisa tu email para confirmar."}}}'
-                className="seva-form formkit-form flex gap-2"
-              >
-                <input
-                  type="email"
-                  name="email_address"
-                  placeholder="tu@email.com"
-                  required
-                  className="formkit-input flex-1 px-4 py-2.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none text-sm"
-                />
-                <button
-                  type="submit"
-                  data-element="submit"
-                  className="formkit-submit px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg transition-colors text-sm"
-                >
-                  <span>Suscribirme</span>
-                </button>
-              </form>
+              <script async data-uid="aa9e9cb20f" src="https://claudecode.kit.com/aa9e9cb20f/index.js"></script>
               <p className="mt-2 text-xs text-slate-500 dark:text-slate-600">
                 Tu email está seguro. Sin spam, cancela cuando quieras.
               </p>
@@ -405,8 +380,12 @@ export default function LandingPage() {
               <p>
                 © 2026 Josu Sanz ·{' '}
                 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
-                  CC BY-NC-SA 4.0
+                  Licencia CC BY-NC-SA 4.0
                 </a>
+                {' '}·{' '}
+                <Link href="/privacidad" className="hover:text-white transition-colors">
+                  Privacidad
+                </Link>
               </p>
             </div>
           </div>
