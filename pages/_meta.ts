@@ -1,8 +1,4 @@
 export default {
-  index: {
-    title: "Inicio",
-    type: "page"
-  },
   empezar: {
     title: "🚀 Empezar",
     type: "page"
