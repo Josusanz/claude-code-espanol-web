@@ -39,8 +39,13 @@ export default async function handler(
     const data = JSON.parse(text)
     console.log('LemonSqueezy response:', JSON.stringify(data))
 
-    if (data.valid === true) {
-      // Licencia valida
+    // Verificar si la licencia existe y es válida
+    // valid: true significa que la licencia existe
+    // license_key.status puede ser: inactive, active, expired, disabled
+    const status = data.license_key?.status
+
+    if (data.valid === true && (status === 'active' || status === 'inactive')) {
+      // Licencia valida (inactive = no usada aún, active = en uso)
       return res.status(200).json({
         valid: true,
         message: 'Licencia valida'
@@ -48,7 +53,7 @@ export default async function handler(
     } else {
       return res.status(200).json({
         valid: false,
-        message: data.error || 'Licencia no valida'
+        message: data.error || `Licencia no valida (status: ${status || 'unknown'})`
       })
     }
   } catch (error) {
