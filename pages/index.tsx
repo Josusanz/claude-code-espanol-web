@@ -44,6 +44,10 @@ export default function LandingPage() {
       <style jsx global>{`
         body {
           font-family: 'Inter', sans-serif;
+          background: #f8fafc;
+        }
+        .dark body {
+          background: #020617;
         }
         .hero-gradient {
           background: radial-gradient(circle at top center, rgba(79, 70, 229, 0.08) 0%, transparent 70%);
@@ -55,7 +59,7 @@ export default function LandingPage() {
 
       <div className="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 min-h-screen transition-colors duration-300">
         {/* Navigation */}
-        <nav className="sticky top-0 z-50 border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md">
+        <nav className="sticky top-0 z-50 border-b border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-950/80 backdrop-blur-md">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-16">
               <div className="flex items-center gap-2">
