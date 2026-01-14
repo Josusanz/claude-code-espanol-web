@@ -1,9 +1,18 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
+import type { VercelRequest, VercelResponse } from '@vercel/node'
 
 export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
+  req: VercelRequest,
+  res: VercelResponse
 ) {
+  // CORS headers
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS')
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
+
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end()
+  }
+
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' })
   }
@@ -16,7 +25,6 @@ export default async function handler(
 
   try {
     // Validar licencia con LemonSqueezy License API
-    // Nota: La License API es pública y usa form data, no JSON
     const response = await fetch('https://api.lemonsqueezy.com/v1/licenses/validate', {
       method: 'POST',
       headers: {
@@ -27,25 +35,18 @@ export default async function handler(
     })
 
     const text = await response.text()
-    console.log('LemonSqueezy raw response:', text)
 
     if (!text) {
       return res.status(200).json({
         valid: false,
-        message: 'Respuesta vacía de LemonSqueezy. Verifica que el producto tenga licencias habilitadas.'
+        message: 'Respuesta vacía de LemonSqueezy'
       })
     }
 
     const data = JSON.parse(text)
-    console.log('LemonSqueezy response:', JSON.stringify(data))
-
-    // Verificar si la licencia existe y es válida
-    // valid: true significa que la licencia existe
-    // license_key.status puede ser: inactive, active, expired, disabled
     const status = data.license_key?.status
 
     if (data.valid === true && (status === 'active' || status === 'inactive')) {
-      // Licencia valida (inactive = no usada aún, active = en uso)
       return res.status(200).json({
         valid: true,
         message: 'Licencia valida'
