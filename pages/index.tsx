@@ -39,6 +39,7 @@ export default function LandingPage() {
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
+        <script async src="https://f.convertkit.com/ckjs/ck.5.js"></script>
       </Head>
 
       <style jsx global>{`
@@ -159,14 +160,18 @@ export default function LandingPage() {
               </Link>
             </div>
 
-            {/* Email Capture - ConvertKit */}
+            {/* Email Capture - Kit */}
             <div className="mt-12 max-w-md mx-auto">
               <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
                 Recibe actualizaciones del curso y recursos exclusivos:
               </p>
               <form
-                action="https://claude-code-en-espanol.kit.com/aa9e9cb20f"
+                action="https://app.kit.com/forms/8973548/subscriptions"
                 method="post"
+                data-sv-form="8973548"
+                data-uid="aa9e9cb20f"
+                data-format="inline"
+                data-version="5"
                 className="flex gap-2"
               >
                 <input
