@@ -117,7 +117,7 @@ export default function LandingPage() {
         </nav>
 
         {/* Hero Section */}
-        <main className="relative overflow-hidden pt-12 pb-24 lg:pt-20 lg:pb-32 bg-slate-50 dark:bg-slate-950">
+        <main className="relative overflow-hidden pt-4 pb-24 lg:pt-8 lg:pb-32 bg-slate-50 dark:bg-slate-950">
           <div className="absolute top-0 inset-x-0 h-[800px] hero-gradient pointer-events-none"></div>
 
           <div className="relative max-w-4xl mx-auto px-6 text-center">
@@ -165,7 +165,7 @@ export default function LandingPage() {
                 Recibe actualizaciones del curso y recursos exclusivos:
               </p>
               <form
-                action="https://app.convertkit.com/forms/aa9e9cb20f/subscriptions"
+                action="https://claude-code-en-espanol.kit.com/aa9e9cb20f"
                 method="post"
                 className="flex gap-2"
               >

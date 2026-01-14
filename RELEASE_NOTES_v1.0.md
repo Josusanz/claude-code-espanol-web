@@ -44,9 +44,9 @@ claude-code-espanol-materiales/
 
 ### 1. Descarga los materiales
 ```bash
-# Descarga claude-code-espanol-materiales-v1.0.zip
+# Descarga claude-code-espanol-materiales-v1.0.1.zip
 # Descomprime en tu carpeta de preferencia
-unzip claude-code-espanol-materiales-v1.0.zip -d mi-curso-claude
+unzip claude-code-espanol-materiales-v1.0.1.zip -d mi-curso-claude
 cd mi-curso-claude
 ```
 
