@@ -122,7 +122,7 @@ export default function LandingPage() {
           <div className="absolute top-0 inset-x-0 h-[800px] hero-gradient pointer-events-none"></div>
 
           <div className="relative max-w-4xl mx-auto px-6 text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 dark:bg-indigo-600/10 border border-blue-100 dark:border-indigo-600/20 text-blue-600 dark:text-blue-400 text-sm font-semibold mb-8 mt-6 shadow-sm">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 dark:bg-indigo-600/10 border border-blue-100 dark:border-indigo-600/20 text-blue-600 dark:text-blue-400 text-sm font-semibold mb-6 shadow-sm">
               <span>✨</span>
               Primer curso completo en español
             </div>
