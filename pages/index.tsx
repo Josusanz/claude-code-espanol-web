@@ -25,6 +25,7 @@ export default function LandingPage() {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta property="og:title" content="Claude Code en Español - Domina la IA" />
         <meta property="og:description" content="Aprende la herramienta de IA más potente haciendo, no mirando. Curso interactivo 100% en español." />
+        <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
