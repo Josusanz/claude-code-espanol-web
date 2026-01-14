@@ -165,7 +165,26 @@ export default function LandingPage() {
               <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
                 Recibe actualizaciones del curso y recursos exclusivos:
               </p>
-              <script async data-uid="aa9e9cb20f" src="https://claudecode.kit.com/aa9e9cb20f/index.js"></script>
+              <form
+                action="https://app.kit.com/forms/8973548/subscriptions"
+                method="post"
+                target="_blank"
+                className="flex flex-col sm:flex-row gap-2"
+              >
+                <input
+                  type="email"
+                  name="email_address"
+                  placeholder="tu@email.com"
+                  required
+                  className="flex-1 px-4 py-2.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none text-sm"
+                />
+                <button
+                  type="submit"
+                  className="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg transition-colors text-sm"
+                >
+                  Suscribirme
+                </button>
+              </form>
               <p className="mt-2 text-xs text-slate-500 dark:text-slate-600">
                 Tu email está seguro. Sin spam, cancela cuando quieras.
               </p>
