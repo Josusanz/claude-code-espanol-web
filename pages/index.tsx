@@ -26,6 +26,15 @@ export default function LandingPage() {
         <meta property="og:title" content="Claude Code en Español - Domina la IA" />
         <meta property="og:description" content="Aprende la herramienta de IA más potente haciendo, no mirando. Curso interactivo 100% en español." />
         <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              tailwind.config = {
+                darkMode: 'class'
+              }
+            `
+          }}
+        />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -50,10 +59,12 @@ export default function LandingPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-16">
               <div className="flex items-center gap-2">
-                <div className="bg-indigo-600 p-1.5 rounded-lg">
-                  <span className="material-symbols-outlined text-white text-xl">terminal</span>
+                <div className="bg-slate-900 dark:bg-white p-1 rounded-md flex items-center justify-center">
+                  <span className="material-symbols-outlined text-white dark:text-slate-900 text-[20px]">terminal</span>
                 </div>
-                <span className="text-lg font-bold tracking-tight text-indigo-600">Claude Code en Español</span>
+                <span className="text-[15px] font-semibold tracking-tight text-slate-900 dark:text-white">
+                  Claude Code <span className="text-slate-500 dark:text-slate-400 font-normal">en Español</span>
+                </span>
               </div>
 
               <div className="hidden md:flex items-center space-x-8">
