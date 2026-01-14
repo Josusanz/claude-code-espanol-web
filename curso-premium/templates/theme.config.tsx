@@ -12,7 +12,7 @@ const config: DocsThemeConfig = {
   },
   docsRepositoryBase: 'https://github.com/tu-usuario/tu-curso',
   footer: {
-    text: '© 2026 Tu Nombre',
+    content: '© 2026 Tu Nombre',
   },
   useNextSeoProps() {
     return {
