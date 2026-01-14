@@ -191,9 +191,61 @@ export default function CursoPremiumPage() {
                 ))}
               </div>
 
+              {/* Requisitos previos */}
+              <div className="bg-gradient-to-br from-indigo-50 to-purple-50 border border-indigo-200 rounded-2xl p-6 mb-8">
+                <div className="flex items-start gap-4 mb-6">
+                  <div className="w-12 h-12 bg-indigo-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <span className="material-symbols-outlined text-white text-2xl">workspace_premium</span>
+                  </div>
+                  <div>
+                    <h2 className="text-xl font-bold text-slate-900 mb-2">Requisitos previos</h2>
+                    <p className="text-slate-600">
+                      Necesitas tener Claude Code instalado para seguir este curso.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="bg-white rounded-xl p-4 border border-indigo-100">
+                    <h3 className="font-semibold text-slate-900 mb-2 flex items-center gap-2">
+                      <span className="text-indigo-600">1.</span>
+                      Claude Pro o Max ($20/mes)
+                    </h3>
+                    <p className="text-sm text-slate-600 mb-3">
+                      Claude Code requiere una suscripcion activa.
+                    </p>
+                    <a
+                      href="https://claude.ai/upgrade"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-sm text-indigo-600 hover:text-indigo-700 font-medium"
+                    >
+                      <span className="material-symbols-outlined text-lg">open_in_new</span>
+                      Obtener Claude Pro
+                    </a>
+                  </div>
+
+                  <div className="bg-white rounded-xl p-4 border border-indigo-100">
+                    <h3 className="font-semibold text-slate-900 mb-2 flex items-center gap-2">
+                      <span className="text-indigo-600">2.</span>
+                      Instalar Claude Code CLI
+                    </h3>
+                    <p className="text-sm text-slate-600 mb-3">
+                      Ejecuta este comando en tu terminal:
+                    </p>
+                    <div className="bg-slate-900 text-slate-100 p-3 rounded-lg font-mono text-sm mb-3 overflow-x-auto">
+                      npm install -g @anthropic-ai/claude-code
+                    </div>
+                    <p className="text-xs text-slate-500">
+                      Compatible con macOS, Windows y Linux. Requiere Node.js 18+.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
               {/* Instrucciones */}
               <div className="bg-slate-100 rounded-2xl p-6">
-                <h2 className="font-bold text-slate-900 mb-4">Como empezar</h2>
+                <h2 className="font-bold text-slate-900 mb-4">Como empezar el curso</h2>
                 <ol className="space-y-3 text-slate-700">
                   <li className="flex gap-3">
                     <span className="font-bold text-amber-600">1.</span>
