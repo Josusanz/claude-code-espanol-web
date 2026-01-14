@@ -14,11 +14,6 @@ const config: DocsThemeConfig = {
   footer: {
     content: '© 2026 Tu Nombre',
   },
-  useNextSeoProps() {
-    return {
-      titleTemplate: '%s – Tu Curso'
-    }
-  },
   head: (
     <>
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
