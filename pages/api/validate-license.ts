@@ -15,22 +15,20 @@ export default async function handler(
   }
 
   try {
-    // Validar licencia con LemonSqueezy API
+    // Validar licencia con LemonSqueezy License API
+    // Nota: La License API es pública y usa form data, no JSON
     const response = await fetch('https://api.lemonsqueezy.com/v1/licenses/validate', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${process.env.LEMONSQUEEZY_API_KEY}`
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: JSON.stringify({
-        license_key: licenseKey
-      })
+      body: `license_key=${encodeURIComponent(licenseKey)}`
     })
 
     const data = await response.json()
 
-    if (data.valid || data.license_key?.status === 'active' || data.license_key?.status === 'inactive') {
+    if (data.valid === true) {
       // Licencia valida
       return res.status(200).json({
         valid: true,
@@ -39,7 +37,7 @@ export default async function handler(
     } else {
       return res.status(401).json({
         valid: false,
-        message: 'Licencia no valida'
+        message: data.error || 'Licencia no valida'
       })
     }
   } catch (error) {
