@@ -134,6 +134,41 @@ export default function PremiumPage() {
               <p className="mt-4 text-xs text-slate-500 dark:text-slate-500">
                 Pago seguro con Stripe. Acceso inmediato tras la compra.
               </p>
+
+              <div className="mt-6 pt-6 border-t border-slate-200 dark:border-slate-700">
+                <p className="text-sm text-slate-600 dark:text-slate-400">
+                  Ya compraste?{' '}
+                  <Link href="/curso-premium" className="text-amber-600 hover:underline font-medium">
+                    Acceder al curso
+                  </Link>
+                </p>
+              </div>
+            </div>
+
+            {/* Cómo funciona */}
+            <div className="max-w-md mx-auto bg-slate-100 dark:bg-slate-800/50 rounded-2xl p-6 text-left">
+              <h3 className="font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+                <span className="material-symbols-outlined text-amber-500">info</span>
+                Como funciona
+              </h3>
+              <ol className="space-y-3 text-sm text-slate-600 dark:text-slate-400">
+                <li className="flex gap-3">
+                  <span className="font-bold text-amber-600">1.</span>
+                  Compra el curso con el boton de arriba
+                </li>
+                <li className="flex gap-3">
+                  <span className="font-bold text-amber-600">2.</span>
+                  Recibiras un email con tu licencia
+                </li>
+                <li className="flex gap-3">
+                  <span className="font-bold text-amber-600">3.</span>
+                  Ve a <Link href="/curso-premium" className="text-amber-600 hover:underline">Area de Miembros</Link> e ingresa tu licencia
+                </li>
+                <li className="flex gap-3">
+                  <span className="font-bold text-amber-600">4.</span>
+                  Descarga los materiales y empieza a aprender
+                </li>
+              </ol>
             </div>
           </div>
 
