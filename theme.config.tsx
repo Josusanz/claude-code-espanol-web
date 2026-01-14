@@ -79,6 +79,8 @@ const config: DocsThemeConfig = {
             </a>
           </span>
           <div style={{ display: 'flex', gap: '1rem', fontSize: '0.875rem' }}>
+            <a href="/privacidad">Privacidad</a>
+            <span style={{ opacity: 0.3 }}>·</span>
             <a href="https://yenze.io" target="_blank" rel="noopener noreferrer">Yenze.io</a>
             <span style={{ opacity: 0.3 }}>·</span>
             <a href="https://sacred.events" target="_blank" rel="noopener noreferrer">Sacred Events</a>

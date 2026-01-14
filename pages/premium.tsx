@@ -62,12 +62,12 @@ export default function PremiumPage() {
                 </span>
               </Link>
 
-              <div className="flex items-center gap-6">
+              <div className="flex items-center gap-4">
                 <a
                   href="https://yenze.lemonsqueezy.com/affiliates"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 text-sm font-medium"
+                  className="flex items-center gap-1.5 bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 hover:bg-amber-200 dark:hover:bg-amber-900/50 px-3 py-1.5 rounded-lg text-sm font-semibold transition-colors"
                 >
                   <span className="material-symbols-outlined text-lg">handshake</span>
                   Afiliados 20%
@@ -487,6 +487,10 @@ export default function PremiumPage() {
                 >
                   Afiliados
                 </a>
+                {' '}&middot;{' '}
+                <Link href="/privacidad" className="hover:text-white transition-colors">
+                  Privacidad
+                </Link>
               </p>
               <p className="text-sm">
                 &copy; 2026 Josu Sanz &middot;{' '}
