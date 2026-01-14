@@ -31,8 +31,8 @@ export default function CursoPremiumPage() {
       } else {
         setError('Licencia no valida. Verifica que la hayas copiado correctamente.')
       }
-    } catch (err) {
-      setError('Error al validar la licencia. Intenta de nuevo.')
+    } catch (err: any) {
+      setError(err?.message || 'Error al validar la licencia. Intenta de nuevo.')
     } finally {
       setIsLoading(false)
     }

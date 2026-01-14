@@ -28,6 +28,8 @@ export default async function handler(
 
     const data = await response.json()
 
+    console.log('LemonSqueezy response:', JSON.stringify(data))
+
     if (data.valid === true) {
       // Licencia valida
       return res.status(200).json({
@@ -35,13 +37,13 @@ export default async function handler(
         message: 'Licencia valida'
       })
     } else {
-      return res.status(401).json({
+      return res.status(200).json({
         valid: false,
         message: data.error || 'Licencia no valida'
       })
     }
   } catch (error) {
     console.error('Error validating license:', error)
-    return res.status(500).json({ error: 'Error validating license' })
+    return res.status(200).json({ valid: false, error: 'Error al conectar con LemonSqueezy' })
   }
 }
