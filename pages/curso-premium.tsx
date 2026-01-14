@@ -76,8 +76,13 @@ export default function CursoPremiumPage() {
         {/* Nav */}
         <nav className="border-b border-slate-200 bg-white">
           <div className="max-w-4xl mx-auto px-6 py-4 flex justify-between items-center">
-            <Link href="/" className="font-semibold text-slate-900">
-              Claude Code en Espanol
+            <Link href="/" className="flex items-center gap-2">
+              <div className="bg-slate-900 p-1 rounded-md flex items-center justify-center">
+                <span className="material-symbols-outlined text-white text-[20px]">terminal</span>
+              </div>
+              <span className="text-[15px] font-semibold tracking-tight text-slate-900">
+                Claude Code <span className="text-slate-500 font-normal">en Espanol</span>
+              </span>
             </Link>
             {isValid && (
               <button
