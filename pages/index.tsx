@@ -165,7 +165,7 @@ export default function LandingPage() {
                 Recibe actualizaciones del curso y recursos exclusivos:
               </p>
               <form
-                action="https://app.convertkit.com/forms/TU_FORM_ID/subscriptions"
+                action="https://app.convertkit.com/forms/aa9e9cb20f/subscriptions"
                 method="post"
                 className="flex gap-2"
               >
