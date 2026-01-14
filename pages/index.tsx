@@ -184,127 +184,137 @@ export default function LandingPage() {
           </div>
         </main>
 
-        {/* Features Section */}
-        <section className="py-24 bg-white dark:bg-slate-900">
+        {/* Stats Section */}
+        <section className="py-20 bg-white dark:bg-slate-900 border-y border-slate-200 dark:border-slate-800">
           <div className="max-w-7xl mx-auto px-6">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-extrabold mb-4 text-slate-950 dark:text-white">
-                ¿Por qué este curso es diferente?
-              </h2>
-              <p className="text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-                No es otro tutorial más. Es la forma más efectiva de dominar Claude Code.
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-3 gap-8">
-              <div className="p-8 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 hover:border-indigo-500 dark:hover:border-indigo-500 transition-all duration-300 hover:-translate-y-2">
-                <div className="text-5xl mb-4">🎯</div>
-                <h3 className="text-2xl font-bold mb-3 text-slate-900 dark:text-white">Aprendes haciendo</h3>
-                <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
-                  No videos aburridos. Ejecutas comandos, ves resultados reales, y construyes proyectos desde el primer día.
-                </p>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+              <div className="text-center">
+                <div className="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 mb-2">
+                  8
+                </div>
+                <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
+                  Lecciones prácticas
+                </div>
               </div>
-
-              <div className="p-8 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 hover:border-indigo-500 dark:hover:border-indigo-500 transition-all duration-300 hover:-translate-y-2">
-                <div className="text-5xl mb-4">🇪🇸</div>
-                <h3 className="text-2xl font-bold mb-3 text-slate-900 dark:text-white">100% en español</h3>
-                <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
-                  El único curso completo de Claude Code en español. Sin barreras de idioma, sin traducciones automáticas.
-                </p>
+              <div className="text-center">
+                <div className="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 mb-2">
+                  ~4h
+                </div>
+                <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
+                  De contenido
+                </div>
               </div>
-
-              <div className="p-8 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 hover:border-indigo-500 dark:hover:border-indigo-500 transition-all duration-300 hover:-translate-y-2">
-                <div className="text-5xl mb-4">🚀</div>
-                <h3 className="text-2xl font-bold mb-3 text-slate-900 dark:text-white">Sin experiencia necesaria</h3>
-                <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
-                  Diseñado para personas no técnicas. Si sabes mantener una conversación, puedes usar Claude Code.
-                </p>
+              <div className="text-center">
+                <div className="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 mb-2">
+                  100%
+                </div>
+                <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
+                  Gratis y open source
+                </div>
+              </div>
+              <div className="text-center">
+                <div className="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 mb-2">
+                  0
+                </div>
+                <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
+                  Experiencia requerida
+                </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* What You'll Learn Section */}
-        <section className="py-24 bg-slate-50 dark:bg-slate-950">
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-extrabold mb-4 text-slate-950 dark:text-white">
-                ¿Qué aprenderás?
+        {/* Curriculum Section */}
+        <section className="py-32 bg-slate-50 dark:bg-slate-950">
+          <div className="max-w-5xl mx-auto px-6">
+            <div className="text-center mb-20">
+              <h2 className="text-4xl md:text-6xl font-extrabold mb-6 text-slate-950 dark:text-white">
+                De cero a experto en{' '}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">
+                  8 lecciones
+                </span>
               </h2>
+              <p className="text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+                Cada lección incluye teoría, práctica y un proyecto real. Aprende haciendo.
+              </p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto">
-              <div>
-                <h3 className="text-2xl font-bold mb-6 text-slate-900 dark:text-white flex items-center gap-3">
-                  <span className="text-3xl">📚</span>
-                  Módulo 1: Fundamentos (~4 horas)
-                </h3>
-                <ul className="space-y-4">
-                  {[
-                    '🔍 Explorar archivos y proyectos',
-                    '✏️ Crear y editar contenido',
-                    '⚡ Comandos slash personalizados',
-                    '🤖 Agentes paralelos',
-                    '🎭 Sub-agentes especializados',
-                    '🧠 Memoria persistente (CLAUDE.md)',
-                    '🚀 Próximos pasos y proyecto final'
-                  ].map((item, i) => (
-                    <li key={i} className="flex items-start gap-3 text-slate-600 dark:text-slate-400">
-                      <span className="text-emerald-500 font-bold text-xl">✓</span>
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div>
-                <h3 className="text-2xl font-bold mb-6 text-slate-900 dark:text-white flex items-center gap-3">
-                  <span className="text-3xl">🛠️</span>
-                  Módulo 2: Proyectos (Próximamente)
-                </h3>
-                <ul className="space-y-4">
-                  {[
-                    'Crear una landing page desde cero',
-                    'Automatizar flujos de trabajo',
-                    'Investigación y análisis con IA',
-                    'Proyectos reales del mundo laboral'
-                  ].map((item, i) => (
-                    <li key={i} className="flex items-start gap-3 text-slate-600 dark:text-slate-400">
-                      <span className="text-slate-400 font-bold text-xl">○</span>
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+            <div className="space-y-6">
+              {[
+                { num: '01', title: 'Explorar archivos', desc: 'Navega y analiza proyectos con comandos de IA', time: '30 min', status: 'available' },
+                { num: '02', title: 'Crear contenido', desc: 'Genera código, docs y archivos automáticamente', time: '30 min', status: 'available' },
+                { num: '03', title: 'Comandos slash', desc: 'Crea tus propios comandos personalizados', time: '30 min', status: 'available' },
+                { num: '04', title: 'Agentes paralelos', desc: 'Ejecuta múltiples tareas simultáneamente', time: '30 min', status: 'available' },
+                { num: '05', title: 'Sub-agentes', desc: 'Delega tareas complejas a agentes especializados', time: '30 min', status: 'available' },
+                { num: '06', title: 'Memoria persistente', desc: 'Configura el contexto con CLAUDE.md', time: '30 min', status: 'available' },
+                { num: '07', title: 'Proyecto final', desc: 'Construye tu primer proyecto completo', time: '45 min', status: 'available' },
+                { num: '08', title: 'Próximos pasos', desc: 'Recursos y caminos avanzados', time: '15 min', status: 'available' },
+              ].map((lesson, i) => (
+                <div
+                  key={i}
+                  className="group relative bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 hover:border-indigo-500 dark:hover:border-indigo-500 transition-all duration-300 hover:shadow-xl hover:shadow-indigo-500/10"
+                >
+                  <div className="flex items-center gap-6">
+                    <div className="flex-shrink-0 w-16 h-16 rounded-xl bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center text-white font-bold text-xl">
+                      {lesson.num}
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-1">
+                        {lesson.title}
+                      </h3>
+                      <p className="text-slate-600 dark:text-slate-400 text-sm">
+                        {lesson.desc}
+                      </p>
+                    </div>
+                    <div className="flex-shrink-0 text-right">
+                      <div className="text-sm font-semibold text-indigo-600 dark:text-indigo-400 mb-1">
+                        {lesson.time}
+                      </div>
+                      <div className="inline-flex items-center gap-1 text-xs text-emerald-600 dark:text-emerald-400 font-medium">
+                        <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+                        Disponible
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </section>
 
         {/* CTA Section */}
-        <section className="py-24 bg-gradient-to-r from-indigo-600 to-purple-600">
-          <div className="max-w-4xl mx-auto px-6 text-center">
-            <h2 className="text-4xl md:text-5xl font-extrabold mb-6 text-white">
-              Comienza hoy mismo
+        <section className="relative py-32 overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600"></div>
+          <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
+
+          <div className="relative max-w-4xl mx-auto px-6 text-center">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 text-white text-sm font-semibold mb-8">
+              <span>🚀</span>
+              <span>Listo para empezar</span>
+            </div>
+
+            <h2 className="text-4xl md:text-6xl font-extrabold mb-6 text-white">
+              Descarga gratis y empieza en 5 minutos
             </h2>
-            <p className="text-xl text-indigo-100 mb-10 max-w-2xl mx-auto">
-              Descarga el curso gratis y empieza a dominar Claude Code en menos de 15 minutos.
+
+            <p className="text-xl text-white/90 mb-12 max-w-2xl mx-auto">
+              Sin registros. Sin suscripciones. Sin trucos. Solo descarga y aprende.
             </p>
+
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
                 href="https://github.com/Josusanz/claude-code-espanol-web/releases/latest"
-                className="w-full sm:w-auto bg-white text-indigo-600 font-bold py-4 px-8 rounded-2xl shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-200 flex items-center justify-center gap-2"
+                className="group w-full sm:w-auto bg-white text-indigo-600 font-bold py-5 px-10 rounded-2xl shadow-2xl hover:shadow-3xl transform hover:-translate-y-1 transition-all duration-200 flex items-center justify-center gap-3 text-lg"
               >
-                <span className="material-symbols-outlined">download</span>
+                <span className="material-symbols-outlined text-2xl">download</span>
                 Descargar Curso Gratis
-              </Link>
-              <Link
-                href="/empezar/introduccion"
-                className="w-full sm:w-auto bg-indigo-700 hover:bg-indigo-800 text-white font-bold py-4 px-8 rounded-2xl border-2 border-indigo-500 transition-all duration-200 flex items-center justify-center gap-2"
-              >
-                <span className="material-symbols-outlined">library_books</span>
-                Ver Documentación
+                <span className="material-symbols-outlined text-xl group-hover:translate-x-1 transition-transform">arrow_forward</span>
               </Link>
             </div>
+
+            <p className="mt-8 text-sm text-white/70">
+              Compatible con Mac, Windows y Linux · Claude Pro requerido ($20/mes)
+            </p>
           </div>
         </section>
 
