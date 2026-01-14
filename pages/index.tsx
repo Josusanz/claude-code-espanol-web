@@ -118,11 +118,11 @@ export default function LandingPage() {
         </nav>
 
         {/* Hero Section */}
-        <main className="relative overflow-hidden pt-4 pb-24 lg:pt-8 lg:pb-32 bg-slate-50 dark:bg-slate-950">
+        <main className="relative overflow-hidden pb-24 lg:pb-32 bg-slate-50 dark:bg-slate-950">
           <div className="absolute top-0 inset-x-0 h-[800px] hero-gradient pointer-events-none"></div>
 
           <div className="relative max-w-4xl mx-auto px-6 text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 dark:bg-indigo-600/10 border border-blue-100 dark:border-indigo-600/20 text-blue-600 dark:text-blue-400 text-sm font-semibold mb-12 shadow-sm">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 dark:bg-indigo-600/10 border border-blue-100 dark:border-indigo-600/20 text-blue-600 dark:text-blue-400 text-sm font-semibold mb-8 mt-6 shadow-sm">
               <span>✨</span>
               Primer curso completo en español
             </div>
