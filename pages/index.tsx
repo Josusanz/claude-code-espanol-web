@@ -525,6 +525,7 @@ export default function LandingPage() {
               <div>
                 <h4 className="text-white font-semibold mb-4">Proyectos de Josu Sanz</h4>
                 <ul className="space-y-2 text-sm">
+                  <li><a href="https://www.josusanz.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">josusanz.com</a></li>
                   <li><a href="https://yenze.io" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Yenze.io</a></li>
                   <li><a href="https://www.sacredevents.app/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Sacred Events</a></li>
                   <li><a href="https://github.com/Josusanz" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">GitHub</a></li>
@@ -550,7 +551,7 @@ export default function LandingPage() {
         <div className="fixed bottom-6 right-6">
           <button
             onClick={toggleDarkMode}
-            className="p-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full shadow-lg hover:scale-110 transition-transform"
+            className="w-12 h-12 flex items-center justify-center bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full shadow-lg hover:scale-110 transition-transform"
           >
             <span className="material-symbols-outlined text-slate-600 dark:text-slate-300 text-[20px]">
               {isDark ? 'light_mode' : 'dark_mode'}
