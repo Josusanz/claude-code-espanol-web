@@ -26,8 +26,17 @@ export default async function handler(
       body: `license_key=${encodeURIComponent(licenseKey)}`
     })
 
-    const data = await response.json()
+    const text = await response.text()
+    console.log('LemonSqueezy raw response:', text)
 
+    if (!text) {
+      return res.status(200).json({
+        valid: false,
+        message: 'Respuesta vacía de LemonSqueezy. Verifica que el producto tenga licencias habilitadas.'
+      })
+    }
+
+    const data = JSON.parse(text)
     console.log('LemonSqueezy response:', JSON.stringify(data))
 
     if (data.valid === true) {
