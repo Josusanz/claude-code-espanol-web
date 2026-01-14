@@ -388,7 +388,7 @@ export default function LandingPage() {
                 <h4 className="text-white font-semibold mb-4">Proyectos de Josu Sanz</h4>
                 <ul className="space-y-2 text-sm">
                   <li><a href="https://yenze.io" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Yenze.io</a></li>
-                  <li><a href="https://sacred.events" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Sacred Events</a></li>
+                  <li><a href="https://www.sacredevents.app/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Sacred Events</a></li>
                   <li><a href="https://github.com/Josusanz" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">GitHub</a></li>
                 </ul>
               </div>
