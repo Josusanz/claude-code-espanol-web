@@ -94,7 +94,7 @@ export default function PremiumPage() {
             {/* Price Card */}
             <div className="max-w-md mx-auto bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl p-8 mb-16">
               <div className="flex items-baseline justify-center gap-2 mb-6">
-                <span className="text-5xl font-extrabold text-slate-900 dark:text-white">$147</span>
+                <span className="text-5xl font-extrabold text-slate-900 dark:text-white">$67</span>
                 <span className="text-slate-500 dark:text-slate-400">USD</span>
               </div>
 
@@ -337,7 +337,7 @@ export default function PremiumPage() {
                 className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-4 px-10 rounded-2xl shadow-lg shadow-amber-500/20 hover:shadow-amber-500/30 transform hover:-translate-y-0.5 transition-all duration-200"
               >
                 <span className="material-symbols-outlined">shopping_cart</span>
-                Comprar por $147
+                Comprar por $67
               </a>
 
               <p className="mt-6 text-sm text-slate-500 dark:text-slate-500">
