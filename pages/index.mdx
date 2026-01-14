@@ -5,25 +5,37 @@ title: Claude Code en Español
 import { Callout, Steps } from 'nextra/components'
 
 <div style={{
-  background: 'linear-gradient(180deg, rgba(99, 102, 241, 0.05) 0%, transparent 100%)',
+  position: 'relative',
+  overflow: 'hidden',
   borderRadius: '1.5rem',
   padding: '4rem 2rem',
   marginTop: '2rem',
   marginBottom: '3rem',
   textAlign: 'center'
 }}>
-  <div style={{ maxWidth: '56rem', margin: '0 auto' }}>
+  <div style={{
+    position: 'absolute',
+    inset: 0,
+    background: 'radial-gradient(circle at top center, rgba(99, 102, 241, 0.15), transparent 70%)',
+    pointerEvents: 'none'
+  }} />
+
+  <div style={{ position: 'relative', zIndex: 1, maxWidth: '56rem', margin: '0 auto' }}>
     <div style={{
-      display: 'inline-block',
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '0.5rem',
       padding: '0.5rem 1rem',
       borderRadius: '9999px',
       fontSize: '0.875rem',
       fontWeight: 600,
-      background: '#dbeafe',
-      color: '#1e40af',
-      marginBottom: '1.5rem'
+      marginBottom: '1.5rem',
+      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      color: 'white',
+      boxShadow: '0 4px 6px -1px rgba(102, 126, 234, 0.3)'
     }}>
-      ✨ Primer curso completo en español
+      <span>✨</span>
+      <span>Primer curso completo en español</span>
     </div>
 
     <h1 style={{
@@ -31,12 +43,17 @@ import { Callout, Steps } from 'nextra/components'
       fontWeight: 900,
       lineHeight: 1.2,
       letterSpacing: '-0.03em',
-      marginBottom: '1.5rem',
-      color: '#111827'
+      marginBottom: '1.5rem'
     }}>
-      Domina Claude Code
+      <span style={{ color: '#111827' }}>Domina </span>
+      <span style={{
+        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor: 'transparent',
+        backgroundClip: 'text'
+      }}>Claude Code</span>
       <br />
-      sin escribir código
+      <span style={{ color: '#111827' }}>sin escribir código</span>
     </h1>
 
     <p style={{
