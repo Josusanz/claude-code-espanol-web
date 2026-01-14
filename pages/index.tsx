@@ -170,20 +170,22 @@ export default function LandingPage() {
                 data-uid="aa9e9cb20f"
                 data-format="inline"
                 data-version="5"
-                className="flex gap-2"
+                data-options='{"settings":{"after_subscribe":{"action":"message","success_message":"¡Gracias! Revisa tu email para confirmar."}}}'
+                className="seva-form formkit-form flex gap-2"
               >
                 <input
                   type="email"
                   name="email_address"
                   placeholder="tu@email.com"
                   required
-                  className="flex-1 px-4 py-2.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none text-sm"
+                  className="formkit-input flex-1 px-4 py-2.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none text-sm"
                 />
                 <button
                   type="submit"
-                  className="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg transition-colors text-sm"
+                  data-element="submit"
+                  className="formkit-submit px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg transition-colors text-sm"
                 >
-                  Suscribirme
+                  <span>Suscribirme</span>
                 </button>
               </form>
               <p className="mt-2 text-xs text-slate-500 dark:text-slate-600">
