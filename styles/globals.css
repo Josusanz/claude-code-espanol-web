@@ -310,3 +310,36 @@ a[href*="github.com"] svg {
   color: #fff !important;
   fill: #fff !important;
 }
+
+/* Logo styles */
+.logo-icon-container {
+  transition: background 200ms ease;
+}
+
+.dark .logo-icon-container {
+  background: white !important;
+}
+
+.logo-stroke {
+  transition: stroke 200ms ease;
+}
+
+.dark .logo-stroke {
+  stroke: #111827 !important;
+}
+
+.logo-text {
+  transition: color 200ms ease;
+}
+
+.dark .logo-text {
+  color: white !important;
+}
+
+.logo-text-secondary {
+  transition: color 200ms ease;
+}
+
+.dark .logo-text-secondary {
+  color: #94a3b8 !important;
+}
