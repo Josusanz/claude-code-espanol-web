@@ -2,6 +2,81 @@ import React, { useEffect, useState, useRef } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 
+function NewsletterForm() {
+  const [email, setEmail] = useState('')
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+  const [errorMessage, setErrorMessage] = useState('')
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setStatus('loading')
+
+    try {
+      const res = await fetch('https://app.loops.so/api/newsletter-form/cmae75u140khm44stqhx4tdxz', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `userGroup=&mailingLists=&email=${encodeURIComponent(email)}`,
+      })
+
+      if (res.ok) {
+        setStatus('success')
+        setEmail('')
+      } else {
+        const data = await res.json()
+        setErrorMessage(data.message || 'Error al suscribirse')
+        setStatus('error')
+      }
+    } catch {
+      setErrorMessage('Error de conexión')
+      setStatus('error')
+    }
+  }
+
+  if (status === 'success') {
+    return (
+      <div className="mt-12 max-w-md mx-auto text-center">
+        <div className="bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 rounded-lg p-4">
+          <p className="text-emerald-700 dark:text-emerald-300 font-medium">
+            ¡Gracias! Revisa tu email para confirmar la suscripción.
+          </p>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="mt-12 max-w-md mx-auto">
+      <p className="text-sm text-slate-600 dark:text-slate-400 mb-4 text-center">
+        Recibe actualizaciones del curso y recursos exclusivos:
+      </p>
+      <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2">
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="tu@email.com"
+          required
+          disabled={status === 'loading'}
+          className="flex-1 px-4 py-2.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none text-sm disabled:opacity-50"
+        />
+        <button
+          type="submit"
+          disabled={status === 'loading'}
+          className="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg transition-colors text-sm disabled:opacity-50"
+        >
+          {status === 'loading' ? 'Enviando...' : 'Suscribirme'}
+        </button>
+      </form>
+      {status === 'error' && (
+        <p className="mt-2 text-xs text-red-500">{errorMessage}</p>
+      )}
+      <p className="mt-2 text-xs text-slate-500 dark:text-slate-600 text-center">
+        Tu email está seguro. Sin spam, cancela cuando quieras.
+      </p>
+    </div>
+  )
+}
+
 export default function LandingPage() {
   const [isDark, setIsDark] = useState(false)
   const [terminalStep, setTerminalStep] = useState(0)
@@ -224,35 +299,8 @@ export default function LandingPage() {
               </Link>
             </div>
 
-            {/* Email Capture - Kit */}
-            <div className="mt-12 max-w-md mx-auto">
-              <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
-                Recibe actualizaciones del curso y recursos exclusivos:
-              </p>
-              <form
-                action="https://app.kit.com/forms/8973548/subscriptions"
-                method="post"
-                target="_blank"
-                className="flex flex-col sm:flex-row gap-2"
-              >
-                <input
-                  type="email"
-                  name="email_address"
-                  placeholder="tu@email.com"
-                  required
-                  className="flex-1 px-4 py-2.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none text-sm"
-                />
-                <button
-                  type="submit"
-                  className="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg transition-colors text-sm"
-                >
-                  Suscribirme
-                </button>
-              </form>
-              <p className="mt-2 text-xs text-slate-500 dark:text-slate-600">
-                Tu email está seguro. Sin spam, cancela cuando quieras.
-              </p>
-            </div>
+            {/* Email Capture - Loops */}
+            <NewsletterForm />
 
             {/* Terminal Demo - Interactive */}
             <div className="mt-24 relative" ref={terminalRef}>
