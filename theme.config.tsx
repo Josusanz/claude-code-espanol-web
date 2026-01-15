@@ -95,12 +95,22 @@ const config: DocsThemeConfig = {
   head: (
     <>
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <meta property="og:title" content="Claude Code en Español" />
+      <meta name="description" content="Aprende Claude Code en español. Curso gratuito de IA para no programadores. Tutoriales, ejemplos prácticos y proyectos reales." />
+      <meta name="keywords" content="claude code tutorial, curso claude español, aprender ia gratis, anthropic claude, programar con inteligencia artificial" />
+      <meta name="author" content="Josu Sanz" />
+      <meta name="robots" content="index, follow" />
+      <meta property="og:type" content="website" />
+      <meta property="og:site_name" content="aprende.software" />
+      <meta property="og:locale" content="es_ES" />
+      <meta property="og:title" content="Claude Code en Español - Curso Gratis de IA" />
       <meta property="og:description" content="Aprende Claude Code completamente en español. Curso interactivo gratuito para personas sin experiencia técnica." />
       <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content="Claude Code en Español" />
+      <meta name="twitter:description" content="Curso gratuito de Claude Code en español para no programadores." />
       <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
       <link rel="alternate icon" href="/favicon.ico" />
-      <title>Claude Code en Español</title>
+      <link rel="canonical" href="https://www.aprende.software/" />
+      <title>Claude Code en Español | aprende.software</title>
     </>
   ),
   themeSwitch: {

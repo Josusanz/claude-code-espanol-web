@@ -153,10 +153,60 @@ export default function LandingPage() {
   return (
     <>
       <Head>
-        <title>Claude Code en Español - Domina la IA</title>
+        <title>Aprende Claude Code en Español | Curso Gratis de IA para No Programadores</title>
+        <meta name="description" content="Curso gratuito de Claude Code en español. Aprende a usar la herramienta de IA más potente sin saber programar. 8 lecciones prácticas, proyectos reales y certificado." />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta property="og:title" content="Claude Code en Español - Domina la IA" />
-        <meta property="og:description" content="Aprende la herramienta de IA más potente haciendo, no mirando. Curso interactivo 100% en español." />
+        <meta name="keywords" content="claude code, curso claude code, aprender ia, inteligencia artificial español, claude anthropic, programar con ia, curso gratis ia, no code, automatización ia" />
+        <meta name="author" content="Josu Sanz" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://www.aprende.software/" />
+
+        {/* Open Graph */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.aprende.software/" />
+        <meta property="og:title" content="Aprende Claude Code en Español | Curso Gratis de IA" />
+        <meta property="og:description" content="Curso gratuito de Claude Code en español. Aprende a usar la herramienta de IA más potente sin saber programar. 8 lecciones prácticas." />
+        <meta property="og:site_name" content="aprende.software" />
+        <meta property="og:locale" content="es_ES" />
+
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Aprende Claude Code en Español | Curso Gratis" />
+        <meta name="twitter:description" content="Curso gratuito de Claude Code en español. Aprende IA sin saber programar." />
+
+        {/* JSON-LD Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Course",
+              "name": "Claude Code en Español",
+              "description": "Curso gratuito para aprender Claude Code, la herramienta de IA de Anthropic. Diseñado para personas sin experiencia en programación.",
+              "provider": {
+                "@type": "Person",
+                "name": "Josu Sanz",
+                "url": "https://www.josusanz.com"
+              },
+              "url": "https://www.aprende.software/",
+              "educationalLevel": "Beginner",
+              "inLanguage": "es",
+              "isAccessibleForFree": true,
+              "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "EUR",
+                "availability": "https://schema.org/InStock"
+              },
+              "hasCourseInstance": {
+                "@type": "CourseInstance",
+                "courseMode": "Online",
+                "courseWorkload": "PT4H"
+              }
+            })
+          }}
+        />
+
         <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
         <script
           dangerouslySetInnerHTML={{

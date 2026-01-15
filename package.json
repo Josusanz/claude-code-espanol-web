@@ -1,7 +1,7 @@
 {
-  "name": "claude-code-espanol",
-  "version": "1.0.1",
-  "description": "Aprende Claude Code en Español - Curso interactivo gratuito",
+  "name": "aprende-software",
+  "version": "1.0.2",
+  "description": "aprende.software - Curso gratuito de Claude Code en español para no programadores",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -12,12 +12,16 @@
     "url": "https://github.com/Josusanz/claude-code-espanol-web.git"
   },
   "keywords": [
-    "claude",
-    "claude-code",
-    "ai",
-    "español",
-    "curso",
-    "tutorial"
+    "claude code",
+    "curso claude code",
+    "aprender ia",
+    "inteligencia artificial español",
+    "anthropic claude",
+    "programar con ia",
+    "curso gratis ia",
+    "no code",
+    "automatización ia",
+    "aprende software"
   ],
   "author": "Josu Sanz",
   "license": "CC-BY-NC-SA-4.0",
