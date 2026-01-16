@@ -1,23 +1,24 @@
-# 🎉 Claude Code en Español v1.0 - Lanzamiento Inicial
+# 🎉 Claude Code en Español v1.0.2 - Nueva lección: Visualizar creaciones
 
 ## 📚 ¿Qué incluye esta versión?
 
 ### Módulo 1: Fundamentos Completo
-8 lecciones interactivas que te enseñan todo lo esencial de Claude Code:
+9 lecciones interactivas que te enseñan todo lo esencial de Claude Code:
 
 1. **Lección 1.1** - ¿Qué es Claude Code?
 2. **Lección 1.2** - Exploración de archivos
 3. **Lección 1.3** - Crear y modificar contenido
-4. **Lección 1.4** - Comandos slash personalizados
-5. **Lección 1.5** - Agentes paralelos
-6. **Lección 1.6** - Sub-agentes especializados
-7. **Lección 1.7** - Memoria del proyecto (CLAUDE.md)
-8. **Lección 1.8** - Próximos pasos ✨ NUEVO
+4. **Lección 1.4** - Visualizar tus creaciones ✨ NUEVO
+5. **Lección 1.5** - Comandos slash personalizados
+6. **Lección 1.6** - Agentes paralelos
+7. **Lección 1.7** - Sub-agentes especializados
+8. **Lección 1.8** - Memoria del proyecto (CLAUDE.md)
+9. **Lección 1.9** - Próximos pasos
 
 ### 🎯 Características
 
 - ✅ **100% en español** - Primer curso completo de Claude Code en español
-- ✅ **Aprendizaje interactivo** - Comandos `/leccion-1` a `/leccion-8` para práctica guiada
+- ✅ **Aprendizaje interactivo** - Comandos `/leccion-1` a `/leccion-9` para práctica guiada
 - ✅ **Documentación web** - Sitio completo con todas las lecciones
 - ✅ **Sistema de progreso** - Comando `/progreso` para seguir tu avance
 - ✅ **Guías prácticas** - Ejemplos y ejercicios incluidos
@@ -30,7 +31,7 @@ claude-code-espanol-materiales/
 ├── .claude/
 │   └── commands/         # 10 comandos interactivos
 │       ├── iniciar.md
-│       ├── leccion-1.md a leccion-8.md
+│       ├── leccion-1.md a leccion-9.md
 │       ├── progreso.md
 │       └── ayuda.md
 ├── materiales/
@@ -44,9 +45,9 @@ claude-code-espanol-materiales/
 
 ### 1. Descarga los materiales
 ```bash
-# Descarga claude-code-espanol-materiales-v1.0.1.zip
+# Descarga claude-code-espanol-materiales-v1.0.2.zip
 # Descomprime en tu carpeta de preferencia
-unzip claude-code-espanol-materiales-v1.0.1.zip -d mi-curso-claude
+unzip claude-code-espanol-materiales-v1.0.2.zip -d mi-curso-claude
 cd mi-curso-claude
 ```
 
