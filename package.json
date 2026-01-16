@@ -26,6 +26,7 @@
   "author": "Josu Sanz",
   "license": "CC-BY-NC-SA-4.0",
   "dependencies": {
+    "@vercel/analytics": "^1.6.1",
     "next": "^14",
     "nextra": "^3",
     "nextra-theme-docs": "^3",
