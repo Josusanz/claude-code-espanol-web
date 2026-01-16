@@ -376,21 +376,37 @@ nav a[href*="github.com"] {
   margin-left: 0.25rem;
 }
 
-/* ===== MÓVIL ===== */
+/* ===== FORZAR VISIBILIDAD EN MÓVIL ===== */
+
+/* Sobreescribir clases de Nextra que ocultan elementos en móvil */
+.max-md\:nx-hidden {
+  display: flex !important;
+}
+
+/* El contenedor padre del extraContent */
+nav > div:last-child {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+}
+
+/* Forzar visibilidad del botón Premium */
+.premium-btn {
+  display: inline-flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
 @media (max-width: 767px) {
   /* Ocultar texto "Premium" en móvil, solo mostrar emoji */
   .premium-text {
-    display: none;
+    display: none !important;
   }
 
   /* Botón Premium más compacto en móvil */
   .premium-btn {
     padding: 0.25rem 0.5rem !important;
     margin-right: 0.25rem !important;
-  }
-
-  /* Forzar que el contenedor de extras se muestre */
-  nav [class*="nav"] > div {
-    display: flex !important;
+    font-size: 1rem !important;
   }
 }
