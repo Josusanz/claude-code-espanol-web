@@ -107,8 +107,8 @@ const config: DocsThemeConfig = {
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content="Claude Code en Español" />
       <meta name="twitter:description" content="Curso gratuito de Claude Code en español para no programadores." />
-      <meta property="og:image" content="https://www.aprende.software/images/hero.png" />
-      <meta name="twitter:image" content="https://www.aprende.software/images/hero.png" />
+      <meta property="og:image" content="https://www.aprende.software/images/og-image.png" />
+      <meta name="twitter:image" content="https://www.aprende.software/images/og-image.png" />
       <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
       <link rel="alternate icon" href="/favicon.ico" />
       <link rel="canonical" href="https://www.aprende.software/" />

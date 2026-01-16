@@ -27,6 +27,7 @@
   "license": "CC-BY-NC-SA-4.0",
   "dependencies": {
     "@vercel/analytics": "^1.6.1",
+    "@vercel/og": "^0.8.6",
     "next": "^14",
     "nextra": "^3",
     "nextra-theme-docs": "^3",
