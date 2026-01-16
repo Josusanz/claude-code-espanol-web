@@ -168,11 +168,15 @@ export default function LandingPage() {
         <meta property="og:description" content="Curso gratuito de Claude Code en español. Aprende a usar la herramienta de IA más potente sin saber programar. 8 lecciones prácticas." />
         <meta property="og:site_name" content="aprende.software" />
         <meta property="og:locale" content="es_ES" />
+        <meta property="og:image" content="https://www.aprende.software/images/hero.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
 
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Aprende Claude Code en Español | Curso Gratis" />
         <meta name="twitter:description" content="Curso gratuito de Claude Code en español. Aprende IA sin saber programar." />
+        <meta name="twitter:image" content="https://www.aprende.software/images/hero.png" />
 
         {/* JSON-LD Structured Data */}
         <script
