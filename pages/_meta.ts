@@ -14,5 +14,8 @@ export default {
   recursos: {
     title: "📋 Recursos",
     type: "page"
+  },
+  privacidad: {
+    display: "hidden"
   }
 }
