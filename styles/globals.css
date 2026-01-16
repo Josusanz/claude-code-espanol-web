@@ -348,9 +348,49 @@ a[href*="github.com"] svg {
   color: #94a3b8 !important;
 }
 
-/* ===== NAVBAR MÓVIL ===== */
+/* ===== NAVBAR Y BOTÓN PREMIUM ===== */
+
+/* Botón Premium - estilos base */
+.premium-btn {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.5rem;
+  background: linear-gradient(to right, #f59e0b, #ea580c);
+  color: white !important;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-decoration: none !important;
+  white-space: nowrap;
+  margin-right: 0.5rem;
+}
+
+.premium-btn:hover {
+  background: linear-gradient(to right, #d97706, #dc2626);
+  text-decoration: none !important;
+}
 
 /* Dar espacio al icono de GitHub */
 nav a[href*="github.com"] {
-  margin-left: 0.5rem;
+  margin-left: 0.25rem;
+}
+
+/* ===== MÓVIL ===== */
+@media (max-width: 767px) {
+  /* Ocultar texto "Premium" en móvil, solo mostrar emoji */
+  .premium-text {
+    display: none;
+  }
+
+  /* Botón Premium más compacto en móvil */
+  .premium-btn {
+    padding: 0.25rem 0.5rem !important;
+    margin-right: 0.25rem !important;
+  }
+
+  /* Forzar que el contenedor de extras se muestre */
+  nav [class*="nav"] > div {
+    display: flex !important;
+  }
 }

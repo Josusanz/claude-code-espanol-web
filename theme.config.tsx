@@ -34,6 +34,19 @@ const config: DocsThemeConfig = {
       </span>
     </div>
   ),
+  navbar: {
+    extraContent: (
+      <>
+        <a
+          href="/premium"
+          className="premium-btn"
+        >
+          <span>✨</span>
+          <span className="premium-text">Premium</span>
+        </a>
+      </>
+    ),
+  },
   project: {
     link: 'https://github.com/Josusanz/claude-code-espanol-web',
   },
