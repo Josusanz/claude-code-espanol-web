@@ -2,6 +2,15 @@ import React from 'react'
 import { DocsThemeConfig } from 'nextra-theme-docs'
 
 const config: DocsThemeConfig = {
+  banner: {
+    key: 'premium-banner-2026',
+    content: (
+      <a href="/premium" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
+        ✨ <span className="banner-text-full">Accede al curso Premium con soporte personalizado</span><span className="banner-text-short">Curso Premium disponible</span> →
+      </a>
+    ),
+    dismissible: true,
+  },
   logo: (
     <div style={{
       display: 'flex',

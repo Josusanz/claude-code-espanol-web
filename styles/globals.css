@@ -378,3 +378,38 @@ nav a[href*="github.com"] {
     font-size: 0.875rem !important;
   }
 }
+
+/* ===== BANNER PREMIUM DE NEXTRA ===== */
+/* Estilo del banner en páginas internas */
+.nextra-banner {
+  background: linear-gradient(to right, #f59e0b, #ea580c) !important;
+}
+
+.nextra-banner a {
+  color: white !important;
+  text-decoration: none !important;
+  font-weight: 500;
+}
+
+.nextra-banner a:hover {
+  text-decoration: underline !important;
+}
+
+/* Texto responsivo del banner */
+.banner-text-full {
+  display: inline;
+}
+
+.banner-text-short {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .banner-text-full {
+    display: none;
+  }
+
+  .banner-text-short {
+    display: inline;
+  }
+}
