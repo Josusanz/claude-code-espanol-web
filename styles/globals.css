@@ -348,68 +348,9 @@ a[href*="github.com"] svg {
   color: #94a3b8 !important;
 }
 
-/* ===== NAVBAR MÓVIL FIX ===== */
+/* ===== NAVBAR MÓVIL ===== */
 
-/* Navbar en móvil - layout correcto */
-@media (max-width: 767px) {
-  /* Ocultar texto "en Español" del logo para dar espacio */
-  .logo-text-secondary {
-    display: none !important;
-  }
-
-  /* Dar espacio entre logo y los iconos de la derecha */
-  nav {
-    gap: 0.5rem !important;
-  }
-
-  /* Contenedor de iconos de la derecha */
-  nav > div:last-child {
-    display: flex !important;
-    align-items: center !important;
-    gap: 0.25rem !important;
-  }
-
-  /* Botón Premium más pequeño en móvil */
-  a[href="/premium"] {
-    padding: 0.25rem 0.5rem !important;
-    font-size: 0.7rem !important;
-    margin-right: 0.25rem !important;
-  }
-
-  /* Reducir tamaño de iconos en móvil */
-  nav svg {
-    width: 20px !important;
-    height: 20px !important;
-  }
-
-  /* Botón de menú hamburguesa */
-  nav button[aria-label="Menu"] {
-    display: flex !important;
-  }
-}
-
-/* Estilos para el botón Premium (todas las pantallas) */
-a[href="/premium"] {
-  display: inline-flex !important;
-  align-items: center;
-  gap: 0.25rem;
-  padding: 0.375rem 0.75rem;
-  border-radius: 0.5rem;
-  background: linear-gradient(to right, #f59e0b, #ea580c) !important;
-  color: white !important;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  text-decoration: none !important;
-  white-space: nowrap;
-  margin-right: 0.5rem;
-}
-
-a[href="/premium"]:hover {
-  background: linear-gradient(to right, #d97706, #dc2626) !important;
-  text-decoration: none !important;
-}
-
-/* Asegurar que el icono de GitHub tenga espacio */
+/* Dar espacio al icono de GitHub */
 nav a[href*="github.com"] {
-  margin-left: 0.25rem;
+  margin-left: 0.5rem;
 }

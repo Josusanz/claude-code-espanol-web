@@ -34,29 +34,6 @@ const config: DocsThemeConfig = {
       </span>
     </div>
   ),
-  navbar: {
-    extraContent: (
-      <a
-        href="/premium"
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '0.375rem',
-          padding: '0.375rem 0.75rem',
-          borderRadius: '0.5rem',
-          background: 'linear-gradient(to right, #f59e0b, #ea580c)',
-          color: 'white',
-          fontSize: '0.8125rem',
-          fontWeight: 600,
-          textDecoration: 'none',
-          marginRight: '0.5rem',
-        }}
-      >
-        <span style={{ fontSize: '1rem' }}>✨</span>
-        Premium
-      </a>
-    ),
-  },
   project: {
     link: 'https://github.com/Josusanz/claude-code-espanol-web',
   },
