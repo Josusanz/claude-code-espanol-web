@@ -1,149 +1,84 @@
 ---
-description: Lección 8 - Próximos pasos
+description: 🧠 Lección 8 - Memoria del proyecto (CLAUDE.md)
 ---
 
-# 🎓 Lección 8: Próximos pasos
+# Lección 8: CLAUDE.md - El cerebro de tu proyecto
 
-¡Felicidades! Has completado el Módulo 1: Fundamentos de Claude Code.
+## Contexto
 
-## 🎉 Lo que has logrado
+El alumno aprenderá a crear contexto persistente para que Claude recuerde información importante.
 
-Has aprendido a:
-- ✅ Explorar archivos y proyectos eficientemente
-- ✅ Crear y modificar contenido de cualquier tipo
-- ✅ Usar comandos slash para automatizar tareas
-- ✅ Trabajar con agentes paralelos
-- ✅ Delegar trabajo a sub-agentes especializados
-- ✅ Gestionar la memoria del proyecto con CLAUDE.md
+## Estructura de la lección
 
-**Eres oficialmente competente en Claude Code.** 🚀
+### 1. El problema que resuelve
 
----
+> "Cada vez que inicias una nueva sesión con Claude, empieza de cero. No recuerda lo que hicieron ayer.
+>
+> ¿Frustrante? Sí. ¿Tiene solución? ¡Sí!
+>
+> El archivo `CLAUDE.md` es como dejarle notas a Claude. Cada vez que abres el proyecto, las lee primero."
 
-## 💪 Desafío Final
+### 2. ¿Qué poner en CLAUDE.md?
 
-Antes de continuar, demuestra todo lo que aprendiste:
+- **Contexto del proyecto** - ¿De qué trata?
+- **Reglas importantes** - ¿Qué debe hacer siempre? ¿Qué evitar?
+- **Preferencias** - Tono, formato, idioma
+- **Información clave** - Nombres, términos, estructuras
 
-### Proyecto: Crea tu propio mini-curso
+### 3. Ejemplo del curso
 
-**Objetivo:** Crear un mini-curso sobre cualquier tema que te apasione.
+> "¿Recuerdas cómo sabía tu nombre y las lecciones que habías completado? Todo está en el CLAUDE.md de este curso."
 
-**Requisitos:**
-1. Crear una estructura de carpetas organizada
-2. Escribir al menos 3 lecciones en archivos markdown
-3. Crear 2 comandos slash personalizados
-4. Documentar el proyecto en un CLAUDE.md
-5. Usar agentes para investigar contenido
+Muestra el archivo:
+```
+cat CLAUDE.md
+```
 
-**Ejemplo de temas:**
-- Cómo hacer café perfecto
-- Introducción a la fotografía
-- Conceptos básicos de finanzas personales
-- Guía de jardinería urbana
-- Cualquier cosa que te interese
+### 4. Ejercicio: Tu propio CLAUDE.md
 
-### 📝 Instrucciones
+> "Vamos a crear el CLAUDE.md para un proyecto tuyo. ¿En qué estás trabajando o te gustaría trabajar?"
 
-1. **Crea la estructura:**
-   - Pide a Claude que cree una carpeta `mi-mini-curso/`
-   - Define la estructura de carpetas
+Opciones:
+- Un blog personal
+- Una pequeña empresa
+- Un proyecto creativo
+- Organización personal
 
-2. **Investiga el contenido:**
-   - Usa sub-agentes para investigar información
-   - Recopila recursos y referencias
+Crea un CLAUDE.md personalizado basado en lo que digan.
 
-3. **Escribe las lecciones:**
-   - Crea 3 archivos markdown con contenido
-   - Usa formato claro y ejemplos
+### 5. Secciones recomendadas
 
-4. **Crea comandos:**
-   - Comando para iniciar el curso
-   - Comando para ver progreso
+```markdown
+# Mi Proyecto
 
-5. **Documenta:**
-   - Crea un CLAUDE.md explicando el proyecto
-   - Incluye objetivos y audiencia
+## Sobre este proyecto
+[Descripción breve]
 
----
+## Mi rol / Contexto
+[Quién eres, qué haces]
 
-## 🎯 ¿Qué hacer después?
+## Preferencias de comunicación
+- Idioma: Español
+- Tono: [formal/informal]
+- Formato preferido: [listas/párrafos]
 
-### 1. Practica con proyectos reales
+## Reglas importantes
+- [Cosas que Claude debe hacer siempre]
+- [Cosas que Claude debe evitar]
 
-Aplica lo aprendido en tus propios proyectos:
-- Blog personal
-- Documentación de trabajo
-- Análisis de datos
-- Sitio web simple
+## Información clave
+- [Términos específicos]
+- [Nombres importantes]
+```
 
-### 2. Explora casos de uso avanzados
+### 6. Dónde colocar el archivo
 
-Claude Code es poderoso para:
-- **Investigación:** Analizar documentos y extraer insights
-- **Automatización:** Crear flujos de trabajo eficientes
-- **Creación de contenido:** Blogs, guías, documentación
-- **Desarrollo web:** Landing pages y apps simples
+> "El CLAUDE.md va en la raíz de tu carpeta de proyecto. Claude lo lee automáticamente cuando trabajas en esa carpeta."
 
-### 3. Únete a la comunidad
+### 7. Concepto clave
 
-- ⭐ Dale estrella al repo: https://github.com/Josusanz/claude-code-espanol-web
-- 💬 Comparte tus proyectos con #ClaudeCode
-- 🐛 Reporta bugs o sugiere mejoras
-- 🤝 Ayuda a otros compartiendo conocimiento
+> 💡 **Recuerda:** CLAUDE.md es tu forma de "programar" a Claude sin código. Cuanto mejor lo escribas, mejor te entenderá.
 
----
+### 8. Transición
 
-## 📚 Módulo 2: Proyectos Prácticos (Próximamente)
-
-El siguiente módulo incluirá:
-- 🌐 Crear una landing page profesional
-- ⚡ Automatizar tareas del día a día
-- 🔍 Construir un asistente de investigación
-- 📊 Crear dashboards de datos
-
-**Para recibir notificaciones:**
-1. Ve al repo en GitHub
-2. Haz clic en "Watch" → "Custom" → "Releases"
-
----
-
-## 💡 Consejos finales
-
-### Mejores prácticas:
-1. **Sé específico** en tus instrucciones
-2. **Usa CLAUDE.md** en proyectos complejos
-3. **Itera** - refina progresivamente
-4. **Aprovecha los agentes** para tareas grandes
-5. **Crea comandos** para tareas repetitivas
-
-### Recursos útiles:
-- 📖 Documentación oficial: https://docs.anthropic.com/claude/docs
-- 🎯 Guía rápida: `/ayuda`
-- 💬 Comunidad GitHub: https://github.com/Josusanz/claude-code-espanol-web/discussions
-
----
-
-## 🙏 ¡Gracias!
-
-Este curso es un proyecto de código abierto creado para la comunidad hispanohablante.
-
-Si te ha sido útil:
-- ⭐ Estrella en GitHub
-- 🔗 Compártelo
-- 💬 Déjanos feedback
-
-**¡Mucha suerte en tu viaje con Claude Code!**
-
----
-
-## 📋 Comandos útiles
-
-- `/ayuda` - Ver todos los comandos disponibles
-- `/progreso` - Revisar tu progreso en el curso
-- `/iniciar` - Volver al inicio
-
----
-
-**¿Listo para el desafío final?**
-
-Escribe: "Quiero crear mi mini-curso sobre [tu tema]"
+> "¡Excelente! Ya dominas la memoria del proyecto. En la última lección veremos los próximos pasos y un desafío final. Escribe `/leccion-9` para completar el módulo."

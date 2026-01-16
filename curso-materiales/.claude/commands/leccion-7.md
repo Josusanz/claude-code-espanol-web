@@ -1,110 +1,92 @@
 ---
-description: 🧠 Lección 7 - Memoria del proyecto (CLAUDE.md)
+description: 🎭 Lección 7 - Sub-agentes personalizados
 ---
 
-# Lección 7: CLAUDE.md - El cerebro de tu proyecto
+# Lección 7: Sub-agentes - Tu equipo de expertos virtuales
 
 ## Contexto
 
-Esta es la lección final del Módulo 1. El alumno aprenderá a crear contexto persistente.
+El alumno entiende agentes paralelos. Ahora creará especialistas con personalidad propia.
 
 ## Estructura de la lección
 
-### 1. El problema que resuelve
+### 1. La idea central
 
-> "Cada vez que inicias una nueva sesión con Claude, empieza de cero. No recuerda lo que hicieron ayer.
+> "¿Y si pudieras tener un equipo de expertos disponible 24/7?
 >
-> ¿Frustrante? Sí. ¿Tiene solución? ¡Sí!
+> - Un editor que revisa tu escritura
+> - Un abogado que analiza contratos
+> - Un coach que te da perspectiva
 >
-> El archivo `CLAUDE.md` es como dejarle notas a Claude. Cada vez que abres el proyecto, las lee primero."
+> Los **sub-agentes** son exactamente eso: versiones especializadas de Claude con instrucciones específicas."
 
-### 2. ¿Qué poner en CLAUDE.md?
+### 2. ¿En qué se diferencian de comandos slash?
 
-- **Contexto del proyecto** - ¿De qué trata?
-- **Reglas importantes** - ¿Qué debe hacer siempre? ¿Qué evitar?
-- **Preferencias** - Tono, formato, idioma
-- **Información clave** - Nombres, términos, estructuras
+> "Un comando slash es una receta que Claude sigue una vez.
+>
+> Un sub-agente es una **personalidad permanente** con su propia forma de pensar y responder."
 
-### 3. Ejemplo del curso
+### 3. Anatomía de un sub-agente
 
-> "¿Recuerdas cómo sabía tu nombre y las lecciones que habías completado? Todo está en el CLAUDE.md de este curso."
-
-Muestra el archivo:
 ```
-cat CLAUDE.md
+.claude/agents/
+├── editor/
+│   └── AGENT.md
+├── critico/
+│   └── AGENT.md
+└── mentor/
+    └── AGENT.md
 ```
 
-### 4. Ejercicio: Tu propio CLAUDE.md
-
-> "Vamos a crear el CLAUDE.md para un proyecto tuyo. ¿En qué estás trabajando o te gustaría trabajar?"
-
-Opciones:
-- Un blog personal
-- Una pequeña empresa
-- Un proyecto creativo
-- Organización personal
-
-Crea un CLAUDE.md personalizado basado en lo que digan.
-
-### 5. Secciones recomendadas
+### 4. Ejemplo: Crear un editor
 
 ```markdown
-# Mi Proyecto
+# Editor Literario
 
-## Sobre este proyecto
-[Descripción breve]
+Eres un editor profesional con 20 años de experiencia.
 
-## Mi rol / Contexto
-[Quién eres, qué haces]
+## Tu personalidad
+- Directo pero amable
+- Enfocado en claridad y fluidez
+- Nunca cambias el estilo del autor, lo mejoras
 
-## Preferencias de comunicación
-- Idioma: Español
-- Tono: [formal/informal]
-- Formato preferido: [listas/párrafos]
+## Cuando revises texto:
+1. Identifica problemas de claridad
+2. Señala repeticiones innecesarias
+3. Sugiere mejoras concretas
+4. Celebra lo que funciona bien
 
-## Reglas importantes
-- [Cosas que Claude debe hacer siempre]
-- [Cosas que Claude debe evitar]
-
-## Información clave
-- [Términos específicos]
-- [Nombres importantes]
+## Formato de respuesta
+- Usa viñetas para feedback específico
+- Incluye ejemplos de cómo mejorar cada punto
 ```
 
-### 6. Dónde colocar el archivo
+### 5. Ejercicio: Crear su sub-agente
 
-> "El CLAUDE.md va en la raíz de tu carpeta de proyecto. Claude lo lee automáticamente cuando trabajas en esa carpeta."
+> "Piensa en un experto que te sería útil tener siempre disponible. ¿Quién sería?"
 
-### 7. Concepto clave
+Ideas:
+- Coach de productividad
+- Crítico constructivo
+- Generador de ideas
+- Simplificador (explica todo como a un niño de 10 años)
 
-> 💡 **Recuerda:** CLAUDE.md es tu forma de "programar" a Claude sin código. Cuanto mejor lo escribas, mejor te entenderá.
+Crea el sub-agente que elijan.
 
-### 8. 🎉 ¡Felicidades!
+### 6. Probar el sub-agente
 
-> "Has completado el **Módulo 1: Fundamentos** del curso.
->
-> Ahora sabes:
-> - ✅ Qué es Claude Code y cómo funciona
-> - ✅ Navegar y explorar archivos
-> - ✅ Crear y modificar contenido
-> - ✅ Usar y crear comandos slash
-> - ✅ Trabajar con agentes paralelos
-> - ✅ Crear sub-agentes especializados
-> - ✅ Configurar memoria de proyecto
->
-> Estás listo para el **Módulo 2: Proyectos Prácticos** (próximamente)."
+Escribe un texto breve y pásalo por el sub-agente creado.
 
-### 9. ¿Qué sigue?
+> "Mira cómo cambia la respuesta dependiendo del 'experto' que consultas."
 
-> "Mientras tanto, el mejor siguiente paso es:
-> 1. Crear un CLAUDE.md para tu proyecto más importante
-> 2. Practicar creando comandos slash para tus tareas frecuentes
-> 3. Experimentar y romper cosas (así se aprende)
->
-> ¿Tienes alguna pregunta antes de terminar?"
+### 7. Caso práctico: Múltiples perspectivas
 
-### 10. Despedida
+> "Lo potente es combinar sub-agentes. Puedes pedir que el mismo texto sea revisado por tu editor, luego por tu crítico, luego por tu simplificador."
 
-> "Ha sido un placer ser tu tutor. Recuerda: la herramienta es poderosa, pero el poder real está en tus ideas.
->
-> ¡A crear! 🚀"
+### 8. Concepto clave
+
+> 💡 **Recuerda:** Los sub-agentes son persistentes. Una vez creados, están ahí cuando los necesites. Son tu equipo personal.
+
+### 9. Transición
+
+> "Ya tienes tu equipo de expertos. En la siguiente lección aprenderemos sobre la memoria del proyecto. Escribe `/leccion-8` para continuar."

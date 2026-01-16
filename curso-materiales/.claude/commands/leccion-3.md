@@ -59,4 +59,4 @@ Pídeles que hagan un cambio al archivo que acaban de crear.
 
 ### 8. Transición
 
-> "Ya puedes crear contenido real. En la siguiente lección aprenderás los comandos slash que aceleran todo. Escribe `/leccion-4` para continuar."
+> "Ya puedes crear contenido real. Pero... ¿cómo ves lo que has creado? En la siguiente lección aprenderás a visualizar tus creaciones. Escribe `/leccion-4` para continuar."

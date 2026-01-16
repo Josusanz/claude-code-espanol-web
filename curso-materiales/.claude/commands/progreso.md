@@ -18,11 +18,12 @@ Muestra el estado actual del alumno de forma visual y motivadora.
 [✅] Lección 1 - Qué es Claude Code
 [✅] Lección 2 - Navegación y archivos
 [⬜] Lección 3 - Crear y modificar
-[⬜] Lección 4 - Comandos slash
-[⬜] Lección 5 - Agentes paralelos
-[⬜] Lección 6 - Sub-agentes
-[⬜] Lección 7 - Memoria (CLAUDE.md)
-[⬜] Lección 8 - Próximos pasos
+[⬜] Lección 4 - Visualizar creaciones
+[⬜] Lección 5 - Comandos slash
+[⬜] Lección 6 - Agentes paralelos
+[⬜] Lección 7 - Sub-agentes
+[⬜] Lección 8 - Memoria (CLAUDE.md)
+[⬜] Lección 9 - Próximos pasos
 
 Progreso: █████░░░░░░░░░░ 25%
 ```

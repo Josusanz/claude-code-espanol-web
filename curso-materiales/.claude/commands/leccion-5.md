@@ -1,66 +1,86 @@
 ---
-description: 🤖 Lección 5 - Agentes paralelos
+description: ⚡ Lección 5 - Comandos slash y atajos
 ---
 
-# Lección 5: Agentes paralelos - Multiplica tu productividad
+# Lección 5: Comandos slash - Tus superpoderes
 
 ## Contexto
 
-El alumno domina lo básico. Ahora descubrirá cómo hacer varias tareas a la vez.
+El alumno ya crea archivos y sabe visualizarlos. Ahora descubrirá cómo automatizar tareas repetitivas.
 
 ## Estructura de la lección
 
-### 1. El concepto
+### 1. ¿Qué son los comandos slash?
 
-> "Imagina que pudieras clonar a Claude. Un Claude trabaja en tu documento, otro busca información, otro revisa errores... todos al mismo tiempo.
+> "¿Te has dado cuenta de que este curso usa comandos como `/leccion-1`?
 >
-> Eso son los **agentes paralelos**."
+> Son **atajos personalizados**. En lugar de escribir instrucciones largas cada vez, creas un comando que las ejecuta por ti.
+>
+> Es como programar tu propio botón mágico."
 
-### 2. ¿Cuándo usarlos?
+### 2. Anatomía de un comando
 
-Ejemplos prácticos:
-- Procesar múltiples archivos a la vez
-- Investigar varios temas simultáneamente  
-- Generar diferentes versiones de un contenido
-- Dividir una tarea grande en subtareas
-
-### 3. Demostración conceptual
-
-> "Digamos que tienes 5 documentos y quieres un resumen de cada uno. Sin agentes, tendrías que hacerlo uno por uno. Con agentes paralelos, los 5 se procesan a la vez."
-
-### 4. Ejercicio práctico
-
-Primero, crea varios archivos:
-```bash
-echo "El marketing digital revoluciona cómo las empresas llegan a sus clientes." > materiales/ejercicios/doc1.txt
-echo "La inteligencia artificial está transformando la medicina moderna." > materiales/ejercicios/doc2.txt
-echo "El trabajo remoto ha cambiado la cultura empresarial para siempre." > materiales/ejercicios/doc3.txt
+Muestra la estructura:
+```
+.claude/commands/
+├── mi-comando.md     → se ejecuta con /mi-comando
+├── otro-comando.md   → se ejecuta con /otro-comando
+└── revisar.md        → se ejecuta con /revisar
 ```
 
-Luego pide al alumno:
-> "Dime: 'Quiero un resumen de una línea para cada documento en la carpeta ejercicios'"
+> "El nombre del archivo = el nombre del comando. Así de simple."
 
-Procesa los tres archivos y muestra los resultados.
+### 3. Demostración
 
-### 5. El poder real
+Muéstrales uno de los comandos del curso:
+```
+cat .claude/commands/iniciar.md
+```
 
-> "Esto escala. ¿Tienes 50 archivos? 100? Claude puede manejarlos. El límite es tu imaginación (y algo de paciencia)."
+Explica cada parte:
+- El frontmatter (---) con la descripción
+- Las instrucciones para Claude
 
-### 6. Casos de uso reales
+### 4. Ejercicio: Crear su primer comando
 
-Comparte ejemplos:
-- "Tengo 20 currículums y necesito identificar los 5 mejores candidatos"
-- "Tengo fotos de una carpeta y quiero renombrarlas por fecha"
-- "Tengo varios capítulos de un libro y quiero un índice"
+> "Vamos a crear tu primer comando personalizado. ¿Qué tarea repetitiva te gustaría automatizar?"
+
+Sugerencias si no se les ocurre nada:
+- `/resumen` - Resumir cualquier texto
+- `/ideas` - Generar ideas sobre un tema
+- `/corregir` - Corregir gramática y ortografía
+
+Crea el comando que elijan en `.claude/commands/`
+
+### 5. Probar el comando
+
+> "Ahora escribe `/` y el nombre de tu comando para probarlo."
+
+Ayúdales a usarlo y ajustarlo si hace falta.
+
+### 6. Comandos con argumentos
+
+> "Los comandos pueden recibir información extra con `$ARGUMENTS`."
+
+Ejemplo:
+```markdown
+---
+description: Traduce texto al inglés
+---
+
+Traduce el siguiente texto al inglés:
+
+$ARGUMENTS
+```
 
 ### 7. Concepto clave
 
-> 💡 **Recuerda:** No tienes que gestionar los agentes manualmente. Solo describe la tarea y Claude decidirá si tiene sentido paralelizar.
+> 💡 **Recuerda:** Los comandos slash son tu forma de enseñarle a Claude nuevos trucos. Una vez creados, los puedes usar para siempre.
 
-### 8. Limitación importante
+### 8. Mini-reto
 
-> ⚠️ "Los agentes paralelos no comparten contexto entre sí. Cada uno trabaja de forma independiente. Si necesitas que colaboren, usa sub-agentes (siguiente lección)."
+> "¿Puedes crear un comando `/motivame` que te dé una frase motivacional personalizada?"
 
 ### 9. Transición
 
-> "Ya sabes multiplicar a Claude. Pero ¿y si quisieras que diferentes Claudes tuvieran diferentes personalidades? Eso lo veremos en `/leccion-6`."
+> "Ya tienes tus propios comandos. En la siguiente lección veremos algo muy potente: agentes paralelos. Escribe `/leccion-6` para descubrirlo."

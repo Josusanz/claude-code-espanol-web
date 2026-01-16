@@ -14,10 +14,12 @@ Muestra al alumno los comandos disponibles de forma amigable:
 | `/leccion-1` | 📚 Qué es Claude Code |
 | `/leccion-2` | 📂 Navegación y archivos |
 | `/leccion-3` | ✏️ Crear y modificar |
-| `/leccion-4` | ⚡ Comandos slash |
-| `/leccion-5` | 🤖 Agentes paralelos |
-| `/leccion-6` | 🎭 Sub-agentes |
-| `/leccion-7` | 🧠 Memoria (CLAUDE.md) |
+| `/leccion-4` | 👀 Visualizar creaciones |
+| `/leccion-5` | ⚡ Comandos slash |
+| `/leccion-6` | 🤖 Agentes paralelos |
+| `/leccion-7` | 🎭 Sub-agentes |
+| `/leccion-8` | 🧠 Memoria (CLAUDE.md) |
+| `/leccion-9` | 🎓 Próximos pasos |
 
 ## Comandos útiles
 

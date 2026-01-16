@@ -26,11 +26,13 @@ El curso usa comandos slash (`/iniciar`, `/leccion-1`, etc.) que activan leccion
 ### Módulo 1: Fundamentos
 - `/leccion-1` - Qué es Claude Code y primeros pasos
 - `/leccion-2` - Navegación y exploración de archivos
-- `/leccion-3` - Trabajar con archivos (@)
-- `/leccion-4` - Comandos slash y atajos
-- `/leccion-5` - Agentes paralelos
-- `/leccion-6` - Sub-agentes personalizados
-- `/leccion-7` - Memoria del proyecto (CLAUDE.md)
+- `/leccion-3` - Crear y modificar archivos
+- `/leccion-4` - Visualizar tus creaciones
+- `/leccion-5` - Comandos slash y atajos
+- `/leccion-6` - Agentes paralelos
+- `/leccion-7` - Sub-agentes personalizados
+- `/leccion-8` - Memoria del proyecto (CLAUDE.md)
+- `/leccion-9` - Próximos pasos
 
 ### Módulo 2: Proyectos Prácticos (próximamente)
 - Crear una landing page

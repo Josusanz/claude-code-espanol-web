@@ -1,86 +1,89 @@
 ---
-description: ⚡ Lección 4 - Comandos slash y atajos
+description: 👀 Lección 4 - Visualizar tus creaciones
 ---
 
-# Lección 4: Comandos slash - Tus superpoderes
+# Lección 4: Visualizar tus creaciones
 
 ## Contexto
 
-El alumno ya crea archivos. Ahora descubrirá cómo automatizar tareas repetitivas.
+El alumno ya sabe crear archivos. Ahora aprenderá a ver en acción lo que ha creado.
 
 ## Estructura de la lección
 
-### 1. ¿Qué son los comandos slash?
+### 1. La pregunta clave
 
-> "¿Te has dado cuenta de que este curso usa comandos como `/leccion-1`? 
+> "Has creado archivos con Claude Code. Pero... ¿cómo los ves?
 >
-> Son **atajos personalizados**. En lugar de escribir instrucciones largas cada vez, creas un comando que las ejecuta por ti.
+> Los archivos existen en tu ordenador. Ahora aprenderás a visualizarlos según su tipo."
+
+### 2. Archivos HTML simples
+
+> "Si has creado una página web (archivo .html), la forma más fácil de verla es abrirla directamente en tu navegador."
+
+Explica según el sistema operativo:
+- **Mac:** `open mi-pagina.html`
+- **Windows:** `start mi-pagina.html`
+- **Linux:** `xdg-open mi-pagina.html`
+
+### 3. Ejercicio: Crear y visualizar
+
+Pide al alumno:
+> "Vamos a probarlo. Dime: 'Crea un archivo hola.html con un título grande que diga Hola Mundo'"
+
+Crea el archivo y luego ábrelo con el comando apropiado.
+
+### 4. Servidor local (recomendado)
+
+> "Para proyectos más complejos con múltiples archivos, imágenes o estilos, es mejor usar un servidor local."
+
+Muestra el comando:
+```bash
+npx serve .
+```
+
+Explica:
+> "Esto levanta un servidor en `http://localhost:3000`. No necesitas instalar nada, `npx` lo descarga automáticamente."
+
+### 5. Proyectos con frameworks
+
+> "Si Claude crea un proyecto con React, Next.js, Vue o similar, necesitarás:"
+
+```bash
+# 1. Instalar dependencias
+npm install
+
+# 2. Iniciar el servidor de desarrollo
+npm run dev
+
+# 3. Abrir en navegador (generalmente localhost:3000 o localhost:5173)
+```
+
+### 6. El atajo mágico
+
+> "Lo más fácil: **pídelo directamente**. Prueba decir:"
+> - 'Abre la página que acabamos de crear'
+> - 'Levanta un servidor local para ver el proyecto'
+> - 'Ejecuta npm run dev'
 >
-> Es como programar tu propio botón mágico."
+> Claude puede ejecutar estos comandos por ti."
 
-### 2. Anatomía de un comando
+### 7. Tipos de archivos y cómo verlos
 
-Muestra la estructura:
-```
-.claude/commands/
-├── mi-comando.md     → se ejecuta con /mi-comando
-├── otro-comando.md   → se ejecuta con /otro-comando
-└── revisar.md        → se ejecuta con /revisar
-```
+Muestra esta tabla:
 
-> "El nombre del archivo = el nombre del comando. Así de simple."
+| Tipo | Cómo visualizar |
+|------|-----------------|
+| `.html` | Abrir en navegador o `npx serve` |
+| `.md` | VS Code o cualquier editor |
+| `.json` | VS Code o cualquier editor |
+| `.py` | `python archivo.py` |
+| `.js` | `node archivo.js` |
+| Proyectos React/Next | `npm run dev` |
 
-### 3. Demostración
+### 8. Concepto clave
 
-Muéstrales uno de los comandos del curso:
-```
-cat .claude/commands/iniciar.md
-```
-
-Explica cada parte:
-- El frontmatter (---) con la descripción
-- Las instrucciones para Claude
-
-### 4. Ejercicio: Crear su primer comando
-
-> "Vamos a crear tu primer comando personalizado. ¿Qué tarea repetitiva te gustaría automatizar?"
-
-Sugerencias si no se les ocurre nada:
-- `/resumen` - Resumir cualquier texto
-- `/ideas` - Generar ideas sobre un tema
-- `/corregir` - Corregir gramática y ortografía
-
-Crea el comando que elijan en `.claude/commands/`
-
-### 5. Probar el comando
-
-> "Ahora escribe `/` y el nombre de tu comando para probarlo."
-
-Ayúdales a usarlo y ajustarlo si hace falta.
-
-### 6. Comandos con argumentos
-
-> "Los comandos pueden recibir información extra con `$ARGUMENTS`."
-
-Ejemplo:
-```markdown
----
-description: Traduce texto al inglés
----
-
-Traduce el siguiente texto al inglés:
-
-$ARGUMENTS
-```
-
-### 7. Concepto clave
-
-> 💡 **Recuerda:** Los comandos slash son tu forma de enseñarle a Claude nuevos trucos. Una vez creados, los puedes usar para siempre.
-
-### 8. Mini-reto
-
-> "¿Puedes crear un comando `/motivame` que te dé una frase motivacional personalizada?"
+> 💡 **Recuerda:** Claude crea archivos reales. Para verlos, usa las herramientas adecuadas según el tipo de archivo. Y si no sabes cómo, ¡pregunta!
 
 ### 9. Transición
 
-> "Ya tienes tus propios comandos. En la siguiente lección veremos algo muy potente: agentes paralelos. Escribe `/leccion-5` para descubrirlo."
+> "Ya sabes crear archivos Y verlos en acción. En la siguiente lección aprenderás los comandos slash que aceleran todo. Escribe `/leccion-5` para continuar."

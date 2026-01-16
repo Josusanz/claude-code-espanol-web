@@ -1,92 +1,66 @@
 ---
-description: 🎭 Lección 6 - Sub-agentes personalizados
+description: 🤖 Lección 6 - Agentes paralelos
 ---
 
-# Lección 6: Sub-agentes - Tu equipo de expertos virtuales
+# Lección 6: Agentes paralelos - Multiplica tu productividad
 
 ## Contexto
 
-El alumno entiende agentes paralelos. Ahora creará especialistas con personalidad propia.
+El alumno domina lo básico. Ahora descubrirá cómo hacer varias tareas a la vez.
 
 ## Estructura de la lección
 
-### 1. La idea central
+### 1. El concepto
 
-> "¿Y si pudieras tener un equipo de expertos disponible 24/7?
+> "Imagina que pudieras clonar a Claude. Un Claude trabaja en tu documento, otro busca información, otro revisa errores... todos al mismo tiempo.
 >
-> - Un editor que revisa tu escritura
-> - Un abogado que analiza contratos
-> - Un coach que te da perspectiva
->
-> Los **sub-agentes** son exactamente eso: versiones especializadas de Claude con instrucciones específicas."
+> Eso son los **agentes paralelos**."
 
-### 2. ¿En qué se diferencian de comandos slash?
+### 2. ¿Cuándo usarlos?
 
-> "Un comando slash es una receta que Claude sigue una vez.
->
-> Un sub-agente es una **personalidad permanente** con su propia forma de pensar y responder."
+Ejemplos prácticos:
+- Procesar múltiples archivos a la vez
+- Investigar varios temas simultáneamente
+- Generar diferentes versiones de un contenido
+- Dividir una tarea grande en subtareas
 
-### 3. Anatomía de un sub-agente
+### 3. Demostración conceptual
 
-```
-.claude/agents/
-├── editor/
-│   └── AGENT.md
-├── critico/
-│   └── AGENT.md
-└── mentor/
-    └── AGENT.md
-```
+> "Digamos que tienes 5 documentos y quieres un resumen de cada uno. Sin agentes, tendrías que hacerlo uno por uno. Con agentes paralelos, los 5 se procesan a la vez."
 
-### 4. Ejemplo: Crear un editor
+### 4. Ejercicio práctico
 
-```markdown
-# Editor Literario
-
-Eres un editor profesional con 20 años de experiencia.
-
-## Tu personalidad
-- Directo pero amable
-- Enfocado en claridad y fluidez
-- Nunca cambias el estilo del autor, lo mejoras
-
-## Cuando revises texto:
-1. Identifica problemas de claridad
-2. Señala repeticiones innecesarias
-3. Sugiere mejoras concretas
-4. Celebra lo que funciona bien
-
-## Formato de respuesta
-- Usa viñetas para feedback específico
-- Incluye ejemplos de cómo mejorar cada punto
+Primero, crea varios archivos:
+```bash
+echo "El marketing digital revoluciona cómo las empresas llegan a sus clientes." > materiales/ejercicios/doc1.txt
+echo "La inteligencia artificial está transformando la medicina moderna." > materiales/ejercicios/doc2.txt
+echo "El trabajo remoto ha cambiado la cultura empresarial para siempre." > materiales/ejercicios/doc3.txt
 ```
 
-### 5. Ejercicio: Crear su sub-agente
+Luego pide al alumno:
+> "Dime: 'Quiero un resumen de una línea para cada documento en la carpeta ejercicios'"
 
-> "Piensa en un experto que te sería útil tener siempre disponible. ¿Quién sería?"
+Procesa los tres archivos y muestra los resultados.
 
-Ideas:
-- Coach de productividad
-- Crítico constructivo
-- Generador de ideas
-- Simplificador (explica todo como a un niño de 10 años)
+### 5. El poder real
 
-Crea el sub-agente que elijan.
+> "Esto escala. ¿Tienes 50 archivos? 100? Claude puede manejarlos. El límite es tu imaginación (y algo de paciencia)."
 
-### 6. Probar el sub-agente
+### 6. Casos de uso reales
 
-Escribe un texto breve y pásalo por el sub-agente creado.
+Comparte ejemplos:
+- "Tengo 20 currículums y necesito identificar los 5 mejores candidatos"
+- "Tengo fotos de una carpeta y quiero renombrarlas por fecha"
+- "Tengo varios capítulos de un libro y quiero un índice"
 
-> "Mira cómo cambia la respuesta dependiendo del 'experto' que consultas."
+### 7. Concepto clave
 
-### 7. Caso práctico: Múltiples perspectivas
+> 💡 **Recuerda:** No tienes que gestionar los agentes manualmente. Solo describe la tarea y Claude decidirá si tiene sentido paralelizar.
 
-> "Lo potente es combinar sub-agentes. Puedes pedir que el mismo texto sea revisado por tu editor, luego por tu crítico, luego por tu simplificador."
+### 8. Limitación importante
 
-### 8. Concepto clave
-
-> 💡 **Recuerda:** Los sub-agentes son persistentes. Una vez creados, están ahí cuando los necesites. Son tu equipo personal.
+> ⚠️ "Los agentes paralelos no comparten contexto entre sí. Cada uno trabaja de forma independiente. Si necesitas que colaboren, usa sub-agentes (siguiente lección)."
 
 ### 9. Transición
 
-> "Ya tienes tu equipo de expertos. En la última lección de este módulo aprenderemos sobre la memoria del proyecto. Escribe `/leccion-7` para completar el módulo."
+> "Ya sabes multiplicar a Claude. Pero ¿y si quisieras que diferentes Claudes tuvieran diferentes personalidades? Eso lo veremos en `/leccion-7`."
