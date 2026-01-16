@@ -347,3 +347,47 @@ a[href*="github.com"] svg {
 .dark .logo-text-secondary {
   color: #94a3b8 !important;
 }
+
+/* Mostrar botón Premium en móvil */
+nav .nx-flex.nx-gap-2 > a[href="/premium"] {
+  display: flex !important;
+}
+
+/* Asegurar que extraContent se muestre en móvil */
+@media (max-width: 767px) {
+  /* Mostrar el contenido extra del navbar */
+  nav > div:last-child {
+    display: flex !important;
+  }
+
+  /* Reducir tamaño del botón Premium en móvil */
+  nav a[href="/premium"] {
+    padding: 0.25rem 0.5rem !important;
+    font-size: 0.75rem !important;
+  }
+
+  /* Ocultar texto "en Español" en móvil para dar espacio */
+  .logo-text-secondary {
+    display: none;
+  }
+}
+
+/* Estilos para el botón Premium */
+nav a[href="/premium"] {
+  display: flex !important;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.5rem;
+  background: linear-gradient(to right, #f59e0b, #ea580c);
+  color: white !important;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-decoration: none !important;
+  white-space: nowrap;
+}
+
+nav a[href="/premium"]:hover {
+  background: linear-gradient(to right, #d97706, #dc2626);
+  text-decoration: none !important;
+}
