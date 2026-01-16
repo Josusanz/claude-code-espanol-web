@@ -348,27 +348,17 @@ a[href*="github.com"] svg {
   color: #94a3b8 !important;
 }
 
-/* ===== NAVBAR Y BOTÓN PREMIUM ===== */
+/* ===== NAVBAR Y BOTÓN PREMIUM (dentro del logo) ===== */
 
-/* Botón Premium - estilos base */
-.premium-btn {
-  display: inline-flex !important;
-  align-items: center;
-  gap: 0.375rem;
-  padding: 0.375rem 0.75rem;
-  border-radius: 0.5rem;
-  background: linear-gradient(to right, #f59e0b, #ea580c);
-  color: white !important;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  text-decoration: none !important;
-  white-space: nowrap;
-  margin-right: 0.5rem;
+/* Botón Premium dentro del logo */
+.premium-btn-nav {
+  transition: all 200ms ease;
 }
 
-.premium-btn:hover {
-  background: linear-gradient(to right, #d97706, #dc2626);
+.premium-btn-nav:hover {
+  background: linear-gradient(to right, #d97706, #dc2626) !important;
   text-decoration: none !important;
+  transform: scale(1.05);
 }
 
 /* Dar espacio al icono de GitHub */
@@ -376,37 +366,15 @@ nav a[href*="github.com"] {
   margin-left: 0.25rem;
 }
 
-/* ===== FORZAR VISIBILIDAD EN MÓVIL ===== */
-
-/* Sobreescribir clases de Nextra que ocultan elementos en móvil */
-.max-md\:nx-hidden {
-  display: flex !important;
-}
-
-/* El contenedor padre del extraContent */
-nav > div:last-child {
-  display: flex !important;
-  align-items: center !important;
-  gap: 0.5rem !important;
-}
-
-/* Forzar visibilidad del botón Premium */
-.premium-btn {
-  display: inline-flex !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-}
-
 @media (max-width: 767px) {
   /* Ocultar texto "Premium" en móvil, solo mostrar emoji */
-  .premium-text {
+  .premium-text-nav {
     display: none !important;
   }
 
   /* Botón Premium más compacto en móvil */
-  .premium-btn {
+  .premium-btn-nav {
     padding: 0.25rem 0.5rem !important;
-    margin-right: 0.25rem !important;
-    font-size: 1rem !important;
+    font-size: 0.875rem !important;
   }
 }

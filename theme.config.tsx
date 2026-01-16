@@ -6,7 +6,8 @@ const config: DocsThemeConfig = {
     <div style={{
       display: 'flex',
       alignItems: 'center',
-      gap: '0.5rem'
+      gap: '0.5rem',
+      width: '100%'
     }}>
       <div className="logo-icon-container" style={{
         background: '#111827',
@@ -16,7 +17,8 @@ const config: DocsThemeConfig = {
         alignItems: 'center',
         justifyContent: 'center',
         width: '28px',
-        height: '28px'
+        height: '28px',
+        flexShrink: 0
       }}>
         <svg width="20" height="20" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect x="2" y="6" width="28" height="20" rx="2" className="logo-stroke" stroke="white" strokeWidth="2.5" fill="none"/>
@@ -32,21 +34,31 @@ const config: DocsThemeConfig = {
       }}>
         Claude Code <span className="logo-text-secondary" style={{ color: '#64748b', fontWeight: 400 }}>en Español</span>
       </span>
+      <a
+        href="/premium"
+        className="premium-btn-nav"
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          marginLeft: 'auto',
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: '0.25rem',
+          padding: '0.25rem 0.625rem',
+          borderRadius: '0.375rem',
+          background: 'linear-gradient(to right, #f59e0b, #ea580c)',
+          color: 'white',
+          fontSize: '0.75rem',
+          fontWeight: 600,
+          textDecoration: 'none',
+          whiteSpace: 'nowrap',
+          flexShrink: 0
+        }}
+      >
+        <span>✨</span>
+        <span className="premium-text-nav">Premium</span>
+      </a>
     </div>
   ),
-  navbar: {
-    extraContent: (
-      <>
-        <a
-          href="/premium"
-          className="premium-btn"
-        >
-          <span>✨</span>
-          <span className="premium-text">Premium</span>
-        </a>
-      </>
-    ),
-  },
   project: {
     link: 'https://github.com/Josusanz/claude-code-espanol-web',
   },
