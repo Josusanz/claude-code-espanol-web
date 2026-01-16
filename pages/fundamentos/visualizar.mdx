@@ -1,0 +1,155 @@
+---
+title: 1.4 Visualizar tus creaciones
+---
+
+import { Callout, Steps, Tabs } from 'nextra/components'
+
+# Lección 1.4: Visualizar tus creaciones
+
+Has creado archivos con Claude Code. Ahora aprende a **verlos en acción**.
+
+<Callout emoji="🎯">
+  Claude Code crea archivos reales en tu ordenador. Para verlos, necesitas abrirlos con las herramientas adecuadas.
+</Callout>
+
+## Archivos HTML simples
+
+La forma más fácil de ver una página web que has creado:
+
+<Tabs items={['Mac', 'Windows', 'Linux']}>
+  <Tabs.Tab>
+```bash
+open mi-pagina.html
+```
+  </Tabs.Tab>
+  <Tabs.Tab>
+```bash
+start mi-pagina.html
+```
+  </Tabs.Tab>
+  <Tabs.Tab>
+```bash
+xdg-open mi-pagina.html
+```
+  </Tabs.Tab>
+</Tabs>
+
+Esto abrirá el archivo directamente en tu navegador.
+
+## Servidor local (recomendado)
+
+Para proyectos más complejos, usa un servidor local:
+
+```bash
+npx serve .
+```
+
+Esto:
+1. Levanta un servidor en `http://localhost:3000`
+2. Sirve todos los archivos de la carpeta actual
+3. Actualiza automáticamente cuando guardas cambios
+
+<Callout type="info" emoji="💡">
+  No necesitas instalar nada. `npx` descarga y ejecuta el paquete automáticamente.
+</Callout>
+
+## Proyectos con frameworks
+
+Si Claude Code crea un proyecto con React, Next.js, Vue, etc:
+
+<Steps>
+### Instala dependencias
+
+```bash
+npm install
+```
+
+### Inicia el servidor de desarrollo
+
+```bash
+npm run dev
+```
+
+### Abre en el navegador
+
+Generalmente en `http://localhost:3000` o `http://localhost:5173`
+</Steps>
+
+## VS Code + Live Server
+
+Para desarrollo más cómodo:
+
+1. Abre la carpeta en VS Code
+2. Instala la extensión **Live Server**
+3. Clic derecho en el HTML → "Open with Live Server"
+
+Ventaja: Se actualiza automáticamente cada vez que guardas.
+
+## Pide a Claude que lo abra
+
+Lo más fácil: **pídelo directamente**:
+
+```
+Abre la página que acabamos de crear en el navegador
+```
+
+```
+Levanta un servidor local para ver el proyecto
+```
+
+```
+Ejecuta npm run dev para ver la aplicación
+```
+
+Claude Code puede ejecutar estos comandos por ti.
+
+## Ejercicio práctico
+
+<Steps>
+### Crea una página web simple
+
+```
+Crea un archivo "hola.html" con un título grande que diga "¡Hola Mundo!"
+y un párrafo que diga "Esta es mi primera página con Claude Code"
+```
+
+### Ábrela en el navegador
+
+```
+Abre hola.html en el navegador
+```
+
+### Modifícala y recarga
+
+```
+Añade un botón azul que diga "Haz clic aquí"
+```
+
+Recarga el navegador para ver los cambios.
+</Steps>
+
+## Tipos de archivos y cómo verlos
+
+| Tipo de archivo | Cómo visualizar |
+|-----------------|-----------------|
+| `.html` | Abrir en navegador o `npx serve` |
+| `.md` (Markdown) | VS Code, o `npx marked archivo.md` |
+| `.json` | VS Code o cualquier editor |
+| `.py` (Python) | `python archivo.py` |
+| `.js` (Node.js) | `node archivo.js` |
+| Proyectos React/Next | `npm run dev` |
+
+---
+
+## Lo que aprendiste
+
+- ✅ Abrir archivos HTML en el navegador
+- ✅ Usar `npx serve` para servidor local
+- ✅ Ejecutar proyectos con frameworks
+- ✅ Pedir a Claude que abra tus creaciones
+
+<div className="mt-8 text-center">
+  <a href="/fundamentos/comandos" className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+    Siguiente: Comandos slash →
+  </a>
+</div>
