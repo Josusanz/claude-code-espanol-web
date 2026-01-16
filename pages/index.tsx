@@ -281,9 +281,6 @@ export default function LandingPage() {
                 <Link href="/recursos" className="flex items-center gap-1.5 text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors text-sm font-medium">
                   📋 Recursos
                 </Link>
-                <Link href="/premium" className="flex items-center gap-1.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white px-4 py-1.5 rounded-full text-sm font-semibold hover:from-amber-600 hover:to-orange-600 transition-all shadow-sm">
-                  Premium
-                </Link>
               </div>
 
               <div className="flex items-center gap-3">
