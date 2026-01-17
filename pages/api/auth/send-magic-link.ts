@@ -36,8 +36,11 @@ export default async function handler(
     const magicLink = `${baseUrl}/api/auth/verify?token=${token}`
 
     // Enviar email con Resend
+    // Usar dominio verificado en Resend, o onboarding@resend.dev para pruebas
+    const fromEmail = process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev'
+
     await resend.emails.send({
-      from: 'Claude Code en Español <curso@aprende.software>',
+      from: `Claude Code en Español <${fromEmail}>`,
       to: email,
       subject: '🚀 Tu acceso al curso de Claude Code',
       html: `
