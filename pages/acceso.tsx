@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, ReactElement } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import type { NextPageWithLayout } from './_app'
 
-export default function Acceso() {
+const Acceso: NextPageWithLayout = () => {
   const router = useRouter()
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
@@ -187,3 +188,7 @@ export default function Acceso() {
     </>
   )
 }
+
+Acceso.getLayout = (page: ReactElement) => page
+
+export default Acceso

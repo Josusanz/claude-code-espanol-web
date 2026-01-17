@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, ReactElement } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import type { NextPageWithLayout } from '../_app'
 
 interface UserData {
   email: string
@@ -86,7 +87,7 @@ const lessons = [
   }
 ]
 
-export default function CursoDashboard() {
+const CursoDashboard: NextPageWithLayout = () => {
   const router = useRouter()
   const [user, setUser] = useState<UserData | null>(null)
   const [loading, setLoading] = useState(true)
@@ -325,3 +326,7 @@ export default function CursoDashboard() {
     </>
   )
 }
+
+CursoDashboard.getLayout = (page: ReactElement) => page
+
+export default CursoDashboard

@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, ReactElement } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { GetStaticProps, GetStaticPaths } from 'next'
+import type { NextPageWithLayout } from '../_app'
 
 interface LessonData {
   id: string
@@ -650,7 +651,7 @@ interface Props {
   lesson: LessonData
 }
 
-export default function LeccionPage({ lesson }: Props) {
+const LeccionPage: NextPageWithLayout<Props> = ({ lesson }) => {
   const router = useRouter()
   const [user, setUser] = useState<{ email: string; progress?: { completedLessons: string[] } } | null>(null)
   const [loading, setLoading] = useState(true)
@@ -839,6 +840,8 @@ export default function LeccionPage({ lesson }: Props) {
   )
 }
 
+LeccionPage.getLayout = (page: ReactElement) => page
+
 // Simple markdown to HTML conversion
 function convertMarkdownToHtml(markdown: string): string {
   return markdown
@@ -902,3 +905,5 @@ export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
 
   return { props: { lesson } }
 }
+
+export default LeccionPage
