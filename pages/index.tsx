@@ -215,12 +215,12 @@ export default function LandingPage() {
                     <span className="material-symbols-outlined text-sm">search</span>
                   </div>
                   <input
-                    className="bg-slate-100 dark:bg-slate-800/50 border-none rounded-full py-1.5 pl-10 pr-12 text-sm focus:ring-2 focus:ring-indigo-600/50 w-64"
+                    className="bg-slate-100 dark:bg-slate-800/50 border-none rounded-full py-1.5 pl-10 pr-12 text-sm focus:ring-2 focus:ring-indigo-600/50 w-64 placeholder-slate-500 dark:placeholder-slate-400"
                     placeholder="Search documentation..."
                     type="text"
                   />
                   <div className="absolute inset-y-0 right-3 flex items-center">
-                    <kbd className="hidden md:inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-medium text-slate-400 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded shadow-sm">
+                    <kbd className="hidden md:inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-medium text-slate-500 dark:text-slate-300 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 rounded shadow-sm">
                       ⌘ K
                     </kbd>
                   </div>
@@ -229,7 +229,7 @@ export default function LandingPage() {
                 {/* Premium button - always visible */}
                 <Link
                   href="/premium"
-                  className="flex items-center gap-1 bg-gradient-to-r from-amber-500 to-orange-500 text-white px-3 py-1.5 rounded-full text-sm font-semibold hover:from-amber-600 hover:to-orange-600 transition-all shadow-sm"
+                  className="flex items-center gap-1 bg-gradient-to-r from-amber-500 to-orange-500 text-white px-3 py-1.5 rounded-full text-sm font-semibold hover:from-amber-600 hover:to-orange-600 transition-all shadow-md hover:shadow-lg"
                 >
                   <span>✨</span>
                   <span className="hidden sm:inline">Premium</span>
@@ -292,14 +292,14 @@ export default function LandingPage() {
         {/* Hero Section */}
         <main className="relative overflow-hidden pb-24 lg:pb-32 hero-section">
           <div className="max-w-4xl mx-auto px-6 pt-16 lg:pt-20 text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 dark:bg-indigo-600/10 border border-blue-100 dark:border-indigo-600/20 text-blue-600 dark:text-blue-400 text-sm font-semibold mb-6 shadow-sm">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 dark:bg-indigo-500/20 border border-blue-100 dark:border-indigo-400/30 text-blue-600 dark:text-indigo-300 text-sm font-semibold mb-6 shadow-sm">
               <span>✨</span>
               Primer curso completo en español
             </div>
 
             <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-4 leading-[1.1] text-slate-950 dark:text-white">
               Domina Claude Code <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400">
                 sin escribir código
               </span>
             </h1>
@@ -309,14 +309,14 @@ export default function LandingPage() {
               <span className="text-slate-900 dark:text-slate-200 font-bold">haciendo, no mirando.</span>
             </p>
 
-            <p className="text-lg text-slate-500 dark:text-slate-500 max-w-xl mx-auto mb-12">
+            <p className="text-lg text-slate-500 dark:text-slate-400 max-w-xl mx-auto mb-12">
               Curso interactivo 100% en español diseñado para no programadores que quieren potenciar su productividad.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
                 href="/acceso"
-                className="w-full sm:w-auto bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold py-4 px-8 rounded-2xl shadow-xl shadow-indigo-600/20 hover:shadow-indigo-600/30 transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2"
+                className="w-full sm:w-auto bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold py-4 px-8 rounded-2xl shadow-lg shadow-indigo-500/40 hover:shadow-xl hover:shadow-indigo-500/50 transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2"
               >
                 <span className="material-symbols-outlined">rocket_launch</span>
                 Empezar Curso Gratis
@@ -338,7 +338,7 @@ export default function LandingPage() {
 
             {/* Terminal Demo - Interactive */}
             <div className="mt-24 relative" ref={terminalRef}>
-              <div className="absolute -inset-4 bg-gradient-to-tr from-indigo-600/20 to-purple-500/20 blur-3xl opacity-50"></div>
+              <div className="absolute -inset-4 bg-gradient-to-tr from-indigo-600/30 to-purple-500/30 blur-3xl opacity-60"></div>
               <div className="relative bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden aspect-[16/9] flex flex-col">
                 <div className="h-10 border-b border-slate-200 dark:border-slate-800 flex items-center px-4 gap-2 bg-slate-50 dark:bg-slate-900/50">
                   <div className="flex gap-1.5">
@@ -488,7 +488,7 @@ export default function LandingPage() {
                         {lesson.desc}
                       </p>
                     </div>
-                    <div className="flex-shrink-0 text-sm text-slate-500 dark:text-slate-500 font-medium">
+                    <div className="flex-shrink-0 text-sm text-slate-500 dark:text-slate-400 font-medium">
                       {lesson.time}
                     </div>
                   </div>
@@ -526,14 +526,14 @@ export default function LandingPage() {
               </Link>
             </div>
 
-            <p className="mt-8 text-sm text-slate-500 dark:text-slate-500">
+            <p className="mt-8 text-sm text-slate-500 dark:text-slate-400">
               Para practicar necesitas Claude Pro ($20/mes)
             </p>
           </div>
         </section>
 
         {/* Footer */}
-        <footer className="bg-slate-900 text-slate-400 py-12">
+        <footer className="bg-slate-900 text-slate-300 py-12">
           <div className="max-w-7xl mx-auto px-6">
             <div className="grid md:grid-cols-3 gap-8 mb-8">
               <div>
@@ -582,9 +582,10 @@ export default function LandingPage() {
         </footer>
 
         {/* Dark Mode Toggle */}
-        <div className="fixed bottom-6 right-6">
+        <div className="fixed bottom-6 right-6 z-40">
           <button
             onClick={toggleDarkMode}
+            aria-label={isDark ? "Activar modo claro" : "Activar modo oscuro"}
             className="w-12 h-12 flex items-center justify-center bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full shadow-lg hover:scale-110 transition-transform"
           >
             <span className="material-symbols-outlined text-slate-600 dark:text-slate-300 text-[20px]">

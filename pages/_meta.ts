@@ -7,12 +7,13 @@ export default {
     title: "📚 Fundamentos",
     type: "page"
   },
+  proyectos: {
+    title: "🛠️ Proyectos",
+    type: "page"
+  },
   recursos: {
     title: "📋 Recursos",
     type: "page"
-  },
-  proyectos: {
-    display: "hidden"
   },
   privacidad: {
     display: "hidden"
