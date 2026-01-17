@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 // Rutas que requieren autenticación
-const protectedRoutes = ['/curso']
+const protectedRoutes = ['/curso', '/fundamentos', '/empezar']
 
 // Rutas que redirigen a /curso si ya está autenticado
 const authRoutes = ['/acceso']
@@ -33,5 +33,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/curso/:path*', '/acceso']
+  matcher: ['/curso/:path*', '/acceso', '/fundamentos/:path*', '/empezar/:path*']
 }
