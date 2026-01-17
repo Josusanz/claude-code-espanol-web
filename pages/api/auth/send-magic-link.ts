@@ -89,8 +89,12 @@ export default async function handler(
 
     return res.status(200).json({ success: true, message: 'Email enviado' })
 
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error sending magic link:', error)
-    return res.status(500).json({ error: 'Error enviando el email. Inténtalo de nuevo.' })
+    const errorMessage = error instanceof Error ? error.message : 'Error desconocido'
+    return res.status(500).json({
+      error: 'Error enviando el email. Inténtalo de nuevo.',
+      details: process.env.NODE_ENV === 'development' ? errorMessage : undefined
+    })
   }
 }
