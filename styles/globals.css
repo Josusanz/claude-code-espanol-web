@@ -1,7 +1,21 @@
+/* Importar fuente Inter de Google Fonts - DEBE ir primero */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
 @import "tailwindcss";
 
-/* Importar fuente Inter de Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+/* Configuración de Tailwind v4 */
+@theme {
+  /* Colores personalizados */
+  --color-primary: #4F46E5;
+  --color-background-light: #F8FAFC;
+  --color-background-dark: #0F172A;
+
+  /* Font family */
+  --font-display: 'Inter', sans-serif;
+}
+
+/* Dark mode basado en clase */
+@variant dark (&:where(.dark, .dark *));
 
 /* Variables CSS personalizadas */
 :root {
