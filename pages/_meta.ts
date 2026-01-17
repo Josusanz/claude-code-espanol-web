@@ -1,15 +1,12 @@
 export default {
   empezar: {
-    title: "🚀 Empezar",
-    type: "page"
+    display: "hidden"
   },
   fundamentos: {
-    title: "📚 Módulo 1: Fundamentos",
-    type: "page"
+    display: "hidden"
   },
   proyectos: {
-    title: "🛠️ Módulo 2: Proyectos",
-    type: "page"
+    display: "hidden"
   },
   recursos: {
     title: "📋 Recursos",
