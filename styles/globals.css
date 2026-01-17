@@ -1,21 +1,7 @@
-/* Importar fuente Inter de Google Fonts - DEBE ir primero */
+/* Importar fuente Inter de Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
 @import "tailwindcss";
-
-/* Configuración de Tailwind v4 */
-@theme {
-  /* Colores personalizados */
-  --color-primary: #4F46E5;
-  --color-background-light: #F8FAFC;
-  --color-background-dark: #0F172A;
-
-  /* Font family */
-  --font-display: 'Inter', sans-serif;
-}
-
-/* Dark mode basado en clase */
-@variant dark (&:where(.dark, .dark *));
 
 /* Variables CSS personalizadas */
 :root {
@@ -424,71 +410,4 @@ nav a[href*="github.com"] {
   .banner-text-short {
     display: inline;
   }
-}
-
-/* ===== NEXTRA NAVIGATION BUTTONS (Siguiente/Anterior) ===== */
-/* Fix para botones de navegación de Nextra - texto blanco en fondo azul */
-
-/* Selector universal para cualquier elemento con fondo azul primario */
-[class*="_navLink"] {
-  color: white !important;
-}
-
-[class*="_navLink"] * {
-  color: white !important;
-}
-
-/* Botones de navegación con fondo azul */
-a[class*="bg-primary"],
-a[style*="background"],
-div[class*="rounded"][class*="bg-"] a {
-  text-decoration: none !important;
-}
-
-/* Fix directo para el color del texto en enlaces de navegación */
-nav a[class*="text-primary"],
-a[class*="nx-text-primary"] {
-  color: var(--primary-600) !important;
-}
-
-/* Asegurar que el texto dentro de botones con fondo sea blanco */
-a[class*="rounded-xl"][class*="border"] {
-  text-decoration: none !important;
-}
-
-/* Nextra 3 específico - botones de navegación */
-[data-active="true"] {
-  color: white !important;
-}
-
-/* Override global para links en elementos con background-color azul */
-*[style*="background-color: rgb(37, 99, 235)"],
-*[style*="background-color: rgb(79, 70, 229)"],
-*[style*="background-color:#2563eb"],
-*[style*="background-color:#4f46e5"] {
-  color: white !important;
-}
-
-*[style*="background-color: rgb(37, 99, 235)"] *,
-*[style*="background-color: rgb(79, 70, 229)"] *,
-*[style*="background-color:#2563eb"] *,
-*[style*="background-color:#4f46e5"] * {
-  color: white !important;
-}
-
-/* Clase directa para Nextra theme docs navigation */
-.nextra-cards a,
-.nextra-card {
-  text-decoration: none !important;
-}
-
-/* Fix para el componente de navegación inferior */
-[class*="nextra-navigation"],
-[class*="_navigation"] {
-  color: inherit;
-}
-
-[class*="nextra-navigation"] a[href],
-[class*="_navigation"] a[href] {
-  text-decoration: none !important;
 }
