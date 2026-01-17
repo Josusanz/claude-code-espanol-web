@@ -34,8 +34,8 @@ export default async function handler(
       `session=${sessionToken}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${30 * 24 * 60 * 60}${process.env.NODE_ENV === 'production' ? '; Secure' : ''}`
     ])
 
-    // Redirigir al curso
-    return res.redirect('/curso')
+    // Redirigir al contenido
+    return res.redirect('/fundamentos/que-es')
 
   } catch (error) {
     console.error('Error verifying magic link:', error)

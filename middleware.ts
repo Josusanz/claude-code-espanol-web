@@ -2,9 +2,9 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 // Rutas que requieren autenticación
-const protectedRoutes = ['/curso', '/fundamentos', '/empezar']
+const protectedRoutes = ['/fundamentos', '/empezar']
 
-// Rutas que redirigen a /curso si ya está autenticado
+// Rutas que redirigen a /fundamentos si ya está autenticado
 const authRoutes = ['/acceso']
 
 export function middleware(request: NextRequest) {
@@ -25,7 +25,14 @@ export function middleware(request: NextRequest) {
   // Si intenta acceder a /acceso con sesión activa
   if (isAuthRoute && sessionCookie) {
     const url = request.nextUrl.clone()
-    url.pathname = '/curso'
+    url.pathname = '/fundamentos/que-es'
+    return NextResponse.redirect(url)
+  }
+
+  // Redirigir /curso a /fundamentos
+  if (pathname === '/curso' || pathname.startsWith('/curso/')) {
+    const url = request.nextUrl.clone()
+    url.pathname = '/fundamentos/que-es'
     return NextResponse.redirect(url)
   }
 

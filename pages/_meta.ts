@@ -1,16 +1,18 @@
 export default {
   empezar: {
-    display: "hidden"
+    title: "🚀 Empezar",
+    type: "page"
   },
   fundamentos: {
-    display: "hidden"
-  },
-  proyectos: {
-    display: "hidden"
+    title: "📚 Fundamentos",
+    type: "page"
   },
   recursos: {
     title: "📋 Recursos",
     type: "page"
+  },
+  proyectos: {
+    display: "hidden"
   },
   privacidad: {
     display: "hidden"
