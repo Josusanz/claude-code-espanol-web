@@ -151,7 +151,11 @@ const Acceso: NextPageWithLayout = () => {
                 <button
                   type="submit"
                   disabled={status === 'loading'}
-                  className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold py-3 px-4 rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  className="w-full text-white font-semibold py-3 px-4 rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  style={{
+                    background: 'linear-gradient(to right, #4f46e5, #7c3aed)',
+                    boxShadow: '0 10px 25px -5px rgba(99, 102, 241, 0.4)'
+                  }}
                 >
                   {status === 'loading' ? (
                     <>
