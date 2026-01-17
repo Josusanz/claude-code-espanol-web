@@ -174,6 +174,25 @@ export default function LandingPage() {
         .animate-fade-in {
           animation: fade-in 0.3s ease-out forwards;
         }
+        /* Botón principal - fix para Tailwind CDN */
+        .btn-cta-primary {
+          background: linear-gradient(to right, #4f46e5, #7c3aed) !important;
+          color: white !important;
+          box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.4), 0 8px 10px -6px rgba(99, 102, 241, 0.3) !important;
+        }
+        .btn-cta-primary:hover {
+          background: linear-gradient(to right, #4338ca, #6d28d9) !important;
+          box-shadow: 0 20px 35px -5px rgba(99, 102, 241, 0.5), 0 10px 15px -6px rgba(99, 102, 241, 0.4) !important;
+          transform: translateY(-2px);
+        }
+        /* Botón Premium nav */
+        .btn-premium-nav {
+          background: linear-gradient(to right, #f59e0b, #ea580c) !important;
+          color: white !important;
+        }
+        .btn-premium-nav:hover {
+          background: linear-gradient(to right, #d97706, #dc2626) !important;
+        }
       `}</style>
 
       <div className="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 min-h-screen transition-colors duration-300">
@@ -229,7 +248,7 @@ export default function LandingPage() {
                 {/* Premium button - always visible */}
                 <Link
                   href="/premium"
-                  className="flex items-center gap-1 bg-gradient-to-r from-amber-500 to-orange-500 text-white px-3 py-1.5 rounded-full text-sm font-semibold hover:from-amber-600 hover:to-orange-600 transition-all shadow-md hover:shadow-lg"
+                  className="btn-premium-nav flex items-center gap-1 px-3 py-1.5 rounded-full text-sm font-semibold transition-all shadow-md hover:shadow-lg"
                 >
                   <span>✨</span>
                   <span className="hidden sm:inline">Premium</span>
@@ -277,7 +296,7 @@ export default function LandingPage() {
                   <div className="pt-3 border-t border-slate-200 dark:border-slate-700">
                     <Link
                       href="/premium"
-                      className="flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white px-4 py-3 rounded-lg text-base font-semibold hover:from-amber-600 hover:to-orange-600 transition-all"
+                      className="btn-premium-nav flex items-center justify-center gap-2 px-4 py-3 rounded-lg text-base font-semibold transition-all"
                       onClick={() => setMobileMenuOpen(false)}
                     >
                       ✨ Acceder a Premium
@@ -316,7 +335,7 @@ export default function LandingPage() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
                 href="/acceso"
-                className="w-full sm:w-auto bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold py-4 px-8 rounded-2xl shadow-lg shadow-indigo-500/40 hover:shadow-xl hover:shadow-indigo-500/50 transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2"
+                className="btn-cta-primary w-full sm:w-auto font-bold py-4 px-8 rounded-2xl transition-all duration-200 flex items-center justify-center gap-2"
               >
                 <span className="material-symbols-outlined">rocket_launch</span>
                 Empezar Curso Gratis
@@ -512,7 +531,7 @@ export default function LandingPage() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
                 href="/acceso"
-                className="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-8 rounded-lg transition-colors flex items-center justify-center gap-2"
+                className="btn-cta-primary w-full sm:w-auto font-semibold py-3 px-8 rounded-lg transition-colors flex items-center justify-center gap-2"
               >
                 <span className="material-symbols-outlined text-xl">rocket_launch</span>
                 Acceder al Curso
