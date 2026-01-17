@@ -2,81 +2,6 @@ import React, { useEffect, useState, useRef } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 
-function NewsletterForm() {
-  const [email, setEmail] = useState('')
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
-  const [errorMessage, setErrorMessage] = useState('')
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setStatus('loading')
-
-    try {
-      const res = await fetch('https://app.loops.so/api/newsletter-form/cmae75u140khm44stqhx4tdxz', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: `userGroup=&mailingLists=&email=${encodeURIComponent(email)}`,
-      })
-
-      if (res.ok) {
-        setStatus('success')
-        setEmail('')
-      } else {
-        const data = await res.json()
-        setErrorMessage(data.message || 'Error al suscribirse')
-        setStatus('error')
-      }
-    } catch {
-      setErrorMessage('Error de conexión')
-      setStatus('error')
-    }
-  }
-
-  if (status === 'success') {
-    return (
-      <div className="mt-12 max-w-md mx-auto text-center">
-        <div className="bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 rounded-lg p-4">
-          <p className="text-emerald-700 dark:text-emerald-300 font-medium">
-            ¡Gracias! Revisa tu email para confirmar la suscripción.
-          </p>
-        </div>
-      </div>
-    )
-  }
-
-  return (
-    <div className="mt-12 max-w-md mx-auto">
-      <p className="text-sm text-slate-600 dark:text-slate-400 mb-4 text-center">
-        Recibe actualizaciones del curso y recursos exclusivos:
-      </p>
-      <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2">
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="tu@email.com"
-          required
-          disabled={status === 'loading'}
-          className="flex-1 px-4 py-2.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none text-sm disabled:opacity-50"
-        />
-        <button
-          type="submit"
-          disabled={status === 'loading'}
-          className="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg transition-colors text-sm disabled:opacity-50"
-        >
-          {status === 'loading' ? 'Enviando...' : 'Suscribirme'}
-        </button>
-      </form>
-      {status === 'error' && (
-        <p className="mt-2 text-xs text-red-500">{errorMessage}</p>
-      )}
-      <p className="mt-2 text-xs text-slate-500 dark:text-slate-600 text-center">
-        Tu email está seguro. Sin spam, cancela cuando quieras.
-      </p>
-    </div>
-  )
-}
-
 export default function LandingPage() {
   const [isDark, setIsDark] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -390,23 +315,26 @@ export default function LandingPage() {
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
-                href="https://github.com/Josusanz/claude-code-espanol-web/releases/latest"
-                className="w-full sm:w-auto bg-gradient-to-r from-indigo-600 to-indigo-600 hover:from-indigo-700 hover:to-indigo-500 text-white font-bold py-4 px-8 rounded-2xl shadow-xl shadow-indigo-600/20 hover:shadow-indigo-600/30 transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2"
+                href="/acceso"
+                className="w-full sm:w-auto bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold py-4 px-8 rounded-2xl shadow-xl shadow-indigo-600/20 hover:shadow-indigo-600/30 transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2"
               >
-                <span className="material-symbols-outlined">download</span>
-                Descargar Curso Gratis
+                <span className="material-symbols-outlined">rocket_launch</span>
+                Empezar Curso Gratis
               </Link>
               <Link
                 href="/empezar/introduccion"
                 className="w-full sm:w-auto bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 text-slate-700 dark:text-slate-200 font-bold py-4 px-8 rounded-2xl shadow-sm hover:shadow-md transition-all duration-200 flex items-center justify-center gap-2"
               >
                 <span className="material-symbols-outlined">library_books</span>
-                Ver Documentación
+                Ver Documentaci&oacute;n
               </Link>
             </div>
 
-            {/* Email Capture - Loops */}
-            <NewsletterForm />
+            {/* Social proof */}
+            <div className="mt-8 flex items-center justify-center gap-2 text-sm text-slate-500 dark:text-slate-400">
+              <span className="material-symbols-outlined text-emerald-500">check_circle</span>
+              <span>100% gratis &middot; Sin tarjeta de cr&eacute;dito &middot; Acceso inmediato</span>
+            </div>
 
             {/* Terminal Demo - Interactive */}
             <div className="mt-24 relative" ref={terminalRef}>
@@ -574,32 +502,32 @@ export default function LandingPage() {
         <section className="py-24 bg-slate-50 dark:bg-slate-900">
           <div className="max-w-4xl mx-auto px-6 text-center">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-slate-900 dark:text-white">
-              Descarga gratis y empieza hoy
+              Empieza gratis hoy
             </h2>
 
             <p className="text-lg text-slate-600 dark:text-slate-400 mb-8 max-w-2xl mx-auto">
-              Sin registros. Sin suscripciones. Solo descarga y aprende.
+              Solo necesitas tu email. Acceso instant&aacute;neo al curso completo.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
-                href="https://github.com/Josusanz/claude-code-espanol-web/releases/latest"
+                href="/acceso"
                 className="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-8 rounded-lg transition-colors flex items-center justify-center gap-2"
               >
-                <span className="material-symbols-outlined text-xl">download</span>
-                Descargar Curso
+                <span className="material-symbols-outlined text-xl">rocket_launch</span>
+                Acceder al Curso
               </Link>
               <Link
                 href="/empezar/introduccion"
                 className="w-full sm:w-auto border border-slate-300 dark:border-slate-700 hover:border-slate-400 dark:hover:border-slate-600 text-slate-700 dark:text-slate-300 font-semibold py-3 px-8 rounded-lg transition-colors flex items-center justify-center gap-2"
               >
                 <span className="material-symbols-outlined text-xl">library_books</span>
-                Ver Documentación
+                Ver Documentaci&oacute;n
               </Link>
             </div>
 
             <p className="mt-8 text-sm text-slate-500 dark:text-slate-500">
-              Compatible con Mac, Windows y Linux · Requiere Claude Pro ($20/mes)
+              Para practicar necesitas Claude Pro ($20/mes)
             </p>
           </div>
         </section>
