@@ -25,14 +25,14 @@ export function middleware(request: NextRequest) {
   // Si intenta acceder a /acceso con sesión activa
   if (isAuthRoute && sessionCookie) {
     const url = request.nextUrl.clone()
-    url.pathname = '/fundamentos/que-es'
+    url.pathname = '/empezar/introduccion'
     return NextResponse.redirect(url)
   }
 
-  // Redirigir /curso a /fundamentos
+  // Redirigir /curso a /empezar/introduccion
   if (pathname === '/curso' || pathname.startsWith('/curso/')) {
     const url = request.nextUrl.clone()
-    url.pathname = '/fundamentos/que-es'
+    url.pathname = '/empezar/introduccion'
     return NextResponse.redirect(url)
   }
 

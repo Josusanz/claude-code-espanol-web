@@ -35,7 +35,7 @@ export default async function handler(
     ])
 
     // Redirigir al contenido
-    return res.redirect('/fundamentos/que-es')
+    return res.redirect('/empezar/introduccion')
 
   } catch (error) {
     console.error('Error verifying magic link:', error)

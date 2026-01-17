@@ -17,7 +17,7 @@ const Acceso: NextPageWithLayout = () => {
       .then(res => res.json())
       .then(data => {
         if (data.authenticated) {
-          router.push('/fundamentos/que-es')
+          router.push('/empezar/introduccion')
         }
       })
       .catch(() => {})
