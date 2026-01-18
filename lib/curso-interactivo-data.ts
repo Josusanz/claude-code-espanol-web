@@ -1,6 +1,18 @@
 // Datos del curso interactivo completo
 // "Crea tu Plataforma de Cursos Interactivos con IA"
 
+// Tipos para contenido multimedia
+export interface MediaContent {
+  type: 'video' | 'image' | 'gif' | 'diagram' | 'code'
+  url?: string // URL para video/image/gif
+  videoId?: string // ID de YouTube/Vimeo
+  videoProvider?: 'youtube' | 'vimeo' | 'self'
+  code?: string // Código para mostrar
+  language?: string // Lenguaje para syntax highlighting
+  caption?: string // Descripción del contenido
+  alt?: string // Alt text para accesibilidad
+}
+
 export interface Lesson {
   id: string
   title: string
@@ -11,6 +23,16 @@ export interface Lesson {
   successKeywords?: string[]
   acceptAnyInput?: boolean
   isComplete?: boolean
+  // Contenido multimedia opcional
+  media?: MediaContent[]
+  // Contenido teórico antes del ejercicio práctico
+  theory?: string // Markdown con explicación teórica
+  // Recursos adicionales
+  resources?: Array<{
+    title: string
+    url: string
+    type: 'docs' | 'video' | 'article' | 'github'
+  }>
 }
 
 export interface Module {
@@ -19,6 +41,12 @@ export interface Module {
   title: string
   description: string
   lessons: Lesson[]
+  // Video introductorio del módulo (opcional)
+  introVideo?: {
+    videoId: string
+    provider: 'youtube' | 'vimeo'
+    duration: string // "5:30"
+  }
 }
 
 export const courseData = {

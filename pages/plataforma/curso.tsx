@@ -5,6 +5,7 @@ import { GetServerSideProps } from 'next'
 import { kv } from '@vercel/kv'
 import { courseData, Lesson, Module, getTotalLessons } from '../../lib/curso-interactivo-data'
 import { AdaptiveTutor } from '../../components/AdaptiveTutor'
+import { LessonContent, ModuleIntroVideo } from '../../components/LessonContent'
 
 interface PageProps {
   hasAccess: boolean
@@ -453,6 +454,25 @@ export default function CursoPage({ hasAccess, userEmail }: PageProps) {
                     <p className="text-slate-400 text-sm">{currentLesson.instruction}</p>
                   </div>
                 </div>
+              </div>
+            )}
+
+            {/* Contenido multimedia (si existe) */}
+            {(currentLesson.media || currentLesson.theory) && (
+              <div className="px-4 pb-2 max-h-48 overflow-y-auto border-b border-slate-800">
+                <LessonContent lesson={currentLesson} />
+              </div>
+            )}
+
+            {/* Video introductorio del módulo (primera lección) */}
+            {currentLessonIndex === 0 && currentModule.introVideo && (
+              <div className="px-4 pb-4 border-b border-slate-800">
+                <ModuleIntroVideo
+                  videoId={currentModule.introVideo.videoId}
+                  provider={currentModule.introVideo.provider}
+                  duration={currentModule.introVideo.duration}
+                  moduleTitle={currentModule.title}
+                />
               </div>
             )}
 
