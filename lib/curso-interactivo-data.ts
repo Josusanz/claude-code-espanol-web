@@ -59,6 +59,11 @@ export const courseData = {
       number: '01',
       title: 'Fundamentos',
       description: 'Configura el proyecto y entiende la arquitectura',
+      introVideo: {
+        videoId: 'dQw4w9WgXcQ', // Placeholder - reemplazar con video real
+        provider: 'youtube',
+        duration: '8:45'
+      },
       lessons: [
         {
           id: '1-1',
@@ -81,6 +86,40 @@ Installing dependencies:
 cd mi-plataforma`,
           aiMessage: 'Hemos creado un proyecto Next.js que será la base de tu plataforma. Next.js es perfecto porque incluye SSR, API routes, y un sistema de routing basado en archivos. En la siguiente lección instalaremos las dependencias adicionales.',
           successKeywords: ['create-next-app', 'npx', 'next', 'mi-plataforma'],
+          theory: `<h3>¿Por qué Next.js?</h3>
+<p>Next.js es el framework ideal para nuestra plataforma por estas razones:</p>
+<ul>
+  <li><strong>Server-Side Rendering (SSR)</strong>: Mejor SEO y rendimiento inicial</li>
+  <li><strong>API Routes</strong>: Backend integrado sin servidor separado</li>
+  <li><strong>File-based Routing</strong>: Rutas automáticas basadas en archivos</li>
+  <li><strong>Deploy fácil</strong>: Vercel lo despliega en segundos</li>
+</ul>`,
+          media: [
+            {
+              type: 'diagram',
+              code: `
+┌─────────────────────────────────────────────────────────────┐
+│                     Tu Plataforma                            │
+├─────────────────────────────────────────────────────────────┤
+│                                                              │
+│   Frontend (Next.js)          API Routes          Claude     │
+│  ┌─────────────────┐      ┌──────────────┐     ┌─────────┐  │
+│  │  React Pages    │──────│  /api/chat   │─────│  Claude  │ │
+│  │  + Components   │      │  /api/course │     │   API    │ │
+│  └─────────────────┘      └──────────────┘     └─────────┘  │
+│                                  │                           │
+│                           ┌──────┴──────┐                    │
+│                           │  Database   │                    │
+│                           │  (Vercel KV)│                    │
+│                           └─────────────┘                    │
+└─────────────────────────────────────────────────────────────┘`,
+              caption: 'Arquitectura de la plataforma que vamos a construir'
+            }
+          ],
+          resources: [
+            { title: 'Documentación de Next.js', url: 'https://nextjs.org/docs', type: 'docs' },
+            { title: 'Vercel Deploy Guide', url: 'https://vercel.com/docs', type: 'docs' }
+          ]
         },
         {
           id: '1-2',
