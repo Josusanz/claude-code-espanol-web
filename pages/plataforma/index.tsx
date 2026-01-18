@@ -375,29 +375,37 @@ export default function PlataformaPage() {
 
         {/* Hero */}
         <section className="py-16 px-4 text-center border-b border-slate-800">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-500/10 border border-emerald-500/20 rounded-full text-emerald-400 text-sm font-medium mb-6">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            </span>
+            Nuevo: Curso para crear tu propia plataforma
+          </div>
+
           <h1 className="text-4xl md:text-5xl font-extrabold mb-4">
-            Cursos Interactivos
+            Crea Cursos Interactivos
             <span className="block text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">
               con Inteligencia Artificial
             </span>
           </h1>
           <p className="text-xl text-slate-400 max-w-2xl mx-auto mb-8">
-            Aprende con un tutor IA que te guía paso a paso, o crea tus propios cursos
-            interactivos con terminal y chat asistido.
+            Aprende a construir tu propia plataforma de cursos con terminal interactivo
+            y tutor IA. Incluye código fuente y licencia comercial.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
-              href="/plataforma/demo"
+              href="/plataforma/comprar"
               className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold rounded-xl transition-all shadow-lg shadow-indigo-500/25 hover:shadow-indigo-500/40"
             >
-              🎮 Probar Demo Interactiva
+              🚀 Comprar Curso - 49€
             </Link>
             <Link
-              href="/empezar/introduccion"
+              href="/plataforma/demo"
               className="w-full sm:w-auto px-8 py-4 bg-slate-800 hover:bg-slate-700 text-white font-medium rounded-xl border border-slate-700 transition-colors"
             >
-              📚 Ver Curso de Claude Code
+              🎮 Probar Demo Gratis
             </Link>
           </div>
         </section>
@@ -480,16 +488,24 @@ Responde siempre en español, de forma concisa y práctica. Usa markdown para fo
 
             {/* CTA */}
             <div className="mt-16 text-center p-8 bg-gradient-to-r from-indigo-900/50 to-purple-900/50 rounded-2xl border border-indigo-500/30">
-              <h2 className="text-2xl font-bold mb-4">¿Listo para crear tu primer curso?</h2>
+              <h2 className="text-2xl font-bold mb-4">¿Listo para crear tu propia plataforma?</h2>
               <p className="text-slate-400 mb-6">
-                Esta funcionalidad está en beta. Regístrate para acceso anticipado.
+                Aprende paso a paso a construir esto mismo. Incluye código fuente completo.
               </p>
-              <Link
-                href="/acceso"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-indigo-600 hover:bg-indigo-700 rounded-xl font-bold transition-colors"
-              >
-                Solicitar Acceso Beta
-              </Link>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <Link
+                  href="/plataforma/comprar"
+                  className="inline-flex items-center gap-2 px-8 py-4 bg-indigo-600 hover:bg-indigo-700 rounded-xl font-bold transition-colors"
+                >
+                  Comprar Curso - 49€
+                </Link>
+                <Link
+                  href="/plataforma/demo"
+                  className="inline-flex items-center gap-2 px-8 py-4 bg-slate-800 hover:bg-slate-700 rounded-xl font-medium border border-slate-700 transition-colors"
+                >
+                  Ver Demo Primero
+                </Link>
+              </div>
             </div>
           </div>
         </section>
