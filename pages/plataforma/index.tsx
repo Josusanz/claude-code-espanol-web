@@ -376,15 +376,30 @@ export default function PlataformaPage() {
         {/* Hero */}
         <section className="py-16 px-4 text-center border-b border-slate-800">
           <h1 className="text-4xl md:text-5xl font-extrabold mb-4">
-            Creador de Cursos
+            Cursos Interactivos
             <span className="block text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">
               con Inteligencia Artificial
             </span>
           </h1>
-          <p className="text-xl text-slate-400 max-w-2xl mx-auto">
-            Diseña cursos interactivos usando IA. Terminal de comandos para gestión rápida
-            y chat asistido para crear contenido.
+          <p className="text-xl text-slate-400 max-w-2xl mx-auto mb-8">
+            Aprende con un tutor IA que te guía paso a paso, o crea tus propios cursos
+            interactivos con terminal y chat asistido.
           </p>
+
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link
+              href="/plataforma/demo"
+              className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold rounded-xl transition-all shadow-lg shadow-indigo-500/25 hover:shadow-indigo-500/40"
+            >
+              🎮 Probar Demo Interactiva
+            </Link>
+            <Link
+              href="/empezar/introduccion"
+              className="w-full sm:w-auto px-8 py-4 bg-slate-800 hover:bg-slate-700 text-white font-medium rounded-xl border border-slate-700 transition-colors"
+            >
+              📚 Ver Curso de Claude Code
+            </Link>
+          </div>
         </section>
 
         {/* Main Content */}
@@ -393,10 +408,18 @@ export default function PlataformaPage() {
             <div className="grid lg:grid-cols-2 gap-8">
               {/* Terminal */}
               <div>
-                <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                  <span className="w-3 h-3 bg-emerald-500 rounded-full"></span>
-                  Terminal de Gestión
-                </h2>
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-lg font-semibold flex items-center gap-2">
+                    <span className="w-3 h-3 bg-emerald-500 rounded-full"></span>
+                    Terminal de Gestión
+                  </h2>
+                  <Link
+                    href="/plataforma/demo"
+                    className="text-sm text-indigo-400 hover:text-indigo-300 transition-colors"
+                  >
+                    Ver demo completa →
+                  </Link>
+                </div>
                 <p className="text-slate-400 text-sm mb-4">
                   Gestiona tus cursos con comandos. Escribe <code className="text-emerald-400 bg-slate-800 px-1.5 py-0.5 rounded">help</code> para empezar.
                 </p>
