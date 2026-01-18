@@ -3,9 +3,49 @@ import Link from 'next/link'
 import { useState, useRef, useEffect, KeyboardEvent, useCallback } from 'react'
 
 // =============================================================================
+// TIPOS
+// =============================================================================
+interface MediaContent {
+  type: 'video' | 'image' | 'gif' | 'diagram' | 'code'
+  url?: string
+  videoId?: string
+  videoProvider?: 'youtube' | 'vimeo'
+  code?: string
+  language?: string
+  caption?: string
+  alt?: string
+}
+
+interface Lesson {
+  id: string
+  title: string
+  instruction: string
+  commandToType: string
+  terminalResponse: string
+  successKeywords?: string[]
+  theory?: string
+  media?: MediaContent[]
+  isComplete?: boolean
+}
+
+interface Module {
+  id: string
+  number: string
+  title: string
+  description: string
+  lessons: Lesson[]
+}
+
+interface DemoCourse {
+  title: string
+  description: string
+  modules: Module[]
+}
+
+// =============================================================================
 // DATOS DEL CURSO DE DEMOSTRACIÓN - "Crea tu Landing Web3 con MetaMask"
 // =============================================================================
-const demoCourse = {
+const demoCourse: DemoCourse = {
   title: 'Crea tu Landing Web3 con MetaMask',
   description: 'Aprende a crear una landing page con conexión a wallet y verificación de NFTs',
   modules: [
@@ -541,32 +581,6 @@ export default function Home() {
 // Aplanar lecciones para navegación fácil
 const allLessons = demoCourse.modules.flatMap(m => m.lessons)
 const totalLessons = allLessons.filter(l => !l.isComplete).length
-
-// =============================================================================
-// TIPOS
-// =============================================================================
-interface MediaContent {
-  type: 'video' | 'image' | 'gif' | 'diagram' | 'code'
-  url?: string
-  videoId?: string
-  videoProvider?: 'youtube' | 'vimeo'
-  code?: string
-  language?: string
-  caption?: string
-  alt?: string
-}
-
-interface Lesson {
-  id: string
-  title: string
-  instruction: string
-  commandToType: string
-  terminalResponse: string
-  successKeywords?: string[]
-  theory?: string
-  media?: MediaContent[]
-  isComplete?: boolean
-}
 
 // =============================================================================
 // COMPONENTES DE CONTENIDO MULTIMEDIA

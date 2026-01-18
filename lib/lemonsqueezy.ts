@@ -50,13 +50,21 @@ export async function hasUserPurchased(email: string): Promise<boolean> {
     const orders = await listOrders({
       filter: {
         userEmail: email,
-        productId: process.env.LEMONSQUEEZY_PRODUCT_ID!,
+        storeId: process.env.LEMONSQUEEZY_STORE_ID!,
       },
     })
 
-    // Verificar si hay alguna orden completada
+    // Filtrar por producto específico y estado pagado
+    const productId = process.env.LEMONSQUEEZY_PRODUCT_ID
     const completedOrders = orders.data?.data.filter(
-      (order) => order.attributes.status === 'paid'
+      (order) => {
+        const isPaid = order.attributes.status === 'paid'
+        // Si hay productId configurado, filtrar por él
+        if (productId) {
+          return isPaid && String(order.attributes.first_order_item?.product_id) === productId
+        }
+        return isPaid
+      }
     )
 
     return completedOrders && completedOrders.length > 0
