@@ -353,6 +353,30 @@ export default function LandingPage() {
               <span>100% gratis &middot; Sin tarjeta de cr&eacute;dito &middot; Acceso inmediato</span>
             </div>
 
+            {/* Product Hunt Badge */}
+            <div className="mt-8 flex justify-center">
+              <a
+                href="https://www.producthunt.com/products/claude-code-en-espanol?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-claude-code-en-espanol"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img
+                  src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1063751&theme=light&t=1768701681086"
+                  alt="Claude Code en Español - Learn AI-assisted coding in Spanish — Free & hands-on | Product Hunt"
+                  width="250"
+                  height="54"
+                  className="dark:hidden"
+                />
+                <img
+                  src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1063751&theme=dark&t=1768701681086"
+                  alt="Claude Code en Español - Learn AI-assisted coding in Spanish — Free & hands-on | Product Hunt"
+                  width="250"
+                  height="54"
+                  className="hidden dark:block"
+                />
+              </a>
+            </div>
+
             {/* Terminal Demo - Interactive */}
             <div className="mt-24 relative" ref={terminalRef}>
               <div className="absolute -inset-4 bg-gradient-to-tr from-indigo-600/30 to-purple-500/30 blur-3xl opacity-60"></div>
