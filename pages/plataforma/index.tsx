@@ -399,7 +399,7 @@ export default function PlataformaPage() {
               href="/plataforma/comprar"
               className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold rounded-xl transition-all shadow-lg shadow-indigo-500/25 hover:shadow-indigo-500/40"
             >
-              🚀 Comprar Curso - 49€
+              🚀 Comprar Curso - 97€
             </Link>
             <Link
               href="/plataforma/demo"
@@ -497,7 +497,7 @@ Responde siempre en español, de forma concisa y práctica. Usa markdown para fo
                   href="/plataforma/comprar"
                   className="inline-flex items-center gap-2 px-8 py-4 bg-indigo-600 hover:bg-indigo-700 rounded-xl font-bold transition-colors"
                 >
-                  Comprar Curso - 49€
+                  Comprar Curso - 97€
                 </Link>
                 <Link
                   href="/plataforma/demo"
