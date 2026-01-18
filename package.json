@@ -26,6 +26,7 @@
   "author": "Josu Sanz",
   "license": "CC-BY-NC-SA-4.0",
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.71.2",
     "@vercel/analytics": "^1.6.1",
     "@vercel/kv": "^3.0.0",
     "@vercel/og": "^0.8.6",
