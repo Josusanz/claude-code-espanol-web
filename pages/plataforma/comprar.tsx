@@ -163,8 +163,8 @@ export default function ComprarPage() {
             {/* Price Card */}
             <div className="max-w-md mx-auto bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-700 rounded-2xl p-8 mb-8">
               <div className="flex items-baseline justify-center gap-2 mb-2">
-                <span className="text-slate-500 line-through text-2xl">147€</span>
-                <span className="text-5xl font-bold">97€</span>
+                <span className="text-slate-500 line-through text-2xl">$297</span>
+                <span className="text-5xl font-bold">$147</span>
               </div>
               <p className="text-slate-400 text-sm mb-6">Pago único · Acceso de por vida · Precio de lanzamiento</p>
 
@@ -351,7 +351,7 @@ export default function ComprarPage() {
               onClick={handleCheckout}
               className="px-12 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold rounded-xl transition-all shadow-lg shadow-indigo-500/25 hover:shadow-indigo-500/40 text-lg"
             >
-              Comprar por 97€ →
+              Comprar por $147 →
             </button>
 
             <p className="text-slate-500 text-sm mt-4">

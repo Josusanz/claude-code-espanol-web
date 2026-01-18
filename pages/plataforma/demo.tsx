@@ -1090,7 +1090,7 @@ export default function DemoPage() {
                   href="/plataforma/comprar"
                   className="px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 rounded-lg text-sm font-medium"
                 >
-                  Comprar - 97€
+                  Comprar - $147
                 </Link>
               </div>
             </div>
@@ -1160,7 +1160,7 @@ export default function DemoPage() {
               href="/plataforma/comprar"
               className="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 rounded-xl font-bold"
             >
-              Ver Curso Completo - 97€
+              Ver Curso Completo - $147
             </Link>
           </div>
         </section>
