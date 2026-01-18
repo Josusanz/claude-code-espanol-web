@@ -1,9 +1,10 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import { useState, useRef, useEffect, KeyboardEvent } from 'react'
+import { useState, useRef, useEffect, KeyboardEvent, useCallback } from 'react'
 import { GetServerSideProps } from 'next'
 import { kv } from '@vercel/kv'
 import { courseData, Lesson, Module, getTotalLessons } from '../../lib/curso-interactivo-data'
+import { AdaptiveTutor } from '../../components/AdaptiveTutor'
 
 interface PageProps {
   hasAccess: boolean
@@ -89,10 +90,12 @@ function isCommandValid(cmd: string, lesson: Lesson): boolean {
 function CourseTerminal({
   lesson,
   onSuccess,
+  onError,
   lessonKey
 }: {
   lesson: Lesson
   onSuccess: () => void
+  onError: (cmd: string) => void
   lessonKey: string
 }) {
   const [history, setHistory] = useState<Array<{ type: 'input' | 'output' | 'success'; content: string }>>([])
@@ -134,12 +137,18 @@ function CourseTerminal({
           { type: 'output', content: lesson.terminalResponse },
           { type: 'success', content: '✓ ¡Correcto! Avanzando...' }
         ])
-        setTimeout(onSuccess, 1500)
+        // Notificar éxito al tutor
+        if (typeof window !== 'undefined' && (window as any).adaptiveTutor?.notifySuccess) {
+          (window as any).adaptiveTutor.notifySuccess()
+        }
+        setTimeout(onSuccess, 2000)
       } else {
         setHistory(prev => [
           ...prev,
-          { type: 'output', content: `Hmm, no es exactamente eso.\n\n💡 Intenta: ${lesson.commandToType}` }
+          { type: 'output', content: `Comando no reconocido: ${cmd}` }
         ])
+        // Notificar error al tutor para que dé feedback adaptativo
+        onError(cmd)
       }
       setIsProcessing(false)
     }, 300)
@@ -227,66 +236,6 @@ function CourseTerminal({
   )
 }
 
-// Componente Tutor IA
-function TutorChat({
-  message,
-  lessonTitle,
-  lessonKey
-}: {
-  message: string
-  lessonTitle: string
-  lessonKey: string
-}) {
-  const [displayedMessage, setDisplayedMessage] = useState('')
-
-  useEffect(() => {
-    setDisplayedMessage('')
-    let i = 0
-    const interval = setInterval(() => {
-      if (i < message.length) {
-        setDisplayedMessage(prev => prev + message[i])
-        i++
-      } else {
-        clearInterval(interval)
-      }
-    }, 12)
-    return () => clearInterval(interval)
-  }, [message, lessonKey])
-
-  return (
-    <div className="bg-slate-900 rounded-xl border border-slate-700 overflow-hidden h-full flex flex-col">
-      <div className="flex items-center gap-3 px-4 py-3 bg-slate-800 border-b border-slate-700">
-        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
-          <span className="text-xl">🤖</span>
-        </div>
-        <div>
-          <span className="text-white font-medium block">Tutor IA</span>
-          <span className="text-xs text-slate-400">Claude Sonnet</span>
-        </div>
-      </div>
-
-      <div className="flex-1 p-4 overflow-y-auto">
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-indigo-600/20 border border-indigo-500/30 rounded-full text-indigo-400 text-xs font-medium mb-4">
-          <span className="w-2 h-2 bg-indigo-400 rounded-full animate-pulse"></span>
-          {lessonTitle}
-        </div>
-
-        <div className="flex gap-3">
-          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex-shrink-0 flex items-center justify-center">
-            <span className="text-sm">🤖</span>
-          </div>
-          <div className="bg-slate-800 rounded-2xl rounded-tl-sm p-4 flex-1">
-            <p className="text-slate-200 text-sm leading-relaxed whitespace-pre-wrap">
-              {displayedMessage}
-              <span className="inline-block w-1 h-4 bg-indigo-400 ml-1 animate-pulse"></span>
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
 // Sidebar de módulos
 function ModuleSidebar({
   modules,
@@ -365,11 +314,19 @@ export default function CursoPage({ hasAccess, userEmail }: PageProps) {
   const [currentLessonIndex, setCurrentLessonIndex] = useState(0)
   const [completedLessons, setCompletedLessons] = useState<Set<string>>(new Set())
   const [isComplete, setIsComplete] = useState(false)
+  const [attempts, setAttempts] = useState(0)
+  const [lessonStartTime, setLessonStartTime] = useState(Date.now())
 
   const currentModule = courseData.modules[currentModuleIndex]
   const currentLesson = isComplete
     ? courseData.completionLesson
     : currentModule?.lessons[currentLessonIndex]
+
+  // Reset attempts y tiempo cuando cambia la lección
+  useEffect(() => {
+    setAttempts(0)
+    setLessonStartTime(Date.now())
+  }, [currentModuleIndex, currentLessonIndex])
 
   // Cargar progreso guardado
   useEffect(() => {
@@ -410,6 +367,14 @@ export default function CursoPage({ hasAccess, userEmail }: PageProps) {
     }
   }
 
+  const handleError = useCallback((cmd: string) => {
+    setAttempts(prev => prev + 1)
+    // El tutor adaptativo recibirá la notificación a través de window.adaptiveTutor
+    if (typeof window !== 'undefined' && (window as any).adaptiveTutor?.notifyError) {
+      (window as any).adaptiveTutor.notifyError(cmd)
+    }
+  }, [])
+
   const handleSelectLesson = (moduleIdx: number, lessonIdx: number) => {
     setCurrentModuleIndex(moduleIdx)
     setCurrentLessonIndex(lessonIdx)
@@ -417,6 +382,18 @@ export default function CursoPage({ hasAccess, userEmail }: PageProps) {
   }
 
   const lessonKey = `${currentModuleIndex}-${currentLessonIndex}`
+
+  // Contexto para el tutor adaptativo
+  const tutorContext = {
+    lessonTitle: currentLesson?.title || '',
+    lessonInstruction: currentLesson?.instruction || '',
+    expectedCommand: currentLesson?.commandToType || '',
+    moduleTitle: currentModule?.title || '',
+    completedLessons: completedLessons.size,
+    totalLessons: getTotalLessons(),
+    attempts,
+    timeOnLesson: Math.round((Date.now() - lessonStartTime) / 1000),
+  }
 
   return (
     <>
@@ -479,20 +456,20 @@ export default function CursoPage({ hasAccess, userEmail }: PageProps) {
               </div>
             )}
 
-            {/* Terminal + Chat */}
+            {/* Terminal + Tutor Adaptativo */}
             <div className="flex-1 grid lg:grid-cols-2 gap-4 p-4 overflow-hidden">
               <div className="h-full">
                 <CourseTerminal
                   lesson={currentLesson}
                   onSuccess={handleLessonComplete}
+                  onError={handleError}
                   lessonKey={lessonKey}
                 />
               </div>
               <div className="h-full">
-                <TutorChat
-                  message={currentLesson.aiMessage}
-                  lessonTitle={currentLesson.title}
+                <AdaptiveTutor
                   lessonKey={lessonKey}
+                  context={tutorContext}
                 />
               </div>
             </div>
