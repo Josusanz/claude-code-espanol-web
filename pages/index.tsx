@@ -221,27 +221,57 @@ export default function LandingPage() {
                 <Link href="/" className="text-indigo-600 font-medium text-sm">
                   Inicio
                 </Link>
-                <Link href="/modo-facil" className="text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors text-sm font-medium">
-                  Modo Fácil
-                </Link>
-                <Link href="/empezar/introduccion" className="text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors text-sm font-medium">
-                  Empezar
-                </Link>
-                <Link href="/fundamentos/que-es" className="text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors text-sm font-medium">
-                  Fundamentos
-                </Link>
-                <Link href="/proyectos" className="text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors text-sm font-medium">
-                  Proyectos
-                </Link>
-                <Link href="/ralph" className="text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors text-sm font-medium">
-                  Ralph Loop
-                </Link>
-                <Link href="/course-builder" className="text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors text-sm font-medium">
-                  Course Builder
-                </Link>
-                <Link href="/recursos" className="text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors text-sm font-medium">
-                  Recursos
-                </Link>
+
+                {/* Dropdown: Curso */}
+                <div className="relative group">
+                  <button className="flex items-center gap-1 text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors text-sm font-medium">
+                    Curso
+                    <span className="material-symbols-outlined text-sm">expand_more</span>
+                  </button>
+                  <div className="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                    <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl shadow-xl py-2 min-w-[200px]">
+                      <Link href="/modo-facil" className="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 hover:text-indigo-600 dark:hover:text-indigo-400">
+                        Modo Fácil
+                      </Link>
+                      <Link href="/empezar/introduccion" className="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 hover:text-indigo-600 dark:hover:text-indigo-400">
+                        Empezar
+                      </Link>
+                      <Link href="/fundamentos/que-es" className="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 hover:text-indigo-600 dark:hover:text-indigo-400">
+                        Fundamentos
+                      </Link>
+                      <Link href="/proyectos" className="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 hover:text-indigo-600 dark:hover:text-indigo-400">
+                        Proyectos
+                      </Link>
+                      <Link href="/recursos" className="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 hover:text-indigo-600 dark:hover:text-indigo-400">
+                        Recursos
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Dropdown: Premium */}
+                <div className="relative group">
+                  <button className="flex items-center gap-1 text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors text-sm font-medium">
+                    Premium
+                    <span className="material-symbols-outlined text-sm">expand_more</span>
+                  </button>
+                  <div className="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                    <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl shadow-xl py-2 min-w-[220px]">
+                      <Link href="/ralph" className="block px-4 py-2 text-sm hover:bg-purple-50 dark:hover:bg-purple-900/30">
+                        <span className="text-slate-700 dark:text-slate-300">Ralph Loop</span>
+                        <span className="ml-2 text-xs text-purple-600 dark:text-purple-400 font-medium">$47</span>
+                      </Link>
+                      <Link href="/course-builder" className="block px-4 py-2 text-sm hover:bg-amber-50 dark:hover:bg-amber-900/30">
+                        <span className="text-slate-700 dark:text-slate-300">Course Builder</span>
+                        <span className="ml-2 text-xs text-amber-600 dark:text-amber-400 font-medium">$147</span>
+                      </Link>
+                      <div className="border-t border-slate-200 dark:border-slate-700 my-1"></div>
+                      <Link href="/premium" className="block px-4 py-2 text-sm text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 font-medium">
+                        Ver todos →
+                      </Link>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               <div className="flex items-center gap-3">
@@ -290,31 +320,47 @@ export default function LandingPage() {
             {/* Mobile menu */}
             {mobileMenuOpen && (
               <div className="md:hidden border-t border-slate-200 dark:border-slate-800 py-4 px-4 bg-slate-50/95 dark:bg-slate-950/95 backdrop-blur-md">
-                <div className="flex flex-col space-y-3">
-                  <Link href="/" className="text-indigo-600 font-medium py-2" onClick={() => setMobileMenuOpen(false)}>
+                <div className="flex flex-col space-y-1">
+                  <Link href="/" className="text-indigo-600 font-medium py-2 px-2" onClick={() => setMobileMenuOpen(false)}>
                     Inicio
                   </Link>
-                  <Link href="/modo-facil" className="text-slate-600 dark:text-slate-400 hover:text-indigo-600 py-2" onClick={() => setMobileMenuOpen(false)}>
-                    Modo Fácil
-                  </Link>
-                  <Link href="/empezar/introduccion" className="text-slate-600 dark:text-slate-400 hover:text-indigo-600 py-2" onClick={() => setMobileMenuOpen(false)}>
-                    Empezar
-                  </Link>
-                  <Link href="/fundamentos/que-es" className="text-slate-600 dark:text-slate-400 hover:text-indigo-600 py-2" onClick={() => setMobileMenuOpen(false)}>
-                    Fundamentos
-                  </Link>
-                  <Link href="/proyectos" className="text-slate-600 dark:text-slate-400 hover:text-indigo-600 py-2" onClick={() => setMobileMenuOpen(false)}>
-                    Proyectos
-                  </Link>
-                  <Link href="/ralph" className="text-slate-600 dark:text-slate-400 hover:text-indigo-600 py-2" onClick={() => setMobileMenuOpen(false)}>
-                    Ralph Loop
-                  </Link>
-                  <Link href="/course-builder" className="text-slate-600 dark:text-slate-400 hover:text-indigo-600 py-2" onClick={() => setMobileMenuOpen(false)}>
-                    Course Builder
-                  </Link>
-                  <Link href="/recursos" className="text-slate-600 dark:text-slate-400 hover:text-indigo-600 py-2" onClick={() => setMobileMenuOpen(false)}>
-                    Recursos
-                  </Link>
+
+                  {/* Curso section */}
+                  <div className="pt-2">
+                    <span className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider px-2">Curso Gratuito</span>
+                    <div className="mt-1 space-y-1">
+                      <Link href="/modo-facil" className="block text-slate-600 dark:text-slate-400 hover:text-indigo-600 hover:bg-slate-100 dark:hover:bg-slate-800 py-2 px-2 rounded-lg" onClick={() => setMobileMenuOpen(false)}>
+                        Modo Fácil
+                      </Link>
+                      <Link href="/empezar/introduccion" className="block text-slate-600 dark:text-slate-400 hover:text-indigo-600 hover:bg-slate-100 dark:hover:bg-slate-800 py-2 px-2 rounded-lg" onClick={() => setMobileMenuOpen(false)}>
+                        Empezar
+                      </Link>
+                      <Link href="/fundamentos/que-es" className="block text-slate-600 dark:text-slate-400 hover:text-indigo-600 hover:bg-slate-100 dark:hover:bg-slate-800 py-2 px-2 rounded-lg" onClick={() => setMobileMenuOpen(false)}>
+                        Fundamentos
+                      </Link>
+                      <Link href="/proyectos" className="block text-slate-600 dark:text-slate-400 hover:text-indigo-600 hover:bg-slate-100 dark:hover:bg-slate-800 py-2 px-2 rounded-lg" onClick={() => setMobileMenuOpen(false)}>
+                        Proyectos
+                      </Link>
+                      <Link href="/recursos" className="block text-slate-600 dark:text-slate-400 hover:text-indigo-600 hover:bg-slate-100 dark:hover:bg-slate-800 py-2 px-2 rounded-lg" onClick={() => setMobileMenuOpen(false)}>
+                        Recursos
+                      </Link>
+                    </div>
+                  </div>
+
+                  {/* Premium section */}
+                  <div className="pt-3">
+                    <span className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider px-2">Premium</span>
+                    <div className="mt-1 space-y-1">
+                      <Link href="/ralph" className="flex items-center justify-between text-slate-600 dark:text-slate-400 hover:text-purple-600 hover:bg-purple-50 dark:hover:bg-purple-900/30 py-2 px-2 rounded-lg" onClick={() => setMobileMenuOpen(false)}>
+                        Ralph Loop
+                        <span className="text-xs text-purple-600 dark:text-purple-400 font-medium">$47</span>
+                      </Link>
+                      <Link href="/course-builder" className="flex items-center justify-between text-slate-600 dark:text-slate-400 hover:text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-900/30 py-2 px-2 rounded-lg" onClick={() => setMobileMenuOpen(false)}>
+                        Course Builder
+                        <span className="text-xs text-amber-600 dark:text-amber-400 font-medium">$147</span>
+                      </Link>
+                    </div>
+                  </div>
                   <div className="pt-3 border-t border-slate-200 dark:border-slate-700">
                     <Link
                       href="/premium"
