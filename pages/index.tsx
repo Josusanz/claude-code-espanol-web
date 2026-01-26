@@ -465,6 +465,81 @@ export default function LandingPage() {
           </div>
         </main>
 
+        {/* Video Demos Section */}
+        <section className="py-20 bg-white dark:bg-slate-950">
+          <div className="max-w-6xl mx-auto px-6">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">
+                Mira lo que puedes hacer
+              </h2>
+              <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+                Videos cortos mostrando Claude Code en acción
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-6">
+              {/* Video 1: Landing Page */}
+              <div className="group relative bg-slate-100 dark:bg-slate-900 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 hover:border-indigo-400 dark:hover:border-indigo-500 transition-all hover:shadow-xl">
+                <div className="aspect-video relative bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
+                  <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-all"></div>
+                  <div className="relative z-10 text-center">
+                    <span className="material-symbols-outlined text-white text-5xl mb-2 opacity-90">web</span>
+                    <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur flex items-center justify-center mx-auto group-hover:scale-110 transition-transform">
+                      <span className="material-symbols-outlined text-white text-3xl">play_arrow</span>
+                    </div>
+                  </div>
+                  <span className="absolute bottom-2 right-2 bg-black/60 text-white text-xs px-2 py-1 rounded">1:30</span>
+                </div>
+                <div className="p-4">
+                  <h3 className="font-bold text-slate-900 dark:text-white mb-1">Crear Landing Page</h3>
+                  <p className="text-sm text-slate-600 dark:text-slate-400">De prompt a web publicada en 5 minutos</p>
+                </div>
+              </div>
+
+              {/* Video 2: Automation */}
+              <div className="group relative bg-slate-100 dark:bg-slate-900 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 hover:border-green-400 dark:hover:border-green-500 transition-all hover:shadow-xl">
+                <div className="aspect-video relative bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center">
+                  <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-all"></div>
+                  <div className="relative z-10 text-center">
+                    <span className="material-symbols-outlined text-white text-5xl mb-2 opacity-90">bolt</span>
+                    <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur flex items-center justify-center mx-auto group-hover:scale-110 transition-transform">
+                      <span className="material-symbols-outlined text-white text-3xl">play_arrow</span>
+                    </div>
+                  </div>
+                  <span className="absolute bottom-2 right-2 bg-black/60 text-white text-xs px-2 py-1 rounded">2:15</span>
+                </div>
+                <div className="p-4">
+                  <h3 className="font-bold text-slate-900 dark:text-white mb-1">Automatizar Tareas</h3>
+                  <p className="text-sm text-slate-600 dark:text-slate-400">Organiza 500 archivos en segundos</p>
+                </div>
+              </div>
+
+              {/* Video 3: Ralph Loop */}
+              <div className="group relative bg-slate-100 dark:bg-slate-900 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 hover:border-purple-400 dark:hover:border-purple-500 transition-all hover:shadow-xl">
+                <div className="aspect-video relative bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center">
+                  <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-all"></div>
+                  <div className="relative z-10 text-center">
+                    <span className="material-symbols-outlined text-white text-5xl mb-2 opacity-90">loop</span>
+                    <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur flex items-center justify-center mx-auto group-hover:scale-110 transition-transform">
+                      <span className="material-symbols-outlined text-white text-3xl">play_arrow</span>
+                    </div>
+                  </div>
+                  <span className="absolute bottom-2 right-2 bg-black/60 text-white text-xs px-2 py-1 rounded">1:45</span>
+                </div>
+                <div className="p-4">
+                  <h3 className="font-bold text-slate-900 dark:text-white mb-1">Ralph Loop Demo</h3>
+                  <p className="text-sm text-slate-600 dark:text-slate-400">Claude trabajando mientras duermes</p>
+                </div>
+              </div>
+            </div>
+
+            <p className="text-center mt-8 text-sm text-slate-500 dark:text-slate-400">
+              <span className="material-symbols-outlined text-base align-middle mr-1">info</span>
+              Haz clic en cualquier video para ver la demo completa
+            </p>
+          </div>
+        </section>
+
         {/* Simple Divider */}
         <div className="border-t border-slate-200 dark:border-slate-800"></div>
 

@@ -109,6 +109,15 @@ export default function PremiumHubPage() {
                 >
                   Volver al inicio
                 </Link>
+                <a
+                  href="https://yenze.lemonsqueezy.com/affiliates"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white text-sm font-semibold rounded-lg transition-all shadow-md hover:shadow-lg"
+                >
+                  <span className="material-symbols-outlined text-lg">handshake</span>
+                  Afiliados 20%
+                </a>
               </div>
             </div>
           </div>
