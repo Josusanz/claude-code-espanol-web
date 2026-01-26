@@ -1,0 +1,142 @@
+---
+title: "2.9 Análisis de Datos: Introducción"
+---
+
+import { Callout } from 'nextra/components'
+
+# Lección 2.9: Análisis de Datos con Claude Code
+
+¿Tienes hojas de cálculo con datos que no sabes cómo interpretar? Claude puede analizar CSVs, encontrar patrones y generar visualizaciones sin que escribas una línea de código.
+
+## ¿Por qué analizar datos con Claude?
+
+| Análisis manual (Excel) | Con Claude Code |
+|------------------------|-----------------|
+| Fórmulas complicadas | Lenguaje natural |
+| Gráficos limitados | Visualizaciones personalizadas |
+| Horas aprendiendo funciones | Resultados inmediatos |
+| Difícil encontrar patrones | IA detecta tendencias |
+
+<Callout type="info">
+  No necesitas saber Excel avanzado, Python ni estadística. Solo describe lo que quieres saber y Claude hace el análisis.
+</Callout>
+
+## ¿Qué puede analizar Claude?
+
+### Archivos CSV y Excel
+```
+Analiza ventas.csv y dime cuál fue el mes con más ingresos
+```
+
+### Datos de encuestas
+```
+Lee respuestas-encuesta.csv y resume los principales insights
+```
+
+### Métricas de negocio
+```
+Compara las métricas de Q1 vs Q2 y detecta tendencias
+```
+
+### Logs y registros
+```
+Analiza el archivo de logs y encuentra patrones de errores
+```
+
+## Tipos de análisis comunes
+
+### 1. Análisis descriptivo
+- ¿Cuál es el promedio de ventas?
+- ¿Cuántos clientes tenemos por región?
+- ¿Cuál es el producto más vendido?
+
+### 2. Análisis comparativo
+- ¿Cómo se compara enero con febrero?
+- ¿Qué vendedor tiene mejor rendimiento?
+- ¿Hay diferencias entre regiones?
+
+### 3. Detección de tendencias
+- ¿Las ventas están subiendo o bajando?
+- ¿Hay estacionalidad en los datos?
+- ¿Qué patrones se repiten?
+
+### 4. Análisis de anomalías
+- ¿Hay datos atípicos?
+- ¿Qué días tuvieron comportamiento inusual?
+- ¿Hay errores en los datos?
+
+## Ejemplo rápido
+
+Imagina que tienes un CSV de ventas:
+
+```csv
+fecha,producto,cantidad,precio,region
+2024-01-15,Widget A,10,25.00,Norte
+2024-01-15,Widget B,5,45.00,Sur
+2024-01-16,Widget A,8,25.00,Norte
+...
+```
+
+Le puedes pedir a Claude:
+
+```
+Lee ventas.csv y dime:
+1. Total de ventas por región
+2. Producto más vendido
+3. Día con más ingresos
+4. Genera un gráfico de ventas por mes
+```
+
+Y Claude te dará un análisis completo con visualizaciones.
+
+## Casos de uso por industria
+
+### E-commerce
+- Análisis de ventas por producto/categoría
+- Comportamiento de clientes
+- Inventario y rotación
+
+### Marketing
+- Rendimiento de campañas
+- Análisis de conversiones
+- ROI por canal
+
+### Recursos Humanos
+- Análisis de encuestas de clima
+- Métricas de rotación
+- Datos de contratación
+
+### Finanzas
+- Análisis de gastos
+- Proyecciones
+- Detección de anomalías
+
+### Educación
+- Análisis de calificaciones
+- Asistencia y deserción
+- Evaluación de programas
+
+## ¿Qué aprenderás en este proyecto?
+
+| Lección | Descripción |
+|---------|-------------|
+| 2.10 Proyecto Práctico | Analizar un CSV de ventas y generar informe |
+
+## Prepara tus datos
+
+Para la siguiente lección, necesitarás un archivo CSV. Puedes usar:
+
+1. **Tus propios datos** - Exporta de Excel, Google Sheets, o tu sistema
+2. **Datos de ejemplo** - Te daremos un CSV de ventas ficticias para practicar
+
+<Callout type="warning">
+  **Importante:** Si usas datos reales, asegúrate de que no contengan información sensible (datos personales, contraseñas, etc.).
+</Callout>
+
+---
+
+<div className="mt-8 text-center">
+  <a href="/proyectos/datos-proyecto" className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+    Siguiente: Proyecto de análisis →
+  </a>
+</div>

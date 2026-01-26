@@ -60,15 +60,26 @@ export default async function handler(
       const email = customEmail || user_email
 
       if (status === 'paid' && email) {
-        // Guardar en KV que este usuario ha comprado el curso
-        const purchaseKey = `curso_interactivo:${email.toLowerCase()}`
-        await kv.set(purchaseKey, {
+        const purchaseData = {
           purchasedAt: new Date().toISOString(),
           orderId: payload.data.id,
           productId: product_id,
-        })
+        }
 
-        console.log(`Purchase recorded for: ${email}`)
+        // Determinar qué producto se compró y guardar en la clave correcta
+        const RALPH_PRODUCT_ID = 793440
+
+        if (product_id === RALPH_PRODUCT_ID) {
+          // Ralph Loop
+          const ralphKey = `ralph_loop:${email.toLowerCase()}`
+          await kv.set(ralphKey, purchaseData)
+          console.log(`Ralph Loop purchase recorded for: ${email}`)
+        } else {
+          // Curso interactivo (producto principal)
+          const purchaseKey = `curso_interactivo:${email.toLowerCase()}`
+          await kv.set(purchaseKey, purchaseData)
+          console.log(`Curso purchase recorded for: ${email}`)
+        }
       }
     }
 

@@ -1,0 +1,261 @@
+---
+title: "2.5 Automatizaciones: Scripts Básicos"
+---
+
+import { Callout, Steps, Tabs } from 'nextra/components'
+
+# Lección 2.5: Scripts Básicos de Automatización
+
+En esta lección crearás dos automatizaciones prácticas que podrás usar en tu día a día.
+
+## Proyecto 1: Organizar Descargas
+
+Tu carpeta de descargas probablemente es un caos. Vamos a crear un script que organice automáticamente los archivos por tipo.
+
+### El objetivo
+
+```
+Antes:                          Después:
+Downloads/                      Downloads/
+├── foto1.jpg                   ├── Imagenes/
+├── documento.pdf               │   ├── foto1.jpg
+├── video.mp4                   │   └── screenshot.png
+├── musica.mp3                  ├── Documentos/
+├── archivo.zip                 │   └── documento.pdf
+├── screenshot.png              ├── Videos/
+└── datos.xlsx                  │   └── video.mp4
+                                ├── Audio/
+                                │   └── musica.mp3
+                                ├── Comprimidos/
+                                │   └── archivo.zip
+                                └── Hojas de Calculo/
+                                    └── datos.xlsx
+```
+
+### Paso a paso
+
+<Steps>
+### Navega a tu carpeta de descargas
+
+```bash
+cd ~/Downloads
+claude
+```
+
+### Pídele a Claude que cree el script
+
+```
+Crea un script en Python llamado organizar_descargas.py que:
+
+1. Lea todos los archivos en la carpeta actual
+2. Los mueva a subcarpetas según su extensión:
+   - Imagenes: jpg, jpeg, png, gif, webp, svg
+   - Documentos: pdf, doc, docx, txt, rtf
+   - Videos: mp4, mov, avi, mkv, webm
+   - Audio: mp3, wav, flac, aac, m4a
+   - Comprimidos: zip, rar, 7z, tar, gz
+   - Hojas de Calculo: xlsx, xls, csv
+   - Otros: todo lo demás
+
+3. Cree las carpetas si no existen
+4. No mueva carpetas, solo archivos
+5. Muestre un resumen de lo que movió
+```
+
+### Revisa el script generado
+
+Claude te mostrará el código. No necesitas entenderlo todo, pero verifica que mencione las extensiones que quieres organizar.
+
+### Ejecuta el script
+
+```
+Ejecuta el script organizar_descargas.py
+```
+
+### Verifica el resultado
+
+```bash
+ls -la
+```
+
+Deberías ver tus nuevas carpetas organizadas.
+</Steps>
+
+<Callout type="warning">
+  **Antes de ejecutar:** Asegúrate de no tener archivos importantes sueltos en Descargas que no quieras mover. O prueba primero con una carpeta de prueba.
+</Callout>
+
+### Personalización
+
+Puedes pedirle a Claude que modifique el script:
+
+| Quieres... | Dile a Claude... |
+|------------|------------------|
+| Añadir más tipos | "Añade una categoría para archivos de código: py, js, html, css" |
+| Ignorar ciertos archivos | "No muevas archivos que empiecen con punto (.)" |
+| Organizar por fecha | "En lugar de por tipo, organiza por mes de creación" |
+| Modo prueba | "Añade un modo --dry-run que solo muestre qué movería sin hacerlo" |
+
+---
+
+## Proyecto 2: Renombrar Fotos con Fecha
+
+Las cámaras nombran las fotos como `IMG_1234.jpg`. Vamos a renombrarlas con la fecha real.
+
+### El objetivo
+
+```
+Antes:                          Después:
+Fotos/                          Fotos/
+├── IMG_1234.jpg                ├── 2024-01-15_IMG_1234.jpg
+├── IMG_1235.jpg                ├── 2024-01-15_IMG_1235.jpg
+├── DSC_0001.jpg                ├── 2024-02-20_DSC_0001.jpg
+└── photo.png                   └── 2024-03-10_photo.png
+```
+
+### Paso a paso
+
+<Steps>
+### Navega a tu carpeta de fotos
+
+```bash
+cd ~/Pictures  # o donde tengas tus fotos
+claude
+```
+
+### Crea una carpeta de prueba
+
+```
+Crea una carpeta llamada "fotos_prueba" y copia ahí 5 fotos para probar
+```
+
+<Callout type="info">
+  Siempre prueba con copias primero. Renombrar es difícil de deshacer.
+</Callout>
+
+### Pídele a Claude el script
+
+```
+Crea un script en Python llamado renombrar_fotos.py que:
+
+1. Lea todas las imágenes (jpg, jpeg, png) en la carpeta actual
+2. Obtenga la fecha de modificación de cada archivo
+3. Renombre cada archivo con el formato: YYYY-MM-DD_nombre-original.extension
+4. Si ya tiene el prefijo de fecha, no lo duplique
+5. Muestre un resumen de los cambios
+```
+
+### Ejecuta en la carpeta de prueba
+
+```bash
+cd fotos_prueba
+```
+
+Luego dile a Claude:
+
+```
+Ejecuta el script renombrar_fotos.py
+```
+
+### Verifica y aplica a todas las fotos
+
+Si el resultado es correcto, puedes ejecutarlo en tu carpeta principal de fotos.
+</Steps>
+
+### Variaciones útiles
+
+```
+# Para usar la fecha de los metadatos EXIF (más precisa)
+Modifica el script para que use la fecha EXIF de la foto si está disponible,
+y si no, use la fecha de modificación del archivo
+
+# Para organizar en carpetas por año/mes
+Además de renombrar, mueve las fotos a carpetas YYYY/MM/
+
+# Para procesar subdirectorios
+Modifica el script para que procese también todas las subcarpetas
+```
+
+---
+
+## Ejercicio: Tu propia automatización
+
+Ahora es tu turno. Elige una de estas tareas (o inventa la tuya):
+
+<Tabs items={['Limpiar duplicados', 'Backup selectivo', 'Renombrar en lote']}>
+  <Tabs.Tab>
+### Encontrar archivos duplicados
+
+```
+Crea un script que encuentre archivos duplicados en una carpeta
+basándose en el tamaño y nombre. Muestra una lista de posibles
+duplicados para que yo decida cuáles eliminar.
+```
+  </Tabs.Tab>
+
+  <Tabs.Tab>
+### Backup de archivos recientes
+
+```
+Crea un script que copie a una carpeta "Backup" todos los archivos
+modificados en los últimos 7 días. Organiza el backup por fecha.
+```
+  </Tabs.Tab>
+
+  <Tabs.Tab>
+### Renombrar archivos en lote
+
+```
+Crea un script que renombre todos los archivos en una carpeta
+reemplazando espacios por guiones bajos y convirtiendo a minúsculas.
+```
+  </Tabs.Tab>
+</Tabs>
+
+## Consejos para crear automatizaciones
+
+### 1. Sé específico en tu prompt
+
+```
+❌ "Organiza mis archivos"
+✅ "Mueve los archivos .pdf a una carpeta llamada PDFs"
+```
+
+### 2. Pide confirmación
+
+```
+"Antes de mover cada archivo, muéstrame qué vas a hacer y pide confirmación"
+```
+
+### 3. Añade modo seguro
+
+```
+"Añade una opción --dry-run que muestre qué haría sin ejecutar nada"
+```
+
+### 4. Guarda los scripts útiles
+
+```
+"Guarda el script en ~/scripts/organizar_descargas.py"
+```
+
+## Resumen
+
+Aprendiste a:
+
+- Crear scripts para organizar archivos por tipo
+- Renombrar archivos en lote con patrones
+- Personalizar scripts según tus necesidades
+- Probar de forma segura antes de ejecutar
+
+<Callout type="info">
+  Los scripts que crees se quedan en tu computadora. Puedes ejecutarlos cuando quieras con `python nombre_script.py`
+</Callout>
+
+---
+
+<div className="mt-8 text-center">
+  <a href="/proyectos/automatizaciones-cron" className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+    Siguiente: Tareas programadas →
+  </a>
+</div>

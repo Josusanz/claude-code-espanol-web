@@ -1,0 +1,241 @@
+---
+title: "2.10 Análisis de Datos: Proyecto"
+---
+
+import { Callout, Steps } from 'nextra/components'
+
+# Lección 2.10: Proyecto de Análisis de Datos
+
+En esta lección analizarás un conjunto de datos de ventas y generarás un informe completo con visualizaciones.
+
+## El proyecto: Análisis de Ventas
+
+Trabajarás con un CSV de ventas ficticias de una tienda online y responderás preguntas de negocio reales.
+
+## Paso 1: Crear los datos de ejemplo
+
+<Steps>
+### Abre Claude Code en una carpeta de trabajo
+
+```bash
+mkdir ~/analisis-ventas
+cd ~/analisis-ventas
+claude
+```
+
+### Pide a Claude que genere datos de ejemplo
+
+```
+Crea un archivo CSV llamado ventas.csv con datos ficticios de ventas.
+
+Incluye estas columnas:
+- fecha (del 1 de enero al 31 de diciembre de 2024)
+- producto (5 productos diferentes)
+- categoria (Electrónica, Ropa, Hogar)
+- cantidad (1-10)
+- precio_unitario
+- region (Norte, Sur, Este, Oeste)
+- vendedor (5 nombres diferentes)
+
+Genera al menos 500 filas con datos realistas.
+Incluye algo de estacionalidad (más ventas en noviembre-diciembre).
+```
+
+### Verifica que se creó correctamente
+
+```
+Muéstrame las primeras 10 filas de ventas.csv
+```
+</Steps>
+
+## Paso 2: Análisis exploratorio
+
+Ahora vamos a entender los datos:
+
+```
+Analiza ventas.csv y dame un resumen general:
+
+1. ¿Cuántas filas y columnas tiene?
+2. ¿Cuáles son los valores únicos de cada columna categórica?
+3. ¿Hay valores nulos o datos faltantes?
+4. ¿Cuál es el rango de fechas?
+5. Estadísticas básicas de las columnas numéricas
+```
+
+## Paso 3: Preguntas de negocio
+
+### Análisis de ventas
+
+```
+Responde estas preguntas sobre las ventas:
+
+1. ¿Cuál fue el total de ingresos del año?
+2. ¿Cuál es el producto más vendido (por cantidad)?
+3. ¿Cuál es el producto que genera más ingresos?
+4. ¿Qué mes tuvo más ventas?
+5. ¿Qué mes tuvo menos ventas?
+```
+
+### Análisis por región
+
+```
+Analiza las ventas por región:
+
+1. ¿Qué región vende más?
+2. ¿Hay diferencias en los productos más vendidos por región?
+3. ¿El ticket promedio varía por región?
+```
+
+### Análisis de vendedores
+
+```
+Analiza el rendimiento de los vendedores:
+
+1. Ranking de vendedores por ingresos totales
+2. ¿Quién tiene el ticket promedio más alto?
+3. ¿Hay vendedores especializados en alguna categoría?
+```
+
+## Paso 4: Visualizaciones
+
+Pide a Claude que genere gráficos:
+
+```
+Genera visualizaciones para los datos de ventas:
+
+1. Gráfico de líneas: Ventas mensuales a lo largo del año
+2. Gráfico de barras: Top 5 productos por ingresos
+3. Gráfico de pastel: Distribución de ventas por categoría
+4. Gráfico de barras horizontal: Ventas por región
+
+Guarda cada gráfico como imagen PNG en la carpeta actual.
+Usa colores profesionales y títulos descriptivos.
+```
+
+<Callout type="info">
+  Claude puede generar gráficos usando Python y librerías como matplotlib o plotly. Tú solo describes lo que quieres ver.
+</Callout>
+
+## Paso 5: Detectar tendencias
+
+```
+Busca patrones y tendencias en los datos:
+
+1. ¿Hay estacionalidad en las ventas? ¿Cuándo son los picos?
+2. ¿Algún producto tiene tendencia creciente o decreciente?
+3. ¿Los fines de semana venden más o menos que entre semana?
+4. ¿Hay correlación entre cantidad vendida y precio?
+```
+
+## Paso 6: Generar el informe final
+
+```
+Genera un informe ejecutivo completo en formato markdown.
+
+Estructura:
+1. RESUMEN EJECUTIVO
+   - Métricas clave del año
+   - Principales hallazgos (3-5 bullets)
+
+2. ANÁLISIS DE VENTAS
+   - Tendencia mensual
+   - Análisis por producto
+   - Análisis por categoría
+
+3. ANÁLISIS GEOGRÁFICO
+   - Rendimiento por región
+   - Oportunidades identificadas
+
+4. RENDIMIENTO DEL EQUIPO
+   - Ranking de vendedores
+   - Mejores prácticas del top performer
+
+5. RECOMENDACIONES
+   - Acciones sugeridas basadas en los datos
+
+6. ANEXO: DATOS Y METODOLOGÍA
+   - Descripción del dataset
+   - Gráficos de soporte
+
+Guarda el informe como informe-ventas-2024.md
+```
+
+## Ejercicio: Tus propios datos
+
+<Steps>
+### Prepara tu CSV
+
+Exporta datos de:
+- Tu negocio (ventas, clientes, inventario)
+- Google Analytics
+- Redes sociales
+- Encuestas (Google Forms, Typeform)
+
+### Haz las preguntas correctas
+
+Antes de analizar, define qué quieres saber:
+- ¿Cuál es la métrica más importante?
+- ¿Qué decisiones tomarás con estos datos?
+- ¿Qué periodo de tiempo te interesa?
+
+### Ejecuta el análisis
+
+```
+Lee [tu_archivo.csv] y analiza:
+1. [Tu pregunta 1]
+2. [Tu pregunta 2]
+3. [Tu pregunta 3]
+
+Genera visualizaciones relevantes y un informe con conclusiones.
+```
+</Steps>
+
+## Prompts útiles para análisis de datos
+
+### Para limpieza de datos
+```
+Revisa ventas.csv y:
+- Identifica filas con datos faltantes
+- Encuentra valores atípicos (outliers)
+- Sugiere correcciones
+```
+
+### Para segmentación
+```
+Segmenta los clientes en grupos basándote en su comportamiento de compra.
+¿Cuántos segmentos identificas? ¿Qué caracteriza a cada uno?
+```
+
+### Para predicción simple
+```
+Basándote en la tendencia histórica, ¿cuántas ventas podríamos esperar
+en enero del próximo año?
+```
+
+### Para comparativas
+```
+Compara el rendimiento de Q4 2024 vs Q4 2023 (si tienes datos de ambos).
+¿Qué mejoró? ¿Qué empeoró?
+```
+
+## Checklist del proyecto
+
+Antes de terminar, verifica:
+
+- [ ] Los datos se cargaron correctamente
+- [ ] Respondiste las preguntas de negocio principales
+- [ ] Generaste al menos 3 visualizaciones
+- [ ] El informe tiene estructura clara
+- [ ] Las conclusiones son accionables
+
+<Callout type="info">
+  **Módulo 2 completado.** Has aprendido a crear landing pages, automatizar tareas, investigar temas y analizar datos con Claude Code.
+</Callout>
+
+---
+
+<div className="mt-8 text-center">
+  <a href="/ralph" className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+    Siguiente módulo: Ralph Loop →
+  </a>
+</div>

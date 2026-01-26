@@ -1,0 +1,105 @@
+---
+title: "2.4 Automatizaciones: Introducción"
+---
+
+import { Callout } from 'nextra/components'
+
+# Lección 2.4: Automatizaciones con Claude Code
+
+¿Cuántas horas pierdes haciendo tareas repetitivas en tu computadora? Renombrar archivos, organizar carpetas, procesar documentos... Claude Code puede hacer todo eso por ti.
+
+## ¿Qué es una automatización?
+
+Una automatización es cuando le enseñas a la computadora a hacer una tarea repetitiva por ti. En lugar de hacerlo manualmente 100 veces, lo haces una vez con Claude y él lo repite automáticamente.
+
+| Tarea manual | Con Claude Code |
+|--------------|-----------------|
+| Renombrar 200 fotos una por una | "Renombra todas las fotos con la fecha" |
+| Buscar y reemplazar en 50 archivos | "Cambia 'viejo' por 'nuevo' en todos los .txt" |
+| Copiar archivos a una carpeta de backup | "Copia los documentos modificados hoy a /backup" |
+| Extraer datos de 30 PDFs | "Extrae los totales de cada factura PDF" |
+
+<Callout type="info">
+  No necesitas saber programar. Le describes la tarea a Claude en español y él escribe el código necesario.
+</Callout>
+
+## Casos de uso comunes
+
+### 1. Organización de archivos
+
+- Mover fotos a carpetas por año/mes
+- Separar archivos por tipo (documentos, imágenes, videos)
+- Limpiar carpeta de descargas automáticamente
+- Encontrar y eliminar archivos duplicados
+
+### 2. Procesamiento de documentos
+
+- Renombrar archivos en lote con un patrón
+- Convertir formatos (ej: todos los .doc a .pdf)
+- Extraer texto de imágenes o PDFs
+- Combinar múltiples archivos en uno
+
+### 3. Gestión de datos
+
+- Limpiar y formatear CSVs
+- Extraer información específica de hojas de cálculo
+- Generar reportes a partir de datos crudos
+- Sincronizar información entre archivos
+
+### 4. Backups y mantenimiento
+
+- Copiar archivos importantes periódicamente
+- Comprimir carpetas antiguas
+- Limpiar archivos temporales
+- Verificar integridad de archivos
+
+## Ejemplo rápido
+
+Imagina que tienes 500 fotos con nombres como `IMG_1234.jpg` y quieres renombrarlas con la fecha en que fueron tomadas.
+
+**Sin Claude:**
+- Abrir cada foto
+- Ver la fecha en las propiedades
+- Renombrar manualmente
+- Repetir 500 veces
+- **Tiempo: ~4 horas**
+
+**Con Claude:**
+```
+Renombra todas las fotos en esta carpeta usando el formato
+YYYY-MM-DD_nombre-original.jpg basándote en la fecha de creación del archivo
+```
+- **Tiempo: ~30 segundos**
+
+## ¿Qué aprenderás en este proyecto?
+
+| Lección | Descripción |
+|---------|-------------|
+| 2.5 Scripts Básicos | Organizar descargas y renombrar fotos |
+| 2.6 Tareas Programadas | Configurar backups automáticos |
+
+## Requisitos
+
+- Claude Code instalado
+- Una carpeta con archivos para practicar (descargas, fotos, documentos)
+- Ganas de dejar de hacer tareas repetitivas
+
+<Callout type="warning">
+  **Consejo de seguridad:** Siempre prueba las automatizaciones primero con copias de tus archivos, no con los originales.
+</Callout>
+
+## La mentalidad correcta
+
+Antes de hacer cualquier tarea repetitiva, pregúntate:
+
+> "¿Puedo pedirle a Claude que haga esto por mí?"
+
+La respuesta casi siempre es **sí**.
+
+---
+
+<div className="mt-8 text-center">
+  <a href="/proyectos/automatizaciones-scripts" className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+    Siguiente: Scripts básicos →
+  </a>
+</div>

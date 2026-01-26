@@ -1,0 +1,235 @@
+---
+title: "2.6 Tareas Programadas"
+---
+
+import { Callout, Steps, Tabs } from 'nextra/components'
+
+# Lección 2.6: Tareas Programadas (Backups Automáticos)
+
+¿Y si tus scripts se ejecutaran solos? En esta lección aprenderás a programar tareas automáticas que se ejecuten diariamente, semanalmente o cuando quieras.
+
+## ¿Qué son las tareas programadas?
+
+Son instrucciones que le das a tu computadora para que ejecute algo automáticamente en un horario específico. Por ejemplo:
+
+- Hacer backup de documentos importantes cada noche
+- Organizar descargas cada lunes
+- Limpiar archivos temporales cada semana
+
+<Callout type="info">
+  En sistemas Unix (Mac/Linux) se llaman **cron jobs**. En Windows se usa el **Programador de tareas**.
+</Callout>
+
+## Proyecto: Backup Automático
+
+Vamos a crear un sistema de backup que copie tus archivos importantes automáticamente cada día.
+
+### Paso 1: Crear el script de backup
+
+<Steps>
+### Inicia Claude Code
+
+```bash
+cd ~
+claude
+```
+
+### Pide el script de backup
+
+```
+Crea un script en Python llamado backup_diario.py que:
+
+1. Copie el contenido de ~/Documentos a ~/Backups/YYYY-MM-DD/
+2. Solo copie archivos modificados en las últimas 24 horas
+3. Cree la carpeta de destino si no existe
+4. Genere un log en ~/Backups/backup.log con:
+   - Fecha y hora del backup
+   - Número de archivos copiados
+   - Tamaño total
+5. Elimine backups con más de 30 días de antigüedad
+```
+
+### Prueba el script manualmente
+
+```
+Ejecuta backup_diario.py
+```
+
+### Verifica que funcionó
+
+```bash
+ls ~/Backups/
+cat ~/Backups/backup.log
+```
+</Steps>
+
+### Paso 2: Programar la ejecución automática
+
+<Tabs items={['macOS/Linux', 'Windows']}>
+  <Tabs.Tab>
+### Usar cron en Mac/Linux
+
+Dile a Claude:
+
+```
+Ayúdame a configurar un cron job para ejecutar backup_diario.py
+todos los días a las 2:00 AM
+```
+
+Claude te guiará para:
+
+1. Abrir el editor de cron:
+```bash
+crontab -e
+```
+
+2. Añadir esta línea:
+```
+0 2 * * * /usr/bin/python3 /Users/tu_usuario/backup_diario.py
+```
+
+### Entender la sintaxis de cron
+
+```
+┌───────────── minuto (0-59)
+│ ┌───────────── hora (0-23)
+│ │ ┌───────────── día del mes (1-31)
+│ │ │ ┌───────────── mes (1-12)
+│ │ │ │ ┌───────────── día de la semana (0-6, 0=domingo)
+│ │ │ │ │
+0 2 * * * comando
+```
+
+### Ejemplos comunes
+
+| Horario | Expresión cron |
+|---------|----------------|
+| Cada día a las 2 AM | `0 2 * * *` |
+| Cada lunes a las 9 AM | `0 9 * * 1` |
+| Cada hora | `0 * * * *` |
+| Cada 15 minutos | `*/15 * * * *` |
+| Primer día del mes | `0 0 1 * *` |
+  </Tabs.Tab>
+
+  <Tabs.Tab>
+### Usar Programador de Tareas en Windows
+
+Dile a Claude:
+
+```
+Ayúdame a crear una tarea programada en Windows para ejecutar
+backup_diario.py todos los días a las 2:00 AM usando schtasks
+```
+
+Claude generará algo como:
+
+```powershell
+schtasks /create /tn "Backup Diario" /tr "python C:\Users\tu_usuario\backup_diario.py" /sc daily /st 02:00
+```
+
+### O usa la interfaz gráfica
+
+1. Busca "Programador de tareas" en el menú inicio
+2. Click en "Crear tarea básica"
+3. Sigue el asistente:
+   - Nombre: "Backup Diario"
+   - Trigger: Diariamente a las 2:00 AM
+   - Acción: Iniciar programa → `python backup_diario.py`
+  </Tabs.Tab>
+</Tabs>
+
+## Verificar que funciona
+
+### Ver tareas programadas
+
+<Tabs items={['macOS/Linux', 'Windows']}>
+  <Tabs.Tab>
+```bash
+crontab -l
+```
+  </Tabs.Tab>
+  <Tabs.Tab>
+```powershell
+schtasks /query /tn "Backup Diario"
+```
+  </Tabs.Tab>
+</Tabs>
+
+### Revisar logs
+
+Después de que se ejecute automáticamente, revisa el log:
+
+```bash
+cat ~/Backups/backup.log
+```
+
+## Ideas de automatizaciones programadas
+
+| Tarea | Frecuencia sugerida |
+|-------|---------------------|
+| Backup de documentos | Diario a las 2 AM |
+| Organizar descargas | Semanal (lunes) |
+| Limpiar archivos temporales | Semanal |
+| Sincronizar con nube | Cada 6 horas |
+| Generar reportes | Mensual |
+
+## Comandos útiles para Claude
+
+```
+# Crear nueva tarea programada
+"Configura un cron job para ejecutar [script] cada [frecuencia]"
+
+# Ver tareas existentes
+"Muéstrame mis cron jobs actuales"
+
+# Eliminar una tarea
+"Elimina el cron job de backup_diario.py"
+
+# Modificar horario
+"Cambia el backup para que se ejecute a las 3 AM en lugar de 2 AM"
+```
+
+## Solución de problemas
+
+<Callout type="warning">
+  **Si el script no se ejecuta automáticamente:**
+
+  1. Verifica que la ruta al script sea absoluta (completa)
+  2. Asegúrate de que el script tiene permisos de ejecución
+  3. Revisa los logs del sistema para errores
+  4. Prueba ejecutar el comando manualmente primero
+</Callout>
+
+### Hacer el script ejecutable (Mac/Linux)
+
+```bash
+chmod +x ~/backup_diario.py
+```
+
+### Usar rutas absolutas
+
+```
+❌ python backup_diario.py
+✅ /usr/bin/python3 /Users/tu_usuario/backup_diario.py
+```
+
+## Resumen
+
+Aprendiste a:
+
+- Crear scripts de backup con rotación automática
+- Programar tareas con cron (Mac/Linux) o Programador de tareas (Windows)
+- Verificar que las tareas se ejecutan correctamente
+- Solucionar problemas comunes
+
+<Callout type="info">
+  **Proyecto Automatizaciones completado.** Ya sabes crear scripts y programarlos para que se ejecuten solos.
+</Callout>
+
+---
+
+<div className="mt-8 text-center">
+  <a href="/proyectos/investigacion-intro" className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+    Siguiente proyecto: Investigación →
+  </a>
+</div>

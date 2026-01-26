@@ -1,0 +1,254 @@
+---
+title: "2.8 Investigación: Proyecto"
+---
+
+import { Callout, Steps } from 'nextra/components'
+
+# Lección 2.8: Proyecto de Investigación Completo
+
+En esta lección realizarás una investigación real: analizar competidores de un nicho de mercado y generar un informe profesional.
+
+## El proyecto: Análisis de Competidores
+
+Vamos a investigar un nicho específico, identificar los principales competidores y generar un informe útil para tomar decisiones de negocio.
+
+### Elige tu nicho
+
+Para este ejercicio, usaremos "apps de meditación" como ejemplo. Tú puedes elegir cualquier nicho que te interese:
+
+- Cursos de idiomas online
+- Software de gestión para restaurantes
+- Tiendas de ropa sostenible
+- Servicios de coaching personal
+- Tu propio proyecto o idea
+
+## Paso a paso
+
+<Steps>
+### Define el alcance de tu investigación
+
+Antes de empezar, decide qué quieres saber:
+
+```
+Voy a investigar el mercado de apps de meditación.
+Quiero saber:
+- ¿Quiénes son los 5 principales competidores?
+- ¿Qué precios manejan?
+- ¿Qué funcionalidades ofrecen?
+- ¿Cuáles son sus puntos fuertes y débiles?
+- ¿Hay algún hueco en el mercado?
+```
+
+### Inicia la investigación con Claude
+
+```bash
+claude
+```
+
+Dale el contexto completo:
+
+```
+Actúa como analista de mercado. Necesito investigar el mercado
+de apps de meditación y mindfulness.
+
+Investiga y dame:
+
+1. PANORAMA GENERAL
+   - Tamaño del mercado
+   - Tendencias actuales
+   - Perfil del usuario típico
+
+2. ANÁLISIS DE COMPETIDORES (top 5)
+   Para cada uno incluye:
+   - Nombre y descripción breve
+   - Modelo de negocio (freemium, suscripción, etc.)
+   - Precios
+   - Funcionalidades principales
+   - Puntos fuertes
+   - Puntos débiles
+   - Valoración en App Store/Play Store
+
+3. TABLA COMPARATIVA
+   Compara los 5 en una tabla con las métricas clave
+
+4. OPORTUNIDADES
+   - Nichos desatendidos
+   - Funcionalidades que faltan
+   - Posibles diferenciadores
+
+Busca información actualizada en internet.
+```
+
+### Pide profundizar en áreas específicas
+
+Si algún aspecto te interesa más:
+
+```
+Profundiza más en Headspace y Calm.
+¿Cuál es su estrategia de adquisición de usuarios?
+¿Qué tipo de contenido ofrecen?
+```
+
+### Solicita el informe final
+
+```
+Genera un informe ejecutivo en formato markdown con toda
+la investigación. Incluye:
+
+- Resumen ejecutivo (1 párrafo)
+- Análisis detallado
+- Tabla comparativa
+- Conclusiones y recomendaciones
+- Fuentes consultadas
+
+Guarda el informe en un archivo llamado "informe-competidores.md"
+```
+
+### Revisa y refina
+
+Lee el informe y pide ajustes:
+
+```
+En la sección de oportunidades, añade ideas específicas
+de cómo podría diferenciarse una nueva app
+```
+</Steps>
+
+## Ejemplo de prompt para tu nicho
+
+Adapta este template a tu área de interés:
+
+```
+Actúa como analista de mercado. Necesito investigar el mercado
+de [TU NICHO] en [REGIÓN/PAÍS].
+
+Investiga y dame:
+
+1. PANORAMA GENERAL
+   - Tamaño del mercado
+   - Tendencias actuales
+   - Perfil del cliente típico
+
+2. ANÁLISIS DE COMPETIDORES (top 5-7)
+   Para cada uno:
+   - Nombre y URL
+   - Propuesta de valor
+   - Precios
+   - Fortalezas
+   - Debilidades
+
+3. TABLA COMPARATIVA
+
+4. OPORTUNIDADES DE MERCADO
+   - Segmentos desatendidos
+   - Posibles diferenciadores
+
+Busca información actualizada. Genera un informe en markdown.
+```
+
+## Tipos de investigación que puedes hacer
+
+### Análisis de mercado
+```
+Investiga el mercado de [producto/servicio] en [país/región].
+Tamaño, crecimiento, tendencias, principales players.
+```
+
+### Due diligence de empresa
+```
+Investiga la empresa [nombre].
+Historia, fundadores, financiación, productos, empleados,
+noticias recientes, reputación online.
+```
+
+### Análisis de tecnología
+```
+Compara [tecnología A] vs [tecnología B] para [caso de uso].
+Incluye: rendimiento, comunidad, curva de aprendizaje, costos.
+```
+
+### Investigación de tendencias
+```
+¿Cuáles son las tendencias emergentes en [industria] para 2025?
+Busca informes, artículos y predicciones de expertos.
+```
+
+## Ejercicio: Tu investigación
+
+<Steps>
+### Elige un tema
+
+Puede ser:
+- Un mercado donde quieres emprender
+- Competidores de tu empresa actual
+- Una tecnología que estás evaluando
+- Un tema para un artículo o presentación
+
+### Escribe tu prompt
+
+Usa el template de arriba adaptado a tu tema.
+
+### Ejecuta la investigación
+
+Dale el prompt a Claude y deja que investigue.
+
+### Pide el informe
+
+Solicita que genere un documento markdown estructurado.
+
+### Guarda tu trabajo
+
+```
+Guarda el informe en ~/Documentos/investigacion-[tema].md
+```
+</Steps>
+
+## Consejos avanzados
+
+### Para mejor calidad
+
+```
+"Busca específicamente en fuentes como TechCrunch, Forbes,
+y reportes de Statista o CB Insights"
+```
+
+### Para datos recientes
+
+```
+"Enfócate en información de 2024 y 2025. Ignora datos
+anteriores a 2023"
+```
+
+### Para verificar información
+
+```
+"Para cada dato importante, incluye la fuente específica"
+```
+
+### Para formato profesional
+
+```
+"Formatea el informe como si fuera para presentar a inversores"
+```
+
+## Checklist de tu investigación
+
+Antes de dar por terminada tu investigación, verifica:
+
+- [ ] ¿Respondiste todas las preguntas iniciales?
+- [ ] ¿Los datos son recientes (2024-2025)?
+- [ ] ¿Incluiste fuentes verificables?
+- [ ] ¿El informe tiene estructura clara?
+- [ ] ¿Las conclusiones son accionables?
+
+<Callout type="info">
+  **Proyecto Investigación completado.** Ya sabes usar Claude como asistente de investigación profesional.
+</Callout>
+
+---
+
+<div className="mt-8 text-center">
+  <a href="/proyectos/datos-intro" className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+    Siguiente proyecto: Análisis de Datos →
+  </a>
+</div>

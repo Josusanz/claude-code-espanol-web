@@ -1,0 +1,238 @@
+---
+title: "2.2 Landing Page: Estructura"
+---
+
+import { Callout, Steps, Tabs } from 'nextra/components'
+
+# Lección 2.2: Crear la Estructura HTML
+
+En esta lección crearás el esqueleto de tu landing page. Claude Code escribirá todo el HTML por ti.
+
+## Preparación
+
+<Steps>
+### Crea una carpeta para tu proyecto
+
+Abre tu terminal y ejecuta:
+
+```bash
+mkdir mi-landing
+cd mi-landing
+```
+
+### Inicia Claude Code
+
+```bash
+claude
+```
+
+Ahora estás listo para pedirle a Claude que cree tu landing page.
+</Steps>
+
+## El prompt mágico
+
+Aquí está el prompt que usarás. **Cópialo y adáptalo** con tu información:
+
+```
+Crea un archivo index.html para una landing page con estas secciones:
+
+1. HERO SECTION:
+   - Título: [TU TÍTULO PRINCIPAL]
+   - Subtítulo: [DESCRIPCIÓN DE 1 LÍNEA]
+   - Botón CTA: [TEXTO DEL BOTÓN]
+
+2. FEATURES (3-4 características):
+   - [Feature 1]
+   - [Feature 2]
+   - [Feature 3]
+
+3. CTA FINAL:
+   - Texto motivador
+   - Botón de acción
+
+4. FOOTER:
+   - Copyright 2025
+   - Enlaces básicos
+
+Usa HTML semántico con clases descriptivas.
+No añadas estilos CSS todavía.
+```
+
+<Callout type="info">
+  Reemplaza todo lo que está entre [corchetes] con tu información real.
+</Callout>
+
+## Ejemplo práctico
+
+Imagina que quieres promocionar un curso de fotografía. Tu prompt sería:
+
+```
+Crea un archivo index.html para una landing page con estas secciones:
+
+1. HERO SECTION:
+   - Título: Aprende Fotografía desde Cero
+   - Subtítulo: Domina tu cámara en 30 días con ejercicios prácticos
+   - Botón CTA: Empezar Ahora
+
+2. FEATURES (3 características):
+   - Aprende a tu ritmo con videos cortos
+   - Ejercicios prácticos cada semana
+   - Comunidad de estudiantes para feedback
+
+3. CTA FINAL:
+   - Texto motivador
+   - Botón de acción
+
+4. FOOTER:
+   - Copyright 2025
+   - Enlaces básicos
+
+Usa HTML semántico con clases descriptivas.
+No añadas estilos CSS todavía.
+```
+
+## Lo que Claude creará
+
+Claude generará algo como esto:
+
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aprende Fotografía desde Cero</title>
+</head>
+<body>
+    <!-- Hero Section -->
+    <header class="hero">
+        <h1 class="hero-title">Aprende Fotografía desde Cero</h1>
+        <p class="hero-subtitle">Domina tu cámara en 30 días con ejercicios prácticos</p>
+        <a href="#" class="cta-button">Empezar Ahora</a>
+    </header>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="feature">
+            <h3>Aprende a tu ritmo</h3>
+            <p>Videos cortos que puedes ver cuando quieras</p>
+        </div>
+        <div class="feature">
+            <h3>Ejercicios prácticos</h3>
+            <p>Practica cada semana con ejercicios guiados</p>
+        </div>
+        <div class="feature">
+            <h3>Comunidad activa</h3>
+            <p>Recibe feedback de otros estudiantes</p>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <h2>¿Listo para capturar momentos increíbles?</h2>
+        <a href="#" class="cta-button">Únete Ahora</a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2025 Fotografía desde Cero</p>
+        <nav>
+            <a href="#">Privacidad</a>
+            <a href="#">Contacto</a>
+        </nav>
+    </footer>
+</body>
+</html>
+```
+
+## Verificar el resultado
+
+Una vez que Claude cree el archivo, puedes verlo en tu navegador:
+
+<Tabs items={['macOS', 'Windows', 'Linux']}>
+  <Tabs.Tab>
+```bash
+open index.html
+```
+  </Tabs.Tab>
+  <Tabs.Tab>
+```bash
+start index.html
+```
+  </Tabs.Tab>
+  <Tabs.Tab>
+```bash
+xdg-open index.html
+```
+  </Tabs.Tab>
+</Tabs>
+
+<Callout type="warning">
+  La página se verá "fea" porque no tiene estilos. Es normal. En la siguiente lección añadiremos el diseño con Tailwind CSS.
+</Callout>
+
+## Ejercicio: Tu turno
+
+<Steps>
+### Define tu proyecto
+
+Antes de pedirle nada a Claude, responde estas preguntas:
+
+- **¿Qué promocionas?** (producto, servicio, proyecto, portafolio)
+- **¿Cuál es el beneficio principal?** (1 frase)
+- **¿Qué acción quieres que tome el visitante?** (comprar, suscribirse, contactar)
+- **¿Cuáles son 3 características o beneficios?**
+
+### Crea tu prompt personalizado
+
+Usa la plantilla de arriba y reemplaza con tu información.
+
+### Pídele a Claude que lo cree
+
+Pega tu prompt en Claude Code y deja que haga la magia.
+
+### Verifica el resultado
+
+Abre el archivo en tu navegador y revisa que tenga todas las secciones.
+
+### Haz ajustes si es necesario
+
+Si algo no te gusta, simplemente dile a Claude:
+
+```
+Cambia el título del hero por "Nuevo Título"
+```
+
+o
+
+```
+Añade una cuarta característica: "Soporte 24/7"
+```
+</Steps>
+
+## Comandos útiles durante el ejercicio
+
+| Quieres... | Dile a Claude... |
+|------------|------------------|
+| Ver el archivo | `muéstrame el contenido de index.html` |
+| Cambiar texto | `cambia "texto viejo" por "texto nuevo" en index.html` |
+| Añadir sección | `añade una sección de testimonios antes del footer` |
+| Empezar de nuevo | `borra index.html y créalo de nuevo con...` |
+
+## Checklist de tu estructura
+
+Antes de continuar, verifica que tu `index.html` tiene:
+
+- [ ] Un `<header>` con título, subtítulo y botón
+- [ ] Una sección de features con al menos 3 items
+- [ ] Una sección CTA con texto motivador y botón
+- [ ] Un `<footer>` con copyright y enlaces
+- [ ] Clases CSS descriptivas (las usaremos después)
+
+---
+
+<div className="mt-8 text-center">
+  <a href="/proyectos/landing-estilos" className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+    Siguiente: Añadir estilos y publicar →
+  </a>
+</div>

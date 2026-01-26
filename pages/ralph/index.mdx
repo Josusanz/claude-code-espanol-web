@@ -1,0 +1,201 @@
+---
+title: Ralph Loop - Claude en Piloto Automático
+---
+
+import { Callout, Steps } from 'nextra/components'
+import RalphAccessGate from '../../components/RalphAccessGate'
+
+# 🤖 Ralph Loop: Claude en Piloto Automático
+
+<div className="mt-6 p-6 bg-gradient-to-r from-purple-900/30 to-blue-900/30 rounded-xl border border-purple-500/30">
+  <div className="flex items-center gap-2 mb-2">
+    <span className="px-3 py-1 text-sm font-semibold bg-purple-600 text-white rounded-full">Módulo Premium</span>
+    <span className="px-3 py-1 text-sm font-semibold bg-yellow-500/20 text-yellow-300 rounded-full">Avanzado</span>
+  </div>
+  <p className="text-lg text-gray-300 mt-4">
+    Aprende a configurar Claude Code para que trabaje de forma <strong>autónoma</strong> durante horas,
+    construyendo proyectos completos mientras tú solo supervisas.
+  </p>
+</div>
+
+---
+
+## ¿Qué es Ralph Loop?
+
+Ralph Loop es un sistema para que Claude Code trabaje de forma **autónoma en bucle**, reiniciando su contexto periódicamente para mantener la máxima calidad en sesiones largas.
+
+**El nombre viene de Ralph Wiggum** (Los Simpsons): un agente que trabaja felizmente en bucle, siguiendo instrucciones simples una y otra vez.
+
+<div className="my-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+  <div className="p-6 bg-gray-800/50 rounded-lg border border-gray-700">
+    <h3 className="text-xl font-bold text-red-400 mb-3">❌ Sin Ralph</h3>
+    <ul className="space-y-2 text-gray-300">
+      <li>• Sesiones largas degradan la calidad</li>
+      <li>• Olvida instrucciones anteriores</li>
+      <li>• Necesitas supervisión constante</li>
+      <li>• Máximo ~2 horas efectivas</li>
+    </ul>
+  </div>
+  <div className="p-6 bg-gray-800/50 rounded-lg border border-green-700">
+    <h3 className="text-xl font-bold text-green-400 mb-3">✅ Con Ralph</h3>
+    <ul className="space-y-2 text-gray-300">
+      <li>• Contexto fresco cada iteración</li>
+      <li>• Instrucciones persistentes en archivos</li>
+      <li>• Trabaja mientras duermes</li>
+      <li>• Proyectos completos en horas</li>
+    </ul>
+  </div>
+</div>
+
+---
+
+## Lo que aprenderás
+
+<div className="my-6 overflow-x-auto">
+  <table className="w-full">
+    <thead>
+      <tr className="border-b border-gray-700">
+        <th className="text-left py-3 px-4">Lección</th>
+        <th className="text-left py-3 px-4">Descripción</th>
+        <th className="text-left py-3 px-4">Duración</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr className="border-b border-gray-800">
+        <td className="py-3 px-4 font-medium">3.1 ¿Qué es Ralph Loop?</td>
+        <td className="py-3 px-4 text-gray-400">Concepto de loops autónomos y cuándo usarlos</td>
+        <td className="py-3 px-4 text-gray-500">~15 min</td>
+      </tr>
+      <tr className="border-b border-gray-800">
+        <td className="py-3 px-4 font-medium">3.2 Context Rot</td>
+        <td className="py-3 px-4 text-gray-400">Por qué reiniciar el contexto mejora los resultados</td>
+        <td className="py-3 px-4 text-gray-500">~15 min</td>
+      </tr>
+      <tr className="border-b border-gray-800">
+        <td className="py-3 px-4 font-medium">3.3 Anatomía de un Loop</td>
+        <td className="py-3 px-4 text-gray-400">Los 4 archivos clave del sistema</td>
+        <td className="py-3 px-4 text-gray-500">~20 min</td>
+      </tr>
+      <tr className="border-b border-gray-800">
+        <td className="py-3 px-4 font-medium">3.4 Fase 1: Specs</td>
+        <td className="py-3 px-4 text-gray-400">Cómo definir especificaciones claras</td>
+        <td className="py-3 px-4 text-gray-500">~30 min</td>
+      </tr>
+      <tr className="border-b border-gray-800">
+        <td className="py-3 px-4 font-medium">3.5 Fase 2: El Plan</td>
+        <td className="py-3 px-4 text-gray-400">Crear un plan de tareas atómicas</td>
+        <td className="py-3 px-4 text-gray-500">~20 min</td>
+      </tr>
+      <tr className="border-b border-gray-800">
+        <td className="py-3 px-4 font-medium">3.6 Fase 3: Ejecutar</td>
+        <td className="py-3 px-4 text-gray-400">Lanzar, monitorear e intervenir</td>
+        <td className="py-3 px-4 text-gray-500">~30 min</td>
+      </tr>
+      <tr className="border-b border-gray-800">
+        <td className="py-3 px-4 font-medium">3.7 Proyecto Práctico</td>
+        <td className="py-3 px-4 text-gray-400">Construir una app completa con Ralph</td>
+        <td className="py-3 px-4 text-gray-500">~45 min</td>
+      </tr>
+      <tr>
+        <td className="py-3 px-4 font-medium">3.8 Consejos Avanzados</td>
+        <td className="py-3 px-4 text-gray-400">Seguridad, Docker, múltiples agentes</td>
+        <td className="py-3 px-4 text-gray-500">~20 min</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p className="text-center text-gray-400 mt-4">
+  <strong>Tiempo total:</strong> ~3.5 horas | <strong>8 lecciones</strong> | <strong>Proyecto incluido</strong>
+</p>
+
+---
+
+## Preview: Los 4 Archivos Clave
+
+El sistema Ralph se basa en 4 archivos que persisten entre reinicios:
+
+```
+mi-proyecto/
+├── loop.sh          # Script que reinicia Claude
+├── PROMPT_build.md  # Instrucciones para Claude
+├── PLAN.md          # Tareas pendientes/completadas
+└── PROGRESS.md      # Aprendizajes del proyecto
+```
+
+<Callout type="info">
+  En el módulo completo aprenderás exactamente qué poner en cada archivo y cómo configurarlos para tu proyecto específico.
+</Callout>
+
+---
+
+## Casos de Uso Reales
+
+<div className="grid grid-cols-1 md:grid-cols-3 gap-4 my-6">
+  <div className="p-4 bg-blue-900/20 rounded-lg border border-blue-700/50">
+    <h4 className="font-bold text-blue-400">🚀 MVPs y Prototipos</h4>
+    <p className="text-sm text-gray-400 mt-2">Construye una app funcional mientras duermes</p>
+  </div>
+  <div className="p-4 bg-green-900/20 rounded-lg border border-green-700/50">
+    <h4 className="font-bold text-green-400">📝 Migraciones</h4>
+    <p className="text-sm text-gray-400 mt-2">Refactoriza cientos de archivos de forma automática</p>
+  </div>
+  <div className="p-4 bg-purple-900/20 rounded-lg border border-purple-700/50">
+    <h4 className="font-bold text-purple-400">🧪 Tests</h4>
+    <p className="text-sm text-gray-400 mt-2">Genera tests para un codebase existente</p>
+  </div>
+</div>
+
+---
+
+## Requisitos
+
+<Callout type="warning">
+  Ralph Loop es una técnica **avanzada**. Asegúrate de cumplir estos requisitos:
+</Callout>
+
+- ✅ Completar [Módulo 1: Fundamentos](/fundamentos)
+- ✅ Completar [Módulo 2: Proyectos Prácticos](/proyectos)
+- ✅ Familiaridad con la terminal y git
+- ✅ Un proyecto en mente para automatizar
+
+---
+
+## Acceder al Contenido
+
+<RalphAccessGate />
+
+---
+
+## Preguntas Frecuentes
+
+<details className="my-4 p-4 bg-gray-800/50 rounded-lg">
+  <summary className="font-semibold cursor-pointer">¿Necesito saber programar?</summary>
+  <p className="mt-3 text-gray-400">
+    No necesitas ser programador experto, pero sí debes sentirte cómodo con la terminal y conceptos básicos de código.
+    El Módulo 1 y 2 te preparan para esto.
+  </p>
+</details>
+
+<details className="my-4 p-4 bg-gray-800/50 rounded-lg">
+  <summary className="font-semibold cursor-pointer">¿Es seguro dejar a Claude trabajando solo?</summary>
+  <p className="mt-3 text-gray-400">
+    En el módulo aprenderás a usar sandboxing (Docker, VMs) para aislar el trabajo de Ralph.
+    Nunca ejecutes código autónomo en sistemas con datos sensibles.
+  </p>
+</details>
+
+<details className="my-4 p-4 bg-gray-800/50 rounded-lg">
+  <summary className="font-semibold cursor-pointer">¿Cuánto cuesta en API de Anthropic?</summary>
+  <p className="mt-3 text-gray-400">
+    Depende del proyecto. Un MVP típico puede costar $5-20 en tokens.
+    El truco está en hacer tareas atómicas que usen poco contexto cada vez.
+  </p>
+</details>
+
+<details className="my-4 p-4 bg-gray-800/50 rounded-lg">
+  <summary className="font-semibold cursor-pointer">¿Incluye soporte?</summary>
+  <p className="mt-3 text-gray-400">
+    Sí. Tienes acceso al Discord donde puedes hacer preguntas y compartir tus proyectos con Ralph.
+  </p>
+</details>

@@ -1,0 +1,260 @@
+---
+title: "2.3 Landing Page: Estilos y Deploy"
+---
+
+import { Callout, Steps, Tabs } from 'nextra/components'
+
+# Lección 2.3: Estilos con Tailwind y Publicación
+
+Tu landing page tiene estructura pero se ve básica. En esta lección la transformarás en una página profesional y la publicarás en internet.
+
+## Parte 1: Añadir Tailwind CSS
+
+Tailwind CSS es una herramienta que te permite diseñar páginas web con clases predefinidas. No necesitas saber CSS - Claude lo hará por ti.
+
+### El prompt para añadir estilos
+
+Dile a Claude:
+
+```
+Añade Tailwind CSS a mi index.html usando el CDN.
+Aplica estilos modernos y profesionales:
+- Hero: fondo con gradiente, texto centrado, botón con hover
+- Features: grid de 3 columnas, iconos o emojis, sombras suaves
+- CTA: fondo de color contrastante, botón destacado
+- Footer: fondo oscuro, texto claro
+- Responsive: que se vea bien en móvil y desktop
+```
+
+<Callout type="info">
+  El CDN de Tailwind permite usar la librería sin instalar nada. Perfecto para proyectos simples.
+</Callout>
+
+### Resultado esperado
+
+Claude transformará tu HTML básico en algo como esto:
+
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aprende Fotografía desde Cero</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="font-sans">
+    <!-- Hero Section -->
+    <header class="bg-gradient-to-r from-purple-600 to-blue-500 text-white py-20 px-4">
+        <div class="max-w-4xl mx-auto text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4">
+                Aprende Fotografía desde Cero
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 opacity-90">
+                Domina tu cámara en 30 días con ejercicios prácticos
+            </p>
+            <a href="#" class="inline-block bg-white text-purple-600 px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-100 transition">
+                Empezar Ahora
+            </a>
+        </div>
+    </header>
+
+    <!-- Features Section -->
+    <section class="py-16 px-4 bg-gray-50">
+        <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
+            <div class="bg-white p-6 rounded-xl shadow-md text-center">
+                <div class="text-4xl mb-4">🎬</div>
+                <h3 class="text-xl font-bold mb-2">Aprende a tu ritmo</h3>
+                <p class="text-gray-600">Videos cortos que puedes ver cuando quieras</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-md text-center">
+                <div class="text-4xl mb-4">📸</div>
+                <h3 class="text-xl font-bold mb-2">Ejercicios prácticos</h3>
+                <p class="text-gray-600">Practica cada semana con ejercicios guiados</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-md text-center">
+                <div class="text-4xl mb-4">👥</div>
+                <h3 class="text-xl font-bold mb-2">Comunidad activa</h3>
+                <p class="text-gray-600">Recibe feedback de otros estudiantes</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 px-4 bg-purple-600 text-white text-center">
+        <h2 class="text-3xl font-bold mb-6">¿Listo para capturar momentos increíbles?</h2>
+        <a href="#" class="inline-block bg-white text-purple-600 px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-100 transition">
+            Únete Ahora
+        </a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-8 px-4">
+        <div class="max-w-4xl mx-auto flex flex-col md:flex-row justify-between items-center">
+            <p>© 2025 Fotografía desde Cero</p>
+            <nav class="flex gap-4 mt-4 md:mt-0">
+                <a href="#" class="hover:text-white transition">Privacidad</a>
+                <a href="#" class="hover:text-white transition">Contacto</a>
+            </nav>
+        </div>
+    </footer>
+</body>
+</html>
+```
+
+### Personalizar colores
+
+Si quieres cambiar los colores, dile a Claude:
+
+```
+Cambia el esquema de colores a tonos verdes en lugar de morados
+```
+
+o
+
+```
+Usa estos colores: primario #FF6B35, secundario #004E89
+```
+
+---
+
+## Parte 2: Publicar en Internet
+
+Tienes varias opciones gratuitas para publicar tu landing. Te muestro las más fáciles.
+
+<Tabs items={['GitHub Pages', 'Netlify Drop', 'Vercel']}>
+  <Tabs.Tab>
+### GitHub Pages (Recomendado si tienes GitHub)
+
+<Steps>
+### Crea un repositorio en GitHub
+
+Ve a [github.com/new](https://github.com/new) y crea un repo llamado `mi-landing`.
+
+### Sube tu archivo
+
+Dile a Claude:
+
+```
+Inicializa git, añade el archivo index.html y haz push a github.com/TU_USUARIO/mi-landing
+```
+
+### Activa GitHub Pages
+
+1. Ve a Settings → Pages en tu repositorio
+2. En "Source" selecciona la rama `main`
+3. Guarda y espera 1-2 minutos
+
+### Tu URL
+
+Tu página estará en: `https://TU_USUARIO.github.io/mi-landing`
+</Steps>
+  </Tabs.Tab>
+
+  <Tabs.Tab>
+### Netlify Drop (Más fácil, sin cuenta)
+
+<Steps>
+### Ve a Netlify Drop
+
+Abre [app.netlify.com/drop](https://app.netlify.com/drop) en tu navegador.
+
+### Arrastra tu carpeta
+
+Arrastra la carpeta `mi-landing` (la que contiene `index.html`) al área de drop.
+
+### Listo
+
+Netlify te dará una URL tipo `https://random-name-12345.netlify.app`
+
+### Opcional: Personaliza la URL
+
+Crea una cuenta gratuita para cambiar el nombre a algo más memorable.
+</Steps>
+  </Tabs.Tab>
+
+  <Tabs.Tab>
+### Vercel (Bueno para proyectos futuros)
+
+<Steps>
+### Instala Vercel CLI
+
+```bash
+npm install -g vercel
+```
+
+### Despliega
+
+En tu carpeta `mi-landing`, ejecuta:
+
+```bash
+vercel
+```
+
+### Sigue las instrucciones
+
+Vercel te guiará y te dará una URL pública.
+</Steps>
+  </Tabs.Tab>
+</Tabs>
+
+<Callout type="warning">
+  **Tip:** Netlify Drop es la opción más rápida si nunca has publicado una web. Solo arrastra y suelta.
+</Callout>
+
+---
+
+## Ejercicio Final
+
+<Steps>
+### Aplica estilos a tu landing
+
+Usa el prompt de Tailwind CSS y personaliza los colores a tu gusto.
+
+### Verifica en el navegador
+
+Abre `index.html` y verifica que:
+- Se ve bien en desktop
+- Se ve bien en móvil (usa las herramientas de desarrollador: F12 → icono de móvil)
+- Los botones cambian al pasar el mouse
+
+### Publica tu landing
+
+Usa cualquiera de los métodos anteriores (recomiendo Netlify Drop para empezar).
+
+### Comparte tu URL
+
+¡Felicidades! Ya tienes tu primera landing page publicada en internet.
+</Steps>
+
+## Checklist Final
+
+Antes de compartir tu landing, verifica:
+
+- [ ] El título describe claramente qué ofreces
+- [ ] El botón CTA tiene un texto de acción claro
+- [ ] Los colores son consistentes y profesionales
+- [ ] Se ve bien en móvil
+- [ ] Todos los enlaces funcionan (o están como `#` si son placeholder)
+- [ ] La URL es accesible desde otro dispositivo
+
+## Próximos pasos
+
+Con lo que aprendiste puedes:
+
+- Crear landing pages para otros proyectos
+- Experimentar con diferentes diseños pidiendo a Claude
+- Añadir formularios de contacto (siguiente nivel)
+- Conectar con herramientas de email marketing
+
+<Callout type="info">
+  **Proyecto completado.** Has creado y publicado tu primera landing page usando Claude Code.
+</Callout>
+
+---
+
+<div className="mt-8 text-center">
+  <a href="/proyectos/automatizaciones-intro" className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+    Siguiente proyecto: Automatizaciones →
+  </a>
+</div>
