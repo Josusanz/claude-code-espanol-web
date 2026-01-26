@@ -479,7 +479,7 @@ export default function LandingPage() {
 
             <div className="grid md:grid-cols-3 gap-6">
               {/* Video 1: Landing Page */}
-              <div className="group relative bg-slate-100 dark:bg-slate-900 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 hover:border-indigo-400 dark:hover:border-indigo-500 transition-all hover:shadow-xl">
+              <Link href="/plataforma/demo-visual" className="group relative bg-slate-100 dark:bg-slate-900 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 hover:border-indigo-400 dark:hover:border-indigo-500 transition-all hover:shadow-xl cursor-pointer">
                 <div className="aspect-video relative bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
                   <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-all"></div>
                   <div className="relative z-10 text-center">
@@ -488,16 +488,16 @@ export default function LandingPage() {
                       <span className="material-symbols-outlined text-white text-3xl">play_arrow</span>
                     </div>
                   </div>
-                  <span className="absolute bottom-2 right-2 bg-black/60 text-white text-xs px-2 py-1 rounded">1:30</span>
+                  <span className="absolute bottom-2 right-2 bg-black/60 text-white text-xs px-2 py-1 rounded">Demo</span>
                 </div>
                 <div className="p-4">
                   <h3 className="font-bold text-slate-900 dark:text-white mb-1">Crear Landing Page</h3>
                   <p className="text-sm text-slate-600 dark:text-slate-400">De prompt a web publicada en 5 minutos</p>
                 </div>
-              </div>
+              </Link>
 
               {/* Video 2: Automation */}
-              <div className="group relative bg-slate-100 dark:bg-slate-900 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 hover:border-green-400 dark:hover:border-green-500 transition-all hover:shadow-xl">
+              <Link href="/proyectos/automatizaciones-intro" className="group relative bg-slate-100 dark:bg-slate-900 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 hover:border-green-400 dark:hover:border-green-500 transition-all hover:shadow-xl cursor-pointer">
                 <div className="aspect-video relative bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center">
                   <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-all"></div>
                   <div className="relative z-10 text-center">
@@ -506,16 +506,16 @@ export default function LandingPage() {
                       <span className="material-symbols-outlined text-white text-3xl">play_arrow</span>
                     </div>
                   </div>
-                  <span className="absolute bottom-2 right-2 bg-black/60 text-white text-xs px-2 py-1 rounded">2:15</span>
+                  <span className="absolute bottom-2 right-2 bg-black/60 text-white text-xs px-2 py-1 rounded">Tutorial</span>
                 </div>
                 <div className="p-4">
                   <h3 className="font-bold text-slate-900 dark:text-white mb-1">Automatizar Tareas</h3>
                   <p className="text-sm text-slate-600 dark:text-slate-400">Organiza 500 archivos en segundos</p>
                 </div>
-              </div>
+              </Link>
 
               {/* Video 3: Ralph Loop */}
-              <div className="group relative bg-slate-100 dark:bg-slate-900 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 hover:border-purple-400 dark:hover:border-purple-500 transition-all hover:shadow-xl">
+              <Link href="/ralph" className="group relative bg-slate-100 dark:bg-slate-900 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 hover:border-purple-400 dark:hover:border-purple-500 transition-all hover:shadow-xl cursor-pointer">
                 <div className="aspect-video relative bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center">
                   <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-all"></div>
                   <div className="relative z-10 text-center">
@@ -524,18 +524,18 @@ export default function LandingPage() {
                       <span className="material-symbols-outlined text-white text-3xl">play_arrow</span>
                     </div>
                   </div>
-                  <span className="absolute bottom-2 right-2 bg-black/60 text-white text-xs px-2 py-1 rounded">1:45</span>
+                  <span className="absolute bottom-2 right-2 bg-black/60 text-white text-xs px-2 py-1 rounded">Premium</span>
                 </div>
                 <div className="p-4">
                   <h3 className="font-bold text-slate-900 dark:text-white mb-1">Ralph Loop Demo</h3>
                   <p className="text-sm text-slate-600 dark:text-slate-400">Claude trabajando mientras duermes</p>
                 </div>
-              </div>
+              </Link>
             </div>
 
             <p className="text-center mt-8 text-sm text-slate-500 dark:text-slate-400">
-              <span className="material-symbols-outlined text-base align-middle mr-1">info</span>
-              Haz clic en cualquier video para ver la demo completa
+              <span className="material-symbols-outlined text-base align-middle mr-1">touch_app</span>
+              Haz clic en cualquier card para probar
             </p>
           </div>
         </section>
