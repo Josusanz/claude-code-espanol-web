@@ -1,0 +1,231 @@
+---
+title: "Sistema de Progreso"
+---
+
+import { Callout } from 'nextra/components'
+import CourseBuilderAccessGate from '../../components/CourseBuilderAccessGate'
+
+# Módulo 4.3: Sistema de Progreso
+
+<CourseBuilderAccessGate>
+
+## Por Qué Trackear Progreso
+
+Un buen curso necesita:
+
+1. **Motivación**: Ver progreso motiva a continuar
+2. **Orientación**: Saber dónde estás y qué sigue
+3. **Recuperación**: Poder retomar después de una pausa
+
+---
+
+## Opción 1: Progreso Simple (Archivo)
+
+La forma más simple: un archivo `PROGRESO.md` que Claude actualiza.
+
+```markdown
+# Progreso del Curso
+
+## Estado actual
+Última lección completada: Lección 3
+
+## Lecciones
+- [x] Lección 1: Tu primer programa
+- [x] Lección 2: Variables
+- [x] Lección 3: Operadores
+- [ ] Lección 4: Condicionales
+- [ ] Lección 5: Bucles
+...
+
+## Notas
+- Preguntó sobre diferencia entre = y ==
+- Le costó los bucles anidados
+```
+
+### Comando `/progreso`
+
+Crea `.claude/commands/progreso.md`:
+
+```markdown
+---
+description: 📊 Ver tu progreso en el curso
+---
+
+# Ver Progreso
+
+## Contexto para el tutor
+
+El alumno quiere ver su progreso. Lee el archivo PROGRESO.md y muéstralo de forma visual.
+
+## Instrucciones
+
+1. Lee el archivo PROGRESO.md
+2. Cuenta lecciones completadas vs totales
+3. Calcula el porcentaje
+4. Muestra de forma visual:
+
+> "📊 **Tu progreso en el curso**
+>
+> Lecciones completadas: X/Y (Z%)
+>
+> ```
+> [██████████░░░░░░░░░░] 50%
+> ```
+>
+> **Siguiente lección:** /leccion-X
+>
+> ¡Vas muy bien! 🎉"
+```
+
+### Actualizar Progreso
+
+En cada lección, incluye instrucciones para actualizar:
+
+```markdown
+### Al completar
+
+Actualiza PROGRESO.md marcando esta lección como completada:
+- [x] Lección 4: Condicionales
+```
+
+---
+
+## Opción 2: Progreso Avanzado (JSON)
+
+Para cursos más complejos, usa un archivo JSON:
+
+```json
+{
+  "curso": "Python para Principiantes",
+  "version": "1.0",
+  "alumno": {
+    "inicio": "2024-01-15",
+    "ultimaActividad": "2024-01-17"
+  },
+  "progreso": {
+    "leccion-1": { "completada": true, "fecha": "2024-01-15" },
+    "leccion-2": { "completada": true, "fecha": "2024-01-15" },
+    "leccion-3": { "completada": true, "fecha": "2024-01-16" },
+    "leccion-4": { "completada": false }
+  },
+  "notas": [
+    { "leccion": 2, "nota": "Confusión con tipos de datos" }
+  ]
+}
+```
+
+### Ventajas
+
+- Más estructurado
+- Fechas exactas
+- Notas por lección
+- Fácil de procesar programáticamente
+
+---
+
+## Comando `/iniciar` Inteligente
+
+Haz que `/iniciar` detecte si es alumno nuevo o regresa:
+
+```markdown
+---
+description: 🚀 Comenzar o continuar el curso
+---
+
+# Iniciar Curso
+
+## Contexto para el tutor
+
+Este comando hace dos cosas:
+1. Si es alumno nuevo: dar bienvenida y empezar desde lección 1
+2. Si ya tiene progreso: dar bienvenida y ofrecer continuar
+
+## Instrucciones
+
+1. Verifica si existe PROGRESO.md (o progreso.json)
+
+2. Si NO existe:
+   > "¡Bienvenido al curso de [nombre]! 🎉
+   >
+   > Este es tu primer día. Vamos a configurar todo y empezar con la primera lección.
+   >
+   > Escribe `/leccion-1` para comenzar."
+
+   Crea el archivo PROGRESO.md vacío.
+
+3. Si SÍ existe:
+   > "¡Hola de nuevo! 👋
+   >
+   > Veo que ya has completado X lecciones.
+   > Tu próxima lección es: [nombre de lección]
+   >
+   > ¿Continuamos? Escribe `/leccion-X`
+   >
+   > O escribe `/progreso` para ver tu avance completo."
+```
+
+---
+
+## Recordatorios de Progreso
+
+Al final de cada lección, recuerda el progreso:
+
+```markdown
+### Cierre de lección
+
+> "✅ **Lección X completada**
+>
+> Has completado X de Y lecciones (Z%)
+>
+> Próxima: Lección X+1 - [Título]
+>
+> Escribe `/leccion-X+1` cuando estés listo, o `/progreso` para ver tu avance."
+```
+
+---
+
+## Gamificación Simple
+
+Añade elementos de gamificación:
+
+```markdown
+## Logros
+
+- 🌟 **Primera línea**: Escribiste tu primer código
+- 🔥 **En racha**: 3 lecciones en un día
+- 💪 **Perseverante**: Completaste una lección difícil
+- 🏆 **Graduado**: Terminaste el curso
+```
+
+En el archivo de progreso:
+
+```json
+"logros": [
+  { "id": "primera-linea", "desbloqueado": true, "fecha": "2024-01-15" },
+  { "id": "en-racha", "desbloqueado": true, "fecha": "2024-01-16" }
+]
+```
+
+---
+
+## Práctica
+
+1. **Crea PROGRESO.md** para tu curso con la estructura de lecciones
+2. **Crea `/progreso`** que muestre el avance de forma visual
+3. **Modifica `/iniciar`** para detectar alumno nuevo vs regreso
+4. **(Opcional)** Añade un logro simple
+
+<Callout type="info">
+  Empieza simple. Un archivo PROGRESO.md básico es suficiente para empezar.
+  Puedes añadir complejidad después.
+</Callout>
+
+---
+
+<div className="mt-8 text-center">
+  <a href="/course-builder/web-nextra" className="inline-block px-6 py-3 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition">
+    Siguiente: Web con Nextra →
+  </a>
+</div>
+
+</CourseBuilderAccessGate>

@@ -1,128 +1,103 @@
-# 🇪🇸 Claude Code en Español
+# 🔄 Ralph Setup para aprende.software
 
-[![Licencia](https://img.shields.io/badge/Licencia-CC%20BY--NC--SA%204.0-blue.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
-[![Web](https://img.shields.io/badge/Web-claude--code--espanol.vercel.app-green)](https://claude-code-espanol.vercel.app)
+Este es tu setup de Ralph para construir automáticamente los Módulos 2 y 3 del curso.
 
-**El primer curso interactivo de Claude Code completamente en español.**
+## Archivos incluidos
 
-![Claude Code en Español](public/images/hero.png)
+| Archivo | Descripción |
+|---------|-------------|
+| `loop.sh` | El script que ejecuta Ralph en loop |
+| `PROMPT_build.md` | Las instrucciones que Ralph sigue en cada iteración |
+| `PLAN.md` | Las tareas a completar (27 tareas totales) |
+| `PROGRESS.md` | Donde Ralph registra aprendizajes |
+| `AGENTS.md` | Guía del proyecto para Ralph |
 
-## 🎯 ¿Qué es esto?
+## Instalación
 
-Un curso **gratuito** para aprender Claude Code sin necesidad de saber programar.
-
-**Lo especial:** El curso se imparte *dentro* de Claude Code. Aprendes haciendo, no mirando vídeos.
-
-## 🚀 Inicio Rápido
-
-### 1. Instala Claude Code
-
-```bash
-# macOS / Linux
-curl -fsSL https://claude.ai/install | sh
-
-# Windows (PowerShell)
-irm https://claude.ai/install.ps1 | iex
-```
-
-### 2. Descarga el curso
-
-Ve a [Releases](https://github.com/TU-USUARIO/claude-code-espanol/releases) y descarga el ZIP más reciente.
-
-### 3. Comienza
+1. **Copia estos archivos a tu repo:**
 
 ```bash
-unzip curso-materiales.zip
-cd curso-materiales
-claude
+# Desde la raíz de claude-code-espanol-web/
+cp -r /ruta/a/ralph-setup/* .
 ```
 
-Escribe `/iniciar` y ¡listo!
-
-## 📚 Contenido
-
-### Módulo 1: Fundamentos (~4 horas)
-
-| Lección | Tema |
-|---------|------|
-| 1.1 | ¿Qué es Claude Code? |
-| 1.2 | Exploración de archivos |
-| 1.3 | Crear y modificar contenido |
-| 1.4 | Comandos slash |
-| 1.5 | Agentes paralelos |
-| 1.6 | Sub-agentes personalizados |
-| 1.7 | Memoria (CLAUDE.md) |
-
-### Módulo 2: Proyectos Prácticos (próximamente)
-
-- Crear una landing page
-- Automatizar flujos de trabajo
-- Investigación con IA
-
-## 📋 Requisitos
-
-- Claude Pro o Max ($20/mes)
-- Mac, Windows o Linux
-- ~4 horas de tiempo
-
-**No necesitas experiencia previa en programación.**
-
-## 🌐 Web del curso
-
-Visita **[claude-code-espanol.vercel.app](https://claude-code-espanol.vercel.app)** para la documentación completa.
-
-## 🛠️ Desarrollo local de la web
+2. **Haz ejecutable el loop:**
 
 ```bash
-# Instalar dependencias
-npm install
-
-# Iniciar servidor de desarrollo
-npm run dev
-
-# Abrir http://localhost:3000
+chmod +x loop.sh
 ```
 
-## 📁 Estructura del repositorio
+3. **Verifica que tienes Claude Code instalado:**
 
-```
-├── pages/               # Páginas de la web (MDX)
-├── public/              # Imágenes y assets
-├── curso-materiales/    # Materiales descargables
-│   ├── CLAUDE.md
-│   ├── .claude/commands/
-│   └── materiales/
-├── theme.config.tsx     # Configuración del tema
-└── next.config.mjs      # Configuración de Next.js
+```bash
+claude --version
 ```
 
-## 🤝 Contribuir
+## Uso
 
-¡Las contribuciones son bienvenidas!
+### Opción A: Loop completo (autónomo)
 
-1. Fork el repositorio
-2. Crea una rama (`git checkout -b mejora/mi-mejora`)
-3. Commit tus cambios (`git commit -am 'Añade mi mejora'`)
-4. Push a la rama (`git push origin mejora/mi-mejora`)
-5. Abre un Pull Request
+```bash
+./loop.sh
+```
 
-## 📜 Licencia
+Ralph ejecutará todas las tareas una por una. Puedes dejarlo corriendo y hacer otra cosa.
 
-[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+### Opción B: Una iteración manual
 
-Puedes compartir y adaptar el contenido para fines no comerciales, dando crédito al autor original.
+```bash
+claude --dangerously-skip-permissions -p "$(cat PROMPT_build.md)"
+```
 
-## 👨‍💻 Autor
+Esto ejecuta UNA sola tarea. Útil para probar o cuando quieres más control.
 
-**Josu Sanz**
+## Monitorear el progreso
 
-- 🌐 [Yenze.io](https://yenze.io) - Visual builder para landing pages con IA
-- 🌿 [Sacred Events](https://sacred.events) - Retiros transformacionales en Perú
+- Revisa `PLAN.md` para ver qué tareas están completadas `[x]`
+- Revisa `git log --oneline` para ver los commits de Ralph
+- Revisa `PROGRESS.md` para ver qué ha aprendido Ralph
+
+## Si algo sale mal
+
+1. **Ralph se atasca en una tarea:**
+   - Revisa `PLAN.md`, la tarea estará marcada como `[BLOCKED]`
+   - Puedes arreglarla manualmente y volver a correr Ralph
+
+2. **Error de build:**
+   - Ralph debería detectarlo y arreglarlo
+   - Si no, haz `npm run build` manualmente y corrige
+
+3. **Quieres pausar:**
+   - `Ctrl+C` para detener el loop
+   - El progreso se guarda en commits de git
+
+## Seguridad
+
+⚠️ **`--dangerously-skip-permissions`** da acceso completo a Claude.
+
+Para proyectos sensibles, considera:
+- Ejecutar en una VM o Docker
+- No tener credenciales en el repo
+- Revisar los commits antes de pushear
+
+## Tareas incluidas
+
+**Módulo 2 - Proyectos (12 tareas):**
+- Landing Page (3 lecciones)
+- Automatizaciones (3 lecciones)
+- Investigación (2 lecciones)
+- Análisis de Datos (2 lecciones)
+
+**Módulo 3 - Ralph Loop (10 tareas):**
+- Conceptos básicos (3 lecciones)
+- Las 3 fases (3 lecciones)
+- Proyecto práctico (1 lección)
+- Consejos avanzados (1 lección)
+
+**Finales (2 tareas):**
+- Actualizar landing
+- Testing
 
 ---
 
-<p align="center">
-  Hecho con ❤️ para la comunidad hispanohablante
-  <br><br>
-  <strong>⭐ Si te ha sido útil, dale una estrella al repo!</strong>
-</p>
+¡Happy Ralphing! 🚀

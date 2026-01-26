@@ -1,0 +1,220 @@
+---
+title: "Fase 2: El Plan"
+---
+
+import { Callout } from 'nextra/components'
+import RalphAccessGate from '../../components/RalphAccessGate'
+
+# Lección 3.5: Fase 2 - El Plan
+
+<RalphAccessGate>
+
+## De Specs a Tareas
+
+Ya tienes specs claras. Ahora necesitas convertirlas en **tareas atómicas** que Claude pueda ejecutar una por una.
+
+La clave: **cada tarea debe ser completable en UNA iteración** (típicamente 15-45 minutos).
+
+---
+
+## ¿Qué es una Tarea Atómica?
+
+Una tarea atómica tiene estas características:
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
+  <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-700/50">
+    <h4 className="font-bold text-blue-600 dark:text-blue-400">✅ Atómica</h4>
+    <ul className="mt-2 space-y-1 text-sm text-slate-600 dark:text-gray-400">
+      <li>• Tiene un objetivo único y claro</li>
+      <li>• Se puede verificar si está completa</li>
+      <li>• No depende de tareas pendientes</li>
+      <li>• Cabe en una iteración de contexto</li>
+    </ul>
+  </div>
+  <div className="p-4 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-700/50">
+    <h4 className="font-bold text-red-600 dark:text-red-400">❌ No Atómica</h4>
+    <ul className="mt-2 space-y-1 text-sm text-slate-600 dark:text-gray-400">
+      <li>• "Implementar el backend"</li>
+      <li>• "Hacer que funcione"</li>
+      <li>• Depende de algo no hecho</li>
+      <li>• Requiere múltiples sesiones</li>
+    </ul>
+  </div>
+</div>
+
+### Ejemplos
+
+| ❌ No Atómica | ✅ Atómica |
+|--------------|-----------|
+| Crear sistema de auth | Crear modelo User en Prisma |
+| Implementar API | Crear endpoint GET /posts |
+| Añadir tests | Escribir test para createUser() |
+| Mejorar UI | Añadir botón de logout al header |
+
+---
+
+## Estructura del PLAN.md
+
+```markdown
+# PLAN.md
+
+## 📊 Estado del Proyecto
+- **Inicio:** 2024-01-15
+- **Última actualización:** 2024-01-15 14:30
+- **Iteraciones completadas:** 5
+- **Progreso estimado:** 40%
+
+## ✅ Completadas
+- [x] Inicializar proyecto con npm init
+- [x] Instalar dependencias base (express, typescript)
+- [x] Configurar TypeScript (tsconfig.json)
+- [x] Crear estructura de carpetas
+- [x] Configurar ESLint y Prettier
+
+## 🔄 En Progreso
+- [ ] Crear modelo User con Prisma
+
+## 📋 Pendientes
+
+### Fase: Base de Datos
+- [ ] Configurar Prisma con SQLite
+- [ ] Crear modelo User (id, email, password, createdAt)
+- [ ] Crear modelo Post (id, title, content, authorId)
+- [ ] Generar y ejecutar migraciones
+
+### Fase: Autenticación
+- [ ] Crear endpoint POST /auth/register
+- [ ] Crear endpoint POST /auth/login
+- [ ] Implementar generación de JWT
+- [ ] Crear middleware de verificación
+- [ ] Escribir tests para auth
+
+### Fase: API de Posts
+- [ ] Crear endpoint GET /posts (listar)
+- [ ] Crear endpoint GET /posts/:id (detalle)
+- [ ] Crear endpoint POST /posts (crear)
+- [ ] Crear endpoint PUT /posts/:id (editar)
+- [ ] Crear endpoint DELETE /posts/:id (eliminar)
+- [ ] Añadir paginación a GET /posts
+- [ ] Escribir tests para posts
+
+### Fase: Finalización
+- [ ] Revisar todos los tests
+- [ ] Documentar endpoints en README
+- [ ] Limpiar código y comentarios
+
+## 🚫 Bloqueados
+(ninguno actualmente)
+
+## 📝 Notas
+- Priorizar auth antes que posts
+- Cada endpoint debe tener al menos un test
+```
+
+---
+
+## Técnica: Descomposición Progresiva
+
+Si una tarea parece grande, descomponla:
+
+```
+"Implementar autenticación"
+         │
+         ▼
+┌────────────────────────────────┐
+│ 1. Crear modelo User           │
+│ 2. Endpoint de registro        │
+│ 3. Endpoint de login           │
+│ 4. Generación de JWT           │
+│ 5. Middleware de verificación  │
+│ 6. Tests de auth               │
+└────────────────────────────────┘
+```
+
+Cada una de estas es atómica y verificable.
+
+---
+
+## El Orden Importa
+
+Organiza las tareas para minimizar dependencias:
+
+```
+✅ CORRECTO                      ❌ INCORRECTO
+1. Crear modelo User             1. Crear endpoint /posts
+2. Crear endpoint registro       2. Crear middleware auth
+3. Crear endpoint login          3. Crear modelo User
+4. Middleware auth               4. Crear endpoint login
+5. Endpoint posts (protegido)    5. Crear endpoint registro
+```
+
+En el orden correcto, cada tarea puede completarse sin depender de algo pendiente.
+
+---
+
+## Técnica: Fases
+
+Agrupa tareas relacionadas en fases:
+
+```markdown
+### Fase 1: Setup (2 tareas)
+- [ ] Inicializar proyecto
+- [ ] Configurar TypeScript
+
+### Fase 2: Base de Datos (4 tareas)
+- [ ] Configurar Prisma
+- [ ] Modelo User
+- [ ] Modelo Post
+- [ ] Migraciones
+
+### Fase 3: Auth (5 tareas)
+...
+```
+
+Esto ayuda a Claude a entender el contexto de cada tarea.
+
+---
+
+## Crear el Plan con Claude
+
+<Callout type="info">
+  Pro tip: Usa Claude para generar el plan inicial, luego revísalo.
+</Callout>
+
+Prompt para generar plan:
+
+```
+Tengo estas specs para un proyecto:
+[pegar PROMPT_build.md]
+
+Genera un PLAN.md con tareas atómicas, organizadas por fases.
+Cada tarea debe:
+1. Ser completable en 15-45 minutos
+2. Tener un criterio de verificación claro
+3. No depender de tareas pendientes
+
+Formato:
+- [ ] Descripción clara de la tarea
+```
+
+---
+
+## Verificación del Plan
+
+Antes de lanzar Ralph, verifica:
+
+- [ ] ¿Cada tarea tiene un objetivo único?
+- [ ] ¿El orden minimiza dependencias?
+- [ ] ¿Hay suficiente detalle para ejecutar sin preguntas?
+- [ ] ¿Los criterios de "completado" son claros?
+- [ ] ¿Hay fases lógicas?
+
+---
+
+<div className="mt-8 text-center">
+  <a href="/ralph/fase-ejecutar" className="inline-block px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition">
+    Siguiente: Fase 3 - Ejecutar →
+  </a>
+</div>
+
+</RalphAccessGate>

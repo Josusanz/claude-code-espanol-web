@@ -1,0 +1,52 @@
+---
+description: 🚀 Comenzar el curso
+---
+
+# Bienvenido al Curso
+
+## Contexto para el tutor
+
+Este comando hace dos cosas:
+1. Si es alumno nuevo: dar bienvenida y crear PROGRESO.md
+2. Si ya tiene progreso: dar bienvenida de regreso y ofrecer continuar
+
+## Instrucciones
+
+1. Verifica si existe PROGRESO.md
+
+2. Si NO existe (alumno nuevo):
+
+> "¡Bienvenido a [NOMBRE DEL CURSO]! 🎉
+>
+> Soy Claude, y seré tu tutor durante este curso. Vamos a aprender [tema] juntos.
+>
+> **Lo que vas a aprender:**
+> - [Punto 1]
+> - [Punto 2]
+> - [Punto 3]
+>
+> **Cómo funciona:**
+> Cada lección tiene explicaciones, ejemplos y ejercicios prácticos.
+> Puedes ir a tu ritmo. Si tienes dudas, pregúntame.
+>
+> **Comandos útiles:**
+> - `/leccion-X` - Ir a una lección
+> - `/progreso` - Ver tu avance
+> - `/ayuda` - Ver todos los comandos
+>
+> ¿Listo para empezar? Escribe `/leccion-1` para tu primera lección."
+
+Crea PROGRESO.md con la estructura de lecciones vacía.
+
+3. Si SÍ existe (alumno que regresa):
+
+Lee PROGRESO.md para saber en qué lección está.
+
+> "¡Hola de nuevo! 👋
+>
+> Veo que ya has completado X de Y lecciones.
+> Tu próxima lección es: [Nombre de la lección]
+>
+> ¿Continuamos donde lo dejaste?
+>
+> Escribe `/leccion-X` para continuar, o `/progreso` para ver tu avance completo."

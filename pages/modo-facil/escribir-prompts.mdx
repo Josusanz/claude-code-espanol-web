@@ -1,0 +1,184 @@
+---
+title: Cómo pedir las cosas a Claude
+---
+
+import { Callout } from 'nextra/components'
+
+# Cómo pedir las cosas a Claude
+
+La forma en que pides algo a Claude afecta mucho la calidad de su respuesta. Aprende a escribir mejores "prompts" (instrucciones).
+
+---
+
+## La regla de oro
+
+<div className="my-8 p-6 bg-amber-50 dark:bg-amber-900/20 rounded-xl border-2 border-amber-300 dark:border-amber-500/30 text-center">
+  <p className="text-2xl font-bold text-amber-700 dark:text-amber-400">
+    Cuanto más contexto des, mejor respuesta obtendrás
+  </p>
+</div>
+
+---
+
+## ❌ Malo vs ✅ Bueno
+
+### Ejemplo 1: Pedir un email
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
+  <div className="p-4 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-700/50">
+    <p className="font-semibold text-red-700 dark:text-red-400 mb-2">❌ Vago</p>
+    <p className="font-mono text-sm text-slate-700 dark:text-gray-300">"Escríbeme un email"</p>
+  </div>
+  <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-700/50">
+    <p className="font-semibold text-green-700 dark:text-green-400 mb-2">✅ Específico</p>
+    <p className="font-mono text-sm text-slate-700 dark:text-gray-300">"Escríbeme un email profesional para mi jefe pidiendo vacaciones del 15 al 22 de agosto. Mi tono suele ser formal pero amable."</p>
+  </div>
+</div>
+
+### Ejemplo 2: Pedir una explicación
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
+  <div className="p-4 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-700/50">
+    <p className="font-semibold text-red-700 dark:text-red-400 mb-2">❌ Vago</p>
+    <p className="font-mono text-sm text-slate-700 dark:text-gray-300">"¿Qué es blockchain?"</p>
+  </div>
+  <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-700/50">
+    <p className="font-semibold text-green-700 dark:text-green-400 mb-2">✅ Específico</p>
+    <p className="font-mono text-sm text-slate-700 dark:text-gray-300">"Explícame qué es blockchain en términos simples. No sé nada de tecnología y necesito entenderlo para una conversación con mi sobrino."</p>
+  </div>
+</div>
+
+---
+
+## Las 5 piezas de un buen prompt
+
+### 1. 🎯 Qué quieres
+
+Sé específico sobre el resultado que buscas.
+
+```
+Quiero una lista de 10 ideas...
+Necesito un resumen de 3 párrafos...
+Ayúdame a escribir un mensaje de WhatsApp...
+```
+
+### 2. 📋 Contexto
+
+Explica la situación o el "por qué".
+
+```
+Es para mi jefe que es muy formal...
+Lo necesito para un cumpleaños sorpresa...
+Estoy estudiando para un examen de...
+```
+
+### 3. 📝 Formato
+
+Indica cómo quieres la respuesta.
+
+```
+En forma de lista con viñetas...
+En un párrafo corto...
+Como una tabla comparativa...
+Con emojis para hacerlo más divertido...
+```
+
+### 4. 🎨 Estilo o tono
+
+Describe el tono que necesitas.
+
+```
+Formal y profesional...
+Casual y amigable...
+Divertido pero respetuoso...
+Serio y directo...
+```
+
+### 5. 📏 Longitud
+
+Especifica si hay límites.
+
+```
+Máximo 100 palabras...
+Un párrafo corto...
+Una respuesta breve de 2-3 líneas...
+```
+
+---
+
+## Plantilla mágica
+
+Usa esta plantilla cuando no sepas cómo empezar:
+
+<div className="my-6 p-6 bg-slate-100 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+  <p className="font-mono text-slate-700 dark:text-gray-300">
+    Necesito [QUÉ QUIERES].<br/>
+    Es para [CONTEXTO/SITUACIÓN].<br/>
+    El tono debe ser [ESTILO].<br/>
+    Formato: [CÓMO LO QUIERES].<br/>
+    Longitud: [LÍMITES SI HAY].
+  </p>
+</div>
+
+### Ejemplo completo:
+
+```
+Necesito un mensaje de agradecimiento.
+Es para mi vecina que me cuidó las plantas durante mis vacaciones.
+El tono debe ser cálido y genuino, pero no exagerado.
+Formato: un mensaje corto para WhatsApp.
+Longitud: máximo 4 líneas.
+```
+
+---
+
+## Trucos adicionales
+
+### Pide ejemplos
+
+```
+Dame 3 opciones diferentes para elegir
+```
+
+### Pide que mejore algo
+
+```
+Este es mi texto: [pega tu texto]. Mejóralo manteniendo mi estilo.
+```
+
+### Pide que simplifique
+
+```
+Hazlo más sencillo, como si se lo explicara a un niño de 8 años.
+```
+
+### Pide formatos específicos
+
+```
+Ponlo en una tabla con columnas: Opción, Ventajas, Desventajas
+```
+
+---
+
+## Ejercicio práctico
+
+<div className="my-6 p-6 bg-indigo-50 dark:bg-indigo-900/20 rounded-xl border border-indigo-200 dark:border-indigo-500/30">
+  <h4 className="font-bold text-indigo-700 dark:text-indigo-400 mb-3">Mejora este prompt</h4>
+  <p className="text-slate-700 dark:text-gray-300 mb-4">
+    Prompt original: <code className="bg-slate-200 dark:bg-slate-700 px-2 py-1 rounded">"Escríbeme una bio"</code>
+  </p>
+  <p className="text-slate-600 dark:text-gray-400 mb-4">
+    Mejóralo añadiendo: contexto (para qué red social), información sobre ti, tono deseado, y longitud.
+  </p>
+  <p className="text-sm text-indigo-600 dark:text-indigo-400 font-medium">
+    Pruébalo con Claude y compara los resultados con el prompt original.
+  </p>
+</div>
+
+---
+
+<div className="mt-8 flex justify-center">
+  <a href="/modo-facil/ejemplos-practicos" className="inline-flex items-center gap-2 px-8 py-4 bg-green-600 text-white rounded-lg hover:bg-green-700 transition text-lg font-semibold">
+    Siguiente: Ejemplos prácticos →
+  </a>
+</div>

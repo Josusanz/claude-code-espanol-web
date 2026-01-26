@@ -73,10 +73,16 @@ export default function PremiumPage() {
                   Afiliados 20%
                 </a>
                 <Link
+                  href="/premium"
+                  className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white text-sm font-medium"
+                >
+                  Todos los cursos
+                </Link>
+                <Link
                   href="/"
                   className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white text-sm font-medium"
                 >
-                  Volver al inicio
+                  Inicio
                 </Link>
               </div>
             </div>
@@ -476,7 +482,7 @@ export default function PremiumPage() {
                 </Link>
                 {' '}&middot;{' '}
                 <Link href="/premium" className="hover:text-white transition-colors">
-                  Course Builder
+                  Cursos Premium
                 </Link>
                 {' '}&middot;{' '}
                 <a

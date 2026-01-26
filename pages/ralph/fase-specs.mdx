@@ -1,0 +1,241 @@
+---
+title: "Fase 1: Specs"
+---
+
+import { Callout } from 'nextra/components'
+import RalphAccessGate from '../../components/RalphAccessGate'
+
+# Lección 3.4: Fase 1 - Specs
+
+<RalphAccessGate>
+
+## La Fase Más Importante
+
+El 80% del éxito de Ralph depende de esta fase. **Si las specs son malas, el resultado será malo** - no importa cuánto tiempo trabaje Claude.
+
+> "Dame 6 horas para cortar un árbol y pasaré las primeras 4 afilando el hacha." - Abraham Lincoln
+
+En Ralph, afilar el hacha = escribir buenas specs.
+
+---
+
+## ¿Qué Son las Specs?
+
+Las **especificaciones** definen exactamente qué quieres construir. No son ideas vagas - son documentos precisos que cualquier desarrollador (o Claude) podría seguir.
+
+### Specs Malas vs Buenas
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
+  <div className="p-4 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-700/50">
+    <h4 className="font-bold text-red-600 dark:text-red-400">❌ Spec Mala</h4>
+    <p className="mt-2 text-sm text-slate-600 dark:text-gray-400 font-mono">
+      "Necesito una app de tareas"
+    </p>
+  </div>
+  <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-700/50">
+    <h4 className="font-bold text-green-600 dark:text-green-400">✅ Spec Buena</h4>
+    <p className="mt-2 text-sm text-slate-600 dark:text-gray-400 font-mono">
+      "App de tareas con: crear, editar, eliminar, marcar completadas. Persistencia en localStorage. UI minimalista con Tailwind."
+    </p>
+  </div>
+</div>
+
+---
+
+## Template de PROMPT_build.md
+
+Usa esta estructura para tus specs:
+
+```markdown
+# PROMPT_build.md
+
+## Resumen del Proyecto
+[2-3 oraciones describiendo qué es y para qué sirve]
+
+## Objetivo de Esta Sesión
+[Qué debe estar listo al final de todas las iteraciones]
+
+## Stack Técnico
+- **Lenguaje:** TypeScript
+- **Runtime:** Node.js 20
+- **Framework:** Express.js
+- **Base de datos:** SQLite (desarrollo), PostgreSQL (producción)
+- **Testing:** Vitest
+- **Linting:** ESLint + Prettier
+
+## Estructura del Proyecto
+```
+src/
+├── index.ts          # Entry point
+├── routes/           # Definición de rutas
+├── controllers/      # Lógica de negocio
+├── models/           # Modelos de datos
+├── middleware/       # Middleware personalizado
+└── utils/            # Funciones helper
+```
+
+## Convenciones de Código
+1. Usar async/await (nunca callbacks)
+2. Nombres de archivos en kebab-case
+3. Funciones y variables en camelCase
+4. Interfaces en PascalCase con prefijo I (IUser)
+5. Errores siempre con try/catch
+6. Logging con console.log para desarrollo
+
+## Reglas CRÍTICAS
+- ⛔ NO modificar archivos en /config sin autorización
+- ⛔ NO instalar dependencias sin documentar en PROGRESS.md
+- ⛔ NO hacer commits (yo lo haré manualmente)
+- ✅ SÍ ejecutar tests después de cada cambio
+- ✅ SÍ actualizar PLAN.md inmediatamente después de completar
+
+## Flujo de Trabajo
+1. Lee PLAN.md y elige la primera tarea pendiente
+2. Lee PROGRESS.md para contexto
+3. Implementa la tarea
+4. Ejecuta tests relacionados
+5. Si pasan: marca como completada
+6. Si fallan: documenta en PROGRESS.md y arregla
+7. Termina la sesión
+
+## Archivos de Estado
+- `PLAN.md` - Tareas pendientes y completadas
+- `PROGRESS.md` - Decisiones y aprendizajes
+```
+
+---
+
+## Los 5 Elementos Esenciales
+
+### 1. Objetivo Claro
+
+No "mejorar la app". Sí "implementar sistema de autenticación con JWT".
+
+```markdown
+## Objetivo
+Crear un sistema de autenticación completo:
+- Registro de usuarios (email + password)
+- Login con JWT
+- Middleware de protección de rutas
+- Endpoint de refresh token
+```
+
+### 2. Stack Definido
+
+Sin ambigüedades sobre qué tecnologías usar.
+
+```markdown
+## Stack
+- Express 4.18+
+- TypeScript 5+
+- Prisma ORM
+- PostgreSQL 15
+- Jest para testing
+```
+
+### 3. Estructura Clara
+
+Claude necesita saber dónde poner cada cosa.
+
+```markdown
+## Estructura
+- `/src/routes/auth.ts` - Rutas de autenticación
+- `/src/controllers/authController.ts` - Lógica de auth
+- `/src/middleware/authMiddleware.ts` - Verificación de JWT
+- `/src/utils/jwt.ts` - Helpers de tokens
+```
+
+### 4. Convenciones Explícitas
+
+Lo que no definas, Claude lo decidirá (y puede no ser lo que quieres).
+
+```markdown
+## Convenciones
+- Passwords: mínimo 8 caracteres, hasheados con bcrypt (10 rounds)
+- JWT: expira en 1 hora, refresh en 7 días
+- Errores: formato { error: string, code: number }
+- Respuestas: formato { success: boolean, data: any }
+```
+
+### 5. Reglas Negativas
+
+Tan importante como decir qué hacer es decir qué NO hacer.
+
+```markdown
+## NO Hacer
+- No guardar passwords en texto plano
+- No exponer tokens en logs
+- No crear migraciones automáticas
+- No modificar .env
+```
+
+---
+
+## Ejercicio Práctico
+
+Convierte esta idea vaga en specs concretas:
+
+> "Quiero una API para un blog"
+
+<details className="my-4 p-4 bg-slate-100 dark:bg-gray-800/50 rounded-lg">
+  <summary className="font-semibold cursor-pointer">Ver solución</summary>
+
+```markdown
+# PROMPT_build.md - API de Blog
+
+## Resumen
+API REST para un blog personal. Permite crear, leer,
+actualizar y eliminar posts. Incluye autenticación básica.
+
+## Objetivo
+Crear una API funcional con:
+- CRUD completo de posts
+- Autenticación de autor
+- Paginación de listados
+- Búsqueda por título
+
+## Stack
+- Node.js 20 + Express 4
+- SQLite (archivo local)
+- JWT para auth
+
+## Endpoints
+POST   /auth/login      - Obtener token
+GET    /posts           - Listar posts (paginado)
+GET    /posts/:id       - Obtener post
+POST   /posts           - Crear post (auth)
+PUT    /posts/:id       - Editar post (auth)
+DELETE /posts/:id       - Eliminar post (auth)
+
+## Modelo Post
+{
+  id: number,
+  title: string (max 200 chars),
+  content: string,
+  author: string,
+  createdAt: Date,
+  updatedAt: Date
+}
+
+## Convenciones
+- Respuestas en JSON
+- Errores: { error: "mensaje", code: 400 }
+- Éxito: { data: {...}, meta: {...} }
+- Paginación: ?page=1&limit=10
+```
+</details>
+
+<Callout type="info">
+  Dedica al menos 30 minutos a escribir buenas specs antes de lanzar Ralph.
+  Es la mejor inversión de tiempo que puedes hacer.
+</Callout>
+
+---
+
+<div className="mt-8 text-center">
+  <a href="/ralph/fase-plan" className="inline-block px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition">
+    Siguiente: Fase 2 - El Plan →
+  </a>
+</div>
+
+</RalphAccessGate>

@@ -1,0 +1,153 @@
+---
+title: Limitaciones de Claude
+---
+
+import { Callout } from 'nextra/components'
+
+# Limitaciones de Claude
+
+Es importante saber qué NO puede hacer Claude para no frustrarte y usar la herramienta correcta para cada cosa.
+
+---
+
+## 🌐 No puede navegar por internet
+
+<div className="p-4 bg-amber-50 dark:bg-amber-900/20 rounded-lg border border-amber-200 dark:border-amber-700/50 my-6">
+  <p className="text-slate-700 dark:text-gray-300">
+    Claude NO puede buscar información en internet. Todo lo que sabe viene de su entrenamiento (datos hasta principios de 2024).
+  </p>
+</div>
+
+**Esto significa que Claude NO puede:**
+- Buscar precios actuales de productos
+- Ver noticias de hoy
+- Acceder a páginas web
+- Verificar datos en tiempo real
+
+**Solución:** Para información actualizada, usa Google y luego pide a Claude que te ayude a entenderla o procesarla.
+
+---
+
+## 🧠 No recuerda entre conversaciones
+
+Cada nuevo chat empieza de cero. Claude no sabe:
+- Quién eres (a menos que se lo digas)
+- Conversaciones anteriores
+- Tus preferencias de otros chats
+
+**Solución:** Si necesitas continuidad:
+1. Mantén proyectos largos en el mismo chat
+2. Al empezar un chat nuevo, dale contexto: "Soy [nombre], trabajo en [X], y estoy buscando ayuda con [Y]"
+
+---
+
+## 🤥 Puede inventar cosas (alucinaciones)
+
+<Callout type="warning">
+  Claude puede dar información que suena muy segura pero es completamente inventada. Esto se llama "alucinación".
+</Callout>
+
+**Especialmente cuidado con:**
+- Citas de libros o personas famosas
+- Estadísticas y datos específicos
+- Enlaces a páginas web
+- Información sobre personas reales
+
+**Solución:** Siempre verifica información importante en fuentes confiables.
+
+---
+
+## 📊 Límite de mensajes (versión gratis)
+
+La versión gratuita tiene un límite de aproximadamente **30 mensajes al día**.
+
+Cuando llegues al límite verás un mensaje indicándolo.
+
+**Soluciones:**
+- Espera unas horas y vuelve
+- Haz preguntas más completas (menos mensajes, más contenido)
+- Considera Claude Pro si lo usas mucho
+
+---
+
+## 📄 Límite de longitud
+
+Hay un límite en cuánto texto puede procesar Claude en un solo mensaje.
+
+Si pegas un documento muy largo, puede que:
+- Lo corte sin avisar
+- Olvide el principio al llegar al final
+- No procese toda la información
+
+**Solución:** Divide documentos muy largos en partes o pide que se enfoque en secciones específicas.
+
+---
+
+## 🔧 No puede ejecutar código
+
+Claude puede **escribir** código, pero no puede **ejecutarlo**.
+
+```
+✅ "Escríbeme un script en Python que..."
+❌ "Ejecuta este código y dime el resultado"
+```
+
+**Solución:** Si necesitas ejecutar código, copia lo que Claude escribe y ejecútalo tú mismo, o usa Claude Code (requiere Pro).
+
+---
+
+## 🔒 No puede acceder a tus archivos locales
+
+A menos que los subas manualmente, Claude no puede:
+- Ver archivos en tu ordenador
+- Leer tu email
+- Acceder a ningún sistema externo
+
+**Solución:** Sube los archivos que necesites analizar usando el botón de clip (📎).
+
+---
+
+## 📅 Conocimiento limitado en el tiempo
+
+Claude fue entrenado con datos hasta principios de 2024. No sabe nada de:
+- Eventos recientes
+- Nuevos productos lanzados después
+- Cambios en leyes o regulaciones recientes
+- Actualizaciones de software
+
+**Solución:** Para información reciente, busca en Google y pide a Claude que te ayude a interpretarla.
+
+---
+
+## ❓ Cuándo NO usar Claude
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
+  <div className="p-4 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-700/50">
+    <p className="font-semibold text-red-700 dark:text-red-400 mb-2">❌ No uses Claude para:</p>
+    <ul className="text-sm text-slate-600 dark:text-gray-400 space-y-1">
+      <li>• Diagnósticos médicos</li>
+      <li>• Consejos legales vinculantes</li>
+      <li>• Emergencias</li>
+      <li>• Decisiones financieras importantes</li>
+      <li>• Información que debe ser 100% precisa</li>
+    </ul>
+  </div>
+  <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-700/50">
+    <p className="font-semibold text-green-700 dark:text-green-400 mb-2">✅ Usa Claude para:</p>
+    <ul className="text-sm text-slate-600 dark:text-gray-400 space-y-1">
+      <li>• Borradores y primeras versiones</li>
+      <li>• Lluvia de ideas</li>
+      <li>• Aprender conceptos nuevos</li>
+      <li>• Organizar información</li>
+      <li>• Tareas creativas</li>
+    </ul>
+  </div>
+</div>
+
+---
+
+<div className="mt-8 flex justify-center">
+  <a href="/modo-facil/siguiente-nivel" className="inline-flex items-center gap-2 px-8 py-4 bg-green-600 text-white rounded-lg hover:bg-green-700 transition text-lg font-semibold">
+    Siguiente: Siguiente nivel →
+  </a>
+</div>

@@ -5,14 +5,14 @@ title: Ralph Loop - Claude en Piloto Automático
 import { Callout, Steps } from 'nextra/components'
 import RalphAccessGate from '../../components/RalphAccessGate'
 
-# 🤖 Ralph Loop: Claude en Piloto Automático
+# Ralph Loop: Claude en Piloto Automático
 
-<div className="mt-6 p-6 bg-gradient-to-r from-purple-900/30 to-blue-900/30 rounded-xl border border-purple-500/30">
+<div className="mt-6 p-6 bg-purple-50 dark:bg-purple-900/20 rounded-xl border border-purple-200 dark:border-purple-500/30">
   <div className="flex items-center gap-2 mb-2">
     <span className="px-3 py-1 text-sm font-semibold bg-purple-600 text-white rounded-full">Módulo Premium</span>
-    <span className="px-3 py-1 text-sm font-semibold bg-yellow-500/20 text-yellow-300 rounded-full">Avanzado</span>
+    <span className="px-3 py-1 text-sm font-semibold bg-amber-100 dark:bg-yellow-500/20 text-amber-700 dark:text-yellow-300 rounded-full">Avanzado</span>
   </div>
-  <p className="text-lg text-gray-300 mt-4">
+  <p className="text-lg text-slate-700 dark:text-gray-300 mt-4">
     Aprende a configurar Claude Code para que trabaje de forma <strong>autónoma</strong> durante horas,
     construyendo proyectos completos mientras tú solo supervisas.
   </p>
@@ -27,18 +27,18 @@ Ralph Loop es un sistema para que Claude Code trabaje de forma **autónoma en bu
 **El nombre viene de Ralph Wiggum** (Los Simpsons): un agente que trabaja felizmente en bucle, siguiendo instrucciones simples una y otra vez.
 
 <div className="my-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-  <div className="p-6 bg-gray-800/50 rounded-lg border border-gray-700">
-    <h3 className="text-xl font-bold text-red-400 mb-3">❌ Sin Ralph</h3>
-    <ul className="space-y-2 text-gray-300">
+  <div className="p-6 bg-red-50 dark:bg-gray-800/50 rounded-lg border border-red-200 dark:border-red-700/50">
+    <h3 className="text-xl font-bold text-red-600 dark:text-red-400 mb-3">❌ Sin Ralph</h3>
+    <ul className="space-y-2 text-slate-700 dark:text-gray-300">
       <li>• Sesiones largas degradan la calidad</li>
       <li>• Olvida instrucciones anteriores</li>
       <li>• Necesitas supervisión constante</li>
       <li>• Máximo ~2 horas efectivas</li>
     </ul>
   </div>
-  <div className="p-6 bg-gray-800/50 rounded-lg border border-green-700">
-    <h3 className="text-xl font-bold text-green-400 mb-3">✅ Con Ralph</h3>
-    <ul className="space-y-2 text-gray-300">
+  <div className="p-6 bg-green-50 dark:bg-gray-800/50 rounded-lg border border-green-200 dark:border-green-700/50">
+    <h3 className="text-xl font-bold text-green-600 dark:text-green-400 mb-3">✅ Con Ralph</h3>
+    <ul className="space-y-2 text-slate-700 dark:text-gray-300">
       <li>• Contexto fresco cada iteración</li>
       <li>• Instrucciones persistentes en archivos</li>
       <li>• Trabaja mientras duermes</li>
@@ -51,63 +51,18 @@ Ralph Loop es un sistema para que Claude Code trabaje de forma **autónoma en bu
 
 ## Lo que aprenderás
 
-<div className="my-6 overflow-x-auto">
-  <table className="w-full">
-    <thead>
-      <tr className="border-b border-gray-700">
-        <th className="text-left py-3 px-4">Lección</th>
-        <th className="text-left py-3 px-4">Descripción</th>
-        <th className="text-left py-3 px-4">Duración</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr className="border-b border-gray-800">
-        <td className="py-3 px-4 font-medium">3.1 ¿Qué es Ralph Loop?</td>
-        <td className="py-3 px-4 text-gray-400">Concepto de loops autónomos y cuándo usarlos</td>
-        <td className="py-3 px-4 text-gray-500">~15 min</td>
-      </tr>
-      <tr className="border-b border-gray-800">
-        <td className="py-3 px-4 font-medium">3.2 Context Rot</td>
-        <td className="py-3 px-4 text-gray-400">Por qué reiniciar el contexto mejora los resultados</td>
-        <td className="py-3 px-4 text-gray-500">~15 min</td>
-      </tr>
-      <tr className="border-b border-gray-800">
-        <td className="py-3 px-4 font-medium">3.3 Anatomía de un Loop</td>
-        <td className="py-3 px-4 text-gray-400">Los 4 archivos clave del sistema</td>
-        <td className="py-3 px-4 text-gray-500">~20 min</td>
-      </tr>
-      <tr className="border-b border-gray-800">
-        <td className="py-3 px-4 font-medium">3.4 Fase 1: Specs</td>
-        <td className="py-3 px-4 text-gray-400">Cómo definir especificaciones claras</td>
-        <td className="py-3 px-4 text-gray-500">~30 min</td>
-      </tr>
-      <tr className="border-b border-gray-800">
-        <td className="py-3 px-4 font-medium">3.5 Fase 2: El Plan</td>
-        <td className="py-3 px-4 text-gray-400">Crear un plan de tareas atómicas</td>
-        <td className="py-3 px-4 text-gray-500">~20 min</td>
-      </tr>
-      <tr className="border-b border-gray-800">
-        <td className="py-3 px-4 font-medium">3.6 Fase 3: Ejecutar</td>
-        <td className="py-3 px-4 text-gray-400">Lanzar, monitorear e intervenir</td>
-        <td className="py-3 px-4 text-gray-500">~30 min</td>
-      </tr>
-      <tr className="border-b border-gray-800">
-        <td className="py-3 px-4 font-medium">3.7 Proyecto Práctico</td>
-        <td className="py-3 px-4 text-gray-400">Construir una app completa con Ralph</td>
-        <td className="py-3 px-4 text-gray-500">~45 min</td>
-      </tr>
-      <tr>
-        <td className="py-3 px-4 font-medium">3.8 Consejos Avanzados</td>
-        <td className="py-3 px-4 text-gray-400">Seguridad, Docker, múltiples agentes</td>
-        <td className="py-3 px-4 text-gray-500">~20 min</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+| Lección | Descripción | Duración |
+|---------|-------------|----------|
+| 3.1 ¿Qué es Ralph Loop? | Concepto de loops autónomos y cuándo usarlos | ~15 min |
+| 3.2 Context Rot | Por qué reiniciar el contexto mejora los resultados | ~15 min |
+| 3.3 Anatomía de un Loop | Los 4 archivos clave del sistema | ~20 min |
+| 3.4 Fase 1: Specs | Cómo definir especificaciones claras | ~30 min |
+| 3.5 Fase 2: El Plan | Crear un plan de tareas atómicas | ~20 min |
+| 3.6 Fase 3: Ejecutar | Lanzar, monitorear e intervenir | ~30 min |
+| 3.7 Proyecto Práctico | Construir una app completa con Ralph | ~45 min |
+| 3.8 Consejos Avanzados | Seguridad, Docker, múltiples agentes | ~20 min |
 
-<p className="text-center text-gray-400 mt-4">
-  <strong>Tiempo total:</strong> ~3.5 horas | <strong>8 lecciones</strong> | <strong>Proyecto incluido</strong>
-</p>
+**Tiempo total:** ~3.5 horas | **8 lecciones** | **Proyecto incluido**
 
 ---
 
@@ -132,17 +87,17 @@ mi-proyecto/
 ## Casos de Uso Reales
 
 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 my-6">
-  <div className="p-4 bg-blue-900/20 rounded-lg border border-blue-700/50">
-    <h4 className="font-bold text-blue-400">🚀 MVPs y Prototipos</h4>
-    <p className="text-sm text-gray-400 mt-2">Construye una app funcional mientras duermes</p>
+  <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-700/50">
+    <h4 className="font-bold text-blue-600 dark:text-blue-400">🚀 MVPs y Prototipos</h4>
+    <p className="text-sm text-slate-600 dark:text-gray-400 mt-2">Construye una app funcional mientras duermes</p>
   </div>
-  <div className="p-4 bg-green-900/20 rounded-lg border border-green-700/50">
-    <h4 className="font-bold text-green-400">📝 Migraciones</h4>
-    <p className="text-sm text-gray-400 mt-2">Refactoriza cientos de archivos de forma automática</p>
+  <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-700/50">
+    <h4 className="font-bold text-green-600 dark:text-green-400">📝 Migraciones</h4>
+    <p className="text-sm text-slate-600 dark:text-gray-400 mt-2">Refactoriza cientos de archivos de forma automática</p>
   </div>
-  <div className="p-4 bg-purple-900/20 rounded-lg border border-purple-700/50">
-    <h4 className="font-bold text-purple-400">🧪 Tests</h4>
-    <p className="text-sm text-gray-400 mt-2">Genera tests para un codebase existente</p>
+  <div className="p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border border-purple-200 dark:border-purple-700/50">
+    <h4 className="font-bold text-purple-600 dark:text-purple-400">🧪 Tests</h4>
+    <p className="text-sm text-slate-600 dark:text-gray-400 mt-2">Genera tests para un codebase existente</p>
   </div>
 </div>
 
@@ -161,6 +116,41 @@ mi-proyecto/
 
 ---
 
+## Elige cómo aprender
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
+  <div className="p-6 bg-blue-50 dark:bg-blue-900/20 rounded-xl border-2 border-blue-300 dark:border-blue-500/50">
+    <div className="flex items-center gap-3 mb-4">
+      <span className="text-3xl">📖</span>
+      <h3 className="text-xl font-bold text-blue-700 dark:text-blue-300">Tutorial Escrito</h3>
+    </div>
+    <p className="text-slate-600 dark:text-gray-400 mb-4">
+      Lee las 8 lecciones a tu ritmo en esta web con ejemplos detallados y código.
+    </p>
+    <a
+      href="/ralph/que-es-ralph"
+      className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-semibold"
+    >
+      Empezar a leer →
+    </a>
+  </div>
+
+  <div className="p-6 bg-green-50 dark:bg-green-900/20 rounded-xl border-2 border-green-300 dark:border-green-500/50">
+    <div className="flex items-center gap-3 mb-4">
+      <span className="text-3xl">💻</span>
+      <h3 className="text-xl font-bold text-green-700 dark:text-green-300">Interactivo en Terminal</h3>
+    </div>
+    <p className="text-slate-600 dark:text-gray-400 mb-4">
+      Aprende con Claude como tutor. Incluye templates del sistema Ralph listos para usar.
+    </p>
+    <span className="inline-block px-6 py-3 bg-slate-400 text-white rounded-lg font-semibold cursor-not-allowed">
+      Requiere acceso →
+    </span>
+  </div>
+</div>
+
+---
+
 ## Acceder al Contenido
 
 <RalphAccessGate />
@@ -169,33 +159,33 @@ mi-proyecto/
 
 ## Preguntas Frecuentes
 
-<details className="my-4 p-4 bg-gray-800/50 rounded-lg">
-  <summary className="font-semibold cursor-pointer">¿Necesito saber programar?</summary>
-  <p className="mt-3 text-gray-400">
+<details className="my-4 p-4 bg-slate-100 dark:bg-gray-800/50 rounded-lg">
+  <summary className="font-semibold cursor-pointer text-slate-800 dark:text-white">¿Necesito saber programar?</summary>
+  <p className="mt-3 text-slate-600 dark:text-gray-400">
     No necesitas ser programador experto, pero sí debes sentirte cómodo con la terminal y conceptos básicos de código.
     El Módulo 1 y 2 te preparan para esto.
   </p>
 </details>
 
-<details className="my-4 p-4 bg-gray-800/50 rounded-lg">
-  <summary className="font-semibold cursor-pointer">¿Es seguro dejar a Claude trabajando solo?</summary>
-  <p className="mt-3 text-gray-400">
+<details className="my-4 p-4 bg-slate-100 dark:bg-gray-800/50 rounded-lg">
+  <summary className="font-semibold cursor-pointer text-slate-800 dark:text-white">¿Es seguro dejar a Claude trabajando solo?</summary>
+  <p className="mt-3 text-slate-600 dark:text-gray-400">
     En el módulo aprenderás a usar sandboxing (Docker, VMs) para aislar el trabajo de Ralph.
     Nunca ejecutes código autónomo en sistemas con datos sensibles.
   </p>
 </details>
 
-<details className="my-4 p-4 bg-gray-800/50 rounded-lg">
-  <summary className="font-semibold cursor-pointer">¿Cuánto cuesta en API de Anthropic?</summary>
-  <p className="mt-3 text-gray-400">
+<details className="my-4 p-4 bg-slate-100 dark:bg-gray-800/50 rounded-lg">
+  <summary className="font-semibold cursor-pointer text-slate-800 dark:text-white">¿Cuánto cuesta en API de Anthropic?</summary>
+  <p className="mt-3 text-slate-600 dark:text-gray-400">
     Depende del proyecto. Un MVP típico puede costar $5-20 en tokens.
     El truco está en hacer tareas atómicas que usen poco contexto cada vez.
   </p>
 </details>
 
-<details className="my-4 p-4 bg-gray-800/50 rounded-lg">
-  <summary className="font-semibold cursor-pointer">¿Incluye soporte?</summary>
-  <p className="mt-3 text-gray-400">
+<details className="my-4 p-4 bg-slate-100 dark:bg-gray-800/50 rounded-lg">
+  <summary className="font-semibold cursor-pointer text-slate-800 dark:text-white">¿Incluye soporte?</summary>
+  <p className="mt-3 text-slate-600 dark:text-gray-400">
     Sí. Tienes acceso al Discord donde puedes hacer preguntas y compartir tus proyectos con Ralph.
   </p>
 </details>

@@ -1,0 +1,152 @@
+---
+title: Primeros pasos con Claude
+---
+
+import { Callout } from 'nextra/components'
+
+# Primeros pasos con Claude
+
+¡Tu cuenta está lista! Vamos a tener tu primera conversación con Claude.
+
+---
+
+## Tu primer mensaje
+
+Escribe algo simple para empezar. Por ejemplo:
+
+<div className="my-6 p-4 bg-slate-100 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700">
+  <p className="font-mono text-slate-700 dark:text-gray-300">Hola, ¿qué puedes hacer por mí?</p>
+</div>
+
+Claude te responderá explicando sus capacidades. ¡Ya estás conversando con IA!
+
+---
+
+## Prueba estas preguntas
+
+Copia y pega cualquiera de estas para probar:
+
+### 📝 Ayuda con escritura
+
+```
+Ayúdame a escribir un email profesional para pedir unos días libres en el trabajo.
+```
+
+### 🧠 Explicaciones simples
+
+```
+Explícame qué es la inteligencia artificial como si tuviera 10 años.
+```
+
+### 💡 Ideas
+
+```
+Dame 5 ideas de regalos originales para alguien que le gusta cocinar.
+```
+
+### 📊 Organización
+
+```
+Ayúdame a organizar una lista de tareas para mudarme de casa.
+```
+
+---
+
+## Cómo funciona la conversación
+
+Claude recuerda todo lo que hablas **dentro de la misma conversación**:
+
+<div className="my-6 p-4 bg-slate-800 rounded-lg text-sm">
+  <div className="mb-4 p-3 bg-blue-600 text-white rounded-lg mr-12">
+    <p className="font-semibold text-xs mb-1 opacity-70">Tú:</p>
+    <p>Tengo un gato que se llama Luna</p>
+  </div>
+  <div className="mb-4 p-3 bg-slate-700 text-slate-200 rounded-lg ml-12">
+    <p className="font-semibold text-xs mb-1 opacity-70">Claude:</p>
+    <p>¡Qué bonito nombre para una gata! ¿Cuántos años tiene Luna?</p>
+  </div>
+  <div className="mb-4 p-3 bg-blue-600 text-white rounded-lg mr-12">
+    <p className="font-semibold text-xs mb-1 opacity-70">Tú:</p>
+    <p>3 años. ¿Qué juguetes le recomendarías?</p>
+  </div>
+  <div className="p-3 bg-slate-700 text-slate-200 rounded-lg ml-12">
+    <p className="font-semibold text-xs mb-1 opacity-70">Claude:</p>
+    <p>Para Luna, que tiene 3 años, te recomiendo juguetes que estimulen su instinto de caza...</p>
+  </div>
+</div>
+
+<Callout type="info">
+  **Claude recordó el nombre y la edad de tu gato** porque están en la misma conversación.
+</Callout>
+
+---
+
+## Nueva conversación = memoria nueva
+
+Cuando empiezas un **nuevo chat**, Claude no recuerda nada de chats anteriores:
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
+  <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-700/50">
+    <p className="font-semibold text-green-700 dark:text-green-400 mb-2">✅ En el mismo chat</p>
+    <p className="text-sm text-slate-600 dark:text-gray-400">Claude recuerda todo lo que hablaste antes</p>
+  </div>
+  <div className="p-4 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-700/50">
+    <p className="font-semibold text-red-700 dark:text-red-400 mb-2">❌ En un chat nuevo</p>
+    <p className="text-sm text-slate-600 dark:text-gray-400">Claude no sabe nada de conversaciones anteriores</p>
+  </div>
+</div>
+
+---
+
+## Botones y funciones útiles
+
+### 📎 Subir archivos
+
+Puedes subir documentos para que Claude los lea:
+- PDFs
+- Imágenes
+- Documentos de texto
+
+Haz clic en el icono de **clip (📎)** junto a la caja de texto.
+
+### 📋 Copiar respuestas
+
+Cada respuesta de Claude tiene un botón para copiar. Muy útil cuando te escribe un email o texto que quieres usar.
+
+### 🔄 Regenerar respuesta
+
+Si no te gusta una respuesta, puedes pedirle que la genere de nuevo.
+
+### 🗂️ Historial de chats
+
+A la izquierda verás todas tus conversaciones anteriores. Puedes volver a cualquiera.
+
+---
+
+## Tu turno: Ejercicio práctico
+
+Prueba esto ahora:
+
+<div className="my-6 p-6 bg-indigo-50 dark:bg-indigo-900/20 rounded-xl border border-indigo-200 dark:border-indigo-500/30">
+  <h4 className="font-bold text-indigo-700 dark:text-indigo-400 mb-3">Ejercicio 1: Pide ayuda con algo real</h4>
+  <p className="text-slate-700 dark:text-gray-300 mb-4">
+    Piensa en algo que necesites hacer hoy o esta semana, y pídele ayuda a Claude. Puede ser:
+  </p>
+  <ul className="list-disc list-inside text-slate-600 dark:text-gray-400 space-y-1 mb-4">
+    <li>Un email que tienes pendiente</li>
+    <li>Ideas para una cena especial</li>
+    <li>Explicación de algo que no entiendes</li>
+    <li>Planificar un viaje o evento</li>
+  </ul>
+  <p className="text-sm text-indigo-600 dark:text-indigo-400 font-medium">
+    No hay respuesta correcta o incorrecta. ¡Solo prueba!
+  </p>
+</div>
+
+---
+
+<div className="mt-8 flex justify-center">
+  <a href="/modo-facil/escribir-prompts" className="inline-flex items-center gap-2 px-8 py-4 bg-green-600 text-white rounded-lg hover:bg-green-700 transition text-lg font-semibold">
+    Siguiente: Cómo pedir las cosas →
+  </a>
+</div>

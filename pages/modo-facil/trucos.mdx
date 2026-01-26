@@ -1,0 +1,188 @@
+---
+title: Trucos y consejos para Claude
+---
+
+import { Callout } from 'nextra/components'
+
+# Trucos y consejos para Claude
+
+Después de usar Claude un tiempo, descubrirás estos trucos que te harán la vida más fácil.
+
+---
+
+## 🔄 Pide variaciones
+
+Si la primera respuesta no te convence:
+
+```
+Dame 3 versiones diferentes de esto
+```
+
+```
+Hazlo más [corto/largo/formal/casual]
+```
+
+```
+Intenta otro enfoque completamente diferente
+```
+
+---
+
+## 📋 Usa el historial
+
+El historial de chats a la izquierda es muy útil:
+
+- **Renombra tus chats** - Haz clic en el nombre para cambiarlo
+- **Organízate por temas** - Un chat para trabajo, otro para personal
+- **Reutiliza conversaciones** - Si Claude ya "entiende" tu contexto, sigue ahí
+
+<Callout type="info">
+  **Truco**: Si tienes un proyecto largo (escribir un libro, planificar un evento), mantén TODO en el mismo chat para que Claude recuerde el contexto.
+</Callout>
+
+---
+
+## 🎭 Dale un rol a Claude
+
+Claude responde mejor cuando le das un papel específico:
+
+```
+Actúa como un experto en marketing y revisa este texto promocional
+```
+
+```
+Eres un profesor de inglés. Corrige mi texto y explícame los errores
+```
+
+```
+Imagina que eres un nutricionista. Qué opinas de esta dieta
+```
+
+---
+
+## 📐 Pide estructuras específicas
+
+Claude puede formatear información de muchas formas:
+
+```
+Organiza esto en una tabla con columnas X, Y, Z
+```
+
+```
+Hazme una lista numerada de pasos
+```
+
+```
+Crea un esquema con títulos y subtítulos
+```
+
+```
+Ponlo en formato de FAQ (preguntas y respuestas)
+```
+
+---
+
+## 🔍 Sé específico con las correcciones
+
+Cuando Claude se equivoque o no entienda:
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
+  <div className="p-4 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-700/50">
+    <p className="font-semibold text-red-700 dark:text-red-400 mb-2">❌ No hagas esto</p>
+    <p className="font-mono text-sm text-slate-700 dark:text-gray-300">"No, está mal"</p>
+  </div>
+  <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-700/50">
+    <p className="font-semibold text-green-700 dark:text-green-400 mb-2">✅ Haz esto</p>
+    <p className="font-mono text-sm text-slate-700 dark:text-gray-300">"Necesito que el tono sea más formal. También quita la parte sobre X porque no aplica"</p>
+  </div>
+</div>
+
+---
+
+## 📎 Sube archivos cuando puedas
+
+En lugar de copiar y pegar textos largos, sube el archivo directamente:
+
+- **PDFs** - Claude los lee completos
+- **Imágenes** - Puede describir y analizar fotos
+- **Documentos** - Word, texto plano, etc.
+
+```
+Analiza este documento y dime los puntos más importantes
+[Subir archivo]
+```
+
+---
+
+## 🎯 El truco del "paso a paso"
+
+Cuando la tarea es compleja, pide que divida el proceso:
+
+```
+Antes de responder, explícame paso a paso cómo vas a abordar esto
+```
+
+Esto hace que Claude piense mejor y cometa menos errores.
+
+---
+
+## 💡 Pide que "piense en voz alta"
+
+```
+Muéstrame tu razonamiento antes de dar la respuesta final
+```
+
+Útil para:
+- Problemas matemáticos
+- Decisiones complejas
+- Cuando quieres entender el "por qué"
+
+---
+
+## ⚡ Atajos útiles
+
+| Acción | Cómo hacerlo |
+|--------|--------------|
+| Nueva conversación | Haz clic en "New chat" |
+| Copiar respuesta | Icono de copiar en cada mensaje |
+| Regenerar | Botón bajo la respuesta |
+| Editar tu mensaje | Haz clic en tu mensaje anterior |
+
+---
+
+## 🚫 Qué NO hacer
+
+<div className="p-4 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-700/50 my-6">
+  <h4 className="font-bold text-red-700 dark:text-red-400 mb-3">Evita estos errores comunes:</h4>
+  <ul className="space-y-2 text-slate-700 dark:text-gray-300">
+    <li>❌ Compartir información muy sensible (contraseñas, tarjetas)</li>
+    <li>❌ Creer todo sin verificar (Claude puede inventar cosas)</li>
+    <li>❌ Usar para emergencias médicas o legales reales</li>
+    <li>❌ Esperar información de última hora (no navega internet)</li>
+    <li>❌ Frustrarte - si no funciona, reformula tu pregunta</li>
+  </ul>
+</div>
+
+---
+
+## Ejercicio final
+
+<div className="my-6 p-6 bg-indigo-50 dark:bg-indigo-900/20 rounded-xl border border-indigo-200 dark:border-indigo-500/30">
+  <h4 className="font-bold text-indigo-700 dark:text-indigo-400 mb-3">Practica estos trucos</h4>
+  <p className="text-slate-700 dark:text-gray-300 mb-4">
+    Abre Claude y prueba al menos 3 de estos trucos con algo real que necesites hacer.
+  </p>
+  <ol className="list-decimal list-inside text-slate-600 dark:text-gray-400 space-y-2">
+    <li>Pídele un rol específico</li>
+    <li>Solicita la respuesta en un formato estructurado</li>
+    <li>Pide variaciones de la misma respuesta</li>
+  </ol>
+</div>
+
+---
+
+<div className="mt-8 flex justify-center">
+  <a href="/modo-facil/limitaciones" className="inline-flex items-center gap-2 px-8 py-4 bg-green-600 text-white rounded-lg hover:bg-green-700 transition text-lg font-semibold">
+    Siguiente: Limitaciones →
+  </a>
+</div>

@@ -1,0 +1,263 @@
+---
+title: "Distribución con GitHub"
+---
+
+import { Callout } from 'nextra/components'
+import CourseBuilderAccessGate from '../../components/CourseBuilderAccessGate'
+
+# Módulo 4.5: Distribución con GitHub
+
+<CourseBuilderAccessGate>
+
+## Opciones de Distribución
+
+Tienes dos opciones principales:
+
+| Método | Público | Privado | Mejor para |
+|--------|---------|---------|------------|
+| **Repositorio público** | ✅ | ❌ | Cursos gratuitos |
+| **Releases/ZIP** | ✅ | ✅ | Cursos de pago |
+
+---
+
+## Opción 1: Repositorio Público
+
+Perfecto para cursos gratuitos o contenido open source.
+
+### Estructura recomendada
+
+```
+mi-curso/
+├── .claude/
+│   └── commands/
+│       ├── iniciar.md
+│       ├── leccion-1.md
+│       └── ...
+├── materiales/
+├── CLAUDE.md
+├── PROGRESO.md
+├── LICENSE
+└── README.md
+```
+
+### README.md efectivo
+
+```markdown
+# 🐍 Curso de Python para Principiantes
+
+Aprende Python desde cero con lecciones interactivas en Claude Code.
+
+## 🚀 Cómo empezar
+
+1. Clona el repositorio:
+   ```bash
+   git clone https://github.com/tuusuario/curso-python.git
+   cd curso-python
+   ```
+
+2. Abre Claude Code:
+   ```bash
+   claude
+   ```
+
+3. Escribe el comando de inicio:
+   ```
+   /iniciar
+   ```
+
+## 📚 Contenido
+
+- Lección 1: Tu primer programa
+- Lección 2: Variables y tipos
+- ...
+
+## 📋 Requisitos
+
+- Claude Code instalado
+- Python 3.10+
+
+## 📝 Licencia
+
+MIT
+```
+
+---
+
+## Opción 2: Releases con ZIP
+
+Para cursos de pago, usa GitHub Releases para distribuir ZIPs.
+
+### Crear un Release
+
+```bash
+# Preparar archivos
+mkdir -p release
+cp -r .claude release/
+cp -r materiales release/
+cp CLAUDE.md release/
+cp README.md release/
+
+# Crear ZIP
+cd release
+zip -r ../mi-curso-v1.0.zip .
+cd ..
+```
+
+### Subir a GitHub
+
+1. Ve a tu repositorio
+2. Click en "Releases"
+3. "Create a new release"
+4. Tag: `v1.0`
+5. Sube el ZIP
+6. Publica
+
+### Repositorio privado + Releases
+
+Para cursos de pago:
+
+1. Mantén el repo **privado**
+2. Genera el ZIP con los archivos necesarios
+3. Súbelo a un servicio externo (Dropbox, S3, etc.)
+4. Entrega el link de descarga después del pago
+
+---
+
+## Versionado
+
+Usa versionado semántico:
+
+```
+v1.0.0 - Primera versión
+v1.1.0 - Nueva lección añadida
+v1.1.1 - Corrección de errores
+v2.0.0 - Reestructuración mayor
+```
+
+### CHANGELOG.md
+
+```markdown
+# Changelog
+
+## [1.1.0] - 2024-01-20
+### Añadido
+- Lección 6: Diccionarios
+- Ejercicios adicionales
+
+### Corregido
+- Typo en lección 3
+
+## [1.0.0] - 2024-01-15
+### Lanzamiento inicial
+- 5 lecciones completas
+- Sistema de progreso
+```
+
+---
+
+## Actualizaciones para Alumnos
+
+### Para repos públicos
+
+Los alumnos pueden actualizar con:
+
+```bash
+git pull origin main
+```
+
+### Para ZIPs
+
+1. Notifica por email sobre nueva versión
+2. Proporciona nuevo link de descarga
+3. Incluye instrucciones de migración si hay cambios breaking
+
+---
+
+## Protección de Contenido Premium
+
+Para contenido de pago:
+
+### 1. Repositorio privado
+
+El código fuente permanece privado. Solo tú y colaboradores tienen acceso.
+
+### 2. ZIP en servicio externo
+
+```
+Dropbox/S3/etc.
+└── curso-python-v1.0.zip?dl=1
+```
+
+Link de descarga directa que entregas después del pago.
+
+### 3. Validación de licencia
+
+En tu web, valida la licencia antes de mostrar el link:
+
+```javascript
+// Pseudo-código
+if (licenseValid(licenseKey)) {
+  showDownloadLink()
+} else {
+  showPurchaseButton()
+}
+```
+
+---
+
+## Script de Release
+
+Automatiza la creación de releases:
+
+```bash
+#!/bin/bash
+# release.sh
+
+VERSION=$1
+
+if [ -z "$VERSION" ]; then
+  echo "Uso: ./release.sh v1.0.0"
+  exit 1
+fi
+
+# Crear directorio temporal
+TEMP_DIR="release-$VERSION"
+mkdir -p "$TEMP_DIR"
+
+# Copiar archivos necesarios
+cp -r .claude "$TEMP_DIR/"
+cp -r materiales "$TEMP_DIR/"
+cp CLAUDE.md "$TEMP_DIR/"
+cp README.md "$TEMP_DIR/"
+
+# Crear ZIP
+ZIP_NAME="mi-curso-$VERSION.zip"
+cd "$TEMP_DIR"
+zip -r "../$ZIP_NAME" .
+cd ..
+
+# Limpiar
+rm -rf "$TEMP_DIR"
+
+echo "✅ Creado: $ZIP_NAME"
+```
+
+---
+
+## Ejercicio
+
+1. **Crea un repositorio** para tu curso (público o privado)
+2. **Sube los archivos** con la estructura correcta
+3. **Escribe un README** que explique cómo usar el curso
+4. **Crea un release** con la versión 1.0
+5. **(Opcional)** Crea el script de release automatizado
+
+---
+
+<div className="mt-8 text-center">
+  <a href="/course-builder/monetizacion" className="inline-block px-6 py-3 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition">
+    Siguiente: Monetización →
+  </a>
+</div>
+
+</CourseBuilderAccessGate>

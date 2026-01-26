@@ -1,0 +1,253 @@
+---
+title: "Web Automática con Nextra"
+---
+
+import { Callout } from 'nextra/components'
+import CourseBuilderAccessGate from '../../components/CourseBuilderAccessGate'
+
+# Módulo 4.4: Web Automática con Nextra
+
+<CourseBuilderAccessGate>
+
+## Por Qué Una Web
+
+Tu curso vive en Claude Code, pero necesitas:
+
+- **Landing page** para explicar qué ofreces
+- **Documentación** para referencia rápida
+- **SEO** para que te encuentren
+- **Credibilidad** profesional
+
+Nextra te permite crear esto con **mínimo esfuerzo**.
+
+---
+
+## ¿Qué es Nextra?
+
+Nextra es un generador de sitios basado en Next.js. Convierte archivos Markdown en una web profesional.
+
+```
+pages/
+├── index.mdx          →   tudominio.com/
+├── empezar.mdx        →   tudominio.com/empezar
+└── lecciones/
+    ├── leccion-1.mdx  →   tudominio.com/lecciones/leccion-1
+    └── leccion-2.mdx  →   tudominio.com/lecciones/leccion-2
+```
+
+**Ventajas:**
+- Escribes en Markdown
+- Tema profesional incluido
+- Búsqueda automática
+- Modo oscuro
+- Mobile-friendly
+
+---
+
+## Configuración Inicial
+
+### 1. Crear proyecto
+
+```bash
+npx create-next-app mi-curso-web --example https://github.com/shuding/nextra-docs-template
+cd mi-curso-web
+```
+
+### 2. Instalar dependencias
+
+```bash
+npm install
+```
+
+### 3. Ejecutar en desarrollo
+
+```bash
+npm run dev
+```
+
+Abre `http://localhost:3000` y verás tu sitio.
+
+---
+
+## Estructura del Proyecto
+
+```
+mi-curso-web/
+├── pages/
+│   ├── _meta.json        # Navegación
+│   ├── index.mdx         # Página principal
+│   ├── empezar.mdx       # Guía de inicio
+│   └── lecciones/
+│       ├── _meta.json    # Navegación de lecciones
+│       ├── leccion-1.mdx
+│       └── leccion-2.mdx
+├── theme.config.tsx      # Configuración del tema
+├── next.config.js        # Configuración de Next.js
+└── package.json
+```
+
+---
+
+## Navegación con _meta.json
+
+Controla el orden y nombres en el sidebar:
+
+```json
+{
+  "index": "Inicio",
+  "empezar": "Empezar",
+  "lecciones": "Lecciones",
+  "---": {
+    "type": "separator"
+  },
+  "about": "Sobre el curso"
+}
+```
+
+Para la carpeta `lecciones/`:
+
+```json
+{
+  "leccion-1": "1. Tu primer programa",
+  "leccion-2": "2. Variables",
+  "leccion-3": "3. Operadores"
+}
+```
+
+---
+
+## Configuración del Tema
+
+Edita `theme.config.tsx`:
+
+```tsx
+import { DocsThemeConfig } from 'nextra-theme-docs'
+
+const config: DocsThemeConfig = {
+  logo: <span>Mi Curso de Python</span>,
+  project: {
+    link: 'https://github.com/tuusuario/mi-curso',
+  },
+  docsRepositoryBase: 'https://github.com/tuusuario/mi-curso/tree/main',
+  footer: {
+    text: '© 2024 Mi Curso. Creado con Course Builder.',
+  },
+  useNextSeoProps() {
+    return {
+      titleTemplate: '%s – Mi Curso de Python'
+    }
+  },
+  primaryHue: 39, // Color amber
+}
+
+export default config
+```
+
+---
+
+## Página Principal
+
+Edita `pages/index.mdx`:
+
+```mdx
+---
+title: Mi Curso de Python
+---
+
+import { Callout } from 'nextra/components'
+
+# Aprende Python desde Cero
+
+Curso interactivo que se ejecuta dentro de Claude Code.
+
+<div className="mt-8 flex gap-4">
+  <a
+    href="/empezar"
+    className="px-6 py-3 bg-amber-500 text-white rounded-lg font-semibold hover:bg-amber-600"
+  >
+    Empezar Gratis
+  </a>
+  <a
+    href="/lecciones/leccion-1"
+    className="px-6 py-3 border border-slate-300 rounded-lg font-semibold hover:bg-slate-50"
+  >
+    Ver Lecciones
+  </a>
+</div>
+
+## ¿Qué aprenderás?
+
+- Variables y tipos de datos
+- Control de flujo
+- Funciones
+- Manejo de archivos
+- Y más...
+
+<Callout type="info">
+  Este curso requiere Claude Code instalado.
+</Callout>
+```
+
+---
+
+## Sincronizar con Comandos
+
+Puedes generar la web desde tus comandos slash:
+
+```
+.claude/commands/leccion-1.md  →  pages/lecciones/leccion-1.mdx
+```
+
+**Script simple:**
+
+```bash
+#!/bin/bash
+# sync-to-web.sh
+
+for file in .claude/commands/leccion-*.md; do
+  filename=$(basename "$file" .md)
+  # Copiar contenido (sin el frontmatter de comandos)
+  tail -n +4 "$file" > "pages/lecciones/${filename}.mdx"
+done
+```
+
+<Callout type="warning">
+  Esto es opcional. Puedes mantener web y comandos por separado si prefieres contenido diferente en cada uno.
+</Callout>
+
+---
+
+## Deploy
+
+### Vercel (Recomendado)
+
+1. Push a GitHub
+2. Conecta repo a [vercel.com](https://vercel.com)
+3. Deploy automático
+
+### Netlify
+
+1. Push a GitHub
+2. Conecta repo a [netlify.com](https://netlify.com)
+3. Build command: `npm run build`
+4. Publish directory: `out`
+
+---
+
+## Ejercicio
+
+1. **Crea un proyecto Nextra** para tu curso
+2. **Configura el tema** con tu logo y colores
+3. **Crea la página principal** con propuesta de valor
+4. **Añade 2-3 páginas de lecciones**
+5. **Haz deploy** en Vercel o Netlify
+
+---
+
+<div className="mt-8 text-center">
+  <a href="/course-builder/distribucion-github" className="inline-block px-6 py-3 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition">
+    Siguiente: Distribución GitHub →
+  </a>
+</div>
+
+</CourseBuilderAccessGate>

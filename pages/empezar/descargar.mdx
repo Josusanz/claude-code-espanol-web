@@ -2,127 +2,169 @@
 title: Descargar y empezar
 ---
 
-import { Callout, Steps, FileTree } from 'nextra/components'
+import { Callout, Steps } from 'nextra/components'
 
 # Descargar y empezar el curso
 
-¡Ya casi estás! Solo falta descargar los materiales y comenzar.
+Sigue estos 3 pasos para comenzar. No te preocupes si algo no queda claro - cada paso está explicado con detalle.
 
-## Descargar los materiales
+---
 
-<div className="mt-6 mb-8 p-6 bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20 rounded-lg">
-  <p className="text-lg font-semibold mb-4">📦 Descarga el curso completo:</p>
-  <a 
-    href="https://github.com/Josusanz/claude-code-espanol-web/releases/latest"
-    className="inline-block px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition text-lg font-semibold"
-    target="_blank"
-  >
-    Descargar ZIP →
-  </a>
+## Paso 1 de 3: Descargar el curso
+
+<div className="mt-6 mb-8 p-8 bg-green-50 dark:bg-green-900/20 rounded-2xl border-2 border-green-300 dark:border-green-500/30">
+  <div className="text-center">
+    <p className="text-2xl font-bold text-green-800 dark:text-green-200 mb-2">Haz clic en este botón:</p>
+    <p className="text-slate-600 dark:text-gray-400 mb-6">Se descargará un archivo a tu computadora</p>
+    <a
+      href="https://github.com/Josusanz/claude-code-espanol-web/releases/download/v1.0.2/claude-code-espanol-materiales-v1.0.2.zip"
+      className="inline-block px-8 py-4 bg-green-600 text-white rounded-xl hover:bg-green-700 transition text-xl font-bold shadow-lg"
+      download
+    >
+      ⬇️ Descargar Curso (ZIP)
+    </a>
+  </div>
 </div>
 
-## Preparar el entorno
-
-<Steps>
-### Descomprime el archivo
-
-Haz doble clic en el ZIP descargado o usa la terminal:
-
-```bash
-unzip claude-code-espanol-materiales-v1.0.2.zip -d mi-curso-claude
-```
-
-### Entra en la carpeta del curso
-
-```bash
-cd mi-curso-claude
-```
-
-### Inicia Claude Code
-
-```bash
-claude
-```
-
-### ¡Comienza el curso!
-
-Escribe el comando:
-
-```
-/iniciar
-```
-
-Claude te dará la bienvenida y comenzará a guiarte.
-</Steps>
-
-## Estructura del curso
-
-Esto es lo que encontrarás dentro de la carpeta:
-
-<FileTree>
-  <FileTree.Folder name="claude-code-espanol" defaultOpen>
-    <FileTree.File name="CLAUDE.md" />
-    <FileTree.File name="README.md" />
-    <FileTree.Folder name=".claude" defaultOpen>
-      <FileTree.Folder name="commands" defaultOpen>
-        <FileTree.File name="iniciar.md" />
-        <FileTree.File name="leccion-1.md" />
-        <FileTree.File name="leccion-2.md" />
-        <FileTree.File name="..." />
-      </FileTree.Folder>
-    </FileTree.Folder>
-    <FileTree.Folder name="materiales">
-      <FileTree.Folder name="ejercicios" />
-      <FileTree.Folder name="ejemplos" />
-      <FileTree.Folder name="recursos" />
-    </FileTree.Folder>
-  </FileTree.Folder>
-</FileTree>
-
-## Comandos disponibles
-
-Una vez dentro del curso, tendrás estos comandos:
-
-| Comando | Descripción |
-|---------|-------------|
-| `/iniciar` | 🚀 Comienza desde el principio |
-| `/leccion-1` ... `/leccion-8` | 📚 Ir a lección específica |
-| `/ayuda` | ❓ Ver todos los comandos |
-| `/progreso` | 📊 Ver tu avance |
-
-## Tips para el curso
-
-<Callout type="info" emoji="💡">
-  **Consejo 1:** No tengas prisa. Cada lección incluye ejercicios prácticos. Tómate tu tiempo.
+<Callout type="info">
+**¿Dónde está el archivo?** Busca en tu carpeta de **Descargas** (Downloads). El archivo se llama `claude-code-espanol-materiales-v1.0.2.zip`
 </Callout>
 
-<Callout type="info" emoji="💡">
-  **Consejo 2:** Pregunta sin miedo. Claude está ahí para ayudarte. No hay preguntas tontas.
+---
+
+## Paso 2 de 3: Abrir el archivo descargado
+
+El archivo que descargaste es un **ZIP** (un archivo comprimido). Necesitas "descomprimirlo" para poder usarlo.
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
+  <div className="p-6 bg-slate-100 dark:bg-gray-800/50 rounded-xl border border-slate-200 dark:border-gray-700">
+    <h3 className="text-lg font-bold mb-4 text-slate-800 dark:text-white">🍎 Si usas Mac</h3>
+    <ol className="space-y-3 text-slate-700 dark:text-gray-300">
+      <li><strong>1.</strong> Abre tu carpeta de <strong>Descargas</strong></li>
+      <li><strong>2.</strong> Busca el archivo ZIP que descargaste</li>
+      <li><strong>3.</strong> Haz <strong>doble clic</strong> en él</li>
+      <li><strong>4.</strong> Aparecerá una nueva carpeta llamada <code className="bg-slate-200 dark:bg-gray-700 px-1 rounded">claude-code-espanol</code></li>
+    </ol>
+  </div>
+
+  <div className="p-6 bg-slate-100 dark:bg-gray-800/50 rounded-xl border border-slate-200 dark:border-gray-700">
+    <h3 className="text-lg font-bold mb-4 text-slate-800 dark:text-white">🪟 Si usas Windows</h3>
+    <ol className="space-y-3 text-slate-700 dark:text-gray-300">
+      <li><strong>1.</strong> Abre tu carpeta de <strong>Descargas</strong></li>
+      <li><strong>2.</strong> Busca el archivo ZIP que descargaste</li>
+      <li><strong>3.</strong> Haz <strong>clic derecho</strong> sobre él</li>
+      <li><strong>4.</strong> Selecciona <strong>"Extraer todo..."</strong></li>
+      <li><strong>5.</strong> Haz clic en <strong>"Extraer"</strong></li>
+    </ol>
+  </div>
+</div>
+
+<Callout type="warning">
+**Importante:** Después de este paso, deberías tener una carpeta llamada **claude-code-espanol** en tu carpeta de Descargas. Si no la ves, repite los pasos anteriores.
 </Callout>
 
-<Callout type="info" emoji="💡">
-  **Consejo 3:** Experimenta. La mejor forma de aprender es probando cosas nuevas.
-</Callout>
+---
 
-## ¿Listo?
+## Paso 3 de 3: Abrir Claude Code en la carpeta del curso
 
-Si ya tienes Claude Code instalado y el curso descargado, ¡estás listo para empezar!
+Ahora necesitas abrir la **Terminal** (la aplicación de línea de comandos) y navegar a la carpeta del curso.
 
-<div className="mt-8 flex justify-center">
-  <a
-    href="/fundamentos/que-es"
-    className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-lg font-semibold"
-  >
-    Continuar al Módulo 1: Fundamentos →
-  </a>
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
+  <div className="p-6 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-200 dark:border-blue-500/30">
+    <h3 className="text-lg font-bold mb-4 text-blue-800 dark:text-blue-200">🍎 En Mac</h3>
+    <ol className="space-y-4 text-slate-700 dark:text-gray-300">
+      <li>
+        <strong>1. Abre la Terminal:</strong>
+        <p className="text-sm mt-1">Presiona <kbd className="px-2 py-1 bg-slate-200 dark:bg-gray-700 rounded text-xs">Cmd</kbd> + <kbd className="px-2 py-1 bg-slate-200 dark:bg-gray-700 rounded text-xs">Espacio</kbd>, escribe "Terminal" y presiona Enter</p>
+      </li>
+      <li>
+        <strong>2. Copia y pega este comando:</strong>
+        <div className="mt-2 p-3 bg-slate-800 text-green-400 rounded-lg font-mono text-sm">
+          cd ~/Downloads/claude-code-espanol && claude
+        </div>
+        <p className="text-sm mt-1">Presiona Enter después de pegar</p>
+      </li>
+    </ol>
+  </div>
+
+  <div className="p-6 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-200 dark:border-blue-500/30">
+    <h3 className="text-lg font-bold mb-4 text-blue-800 dark:text-blue-200">🪟 En Windows</h3>
+    <ol className="space-y-4 text-slate-700 dark:text-gray-300">
+      <li>
+        <strong>1. Abre PowerShell:</strong>
+        <p className="text-sm mt-1">Presiona <kbd className="px-2 py-1 bg-slate-200 dark:bg-gray-700 rounded text-xs">Windows</kbd> + <kbd className="px-2 py-1 bg-slate-200 dark:bg-gray-700 rounded text-xs">X</kbd>, luego selecciona "Terminal" o "PowerShell"</p>
+      </li>
+      <li>
+        <strong>2. Copia y pega este comando:</strong>
+        <div className="mt-2 p-3 bg-slate-800 text-green-400 rounded-lg font-mono text-sm">
+          cd $HOME\Downloads\claude-code-espanol; claude
+        </div>
+        <p className="text-sm mt-1">Presiona Enter después de pegar</p>
+      </li>
+    </ol>
+  </div>
 </div>
 
 ---
 
-## ¿Problemas?
+## ¡Último paso! Iniciar el curso
 
-Si algo no funciona:
+Cuando Claude Code se abra, verás una pantalla esperando tu mensaje.
 
-1. **Revisa la instalación** - ¿`claude --version` muestra un número?
-2. **Verifica la ubicación** - ¿Estás dentro de la carpeta `claude-code-espanol`?
-3. **Abre un issue** - [Reportar problema](https://github.com/Josusanz/claude-code-espanol-web/issues)
+<div className="my-8 p-8 bg-purple-50 dark:bg-purple-900/20 rounded-2xl border-2 border-purple-300 dark:border-purple-500/30 text-center">
+  <p className="text-xl font-bold text-purple-800 dark:text-purple-200 mb-4">Escribe este comando y presiona Enter:</p>
+  <div className="inline-block p-4 bg-slate-800 text-green-400 rounded-xl font-mono text-2xl">
+    /iniciar
+  </div>
+  <p className="text-slate-600 dark:text-gray-400 mt-4">Claude te dará la bienvenida y comenzará a guiarte paso a paso</p>
+</div>
+
+---
+
+## ¿Algo no funciona?
+
+<div className="grid grid-cols-1 gap-4 my-6">
+  <details className="p-4 bg-amber-50 dark:bg-amber-900/20 rounded-lg border border-amber-200 dark:border-amber-500/30">
+    <summary className="font-semibold cursor-pointer text-amber-800 dark:text-amber-200">❓ "No encuentro el archivo descargado"</summary>
+    <p className="mt-3 text-slate-600 dark:text-gray-400">
+      Busca en tu carpeta de <strong>Descargas</strong> (Downloads). El archivo se llama <code>claude-code-espanol-materiales-v1.0.2.zip</code>.
+      Si usas Chrome, también puedes hacer clic en el icono de descargas abajo a la izquierda del navegador.
+    </p>
+  </details>
+
+  <details className="p-4 bg-amber-50 dark:bg-amber-900/20 rounded-lg border border-amber-200 dark:border-amber-500/30">
+    <summary className="font-semibold cursor-pointer text-amber-800 dark:text-amber-200">❓ "El comando 'claude' no funciona"</summary>
+    <p className="mt-3 text-slate-600 dark:text-gray-400">
+      Esto significa que Claude Code no está instalado. Vuelve a la página anterior de <a href="/empezar/instalacion" className="text-blue-600 dark:text-blue-400 underline">Instalación</a> y sigue los pasos.
+    </p>
+  </details>
+
+  <details className="p-4 bg-amber-50 dark:bg-amber-900/20 rounded-lg border border-amber-200 dark:border-amber-500/30">
+    <summary className="font-semibold cursor-pointer text-amber-800 dark:text-amber-200">❓ "Dice que la carpeta no existe"</summary>
+    <p className="mt-3 text-slate-600 dark:text-gray-400">
+      Asegúrate de haber descomprimido el archivo ZIP (Paso 2). La carpeta <code>claude-code-espanol</code> debe existir dentro de tu carpeta de Descargas.
+    </p>
+  </details>
+
+  <details className="p-4 bg-amber-50 dark:bg-amber-900/20 rounded-lg border border-amber-200 dark:border-amber-500/30">
+    <summary className="font-semibold cursor-pointer text-amber-800 dark:text-amber-200">❓ "Necesito más ayuda"</summary>
+    <p className="mt-3 text-slate-600 dark:text-gray-400">
+      No te preocupes, estamos aquí para ayudarte. <a href="https://github.com/Josusanz/claude-code-espanol-web/issues" className="text-blue-600 dark:text-blue-400 underline">Abre un ticket de soporte</a> describiendo tu problema y te ayudaremos.
+    </p>
+  </details>
+</div>
+
+---
+
+## ¿Listo para continuar?
+
+Una vez que tengas Claude Code funcionando con el curso, puedes explorar la documentación:
+
+<div className="mt-8 flex justify-center">
+  <a
+    href="/fundamentos/que-es"
+    className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition text-lg font-bold shadow-lg"
+  >
+    Ir al Módulo 1: Fundamentos →
+  </a>
+</div>

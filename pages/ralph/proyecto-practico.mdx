@@ -1,0 +1,376 @@
+---
+title: Proyecto Práctico
+---
+
+import { Callout } from 'nextra/components'
+import RalphAccessGate from '../../components/RalphAccessGate'
+
+# Lección 3.7: Proyecto Práctico
+
+<RalphAccessGate>
+
+## Construye una App Completa con Ralph
+
+Es hora de poner todo en práctica. Vamos a construir una **API de gestión de notas** desde cero usando Ralph Loop.
+
+---
+
+## El Proyecto: Notes API
+
+Una API REST completa con:
+- CRUD de notas
+- Autenticación JWT
+- Categorías/etiquetas
+- Búsqueda de texto
+- Tests automatizados
+
+**Tiempo estimado:** 2-4 horas de Ralph (sin supervisión continua)
+
+---
+
+## Paso 1: Crear los Archivos Base
+
+### PROMPT_build.md
+
+```markdown
+# PROMPT_build.md - Notes API
+
+## Resumen del Proyecto
+API REST para gestión de notas personales con autenticación,
+categorías y búsqueda. Stack moderno con TypeScript y SQLite.
+
+## Tu Rol
+Eres un desarrollador senior construyendo esta API. Sigues
+buenas prácticas, escribes tests, y documentas decisiones.
+
+## Stack Técnico
+- Runtime: Node.js 20
+- Lenguaje: TypeScript 5
+- Framework: Express.js 4
+- ORM: Prisma
+- Base de datos: SQLite (desarrollo)
+- Testing: Vitest
+- Autenticación: JWT (jsonwebtoken)
+- Validación: Zod
+
+## Estructura del Proyecto
+```
+notes-api/
+├── src/
+│   ├── index.ts              # Entry point
+│   ├── app.ts                # Express app config
+│   ├── routes/
+│   │   ├── auth.ts           # Rutas de auth
+│   │   └── notes.ts          # Rutas de notas
+│   ├── controllers/
+│   │   ├── authController.ts
+│   │   └── notesController.ts
+│   ├── middleware/
+│   │   ├── auth.ts           # JWT verification
+│   │   └── errorHandler.ts
+│   ├── schemas/              # Zod schemas
+│   │   ├── auth.ts
+│   │   └── notes.ts
+│   └── utils/
+│       ├── jwt.ts
+│       └── password.ts
+├── prisma/
+│   └── schema.prisma
+├── tests/
+│   ├── auth.test.ts
+│   └── notes.test.ts
+├── package.json
+├── tsconfig.json
+└── vitest.config.ts
+```
+
+## Convenciones de Código
+1. Async/await siempre (nunca callbacks)
+2. Errores con try/catch y middleware centralizado
+3. Validación de input en cada endpoint con Zod
+4. Respuestas: { success: boolean, data?: any, error?: string }
+5. Códigos HTTP correctos (200, 201, 400, 401, 404, 500)
+
+## Modelos de Datos
+
+### User
+- id: Int (auto)
+- email: String (unique)
+- password: String (hashed)
+- createdAt: DateTime
+
+### Note
+- id: Int (auto)
+- title: String (max 200)
+- content: String
+- category: String (opcional)
+- userId: Int (FK)
+- createdAt: DateTime
+- updatedAt: DateTime
+
+## Endpoints Requeridos
+
+### Auth
+- POST /auth/register - Crear cuenta
+- POST /auth/login - Obtener token
+
+### Notes (protegidos)
+- GET /notes - Listar notas del usuario
+- GET /notes/:id - Obtener nota específica
+- POST /notes - Crear nota
+- PUT /notes/:id - Actualizar nota
+- DELETE /notes/:id - Eliminar nota
+- GET /notes/search?q=texto - Buscar en título/contenido
+
+## Reglas CRÍTICAS
+- ⛔ NUNCA guardar passwords en texto plano
+- ⛔ NO crear endpoints sin validación
+- ⛔ NO modificar datos de otros usuarios
+- ✅ Verificar ownership antes de CRUD
+- ✅ Ejecutar tests después de cada feature
+- ✅ Documentar decisiones en PROGRESS.md
+
+## Flujo de Trabajo
+1. Lee PLAN.md - encuentra la primera tarea pendiente
+2. Lee PROGRESS.md - obtén contexto previo
+3. Implementa la tarea completamente
+4. Ejecuta tests relacionados
+5. Si pasan: marca [x] en PLAN.md
+6. Si fallan: arregla y documenta en PROGRESS.md
+7. Termina la sesión
+```
+
+### PLAN.md
+
+```markdown
+# PLAN.md - Notes API
+
+## 📊 Estado
+- Inicio: [fecha actual]
+- Progreso: 0%
+
+## ✅ Completadas
+(ninguna aún)
+
+## 🔄 En Progreso
+(ninguna)
+
+## 📋 Pendientes
+
+### Fase 1: Setup del Proyecto
+- [ ] Crear package.json con dependencias
+- [ ] Configurar TypeScript (tsconfig.json)
+- [ ] Configurar Vitest
+- [ ] Crear estructura de carpetas
+
+### Fase 2: Base de Datos
+- [ ] Configurar Prisma
+- [ ] Crear modelo User en schema.prisma
+- [ ] Crear modelo Note en schema.prisma
+- [ ] Generar cliente Prisma y migración
+
+### Fase 3: Autenticación
+- [ ] Crear utils/password.ts (hash, verify)
+- [ ] Crear utils/jwt.ts (sign, verify)
+- [ ] Crear schemas/auth.ts (validación Zod)
+- [ ] Crear authController (register, login)
+- [ ] Crear routes/auth.ts
+- [ ] Crear middleware/auth.ts (protección)
+- [ ] Test: registro de usuario
+- [ ] Test: login y token válido
+
+### Fase 4: CRUD de Notas
+- [ ] Crear schemas/notes.ts (validación)
+- [ ] Crear notesController (create)
+- [ ] Crear notesController (list)
+- [ ] Crear notesController (getById)
+- [ ] Crear notesController (update)
+- [ ] Crear notesController (delete)
+- [ ] Crear routes/notes.ts
+- [ ] Test: crear nota
+- [ ] Test: listar notas
+- [ ] Test: editar nota
+- [ ] Test: eliminar nota
+- [ ] Test: no acceder a notas de otros
+
+### Fase 5: Búsqueda
+- [ ] Añadir endpoint GET /notes/search
+- [ ] Implementar búsqueda en título y contenido
+- [ ] Test: búsqueda funciona correctamente
+
+### Fase 6: Finalización
+- [ ] Middleware de manejo de errores
+- [ ] Revisar todos los tests pasan
+- [ ] Crear app.ts con configuración Express
+- [ ] Crear index.ts (entry point)
+- [ ] Documentar endpoints en README.md
+
+## 🚫 Bloqueados
+(ninguno)
+
+## 📝 Notas
+- JWT secret: usar variable de entorno
+- Password: bcrypt con 10 rounds
+```
+
+### PROGRESS.md
+
+```markdown
+# PROGRESS.md - Notes API
+
+## Decisiones de Arquitectura
+(se llenarán durante el desarrollo)
+
+## Bugs y Soluciones
+(se llenarán durante el desarrollo)
+
+## Dependencias Instaladas
+(se llenarán durante el desarrollo)
+
+## Notas para Futuras Iteraciones
+- Verificar que tests pasen antes de continuar
+- Documentar cualquier cambio de enfoque
+```
+
+### loop.sh
+
+Usa el script de la lección anterior.
+
+---
+
+## Paso 2: Lanzar Ralph
+
+```bash
+# Crear directorio del proyecto
+mkdir notes-api
+cd notes-api
+
+# Crear los archivos (copia el contenido de arriba)
+# PROMPT_build.md
+# PLAN.md
+# PROGRESS.md
+# loop.sh
+
+# Dar permisos
+chmod +x loop.sh
+
+# ¡Lanzar!
+./loop.sh
+```
+
+---
+
+## Paso 3: Monitorear
+
+En otra terminal:
+
+```bash
+# Ver progreso
+watch -n 30 "cat PLAN.md | grep -E '\[.\]'"
+
+# Ver cambios recientes
+watch -n 60 "ls -lt src/ 2>/dev/null | head -10"
+
+# Ver log
+tail -f ralph_log_*.txt
+```
+
+---
+
+## Paso 4: Puntos de Verificación
+
+<Callout type="info">
+  Verifica estos hitos durante la ejecución:
+</Callout>
+
+| Después de... | Verificar |
+|---------------|-----------|
+| ~15 min | Setup completo, package.json existe |
+| ~30 min | Prisma configurado, modelos creados |
+| ~60 min | Auth funciona, tests de auth pasan |
+| ~90 min | CRUD básico completo |
+| ~120 min | Búsqueda funciona, tests pasan |
+| ~150 min | Todo completado, README documentado |
+
+---
+
+## Paso 5: Resultado Esperado
+
+Al terminar, deberías tener:
+
+```bash
+notes-api/
+├── src/
+│   ├── index.ts              ✅
+│   ├── app.ts                ✅
+│   ├── routes/
+│   │   ├── auth.ts           ✅
+│   │   └── notes.ts          ✅
+│   ├── controllers/
+│   │   ├── authController.ts ✅
+│   │   └── notesController.ts✅
+│   ├── middleware/
+│   │   ├── auth.ts           ✅
+│   │   └── errorHandler.ts   ✅
+│   ├── schemas/
+│   │   ├── auth.ts           ✅
+│   │   └── notes.ts          ✅
+│   └── utils/
+│       ├── jwt.ts            ✅
+│       └── password.ts       ✅
+├── prisma/
+│   └── schema.prisma         ✅
+├── tests/
+│   ├── auth.test.ts          ✅
+│   └── notes.test.ts         ✅
+├── README.md                  ✅
+├── package.json              ✅
+└── tsconfig.json             ✅
+```
+
+Y todos los tests pasando:
+
+```bash
+npm test
+# ✓ auth.test.ts (3 tests)
+# ✓ notes.test.ts (6 tests)
+# All tests passed!
+```
+
+---
+
+## Troubleshooting del Proyecto
+
+<details className="my-4 p-4 bg-slate-100 dark:bg-gray-800/50 rounded-lg">
+  <summary className="font-semibold cursor-pointer">Ralph se atora en setup</summary>
+  <p className="mt-3 text-slate-600 dark:text-gray-400">
+    Verifica que tienes Node.js 20+ instalado. Si el problema persiste, ejecuta manualmente
+    `npm init -y` y reinicia Ralph.
+  </p>
+</details>
+
+<details className="my-4 p-4 bg-slate-100 dark:bg-gray-800/50 rounded-lg">
+  <summary className="font-semibold cursor-pointer">Tests fallan repetidamente</summary>
+  <p className="mt-3 text-slate-600 dark:text-gray-400">
+    Añade una nota en PROGRESS.md explicando el problema. Si persiste, detén Ralph,
+    ejecuta los tests manualmente para diagnosticar, y ajusta las specs.
+  </p>
+</details>
+
+<details className="my-4 p-4 bg-slate-100 dark:bg-gray-800/50 rounded-lg">
+  <summary className="font-semibold cursor-pointer">Claude no marca tareas completadas</summary>
+  <p className="mt-3 text-slate-600 dark:text-gray-400">
+    Verifica que el formato en PLAN.md es exactamente `- [ ]` y `- [x]` (con espacios).
+    Añade instrucción explícita en PROMPT_build.md sobre el formato.
+  </p>
+</details>
+
+---
+
+<div className="mt-8 text-center">
+  <a href="/ralph/consejos-avanzados" className="inline-block px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition">
+    Siguiente: Consejos Avanzados →
+  </a>
+</div>
+
+</RalphAccessGate>

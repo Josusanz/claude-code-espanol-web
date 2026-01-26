@@ -141,7 +141,7 @@ export default function CursoPremiumPage() {
 
               <p className="mt-6 text-center text-sm text-slate-500">
                 No tienes licencia?{' '}
-                <Link href="/premium" className="text-amber-600 hover:underline">
+                <Link href="/premium/course-builder" className="text-amber-600 hover:underline">
                   Comprar curso
                 </Link>
               </p>
@@ -165,7 +165,7 @@ export default function CursoPremiumPage() {
                     <p className="text-sm text-slate-500">ZIP con comandos, templates y ejemplos</p>
                   </div>
                   <a
-                    href="https://github.com/Josusanz/claude-code-course-builder/archive/refs/heads/main.zip"
+                    href="/api/download/course-builder"
                     className="bg-amber-500 hover:bg-amber-600 text-white font-medium py-2 px-4 rounded-lg transition-colors"
                   >
                     Descargar ZIP

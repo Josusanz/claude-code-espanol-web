@@ -1,8 +1,32 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { Resend } from 'resend'
+import { kv } from '@vercel/kv'
 import { generateToken, saveMagicLinkToken } from '../../../lib/auth'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
+
+// Rate limiting: 3 requests per email per hour
+const RATE_LIMIT_MAX = 3
+const RATE_LIMIT_WINDOW = 60 * 60 // 1 hour in seconds
+
+async function checkRateLimit(email: string): Promise<{ allowed: boolean; remaining: number }> {
+  const key = `rate_limit:magic_link:${email.toLowerCase()}`
+  const current = await kv.get<number>(key) || 0
+
+  if (current >= RATE_LIMIT_MAX) {
+    return { allowed: false, remaining: 0 }
+  }
+
+  // Increment counter
+  await kv.incr(key)
+
+  // Set expiry on first request
+  if (current === 0) {
+    await kv.expire(key, RATE_LIMIT_WINDOW)
+  }
+
+  return { allowed: true, remaining: RATE_LIMIT_MAX - current - 1 }
+}
 
 export default async function handler(
   req: NextApiRequest,
@@ -24,6 +48,15 @@ export default async function handler(
     return res.status(400).json({ error: 'Email inválido' })
   }
 
+  // Check rate limit
+  const { allowed, remaining } = await checkRateLimit(email)
+  if (!allowed) {
+    return res.status(429).json({
+      error: 'Demasiados intentos. Espera una hora antes de solicitar otro enlace.',
+      retryAfter: RATE_LIMIT_WINDOW
+    })
+  }
+
   try {
     // Generar token
     const token = generateToken()
@@ -36,7 +69,6 @@ export default async function handler(
     const magicLink = `${baseUrl}/api/auth/verify?token=${token}`
 
     // Enviar email con Resend
-    // Usar dominio verificado en Resend, o onboarding@resend.dev para pruebas
     const fromEmail = process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev'
 
     await resend.emails.send({
@@ -87,7 +119,11 @@ export default async function handler(
       `
     })
 
-    return res.status(200).json({ success: true, message: 'Email enviado' })
+    return res.status(200).json({
+      success: true,
+      message: 'Email enviado',
+      remaining // Tell user how many requests they have left
+    })
 
   } catch (error: unknown) {
     console.error('Error sending magic link:', error)

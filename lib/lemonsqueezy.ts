@@ -92,7 +92,9 @@ export interface LemonSqueezyWebhookPayload {
       currency: string
       created_at: string
       product_id: number
+      product_name?: string
       variant_id: number
+      variant_name?: string
     }
   }
 }

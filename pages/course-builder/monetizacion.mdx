@@ -1,0 +1,279 @@
+---
+title: "Monetización"
+---
+
+import { Callout } from 'nextra/components'
+import CourseBuilderAccessGate from '../../components/CourseBuilderAccessGate'
+
+# Módulo 4.6: Monetización
+
+<CourseBuilderAccessGate>
+
+## Modelos de Monetización
+
+### 1. Pago único
+
+El alumno paga una vez y tiene acceso permanente.
+
+**Pros:**
+- Simple de implementar
+- Sin gestión de suscripciones
+- Atractivo para el comprador
+
+**Contras:**
+- Ingresos puntuales, no recurrentes
+- Difícil justificar actualizaciones de precio
+
+**Precio sugerido:** $29-$197 dependiendo del contenido
+
+### 2. Suscripción
+
+Acceso mientras mantenga la suscripción.
+
+**Pros:**
+- Ingresos recurrentes
+- Motiva actualizaciones constantes
+
+**Contras:**
+- Más complejo de gestionar
+- Expectativas de nuevo contenido
+
+**Precio sugerido:** $9-$29/mes
+
+### 3. Freemium
+
+Contenido básico gratis, avanzado de pago.
+
+**Pros:**
+- Captura leads
+- Demuestra valor antes de pedir dinero
+
+**Contras:**
+- Requiere más contenido
+- Conversión más lenta
+
+---
+
+## LemonSqueezy: Setup Rápido
+
+LemonSqueezy es ideal para vender cursos digitales. Acepta pagos globales, maneja impuestos, y es fácil de configurar.
+
+### 1. Crear cuenta
+
+Ve a [lemonsqueezy.com](https://lemonsqueezy.com) y crea una cuenta.
+
+### 2. Crear producto
+
+1. Dashboard → Products → New Product
+2. Tipo: "Digital download" o "License key"
+3. Nombre: "Curso de Python"
+4. Precio: $47 (o el que elijas)
+5. Sube el ZIP como archivo entregable
+
+### 3. Configurar checkout
+
+1. Personaliza la página de checkout con tu branding
+2. Añade descripción atractiva
+3. Configura emails de confirmación
+
+### 4. Obtener link de compra
+
+Cada producto tiene un link directo:
+
+```
+https://tustore.lemonsqueezy.com/checkout/buy/abc123
+```
+
+Usa este link en tu landing page.
+
+---
+
+## Integración con Tu Web
+
+### Botón de compra simple
+
+```html
+<a
+  href="https://tustore.lemonsqueezy.com/checkout/buy/abc123"
+  class="bg-amber-500 text-white px-6 py-3 rounded-lg"
+>
+  Comprar Curso - $47
+</a>
+```
+
+### Con JavaScript (overlay)
+
+```html
+<script src="https://assets.lemonsqueezy.com/lemon.js" defer></script>
+
+<a
+  href="https://tustore.lemonsqueezy.com/checkout/buy/abc123"
+  class="lemonsqueezy-button"
+>
+  Comprar Curso - $47
+</a>
+```
+
+El checkout se abre como overlay sin salir de tu página.
+
+---
+
+## Sistema de Licencias
+
+LemonSqueezy genera licencias automáticamente.
+
+### Validar licencia (API)
+
+```javascript
+// pages/api/validate-license.js
+export default async function handler(req, res) {
+  const { licenseKey } = req.body;
+
+  const response = await fetch(
+    'https://api.lemonsqueezy.com/v1/licenses/validate',
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        license_key: licenseKey,
+      }),
+    }
+  );
+
+  const data = await response.json();
+
+  if (data.valid) {
+    return res.json({ valid: true });
+  }
+
+  return res.json({ valid: false });
+}
+```
+
+### Flujo completo
+
+1. Usuario compra → recibe licencia por email
+2. Usuario va a tu web → ingresa licencia
+3. Tu API valida con LemonSqueezy
+4. Si válida → muestra link de descarga
+5. Usuario descarga ZIP y empieza el curso
+
+---
+
+## Landing Page que Convierte
+
+### Estructura probada
+
+```
+1. Hero: Propuesta de valor clara
+2. Problema: Qué dolor resuelve
+3. Solución: Cómo lo resuelve tu curso
+4. Contenido: Qué incluye
+5. Prueba social: Testimonios
+6. Garantía: Reducir riesgo
+7. CTA: Botón de compra
+8. FAQ: Resolver objeciones
+```
+
+### Elementos clave
+
+**Hero:**
+> "Aprende Python en 4 horas con un tutor IA personal"
+
+**Problema:**
+> "Los tutoriales de YouTube son aburridos. Los cursos tradicionales son caros. Aprender solo es frustrante."
+
+**Solución:**
+> "Un curso interactivo donde Claude Code te guía paso a paso, corrigiendo tus errores en tiempo real."
+
+**Garantía:**
+> "30 días de garantía. Si no te gusta, te devuelvo el dinero."
+
+---
+
+## Pricing Tips
+
+1. **No compitas por precio** - Compite por valor
+2. **Número impar** - $47 vs $50 (parece más pensado)
+3. **Ancla alta** - "Valor $197, hoy $47"
+4. **Escasez real** - Descuento por tiempo limitado
+
+### Tabla de precios sugeridos
+
+| Tipo de curso | Precio sugerido |
+|---------------|-----------------|
+| Mini-curso (< 2h) | $19-$39 |
+| Curso estándar (2-5h) | $47-$97 |
+| Curso completo (5-10h) | $97-$197 |
+| Certificación/Mentoría | $297+ |
+
+---
+
+## Métricas a Trackear
+
+- **Visitantes** a landing page
+- **Tasa de conversión** (compras / visitantes)
+- **Ingresos totales**
+- **Ticket promedio**
+- **Reembolsos**
+
+Usa LemonSqueezy analytics + Google Analytics.
+
+---
+
+## Ejercicio Final
+
+1. **Crea cuenta** en LemonSqueezy
+2. **Configura tu producto** con el ZIP del curso
+3. **Crea landing page** con propuesta de valor
+4. **Integra botón** de compra
+5. **Prueba el flujo** completo (puedes usar modo test)
+
+<Callout type="info">
+  No necesitas miles de visitantes para ganar dinero. 100 visitantes con 5% de conversión a $47 = $235.
+  Enfócate en crear un curso excelente y el boca a boca hará el resto.
+</Callout>
+
+---
+
+## Conclusión del Curso
+
+<div className="my-8 p-6 bg-gradient-to-r from-amber-500 to-orange-500 rounded-xl text-white">
+  <h3 className="text-2xl font-bold mb-4">🎉 ¡Felicidades!</h3>
+  <p className="mb-4">
+    Has completado Course Builder. Ahora tienes todas las herramientas para crear,
+    distribuir y monetizar tu propio curso interactivo.
+  </p>
+  <ul className="space-y-2">
+    <li>✅ Arquitectura de comandos slash</li>
+    <li>✅ CLAUDE.md efectivo</li>
+    <li>✅ Sistema de progreso</li>
+    <li>✅ Web con Nextra</li>
+    <li>✅ Distribución con GitHub</li>
+    <li>✅ Monetización con LemonSqueezy</li>
+  </ul>
+</div>
+
+### Próximos pasos
+
+1. **Define tu tema** - ¿Qué vas a enseñar?
+2. **Crea 3 lecciones** - Mínimo viable para validar
+3. **Prueba con amigos** - Feedback antes de lanzar
+4. **Lanza** - Un curso imperfecto es mejor que ninguno
+5. **Itera** - Mejora basándote en feedback real
+
+<Callout type="warning">
+  El mayor error es esperar a que esté "perfecto". Lanza con 3-5 lecciones y añade más después.
+</Callout>
+
+---
+
+<div className="mt-8 text-center">
+  <a href="/premium" className="inline-block px-6 py-3 bg-white text-amber-600 rounded-lg hover:bg-amber-100 transition font-semibold">
+    Ver Más Cursos →
+  </a>
+</div>
+
+</CourseBuilderAccessGate>

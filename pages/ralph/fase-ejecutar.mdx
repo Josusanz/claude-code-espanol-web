@@ -1,0 +1,274 @@
+---
+title: "Fase 3: Ejecutar"
+---
+
+import { Callout } from 'nextra/components'
+import RalphAccessGate from '../../components/RalphAccessGate'
+
+# Lección 3.6: Fase 3 - Ejecutar
+
+<RalphAccessGate>
+
+## El Momento de la Verdad
+
+Tienes specs claras y un plan detallado. Es hora de **lanzar Ralph**.
+
+---
+
+## El Script de Loop
+
+Guarda este script como `loop.sh` en la raíz de tu proyecto:
+
+```bash
+#!/bin/bash
+
+# ═══════════════════════════════════════════════════════════
+#                    RALPH LOOP v1.0
+#         Claude Code en Piloto Automático
+# ═══════════════════════════════════════════════════════════
+
+# Colores para output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+# Contador de iteraciones
+ITERATION=1
+
+# Archivo de log
+LOG_FILE="ralph_log_$(date +%Y%m%d_%H%M%S).txt"
+
+echo -e "${BLUE}═══════════════════════════════════════════════════════${NC}"
+echo -e "${BLUE}        🤖 RALPH LOOP INICIADO${NC}"
+echo -e "${BLUE}═══════════════════════════════════════════════════════${NC}"
+echo ""
+echo -e "📁 Proyecto: $(pwd)"
+echo -e "📝 Log: $LOG_FILE"
+echo -e "⏰ Inicio: $(date)"
+echo ""
+echo -e "${YELLOW}Presiona Ctrl+C para detener${NC}"
+echo ""
+
+# Guardar inicio en log
+echo "=== RALPH LOOP INICIADO ===" >> $LOG_FILE
+echo "Directorio: $(pwd)" >> $LOG_FILE
+echo "Inicio: $(date)" >> $LOG_FILE
+echo "" >> $LOG_FILE
+
+while true; do
+    echo -e "${GREEN}───────────────────────────────────────────────────────${NC}"
+    echo -e "${GREEN}  📍 ITERACIÓN #$ITERATION${NC}"
+    echo -e "${GREEN}───────────────────────────────────────────────────────${NC}"
+    echo -e "⏰ $(date)"
+    echo ""
+
+    # Guardar en log
+    echo "--- Iteración #$ITERATION - $(date) ---" >> $LOG_FILE
+
+    # Mostrar estado actual del PLAN.md
+    if [ -f "PLAN.md" ]; then
+        COMPLETADAS=$(grep -c "\[x\]" PLAN.md 2>/dev/null || echo "0")
+        PENDIENTES=$(grep -c "\[ \]" PLAN.md 2>/dev/null || echo "0")
+        echo -e "📊 Estado: ${GREEN}$COMPLETADAS completadas${NC}, ${YELLOW}$PENDIENTES pendientes${NC}"
+        echo ""
+    fi
+
+    # Ejecutar Claude
+    echo -e "${BLUE}🚀 Lanzando Claude...${NC}"
+    echo ""
+
+    # El comando principal
+    claude -p "$(cat PROMPT_build.md)" 2>&1 | tee -a $LOG_FILE
+
+    EXIT_CODE=$?
+
+    echo ""
+
+    # Verificar resultado
+    if [ $EXIT_CODE -eq 0 ]; then
+        echo -e "${GREEN}✅ Iteración #$ITERATION completada${NC}"
+    else
+        echo -e "${RED}⚠️ Iteración #$ITERATION terminó con código: $EXIT_CODE${NC}"
+    fi
+
+    # Incrementar contador
+    ITERATION=$((ITERATION + 1))
+
+    # Pausa antes de siguiente iteración
+    echo ""
+    echo -e "${YELLOW}⏳ Siguiente iteración en 10 segundos...${NC}"
+    echo -e "${YELLOW}   (Ctrl+C para detener)${NC}"
+    sleep 10
+done
+```
+
+---
+
+## Permisos y Ejecución
+
+```bash
+# Dar permisos de ejecución
+chmod +x loop.sh
+
+# Ejecutar Ralph
+./loop.sh
+```
+
+---
+
+## Monitoreo en Tiempo Real
+
+### Terminal dividida
+
+Usa `tmux` o divide tu terminal:
+
+```
+┌─────────────────────────────────────┐
+│          RALPH LOOP                 │
+│  (ejecutando claude)                │
+│                                     │
+├─────────────────────────────────────┤
+│  $ tail -f ralph_log_*.txt          │
+│  (log en tiempo real)               │
+└─────────────────────────────────────┘
+```
+
+### Comandos útiles mientras Ralph trabaja
+
+```bash
+# Ver progreso del plan
+cat PLAN.md | grep -E "\[.\]"
+
+# Ver últimos cambios en archivos
+ls -lt src/ | head -10
+
+# Ver aprendizajes acumulados
+cat PROGRESS.md
+
+# Ver log en tiempo real
+tail -f ralph_log_*.txt
+```
+
+---
+
+## Cuándo Intervenir
+
+<div className="my-6 space-y-4">
+  <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border-l-4 border-green-500">
+    <h4 className="font-bold text-green-600 dark:text-green-400">✅ Dejar que continúe</h4>
+    <ul className="text-sm text-slate-600 dark:text-gray-400 mt-2">
+      <li>• Las tareas se completan correctamente</li>
+      <li>• Los tests pasan</li>
+      <li>• PROGRESS.md se actualiza con información útil</li>
+    </ul>
+  </div>
+
+  <div className="p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border-l-4 border-yellow-500">
+    <h4 className="font-bold text-yellow-600 dark:text-yellow-400">⚠️ Revisar pero no detener</h4>
+    <ul className="text-sm text-slate-600 dark:text-gray-400 mt-2">
+      <li>• Una tarea tarda más de lo esperado</li>
+      <li>• Claude añade notas en PROGRESS.md</li>
+      <li>• Hay warnings pero no errores</li>
+    </ul>
+  </div>
+
+  <div className="p-4 bg-red-50 dark:bg-red-900/20 rounded-lg border-l-4 border-red-500">
+    <h4 className="font-bold text-red-600 dark:text-red-400">🛑 Detener e intervenir</h4>
+    <ul className="text-sm text-slate-600 dark:text-gray-400 mt-2">
+      <li>• La misma tarea falla múltiples veces</li>
+      <li>• Claude pide clarificación que no puede obtener</li>
+      <li>• Los tests fallan repetidamente</li>
+      <li>• Se detecta un error en las specs</li>
+    </ul>
+  </div>
+</div>
+
+---
+
+## Intervención Suave
+
+Si necesitas corregir algo sin detener Ralph:
+
+1. **Edita PROGRESS.md** - Añade una nota que Claude leerá
+2. **Edita PLAN.md** - Reordena o clarifica tareas
+3. **No toques PROMPT_build.md** durante ejecución
+
+```markdown
+# PROGRESS.md
+
+## ⚠️ NOTA DEL OPERADOR (2024-01-15 15:30)
+No usar console.log, usar el logger configurado en /src/utils/logger.ts
+```
+
+Claude leerá esta nota en la siguiente iteración.
+
+---
+
+## Intervención Fuerte
+
+Si necesitas detener Ralph:
+
+```bash
+# Presiona Ctrl+C
+
+# O desde otra terminal:
+pkill -f "loop.sh"
+```
+
+Después de corregir el problema:
+
+```bash
+# Reiniciar
+./loop.sh
+```
+
+---
+
+## Métricas de Éxito
+
+Al final de una sesión de Ralph, evalúa:
+
+| Métrica | Objetivo | Tu resultado |
+|---------|----------|--------------|
+| Tareas completadas | 80%+ del plan | ? |
+| Tests pasando | 100% | ? |
+| Intervenciones necesarias | < 3 | ? |
+| Tiempo total | Según estimación | ? |
+
+---
+
+## Troubleshooting Común
+
+<details className="my-4 p-4 bg-slate-100 dark:bg-gray-800/50 rounded-lg">
+  <summary className="font-semibold cursor-pointer">Claude repite la misma tarea</summary>
+  <p className="mt-3 text-slate-600 dark:text-gray-400">
+    Verifica que PLAN.md se está actualizando correctamente. Puede que Claude no tenga permisos
+    de escritura o que el formato de checkbox sea incorrecto.
+  </p>
+</details>
+
+<details className="my-4 p-4 bg-slate-100 dark:bg-gray-800/50 rounded-lg">
+  <summary className="font-semibold cursor-pointer">Las iteraciones son muy cortas</summary>
+  <p className="mt-3 text-slate-600 dark:text-gray-400">
+    Las tareas pueden ser demasiado simples. Agrúpalas o hazlas más sustanciales.
+  </p>
+</details>
+
+<details className="my-4 p-4 bg-slate-100 dark:bg-gray-800/50 rounded-lg">
+  <summary className="font-semibold cursor-pointer">Claude pide información que no tiene</summary>
+  <p className="mt-3 text-slate-600 dark:text-gray-400">
+    Tus specs no son suficientemente detalladas. Detén, mejora PROMPT_build.md, y reinicia.
+  </p>
+</details>
+
+---
+
+<div className="mt-8 text-center">
+  <a href="/ralph/proyecto-practico" className="inline-block px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition">
+    Siguiente: Proyecto Práctico →
+  </a>
+</div>
+
+</RalphAccessGate>

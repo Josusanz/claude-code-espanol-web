@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
+import UserNav from '../components/UserNav'
 
 export default function LandingPage() {
   const [isDark, setIsDark] = useState(false)
@@ -15,8 +16,13 @@ export default function LandingPage() {
   const response = '¡Hola! He analizado tu solicitud. Estoy creando una landing page profesional en español optimizada para conversión. ¿Deseas que añada soporte para modo oscuro?'
 
   useEffect(() => {
-    // Check for preferred color scheme
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    // Check localStorage first, then system preference
+    const savedTheme = localStorage.getItem('theme')
+    if (savedTheme) {
+      const isDarkMode = savedTheme === 'dark'
+      setIsDark(isDarkMode)
+      document.documentElement.classList.toggle('dark', isDarkMode)
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
       setIsDark(true)
       document.documentElement.classList.add('dark')
     }
@@ -72,8 +78,10 @@ export default function LandingPage() {
   }
 
   const toggleDarkMode = () => {
-    setIsDark(!isDark)
-    document.documentElement.classList.toggle('dark')
+    const newState = !isDark
+    setIsDark(newState)
+    document.documentElement.classList.toggle('dark', newState)
+    localStorage.setItem('theme', newState ? 'dark' : 'light')
   }
 
   return (
@@ -209,21 +217,30 @@ export default function LandingPage() {
                 </span>
               </div>
 
-              <div className="hidden md:flex items-center space-x-8">
-                <Link href="/" className="text-indigo-600 font-medium">
+              <div className="hidden md:flex items-center space-x-6">
+                <Link href="/" className="text-indigo-600 font-medium text-sm">
                   Inicio
                 </Link>
-                <Link href="/empezar/introduccion" className="flex items-center gap-1.5 text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors text-sm font-medium">
-                  🚀 Empezar
+                <Link href="/modo-facil" className="text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors text-sm font-medium">
+                  Modo Fácil
                 </Link>
-                <Link href="/fundamentos/que-es" className="flex items-center gap-1.5 text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors text-sm font-medium">
-                  📚 Módulo 1
+                <Link href="/empezar/introduccion" className="text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors text-sm font-medium">
+                  Empezar
                 </Link>
-                <Link href="/proyectos" className="flex items-center gap-1.5 text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors text-sm font-medium">
-                  🛠️ Módulo 2
+                <Link href="/fundamentos/que-es" className="text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors text-sm font-medium">
+                  Fundamentos
                 </Link>
-                <Link href="/recursos" className="flex items-center gap-1.5 text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors text-sm font-medium">
-                  📋 Recursos
+                <Link href="/proyectos" className="text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors text-sm font-medium">
+                  Proyectos
+                </Link>
+                <Link href="/ralph" className="text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors text-sm font-medium">
+                  Ralph Loop
+                </Link>
+                <Link href="/course-builder" className="text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors text-sm font-medium">
+                  Course Builder
+                </Link>
+                <Link href="/recursos" className="text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors text-sm font-medium">
+                  Recursos
                 </Link>
               </div>
 
@@ -254,10 +271,8 @@ export default function LandingPage() {
                   <span className="hidden sm:inline">Premium</span>
                 </Link>
 
-                {/* Login icon - always visible */}
-                <Link href="/acceso" className="text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
-                  <span className="material-symbols-outlined text-[22px] sm:text-[24px]">login</span>
-                </Link>
+                {/* User nav - shows account or login */}
+                <UserNav />
 
                 {/* Hamburger menu button - mobile only */}
                 <button
@@ -279,17 +294,26 @@ export default function LandingPage() {
                   <Link href="/" className="text-indigo-600 font-medium py-2" onClick={() => setMobileMenuOpen(false)}>
                     Inicio
                   </Link>
-                  <Link href="/empezar/introduccion" className="flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-indigo-600 py-2" onClick={() => setMobileMenuOpen(false)}>
-                    🚀 Empezar
+                  <Link href="/modo-facil" className="text-slate-600 dark:text-slate-400 hover:text-indigo-600 py-2" onClick={() => setMobileMenuOpen(false)}>
+                    Modo Fácil
                   </Link>
-                  <Link href="/fundamentos/que-es" className="flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-indigo-600 py-2" onClick={() => setMobileMenuOpen(false)}>
-                    📚 Módulo 1
+                  <Link href="/empezar/introduccion" className="text-slate-600 dark:text-slate-400 hover:text-indigo-600 py-2" onClick={() => setMobileMenuOpen(false)}>
+                    Empezar
                   </Link>
-                  <Link href="/proyectos" className="flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-indigo-600 py-2" onClick={() => setMobileMenuOpen(false)}>
-                    🛠️ Módulo 2
+                  <Link href="/fundamentos/que-es" className="text-slate-600 dark:text-slate-400 hover:text-indigo-600 py-2" onClick={() => setMobileMenuOpen(false)}>
+                    Fundamentos
                   </Link>
-                  <Link href="/recursos" className="flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-indigo-600 py-2" onClick={() => setMobileMenuOpen(false)}>
-                    📋 Recursos
+                  <Link href="/proyectos" className="text-slate-600 dark:text-slate-400 hover:text-indigo-600 py-2" onClick={() => setMobileMenuOpen(false)}>
+                    Proyectos
+                  </Link>
+                  <Link href="/ralph" className="text-slate-600 dark:text-slate-400 hover:text-indigo-600 py-2" onClick={() => setMobileMenuOpen(false)}>
+                    Ralph Loop
+                  </Link>
+                  <Link href="/course-builder" className="text-slate-600 dark:text-slate-400 hover:text-indigo-600 py-2" onClick={() => setMobileMenuOpen(false)}>
+                    Course Builder
+                  </Link>
+                  <Link href="/recursos" className="text-slate-600 dark:text-slate-400 hover:text-indigo-600 py-2" onClick={() => setMobileMenuOpen(false)}>
+                    Recursos
                   </Link>
                   <div className="pt-3 border-t border-slate-200 dark:border-slate-700">
                     <Link
@@ -444,6 +468,42 @@ export default function LandingPage() {
         {/* Simple Divider */}
         <div className="border-t border-slate-200 dark:border-slate-800"></div>
 
+        {/* Modo Fácil Section - For beginners */}
+        <section className="py-16 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950/20 dark:to-emerald-950/20">
+          <div className="max-w-4xl mx-auto px-6">
+            <div className="flex flex-col md:flex-row items-center gap-8">
+              <div className="flex-shrink-0 w-24 h-24 bg-gradient-to-br from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center shadow-lg">
+                <span className="text-5xl">🌱</span>
+              </div>
+              <div className="flex-1 text-center md:text-left">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-sm font-medium mb-3">
+                  <span className="material-symbols-outlined text-sm">new_releases</span>
+                  Nuevo
+                </div>
+                <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-3">
+                  ¿No sabes usar la terminal? No hay problema
+                </h2>
+                <p className="text-slate-600 dark:text-slate-400 mb-6">
+                  <strong className="text-slate-800 dark:text-slate-200">Modo Fácil</strong> te enseña a usar Claude desde el navegador,
+                  sin instalar nada. Perfecto para empezar desde cero o si la terminal te intimida.
+                </p>
+                <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-3">
+                  <Link
+                    href="/modo-facil"
+                    className="w-full sm:w-auto bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-semibold py-3 px-6 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2"
+                  >
+                    <span className="material-symbols-outlined">play_arrow</span>
+                    Empezar Modo Fácil
+                  </Link>
+                  <span className="text-sm text-slate-500 dark:text-slate-400">
+                    100% gratis · 8 lecciones · Sin terminal
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Claude Pro Section */}
         <section className="py-16 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/30 dark:to-purple-950/30">
           <div className="max-w-4xl mx-auto px-6">
@@ -495,46 +555,114 @@ export default function LandingPage() {
           <div className="max-w-4xl mx-auto px-6">
             <div className="mb-16">
               <h2 className="text-3xl md:text-4xl font-bold mb-4 text-slate-900 dark:text-white">
-                8 lecciones prácticas
+                4 módulos, 33 lecciones prácticas
               </h2>
               <p className="text-lg text-slate-600 dark:text-slate-400">
-                Aprende haciendo. Cada lección incluye teoría y práctica.
+                Aprende haciendo. Desde fundamentos hasta crear y monetizar tus propios cursos.
               </p>
             </div>
 
-            <div className="space-y-3">
-              {[
-                { num: '01', title: 'Explorar archivos', desc: 'Navega y analiza proyectos con comandos de IA', time: '30 min' },
-                { num: '02', title: 'Crear contenido', desc: 'Genera código, docs y archivos automáticamente', time: '30 min' },
-                { num: '03', title: 'Comandos slash', desc: 'Crea tus propios comandos personalizados', time: '30 min' },
-                { num: '04', title: 'Agentes paralelos', desc: 'Ejecuta múltiples tareas simultáneamente', time: '30 min' },
-                { num: '05', title: 'Sub-agentes', desc: 'Delega tareas complejas a agentes especializados', time: '30 min' },
-                { num: '06', title: 'Memoria persistente', desc: 'Configura el contexto con CLAUDE.md', time: '30 min' },
-                { num: '07', title: 'Proyecto final', desc: 'Construye tu primer proyecto completo', time: '45 min' },
-                { num: '08', title: 'Próximos pasos', desc: 'Recursos y caminos avanzados', time: '15 min' },
-              ].map((lesson, i) => (
-                <div
-                  key={i}
-                  className="border-b border-slate-200 dark:border-slate-800 py-4 hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-colors px-4 -mx-4 rounded-lg"
-                >
-                  <div className="flex items-center gap-4">
-                    <div className="flex-shrink-0 w-8 text-slate-400 dark:text-slate-600 font-mono text-sm font-semibold">
-                      {lesson.num}
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-base font-semibold text-slate-900 dark:text-white mb-0.5">
-                        {lesson.title}
-                      </h3>
-                      <p className="text-slate-600 dark:text-slate-400 text-sm">
-                        {lesson.desc}
-                      </p>
-                    </div>
-                    <div className="flex-shrink-0 text-sm text-slate-500 dark:text-slate-400 font-medium">
-                      {lesson.time}
-                    </div>
+            {/* Módulo 1 */}
+            <div className="mb-12">
+              <div className="flex items-center gap-3 mb-6">
+                <span className="text-2xl">📚</span>
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white">Módulo 1: Fundamentos</h3>
+                <span className="text-sm text-slate-500 dark:text-slate-400 ml-auto">9 lecciones · ~4h</span>
+              </div>
+              <div className="space-y-2 pl-4 border-l-2 border-indigo-200 dark:border-indigo-800">
+                {[
+                  { title: '¿Qué es Claude Code?', desc: 'Diferencia con chat normal' },
+                  { title: 'Exploración de archivos', desc: 'Navega proyectos con IA' },
+                  { title: 'Crear y modificar', desc: 'Genera código y documentos' },
+                  { title: 'Visualizar creaciones', desc: 'Previsualiza resultados' },
+                  { title: 'Comandos slash', desc: 'Atajos personalizados' },
+                  { title: 'Agentes paralelos', desc: 'Tareas simultáneas' },
+                  { title: 'Sub-agentes', desc: 'Delega tareas complejas' },
+                  { title: 'Memoria (CLAUDE.md)', desc: 'Contexto persistente' },
+                  { title: 'Próximos pasos', desc: 'Recursos avanzados' },
+                ].map((lesson, i) => (
+                  <div key={i} className="py-2 text-sm">
+                    <span className="font-medium text-slate-900 dark:text-white">{lesson.title}</span>
+                    <span className="text-slate-500 dark:text-slate-400"> — {lesson.desc}</span>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
+            </div>
+
+            {/* Módulo 2 */}
+            <div className="mb-12">
+              <div className="flex items-center gap-3 mb-6">
+                <span className="text-2xl">🛠️</span>
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white">Módulo 2: Proyectos Prácticos</h3>
+                <span className="px-2 py-0.5 text-xs font-semibold bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 rounded-full">Nuevo</span>
+                <span className="text-sm text-slate-500 dark:text-slate-400 ml-auto">10 lecciones · ~3.5h</span>
+              </div>
+              <div className="space-y-2 pl-4 border-l-2 border-emerald-200 dark:border-emerald-800">
+                {[
+                  { title: 'Landing Page', desc: 'Crea una web profesional sin código' },
+                  { title: 'Automatizaciones', desc: 'Organiza archivos y tareas' },
+                  { title: 'Tareas programadas', desc: 'Backups automáticos con cron' },
+                  { title: 'Investigación', desc: 'Claude como asistente de research' },
+                  { title: 'Análisis de datos', desc: 'Procesa CSVs y genera insights' },
+                ].map((lesson, i) => (
+                  <div key={i} className="py-2 text-sm">
+                    <span className="font-medium text-slate-900 dark:text-white">{lesson.title}</span>
+                    <span className="text-slate-500 dark:text-slate-400"> — {lesson.desc}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Módulo 3 */}
+            <div className="mb-12">
+              <div className="flex items-center gap-3 mb-6">
+                <span className="text-2xl">🤖</span>
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white">Módulo 3: Ralph Loop</h3>
+                <span className="px-2 py-0.5 text-xs font-semibold bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 rounded-full">Premium $47</span>
+                <span className="text-sm text-slate-500 dark:text-slate-400 ml-auto">8 lecciones · ~3.5h</span>
+              </div>
+              <div className="space-y-2 pl-4 border-l-2 border-purple-200 dark:border-purple-800">
+                {[
+                  { title: '¿Qué es Ralph Loop?', desc: 'Automatización autónoma' },
+                  { title: 'Context Rot', desc: 'Por qué reiniciar el contexto' },
+                  { title: 'Anatomía del loop', desc: 'Los 4 archivos clave' },
+                  { title: 'Definir specs', desc: 'La conversación inicial' },
+                  { title: 'Crear el plan', desc: 'Tareas atómicas' },
+                  { title: 'Ejecutar el loop', desc: 'Lanzar y monitorear' },
+                  { title: 'Proyecto práctico', desc: 'Construye una app con Ralph' },
+                  { title: 'Consejos avanzados', desc: 'Seguridad y casos especiales' },
+                ].map((lesson, i) => (
+                  <div key={i} className="py-2 text-sm">
+                    <span className="font-medium text-slate-900 dark:text-white">{lesson.title}</span>
+                    <span className="text-slate-500 dark:text-slate-400"> — {lesson.desc}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Módulo 4 */}
+            <div className="mb-8">
+              <div className="flex items-center gap-3 mb-6">
+                <span className="text-2xl">🎓</span>
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white">Módulo 4: Course Builder</h3>
+                <span className="px-2 py-0.5 text-xs font-semibold bg-amber-100 dark:bg-amber-900/50 text-amber-700 dark:text-amber-300 rounded-full">Premium $147</span>
+                <span className="text-sm text-slate-500 dark:text-slate-400 ml-auto">6 lecciones · ~3h</span>
+              </div>
+              <div className="space-y-2 pl-4 border-l-2 border-amber-200 dark:border-amber-800">
+                {[
+                  { title: 'Arquitectura de comandos', desc: 'Diseña lecciones interactivas' },
+                  { title: 'CLAUDE.md efectivo', desc: 'Configura el tutor perfecto' },
+                  { title: 'Sistema de progreso', desc: 'Trackea el avance del alumno' },
+                  { title: 'Web con Nextra', desc: 'Documentación profesional' },
+                  { title: 'Distribución GitHub', desc: 'Releases y versiones' },
+                  { title: 'Monetización', desc: 'Vende con LemonSqueezy' },
+                ].map((lesson, i) => (
+                  <div key={i} className="py-2 text-sm">
+                    <span className="font-medium text-slate-900 dark:text-white">{lesson.title}</span>
+                    <span className="text-slate-500 dark:text-slate-400"> — {lesson.desc}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>
@@ -594,6 +722,8 @@ export default function LandingPage() {
                   <li><Link href="/empezar/introduccion" className="hover:text-white transition-colors">Empezar</Link></li>
                   <li><Link href="/fundamentos/que-es" className="hover:text-white transition-colors">Fundamentos</Link></li>
                   <li><Link href="/proyectos" className="hover:text-white transition-colors">Proyectos</Link></li>
+                  <li><Link href="/ralph" className="hover:text-white transition-colors">Ralph Loop</Link></li>
+                  <li><Link href="/course-builder" className="hover:text-white transition-colors">Course Builder</Link></li>
                   <li><Link href="/recursos" className="hover:text-white transition-colors">Recursos</Link></li>
                 </ul>
               </div>

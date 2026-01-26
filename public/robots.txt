@@ -1,10 +1,10 @@
-# robots.txt para aprende.software
+# robots.txt for aprende.software
+
 User-agent: *
 Allow: /
 
-# Sitemap
 Sitemap: https://www.aprende.software/sitemap.xml
 
-# Bloquear rutas innecesarias
 Disallow: /api/
+Disallow: /acceso
 Disallow: /_next/

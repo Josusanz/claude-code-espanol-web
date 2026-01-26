@@ -1,0 +1,135 @@
+---
+title: "Arquitectura de Comandos Slash"
+---
+
+import { Callout } from 'nextra/components'
+import CourseBuilderAccessGate from '../../components/CourseBuilderAccessGate'
+
+# Módulo 4.1: Arquitectura de Comandos Slash
+
+<CourseBuilderAccessGate>
+
+## El Corazón del Sistema
+
+Los comandos slash son la **interfaz de tu curso**. Cada comando es una lección que el alumno puede ejecutar.
+
+El flujo es simple:
+- El alumno escribe `/leccion-1`
+- Claude lee el archivo `.claude/commands/leccion-1.md`
+- Se convierte en tutor interactivo
+
+---
+
+## Estructura de un Comando
+
+Los comandos viven en `.claude/commands/`:
+
+```text
+mi-curso/
+└── .claude/
+    └── commands/
+        ├── iniciar.md       # /iniciar
+        ├── leccion-1.md     # /leccion-1
+        ├── leccion-2.md     # /leccion-2
+        └── ayuda.md         # /ayuda
+```
+
+**El nombre del archivo = el comando.** Simple.
+
+---
+
+## Anatomía de una Lección
+
+Cada archivo `.md` tiene esta estructura:
+
+1. **Frontmatter** con descripción
+2. **Contexto para el tutor** (invisible para el alumno)
+3. **Estructura de la lección** con tiempos
+4. **Diálogos del tutor** (texto para Claude)
+5. **Transición** al siguiente tema
+
+### Ejemplo de Frontmatter
+
+```yaml
+---
+description: 📘 Lección 1: Título de la lección
+---
+```
+
+El `description` aparece cuando el alumno escribe `/help`.
+
+**Tips:**
+- Usa emojis para visual hierarchy
+- Mantén descripciones cortas (menos de 50 caracteres)
+- Numera las lecciones para orden claro
+
+---
+
+## El Contexto para el Tutor
+
+Esta sección le da a Claude información que necesita:
+
+```text
+## Contexto para el tutor
+
+El alumno acaba de instalar Python. No sabe nada de programación.
+Esta es su primera experiencia con código.
+
+**Objetivo:** Que escriba y ejecute su primer "Hello World"
+
+**Errores comunes:**
+- Olvidar las comillas en strings
+- Confundir print con Print (mayúsculas)
+```
+
+### Diálogos del Tutor
+
+Los bloques `>` son para texto que Claude dirá:
+
+```text
+> "¡Bienvenido a tu primera lección de Python! 🐍
+>
+> Python es uno de los lenguajes más fáciles de aprender.
+> Hoy vas a escribir tu primer programa."
+```
+
+---
+
+## Flujo Entre Lecciones
+
+Conecta las lecciones con transiciones claras:
+
+```text
+### 5. Transición
+
+> "¡Excelente! Has completado la Lección 1.
+>
+> En la siguiente lección aprenderás sobre variables.
+>
+> Escribe /leccion-2 cuando estés listo."
+```
+
+---
+
+## Ejercicio
+
+Crea el archivo `.claude/commands/leccion-1.md` para tu curso con:
+
+1. Frontmatter con descripción
+2. Contexto para el tutor
+3. Al menos 3 secciones de contenido
+4. Una transición a la siguiente lección
+
+<Callout type="info">
+  No necesitas terminar todo el curso ahora. Empezar con 2-3 lecciones es suficiente para validar el formato.
+</Callout>
+
+---
+
+<div className="mt-8 text-center">
+  <a href="/course-builder/claude-md-efectivo" className="inline-block px-6 py-3 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition">
+    Siguiente: CLAUDE.md Efectivo →
+  </a>
+</div>
+
+</CourseBuilderAccessGate>

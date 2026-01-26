@@ -418,14 +418,6 @@ export default function CursoPage({ hasAccess, userEmail }: PageProps) {
 
           <div className="flex items-center gap-4">
             <span className="text-slate-400 text-sm">{userEmail}</span>
-            <a
-              href="https://github.com/Josusanz/curso-interactivo-ia"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 rounded-lg text-sm font-medium transition-colors"
-            >
-              📦 Código Fuente
-            </a>
           </div>
         </header>
 

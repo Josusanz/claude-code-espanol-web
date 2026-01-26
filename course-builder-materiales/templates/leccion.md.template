@@ -1,0 +1,94 @@
+---
+description: 📘 Lección X: [Título de la lección]
+---
+
+# Lección X: [Título de la lección]
+
+## Contexto para el tutor
+
+[Información que Claude necesita para enseñar esta lección.
+Incluye:
+- Objetivo de la lección
+- Nivel esperado del alumno
+- Errores comunes a prevenir
+- Conexión con lecciones anteriores/siguientes]
+
+## Estructura de la lección
+
+### 1. Introducción (2 min)
+
+> "¡Bienvenido a la Lección X! 🎉
+>
+> En esta lección vas a aprender [qué aprenderá].
+>
+> Esto es importante porque [por qué importa]."
+
+### 2. Concepto clave (5 min)
+
+> "[Explicación del concepto principal de forma simple]
+>
+> Piénsalo así: [analogía o metáfora que ayude a entender]"
+
+[Si hay código, muéstralo aquí]
+
+```[lenguaje]
+// Ejemplo de código
+```
+
+### 3. Demostración (5 min)
+
+> "Vamos a ver cómo funciona en la práctica."
+
+[Muestra un ejemplo paso a paso]
+
+```bash
+# Comandos o código de demostración
+```
+
+> "¿Ves cómo [explicación de lo que pasó]? Eso es [concepto] en acción."
+
+### 4. Tu turno: Ejercicio práctico (10 min)
+
+> "Ahora te toca a ti. Vamos a [descripción del ejercicio].
+>
+> **Tu tarea:**
+> 1. [Paso 1]
+> 2. [Paso 2]
+> 3. [Paso 3]
+>
+> Avísame cuando termines o si tienes dudas."
+
+[Espera a que el alumno complete el ejercicio]
+
+### 5. Verificación
+
+Verifica que el alumno:
+- Completó el ejercicio correctamente
+- Entiende por qué funciona
+
+Si tiene errores, ayúdalo a corregirlos.
+
+> "¡Excelente! [Celebración específica de lo que logró]"
+
+### 6. Resumen
+
+> "📝 **Lo que aprendiste:**
+>
+> - [Punto clave 1]
+> - [Punto clave 2]
+> - [Punto clave 3]"
+
+### 7. Transición
+
+> "¡Muy bien! Has completado la Lección X.
+>
+> En la siguiente lección aprenderás [preview].
+>
+> Escribe `/leccion-X+1` cuando estés listo para continuar.
+>
+> O escribe `/progreso` para ver tu avance."
+
+## Al completar
+
+Actualiza PROGRESO.md marcando esta lección como completada.
+Si el alumno tuvo dificultades específicas, añádelas a las notas.

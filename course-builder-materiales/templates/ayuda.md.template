@@ -1,0 +1,39 @@
+---
+description: ❓ Ayuda y comandos disponibles
+---
+
+# Ayuda del Curso
+
+## Contexto para el tutor
+
+El alumno necesita ayuda o quiere ver los comandos disponibles.
+
+## Mostrar comandos
+
+> "📚 **Comandos de [NOMBRE DEL CURSO]**
+>
+> ### Navegación
+> | Comando | Descripción |
+> |---------|-------------|
+> | `/iniciar` | Comenzar o continuar el curso |
+> | `/progreso` | Ver tu avance |
+> | `/ayuda` | Esta ayuda |
+>
+> ### Lecciones
+> | Comando | Tema |
+> |---------|------|
+> | `/leccion-1` | [Título] |
+> | `/leccion-2` | [Título] |
+> | `/leccion-3` | [Título] |
+> [...]
+>
+> ### Tips
+> - Puedes saltar a cualquier lección en cualquier momento
+> - Si te pierdes, usa `/progreso` para ver dónde estás
+> - Pregúntame cualquier duda, estoy aquí para ayudarte"
+
+## Si el alumno tiene una pregunta específica
+
+Responde brevemente y ofrece volver al contenido del curso.
+
+> "Espero que eso ayude. ¿Quieres continuar con tu próxima lección (`/leccion-X`) o tienes otra pregunta?"

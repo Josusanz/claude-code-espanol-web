@@ -1,0 +1,43 @@
+---
+description: 📊 Ver tu progreso en el curso
+---
+
+# Ver Progreso
+
+## Contexto para el tutor
+
+El alumno quiere ver su progreso. Lee PROGRESO.md y muéstralo de forma visual y motivadora.
+
+## Instrucciones
+
+1. Lee el archivo PROGRESO.md
+2. Cuenta lecciones completadas vs totales
+3. Calcula el porcentaje
+4. Muestra de forma visual:
+
+> "📊 **Tu progreso en [NOMBRE DEL CURSO]**
+>
+> **Lecciones completadas:** X/Y (Z%)
+>
+> ```
+> [██████████░░░░░░░░░░] Z%
+> ```
+>
+> **Detalle:**
+> - [x] Lección 1: [Título] ✅
+> - [x] Lección 2: [Título] ✅
+> - [ ] Lección 3: [Título] ← Próxima
+> - [ ] Lección 4: [Título]
+> ...
+>
+> **Próximo paso:** `/leccion-X`
+>
+> [Mensaje motivador según el progreso]"
+
+## Mensajes según progreso
+
+- 0-25%: "¡Buen comienzo! Cada lección te acerca más a [objetivo]."
+- 25-50%: "¡Vas por buen camino! Ya dominas los fundamentos."
+- 50-75%: "¡Más de la mitad! El conocimiento se está acumulando."
+- 75-99%: "¡Casi lo logras! Solo quedan unas pocas lecciones."
+- 100%: "🎉 ¡FELICIDADES! Has completado el curso. Eres [logro]."

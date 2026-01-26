@@ -1,0 +1,403 @@
+---
+title: Consejos Avanzados
+---
+
+import { Callout } from 'nextra/components'
+import RalphAccessGate from '../../components/RalphAccessGate'
+
+# Lección 3.8: Consejos Avanzados
+
+<RalphAccessGate>
+
+## Llevando Ralph al Siguiente Nivel
+
+Ya dominas los fundamentos. Ahora veamos técnicas avanzadas para proyectos más complejos y entornos de producción.
+
+---
+
+## 1. Seguridad con Docker
+
+<Callout type="warning">
+  Ejecutar código autónomo es inherentemente riesgoso. Docker añade una capa de protección.
+</Callout>
+
+### Dockerfile para Ralph
+
+```dockerfile
+# Dockerfile.ralph
+FROM node:20-slim
+
+# Crear usuario no-root
+RUN useradd -m -s /bin/bash ralph
+
+# Directorio de trabajo
+WORKDIR /project
+
+# Copiar archivos del proyecto
+COPY --chown=ralph:ralph . .
+
+# Cambiar a usuario ralph
+USER ralph
+
+# Instalar Claude Code globalmente para el usuario
+RUN npm install -g @anthropic-ai/claude-code
+
+# Entry point
+CMD ["./loop.sh"]
+```
+
+### docker-compose.yml
+
+```yaml
+version: '3.8'
+services:
+  ralph:
+    build:
+      context: .
+      dockerfile: Dockerfile.ralph
+    volumes:
+      # Solo montar lo necesario (read-only excepto src/)
+      - ./src:/project/src
+      - ./PLAN.md:/project/PLAN.md
+      - ./PROGRESS.md:/project/PROGRESS.md
+      - ./PROMPT_build.md:/project/PROMPT_build.md:ro
+    environment:
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+    # Limitar recursos
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+```
+
+### Ejecutar
+
+```bash
+docker-compose up ralph
+```
+
+### Beneficios
+
+- **Aislamiento**: Ralph no puede tocar nada fuera del contenedor
+- **Reproducibilidad**: El mismo entorno siempre
+- **Límites de recursos**: No puede consumir toda tu CPU/RAM
+- **Sin permisos root**: Minimiza daños potenciales
+
+---
+
+## 2. Múltiples Agentes
+
+Para proyectos grandes, puedes tener múltiples "Ralphs" trabajando en paralelo.
+
+### Estructura
+
+```
+mi-proyecto/
+├── ralph-backend/
+│   ├── loop.sh
+│   ├── PROMPT_build.md      # Solo backend
+│   ├── PLAN.md
+│   └── PROGRESS.md
+├── ralph-frontend/
+│   ├── loop.sh
+│   ├── PROMPT_build.md      # Solo frontend
+│   ├── PLAN.md
+│   └── PROGRESS.md
+└── src/
+    ├── backend/
+    └── frontend/
+```
+
+### Coordinación
+
+Crea un archivo compartido `SHARED_PROGRESS.md`:
+
+```markdown
+# SHARED_PROGRESS.md
+
+## API Contracts (backend → frontend)
+- POST /api/users: { email, password } → { token }
+- GET /api/notes: → [{ id, title, content }]
+
+## Decisiones Globales
+- Puerto backend: 3001
+- Puerto frontend: 3000
+- Formato de fechas: ISO 8601
+```
+
+Añade a cada PROMPT_build.md:
+
+```markdown
+## Coordinación
+Antes de empezar, lee SHARED_PROGRESS.md para contratos de API.
+Si haces cambios que afectan al otro agente, actualiza SHARED_PROGRESS.md.
+```
+
+---
+
+## 3. Checkpoints y Recuperación
+
+### Git Automático
+
+Añade commits automáticos a loop.sh:
+
+```bash
+#!/bin/bash
+
+ITERATION=1
+
+while true; do
+    echo "🔄 Iteración #$ITERATION"
+
+    # Ejecutar Claude
+    claude -p "$(cat PROMPT_build.md)"
+
+    # Checkpoint automático con git
+    if [[ $(git status --porcelain) ]]; then
+        git add -A
+        git commit -m "Ralph: Iteración #$ITERATION - $(date +%H:%M)"
+        echo "📸 Checkpoint guardado"
+    fi
+
+    ITERATION=$((ITERATION + 1))
+    sleep 10
+done
+```
+
+### Rollback Fácil
+
+Si algo sale mal:
+
+```bash
+# Ver historial de Ralph
+git log --oneline | grep "Ralph:"
+
+# Rollback a iteración específica
+git revert HEAD~3..HEAD
+```
+
+---
+
+## 4. Métricas y Análisis
+
+### Script de Análisis
+
+```bash
+#!/bin/bash
+# analyze_ralph.sh
+
+echo "📊 Análisis de Sesión Ralph"
+echo "═══════════════════════════"
+
+# Duración total
+START=$(head -5 ralph_log_*.txt | grep "Inicio:" | tail -1)
+echo "Inicio: $START"
+
+# Iteraciones
+ITERATIONS=$(grep -c "Iteración #" ralph_log_*.txt)
+echo "Iteraciones: $ITERATIONS"
+
+# Tareas completadas
+COMPLETED=$(grep -c "\[x\]" PLAN.md)
+TOTAL=$(grep -c "\[.\]" PLAN.md)
+echo "Tareas: $COMPLETED/$TOTAL completadas"
+
+# Errores detectados
+ERRORS=$(grep -ci "error\|failed\|exception" ralph_log_*.txt)
+echo "Errores detectados: $ERRORS"
+
+# Archivos modificados
+FILES=$(git diff --stat HEAD~$ITERATIONS --name-only 2>/dev/null | wc -l)
+echo "Archivos modificados: $FILES"
+```
+
+### Dashboard Simple
+
+```bash
+# Ejecutar en loop mientras Ralph trabaja
+watch -n 30 ./analyze_ralph.sh
+```
+
+---
+
+## 5. Specs Avanzadas
+
+### Templates por Tipo de Proyecto
+
+**Para APIs:**
+```markdown
+## Endpoints
+[tabla de endpoints con método, ruta, body, respuesta]
+
+## Autenticación
+[tipo de auth, flujo, tokens]
+
+## Validación
+[reglas de validación por campo]
+```
+
+**Para Frontends:**
+```markdown
+## Componentes
+[árbol de componentes]
+
+## Estado
+[estructura del state management]
+
+## Rutas
+[lista de rutas y componentes]
+```
+
+**Para CLIs:**
+```markdown
+## Comandos
+[lista de comandos con flags]
+
+## Flujos
+[secuencia de operaciones]
+
+## Configuración
+[archivos de config soportados]
+```
+
+---
+
+## 6. Patrones de Recuperación
+
+### Auto-Diagnóstico
+
+Añade al final de PROMPT_build.md:
+
+```markdown
+## Si Algo Falla
+1. Documenta el error exacto en PROGRESS.md
+2. Intenta una solución
+3. Si falla 2 veces: marca tarea como bloqueada
+4. Pasa a la siguiente tarea
+5. NO te quedes en loop infinito en un error
+```
+
+### Tareas de Emergencia
+
+```markdown
+## 🚨 En Caso de Muchos Errores
+Si hay más de 3 tareas bloqueadas:
+1. Ejecuta `npm test` y documenta resultados
+2. Ejecuta `npm run lint` y documenta errores
+3. Crea una sección "## Diagnóstico" en PROGRESS.md
+4. Lista todos los problemas encontrados
+5. Termina la sesión (no intentes arreglar)
+```
+
+---
+
+## 7. Integración Continua
+
+### GitHub Actions con Ralph
+
+```yaml
+# .github/workflows/ralph.yml
+name: Ralph Nightly Build
+
+on:
+  schedule:
+    - cron: '0 2 * * *'  # 2 AM cada día
+  workflow_dispatch:     # Manual trigger
+
+jobs:
+  ralph:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180  # 3 horas máximo
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install Claude Code
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Run Ralph (max 10 iterations)
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          for i in {1..10}; do
+            echo "Iteration $i"
+            claude -p "$(cat PROMPT_build.md)" || true
+            sleep 5
+          done
+
+      - name: Commit Changes
+        run: |
+          git config user.name "Ralph Bot"
+          git config user.email "ralph@bot.local"
+          git add -A
+          git commit -m "Ralph: Nightly build $(date +%Y-%m-%d)" || true
+          git push
+```
+
+---
+
+## 8. Costos y Optimización
+
+### Estimación de Costos
+
+| Iteraciones | Tokens aprox. | Costo (Claude Sonnet) |
+|-------------|---------------|----------------------|
+| 10 | ~500k | ~$1.50 |
+| 50 | ~2.5M | ~$7.50 |
+| 100 | ~5M | ~$15.00 |
+
+### Reducir Costos
+
+1. **Tareas más atómicas** = menos contexto por iteración
+2. **PROGRESS.md conciso** = menos tokens leídos
+3. **Modelo más económico** para tareas simples
+
+---
+
+## Conclusión del Módulo
+
+<div className="my-8 p-6 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl text-white">
+  <h3 className="text-2xl font-bold mb-4">🎉 ¡Has Completado Ralph Loop!</h3>
+  <p className="mb-4">
+    Ahora tienes las herramientas para poner a Claude en piloto automático.
+    Úsalas con responsabilidad.
+  </p>
+  <ul className="space-y-2">
+    <li>✅ Entiendes Context Rot y cómo superarlo</li>
+    <li>✅ Dominas los 4 archivos del sistema</li>
+    <li>✅ Puedes escribir specs efectivas</li>
+    <li>✅ Sabes crear planes atómicos</li>
+    <li>✅ Puedes monitorear e intervenir</li>
+    <li>✅ Conoces técnicas avanzadas de seguridad</li>
+  </ul>
+</div>
+
+### Siguiente Paso Recomendado
+
+Aplica Ralph a un proyecto real:
+1. Elige un proyecto pequeño (MVP, utilidad, migración)
+2. Escribe specs detalladas (30+ minutos)
+3. Crea un plan de 15-20 tareas atómicas
+4. Lanza Ralph y observa
+5. Itera y mejora tus specs
+
+<Callout type="info">
+  ¿Quieres ir más allá? El **Course Builder** te enseña a crear cursos completos con IA,
+  incluyendo contenido, ejercicios y evaluaciones automatizadas.
+</Callout>
+
+---
+
+<div className="mt-8 text-center">
+  <a href="/premium" className="inline-block px-6 py-3 bg-white text-purple-600 rounded-lg hover:bg-purple-100 transition font-semibold">
+    Ver Más Cursos Premium →
+  </a>
+</div>
+
+</RalphAccessGate>

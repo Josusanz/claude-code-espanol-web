@@ -1,0 +1,225 @@
+---
+title: Anatomía de un Loop
+---
+
+import { Callout } from 'nextra/components'
+import RalphAccessGate from '../../components/RalphAccessGate'
+
+# Lección 3.3: Anatomía de un Loop
+
+<RalphAccessGate>
+
+## Los 4 Archivos Clave
+
+Todo sistema Ralph necesita exactamente 4 archivos:
+
+```
+mi-proyecto/
+├── loop.sh          # El script que reinicia Claude
+├── PROMPT_build.md  # Las instrucciones para Claude
+├── PLAN.md          # La lista de tareas
+└── PROGRESS.md      # Los aprendizajes acumulados
+```
+
+Veamos cada uno en detalle.
+
+---
+
+## 1. loop.sh - El Orquestador
+
+Este script es el corazón del sistema. Su trabajo es simple: **reiniciar Claude indefinidamente**.
+
+```bash
+#!/bin/bash
+
+# loop.sh - El orquestador de Ralph
+
+while true; do
+    echo "🔄 Iniciando nueva iteración de Ralph..."
+    echo "⏰ $(date)"
+    echo "---"
+
+    # Ejecutar Claude Code con el prompt
+    claude -p "$(cat PROMPT_build.md)"
+
+    # Pequeña pausa entre iteraciones
+    echo ""
+    echo "✅ Iteración completada. Reiniciando en 5 segundos..."
+    sleep 5
+done
+```
+
+### Características importantes:
+
+- **Loop infinito** - Continúa hasta que lo detengas (Ctrl+C)
+- **Timestamp** - Registra cuándo empezó cada iteración
+- **Pausa** - Da tiempo a revisar antes del siguiente ciclo
+
+---
+
+## 2. PROMPT_build.md - Las Instrucciones
+
+Este archivo contiene TODO lo que Claude necesita saber. Se lee **al inicio de cada iteración**, así que siempre tiene contexto fresco.
+
+```markdown
+# PROMPT_build.md
+
+## Tu Rol
+Eres un desarrollador senior trabajando en [nombre del proyecto].
+
+## El Proyecto
+[Descripción breve del proyecto]
+
+## Instrucciones CRÍTICAS
+1. Lee PLAN.md para ver las tareas pendientes
+2. Ejecuta UNA tarea a la vez
+3. Marca la tarea como completada cuando termines
+4. Actualiza PROGRESS.md con aprendizajes
+5. Si encuentras un bloqueador, documéntalo y pasa a otra tarea
+
+## Stack Técnico
+- Lenguaje: [X]
+- Framework: [Y]
+- Base de datos: [Z]
+
+## Convenciones
+- [Lista de convenciones de código]
+- [Patrones a seguir]
+- [Cosas a evitar]
+
+## Archivos Clave
+- `/src/` - Código fuente
+- `/tests/` - Tests
+- `/docs/` - Documentación
+
+## Ahora
+1. Lee PLAN.md
+2. Elige la primera tarea pendiente
+3. Ejecútala completamente
+4. Actualiza los archivos de estado
+```
+
+<Callout type="warning">
+  Este archivo es tu **contrato** con Claude. Cuanto más específico seas, mejores resultados.
+</Callout>
+
+---
+
+## 3. PLAN.md - La Lista de Tareas
+
+El archivo que Claude lee y modifica para saber qué hacer.
+
+```markdown
+# PLAN.md - Tareas del Proyecto
+
+## ✅ Completadas
+- [x] Configurar proyecto base
+- [x] Crear estructura de carpetas
+- [x] Instalar dependencias
+
+## 🔄 En Progreso
+- [ ] Implementar autenticación de usuarios
+
+## 📋 Pendientes
+- [ ] Crear endpoint de login
+- [ ] Crear endpoint de registro
+- [ ] Implementar JWT tokens
+- [ ] Crear middleware de auth
+- [ ] Escribir tests de autenticación
+
+## 🚫 Bloqueados
+(ninguno actualmente)
+
+## 📝 Notas
+- Usar bcrypt para passwords
+- JWT expira en 24h
+```
+
+### Reglas del PLAN.md:
+
+1. **Tareas atómicas** - Cada tarea debe ser completable en una iteración
+2. **Orden lógico** - Las dependencias van primero
+3. **Checkboxes** - Usa `[x]` y `[ ]` para marcar estado
+4. **Sección de bloqueados** - Para tareas que no se pueden hacer aún
+
+---
+
+## 4. PROGRESS.md - La Memoria Persistente
+
+Aquí Claude guarda lo que aprende. Es crucial para no repetir errores.
+
+```markdown
+# PROGRESS.md - Aprendizajes del Proyecto
+
+## Decisiones de Arquitectura
+- Usamos PostgreSQL en vez de MongoDB por las relaciones
+- JWT en lugar de sesiones por escalabilidad
+
+## Bugs Encontrados y Solucionados
+- El puerto 3000 estaba ocupado -> cambiado a 3001
+- Error de CORS -> añadido middleware específico
+
+## Convenciones Establecidas
+- Nombres de archivos en kebab-case
+- Funciones en camelCase
+- Tipos/Interfaces en PascalCase
+
+## Dependencias Instaladas
+- express: servidor web
+- jsonwebtoken: manejo de JWT
+- bcrypt: hash de passwords
+
+## Notas para Futuras Iteraciones
+- Recordar ejecutar tests antes de marcar como completado
+- El usuario admin tiene ID=1, no borrarlo en tests
+```
+
+### Por qué es importante:
+
+- **Evita repetir errores** - Si Claude documentó un bug, no lo repetirá
+- **Mantiene consistencia** - Las convenciones se preservan
+- **Acelera iteraciones** - No pierde tiempo redescubriendo cosas
+
+---
+
+## El Flujo Completo
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                                                             │
+│  loop.sh ejecuta ──▶ Claude inicia con PROMPT_build.md     │
+│                              │                              │
+│                              ▼                              │
+│                    Lee PLAN.md para tareas                  │
+│                              │                              │
+│                              ▼                              │
+│                   Lee PROGRESS.md para contexto             │
+│                              │                              │
+│                              ▼                              │
+│                    Ejecuta UNA tarea                        │
+│                              │                              │
+│                              ▼                              │
+│            Actualiza PLAN.md (marca completada)             │
+│                              │                              │
+│                              ▼                              │
+│         Actualiza PROGRESS.md (si aprendió algo)           │
+│                              │                              │
+│                              ▼                              │
+│                    Termina la sesión                        │
+│                              │                              │
+│                              ▼                              │
+│               loop.sh reinicia ──────────────────┐         │
+│                                                   │         │
+│                          ◀────────────────────────┘         │
+└─────────────────────────────────────────────────────────────┘
+```
+
+---
+
+<div className="mt-8 text-center">
+  <a href="/ralph/fase-specs" className="inline-block px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition">
+    Siguiente: Fase 1 - Specs →
+  </a>
+</div>
+
+</RalphAccessGate>

@@ -365,8 +365,11 @@ export default function PlataformaPage() {
               </Link>
 
               <div className="flex items-center gap-4">
+                <Link href="/premium" className="text-slate-400 hover:text-white transition-colors text-sm">
+                  Cursos Premium
+                </Link>
                 <Link href="/" className="text-slate-400 hover:text-white transition-colors text-sm">
-                  ← Volver al curso
+                  Inicio
                 </Link>
               </div>
             </div>

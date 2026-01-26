@@ -1,18 +1,30 @@
 export default {
+  "modo-facil": {
+    title: "Modo Fácil",
+    type: "page"
+  },
   empezar: {
-    title: "🚀 Empezar",
+    title: "Empezar",
     type: "page"
   },
   fundamentos: {
-    title: "📚 Fundamentos",
+    title: "Fundamentos",
     type: "page"
   },
   proyectos: {
-    title: "🛠️ Proyectos",
+    title: "Proyectos",
+    type: "page"
+  },
+  ralph: {
+    title: "🔒 Ralph Loop",
+    type: "page"
+  },
+  "course-builder": {
+    title: "🔒 Course Builder",
     type: "page"
   },
   recursos: {
-    title: "📋 Recursos",
+    title: "Recursos",
     type: "page"
   },
   privacidad: {
