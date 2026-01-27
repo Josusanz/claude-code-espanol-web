@@ -1,7 +1,15 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Head from 'next/head'
 
 type ContentType = 'news' | 'thread' | 'hottake' | 'tip' | 'demo'
+
+interface FeedItem {
+  title: string
+  link: string
+  source: string
+  pubDate: string
+  description?: string
+}
 
 const CONTENT_TEMPLATES: Record<ContentType, { label: string; emoji: string; description: string }> = {
   news: { label: 'Noticia IA', emoji: '📰', description: 'Traduce y adapta una noticia de IA' },
@@ -19,6 +27,39 @@ export default function ContentAdminPage() {
   const [isScheduling, setIsScheduling] = useState(false)
   const [scheduleTime, setScheduleTime] = useState<'now' | 'next-free-slot' | 'custom'>('next-free-slot')
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
+  const [feedItems, setFeedItems] = useState<FeedItem[]>([])
+  const [isLoadingFeed, setIsLoadingFeed] = useState(true)
+  const [selectedSource, setSelectedSource] = useState<string>('all')
+
+  // Fetch RSS feed on mount
+  useEffect(() => {
+    const fetchFeed = async () => {
+      try {
+        const res = await fetch('/api/admin/feed')
+        const data = await res.json()
+        if (data.items) {
+          setFeedItems(data.items)
+        }
+      } catch (error) {
+        console.error('Error fetching feed:', error)
+      } finally {
+        setIsLoadingFeed(false)
+      }
+    }
+    fetchFeed()
+  }, [])
+
+  const handleSelectFeedItem = (item: FeedItem) => {
+    setOriginalContent(`${item.title}\n\n${item.description || ''}\n\nFuente: ${item.source}\n${item.link}`)
+    setContentType('news')
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  const uniqueSources = ['all', ...new Set(feedItems.map(item => item.source))]
+  const filteredFeedItems = selectedSource === 'all'
+    ? feedItems
+    : feedItems.filter(item => item.source === selectedSource)
 
   const handleGenerate = async () => {
     if (!originalContent.trim()) return
@@ -213,6 +254,83 @@ export default function ContentAdminPage() {
                 </a>
               ))}
             </div>
+          </div>
+
+          {/* RSS Feed - AI News */}
+          <div className="mt-6 p-6 bg-slate-900 rounded-xl">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="font-semibold">📡 Noticias de IA (RSS)</h3>
+              <select
+                value={selectedSource}
+                onChange={(e) => setSelectedSource(e.target.value)}
+                className="p-2 bg-slate-800 border border-slate-700 rounded-lg text-sm text-white"
+              >
+                {uniqueSources.map(source => (
+                  <option key={source} value={source}>
+                    {source === 'all' ? 'Todas las fuentes' : source}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {isLoadingFeed ? (
+              <div className="text-center py-8 text-slate-400">
+                Cargando noticias...
+              </div>
+            ) : filteredFeedItems.length === 0 ? (
+              <div className="text-center py-8 text-slate-400">
+                No hay noticias disponibles
+              </div>
+            ) : (
+              <div className="space-y-3 max-h-96 overflow-y-auto">
+                {filteredFeedItems.map((item, index) => (
+                  <div
+                    key={`${item.link}-${index}`}
+                    className="p-4 bg-slate-800 hover:bg-slate-750 rounded-lg cursor-pointer transition group"
+                    onClick={() => handleSelectFeedItem(item)}
+                  >
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-medium text-sm text-white group-hover:text-indigo-400 transition line-clamp-2">
+                          {item.title}
+                        </h4>
+                        {item.description && (
+                          <p className="text-xs text-slate-400 mt-1 line-clamp-2">
+                            {item.description}
+                          </p>
+                        )}
+                        <div className="flex items-center gap-2 mt-2">
+                          <span className="text-xs px-2 py-0.5 bg-slate-700 rounded text-slate-300">
+                            {item.source}
+                          </span>
+                          <span className="text-xs text-slate-500">
+                            {new Date(item.pubDate).toLocaleDateString('es-ES', {
+                              day: 'numeric',
+                              month: 'short',
+                              hour: '2-digit',
+                              minute: '2-digit'
+                            })}
+                          </span>
+                        </div>
+                      </div>
+                      <button
+                        className="shrink-0 px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 rounded text-xs font-medium opacity-0 group-hover:opacity-100 transition"
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          handleSelectFeedItem(item)
+                        }}
+                      >
+                        Adaptar
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <p className="text-xs text-slate-500 mt-4 text-center">
+              Haz clic en una noticia para adaptarla al español con Claude
+            </p>
           </div>
         </div>
       </div>
