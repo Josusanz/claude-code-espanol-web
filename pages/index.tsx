@@ -623,21 +623,21 @@ export default function LandingPage() {
             </div>
 
             <div className="grid md:grid-cols-3 gap-6">
-              {/* Video 1: Landing Page */}
-              <Link href="/plataforma/demo-visual" className="group relative bg-slate-100 dark:bg-slate-900 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 hover:border-indigo-400 dark:hover:border-indigo-500 transition-all hover:shadow-xl cursor-pointer">
-                <div className="aspect-video relative bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
+              {/* Video 1: Course Builder */}
+              <Link href="/premium/course-builder" className="group relative bg-slate-100 dark:bg-slate-900 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 hover:border-amber-400 dark:hover:border-amber-500 transition-all hover:shadow-xl cursor-pointer">
+                <div className="aspect-video relative bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center">
                   <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-all"></div>
                   <div className="relative z-10 text-center">
-                    <span className="material-symbols-outlined text-white text-5xl mb-2 opacity-90">web</span>
+                    <span className="material-symbols-outlined text-white text-5xl mb-2 opacity-90">school</span>
                     <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur flex items-center justify-center mx-auto group-hover:scale-110 transition-transform">
                       <span className="material-symbols-outlined text-white text-3xl">play_arrow</span>
                     </div>
                   </div>
-                  <span className="absolute bottom-2 right-2 bg-black/60 text-white text-xs px-2 py-1 rounded">Demo</span>
+                  <span className="absolute bottom-2 right-2 bg-amber-600 text-white text-xs font-semibold px-2 py-1 rounded">$147</span>
                 </div>
                 <div className="p-4">
-                  <h3 className="font-bold text-slate-900 dark:text-white mb-1">Crear Landing Page</h3>
-                  <p className="text-sm text-slate-600 dark:text-slate-400">De prompt a web publicada en 5 minutos</p>
+                  <h3 className="font-bold text-slate-900 dark:text-white mb-1">Course Builder</h3>
+                  <p className="text-sm text-slate-600 dark:text-slate-400">Crea y vende cursos con IA</p>
                 </div>
               </Link>
 
