@@ -615,10 +615,10 @@ export default function LandingPage() {
           <div className="max-w-6xl mx-auto px-6">
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">
-                Mira lo que puedes hacer
+                Aprende con nosotros
               </h2>
               <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-                Videos cortos mostrando Claude Code en acción
+                Cursos y recursos para dominar Claude Code
               </p>
             </div>
 
@@ -679,8 +679,8 @@ export default function LandingPage() {
             </div>
 
             <p className="text-center mt-8 text-sm text-slate-500 dark:text-slate-400">
-              <span className="material-symbols-outlined text-base align-middle mr-1">touch_app</span>
-              Haz clic en cualquier card para probar
+              <span className="material-symbols-outlined text-base align-middle mr-1">arrow_forward</span>
+              Haz clic para ver mas detalles
             </p>
           </div>
         </section>
