@@ -45,6 +45,33 @@ export default function BlogPage({ posts }: BlogPageProps) {
       </Head>
 
       <div className="min-h-screen bg-white dark:bg-slate-950">
+        {/* Navigation */}
+        <nav className="sticky top-0 z-50 border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md">
+          <div className="max-w-3xl mx-auto px-6">
+            <div className="flex justify-between items-center h-16">
+              <Link href="/" className="flex items-center gap-2">
+                <div className="bg-slate-900 dark:bg-white p-1.5 rounded-md flex items-center justify-center">
+                  <svg className="w-4 h-4 text-white dark:text-slate-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <span className="text-[15px] font-semibold tracking-tight text-slate-900 dark:text-white">
+                  Claude Code <span className="text-slate-500 dark:text-slate-400 font-normal">en Espanol</span>
+                </span>
+              </Link>
+
+              <div className="flex items-center gap-4">
+                <Link href="/empezar" className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white text-sm font-medium">
+                  Curso
+                </Link>
+                <Link href="/premium" className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white text-sm font-medium">
+                  Premium
+                </Link>
+              </div>
+            </div>
+          </div>
+        </nav>
+
         {/* Hero */}
         <section className="py-16 px-6 border-b border-slate-200 dark:border-slate-800">
           <div className="max-w-3xl mx-auto text-center">
