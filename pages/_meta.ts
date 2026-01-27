@@ -26,7 +26,7 @@ export default {
       }
     }
   },
-  // Link directo a Clawdbot
+  // Dropdown: Clawdbot
   "clawdbot-menu": {
     title: "🦞 Clawdbot",
     type: "menu",
@@ -50,6 +50,18 @@ export default {
       automatizar: {
         title: "4. Automatizar",
         href: "/clawdbot/primeras-automatizaciones"
+      },
+      skills: {
+        title: "5. Skills",
+        href: "/clawdbot/skills"
+      },
+      proactivas: {
+        title: "6. Tareas proactivas",
+        href: "/clawdbot/tareas-proactivas"
+      },
+      proyecto: {
+        title: "7. Proyecto final",
+        href: "/clawdbot/proyecto-asistente"
       }
     }
   },
@@ -72,38 +84,30 @@ export default {
       }
     }
   },
-  // Section pages - with navbar visible
+  // Hidden pages - accessible via links but not shown in navbar
   "modo-facil": {
-    title: "Modo Fácil",
-    type: "page"
+    display: "hidden"
   },
   empezar: {
-    title: "Empezar",
-    type: "page"
+    display: "hidden"
   },
   fundamentos: {
-    title: "Fundamentos",
-    type: "page"
+    display: "hidden"
   },
   proyectos: {
-    title: "Proyectos",
-    type: "page"
+    display: "hidden"
   },
   ralph: {
-    title: "Ralph Loop",
-    type: "page"
+    display: "hidden"
   },
   clawdbot: {
-    title: "Clawdbot",
-    type: "page"
+    display: "hidden"
   },
   "course-builder": {
-    title: "Course Builder",
-    type: "page"
+    display: "hidden"
   },
   recursos: {
-    title: "Recursos",
-    type: "page"
+    display: "hidden"
   },
   privacidad: {
     display: "hidden"

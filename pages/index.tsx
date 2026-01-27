@@ -688,6 +688,47 @@ export default function LandingPage() {
         {/* Simple Divider */}
         <div className="border-t border-slate-200 dark:border-slate-800"></div>
 
+        {/* Clawdbot Section - New Course */}
+        <section className="py-16 bg-gradient-to-br from-red-50 to-orange-50 dark:from-red-950/20 dark:to-orange-950/20">
+          <div className="max-w-4xl mx-auto px-6">
+            <div className="flex flex-col md:flex-row items-center gap-8">
+              <div className="flex-shrink-0 w-24 h-24 bg-gradient-to-br from-red-500 to-orange-500 rounded-2xl flex items-center justify-center shadow-lg">
+                <span className="text-5xl">🦞</span>
+              </div>
+              <div className="flex-1 text-center md:text-left">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 text-sm font-medium mb-3">
+                  <span className="material-symbols-outlined text-sm">new_releases</span>
+                  Nuevo Curso
+                </div>
+                <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-3">
+                  Clawdbot: Tu Asistente de IA Personal
+                </h2>
+                <p className="text-slate-600 dark:text-slate-400 mb-2">
+                  <strong className="text-slate-800 dark:text-slate-200">ChatGPT en tu WhatsApp</strong>, pero con memoria infinita y que trabaja mientras duermes.
+                </p>
+                <p className="text-slate-500 dark:text-slate-500 text-sm mb-6">
+                  Gratis, open-source, y tus datos en tu ordenador. Primer curso completo en español.
+                </p>
+                <div className="flex flex-wrap items-center justify-center md:justify-start gap-3">
+                  <Link
+                    href="/clawdbot"
+                    className="w-full sm:w-auto bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-700 hover:to-orange-700 text-white font-semibold py-3 px-6 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2"
+                  >
+                    <span className="material-symbols-outlined">play_arrow</span>
+                    Empezar Curso Gratis
+                  </Link>
+                  <span className="text-sm text-slate-500 dark:text-slate-400">
+                    7 lecciones · Gratis
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Simple Divider */}
+        <div className="border-t border-slate-200 dark:border-slate-800"></div>
+
         {/* Modo Fácil Section - For beginners */}
         <section className="py-16 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950/20 dark:to-emerald-950/20">
           <div className="max-w-4xl mx-auto px-6">
@@ -942,6 +983,7 @@ export default function LandingPage() {
                   <li><Link href="/empezar/introduccion" className="hover:text-white transition-colors">Empezar</Link></li>
                   <li><Link href="/fundamentos/que-es" className="hover:text-white transition-colors">Fundamentos</Link></li>
                   <li><Link href="/proyectos" className="hover:text-white transition-colors">Proyectos</Link></li>
+                  <li><Link href="/clawdbot" className="hover:text-white transition-colors">Clawdbot</Link></li>
                   <li><Link href="/ralph" className="hover:text-white transition-colors">Ralph Loop</Link></li>
                   <li><Link href="/course-builder" className="hover:text-white transition-colors">Course Builder</Link></li>
                   <li><Link href="/recursos" className="hover:text-white transition-colors">Recursos</Link></li>
