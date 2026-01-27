@@ -1,0 +1,195 @@
+---
+title: "Instalación de Clawdbot"
+---
+
+import { Callout, Steps, Tabs } from 'nextra/components'
+
+# Lección 2: Instalación de Clawdbot
+
+## Requisitos previos
+
+Antes de empezar, necesitas:
+
+- **Node.js 18+** instalado
+- **Una API key** de Claude (Anthropic) o GPT (OpenAI)
+- **macOS 12+**, **Windows 10+**, o **Linux**
+
+<Callout type="info">
+  Si no tienes API key de Claude, puedes conseguir una en [console.anthropic.com](https://console.anthropic.com)
+</Callout>
+
+## Instalación rápida
+
+<Steps>
+### Opción 1: One-liner (recomendado)
+
+Abre tu terminal y ejecuta:
+
+```bash
+curl -fsSL https://molt.bot/install.sh | bash
+```
+
+Este script:
+- Descarga Clawdbot
+- Lo instala globalmente
+- Crea la configuración inicial
+
+### Opción 2: Con npm
+
+Si prefieres usar npm:
+
+```bash
+npm install -g clawdbot
+```
+
+### Opción 3: Desde el código fuente
+
+Para contribuidores o curiosos:
+
+```bash
+git clone https://github.com/clawdbot/clawdbot.git
+cd clawdbot
+npm install
+npm run build
+npm link
+```
+</Steps>
+
+## Configuración inicial
+
+Después de instalar, ejecuta:
+
+```bash
+clawdbot init
+```
+
+Esto abre un asistente interactivo que te pregunta:
+
+1. **¿Qué modelo quieres usar?**
+   - Claude (recomendado)
+   - GPT-4
+   - Modelo local (Ollama)
+
+2. **Tu API key**
+   - Pega tu clave de Anthropic o OpenAI
+
+3. **¿Dónde guardar datos?**
+   - Por defecto: `~/.clawdbot/`
+
+## Verificar la instalación
+
+Ejecuta:
+
+```bash
+clawdbot --version
+```
+
+Deberías ver algo como:
+
+```
+Clawdbot v2.1.4 (Moltbot)
+```
+
+## Primera conversación
+
+Para probar que funciona:
+
+```bash
+clawdbot chat
+```
+
+Esto abre un chat en terminal. Escribe algo como:
+
+```
+Hola, ¿qué puedes hacer?
+```
+
+Si responde, ¡la instalación fue exitosa!
+
+## Estructura de archivos
+
+Clawdbot crea esta estructura:
+
+```
+~/.clawdbot/
+├── config.json      # Configuración
+├── memory/          # Memoria persistente
+├── skills/          # Tus skills personalizados
+├── logs/            # Logs de actividad
+└── cache/           # Caché temporal
+```
+
+## Configuración avanzada
+
+El archivo `~/.clawdbot/config.json` contiene:
+
+```json
+{
+  "model": {
+    "provider": "anthropic",
+    "name": "claude-sonnet-4-20250514",
+    "apiKey": "sk-ant-..."
+  },
+  "memory": {
+    "enabled": true,
+    "maxTokens": 100000
+  },
+  "sandbox": {
+    "enabled": false,
+    "docker": false
+  },
+  "channels": []
+}
+```
+
+### Opciones importantes
+
+| Opción | Descripción | Default |
+|--------|-------------|---------|
+| `model.provider` | anthropic, openai, ollama | anthropic |
+| `memory.enabled` | Activar memoria persistente | true |
+| `memory.maxTokens` | Límite de memoria | 100000 |
+| `sandbox.enabled` | Restringir acceso al sistema | false |
+| `sandbox.docker` | Ejecutar en contenedor | false |
+
+## Solución de problemas
+
+### "Command not found: clawdbot"
+
+Asegúrate de que npm global está en tu PATH:
+
+```bash
+export PATH="$PATH:$(npm config get prefix)/bin"
+```
+
+Añade esta línea a tu `~/.bashrc` o `~/.zshrc`.
+
+### "API key invalid"
+
+1. Verifica que copiaste la key completa
+2. Comprueba que tienes créditos en tu cuenta
+3. Prueba regenerar la key
+
+### "Permission denied"
+
+En Mac/Linux, puede que necesites:
+
+```bash
+sudo npm install -g clawdbot
+```
+
+O mejor, configura npm para no necesitar sudo:
+
+```bash
+mkdir ~/.npm-global
+npm config set prefix '~/.npm-global'
+export PATH=~/.npm-global/bin:$PATH
+```
+
+---
+
+<div className="mt-8 text-center">
+  <a href="/clawdbot/conectar-plataformas" className="inline-block px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition">
+    Siguiente: Conectar WhatsApp/Telegram →
+  </a>
+</div>

@@ -1,0 +1,298 @@
+---
+title: "Tareas Proactivas"
+---
+
+import { Callout, Steps } from 'nextra/components'
+
+# Lección 6: Tareas Proactivas
+
+Aquí es donde Clawdbot se vuelve realmente potente: **actúa sin que se lo pidas**.
+
+## ¿Qué son las tareas proactivas?
+
+A diferencia de ChatGPT o Claude que solo responden cuando preguntas, Clawdbot puede:
+
+- Ejecutar tareas en horarios específicos (cron jobs)
+- Reaccionar a eventos (webhooks)
+- Monitorear cosas y alertarte
+- Hacer chequeos periódicos
+
+<Callout type="info">
+  Es como tener un asistente que trabaja mientras duermes.
+</Callout>
+
+## Tipos de tareas proactivas
+
+### 1. Cron Jobs (tareas programadas)
+
+Ejecutar algo en un horario específico:
+
+```
+Cada día a las 8am, mándame un resumen de:
+- El tiempo de hoy
+- Mis eventos del calendario
+- Las noticias importantes de tecnología
+```
+
+### 2. Triggers (reacciones a eventos)
+
+Cuando pasa algo, hacer algo:
+
+```
+Cuando reciba un email con "URGENTE" en el asunto,
+avísame inmediatamente por Telegram aunque sea de noche.
+```
+
+### 3. Monitors (vigilancia continua)
+
+Vigilar algo y alertar si cambia:
+
+```
+Monitorea el precio de Bitcoin cada hora.
+Si baja de 40,000€, avísame.
+```
+
+### 4. Webhooks (recibir datos externos)
+
+Recibir información de otros servicios:
+
+```
+Cuando alguien complete el formulario de contacto
+de mi web, mándame los datos por WhatsApp.
+```
+
+## Configurar Cron Jobs
+
+### Sintaxis simple
+
+Clawdbot entiende lenguaje natural:
+
+```
+"Cada día a las 9am"
+"Todos los lunes a las 10"
+"Cada hora"
+"Cada 30 minutos"
+"El día 1 de cada mes"
+```
+
+### Crear un cron job
+
+<Steps>
+
+### Dile a Clawdbot qué quieres
+
+```
+Quiero que cada día a las 7:30am me mandes
+un mensaje con mis tareas pendientes en Notion
+y los eventos del día en mi calendario.
+```
+
+### Clawdbot confirma
+
+```
+✅ Cron job creado:
+
+Nombre: morning-briefing
+Horario: 7:30 AM (todos los días)
+Acciones:
+  1. Leer tareas de Notion
+  2. Leer eventos de Google Calendar
+  3. Enviar resumen por Telegram
+
+¿Lo activo?
+```
+
+### Confirma
+
+```
+Sí, actívalo
+```
+
+</Steps>
+
+### Ver cron jobs activos
+
+```bash
+clawdbot cron list
+```
+
+```
+Active cron jobs:
+
+  📅 morning-briefing
+     Schedule: 0 7 30 * * * (7:30 AM daily)
+     Next run: Tomorrow at 7:30 AM
+     Status: ✅ Active
+
+  📊 weekly-report
+     Schedule: 0 9 0 * * 1 (Mondays 9:00 AM)
+     Next run: Monday at 9:00 AM
+     Status: ✅ Active
+```
+
+### Pausar o eliminar
+
+```bash
+clawdbot cron pause morning-briefing
+clawdbot cron delete weekly-report
+```
+
+## Ejemplos útiles de cron jobs
+
+### Daily Briefing (mañana)
+
+```
+Cada día a las 7am crea un "daily briefing" con:
+1. El clima de hoy
+2. Mis 3 tareas más importantes
+3. Eventos del calendario
+4. Una frase motivacional
+Mándamelo por Telegram.
+```
+
+### Weekly Review (fin de semana)
+
+```
+Cada domingo a las 8pm prepara mi weekly review:
+1. Resumen de lo que hice esta semana (de mis commits en GitHub)
+2. Emails importantes que no respondí
+3. Tareas que quedaron pendientes
+4. Sugerencias para la próxima semana
+```
+
+### Price Alerts
+
+```
+Cada hora chequea:
+- Precio de Bitcoin
+- Precio de acciones de Apple
+- Precio de acciones de Tesla
+
+Si alguno cambia más del 3% desde ayer, avísame.
+```
+
+### News Digest
+
+```
+Cada día a las 12pm busca las 5 noticias más
+importantes sobre IA y startups, resúmelas,
+y mándamelas por WhatsApp.
+```
+
+### Backup Reminder
+
+```
+Cada viernes a las 6pm recuérdame hacer backup
+de mis proyectos importantes.
+```
+
+## Configurar Triggers
+
+Los triggers reaccionan a eventos en tiempo real:
+
+### Email urgente
+
+```
+Cuando llegue un email con "urgente" o "ASAP" en el asunto,
+avísame por Telegram inmediatamente con el remitente y asunto.
+```
+
+### Mención en Twitter
+
+```
+Cuando alguien me mencione en Twitter,
+mándame el tweet por WhatsApp.
+```
+
+### Nuevo PR en GitHub
+
+```
+Cuando se cree un Pull Request en mi repo "mi-proyecto",
+léelo y dame un resumen de los cambios.
+```
+
+## Configurar Monitors
+
+Los monitors vigilan algo continuamente:
+
+### Monitor de sitio web
+
+```
+Monitorea mi web https://misite.com cada 5 minutos.
+Si no responde o tarda más de 3 segundos, avísame.
+```
+
+### Monitor de stock
+
+```
+Vigila el inventario de la PlayStation 5 en Amazon.
+Cuando esté disponible, avísame inmediatamente.
+```
+
+### Monitor de precios
+
+```
+Vigila el precio de este producto en Amazon:
+[URL]
+Si baja de 50€, avísame.
+```
+
+## Webhooks
+
+Clawdbot puede recibir datos de servicios externos:
+
+```bash
+clawdbot webhook create mi-webhook
+```
+
+```
+Webhook created!
+URL: https://hooks.clawdbot.io/wh_abc123xyz
+
+Use this URL in external services to send data to Clawdbot.
+```
+
+### Ejemplo: Formulario de contacto
+
+1. En tu web, envía los datos del formulario al webhook
+2. Clawdbot los recibe y te avisa:
+
+```
+Configura el webhook mi-webhook para que cuando
+reciba datos, me los mande por Telegram formateados
+como "Nuevo contacto: [nombre] - [email] - [mensaje]"
+```
+
+## Seguridad en tareas proactivas
+
+<Callout type="warning">
+  Las tareas proactivas pueden hacer muchas cosas automáticamente. Ten cuidado.
+</Callout>
+
+### Buenas prácticas
+
+1. **Limita las acciones automáticas** - No dejes que elimine archivos o envíe emails sin confirmación
+2. **Revisa los logs** - `clawdbot logs` muestra todo lo que hace
+3. **Prueba antes de activar** - Usa `--dry-run` para probar sin ejecutar
+4. **Pon límites** - Máximo de mensajes por hora, por día, etc.
+
+### Configurar límites
+
+```json
+// ~/.clawdbot/config.json
+{
+  "safety": {
+    "maxMessagesPerHour": 20,
+    "maxActionsPerDay": 100,
+    "requireConfirmation": ["delete", "send-email", "post-social"]
+  }
+}
+```
+
+---
+
+<div className="mt-8 text-center">
+  <a href="/clawdbot/proyecto-asistente" className="inline-block px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition">
+    Siguiente: Proyecto Final →
+  </a>
+</div>

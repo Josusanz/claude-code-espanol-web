@@ -1,0 +1,257 @@
+---
+title: "Skills y ClawdHub"
+---
+
+import { Callout, Steps } from 'nextra/components'
+
+# Lección 5: Skills y ClawdHub
+
+Los **skills** son las superpoderes de Clawdbot. Son módulos que le dan capacidades específicas.
+
+## ¿Qué es un skill?
+
+Un skill es código que le enseña a Clawdbot a hacer algo nuevo:
+
+- **gmail**: Leer y enviar emails
+- **calendar**: Gestionar Google Calendar
+- **spotify**: Controlar tu música
+- **notion**: Crear y editar páginas
+- **github**: Gestionar repos y PRs
+- **twitter**: Publicar y leer tweets
+
+## Skills incluidos por defecto
+
+```bash
+clawdbot skills list
+```
+
+```
+Installed skills:
+  ✅ web-browse    - Navegar páginas web
+  ✅ web-search    - Buscar en Google
+  ✅ file-read     - Leer archivos locales
+  ✅ file-write    - Escribir archivos
+  ✅ shell         - Ejecutar comandos
+  ✅ reminder      - Crear recordatorios
+```
+
+## ClawdHub: El marketplace
+
+ClawdHub es el marketplace comunitario de skills. Miles de skills creados por la comunidad.
+
+### Explorar ClawdHub
+
+```bash
+clawdbot hub search gmail
+```
+
+```
+Found 12 skills matching "gmail":
+
+  📧 gmail-official (v2.1.0) ⭐ 4.8
+     Read, send, and manage Gmail
+     Downloads: 45,230
+
+  📧 gmail-summary (v1.3.2) ⭐ 4.6
+     Daily email summaries
+     Downloads: 12,450
+
+  📧 gmail-auto-reply (v1.0.5) ⭐ 4.2
+     Auto-reply to common emails
+     Downloads: 3,210
+```
+
+### Instalar un skill
+
+```bash
+clawdbot hub install gmail-official
+```
+
+### Skills populares
+
+| Skill | Descripción | Descargas |
+|-------|-------------|-----------|
+| `gmail-official` | Email completo | 45K |
+| `google-calendar` | Gestión de calendario | 38K |
+| `spotify-control` | Control de Spotify | 32K |
+| `notion-sync` | Sincronizar con Notion | 28K |
+| `github-assistant` | Gestionar repos | 25K |
+| `twitter-poster` | Publicar en Twitter | 22K |
+| `telegram-forwarder` | Reenviar mensajes | 18K |
+| `smart-home` | Control domótico | 15K |
+
+## Configurar skills
+
+Cada skill puede necesitar configuración. Ejemplo con Gmail:
+
+<Steps>
+### Instalar
+
+```bash
+clawdbot hub install gmail-official
+```
+
+### Configurar OAuth
+
+```bash
+clawdbot skill config gmail-official
+```
+
+Se abre el navegador para autorizar acceso a tu cuenta de Google.
+
+### Probar
+
+```
+Lee mis últimos 5 emails
+```
+</Steps>
+
+## Crear tu propio skill
+
+Los skills se escriben en TypeScript/JavaScript:
+
+```typescript
+// ~/.clawdbot/skills/mi-skill/index.ts
+
+import { Skill, Context } from '@clawdbot/sdk';
+
+export default class MiSkill extends Skill {
+  name = 'mi-skill';
+  description = 'Hace algo útil';
+
+  // Palabras que activan este skill
+  triggers = ['mi comando', 'hacer algo'];
+
+  async execute(ctx: Context) {
+    const { input, memory, reply } = ctx;
+
+    // Tu lógica aquí
+    const resultado = await this.hacerAlgo(input);
+
+    // Responder al usuario
+    await reply(`Hecho: ${resultado}`);
+  }
+
+  private async hacerAlgo(input: string) {
+    // Implementación
+    return 'resultado';
+  }
+}
+```
+
+### Estructura de un skill
+
+```
+~/.clawdbot/skills/mi-skill/
+├── index.ts        # Código principal
+├── package.json    # Dependencias
+├── config.json     # Configuración
+└── README.md       # Documentación
+```
+
+### Registrar el skill
+
+```bash
+clawdbot skill register ./mi-skill
+```
+
+## Skills que se auto-escriben
+
+<Callout type="warning">
+  Esta es la feature más loca de Clawdbot.
+</Callout>
+
+Puedes pedirle a Clawdbot que **cree un skill por ti**:
+
+```
+Crea un skill que:
+1. Cada mañana a las 8am
+2. Revise el precio de Bitcoin
+3. Si subió más del 5%, me avise por Telegram
+```
+
+Clawdbot:
+1. Escribe el código del skill
+2. Lo registra
+3. Lo activa
+
+**Tú no tocaste ni una línea de código.**
+
+### Ejemplo real
+
+```
+Necesito un skill que cuando alguien me mencione en
+Twitter, me mande un resumen por WhatsApp con el
+tweet y quién lo escribió.
+```
+
+Clawdbot genera algo así:
+
+```typescript
+export default class TwitterMentions extends Skill {
+  name = 'twitter-mentions';
+
+  @cron('*/5 * * * *') // Cada 5 minutos
+  async checkMentions(ctx: Context) {
+    const mentions = await this.twitter.getMentions();
+    const newMentions = mentions.filter(m => !this.seen.has(m.id));
+
+    for (const mention of newMentions) {
+      await ctx.channels.whatsapp.send(
+        `🐦 Nueva mención de @${mention.author}:\n${mention.text}`
+      );
+      this.seen.add(mention.id);
+    }
+  }
+}
+```
+
+## Compartir skills
+
+Si creas un skill útil, publícalo:
+
+```bash
+clawdbot hub publish ./mi-skill
+```
+
+Necesitas cuenta en ClawdHub (gratis).
+
+## Ejercicio práctico
+
+<Steps>
+### Instala el skill de Notion
+
+```bash
+clawdbot hub install notion-sync
+clawdbot skill config notion-sync
+```
+
+### Configura la integración
+
+Sigue los pasos para conectar con tu workspace de Notion.
+
+### Prueba
+
+```
+Crea una página en Notion llamada "Ideas de proyecto"
+con 3 bullets vacíos
+```
+
+### Avanzado: Crea tu skill
+
+Pide a Clawdbot:
+
+```
+Crea un skill que cada vez que diga "idea" seguido
+de texto, lo añada como bullet a mi página de Ideas
+en Notion.
+```
+</Steps>
+
+---
+
+<div className="mt-8 text-center">
+  <a href="/clawdbot/tareas-proactivas" className="inline-block px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition">
+    Siguiente: Tareas proactivas →
+  </a>
+</div>

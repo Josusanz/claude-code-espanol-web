@@ -1,0 +1,219 @@
+---
+title: "Primeras Automatizaciones"
+---
+
+import { Callout, Steps } from 'nextra/components'
+
+# Lección 4: Primeras Automatizaciones
+
+Ahora que tienes Clawdbot conectado, vamos a hacer cosas útiles.
+
+## Comandos básicos
+
+Clawdbot entiende lenguaje natural. No necesitas sintaxis especial:
+
+```
+✅ "Busca en Google qué tiempo hace mañana en Madrid"
+✅ "Resúmeme este artículo: [URL]"
+✅ "¿Qué tengo pendiente esta semana?"
+❌ "/search weather madrid" (no hace falta)
+```
+
+## 10 automatizaciones para empezar
+
+### 1. Resumen de artículos
+
+```
+Lee este artículo y dame un resumen de 3 puntos:
+https://example.com/articulo-largo
+```
+
+Clawdbot:
+- Abre el navegador
+- Lee el contenido
+- Te devuelve el resumen
+
+### 2. Búsqueda web inteligente
+
+```
+Busca los 5 mejores restaurantes japoneses en Barcelona
+con buenas reseñas y precio medio
+```
+
+### 3. Recordatorios contextuales
+
+```
+Recuérdame mañana a las 9 que tengo que llamar al
+médico para pedir cita. El teléfono es 912345678.
+```
+
+<Callout type="info">
+  A diferencia de Siri o Google Assistant, Clawdbot **recuerda el contexto**. Si mañana le preguntas "¿qué tenía que hacer hoy?", lo sabe.
+</Callout>
+
+### 4. Traducción rápida
+
+```
+Traduce esto al inglés formal para un email de trabajo:
+
+"Hola, quería saber si podemos reunirnos la semana
+que viene para hablar del proyecto."
+```
+
+### 5. Generar contenido
+
+```
+Escríbeme un tweet sobre productividad con IA.
+Máximo 280 caracteres. Tono profesional pero cercano.
+```
+
+### 6. Análisis de datos
+
+```
+Tengo este CSV de ventas. Dime cuál fue el producto
+más vendido y el mes con más ingresos.
+
+[Adjuntas el archivo o pegas los datos]
+```
+
+### 7. Resumen de emails
+
+```
+Lee mis últimos 10 emails y dime cuáles son urgentes
+```
+
+<Callout type="warning">
+  Para leer emails necesitas configurar el skill de Gmail. Ver la lección de Skills.
+</Callout>
+
+### 8. Preparar reuniones
+
+```
+Tengo una reunión mañana con el equipo de marketing
+sobre la campaña de verano. Prepárame 5 preguntas
+que debería hacer y 3 puntos a destacar.
+```
+
+### 9. Investigación de mercado
+
+```
+Investiga las 3 principales herramientas de gestión
+de proyectos en 2026. Compara precios, features
+principales, y pros/contras de cada una.
+```
+
+### 10. Código rápido
+
+```
+Necesito un script en Python que lea un CSV, filtre
+las filas donde la columna "status" sea "pending",
+y guarde el resultado en otro archivo.
+```
+
+## El poder de la memoria
+
+Lo que hace especial a Clawdbot es que **recuerda**.
+
+### Ejemplo de conversación continua
+
+**Día 1:**
+```
+Tú: Estoy trabajando en un proyecto de e-commerce
+    con Next.js y Stripe.
+Bot: Entendido. ¿En qué puedo ayudarte?
+```
+
+**Día 5:**
+```
+Tú: ¿Cómo implemento webhooks?
+Bot: Para tu proyecto de e-commerce con Next.js y
+     Stripe, los webhooks se implementan así...
+```
+
+No tuviste que recordarle el contexto. **Él lo sabe**.
+
+### Ver qué recuerda
+
+```
+¿Qué sabes sobre mí y mis proyectos?
+```
+
+Clawdbot te mostrará un resumen de lo que ha aprendido.
+
+### Borrar memoria
+
+Si quieres que olvide algo:
+
+```
+Olvida todo lo que sabes sobre el proyecto X
+```
+
+O para borrar todo:
+
+```bash
+clawdbot memory clear
+```
+
+## Crear alias
+
+Para comandos que usas mucho, puedes crear alias:
+
+```
+A partir de ahora, cuando diga "daily", quiero que:
+1. Me digas qué día es y el clima
+2. Me resumas mis emails importantes
+3. Me recuerdes mis tareas pendientes
+```
+
+Ahora solo escribes:
+
+```
+daily
+```
+
+Y ejecuta todo.
+
+## Encadenar acciones
+
+Clawdbot puede hacer múltiples cosas en secuencia:
+
+```
+Busca el precio actual de Bitcoin, conviértelo a euros,
+y si está por encima de 50,000€ mándame una alerta.
+```
+
+## Ejercicio práctico
+
+<Steps>
+### Configura tu primera automatización
+
+Escribe a Clawdbot:
+
+```
+Cada vez que te diga "resumen", quiero que:
+1. Busques las noticias más importantes del día sobre IA
+2. Me las resumas en 5 bullets
+3. Me des tu opinión sobre la más importante
+```
+
+### Pruébalo
+
+Ahora escribe simplemente:
+
+```
+resumen
+```
+
+### Personaliza
+
+Modifica el alias para que incluya también noticias de tu sector o intereses.
+
+</Steps>
+
+---
+
+<div className="mt-8 text-center">
+  <a href="/clawdbot/skills" className="inline-block px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition">
+    Siguiente: Skills y ClawdHub →
+  </a>
+</div>

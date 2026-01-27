@@ -1,0 +1,232 @@
+---
+title: "Conectar WhatsApp y Telegram"
+---
+
+import { Callout, Steps, Tabs } from 'nextra/components'
+
+# Lección 3: Conectar WhatsApp y Telegram
+
+Esta es la parte más potente de Clawdbot: poder hablarle desde tu app de mensajería favorita.
+
+## Plataformas soportadas
+
+| Plataforma | Dificultad | Método |
+|------------|------------|--------|
+| **Telegram** | Fácil | Bot API oficial |
+| **WhatsApp** | Media | WhatsApp Web bridge |
+| **Discord** | Fácil | Bot token |
+| **Slack** | Media | App OAuth |
+| **Signal** | Avanzada | signal-cli |
+| **iMessage** | Solo Mac | AppleScript |
+
+<Callout type="info">
+  Recomiendo empezar con **Telegram** por ser el más fácil. Luego añade WhatsApp.
+</Callout>
+
+## Conectar Telegram
+
+<Steps>
+### Crear un bot en Telegram
+
+1. Abre Telegram y busca `@BotFather`
+2. Envía `/newbot`
+3. Elige un nombre (ej: "Mi Asistente IA")
+4. Elige un username (ej: "mi_asistente_ia_bot")
+5. BotFather te da un **token** como: `7123456789:AAH...`
+
+### Configurar Clawdbot
+
+Ejecuta:
+
+```bash
+clawdbot channel add telegram
+```
+
+Pega el token cuando te lo pida.
+
+### Probar
+
+1. Busca tu bot en Telegram
+2. Envíale un mensaje: "Hola"
+3. ¡Debería responder!
+
+</Steps>
+
+## Conectar WhatsApp
+
+WhatsApp es más complejo porque no tiene API oficial pública. Clawdbot usa un "bridge" que conecta con WhatsApp Web.
+
+<Callout type="warning">
+  **Importante:** WhatsApp puede bloquear cuentas que usen automatización. Úsalo con moderación y en tu cuenta personal.
+</Callout>
+
+<Steps>
+### Instalar el bridge
+
+```bash
+clawdbot channel add whatsapp
+```
+
+Esto instala las dependencias necesarias (Baileys).
+
+### Escanear QR
+
+Al ejecutar, aparece un código QR en la terminal:
+
+```
+█████████████████████████
+█████████████████████████
+████ ▄▄▄▄▄ █▄▄█ ▄▄▄▄▄ ████
+████ █   █ █▄ █ █   █ ████
+████ █▄▄▄█ █ ▀█ █▄▄▄█ ████
+█████████████████████████
+```
+
+1. Abre WhatsApp en tu móvil
+2. Ve a **Ajustes > Dispositivos vinculados**
+3. Pulsa **Vincular dispositivo**
+4. Escanea el QR
+
+### Verificar conexión
+
+Una vez conectado, verás:
+
+```
+✅ WhatsApp connected as +34612345678
+```
+
+### Probar
+
+Envíate un mensaje a ti mismo o pide a alguien que te escriba.
+
+</Steps>
+
+## Conectar Discord
+
+<Steps>
+### Crear una aplicación
+
+1. Ve a [Discord Developer Portal](https://discord.com/developers/applications)
+2. Click en "New Application"
+3. Ponle un nombre
+4. Ve a **Bot** > **Add Bot**
+5. Copia el **Token**
+
+### Configurar permisos
+
+En **OAuth2 > URL Generator**:
+- Scopes: `bot`
+- Permissions: `Send Messages`, `Read Message History`
+
+Copia la URL generada y ábrela para añadir el bot a tu servidor.
+
+### Añadir a Clawdbot
+
+```bash
+clawdbot channel add discord
+```
+
+Pega el token.
+
+</Steps>
+
+## Conectar Slack
+
+<Steps>
+### Crear una Slack App
+
+1. Ve a [api.slack.com/apps](https://api.slack.com/apps)
+2. **Create New App** > **From scratch**
+3. En **OAuth & Permissions**, añade scopes:
+   - `chat:write`
+   - `im:history`
+   - `im:read`
+   - `im:write`
+
+### Instalar en workspace
+
+1. Click en **Install to Workspace**
+2. Copia el **Bot User OAuth Token** (empieza por `xoxb-`)
+
+### Configurar Clawdbot
+
+```bash
+clawdbot channel add slack
+```
+
+</Steps>
+
+## Configuración multi-canal
+
+Puedes tener varios canales activos. Ver tu configuración:
+
+```bash
+clawdbot channels list
+```
+
+Salida ejemplo:
+
+```
+Active channels:
+  ✅ telegram: @mi_asistente_bot
+  ✅ whatsapp: +34612345678
+  ❌ discord: (not configured)
+  ❌ slack: (not configured)
+```
+
+## Filtrar por canal
+
+Puedes configurar qué puede hacer Clawdbot en cada canal:
+
+```json
+// ~/.clawdbot/config.json
+{
+  "channels": {
+    "telegram": {
+      "allowedUsers": ["@mi_usuario"],
+      "skills": ["all"]
+    },
+    "whatsapp": {
+      "allowedUsers": ["+34612345678"],
+      "skills": ["search", "reminder"],
+      "maxTokensPerDay": 10000
+    }
+  }
+}
+```
+
+## Mantener activo
+
+Para que Clawdbot siga funcionando cuando cierras la terminal:
+
+### Opción 1: Screen/tmux
+
+```bash
+screen -S clawdbot
+clawdbot start
+# Ctrl+A, D para dejar en background
+```
+
+### Opción 2: Servicio del sistema (Mac)
+
+```bash
+clawdbot service install
+clawdbot service start
+```
+
+### Opción 3: PM2 (recomendado)
+
+```bash
+npm install -g pm2
+pm2 start clawdbot --name "clawdbot"
+pm2 save
+pm2 startup
+```
+
+---
+
+<div className="mt-8 text-center">
+  <a href="/clawdbot/primeras-automatizaciones" className="inline-block px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition">
+    Siguiente: Primeras automatizaciones →
+  </a>
+</div>

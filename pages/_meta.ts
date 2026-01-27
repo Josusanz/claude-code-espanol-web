@@ -20,6 +20,10 @@ export default {
         title: "Proyectos",
         href: "/proyectos"
       },
+      clawdbot: {
+        title: "🦞 Clawdbot (Nuevo)",
+        href: "/clawdbot"
+      },
       recursos: {
         title: "Recursos",
         href: "/recursos"
@@ -64,6 +68,10 @@ export default {
   },
   ralph: {
     title: "Ralph Loop",
+    type: "page"
+  },
+  clawdbot: {
+    title: "Clawdbot",
     type: "page"
   },
   "course-builder": {

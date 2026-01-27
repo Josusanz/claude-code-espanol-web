@@ -1,0 +1,112 @@
+---
+title: "¿Qué es Clawdbot?"
+---
+
+import { Callout, Steps } from 'nextra/components'
+
+# Lección 1: ¿Qué es Clawdbot?
+
+## El asistente de IA que vive en tu WhatsApp
+
+Clawdbot (ahora llamado **Moltbot**) es un asistente de IA personal que:
+
+1. **Corre en TU máquina** - No en la nube de otra empresa
+2. **Se conecta a tus apps** - WhatsApp, Telegram, Discord, Slack...
+3. **Recuerda todo** - Memoria persistente entre conversaciones
+4. **Actúa solo** - Puede hacer cosas mientras duermes
+
+<Callout type="info">
+  Piensa en Clawdbot como tener un asistente personal 24/7 al que le puedes escribir por WhatsApp y que tiene acceso a tu ordenador.
+</Callout>
+
+## La diferencia con ChatGPT o Claude
+
+| | ChatGPT/Claude Web | Clawdbot |
+|---|-------------------|----------|
+| **Dónde vive** | Servidores de OpenAI/Anthropic | Tu ordenador |
+| **Cómo accedes** | Web o app | WhatsApp, Telegram, cualquier chat |
+| **Memoria** | Se borra al cerrar | Recuerda TODO para siempre |
+| **Puede hacer** | Solo escribir texto | Navegar webs, leer archivos, ejecutar comandos |
+| **Proactividad** | Solo responde cuando preguntas | Puede actuar solo (alarmas, cron jobs) |
+| **Tus datos** | Van a sus servidores | Se quedan en tu máquina |
+| **Costo** | $20/mes | Gratis (solo pagas la API) |
+
+## Casos de uso reales
+
+### 1. Gestión de email
+> "Oye, revisa mi correo y resúmeme los importantes"
+
+Clawdbot accede a tu Gmail, lee los emails, y te manda un resumen por WhatsApp.
+
+### 2. Investigación automática
+> "Busca vuelos baratos a Lisboa para el finde que viene"
+
+Clawdbot navega Skyscanner, compara precios, y te manda las mejores opciones.
+
+### 3. Recordatorios inteligentes
+> "Recuérdame mañana a las 9 que tengo que llamar al médico"
+
+No es un simple recordatorio - Clawdbot puede incluso buscar el teléfono y prepararte lo que necesitas.
+
+### 4. Automatización de trabajo
+> "Cada lunes a las 8am, mándame un resumen de mis tareas pendientes en Notion"
+
+Clawdbot ejecuta tareas programadas (cron jobs) sin que tengas que hacer nada.
+
+### 5. Control de tu ordenador
+> "Abre Spotify y pon música para concentrarme"
+
+Clawdbot puede ejecutar comandos en tu sistema.
+
+## Arquitectura simplificada
+
+```
+┌─────────────────┐
+│   Tu WhatsApp   │ ◄── Tú escribes aquí
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐
+│    Clawdbot     │ ◄── Corre en tu Mac/PC
+│  (en tu máquina)│
+└────────┬────────┘
+         │
+    ┌────┴────┐
+    ▼         ▼
+┌───────┐ ┌───────┐
+│ Claude│ │ GPT   │ ◄── El "cerebro" (tú eliges)
+└───────┘ └───────┘
+```
+
+## ¿Es seguro?
+
+<Callout type="warning">
+  **Importante:** Clawdbot tiene acceso a tu sistema. Úsalo con cuidado.
+</Callout>
+
+**Ventajas de seguridad:**
+- Tus datos no salen de tu máquina
+- Código open-source (puedes auditar)
+- Sandbox opcional con Docker
+
+**Riesgos a considerar:**
+- Si alguien accede a tu Clawdbot, accede a tu sistema
+- Los prompts van a la API de Claude/GPT (pero no tu contexto local)
+- Configuración incorrecta puede exponer tu sistema
+
+## ¿Por qué todo el mundo habla de esto?
+
+Clawdbot se hizo viral porque:
+
+1. **Es el "iPhone moment" de los asistentes de IA** - Por primera vez puedes tener un asistente realmente útil
+2. **Open-source** - La comunidad está creando miles de "skills"
+3. **Funciona en WhatsApp** - No necesitas aprender nada nuevo
+4. **Es gratis** - Solo pagas el uso de la API (~$5-20/mes)
+
+---
+
+<div className="mt-8 text-center">
+  <a href="/clawdbot/instalacion" className="inline-block px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition">
+    Siguiente: Instalación →
+  </a>
+</div>

@@ -1,0 +1,282 @@
+---
+title: "Proyecto: Tu Asistente Personal"
+---
+
+import { Callout, Steps } from 'nextra/components'
+
+# Lección 7: Proyecto Final - Tu Asistente Personal Completo
+
+En esta lección final, vas a configurar un asistente personal completo que te ayude en tu día a día.
+
+## El objetivo
+
+Crear un asistente que:
+
+1. **Te despierte** con un briefing personalizado
+2. **Gestione tu día** respondiendo preguntas por WhatsApp
+3. **Te ayude a trabajar** con búsquedas, resúmenes y código
+4. **Te recuerde cosas** de forma inteligente
+5. **Te prepare para dormir** con un resumen del día
+
+## Paso 1: El Morning Briefing
+
+<Steps>
+### Configura el briefing
+
+Escribe a Clawdbot:
+
+```
+Crea un cron job llamado "buenos-dias" que se ejecute
+cada día a las 7:30am y me mande por Telegram:
+
+1. Saludo con mi nombre (me llamo [tu nombre])
+2. Qué día es y el clima en [tu ciudad]
+3. Mis 3 eventos más importantes del día (de Google Calendar)
+4. Mis 3 tareas pendientes más urgentes (de Notion)
+5. Una frase motivacional relacionada con productividad
+
+Formato: mensaje limpio con emojis, fácil de leer en el móvil.
+```
+
+### Prueba
+
+```
+Ejecuta buenos-dias ahora para probar
+```
+
+### Ajusta
+
+Si algo no te gusta, dile qué cambiar.
+
+</Steps>
+
+## Paso 2: Tu copiloto de trabajo
+
+Configura respuestas rápidas para tu trabajo diario:
+
+```
+A partir de ahora, cuando te pida algo sobre trabajo, ten en cuenta:
+
+- Trabajo como [tu profesión]
+- Mi stack es [tecnologías que usas]
+- Mis proyectos actuales son [proyectos]
+- Mi estilo de comunicación es [formal/informal]
+
+Recuerda esto siempre.
+```
+
+### Alias útiles
+
+```
+Crea estos alias:
+
+1. "standup" → Dame un resumen de lo que hice ayer
+   (commits de GitHub, tareas completadas) y sugiere
+   qué debería hacer hoy.
+
+2. "review [url]" → Lee el código en esa URL y dame
+   feedback sobre posibles mejoras.
+
+3. "email [destinatario] sobre [tema]" → Redacta un
+   email profesional y mándamelo para revisar.
+
+4. "investigar [tema]" → Busca información actualizada
+   sobre el tema y dame un resumen ejecutivo.
+```
+
+## Paso 3: Sistema de recordatorios
+
+```
+Configura un sistema de recordatorios inteligente:
+
+1. Cuando diga "recuérdame [algo] [cuando]", crea el recordatorio
+2. Guarda todos los recordatorios en tu memoria
+3. Cuando me avises, dame contexto útil si lo tienes
+4. Si no especifico hora, pregúntame
+
+Ejemplo: Si digo "recuérdame llamar al médico mañana"
+y sé que el médico es Dr. García con teléfono 912345678,
+incluye esa info en el recordatorio.
+```
+
+## Paso 4: Monitor de noticias
+
+```
+Crea un monitor de noticias personalizado:
+
+Temas que me interesan:
+- [tema 1, ej: Inteligencia Artificial]
+- [tema 2, ej: Startups]
+- [tema 3, ej: tu industria]
+
+Cada día a las 12pm:
+1. Busca las 5 noticias más relevantes de estos temas
+2. Resúmelas en 1-2 líneas cada una
+3. Dime cuál es la más importante y por qué
+4. Mándamelo por [WhatsApp/Telegram]
+```
+
+## Paso 5: El Evening Review
+
+```
+Crea un cron job llamado "buenas-noches" para las 10pm:
+
+1. Resumen de lo que hice hoy (basado en mis interacciones)
+2. Tareas que quedaron pendientes
+3. Eventos de mañana
+4. Si hay algo urgente para mañana, destácalo
+5. Sugerencia de algo que podría automatizar basado en
+   patrones que hayas notado en mi comportamiento
+
+Cierra con un mensaje positivo.
+```
+
+## Paso 6: Skill personalizado
+
+Crea un skill único para ti:
+
+<Steps>
+### Identifica algo repetitivo
+
+Piensa en algo que haces frecuentemente:
+- ¿Revisar algo cada día?
+- ¿Formatear información de cierta manera?
+- ¿Conectar dos servicios?
+
+### Pídelo a Clawdbot
+
+```
+Crea un skill que:
+[describe lo que quieres automatizar]
+
+Debería:
+1. [paso 1]
+2. [paso 2]
+3. [paso 3]
+```
+
+### Prueba y refina
+
+```
+Prueba el skill [nombre]
+```
+
+Si algo falla:
+
+```
+El skill [nombre] falla cuando [situación].
+Arréglalo para que [comportamiento esperado].
+```
+</Steps>
+
+## Configuración final recomendada
+
+### Tu config.json optimizado
+
+```json
+{
+  "model": {
+    "provider": "anthropic",
+    "name": "claude-sonnet-4-20250514"
+  },
+  "memory": {
+    "enabled": true,
+    "maxTokens": 200000,
+    "summarizeAfter": 50000
+  },
+  "channels": {
+    "telegram": {
+      "default": true,
+      "notifications": true
+    },
+    "whatsapp": {
+      "notifications": false
+    }
+  },
+  "safety": {
+    "maxMessagesPerHour": 50,
+    "requireConfirmation": ["send-email", "post-social", "delete"]
+  },
+  "proactive": {
+    "enabled": true,
+    "quietHours": {
+      "start": "23:00",
+      "end": "07:00"
+    }
+  }
+}
+```
+
+### Skills recomendados
+
+```bash
+clawdbot hub install gmail-official
+clawdbot hub install google-calendar
+clawdbot hub install notion-sync
+clawdbot hub install github-assistant
+clawdbot hub install web-clipper
+```
+
+## Checklist final
+
+Verifica que tienes configurado:
+
+- [ ] Morning briefing funcionando
+- [ ] Al menos 3 alias de trabajo
+- [ ] Sistema de recordatorios
+- [ ] Monitor de noticias
+- [ ] Evening review
+- [ ] Un skill personalizado
+- [ ] Quiet hours configuradas
+- [ ] Backup de tu configuración
+
+## Backup de tu configuración
+
+```bash
+cp -r ~/.clawdbot ~/clawdbot-backup-$(date +%Y%m%d)
+```
+
+## Mantener actualizado
+
+```bash
+clawdbot update
+```
+
+## Próximos pasos
+
+Ahora que tienes tu asistente configurado:
+
+1. **Úsalo durante una semana** - Descubre qué más podrías automatizar
+2. **Crea más skills** - Cada tarea repetitiva es una oportunidad
+3. **Comparte tus skills** - Si creas algo útil, súbelo a ClawdHub
+4. **Únete a la comunidad** - Discord de Clawdbot tiene mucha gente compartiendo ideas
+
+<Callout type="info">
+  El verdadero poder de Clawdbot aparece con el tiempo. Cuanto más lo uses, más aprende sobre ti y más útil se vuelve.
+</Callout>
+
+---
+
+## ¡Felicidades!
+
+Has completado el curso de Clawdbot. Ahora tienes un asistente de IA personal que:
+
+- Vive en tu WhatsApp/Telegram
+- Recuerda todo lo que le dices
+- Trabaja mientras duermes
+- Se adapta a ti con el tiempo
+
+<div className="mt-8 p-6 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-xl border border-purple-200 dark:border-purple-800">
+  <h3 className="text-xl font-bold mb-2">¿Te ha gustado el curso?</h3>
+  <p className="text-gray-600 dark:text-gray-300 mb-4">
+    Si este curso te ha sido útil, compártelo con otros desarrolladores hispanohablantes.
+  </p>
+  <div className="flex gap-4">
+    <a href="https://twitter.com/intent/tweet?text=Acabo%20de%20completar%20el%20curso%20de%20Clawdbot%20en%20español%20🦞%20https://aprende.software/clawdbot" target="_blank" className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition">
+      Compartir en Twitter
+    </a>
+    <a href="/premium" className="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition">
+      Ver más cursos
+    </a>
+  </div>
+</div>
