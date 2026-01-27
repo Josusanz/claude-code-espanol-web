@@ -301,6 +301,56 @@ export default function LandingPage() {
                   </div>
                 </div>
 
+                {/* Mega Menu: Clawdbot */}
+                <div className="relative group">
+                  <button className="flex items-center gap-1 text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors text-sm font-medium py-4">
+                    <span>🦞</span> Clawdbot
+                    <span className="material-symbols-outlined text-sm transition-transform group-hover:rotate-180">expand_more</span>
+                  </button>
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out transform group-hover:translate-y-0 translate-y-2">
+                    <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-2xl p-6 min-w-[320px]">
+                      <div className="flex items-center gap-3 mb-4 pb-4 border-b border-slate-200 dark:border-slate-700">
+                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center flex-shrink-0 shadow-lg">
+                          <span className="text-2xl">🦞</span>
+                        </div>
+                        <div>
+                          <div className="font-bold text-slate-900 dark:text-white">Curso Clawdbot</div>
+                          <div className="text-xs text-slate-500 dark:text-slate-400">Tu asistente de IA personal</div>
+                        </div>
+                      </div>
+                      <div className="space-y-1">
+                        <Link href="/clawdbot" className="flex items-center gap-3 p-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition-all group/item">
+                          <span className="w-6 h-6 flex items-center justify-center bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-full text-xs font-bold">→</span>
+                          <span className="text-sm text-slate-700 dark:text-slate-300 group-hover/item:text-red-600 dark:group-hover/item:text-red-400">Empezar curso</span>
+                        </Link>
+                        <Link href="/clawdbot/que-es" className="flex items-center gap-3 p-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition-all group/item">
+                          <span className="w-6 h-6 flex items-center justify-center bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 rounded-full text-xs font-bold">1</span>
+                          <span className="text-sm text-slate-700 dark:text-slate-300 group-hover/item:text-red-600 dark:group-hover/item:text-red-400">¿Qué es Clawdbot?</span>
+                          <span className="ml-auto text-xs text-green-600 dark:text-green-400 font-medium">Gratis</span>
+                        </Link>
+                        <Link href="/clawdbot/instalacion" className="flex items-center gap-3 p-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition-all group/item">
+                          <span className="w-6 h-6 flex items-center justify-center bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-full text-xs font-bold">2</span>
+                          <span className="text-sm text-slate-700 dark:text-slate-300 group-hover/item:text-red-600 dark:group-hover/item:text-red-400">Instalación</span>
+                        </Link>
+                        <Link href="/clawdbot/conectar-plataformas" className="flex items-center gap-3 p-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition-all group/item">
+                          <span className="w-6 h-6 flex items-center justify-center bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-full text-xs font-bold">3</span>
+                          <span className="text-sm text-slate-700 dark:text-slate-300 group-hover/item:text-red-600 dark:group-hover/item:text-red-400">Conectar WhatsApp</span>
+                        </Link>
+                        <Link href="/clawdbot/primeras-automatizaciones" className="flex items-center gap-3 p-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition-all group/item">
+                          <span className="w-6 h-6 flex items-center justify-center bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-full text-xs font-bold">4</span>
+                          <span className="text-sm text-slate-700 dark:text-slate-300 group-hover/item:text-red-600 dark:group-hover/item:text-red-400">Automatizaciones</span>
+                        </Link>
+                      </div>
+                      <div className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
+                        <Link href="/clawdbot" className="flex items-center justify-center gap-2 w-full py-2 bg-gradient-to-r from-red-500 to-orange-500 text-white rounded-lg text-sm font-semibold hover:from-red-600 hover:to-orange-600 transition-all">
+                          Ver todas las lecciones
+                          <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
                 {/* Mega Menu: Premium */}
                 <div className="relative group">
                   <button className="flex items-center gap-1 text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors text-sm font-medium py-4">
@@ -433,6 +483,26 @@ export default function LandingPage() {
                       </Link>
                       <Link href="/recursos" className="block text-slate-600 dark:text-slate-400 hover:text-indigo-600 hover:bg-slate-100 dark:hover:bg-slate-800 py-2 px-2 rounded-lg" onClick={() => setMobileMenuOpen(false)}>
                         Recursos
+                      </Link>
+                    </div>
+                  </div>
+
+                  {/* Clawdbot section */}
+                  <div className="pt-3">
+                    <span className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider px-2">🦞 Clawdbot</span>
+                    <div className="mt-1 space-y-1">
+                      <Link href="/clawdbot" className="block text-slate-600 dark:text-slate-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 py-2 px-2 rounded-lg" onClick={() => setMobileMenuOpen(false)}>
+                        Empezar curso
+                      </Link>
+                      <Link href="/clawdbot/que-es" className="flex items-center justify-between text-slate-600 dark:text-slate-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 py-2 px-2 rounded-lg" onClick={() => setMobileMenuOpen(false)}>
+                        1. ¿Qué es?
+                        <span className="text-xs text-green-600 dark:text-green-400 font-medium">Gratis</span>
+                      </Link>
+                      <Link href="/clawdbot/instalacion" className="block text-slate-600 dark:text-slate-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 py-2 px-2 rounded-lg" onClick={() => setMobileMenuOpen(false)}>
+                        2. Instalación
+                      </Link>
+                      <Link href="/clawdbot/conectar-plataformas" className="block text-slate-600 dark:text-slate-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 py-2 px-2 rounded-lg" onClick={() => setMobileMenuOpen(false)}>
+                        3. Conectar WhatsApp
                       </Link>
                     </div>
                   </div>
