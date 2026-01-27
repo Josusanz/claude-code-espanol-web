@@ -1,0 +1,93 @@
+---
+title: "Como usar Claude Code: Guia para principiantes"
+description: "Aprende a instalar y configurar Claude Code en tu terminal. Una guia paso a paso para empezar a programar con IA desde cero."
+date: "2026-01-26"
+author: "Josu Sanz"
+tags: ["claude-code", "tutorial", "principiantes"]
+image: "/images/blog/claude-code-principiantes.png"
+---
+
+# Como usar Claude Code: Guia para principiantes
+
+Si has llegado aqui es porque quieres aprender a usar **Claude Code**, la herramienta de Anthropic que te permite programar con IA directamente desde tu terminal.
+
+En esta guia te explico paso a paso como instalarlo y empezar a usarlo.
+
+## Que es Claude Code?
+
+Claude Code es un agente de programacion que vive en tu terminal. A diferencia de ChatGPT o el chat de Claude.ai, Claude Code puede:
+
+- **Leer y escribir archivos** en tu proyecto
+- **Ejecutar comandos** en tu terminal
+- **Navegar por tu codigo** para entender el contexto
+- **Hacer commits** y manejar git
+- **Correr tests** y arreglar errores
+
+Es como tener un programador senior sentado a tu lado, pero que nunca se cansa y trabaja a la velocidad de la luz.
+
+## Requisitos previos
+
+Antes de instalar Claude Code necesitas:
+
+1. **Node.js 18+** instalado en tu sistema
+2. **Una cuenta de Anthropic** con creditos de API
+3. **Terminal** (cualquier terminal funciona: Terminal de Mac, iTerm2, Windows Terminal, etc.)
+
+## Instalacion
+
+La instalacion es muy sencilla. Abre tu terminal y ejecuta:
+
+```bash
+npm install -g @anthropic-ai/claude-code
+```
+
+Esto instalara Claude Code de forma global en tu sistema.
+
+## Configuracion inicial
+
+Una vez instalado, necesitas configurar tu API key de Anthropic:
+
+```bash
+claude config set api_key tu-api-key-aqui
+```
+
+Puedes obtener tu API key en [console.anthropic.com](https://console.anthropic.com).
+
+## Tu primer proyecto con Claude Code
+
+Vamos a crear un proyecto simple para probar. Navega a una carpeta vacia y ejecuta:
+
+```bash
+claude
+```
+
+Esto abrira una sesion interactiva. Ahora puedes pedirle cosas como:
+
+- "Crea un servidor express basico"
+- "Anade un endpoint /health que devuelva OK"
+- "Escribe tests para el servidor"
+
+Claude Code leera tu proyecto, entendera el contexto, y hara los cambios necesarios.
+
+## Comandos utiles
+
+Aqui tienes algunos comandos que uso constantemente:
+
+| Comando | Descripcion |
+|---------|-------------|
+| `claude` | Inicia sesion interactiva |
+| `claude "tu pregunta"` | Pregunta directa sin sesion |
+| `claude commit` | Genera un commit con mensaje automatico |
+| `claude review` | Revisa tus cambios antes de commit |
+
+## Siguientes pasos
+
+Ahora que tienes Claude Code instalado, te recomiendo:
+
+1. **Explorar el curso gratuito** en [aprende.software/empezar](/empezar)
+2. **Practicar con proyectos pequenos** antes de usarlo en produccion
+3. **Unirte a la comunidad** para resolver dudas
+
+---
+
+*Tienes dudas? Escribeme en [X @anthropic](https://x.com) o deja un comentario abajo.*
