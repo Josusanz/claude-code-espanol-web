@@ -1,7 +1,7 @@
 export default {
-  // Dropdown: Curso Gratuito
-  curso: {
-    title: "Curso",
+  // Dropdown: Curso Claude Code
+  "claude-code": {
+    title: "Claude Code",
     type: "menu",
     items: {
       "modo-facil": {
@@ -20,13 +20,36 @@ export default {
         title: "Proyectos",
         href: "/proyectos"
       },
-      clawdbot: {
-        title: "🦞 Clawdbot (Nuevo)",
-        href: "/clawdbot"
-      },
       recursos: {
         title: "Recursos",
         href: "/recursos"
+      }
+    }
+  },
+  // Link directo a Clawdbot
+  "clawdbot-menu": {
+    title: "🦞 Clawdbot",
+    type: "menu",
+    items: {
+      index: {
+        title: "Empezar curso",
+        href: "/clawdbot"
+      },
+      "que-es": {
+        title: "1. ¿Qué es?",
+        href: "/clawdbot/que-es"
+      },
+      instalacion: {
+        title: "2. Instalación",
+        href: "/clawdbot/instalacion"
+      },
+      conectar: {
+        title: "3. Conectar apps",
+        href: "/clawdbot/conectar-plataformas"
+      },
+      automatizar: {
+        title: "4. Automatizar",
+        href: "/clawdbot/primeras-automatizaciones"
       }
     }
   },
@@ -41,7 +64,7 @@ export default {
       },
       "course-builder": {
         title: "Course Builder ($147)",
-        href: "/course-builder"
+        href: "/premium/course-builder"
       },
       hub: {
         title: "Ver todos →",
