@@ -85,14 +85,6 @@ export default function LessonComplete({ lessonId, nextLesson, moduleComplete }:
             <p className="text-green-600 dark:text-green-400 font-bold text-xl mb-3">
               🎉 ¡Has completado {moduleComplete.title}!
             </p>
-            {moduleComplete.certificateUrl && (
-              <Link
-                href={moduleComplete.certificateUrl}
-                className="inline-flex items-center gap-2 px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition font-semibold"
-              >
-                🏆 Obtener certificado
-              </Link>
-            )}
           </div>
         )}
       </div>

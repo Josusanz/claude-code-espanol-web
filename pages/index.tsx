@@ -88,7 +88,7 @@ export default function LandingPage() {
     <>
       <Head>
         <title>Aprende Claude Code en Español | Curso Gratis de IA para No Programadores</title>
-        <meta name="description" content="Curso gratuito de Claude Code en español. Aprende a usar la herramienta de IA más potente sin saber programar. 8 lecciones prácticas, proyectos reales y certificado." />
+        <meta name="description" content="Curso gratuito de Claude Code en español. Aprende a usar la herramienta de IA más potente sin saber programar. 8 lecciones prácticas y proyectos reales." />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="keywords" content="claude code, curso claude code, aprender ia, inteligencia artificial español, claude anthropic, programar con ia, curso gratis ia, no code, automatización ia" />
         <meta name="author" content="Josu Sanz" />

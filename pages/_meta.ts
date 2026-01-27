@@ -111,5 +111,8 @@ export default {
   },
   privacidad: {
     display: "hidden"
+  },
+  certificado: {
+    display: "hidden"
   }
 }
