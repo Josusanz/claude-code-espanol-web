@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { Resend } from 'resend'
 import { kv } from '@vercel/kv'
 import { generateToken, saveMagicLinkToken } from '../../../lib/auth'
+import { addUserToSequence } from '../../../lib/email/sequences'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
@@ -63,6 +64,9 @@ export default async function handler(
 
     // Guardar token en KV
     await saveMagicLinkToken(email, token)
+
+    // Añadir usuario a la secuencia de emails
+    await addUserToSequence(email)
 
     // URL del magic link
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.aprende.software'
