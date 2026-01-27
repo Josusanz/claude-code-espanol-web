@@ -1,5 +1,5 @@
 export default {
-  // Dropdown menus for navbar
+  // Dropdown menus for navbar only
   "claude-code": {
     title: "Claude Code",
     type: "menu",
@@ -82,36 +82,36 @@ export default {
       }
     }
   },
-  // Folders with sidebar - hidden from top navbar but visible in sidebar
+  // Actual page folders - type page shows sidebar
   "modo-facil": {
     title: "Modo Fácil",
-    display: "children"
+    type: "page"
   },
   empezar: {
     title: "Empezar",
-    display: "children"
+    type: "page"
   },
   fundamentos: {
     title: "Fundamentos",
-    display: "children"
+    type: "page"
   },
   proyectos: {
     title: "Proyectos",
-    display: "children"
+    type: "page"
   },
   clawdbot: {
     title: "🦞 Clawdbot",
-    display: "children"
+    type: "page"
   },
   ralph: {
     title: "Ralph Loop",
-    display: "children"
+    type: "page"
   },
   recursos: {
     title: "Recursos",
-    display: "children"
+    type: "page"
   },
-  // Truly hidden pages
+  // Hidden pages
   "course-builder": {
     display: "hidden"
   },
