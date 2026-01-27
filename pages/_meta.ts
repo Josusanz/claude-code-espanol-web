@@ -45,34 +45,38 @@ export default {
       }
     }
   },
-  // Hidden from navbar but accessible via sidebar
+  // Section pages - with navbar visible
   "modo-facil": {
     title: "Modo Fácil",
-    theme: { navbar: false }
+    type: "page"
   },
   empezar: {
     title: "Empezar",
-    theme: { navbar: false }
+    type: "page"
   },
   fundamentos: {
     title: "Fundamentos",
-    theme: { navbar: false }
+    type: "page"
   },
   proyectos: {
     title: "Proyectos",
-    theme: { navbar: false }
+    type: "page"
   },
   ralph: {
     title: "Ralph Loop",
-    theme: { navbar: false }
+    type: "page"
   },
   "course-builder": {
     title: "Course Builder",
-    theme: { navbar: false }
+    type: "page"
   },
   recursos: {
     title: "Recursos",
-    theme: { navbar: false }
+    type: "page"
+  },
+  blog: {
+    title: "Blog",
+    type: "page"
   },
   privacidad: {
     display: "hidden"

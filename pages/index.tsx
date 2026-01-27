@@ -222,56 +222,146 @@ export default function LandingPage() {
                   Inicio
                 </Link>
 
-                {/* Dropdown: Curso */}
+                {/* Mega Menu: Curso */}
                 <div className="relative group">
-                  <button className="flex items-center gap-1 text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors text-sm font-medium">
+                  <button className="flex items-center gap-1 text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors text-sm font-medium py-4">
                     Curso
-                    <span className="material-symbols-outlined text-sm">expand_more</span>
+                    <span className="material-symbols-outlined text-sm transition-transform group-hover:rotate-180">expand_more</span>
                   </button>
-                  <div className="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                    <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl shadow-xl py-2 min-w-[200px]">
-                      <Link href="/modo-facil" className="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 hover:text-indigo-600 dark:hover:text-indigo-400">
-                        Modo Fácil
-                      </Link>
-                      <Link href="/empezar/introduccion" className="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 hover:text-indigo-600 dark:hover:text-indigo-400">
-                        Empezar
-                      </Link>
-                      <Link href="/fundamentos/que-es" className="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 hover:text-indigo-600 dark:hover:text-indigo-400">
-                        Fundamentos
-                      </Link>
-                      <Link href="/proyectos" className="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 hover:text-indigo-600 dark:hover:text-indigo-400">
-                        Proyectos
-                      </Link>
-                      <Link href="/recursos" className="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 hover:text-indigo-600 dark:hover:text-indigo-400">
-                        Recursos
-                      </Link>
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out transform group-hover:translate-y-0 translate-y-2">
+                    <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-2xl p-6 min-w-[600px]">
+                      <div className="grid grid-cols-2 gap-6">
+                        {/* Columna izquierda - Aprendizaje */}
+                        <div>
+                          <h3 className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-3">Aprende</h3>
+                          <div className="space-y-1">
+                            <Link href="/modo-facil" className="flex items-start gap-3 p-3 rounded-xl hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 dark:hover:from-blue-900/20 dark:hover:to-indigo-900/20 transition-all group/item">
+                              <div className="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center flex-shrink-0">
+                                <span className="material-symbols-outlined text-blue-600 dark:text-blue-400">touch_app</span>
+                              </div>
+                              <div>
+                                <div className="font-semibold text-slate-900 dark:text-white group-hover/item:text-blue-600 dark:group-hover/item:text-blue-400">Modo Fácil</div>
+                                <div className="text-xs text-slate-500 dark:text-slate-400">Sin instalar nada, desde el navegador</div>
+                              </div>
+                            </Link>
+                            <Link href="/empezar/introduccion" className="flex items-start gap-3 p-3 rounded-xl hover:bg-gradient-to-r hover:from-green-50 hover:to-emerald-50 dark:hover:from-green-900/20 dark:hover:to-emerald-900/20 transition-all group/item">
+                              <div className="w-10 h-10 rounded-lg bg-green-100 dark:bg-green-900/40 flex items-center justify-center flex-shrink-0">
+                                <span className="material-symbols-outlined text-green-600 dark:text-green-400">rocket_launch</span>
+                              </div>
+                              <div>
+                                <div className="font-semibold text-slate-900 dark:text-white group-hover/item:text-green-600 dark:group-hover/item:text-green-400">Empezar</div>
+                                <div className="text-xs text-slate-500 dark:text-slate-400">Instalación y primeros pasos</div>
+                              </div>
+                            </Link>
+                            <Link href="/fundamentos/que-es" className="flex items-start gap-3 p-3 rounded-xl hover:bg-gradient-to-r hover:from-violet-50 hover:to-purple-50 dark:hover:from-violet-900/20 dark:hover:to-purple-900/20 transition-all group/item">
+                              <div className="w-10 h-10 rounded-lg bg-violet-100 dark:bg-violet-900/40 flex items-center justify-center flex-shrink-0">
+                                <span className="material-symbols-outlined text-violet-600 dark:text-violet-400">school</span>
+                              </div>
+                              <div>
+                                <div className="font-semibold text-slate-900 dark:text-white group-hover/item:text-violet-600 dark:group-hover/item:text-violet-400">Fundamentos</div>
+                                <div className="text-xs text-slate-500 dark:text-slate-400">Domina los conceptos clave</div>
+                              </div>
+                            </Link>
+                          </div>
+                        </div>
+                        {/* Columna derecha - Práctica */}
+                        <div>
+                          <h3 className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-3">Practica</h3>
+                          <div className="space-y-1">
+                            <Link href="/proyectos" className="flex items-start gap-3 p-3 rounded-xl hover:bg-gradient-to-r hover:from-amber-50 hover:to-orange-50 dark:hover:from-amber-900/20 dark:hover:to-orange-900/20 transition-all group/item">
+                              <div className="w-10 h-10 rounded-lg bg-amber-100 dark:bg-amber-900/40 flex items-center justify-center flex-shrink-0">
+                                <span className="material-symbols-outlined text-amber-600 dark:text-amber-400">folder_open</span>
+                              </div>
+                              <div>
+                                <div className="font-semibold text-slate-900 dark:text-white group-hover/item:text-amber-600 dark:group-hover/item:text-amber-400">Proyectos</div>
+                                <div className="text-xs text-slate-500 dark:text-slate-400">4 proyectos reales paso a paso</div>
+                              </div>
+                            </Link>
+                            <Link href="/recursos" className="flex items-start gap-3 p-3 rounded-xl hover:bg-gradient-to-r hover:from-slate-50 hover:to-gray-50 dark:hover:from-slate-800/50 dark:hover:to-gray-800/50 transition-all group/item">
+                              <div className="w-10 h-10 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center flex-shrink-0">
+                                <span className="material-symbols-outlined text-slate-600 dark:text-slate-400">description</span>
+                              </div>
+                              <div>
+                                <div className="font-semibold text-slate-900 dark:text-white group-hover/item:text-slate-700 dark:group-hover/item:text-slate-300">Recursos</div>
+                                <div className="text-xs text-slate-500 dark:text-slate-400">Cheatsheets, prompts y más</div>
+                              </div>
+                            </Link>
+                          </div>
+                          {/* CTA */}
+                          <div className="mt-4 p-4 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl">
+                            <div className="text-white font-semibold text-sm mb-1">100% Gratis</div>
+                            <div className="text-indigo-100 text-xs mb-3">4 módulos, 27 lecciones</div>
+                            <Link href="/empezar/introduccion" className="inline-flex items-center gap-1 text-xs font-semibold text-white bg-white/20 hover:bg-white/30 px-3 py-1.5 rounded-lg transition-colors">
+                              Empezar ahora <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                            </Link>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Dropdown: Premium */}
+                {/* Mega Menu: Premium */}
                 <div className="relative group">
-                  <button className="flex items-center gap-1 text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors text-sm font-medium">
+                  <button className="flex items-center gap-1 text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors text-sm font-medium py-4">
                     Premium
-                    <span className="material-symbols-outlined text-sm">expand_more</span>
+                    <span className="material-symbols-outlined text-sm transition-transform group-hover:rotate-180">expand_more</span>
                   </button>
-                  <div className="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                    <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl shadow-xl py-2 min-w-[220px]">
-                      <Link href="/ralph" className="block px-4 py-2 text-sm hover:bg-purple-50 dark:hover:bg-purple-900/30">
-                        <span className="text-slate-700 dark:text-slate-300">Ralph Loop</span>
-                        <span className="ml-2 text-xs text-purple-600 dark:text-purple-400 font-medium">$47</span>
-                      </Link>
-                      <Link href="/course-builder" className="block px-4 py-2 text-sm hover:bg-amber-50 dark:hover:bg-amber-900/30">
-                        <span className="text-slate-700 dark:text-slate-300">Course Builder</span>
-                        <span className="ml-2 text-xs text-amber-600 dark:text-amber-400 font-medium">$147</span>
-                      </Link>
-                      <div className="border-t border-slate-200 dark:border-slate-700 my-1"></div>
-                      <Link href="/premium" className="block px-4 py-2 text-sm text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 font-medium">
-                        Ver todos →
-                      </Link>
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out transform group-hover:translate-y-0 translate-y-2">
+                    <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-2xl p-6 min-w-[500px]">
+                      <h3 className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-4">Cursos Premium</h3>
+                      <div className="space-y-3">
+                        {/* Ralph Loop Card */}
+                        <Link href="/ralph" className="block p-4 rounded-xl border-2 border-transparent hover:border-purple-300 dark:hover:border-purple-700 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 transition-all group/item">
+                          <div className="flex items-center gap-4">
+                            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center flex-shrink-0 shadow-lg shadow-purple-500/25">
+                              <span className="material-symbols-outlined text-white text-2xl">loop</span>
+                            </div>
+                            <div className="flex-1">
+                              <div className="flex items-center gap-2">
+                                <span className="font-bold text-slate-900 dark:text-white">Ralph Loop</span>
+                                <span className="text-xs font-bold text-purple-600 dark:text-purple-400 bg-purple-100 dark:bg-purple-900/50 px-2 py-0.5 rounded-full">$47</span>
+                              </div>
+                              <div className="text-sm text-slate-600 dark:text-slate-400">Claude en piloto automático</div>
+                            </div>
+                            <span className="material-symbols-outlined text-purple-400 group-hover/item:translate-x-1 transition-transform">arrow_forward</span>
+                          </div>
+                        </Link>
+                        {/* Course Builder Card */}
+                        <Link href="/course-builder" className="block p-4 rounded-xl border-2 border-transparent hover:border-amber-300 dark:hover:border-amber-700 bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 transition-all group/item">
+                          <div className="flex items-center gap-4">
+                            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center flex-shrink-0 shadow-lg shadow-amber-500/25">
+                              <span className="material-symbols-outlined text-white text-2xl">school</span>
+                            </div>
+                            <div className="flex-1">
+                              <div className="flex items-center gap-2">
+                                <span className="font-bold text-slate-900 dark:text-white">Course Builder</span>
+                                <span className="text-xs font-bold text-amber-600 dark:text-amber-400 bg-amber-100 dark:bg-amber-900/50 px-2 py-0.5 rounded-full">$147</span>
+                              </div>
+                              <div className="text-sm text-slate-600 dark:text-slate-400">Crea y vende cursos con IA</div>
+                            </div>
+                            <span className="material-symbols-outlined text-amber-400 group-hover/item:translate-x-1 transition-transform">arrow_forward</span>
+                          </div>
+                        </Link>
+                      </div>
+                      {/* Footer */}
+                      <div className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700 flex items-center justify-between">
+                        <Link href="/premium" className="text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 flex items-center gap-1">
+                          Ver todos los cursos <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                        </Link>
+                        <a href="https://yenze.lemonsqueezy.com/affiliates" target="_blank" rel="noopener noreferrer" className="text-xs text-slate-500 dark:text-slate-400 hover:text-green-600 dark:hover:text-green-400 flex items-center gap-1">
+                          <span className="material-symbols-outlined text-sm">handshake</span>
+                          Afiliados 20%
+                        </a>
+                      </div>
                     </div>
                   </div>
                 </div>
+
+                {/* Blog link */}
+                <Link href="/blog" className="text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors text-sm font-medium">
+                  Blog
+                </Link>
               </div>
 
               <div className="flex items-center gap-3">
@@ -361,6 +451,15 @@ export default function LandingPage() {
                       </Link>
                     </div>
                   </div>
+
+                  {/* Blog link */}
+                  <div className="pt-3">
+                    <Link href="/blog" className="flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-indigo-600 hover:bg-slate-100 dark:hover:bg-slate-800 py-2 px-2 rounded-lg" onClick={() => setMobileMenuOpen(false)}>
+                      <span className="material-symbols-outlined text-lg">rss_feed</span>
+                      Blog
+                    </Link>
+                  </div>
+
                   <div className="pt-3 border-t border-slate-200 dark:border-slate-700">
                     <Link
                       href="/premium"
@@ -570,11 +669,11 @@ export default function LandingPage() {
                       <span className="material-symbols-outlined text-white text-3xl">play_arrow</span>
                     </div>
                   </div>
-                  <span className="absolute bottom-2 right-2 bg-black/60 text-white text-xs px-2 py-1 rounded">Premium</span>
+                  <span className="absolute bottom-2 right-2 bg-purple-600 text-white text-xs font-semibold px-2 py-1 rounded">$47</span>
                 </div>
                 <div className="p-4">
-                  <h3 className="font-bold text-slate-900 dark:text-white mb-1">Ralph Loop Demo</h3>
-                  <p className="text-sm text-slate-600 dark:text-slate-400">Claude trabajando mientras duermes</p>
+                  <h3 className="font-bold text-slate-900 dark:text-white mb-1">Ralph Loop</h3>
+                  <p className="text-sm text-slate-600 dark:text-slate-400">Claude en piloto automático 24/7</p>
                 </div>
               </Link>
             </div>
