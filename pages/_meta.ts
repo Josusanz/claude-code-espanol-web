@@ -74,10 +74,6 @@ export default {
     title: "Recursos",
     type: "page"
   },
-  blog: {
-    title: "Blog",
-    type: "page"
-  },
   privacidad: {
     display: "hidden"
   }
