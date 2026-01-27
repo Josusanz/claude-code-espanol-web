@@ -30,6 +30,9 @@ export default function ContentAdminPage() {
   const [feedItems, setFeedItems] = useState<FeedItem[]>([])
   const [isLoadingFeed, setIsLoadingFeed] = useState(true)
   const [selectedSource, setSelectedSource] = useState<string>('all')
+  const [weeklyPosts, setWeeklyPosts] = useState<any[]>([])
+  const [isLoadingWeekly, setIsLoadingWeekly] = useState(false)
+  const [isSchedulingWeek, setIsSchedulingWeek] = useState(false)
 
   // Fetch RSS feed on mount
   useEffect(() => {
@@ -60,6 +63,46 @@ export default function ContentAdminPage() {
   const filteredFeedItems = selectedSource === 'all'
     ? feedItems
     : feedItems.filter(item => item.source === selectedSource)
+
+  const handlePreviewWeek = async () => {
+    setIsLoadingWeekly(true)
+    try {
+      const res = await fetch('/api/admin/schedule-week', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ dryRun: true }),
+      })
+      const data = await res.json()
+      setWeeklyPosts(data.results || [])
+    } catch (error) {
+      setMessage({ type: 'error', text: 'Error cargando posts semanales' })
+    } finally {
+      setIsLoadingWeekly(false)
+    }
+  }
+
+  const handleScheduleWeek = async () => {
+    if (!confirm('¿Programar los 28 posts de la semana?')) return
+    setIsSchedulingWeek(true)
+    try {
+      const res = await fetch('/api/admin/schedule-week', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ dryRun: false }),
+      })
+      const data = await res.json()
+      if (res.ok) {
+        setMessage({ type: 'success', text: `¡${data.totalPosts} posts programados!` })
+        setWeeklyPosts([])
+      } else {
+        setMessage({ type: 'error', text: data.error })
+      }
+    } catch (error) {
+      setMessage({ type: 'error', text: 'Error programando posts' })
+    } finally {
+      setIsSchedulingWeek(false)
+    }
+  }
 
   const handleGenerate = async () => {
     if (!originalContent.trim()) return
@@ -233,6 +276,48 @@ export default function ContentAdminPage() {
               <li>• <strong>Tips:</strong> Un consejo = un tweet. Simple y accionable.</li>
               <li>• <strong>Demos:</strong> Muestra antes/después. Los resultados venden.</li>
             </ul>
+          </div>
+
+          {/* Programar semana completa */}
+          <div className="mt-6 p-6 bg-gradient-to-r from-indigo-900/50 to-purple-900/50 rounded-xl border border-indigo-700">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="font-semibold">📅 Programar Semana Completa</h3>
+              <div className="flex gap-2">
+                <button
+                  onClick={handlePreviewWeek}
+                  disabled={isLoadingWeekly}
+                  className="px-4 py-2 bg-slate-700 hover:bg-slate-600 disabled:opacity-50 rounded-lg text-sm font-medium transition"
+                >
+                  {isLoadingWeekly ? 'Cargando...' : 'Ver preview'}
+                </button>
+                <button
+                  onClick={handleScheduleWeek}
+                  disabled={isSchedulingWeek || weeklyPosts.length === 0}
+                  className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 rounded-lg text-sm font-medium transition"
+                >
+                  {isSchedulingWeek ? 'Programando...' : '🚀 Programar 28 posts'}
+                </button>
+              </div>
+            </div>
+            <p className="text-sm text-slate-400 mb-4">
+              28 posts variados (4/día): tips de productividad, preguntas de engagement, hot takes, y solo ~4-5 sobre Claude Code.
+            </p>
+
+            {weeklyPosts.length > 0 && (
+              <div className="space-y-2 max-h-64 overflow-y-auto">
+                {weeklyPosts.map((post, index) => (
+                  <div
+                    key={index}
+                    className="p-3 bg-slate-800/50 rounded-lg text-sm"
+                  >
+                    <div className="flex items-start gap-2">
+                      <span className="text-xs text-slate-500 shrink-0">{post.time}</span>
+                      <p className="text-slate-300 whitespace-pre-wrap">{post.content}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Cuentas a seguir */}
