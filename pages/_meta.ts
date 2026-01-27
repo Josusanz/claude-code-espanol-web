@@ -1,5 +1,5 @@
 export default {
-  // Dropdown: Curso Claude Code
+  // Dropdown menus for navbar
   "claude-code": {
     title: "Claude Code",
     type: "menu",
@@ -26,7 +26,6 @@ export default {
       }
     }
   },
-  // Dropdown: Clawdbot
   "clawdbot-menu": {
     title: "🦞 Clawdbot",
     type: "menu",
@@ -65,7 +64,6 @@ export default {
       }
     }
   },
-  // Dropdown: Premium
   premium: {
     title: "Premium",
     type: "menu",
@@ -84,35 +82,46 @@ export default {
       }
     }
   },
-  // Hidden pages - accessible via links but not shown in navbar
+  // Folders with sidebar - hidden from top navbar but visible in sidebar
   "modo-facil": {
-    display: "hidden"
+    title: "Modo Fácil",
+    display: "children"
   },
   empezar: {
-    display: "hidden"
+    title: "Empezar",
+    display: "children"
   },
   fundamentos: {
-    display: "hidden"
+    title: "Fundamentos",
+    display: "children"
   },
   proyectos: {
-    display: "hidden"
-  },
-  ralph: {
-    display: "hidden"
+    title: "Proyectos",
+    display: "children"
   },
   clawdbot: {
-    display: "hidden"
+    title: "🦞 Clawdbot",
+    display: "children"
   },
-  "course-builder": {
-    display: "hidden"
+  ralph: {
+    title: "Ralph Loop",
+    display: "children"
   },
   recursos: {
+    title: "Recursos",
+    display: "children"
+  },
+  // Truly hidden pages
+  "course-builder": {
     display: "hidden"
   },
   privacidad: {
     display: "hidden"
   },
   certificado: {
+    display: "hidden"
+  },
+  blog: {
     display: "hidden"
   }
 }
