@@ -459,11 +459,14 @@ export default function CursoNegocioLanding() {
           <header className="sticky top-0 z-50 backdrop-blur-xl bg-white/80 dark:bg-black/80 border-b border-slate-200/50 dark:border-white/5">
             <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="flex justify-between items-center h-16 lg:h-20">
-                <Link href="/" className="flex items-center gap-2.5">
-                  <div className="w-9 h-9 bg-[#895af6] rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/20">
-                    <span className="material-symbols-outlined text-white text-xl">bolt</span>
+                <Link href="/" className="flex items-center gap-2">
+                  <div className="w-8 h-8 sm:w-9 sm:h-9 bg-gradient-to-br from-[#895af6] to-[#3b82f6] rounded-lg sm:rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/20">
+                    <span className="text-white font-black text-sm sm:text-base">AS</span>
                   </div>
-                  <span className="text-lg font-bold tracking-tight">aprende.software</span>
+                  <span className="text-base sm:text-lg font-bold tracking-tight">
+                    <span className="hidden min-[400px]:inline">aprende</span>
+                    <span className="text-[#895af6] hidden min-[400px]:inline">.software</span>
+                  </span>
                 </Link>
 
                 {/* Desktop nav */}
@@ -473,30 +476,30 @@ export default function CursoNegocioLanding() {
                   <a href="#aplicar" className="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-[#895af6] dark:hover:text-[#895af6] transition-colors">Aplicar</a>
                 </div>
 
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2 sm:gap-3">
                   <button
                     onClick={toggleDarkMode}
-                    className="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 transition-colors"
+                    className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-lg sm:rounded-xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 transition-colors"
                     aria-label="Cambiar tema"
                   >
-                    <span className="material-symbols-outlined text-xl">
+                    <span className="material-symbols-outlined text-lg sm:text-xl">
                       {isDark ? 'light_mode' : 'dark_mode'}
                     </span>
                   </button>
                   <a
                     href="#aplicar"
-                    className="btn-shine bg-[#895af6] hover:bg-[#7c4ddb] text-white px-5 py-2.5 rounded-xl text-sm font-bold transition-all shadow-lg shadow-purple-500/25"
+                    className="hidden sm:flex btn-shine bg-[#895af6] hover:bg-[#7c4ddb] text-white px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg sm:rounded-xl text-xs sm:text-sm font-bold transition-all shadow-lg shadow-purple-500/25 items-center gap-1"
                   >
-                    Aplicar ahora
+                    Aplicar
                   </a>
 
                   {/* Mobile menu button */}
                   <button
                     onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                    className="md:hidden w-10 h-10 flex items-center justify-center"
+                    className="md:hidden w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center"
                     aria-label="Menú"
                   >
-                    <span className="material-symbols-outlined text-2xl">
+                    <span className="material-symbols-outlined text-xl sm:text-2xl">
                       {mobileMenuOpen ? 'close' : 'menu'}
                     </span>
                   </button>
@@ -526,7 +529,7 @@ export default function CursoNegocioLanding() {
                     <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#895af6]"></span>
                   </span>
                   <span className="text-[#895af6] text-xs font-bold uppercase tracking-widest">
-                    Próxima edición: Febrero 2025
+                    Próxima edición: Marzo 2026
                   </span>
                 </div>
 
@@ -926,7 +929,7 @@ export default function CursoNegocioLanding() {
                   ¿Listo para crear tu negocio digital?
                 </h2>
                 <p className="text-lg text-slate-600 dark:text-slate-400 mb-10">
-                  La próxima edición empieza en febrero. Plazas limitadas.
+                  La próxima edición empieza en marzo 2026. Plazas limitadas.
                 </p>
                 <a
                   href="#precio"
@@ -944,10 +947,10 @@ export default function CursoNegocioLanding() {
             <div className="max-w-7xl mx-auto">
               <div className="flex flex-col md:flex-row justify-between items-center gap-8">
                 <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 bg-[#895af6]/10 rounded-lg flex items-center justify-center">
-                    <span className="material-symbols-outlined text-[#895af6]">bolt</span>
+                  <div className="w-7 h-7 bg-gradient-to-br from-[#895af6] to-[#3b82f6] rounded-lg flex items-center justify-center">
+                    <span className="text-white font-black text-xs">AS</span>
                   </div>
-                  <span className="font-bold">aprende.software</span>
+                  <span className="font-bold">aprende<span className="text-[#895af6]">.software</span></span>
                 </div>
 
                 <div className="flex gap-8 text-sm text-slate-500 dark:text-slate-400">
