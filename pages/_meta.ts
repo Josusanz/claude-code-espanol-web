@@ -1,4 +1,11 @@
 export default {
+  // Landing pages independientes
+  "curso-negocio": {
+    title: "🚀 Curso Negocio IA",
+    href: "/curso-negocio",
+    type: "page",
+    display: "hidden" // Landing page independiente, acceso directo
+  },
   // Dropdown menus for navbar only
   "claude-code": {
     title: "Claude Code",
@@ -23,6 +30,10 @@ export default {
       recursos: {
         title: "Recursos",
         href: "/recursos"
+      },
+      mcp: {
+        title: "MCP",
+        href: "/mcp"
       }
     }
   },
@@ -109,6 +120,10 @@ export default {
   },
   recursos: {
     title: "Recursos",
+    type: "page"
+  },
+  mcp: {
+    title: "MCP",
     type: "page"
   },
   // Hidden pages

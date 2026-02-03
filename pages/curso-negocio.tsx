@@ -1,0 +1,958 @@
+import React, { useEffect, useState, useRef } from 'react'
+import Head from 'next/head'
+import Link from 'next/link'
+
+export default function CursoNegocioLanding() {
+  const [isDark, setIsDark] = useState(true)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [activeAccordion, setActiveAccordion] = useState<number | null>(0)
+  const [visibleSections, setVisibleSections] = useState<Set<string>>(new Set())
+  const observerRef = useRef<IntersectionObserver | null>(null)
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme')
+    if (savedTheme) {
+      const isDarkMode = savedTheme === 'dark'
+      setIsDark(isDarkMode)
+      document.documentElement.classList.toggle('dark', isDarkMode)
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      setIsDark(true)
+      document.documentElement.classList.add('dark')
+    } else {
+      setIsDark(true)
+      document.documentElement.classList.add('dark')
+    }
+  }, [])
+
+  // Intersection Observer for scroll animations
+  useEffect(() => {
+    observerRef.current = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setVisibleSections((prev) => new Set([...prev, entry.target.id]))
+          }
+        })
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+    )
+
+    const sections = document.querySelectorAll('[data-animate]')
+    sections.forEach((section) => observerRef.current?.observe(section))
+
+    return () => observerRef.current?.disconnect()
+  }, [])
+
+  const toggleDarkMode = () => {
+    const newState = !isDark
+    setIsDark(newState)
+    document.documentElement.classList.toggle('dark', newState)
+    localStorage.setItem('theme', newState ? 'dark' : 'light')
+  }
+
+  const curriculum = [
+    {
+      week: 'Semana 1-2',
+      title: 'Fundamentos de IA para Negocios',
+      lessons: [
+        'Introducción al ecosistema de herramientas IA',
+        'Prompt Engineering avanzado',
+        'Cómo pensar como un "orquestador de IA"',
+        'Setup de tu entorno de trabajo'
+      ]
+    },
+    {
+      week: 'Semana 3-4',
+      title: 'Construcción Sin Código',
+      lessons: [
+        'Desarrollo con Cursor y Replit',
+        'Automatización con Make y Zapier',
+        'Bases de datos sin SQL (Airtable, Notion)',
+        'APIs y webhooks simplificados'
+      ]
+    },
+    {
+      week: 'Semana 5-6',
+      title: 'Tu Primer Producto Digital',
+      lessons: [
+        'Validación de ideas en 48 horas',
+        'MVP funcional con IA en 1 semana',
+        'Landing pages que convierten',
+        'Sistemas de pago integrados'
+      ]
+    },
+    {
+      week: 'Semana 7-8',
+      title: 'Lanzamiento y Escalado',
+      lessons: [
+        'Marketing con contenido generado por IA',
+        'Automatización de operaciones',
+        'Atención al cliente con chatbots',
+        'Métricas y optimización continua'
+      ]
+    }
+  ]
+
+  const testimonials = [
+    {
+      name: 'María González',
+      role: 'Fundadora de SaaS',
+      avatar: 'MG',
+      text: 'En 3 meses pasé de no saber programar a tener mi propia plataforma generando ingresos recurrentes.',
+      revenue: '€4,200/mes'
+    },
+    {
+      name: 'Carlos Ruiz',
+      role: 'Consultor Digital',
+      avatar: 'CR',
+      text: 'El curso me dio las herramientas para automatizar mi negocio de consultoría y triplicar mis clientes.',
+      revenue: '€8,500/mes'
+    },
+    {
+      name: 'Ana Martínez',
+      role: 'Creadora de Cursos',
+      avatar: 'AM',
+      text: 'Ahora creo cursos completos en días, no meses. Mi productividad se multiplicó por 10.',
+      revenue: '€12,000/mes'
+    }
+  ]
+
+  return (
+    <>
+      <Head>
+        <title>Crea tu Negocio Digital con IA | Curso Presencial Online</title>
+        <meta name="description" content="Aprende a crear tu negocio digital sin escribir código. Curso presencial online de 8 semanas. Domina las herramientas de IA para construir, lanzar y escalar." />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="keywords" content="curso ia negocio, crear negocio con ia, no code, automatización, emprendimiento digital, curso online presencial" />
+
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Crea tu Negocio Digital con IA | Curso Presencial Online" />
+        <meta property="og:description" content="Aprende a crear tu negocio digital sin escribir código. 8 semanas de formación intensiva." />
+        <meta property="og:site_name" content="aprende.software" />
+        <meta property="og:locale" content="es_ES" />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Crea tu Negocio Digital con IA" />
+        <meta name="twitter:description" content="Curso presencial online de 8 semanas para crear tu negocio digital con IA." />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
+      </Head>
+
+      <style jsx global>{`
+        .landing-curso {
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+          --primary: #895af6;
+          --primary-light: #a78bfa;
+          --accent-blue: #3b82f6;
+          --bg-light: #fafafa;
+          --bg-dark: #050505;
+        }
+
+        .landing-curso .font-serif-accent {
+          font-family: 'Instrument Serif', Georgia, serif;
+        }
+
+        /* Noise texture overlay */
+        .noise-bg {
+          position: fixed;
+          inset: 0;
+          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+          opacity: 0.03;
+          pointer-events: none;
+          z-index: 1;
+        }
+
+        .dark .noise-bg {
+          opacity: 0.05;
+        }
+
+        /* Mesh gradient */
+        .mesh-gradient {
+          position: fixed;
+          inset: 0;
+          background:
+            radial-gradient(at 0% 0%, rgba(137, 90, 246, 0.08) 0, transparent 50%),
+            radial-gradient(at 100% 100%, rgba(59, 130, 246, 0.08) 0, transparent 50%);
+          pointer-events: none;
+          z-index: 0;
+        }
+
+        .dark .mesh-gradient {
+          background:
+            radial-gradient(at 0% 0%, rgba(137, 90, 246, 0.15) 0, transparent 50%),
+            radial-gradient(at 100% 100%, rgba(59, 130, 246, 0.15) 0, transparent 50%);
+        }
+
+        /* Grid lines */
+        .grid-lines {
+          position: fixed;
+          inset: 0;
+          background-image:
+            linear-gradient(to right, rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+          background-size: 60px 60px;
+          pointer-events: none;
+          z-index: 0;
+        }
+
+        .dark .grid-lines {
+          background-image:
+            linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+
+        /* Bento card styles */
+        .bento-card {
+          background: rgba(255, 255, 255, 0.7);
+          border: 1px solid rgba(0, 0, 0, 0.08);
+          backdrop-filter: blur(20px);
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .dark .bento-card {
+          background: rgba(255, 255, 255, 0.03);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .bento-card:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 25px 50px -12px rgba(137, 90, 246, 0.15);
+          border-color: rgba(137, 90, 246, 0.3);
+        }
+
+        .dark .bento-card:hover {
+          box-shadow: 0 25px 50px -12px rgba(137, 90, 246, 0.25);
+        }
+
+        /* Animated gradient border for pricing */
+        .pricing-card {
+          position: relative;
+          background: white;
+          border-radius: 1.5rem;
+          overflow: hidden;
+        }
+
+        .dark .pricing-card {
+          background: #0a0a0a;
+        }
+
+        .pricing-card::before {
+          content: "";
+          position: absolute;
+          inset: -2px;
+          background: linear-gradient(45deg, #895af6, #3b82f6, #895af6, #3b82f6);
+          background-size: 300% 300%;
+          animation: gradientShift 4s ease infinite;
+          z-index: -1;
+          border-radius: 1.6rem;
+          opacity: 0.6;
+        }
+
+        @keyframes gradientShift {
+          0%, 100% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+        }
+
+        /* Glow effect */
+        .glow-primary {
+          box-shadow: 0 0 60px rgba(137, 90, 246, 0.3);
+        }
+
+        .dark .glow-primary {
+          box-shadow: 0 0 80px rgba(137, 90, 246, 0.4);
+        }
+
+        /* Text gradient */
+        .text-gradient {
+          background: linear-gradient(135deg, #895af6 0%, #3b82f6 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+
+        /* Pulse animation for live indicator */
+        @keyframes pulse-ring {
+          0% { transform: scale(1); opacity: 1; }
+          100% { transform: scale(2); opacity: 0; }
+        }
+
+        .pulse-ring::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          border-radius: 9999px;
+          background: #895af6;
+          animation: pulse-ring 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        /* Smooth scroll */
+        html {
+          scroll-behavior: smooth;
+        }
+
+        /* Counter animation */
+        @keyframes countUp {
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-count {
+          animation: countUp 0.6s ease-out forwards;
+        }
+
+        /* Accordion transition */
+        .accordion-content {
+          max-height: 0;
+          overflow: hidden;
+          transition: max-height 0.3s ease-out;
+        }
+
+        .accordion-content.open {
+          max-height: 500px;
+        }
+
+        /* Button shine effect */
+        .btn-shine {
+          position: relative;
+          overflow: hidden;
+        }
+
+        .btn-shine::after {
+          content: '';
+          position: absolute;
+          top: -50%;
+          left: -50%;
+          width: 200%;
+          height: 200%;
+          background: linear-gradient(
+            to right,
+            transparent 0%,
+            rgba(255, 255, 255, 0.3) 50%,
+            transparent 100%
+          );
+          transform: rotate(45deg) translateX(-100%);
+          transition: transform 0.6s;
+        }
+
+        .btn-shine:hover::after {
+          transform: rotate(45deg) translateX(100%);
+        }
+
+        /* Scroll animations */
+        .animate-on-scroll {
+          opacity: 0;
+          transform: translateY(30px);
+          transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .animate-on-scroll.visible {
+          opacity: 1;
+          transform: translateY(0);
+        }
+
+        .animate-on-scroll.delay-1 { transition-delay: 0.1s; }
+        .animate-on-scroll.delay-2 { transition-delay: 0.2s; }
+        .animate-on-scroll.delay-3 { transition-delay: 0.3s; }
+        .animate-on-scroll.delay-4 { transition-delay: 0.4s; }
+
+        /* Floating animation for hero elements */
+        @keyframes float {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-10px); }
+        }
+
+        .animate-float {
+          animation: float 6s ease-in-out infinite;
+        }
+
+        /* Stagger animation for cards */
+        @keyframes staggerIn {
+          from {
+            opacity: 0;
+            transform: translateY(20px) scale(0.98);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+
+        .stagger-in {
+          animation: staggerIn 0.5s ease-out forwards;
+          opacity: 0;
+        }
+
+        .stagger-in:nth-child(1) { animation-delay: 0s; }
+        .stagger-in:nth-child(2) { animation-delay: 0.1s; }
+        .stagger-in:nth-child(3) { animation-delay: 0.2s; }
+        .stagger-in:nth-child(4) { animation-delay: 0.3s; }
+
+        /* Hero text reveal */
+        @keyframes revealText {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+            filter: blur(10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0);
+          }
+        }
+
+        .reveal-text {
+          animation: revealText 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .reveal-text.delay-1 { animation-delay: 0.1s; opacity: 0; }
+        .reveal-text.delay-2 { animation-delay: 0.2s; opacity: 0; }
+        .reveal-text.delay-3 { animation-delay: 0.3s; opacity: 0; }
+        .reveal-text.delay-4 { animation-delay: 0.4s; opacity: 0; }
+        .reveal-text.delay-5 { animation-delay: 0.5s; opacity: 0; }
+
+        /* Gradient border animation */
+        @keyframes borderGlow {
+          0%, 100% { opacity: 0.5; }
+          50% { opacity: 1; }
+        }
+
+        .border-glow::before {
+          animation: borderGlow 2s ease-in-out infinite;
+        }
+
+        /* Card hover lift */
+        .hover-lift {
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .hover-lift:hover {
+          transform: translateY(-8px);
+        }
+
+        /* Number counter animation */
+        @keyframes numberPop {
+          0% { transform: scale(0.5); opacity: 0; }
+          50% { transform: scale(1.1); }
+          100% { transform: scale(1); opacity: 1; }
+        }
+
+        .number-pop {
+          animation: numberPop 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        /* Testimonial card special effect */
+        .testimonial-card {
+          position: relative;
+        }
+
+        .testimonial-card::after {
+          content: '"';
+          position: absolute;
+          top: 20px;
+          right: 30px;
+          font-size: 120px;
+          font-family: 'Instrument Serif', Georgia, serif;
+          color: currentColor;
+          opacity: 0.05;
+          line-height: 1;
+          pointer-events: none;
+        }
+      `}</style>
+
+      <div className={`landing-curso min-h-screen transition-colors duration-300 ${isDark ? 'dark bg-[#050505] text-white' : 'bg-[#fafafa] text-slate-900'}`}>
+        {/* Background layers */}
+        <div className="noise-bg"></div>
+        <div className="mesh-gradient"></div>
+        <div className="grid-lines"></div>
+
+        {/* Content */}
+        <div className="relative z-10">
+          {/* Navigation */}
+          <header className="sticky top-0 z-50 backdrop-blur-xl bg-white/80 dark:bg-black/80 border-b border-slate-200/50 dark:border-white/5">
+            <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="flex justify-between items-center h-16 lg:h-20">
+                <Link href="/" className="flex items-center gap-2.5">
+                  <div className="w-9 h-9 bg-[#895af6] rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/20">
+                    <span className="material-symbols-outlined text-white text-xl">bolt</span>
+                  </div>
+                  <span className="text-lg font-bold tracking-tight">aprende.software</span>
+                </Link>
+
+                {/* Desktop nav */}
+                <div className="hidden md:flex items-center gap-8">
+                  <a href="#programa" className="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-[#895af6] dark:hover:text-[#895af6] transition-colors">Programa</a>
+                  <a href="#metodologia" className="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-[#895af6] dark:hover:text-[#895af6] transition-colors">Metodología</a>
+                  <a href="#testimonios" className="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-[#895af6] dark:hover:text-[#895af6] transition-colors">Testimonios</a>
+                  <a href="#precio" className="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-[#895af6] dark:hover:text-[#895af6] transition-colors">Precio</a>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={toggleDarkMode}
+                    className="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 transition-colors"
+                    aria-label="Cambiar tema"
+                  >
+                    <span className="material-symbols-outlined text-xl">
+                      {isDark ? 'light_mode' : 'dark_mode'}
+                    </span>
+                  </button>
+                  <a
+                    href="#precio"
+                    className="btn-shine bg-[#895af6] hover:bg-[#7c4ddb] text-white px-5 py-2.5 rounded-xl text-sm font-bold transition-all shadow-lg shadow-purple-500/25"
+                  >
+                    Reservar plaza
+                  </a>
+
+                  {/* Mobile menu button */}
+                  <button
+                    onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                    className="md:hidden w-10 h-10 flex items-center justify-center"
+                    aria-label="Menú"
+                  >
+                    <span className="material-symbols-outlined text-2xl">
+                      {mobileMenuOpen ? 'close' : 'menu'}
+                    </span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Mobile menu */}
+              {mobileMenuOpen && (
+                <div className="md:hidden py-4 border-t border-slate-200 dark:border-white/10">
+                  <div className="flex flex-col gap-2">
+                    <a href="#programa" onClick={() => setMobileMenuOpen(false)} className="py-2 text-slate-600 dark:text-slate-400 hover:text-[#895af6]">Programa</a>
+                    <a href="#metodologia" onClick={() => setMobileMenuOpen(false)} className="py-2 text-slate-600 dark:text-slate-400 hover:text-[#895af6]">Metodología</a>
+                    <a href="#testimonios" onClick={() => setMobileMenuOpen(false)} className="py-2 text-slate-600 dark:text-slate-400 hover:text-[#895af6]">Testimonios</a>
+                    <a href="#precio" onClick={() => setMobileMenuOpen(false)} className="py-2 text-slate-600 dark:text-slate-400 hover:text-[#895af6]">Precio</a>
+                  </div>
+                </div>
+              )}
+            </nav>
+          </header>
+
+          <main>
+            {/* Hero Section */}
+            <section className="relative pt-16 lg:pt-24 pb-20 lg:pb-32 px-4 sm:px-6 lg:px-8">
+              <div className="max-w-5xl mx-auto text-center">
+                {/* Badge */}
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#895af6]/10 border border-[#895af6]/20 mb-8 reveal-text">
+                  <span className="relative flex h-2.5 w-2.5 pulse-ring">
+                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#895af6]"></span>
+                  </span>
+                  <span className="text-[#895af6] text-xs font-bold uppercase tracking-widest">
+                    Próxima edición: Febrero 2025
+                  </span>
+                </div>
+
+                {/* Main headline */}
+                <h1 className="text-4xl sm:text-5xl lg:text-7xl xl:text-8xl font-black leading-[1.05] tracking-tight mb-8 reveal-text delay-1">
+                  Crea tu{' '}
+                  <span className="font-serif-accent italic font-normal text-gradient">
+                    negocio digital
+                  </span>
+                  <br />
+                  con IA
+                </h1>
+
+                {/* Subheadline */}
+                <p className="text-lg sm:text-xl lg:text-2xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto mb-10 leading-relaxed reveal-text delay-2">
+                  Curso <strong className="text-slate-900 dark:text-white">presencial online</strong> de 8 semanas.
+                  Sin escribir código. Domina las herramientas que te permiten construir software real
+                  <span className="text-gradient font-semibold"> a la velocidad de tu pensamiento</span>.
+                </p>
+
+                {/* CTAs */}
+                <div className="flex flex-col sm:flex-row justify-center gap-4 mb-12 reveal-text delay-3">
+                  <a
+                    href="#precio"
+                    className="btn-shine bg-[#895af6] hover:bg-[#7c4ddb] text-white px-8 py-4 rounded-2xl text-lg font-bold shadow-2xl shadow-purple-500/30 flex items-center justify-center gap-2 transition-all hover:scale-[1.02]"
+                  >
+                    Reservar mi plaza
+                    <span className="material-symbols-outlined">arrow_forward</span>
+                  </a>
+                  <a
+                    href="#programa"
+                    className="bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 hover:border-[#895af6]/50 text-slate-900 dark:text-white px-8 py-4 rounded-2xl text-lg font-bold transition-all flex items-center justify-center gap-2"
+                  >
+                    Ver programa completo
+                  </a>
+                </div>
+
+                {/* Trust indicators */}
+                <div className="flex flex-wrap justify-center items-center gap-6 text-sm text-slate-500 dark:text-slate-400 reveal-text delay-4">
+                  <div className="flex items-center gap-2">
+                    <span className="material-symbols-outlined text-emerald-500">verified</span>
+                    <span>Clases en directo</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="material-symbols-outlined text-emerald-500">verified</span>
+                    <span>Grupos reducidos (máx. 20)</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="material-symbols-outlined text-emerald-500">verified</span>
+                    <span>Soporte personalizado</span>
+                  </div>
+                </div>
+
+                {/* Tool logos */}
+                <div className="mt-16 pt-12 border-t border-slate-200 dark:border-white/10">
+                  <p className="text-xs font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-6">
+                    Herramientas que dominarás
+                  </p>
+                  <div className="flex flex-wrap justify-center items-center gap-8 lg:gap-12 opacity-60 hover:opacity-100 transition-opacity">
+                    {['Claude', 'Cursor', 'Replit', 'Make', 'Notion', 'Vercel'].map((tool) => (
+                      <span key={tool} className="text-lg lg:text-xl font-bold tracking-tight">{tool}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* Stats Section */}
+            <section className="py-12 px-4 sm:px-6 lg:px-8">
+              <div className="max-w-5xl mx-auto">
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+                  {[
+                    { value: '500+', label: 'Estudiantes formados', icon: 'school' },
+                    { value: '120+', label: 'Proyectos lanzados', icon: 'rocket_launch' },
+                    { value: '8', label: 'Semanas de curso', icon: 'calendar_month' },
+                    { value: '99%', label: 'Satisfacción', icon: 'sentiment_satisfied' }
+                  ].map((stat, i) => (
+                    <div key={i} className="bento-card rounded-2xl p-6 lg:p-8 text-center">
+                      <span className="material-symbols-outlined text-[#895af6] text-3xl mb-3">{stat.icon}</span>
+                      <div className="text-3xl lg:text-4xl font-black mb-1">{stat.value}</div>
+                      <div className="text-xs lg:text-sm text-slate-500 dark:text-slate-400 font-medium">{stat.label}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+
+            {/* Bento Grid - Methodology */}
+            <section id="metodologia" className="py-20 lg:py-32 px-4 sm:px-6 lg:px-8">
+              <div className="max-w-7xl mx-auto">
+                {/* Section header */}
+                <div className="mb-12 lg:mb-16">
+                  <span className="text-[#895af6] font-bold text-sm tracking-widest uppercase block mb-3">
+                    Metodología Bento
+                  </span>
+                  <h2 className="text-3xl lg:text-5xl font-bold max-w-2xl">
+                    Un sistema diseñado para{' '}
+                    <span className="text-gradient">ejecutar</span>
+                  </h2>
+                </div>
+
+                {/* Bento Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 lg:gap-6">
+                  {/* Large card - spans 2 cols and 2 rows */}
+                  <div className="md:col-span-2 md:row-span-2 bento-card rounded-3xl p-8 lg:p-10 relative overflow-hidden group min-h-[400px] flex flex-col justify-between">
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#895af6]/5 to-[#3b82f6]/5 dark:from-[#895af6]/10 dark:to-[#3b82f6]/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div className="relative z-10">
+                      <div className="w-14 h-14 rounded-2xl bg-[#895af6]/10 border border-[#895af6]/20 flex items-center justify-center text-[#895af6] mb-6">
+                        <span className="material-symbols-outlined text-3xl">psychology</span>
+                      </div>
+                      <h3 className="text-2xl lg:text-3xl font-bold mb-4">Ejecución con IA</h3>
+                      <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-lg">
+                        Aprende a orquestar múltiples agentes de IA para desarrollar, testear y desplegar aplicaciones completas en días, no meses.
+                      </p>
+                    </div>
+                    <div className="relative z-10 flex flex-wrap gap-2 mt-6">
+                      <span className="px-3 py-1.5 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-xs font-bold uppercase tracking-wide">
+                        Prompt Engineering
+                      </span>
+                      <span className="px-3 py-1.5 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-xs font-bold uppercase tracking-wide">
+                        Automations
+                      </span>
+                      <span className="px-3 py-1.5 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-xs font-bold uppercase tracking-wide">
+                        No-Code
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Medium card - spans 2 cols */}
+                  <div className="md:col-span-2 bento-card rounded-3xl p-8 flex items-center justify-between gap-6">
+                    <div className="flex-1">
+                      <h3 className="text-xl lg:text-2xl font-bold mb-2">Clases en Directo</h3>
+                      <p className="text-slate-600 dark:text-slate-400 text-sm lg:text-base">
+                        2 sesiones semanales de 2 horas. Construimos proyectos reales desde cero, juntos.
+                      </p>
+                    </div>
+                    <div className="w-20 h-20 lg:w-24 lg:h-24 rounded-full border-4 border-[#895af6]/20 flex items-center justify-center bg-[#895af6]/5 flex-shrink-0">
+                      <span className="material-symbols-outlined text-[#895af6] text-3xl lg:text-4xl">videocam</span>
+                    </div>
+                  </div>
+
+                  {/* Small card 1 */}
+                  <div className="bento-card rounded-3xl p-6 flex flex-col justify-center items-center text-center">
+                    <div className="text-4xl font-black text-gradient mb-2">20</div>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-tight">Plazas máximo</p>
+                    <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-2">Grupos reducidos para máxima atención</p>
+                  </div>
+
+                  {/* Small card 2 */}
+                  <div className="bento-card rounded-3xl p-6 flex flex-col justify-center items-center text-center">
+                    <span className="material-symbols-outlined text-4xl text-[#3b82f6] mb-3">support_agent</span>
+                    <h3 className="text-sm font-bold">Soporte 24/7</h3>
+                    <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1">Comunidad privada + mentorías</p>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* Curriculum Section */}
+            <section id="programa" className="py-20 lg:py-32 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-black/50">
+              <div className="max-w-4xl mx-auto">
+                <div className="text-center mb-16">
+                  <span className="text-[#895af6] font-bold text-sm tracking-widest uppercase block mb-3">
+                    Programa completo
+                  </span>
+                  <h2 className="text-3xl lg:text-5xl font-bold mb-4">
+                    8 semanas de transformación
+                  </h2>
+                  <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+                    De cero a lanzar tu primer producto digital. Cada semana es práctica, con entregables reales.
+                  </p>
+                </div>
+
+                {/* Accordion */}
+                <div className="space-y-4">
+                  {curriculum.map((module, index) => (
+                    <div
+                      key={index}
+                      className="bento-card rounded-2xl overflow-hidden"
+                    >
+                      <button
+                        onClick={() => setActiveAccordion(activeAccordion === index ? null : index)}
+                        className="w-full p-6 lg:p-8 flex items-center justify-between text-left"
+                      >
+                        <div className="flex items-center gap-4 lg:gap-6">
+                          <div className={`w-12 h-12 lg:w-14 lg:h-14 rounded-xl flex items-center justify-center text-white font-bold text-lg ${
+                            index === 0 ? 'bg-[#895af6]' :
+                            index === 1 ? 'bg-[#3b82f6]' :
+                            index === 2 ? 'bg-emerald-500' :
+                            'bg-amber-500'
+                          }`}>
+                            {index + 1}
+                          </div>
+                          <div>
+                            <div className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">
+                              {module.week}
+                            </div>
+                            <h3 className="text-lg lg:text-xl font-bold">{module.title}</h3>
+                          </div>
+                        </div>
+                        <span className={`material-symbols-outlined text-2xl transition-transform ${activeAccordion === index ? 'rotate-180' : ''}`}>
+                          expand_more
+                        </span>
+                      </button>
+                      <div className={`accordion-content ${activeAccordion === index ? 'open' : ''}`}>
+                        <div className="px-6 lg:px-8 pb-6 lg:pb-8 pt-0">
+                          <div className="pl-16 lg:pl-20 border-l-2 border-slate-200 dark:border-white/10 ml-6 lg:ml-7">
+                            <ul className="space-y-3">
+                              {module.lessons.map((lesson, lessonIndex) => (
+                                <li key={lessonIndex} className="flex items-start gap-3 text-slate-600 dark:text-slate-400">
+                                  <span className="material-symbols-outlined text-emerald-500 text-lg mt-0.5">check_circle</span>
+                                  <span>{lesson}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+
+            {/* Testimonials */}
+            <section id="testimonios" className="py-20 lg:py-32 px-4 sm:px-6 lg:px-8">
+              <div className="max-w-6xl mx-auto">
+                <div className="text-center mb-16">
+                  <span className="text-[#895af6] font-bold text-sm tracking-widest uppercase block mb-3">
+                    Resultados reales
+                  </span>
+                  <h2 className="text-3xl lg:text-5xl font-bold mb-4">
+                    Lo que dicen nuestros estudiantes
+                  </h2>
+                </div>
+
+                <div className="grid md:grid-cols-3 gap-6">
+                  {testimonials.map((testimonial, index) => (
+                    <div key={index} className="bento-card rounded-3xl p-8 testimonial-card hover-lift">
+                      <div className="flex items-center gap-4 mb-6">
+                        <div className={`w-14 h-14 rounded-full flex items-center justify-center text-white font-bold ${
+                          index === 0 ? 'bg-[#895af6]' :
+                          index === 1 ? 'bg-[#3b82f6]' :
+                          'bg-emerald-500'
+                        }`}>
+                          {testimonial.avatar}
+                        </div>
+                        <div>
+                          <div className="font-bold">{testimonial.name}</div>
+                          <div className="text-sm text-slate-500 dark:text-slate-400">{testimonial.role}</div>
+                        </div>
+                      </div>
+                      <p className="text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
+                        "{testimonial.text}"
+                      </p>
+                      <div className="pt-4 border-t border-slate-200 dark:border-white/10">
+                        <div className="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Ingresos actuales</div>
+                        <div className="text-2xl font-black text-gradient">{testimonial.revenue}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+
+            {/* Pricing Section */}
+            <section id="precio" className="py-20 lg:py-32 px-4 sm:px-6 lg:px-8">
+              <div className="max-w-4xl mx-auto">
+                <div className="pricing-card p-8 lg:p-12 glow-primary">
+                  <div className="flex flex-col lg:flex-row gap-12 items-center">
+                    <div className="flex-1 text-center lg:text-left">
+                      <div className="inline-block px-4 py-1.5 rounded-full bg-[#895af6]/10 text-[#895af6] text-xs font-black uppercase tracking-widest mb-6">
+                        Oferta de Lanzamiento
+                      </div>
+                      <h2 className="text-3xl lg:text-4xl font-black mb-6">
+                        Únete a la próxima edición
+                      </h2>
+                      <ul className="space-y-4 mb-8 text-left">
+                        {[
+                          '8 semanas de formación intensiva',
+                          '16 clases en directo (32 horas)',
+                          'Acceso a comunidad privada de por vida',
+                          'Mentorías 1-a-1 personalizadas',
+                          'Pack de plantillas y recursos premium',
+                          'Certificado de finalización',
+                          'Garantía de devolución 14 días'
+                        ].map((item, i) => (
+                          <li key={i} className="flex items-center gap-3 text-slate-600 dark:text-slate-300">
+                            <span className="material-symbols-outlined text-[#895af6]">check_circle</span>
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className="w-full lg:w-auto text-center lg:text-right flex-shrink-0">
+                      <div className="mb-2 line-through text-slate-400 font-bold text-xl">1.999€</div>
+                      <div className="text-6xl lg:text-7xl font-black mb-2">999€</div>
+                      <div className="text-sm text-slate-500 dark:text-slate-400 mb-8">
+                        o 3 cuotas de 349€
+                      </div>
+                      <a
+                        href="https://pay.aprende.software/checkout/curso-negocio"
+                        className="btn-shine block w-full lg:w-auto bg-white dark:bg-white text-[#050505] hover:bg-slate-100 px-10 py-5 rounded-2xl text-lg font-extrabold transition-all shadow-xl"
+                      >
+                        Reservar mi plaza
+                      </a>
+                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-4">
+                        Solo 6 plazas disponibles
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Guarantee */}
+                <div className="mt-8 text-center">
+                  <div className="inline-flex items-center gap-3 px-6 py-4 rounded-2xl bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20">
+                    <span className="material-symbols-outlined text-emerald-600 dark:text-emerald-400 text-2xl">verified_user</span>
+                    <span className="text-sm font-medium text-emerald-700 dark:text-emerald-400">
+                      Garantía de devolución del 100% durante los primeros 14 días
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* FAQ Section */}
+            <section className="py-20 lg:py-32 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-black/50">
+              <div className="max-w-3xl mx-auto">
+                <div className="text-center mb-16">
+                  <h2 className="text-3xl lg:text-4xl font-bold mb-4">
+                    Preguntas frecuentes
+                  </h2>
+                </div>
+
+                <div className="space-y-4">
+                  {[
+                    {
+                      q: '¿Necesito saber programar?',
+                      a: 'No. El curso está diseñado específicamente para personas sin conocimientos técnicos. Aprenderás a usar herramientas no-code y a orquestar IA para crear software sin escribir código.'
+                    },
+                    {
+                      q: '¿Qué pasa si no puedo asistir a una clase en directo?',
+                      a: 'Todas las sesiones quedan grabadas y disponibles en tu área de estudiante. Además, puedes resolver dudas en la comunidad privada o en las mentorías semanales.'
+                    },
+                    {
+                      q: '¿Cuánto tiempo necesito dedicar por semana?',
+                      a: 'Recomendamos dedicar entre 6-8 horas semanales: 4 horas de clases en directo + 2-4 horas de práctica con los ejercicios y tu proyecto personal.'
+                    },
+                    {
+                      q: '¿Qué tipo de negocios puedo crear?',
+                      a: 'SaaS, marketplaces, apps móviles, herramientas de productividad, cursos online, servicios de automatización... Las posibilidades son infinitas con las herramientas que aprenderás.'
+                    }
+                  ].map((faq, i) => (
+                    <div key={i} className="bento-card rounded-2xl p-6">
+                      <h3 className="font-bold text-lg mb-2">{faq.q}</h3>
+                      <p className="text-slate-600 dark:text-slate-400">{faq.a}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+
+            {/* Final CTA */}
+            <section className="py-20 lg:py-32 px-4 sm:px-6 lg:px-8">
+              <div className="max-w-3xl mx-auto text-center">
+                <h2 className="text-3xl lg:text-5xl font-bold mb-6">
+                  ¿Listo para crear tu negocio digital?
+                </h2>
+                <p className="text-lg text-slate-600 dark:text-slate-400 mb-10">
+                  La próxima edición empieza en febrero. Plazas limitadas.
+                </p>
+                <a
+                  href="#precio"
+                  className="btn-shine inline-flex items-center gap-2 bg-[#895af6] hover:bg-[#7c4ddb] text-white px-10 py-5 rounded-2xl text-lg font-bold shadow-2xl shadow-purple-500/30 transition-all hover:scale-[1.02]"
+                >
+                  Reservar mi plaza ahora
+                  <span className="material-symbols-outlined">arrow_forward</span>
+                </a>
+              </div>
+            </section>
+          </main>
+
+          {/* Footer */}
+          <footer className="border-t border-slate-200 dark:border-white/5 py-12 px-4 sm:px-6 lg:px-8">
+            <div className="max-w-7xl mx-auto">
+              <div className="flex flex-col md:flex-row justify-between items-center gap-8">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 bg-[#895af6]/10 rounded-lg flex items-center justify-center">
+                    <span className="material-symbols-outlined text-[#895af6]">bolt</span>
+                  </div>
+                  <span className="font-bold">aprende.software</span>
+                </div>
+
+                <div className="flex gap-8 text-sm text-slate-500 dark:text-slate-400">
+                  <Link href="/privacidad" className="hover:text-[#895af6] transition-colors">Privacidad</Link>
+                  <Link href="/" className="hover:text-[#895af6] transition-colors">Curso gratuito</Link>
+                  <a href="https://twitter.com/josusanz" target="_blank" rel="noopener noreferrer" className="hover:text-[#895af6] transition-colors">Twitter</a>
+                </div>
+
+                <p className="text-xs text-slate-400 dark:text-slate-500">
+                  © 2025 aprende.software
+                </p>
+              </div>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </>
+  )
+}
