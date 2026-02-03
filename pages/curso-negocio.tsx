@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react'
 import Head from 'next/head'
-import Script from 'next/script'
 import Link from 'next/link'
 
 export default function CursoNegocioLanding() {
@@ -796,7 +795,7 @@ export default function CursoNegocioLanding() {
             {/* Testimonials */}
             {/* Lead Capture Form */}
             <section id="aplicar" className="py-20 lg:py-32 px-4 sm:px-6 lg:px-8">
-              <div className="max-w-3xl mx-auto">
+              <div className="max-w-5xl mx-auto">
                 <div className="text-center mb-12">
                   <span className="text-[#895af6] font-bold text-sm tracking-widest uppercase block mb-3">
                     Plazas limitadas
@@ -809,15 +808,15 @@ export default function CursoNegocioLanding() {
                   </p>
                 </div>
 
-                <div className="bento-card rounded-3xl p-4 sm:p-6 lg:p-8 overflow-hidden">
-                  <div
-                    data-qualifyform="0fcpkwpr"
-                    data-mode="inline"
-                    data-height="700px"
-                    data-auto-resize="true"
-                    data-width="100%"
-                    style={{ width: '100%', minHeight: '700px' }}
-                  ></div>
+                <div className="bg-white dark:bg-slate-900 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+                  <iframe
+                    src="https://qualifyform.com/f/0fcpkwpr"
+                    width="100%"
+                    height="800"
+                    frameBorder="0"
+                    style={{ border: 'none', minHeight: '800px', width: '100%' }}
+                    allow="camera; microphone"
+                  ></iframe>
                 </div>
               </div>
             </section>
@@ -966,11 +965,6 @@ export default function CursoNegocioLanding() {
         </div>
       </div>
 
-      {/* QualifyForm Script */}
-      <Script
-        src="https://www.qualifyform.com/embed.js"
-        strategy="lazyOnload"
-      />
-    </>
+          </>
   )
 }
