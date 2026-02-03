@@ -573,7 +573,7 @@ export default function CursoNegocioLanding() {
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="material-symbols-outlined text-emerald-500">verified</span>
-                    <span>Grupos reducidos (máx. 20)</span>
+                    <span>Grupo reducido (máx. 10)</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="material-symbols-outlined text-emerald-500">verified</span>
@@ -586,10 +586,51 @@ export default function CursoNegocioLanding() {
                   <p className="text-xs font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-6">
                     Herramientas que dominarás
                   </p>
-                  <div className="flex flex-wrap justify-center items-center gap-8 lg:gap-12 opacity-60 hover:opacity-100 transition-opacity">
-                    {['Claude', 'Cursor', 'Replit', 'Make', 'Notion', 'Vercel'].map((tool) => (
-                      <span key={tool} className="text-lg lg:text-xl font-bold tracking-tight">{tool}</span>
-                    ))}
+                  <div className="flex flex-wrap justify-center items-center gap-6 lg:gap-10 opacity-70 hover:opacity-100 transition-opacity">
+                    {/* Claude */}
+                    <div className="flex items-center gap-2">
+                      <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M4.709 15.955l4.72-2.647.08-.08 2.726-1.529 6.676-3.744c.588-.33 1.584.125 1.584.843v6.091c0 .45-.238.866-.627 1.096l-6.139 3.457a2.263 2.263 0 01-2.229-.012l-6.163-3.469a1.27 1.27 0 01-.628-1.096v-.91z"/>
+                        <path d="M9.508 13.228l-4.8 2.727v-5.647c0-.718.997-1.173 1.585-.843l3.215 1.803v1.96z" opacity=".5"/>
+                      </svg>
+                      <span className="text-sm lg:text-base font-semibold">Claude</span>
+                    </div>
+                    {/* Terminal */}
+                    <div className="flex items-center gap-2">
+                      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="4 17 10 11 4 5"></polyline>
+                        <line x1="12" y1="19" x2="20" y2="19"></line>
+                      </svg>
+                      <span className="text-sm lg:text-base font-semibold">Terminal</span>
+                    </div>
+                    {/* n8n (Stitch alternative - automation) */}
+                    <div className="flex items-center gap-2">
+                      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                      </svg>
+                      <span className="text-sm lg:text-base font-semibold">n8n</span>
+                    </div>
+                    {/* GitHub */}
+                    <div className="flex items-center gap-2">
+                      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                      </svg>
+                      <span className="text-sm lg:text-base font-semibold">GitHub</span>
+                    </div>
+                    {/* Notion */}
+                    <div className="flex items-center gap-2">
+                      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M4.459 4.208c.746.606 1.026.56 2.428.466l13.215-.793c.28 0 .047-.28-.046-.326L17.86 1.968c-.42-.326-.98-.7-2.055-.607L3.01 2.295c-.466.046-.56.28-.374.466zm.793 3.08v13.904c0 .747.373 1.027 1.214.98l14.523-.84c.841-.046.934-.56.934-1.167V6.354c0-.606-.233-.933-.746-.886l-15.177.887c-.56.047-.748.327-.748.933zm14.337.745c.093.42 0 .84-.42.888l-.7.14v10.264c-.608.327-1.168.514-1.635.514-.748 0-.935-.234-1.495-.933l-4.577-7.186v6.952l1.448.327s0 .84-1.168.84l-3.22.186c-.094-.186 0-.653.327-.746l.84-.233V9.854L7.822 9.76c-.094-.42.14-1.026.793-1.073l3.456-.233 4.764 7.279v-6.44l-1.215-.14c-.093-.514.28-.886.747-.933zM2.523 1.128l13.588-.933c1.68-.14 2.101.093 2.802.606l3.87 2.707c.467.326.607.42.607.793v15.904c0 .98-.373 1.587-1.68 1.68l-15.458.933c-.98.047-1.448-.093-1.962-.747l-3.127-4.053c-.56-.747-.793-1.307-.793-1.96V2.895c0-.84.373-1.54 1.353-1.767z"/>
+                      </svg>
+                      <span className="text-sm lg:text-base font-semibold">Notion</span>
+                    </div>
+                    {/* Vercel */}
+                    <div className="flex items-center gap-2">
+                      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M24 22.525H0l12-21.05 12 21.05z"/>
+                      </svg>
+                      <span className="text-sm lg:text-base font-semibold">Vercel</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -600,10 +641,10 @@ export default function CursoNegocioLanding() {
               <div className="max-w-5xl mx-auto">
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
                   {[
-                    { value: '10+', label: 'Años en tech', icon: 'code' },
-                    { value: '50+', label: 'Proyectos con IA', icon: 'rocket_launch' },
-                    { value: '10', label: 'Semanas de curso', icon: 'calendar_month' },
-                    { value: '20', label: 'Plazas máximo', icon: 'group' }
+                    { value: '20+', label: 'Años en tech', icon: 'code' },
+                    { value: '500+', label: 'Webs creadas', icon: 'web' },
+                    { value: '20+', label: 'Proyectos lanzados', icon: 'rocket_launch' },
+                    { value: '10', label: 'Plazas máximo', icon: 'group' }
                   ].map((stat, i) => (
                     <div key={i} className="bento-card rounded-2xl p-6 lg:p-8 text-center">
                       <span className="material-symbols-outlined text-[#895af6] text-3xl mb-3">{stat.icon}</span>
@@ -661,7 +702,7 @@ export default function CursoNegocioLanding() {
                     <div className="flex-1">
                       <h3 className="text-xl lg:text-2xl font-bold mb-2">Clases en Directo</h3>
                       <p className="text-slate-600 dark:text-slate-400 text-sm lg:text-base">
-                        2 sesiones semanales de 2 horas. Construimos proyectos reales desde cero, juntos.
+                        1 clase semanal en directo + seguimiento individual. Construimos proyectos reales desde cero, juntos.
                       </p>
                     </div>
                     <div className="w-20 h-20 lg:w-24 lg:h-24 rounded-full border-4 border-[#895af6]/20 flex items-center justify-center bg-[#895af6]/5 flex-shrink-0">
@@ -671,7 +712,7 @@ export default function CursoNegocioLanding() {
 
                   {/* Small card 1 */}
                   <div className="bento-card rounded-3xl p-6 flex flex-col justify-center items-center text-center">
-                    <div className="text-4xl font-black text-gradient mb-2">20</div>
+                    <div className="text-4xl font-black text-gradient mb-2">10</div>
                     <p className="text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-tight">Plazas máximo</p>
                     <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-2">Grupos reducidos para máxima atención</p>
                   </div>
@@ -768,12 +809,14 @@ export default function CursoNegocioLanding() {
                   </p>
                 </div>
 
-                <div className="bento-card rounded-3xl p-6 lg:p-8">
+                <div className="bento-card rounded-3xl p-4 sm:p-6 lg:p-8 overflow-hidden">
                   <div
                     data-qualifyform="0fcpkwpr"
                     data-mode="inline"
-                    data-height="600px"
+                    data-height="700px"
                     data-auto-resize="true"
+                    data-width="100%"
+                    style={{ width: '100%', minHeight: '700px' }}
                   ></div>
                 </div>
               </div>
@@ -794,9 +837,9 @@ export default function CursoNegocioLanding() {
                       <ul className="space-y-4 mb-8 text-left">
                         {[
                           '10 semanas de formación intensiva',
-                          '20 clases en directo (40 horas)',
+                          '10 clases en directo (1 por semana)',
+                          'Seguimiento individual semanal',
                           'Acceso a comunidad privada de por vida',
-                          'Mentorías 1-a-1 personalizadas',
                           'Pack de plantillas y recursos premium',
                           'Certificado de finalización',
                           'Garantía de devolución 14 días'
@@ -822,7 +865,7 @@ export default function CursoNegocioLanding() {
                         Reservar mi plaza
                       </a>
                       <p className="text-xs text-slate-500 dark:text-slate-400 mt-4">
-                        Solo 6 plazas disponibles
+                        Solo 10 plazas disponibles
                       </p>
                     </div>
                   </div>
