@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react'
 import Head from 'next/head'
+import Script from 'next/script'
 import Link from 'next/link'
 
 export default function CursoNegocioLanding() {
-  const [isDark, setIsDark] = useState(true)
+  const [isDark, setIsDark] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [activeAccordion, setActiveAccordion] = useState<number | null>(0)
   const [visibleSections, setVisibleSections] = useState<Set<string>>(new Set())
@@ -15,12 +16,10 @@ export default function CursoNegocioLanding() {
       const isDarkMode = savedTheme === 'dark'
       setIsDark(isDarkMode)
       document.documentElement.classList.toggle('dark', isDarkMode)
-    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      setIsDark(true)
-      document.documentElement.classList.add('dark')
     } else {
-      setIsDark(true)
-      document.documentElement.classList.add('dark')
+      // Light mode por defecto
+      setIsDark(false)
+      document.documentElement.classList.remove('dark')
     }
   }, [])
 
@@ -83,37 +82,23 @@ export default function CursoNegocioLanding() {
     },
     {
       week: 'Semana 7-8',
-      title: 'Lanzamiento y Escalado',
+      title: 'Marketing y Adquisición',
       lessons: [
         'Marketing con contenido generado por IA',
+        'SEO y posicionamiento automático',
+        'Embudos de venta optimizados',
+        'Estrategias de growth hacking'
+      ]
+    },
+    {
+      week: 'Semana 9-10',
+      title: 'Escalado y Automatización Total',
+      lessons: [
         'Automatización de operaciones',
         'Atención al cliente con chatbots',
-        'Métricas y optimización continua'
+        'Métricas y optimización continua',
+        'Preparación para escalar'
       ]
-    }
-  ]
-
-  const testimonials = [
-    {
-      name: 'María González',
-      role: 'Fundadora de SaaS',
-      avatar: 'MG',
-      text: 'En 3 meses pasé de no saber programar a tener mi propia plataforma generando ingresos recurrentes.',
-      revenue: '€4,200/mes'
-    },
-    {
-      name: 'Carlos Ruiz',
-      role: 'Consultor Digital',
-      avatar: 'CR',
-      text: 'El curso me dio las herramientas para automatizar mi negocio de consultoría y triplicar mis clientes.',
-      revenue: '€8,500/mes'
-    },
-    {
-      name: 'Ana Martínez',
-      role: 'Creadora de Cursos',
-      avatar: 'AM',
-      text: 'Ahora creo cursos completos en días, no meses. Mi productividad se multiplicó por 10.',
-      revenue: '€12,000/mes'
     }
   ]
 
@@ -121,13 +106,13 @@ export default function CursoNegocioLanding() {
     <>
       <Head>
         <title>Crea tu Negocio Digital con IA | Curso Presencial Online</title>
-        <meta name="description" content="Aprende a crear tu negocio digital sin escribir código. Curso presencial online de 8 semanas. Domina las herramientas de IA para construir, lanzar y escalar." />
+        <meta name="description" content="Aprende a crear tu negocio digital sin escribir código. Curso presencial online de 10 semanas. Domina las herramientas de IA para construir, lanzar y escalar." />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="keywords" content="curso ia negocio, crear negocio con ia, no code, automatización, emprendimiento digital, curso online presencial" />
 
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Crea tu Negocio Digital con IA | Curso Presencial Online" />
-        <meta property="og:description" content="Aprende a crear tu negocio digital sin escribir código. 8 semanas de formación intensiva." />
+        <meta property="og:description" content="Aprende a crear tu negocio digital sin escribir código. 10 semanas de formación intensiva." />
         <meta property="og:site_name" content="aprende.software" />
         <meta property="og:locale" content="es_ES" />
 
@@ -486,8 +471,7 @@ export default function CursoNegocioLanding() {
                 <div className="hidden md:flex items-center gap-8">
                   <a href="#programa" className="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-[#895af6] dark:hover:text-[#895af6] transition-colors">Programa</a>
                   <a href="#metodologia" className="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-[#895af6] dark:hover:text-[#895af6] transition-colors">Metodología</a>
-                  <a href="#testimonios" className="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-[#895af6] dark:hover:text-[#895af6] transition-colors">Testimonios</a>
-                  <a href="#precio" className="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-[#895af6] dark:hover:text-[#895af6] transition-colors">Precio</a>
+                  <a href="#aplicar" className="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-[#895af6] dark:hover:text-[#895af6] transition-colors">Aplicar</a>
                 </div>
 
                 <div className="flex items-center gap-3">
@@ -501,10 +485,10 @@ export default function CursoNegocioLanding() {
                     </span>
                   </button>
                   <a
-                    href="#precio"
+                    href="#aplicar"
                     className="btn-shine bg-[#895af6] hover:bg-[#7c4ddb] text-white px-5 py-2.5 rounded-xl text-sm font-bold transition-all shadow-lg shadow-purple-500/25"
                   >
-                    Reservar plaza
+                    Aplicar ahora
                   </a>
 
                   {/* Mobile menu button */}
@@ -526,8 +510,7 @@ export default function CursoNegocioLanding() {
                   <div className="flex flex-col gap-2">
                     <a href="#programa" onClick={() => setMobileMenuOpen(false)} className="py-2 text-slate-600 dark:text-slate-400 hover:text-[#895af6]">Programa</a>
                     <a href="#metodologia" onClick={() => setMobileMenuOpen(false)} className="py-2 text-slate-600 dark:text-slate-400 hover:text-[#895af6]">Metodología</a>
-                    <a href="#testimonios" onClick={() => setMobileMenuOpen(false)} className="py-2 text-slate-600 dark:text-slate-400 hover:text-[#895af6]">Testimonios</a>
-                    <a href="#precio" onClick={() => setMobileMenuOpen(false)} className="py-2 text-slate-600 dark:text-slate-400 hover:text-[#895af6]">Precio</a>
+                    <a href="#aplicar" onClick={() => setMobileMenuOpen(false)} className="py-2 text-slate-600 dark:text-slate-400 hover:text-[#895af6]">Aplicar</a>
                   </div>
                 </div>
               )}
@@ -560,7 +543,7 @@ export default function CursoNegocioLanding() {
 
                 {/* Subheadline */}
                 <p className="text-lg sm:text-xl lg:text-2xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto mb-10 leading-relaxed reveal-text delay-2">
-                  Curso <strong className="text-slate-900 dark:text-white">presencial online</strong> de 8 semanas.
+                  Curso <strong className="text-slate-900 dark:text-white">presencial online</strong> de 10 semanas.
                   Sin escribir código. Domina las herramientas que te permiten construir software real
                   <span className="text-gradient font-semibold"> a la velocidad de tu pensamiento</span>.
                 </p>
@@ -568,10 +551,10 @@ export default function CursoNegocioLanding() {
                 {/* CTAs */}
                 <div className="flex flex-col sm:flex-row justify-center gap-4 mb-12 reveal-text delay-3">
                   <a
-                    href="#precio"
+                    href="#aplicar"
                     className="btn-shine bg-[#895af6] hover:bg-[#7c4ddb] text-white px-8 py-4 rounded-2xl text-lg font-bold shadow-2xl shadow-purple-500/30 flex items-center justify-center gap-2 transition-all hover:scale-[1.02]"
                   >
-                    Reservar mi plaza
+                    Aplicar ahora
                     <span className="material-symbols-outlined">arrow_forward</span>
                   </a>
                   <a
@@ -617,10 +600,10 @@ export default function CursoNegocioLanding() {
               <div className="max-w-5xl mx-auto">
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
                   {[
-                    { value: '500+', label: 'Estudiantes formados', icon: 'school' },
-                    { value: '120+', label: 'Proyectos lanzados', icon: 'rocket_launch' },
-                    { value: '8', label: 'Semanas de curso', icon: 'calendar_month' },
-                    { value: '99%', label: 'Satisfacción', icon: 'sentiment_satisfied' }
+                    { value: '10+', label: 'Años en tech', icon: 'code' },
+                    { value: '50+', label: 'Proyectos con IA', icon: 'rocket_launch' },
+                    { value: '10', label: 'Semanas de curso', icon: 'calendar_month' },
+                    { value: '20', label: 'Plazas máximo', icon: 'group' }
                   ].map((stat, i) => (
                     <div key={i} className="bento-card rounded-2xl p-6 lg:p-8 text-center">
                       <span className="material-symbols-outlined text-[#895af6] text-3xl mb-3">{stat.icon}</span>
@@ -711,7 +694,7 @@ export default function CursoNegocioLanding() {
                     Programa completo
                   </span>
                   <h2 className="text-3xl lg:text-5xl font-bold mb-4">
-                    8 semanas de transformación
+                    10 semanas de transformación
                   </h2>
                   <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
                     De cero a lanzar tu primer producto digital. Cada semana es práctica, con entregables reales.
@@ -770,48 +753,34 @@ export default function CursoNegocioLanding() {
             </section>
 
             {/* Testimonials */}
-            <section id="testimonios" className="py-20 lg:py-32 px-4 sm:px-6 lg:px-8">
-              <div className="max-w-6xl mx-auto">
-                <div className="text-center mb-16">
+            {/* Lead Capture Form */}
+            <section id="aplicar" className="py-20 lg:py-32 px-4 sm:px-6 lg:px-8">
+              <div className="max-w-3xl mx-auto">
+                <div className="text-center mb-12">
                   <span className="text-[#895af6] font-bold text-sm tracking-widest uppercase block mb-3">
-                    Resultados reales
+                    Plazas limitadas
                   </span>
                   <h2 className="text-3xl lg:text-5xl font-bold mb-4">
-                    Lo que dicen nuestros estudiantes
+                    ¿Es este curso para ti?
                   </h2>
+                  <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+                    Completa este breve cuestionario para ver si encajas en el perfil y reservar tu plaza en la próxima edición.
+                  </p>
                 </div>
 
-                <div className="grid md:grid-cols-3 gap-6">
-                  {testimonials.map((testimonial, index) => (
-                    <div key={index} className="bento-card rounded-3xl p-8 testimonial-card hover-lift">
-                      <div className="flex items-center gap-4 mb-6">
-                        <div className={`w-14 h-14 rounded-full flex items-center justify-center text-white font-bold ${
-                          index === 0 ? 'bg-[#895af6]' :
-                          index === 1 ? 'bg-[#3b82f6]' :
-                          'bg-emerald-500'
-                        }`}>
-                          {testimonial.avatar}
-                        </div>
-                        <div>
-                          <div className="font-bold">{testimonial.name}</div>
-                          <div className="text-sm text-slate-500 dark:text-slate-400">{testimonial.role}</div>
-                        </div>
-                      </div>
-                      <p className="text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
-                        "{testimonial.text}"
-                      </p>
-                      <div className="pt-4 border-t border-slate-200 dark:border-white/10">
-                        <div className="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Ingresos actuales</div>
-                        <div className="text-2xl font-black text-gradient">{testimonial.revenue}</div>
-                      </div>
-                    </div>
-                  ))}
+                <div className="bento-card rounded-3xl p-6 lg:p-8">
+                  <div
+                    data-qualifyform="0fcpkwpr"
+                    data-mode="inline"
+                    data-height="600px"
+                    data-auto-resize="true"
+                  ></div>
                 </div>
               </div>
             </section>
 
             {/* Pricing Section */}
-            <section id="precio" className="py-20 lg:py-32 px-4 sm:px-6 lg:px-8">
+            <section id="precio" className="py-20 lg:py-32 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-black/50">
               <div className="max-w-4xl mx-auto">
                 <div className="pricing-card p-8 lg:p-12 glow-primary">
                   <div className="flex flex-col lg:flex-row gap-12 items-center">
@@ -824,8 +793,8 @@ export default function CursoNegocioLanding() {
                       </h2>
                       <ul className="space-y-4 mb-8 text-left">
                         {[
-                          '8 semanas de formación intensiva',
-                          '16 clases en directo (32 horas)',
+                          '10 semanas de formación intensiva',
+                          '20 clases en directo (40 horas)',
                           'Acceso a comunidad privada de por vida',
                           'Mentorías 1-a-1 personalizadas',
                           'Pack de plantillas y recursos premium',
@@ -953,6 +922,12 @@ export default function CursoNegocioLanding() {
           </footer>
         </div>
       </div>
+
+      {/* QualifyForm Script */}
+      <Script
+        src="https://www.qualifyform.com/embed.js"
+        strategy="lazyOnload"
+      />
     </>
   )
 }
