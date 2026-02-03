@@ -305,60 +305,14 @@ export default function CursoNegocioLanding() {
         /* Gradient button */
         .btn-gradient {
           background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
-          position: relative;
-          overflow: hidden;
           transition: all 0.3s ease;
           box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
         }
 
         .btn-gradient:hover {
+          background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
           box-shadow: 0 8px 25px rgba(124, 58, 237, 0.5);
           transform: translateY(-2px);
-        }
-
-        .btn-gradient::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
-          opacity: 0;
-          transition: opacity 0.3s ease;
-        }
-
-        .btn-gradient:hover::before {
-          opacity: 1;
-        }
-
-        .btn-gradient > * {
-          position: relative;
-          z-index: 1;
-        }
-
-        /* Button shine effect */
-        .btn-shine {
-          position: relative;
-          overflow: hidden;
-        }
-
-        .btn-shine::after {
-          content: '';
-          position: absolute;
-          top: -50%;
-          left: -50%;
-          width: 200%;
-          height: 200%;
-          background: linear-gradient(
-            to right,
-            transparent 0%,
-            rgba(255, 255, 255, 0.4) 50%,
-            transparent 100%
-          );
-          transform: rotate(45deg) translateX(-100%);
-          transition: transform 0.6s;
-        }
-
-        .btn-shine:hover::after {
-          transform: rotate(45deg) translateX(100%);
         }
 
         /* Scroll animations */
