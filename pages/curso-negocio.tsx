@@ -128,9 +128,9 @@ export default function CursoNegocioLanding() {
       <style jsx global>{`
         .landing-curso {
           font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-          --primary: #895af6;
+          --primary: #06b6d4;
           --primary-light: #a78bfa;
-          --accent-blue: #3b82f6;
+          --accent-blue: #0891b2;
           --bg-light: #fafafa;
           --bg-dark: #050505;
         }
@@ -227,7 +227,7 @@ export default function CursoNegocioLanding() {
           content: "";
           position: absolute;
           inset: -2px;
-          background: linear-gradient(45deg, #895af6, #3b82f6, #895af6, #3b82f6);
+          background: linear-gradient(45deg, #06b6d4, #0891b2, #06b6d4, #0891b2);
           background-size: 300% 300%;
           animation: gradientShift 4s ease infinite;
           z-index: -1;
@@ -251,7 +251,7 @@ export default function CursoNegocioLanding() {
 
         /* Text gradient */
         .text-gradient {
-          background: linear-gradient(135deg, #895af6 0%, #3b82f6 100%);
+          background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
@@ -268,7 +268,7 @@ export default function CursoNegocioLanding() {
           position: absolute;
           inset: 0;
           border-radius: 9999px;
-          background: #895af6;
+          background: #06b6d4;
           animation: pulse-ring 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
 
@@ -460,20 +460,20 @@ export default function CursoNegocioLanding() {
             <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="flex justify-between items-center h-16 lg:h-20">
                 <Link href="/" className="flex items-center gap-2">
-                  <div className="w-8 h-8 sm:w-9 sm:h-9 bg-gradient-to-br from-[#895af6] to-[#3b82f6] rounded-lg sm:rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/20">
+                  <div className="w-8 h-8 sm:w-9 sm:h-9 bg-gradient-to-br from-[#06b6d4] to-[#0891b2] rounded-lg sm:rounded-xl flex items-center justify-center shadow-lg shadow-cyan-500/20">
                     <span className="text-white font-black text-sm sm:text-base">AS</span>
                   </div>
                   <span className="text-base sm:text-lg font-bold tracking-tight">
                     <span className="hidden min-[400px]:inline">aprende</span>
-                    <span className="text-[#895af6] hidden min-[400px]:inline">.software</span>
+                    <span className="text-[#06b6d4] hidden min-[400px]:inline">.software</span>
                   </span>
                 </Link>
 
                 {/* Desktop nav */}
                 <div className="hidden md:flex items-center gap-8">
-                  <a href="#programa" className="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-[#895af6] dark:hover:text-[#895af6] transition-colors">Programa</a>
-                  <a href="#metodologia" className="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-[#895af6] dark:hover:text-[#895af6] transition-colors">Metodología</a>
-                  <a href="#aplicar" className="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-[#895af6] dark:hover:text-[#895af6] transition-colors">Aplicar</a>
+                  <a href="#programa" className="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-[#06b6d4] dark:hover:text-[#06b6d4] transition-colors">Programa</a>
+                  <a href="#metodologia" className="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-[#06b6d4] dark:hover:text-[#06b6d4] transition-colors">Metodología</a>
+                  <a href="#aplicar" className="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-[#06b6d4] dark:hover:text-[#06b6d4] transition-colors">Aplicar</a>
                 </div>
 
                 <div className="flex items-center gap-2 sm:gap-3">
@@ -488,7 +488,7 @@ export default function CursoNegocioLanding() {
                   </button>
                   <a
                     href="#aplicar"
-                    className="hidden sm:flex btn-shine bg-[#895af6] hover:bg-[#7c4ddb] text-white px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg sm:rounded-xl text-xs sm:text-sm font-bold transition-all shadow-lg shadow-purple-500/25 items-center gap-1"
+                    className="hidden sm:flex btn-shine bg-[#06b6d4] hover:bg-[#0e7490] text-white px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg sm:rounded-xl text-xs sm:text-sm font-bold transition-all shadow-lg shadow-cyan-500/25 items-center gap-1"
                   >
                     Aplicar
                   </a>
@@ -510,9 +510,9 @@ export default function CursoNegocioLanding() {
               {mobileMenuOpen && (
                 <div className="md:hidden py-4 border-t border-slate-200 dark:border-white/10">
                   <div className="flex flex-col gap-2">
-                    <a href="#programa" onClick={() => setMobileMenuOpen(false)} className="py-2 text-slate-600 dark:text-slate-400 hover:text-[#895af6]">Programa</a>
-                    <a href="#metodologia" onClick={() => setMobileMenuOpen(false)} className="py-2 text-slate-600 dark:text-slate-400 hover:text-[#895af6]">Metodología</a>
-                    <a href="#aplicar" onClick={() => setMobileMenuOpen(false)} className="py-2 text-slate-600 dark:text-slate-400 hover:text-[#895af6]">Aplicar</a>
+                    <a href="#programa" onClick={() => setMobileMenuOpen(false)} className="py-2 text-slate-600 dark:text-slate-400 hover:text-[#06b6d4]">Programa</a>
+                    <a href="#metodologia" onClick={() => setMobileMenuOpen(false)} className="py-2 text-slate-600 dark:text-slate-400 hover:text-[#06b6d4]">Metodología</a>
+                    <a href="#aplicar" onClick={() => setMobileMenuOpen(false)} className="py-2 text-slate-600 dark:text-slate-400 hover:text-[#06b6d4]">Aplicar</a>
                   </div>
                 </div>
               )}
@@ -524,11 +524,11 @@ export default function CursoNegocioLanding() {
             <section className="relative pt-16 lg:pt-24 pb-20 lg:pb-32 px-4 sm:px-6 lg:px-8">
               <div className="max-w-5xl mx-auto text-center">
                 {/* Badge */}
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#895af6]/10 border border-[#895af6]/20 mb-8 reveal-text">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#06b6d4]/10 border border-[#06b6d4]/20 mb-8 reveal-text">
                   <span className="relative flex h-2.5 w-2.5 pulse-ring">
-                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#895af6]"></span>
+                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#06b6d4]"></span>
                   </span>
-                  <span className="text-[#895af6] text-xs font-bold uppercase tracking-widest">
+                  <span className="text-[#06b6d4] text-xs font-bold uppercase tracking-widest">
                     Próxima edición: Marzo 2026
                   </span>
                 </div>
@@ -554,14 +554,14 @@ export default function CursoNegocioLanding() {
                 <div className="flex flex-col sm:flex-row justify-center gap-4 mb-12 reveal-text delay-3">
                   <a
                     href="#aplicar"
-                    className="btn-shine bg-[#895af6] hover:bg-[#7c4ddb] text-white px-8 py-4 rounded-2xl text-lg font-bold shadow-2xl shadow-purple-500/30 flex items-center justify-center gap-2 transition-all hover:scale-[1.02]"
+                    className="btn-shine bg-[#06b6d4] hover:bg-[#0e7490] text-white px-8 py-4 rounded-2xl text-lg font-bold shadow-2xl shadow-cyan-500/30 flex items-center justify-center gap-2 transition-all hover:scale-[1.02]"
                   >
                     Aplicar ahora
                     <span className="material-symbols-outlined">arrow_forward</span>
                   </a>
                   <a
                     href="#programa"
-                    className="bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 hover:border-[#895af6]/50 text-slate-900 dark:text-white px-8 py-4 rounded-2xl text-lg font-bold transition-all flex items-center justify-center gap-2"
+                    className="bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 hover:border-[#06b6d4]/50 text-slate-900 dark:text-white px-8 py-4 rounded-2xl text-lg font-bold transition-all flex items-center justify-center gap-2"
                   >
                     Ver programa completo
                   </a>
@@ -649,7 +649,7 @@ export default function CursoNegocioLanding() {
                     { value: '10', label: 'Plazas máximo', icon: 'group' }
                   ].map((stat, i) => (
                     <div key={i} className="bento-card rounded-2xl p-6 lg:p-8 text-center">
-                      <span className="material-symbols-outlined text-[#895af6] text-3xl mb-3">{stat.icon}</span>
+                      <span className="material-symbols-outlined text-[#06b6d4] text-3xl mb-3">{stat.icon}</span>
                       <div className="text-3xl lg:text-4xl font-black mb-1">{stat.value}</div>
                       <div className="text-xs lg:text-sm text-slate-500 dark:text-slate-400 font-medium">{stat.label}</div>
                     </div>
@@ -663,7 +663,7 @@ export default function CursoNegocioLanding() {
               <div className="max-w-7xl mx-auto">
                 {/* Section header */}
                 <div className="mb-12 lg:mb-16">
-                  <span className="text-[#895af6] font-bold text-sm tracking-widest uppercase block mb-3">
+                  <span className="text-[#06b6d4] font-bold text-sm tracking-widest uppercase block mb-3">
                     Metodología Bento
                   </span>
                   <h2 className="text-3xl lg:text-5xl font-bold max-w-2xl">
@@ -676,9 +676,9 @@ export default function CursoNegocioLanding() {
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4 lg:gap-6">
                   {/* Large card - spans 2 cols and 2 rows */}
                   <div className="md:col-span-2 md:row-span-2 bento-card rounded-3xl p-8 lg:p-10 relative overflow-hidden group min-h-[400px] flex flex-col justify-between">
-                    <div className="absolute inset-0 bg-gradient-to-br from-[#895af6]/5 to-[#3b82f6]/5 dark:from-[#895af6]/10 dark:to-[#3b82f6]/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#06b6d4]/5 to-[#0891b2]/5 dark:from-[#06b6d4]/10 dark:to-[#0891b2]/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     <div className="relative z-10">
-                      <div className="w-14 h-14 rounded-2xl bg-[#895af6]/10 border border-[#895af6]/20 flex items-center justify-center text-[#895af6] mb-6">
+                      <div className="w-14 h-14 rounded-2xl bg-[#06b6d4]/10 border border-[#06b6d4]/20 flex items-center justify-center text-[#06b6d4] mb-6">
                         <span className="material-symbols-outlined text-3xl">psychology</span>
                       </div>
                       <h3 className="text-2xl lg:text-3xl font-bold mb-4">Ejecución con IA</h3>
@@ -707,8 +707,8 @@ export default function CursoNegocioLanding() {
                         1 clase semanal en directo + seguimiento individual. Construimos proyectos reales desde cero, juntos.
                       </p>
                     </div>
-                    <div className="w-20 h-20 lg:w-24 lg:h-24 rounded-full border-4 border-[#895af6]/20 flex items-center justify-center bg-[#895af6]/5 flex-shrink-0">
-                      <span className="material-symbols-outlined text-[#895af6] text-3xl lg:text-4xl">videocam</span>
+                    <div className="w-20 h-20 lg:w-24 lg:h-24 rounded-full border-4 border-[#06b6d4]/20 flex items-center justify-center bg-[#06b6d4]/5 flex-shrink-0">
+                      <span className="material-symbols-outlined text-[#06b6d4] text-3xl lg:text-4xl">videocam</span>
                     </div>
                   </div>
 
@@ -721,7 +721,7 @@ export default function CursoNegocioLanding() {
 
                   {/* Small card 2 */}
                   <div className="bento-card rounded-3xl p-6 flex flex-col justify-center items-center text-center">
-                    <span className="material-symbols-outlined text-4xl text-[#3b82f6] mb-3">support_agent</span>
+                    <span className="material-symbols-outlined text-4xl text-[#0891b2] mb-3">support_agent</span>
                     <h3 className="text-sm font-bold">Soporte 24/7</h3>
                     <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1">Comunidad privada + mentorías</p>
                   </div>
@@ -733,7 +733,7 @@ export default function CursoNegocioLanding() {
             <section id="programa" className="py-20 lg:py-32 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-black/50">
               <div className="max-w-4xl mx-auto">
                 <div className="text-center mb-16">
-                  <span className="text-[#895af6] font-bold text-sm tracking-widest uppercase block mb-3">
+                  <span className="text-[#06b6d4] font-bold text-sm tracking-widest uppercase block mb-3">
                     Programa completo
                   </span>
                   <h2 className="text-3xl lg:text-5xl font-bold mb-4">
@@ -757,8 +757,8 @@ export default function CursoNegocioLanding() {
                       >
                         <div className="flex items-center gap-4 lg:gap-6">
                           <div className={`w-12 h-12 lg:w-14 lg:h-14 rounded-xl flex items-center justify-center text-white font-bold text-lg ${
-                            index === 0 ? 'bg-[#895af6]' :
-                            index === 1 ? 'bg-[#3b82f6]' :
+                            index === 0 ? 'bg-[#06b6d4]' :
+                            index === 1 ? 'bg-[#0891b2]' :
                             index === 2 ? 'bg-emerald-500' :
                             'bg-amber-500'
                           }`}>
@@ -800,7 +800,7 @@ export default function CursoNegocioLanding() {
             <section id="aplicar" className="py-20 lg:py-32 px-4 sm:px-6 lg:px-8">
               <div className="max-w-5xl mx-auto">
                 <div className="text-center mb-12">
-                  <span className="text-[#895af6] font-bold text-sm tracking-widest uppercase block mb-3">
+                  <span className="text-[#06b6d4] font-bold text-sm tracking-widest uppercase block mb-3">
                     Plazas limitadas
                   </span>
                   <h2 className="text-3xl lg:text-5xl font-bold mb-4">
@@ -830,7 +830,7 @@ export default function CursoNegocioLanding() {
                 <div className="pricing-card p-8 lg:p-12 glow-primary">
                   <div className="flex flex-col lg:flex-row gap-12 items-center">
                     <div className="flex-1 text-center lg:text-left">
-                      <div className="inline-block px-4 py-1.5 rounded-full bg-[#895af6]/10 text-[#895af6] text-xs font-black uppercase tracking-widest mb-6">
+                      <div className="inline-block px-4 py-1.5 rounded-full bg-[#06b6d4]/10 text-[#06b6d4] text-xs font-black uppercase tracking-widest mb-6">
                         Oferta de Lanzamiento
                       </div>
                       <h2 className="text-3xl lg:text-4xl font-black mb-6">
@@ -847,7 +847,7 @@ export default function CursoNegocioLanding() {
                           'Garantía de devolución 14 días'
                         ].map((item, i) => (
                           <li key={i} className="flex items-center gap-3 text-slate-600 dark:text-slate-300">
-                            <span className="material-symbols-outlined text-[#895af6]">check_circle</span>
+                            <span className="material-symbols-outlined text-[#06b6d4]">check_circle</span>
                             {item}
                           </li>
                         ))}
@@ -933,7 +933,7 @@ export default function CursoNegocioLanding() {
                 </p>
                 <a
                   href="#precio"
-                  className="btn-shine inline-flex items-center gap-2 bg-[#895af6] hover:bg-[#7c4ddb] text-white px-10 py-5 rounded-2xl text-lg font-bold shadow-2xl shadow-purple-500/30 transition-all hover:scale-[1.02]"
+                  className="btn-shine inline-flex items-center gap-2 bg-[#06b6d4] hover:bg-[#0e7490] text-white px-10 py-5 rounded-2xl text-lg font-bold shadow-2xl shadow-cyan-500/30 transition-all hover:scale-[1.02]"
                 >
                   Reservar mi plaza ahora
                   <span className="material-symbols-outlined">arrow_forward</span>
@@ -947,16 +947,16 @@ export default function CursoNegocioLanding() {
             <div className="max-w-7xl mx-auto">
               <div className="flex flex-col md:flex-row justify-between items-center gap-8">
                 <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 bg-gradient-to-br from-[#895af6] to-[#3b82f6] rounded-lg flex items-center justify-center">
+                  <div className="w-7 h-7 bg-gradient-to-br from-[#06b6d4] to-[#0891b2] rounded-lg flex items-center justify-center">
                     <span className="text-white font-black text-xs">AS</span>
                   </div>
-                  <span className="font-bold">aprende<span className="text-[#895af6]">.software</span></span>
+                  <span className="font-bold">aprende<span className="text-[#06b6d4]">.software</span></span>
                 </div>
 
                 <div className="flex gap-8 text-sm text-slate-500 dark:text-slate-400">
-                  <Link href="/privacidad" className="hover:text-[#895af6] transition-colors">Privacidad</Link>
-                  <Link href="/" className="hover:text-[#895af6] transition-colors">Curso gratuito</Link>
-                  <a href="https://twitter.com/josusanz" target="_blank" rel="noopener noreferrer" className="hover:text-[#895af6] transition-colors">Twitter</a>
+                  <Link href="/privacidad" className="hover:text-[#06b6d4] transition-colors">Privacidad</Link>
+                  <Link href="/" className="hover:text-[#06b6d4] transition-colors">Curso gratuito</Link>
+                  <a href="https://twitter.com/josusanz" target="_blank" rel="noopener noreferrer" className="hover:text-[#06b6d4] transition-colors">Twitter</a>
                 </div>
 
                 <p className="text-xs text-slate-400 dark:text-slate-500">
