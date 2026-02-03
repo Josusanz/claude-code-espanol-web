@@ -347,7 +347,7 @@ export default function CursoNegocioLanding() {
               </div>
 
               {/* Headline */}
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.1] mb-8 animate-in delay-1">
+              <h1 className={`text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.1] mb-8 animate-in delay-1 ${isDark ? 'text-white' : 'text-slate-900'}`}>
                 Crea tu Negocio<br />Digital con IA
               </h1>
 
@@ -405,7 +405,7 @@ export default function CursoNegocioLanding() {
               </p>
               <div className="flex flex-wrap justify-center items-center gap-8 lg:gap-12">
                 {['Claude AI', 'ChatGPT', 'Cursor', 'v0.dev', 'Stripe', 'Vercel'].map((tool) => (
-                  <span key={tool} className={`text-base font-semibold ${isDark ? 'text-zinc-600' : 'text-slate-400'}`}>
+                  <span key={tool} className={`text-base font-semibold ${isDark ? 'text-zinc-600' : 'text-slate-500'}`}>
                     {tool}
                   </span>
                 ))}
@@ -443,7 +443,7 @@ export default function CursoNegocioLanding() {
                 <span className="text-[#8B5CF6] text-xs font-bold uppercase tracking-widest mb-4 block">
                   METODOLOGÍA
                 </span>
-                <h2 className="text-3xl lg:text-5xl font-bold mb-4">
+                <h2 className={`text-3xl lg:text-5xl font-bold mb-4 ${isDark ? 'text-white' : 'text-slate-900'}`}>
                   Todo lo que necesitas para lanzar
                 </h2>
                 <p className={`text-lg ${isDark ? 'text-zinc-500' : 'text-slate-500'}`}>
@@ -457,7 +457,7 @@ export default function CursoNegocioLanding() {
                   <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#3B82F6] to-[#8B5CF6] flex items-center justify-center mb-6">
                     <span className="text-2xl">📹</span>
                   </div>
-                  <h3 className="text-xl font-semibold mb-3">Clases en vivo semanales</h3>
+                  <h3 className={`text-xl font-semibold mb-3 ${isDark ? 'text-white' : 'text-slate-900'}`}>Clases en vivo semanales</h3>
                   <p className={`${isDark ? 'text-zinc-400' : 'text-slate-600'} leading-relaxed`}>
                     Sesiones de 2 horas donde trabajamos juntos en tu proyecto real. Nada de teoría aburrida, solo práctica.
                   </p>
@@ -468,7 +468,7 @@ export default function CursoNegocioLanding() {
                   <div className={`w-12 h-12 rounded-xl ${isDark ? 'bg-zinc-800' : 'bg-slate-100'} flex items-center justify-center mb-6`}>
                     <span className="text-2xl">👤</span>
                   </div>
-                  <h3 className="text-xl font-semibold mb-3">Mentoría 1:1 semanal</h3>
+                  <h3 className={`text-xl font-semibold mb-3 ${isDark ? 'text-white' : 'text-slate-900'}`}>Mentoría 1:1 semanal</h3>
                   <p className={`${isDark ? 'text-zinc-400' : 'text-slate-600'} leading-relaxed`}>
                     Seguimiento individual para resolver dudas y acelerar tu progreso.
                   </p>
@@ -479,7 +479,7 @@ export default function CursoNegocioLanding() {
                   <div className={`w-12 h-12 rounded-xl ${isDark ? 'bg-zinc-800' : 'bg-slate-100'} flex items-center justify-center mb-6`}>
                     <span className="text-2xl">🤝</span>
                   </div>
-                  <h3 className="text-xl font-semibold mb-3">Comunidad exclusiva</h3>
+                  <h3 className={`text-xl font-semibold mb-3 ${isDark ? 'text-white' : 'text-slate-900'}`}>Comunidad exclusiva</h3>
                   <p className={`${isDark ? 'text-zinc-400' : 'text-slate-600'} leading-relaxed`}>
                     Grupo privado de máximo 10 personas para networking y apoyo mutuo.
                   </p>
@@ -490,11 +490,11 @@ export default function CursoNegocioLanding() {
                   <div className={`w-12 h-12 rounded-xl ${isDark ? 'bg-white/10' : 'bg-indigo-100'} flex items-center justify-center mb-6`}>
                     <span className="text-2xl">🚀</span>
                   </div>
-                  <h3 className="text-xl font-semibold mb-3">De 0 a lanzamiento</h3>
+                  <h3 className={`text-xl font-semibold mb-3 ${isDark ? 'text-white' : 'text-indigo-900'}`}>De 0 a lanzamiento</h3>
                   <p className={`${isDark ? 'text-indigo-200' : 'text-indigo-700'} leading-relaxed mb-4`}>
                     En 10 semanas tendrás tu negocio funcionando: web, producto, sistema de ventas y primeros clientes.
                   </p>
-                  <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${isDark ? 'bg-white/10' : 'bg-white/80'} text-sm font-medium w-fit`}>
+                  <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium w-fit ${isDark ? 'bg-white/10 text-white' : 'bg-white text-indigo-700 shadow-sm'}`}>
                     ✨ Garantía de resultados
                   </div>
                 </div>
@@ -509,7 +509,7 @@ export default function CursoNegocioLanding() {
                 <span className="text-[#3B82F6] text-xs font-bold uppercase tracking-widest mb-4 block">
                   10 SEMANAS INTENSIVAS
                 </span>
-                <h2 className="text-3xl lg:text-5xl font-bold mb-4">
+                <h2 className={`text-3xl lg:text-5xl font-bold mb-4 ${isDark ? 'text-white' : 'text-slate-900'}`}>
                   Programa completo
                 </h2>
                 <p className={`text-lg ${isDark ? 'text-zinc-500' : 'text-slate-500'}`}>
@@ -527,7 +527,7 @@ export default function CursoNegocioLanding() {
                       <span className="text-white font-bold text-sm">{week.week}</span>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-semibold text-base">
+                      <h3 className={`font-semibold text-base ${isDark ? 'text-white' : 'text-slate-900'}`}>
                         {week.highlight && '🎉 '}{week.title}
                       </h3>
                       <p className={`text-sm ${isDark ? 'text-zinc-500' : 'text-slate-500'} truncate`}>
@@ -560,7 +560,7 @@ export default function CursoNegocioLanding() {
                   <span className="text-[#8B5CF6] text-xs font-bold uppercase tracking-widest mb-2 block">
                     TU MENTOR
                   </span>
-                  <h3 className="text-2xl lg:text-3xl font-bold mb-3">Josu Sanz</h3>
+                  <h3 className={`text-2xl lg:text-3xl font-bold mb-3 ${isDark ? 'text-white' : 'text-slate-900'}`}>Josu Sanz</h3>
                   <p className={`text-lg mb-4 ${isDark ? 'text-zinc-400' : 'text-slate-600'}`}>
                     +20 años construyendo productos digitales. He creado más de 500 webs y lanzado +20 proyectos propios.
                     Ahora ayudo a otros a hacer lo mismo usando IA.
@@ -588,7 +588,7 @@ export default function CursoNegocioLanding() {
                 <span className="text-[#8B5CF6] text-xs font-bold uppercase tracking-widest mb-4 block">
                   INVERSIÓN
                 </span>
-                <h2 className="text-3xl lg:text-5xl font-bold mb-4">
+                <h2 className={`text-3xl lg:text-5xl font-bold mb-4 ${isDark ? 'text-white' : 'text-slate-900'}`}>
                   Una decisión que cambia todo
                 </h2>
                 <p className={`text-lg ${isDark ? 'text-zinc-500' : 'text-slate-500'}`}>
@@ -600,12 +600,12 @@ export default function CursoNegocioLanding() {
                 {/* Price */}
                 <div className="mb-8">
                   <div className={`text-xl line-through mb-1 ${isDark ? 'text-zinc-600' : 'text-slate-400'}`}>1.997€</div>
-                  <div className="text-6xl lg:text-7xl font-extrabold mb-2">997€</div>
+                  <div className={`text-6xl lg:text-7xl font-extrabold mb-2 ${isDark ? 'text-white' : 'text-slate-900'}`}>997€</div>
                   <p className={`text-sm ${isDark ? 'text-zinc-500' : 'text-slate-500'}`}>
                     pago único · IVA incluido
                   </p>
-                  <div className="inline-flex items-center gap-2 mt-3 px-3 py-1.5 rounded-full bg-green-500/10 border border-green-500/20">
-                    <span className="text-green-500 text-sm font-semibold">Ahorras 1.000€</span>
+                  <div className={`inline-flex items-center gap-2 mt-3 px-3 py-1.5 rounded-full ${isDark ? 'bg-green-500/10 border border-green-500/20' : 'bg-green-50 border border-green-200'}`}>
+                    <span className={`text-sm font-semibold ${isDark ? 'text-green-500' : 'text-green-700'}`}>Ahorras 1.000€</span>
                   </div>
                 </div>
 
@@ -654,7 +654,7 @@ export default function CursoNegocioLanding() {
                 <span className="text-[#8B5CF6] text-xs font-bold uppercase tracking-widest mb-4 block">
                   ¿ES PARA TI?
                 </span>
-                <h2 className="text-3xl lg:text-5xl font-bold mb-4">
+                <h2 className={`text-3xl lg:text-5xl font-bold mb-4 ${isDark ? 'text-white' : 'text-slate-900'}`}>
                   Este curso es para ti si...
                 </h2>
               </div>
@@ -690,7 +690,7 @@ export default function CursoNegocioLanding() {
                 <span className="text-[#3B82F6] text-xs font-bold uppercase tracking-widest mb-4 block">
                   PLAZAS LIMITADAS
                 </span>
-                <h2 className="text-3xl lg:text-5xl font-bold mb-4">
+                <h2 className={`text-3xl lg:text-5xl font-bold mb-4 ${isDark ? 'text-white' : 'text-slate-900'}`}>
                   Aplica a la próxima edición
                 </h2>
                 <p className={`text-lg ${isDark ? 'text-zinc-500' : 'text-slate-500'}`}>
@@ -715,7 +715,7 @@ export default function CursoNegocioLanding() {
           <section className="py-20 lg:py-28 px-4 sm:px-6">
             <div className="max-w-3xl mx-auto">
               <div className="text-center mb-12">
-                <h2 className="text-3xl lg:text-4xl font-bold mb-4">
+                <h2 className={`text-3xl lg:text-4xl font-bold mb-4 ${isDark ? 'text-white' : 'text-slate-900'}`}>
                   Preguntas frecuentes
                 </h2>
               </div>
@@ -723,7 +723,7 @@ export default function CursoNegocioLanding() {
               <div className="space-y-4">
                 {faqs.map((faq, i) => (
                   <div key={i} className="bento-card rounded-2xl p-6">
-                    <h3 className="font-semibold text-lg mb-2">{faq.q}</h3>
+                    <h3 className={`font-semibold text-lg mb-2 ${isDark ? 'text-white' : 'text-slate-900'}`}>{faq.q}</h3>
                     <p className={isDark ? 'text-zinc-400' : 'text-slate-600'}>{faq.a}</p>
                   </div>
                 ))}
@@ -737,7 +737,7 @@ export default function CursoNegocioLanding() {
               <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6 pulse ${isDark ? 'bg-amber-500/10 border border-amber-500/20' : 'bg-amber-50 border border-amber-200'}`}>
                 <span className={`text-sm font-semibold ${isDark ? 'text-amber-500' : 'text-amber-700'}`}>⚡ Solo quedan 10 plazas</span>
               </div>
-              <h2 className="text-3xl lg:text-5xl font-bold mb-6">
+              <h2 className={`text-3xl lg:text-5xl font-bold mb-6 ${isDark ? 'text-white' : 'text-slate-900'}`}>
                 Tu negocio digital te espera
               </h2>
               <p className={`text-lg mb-10 ${isDark ? 'text-zinc-500' : 'text-slate-500'}`}>
@@ -765,7 +765,7 @@ export default function CursoNegocioLanding() {
                 <div className="w-10 h-10 bg-gradient-to-br from-[#3B82F6] to-[#8B5CF6] rounded-xl flex items-center justify-center">
                   <span className="text-white font-bold text-sm">AS</span>
                 </div>
-                <span className="text-lg font-semibold">aprende.software</span>
+                <span className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-slate-900'}`}>aprende.software</span>
               </div>
 
               <div className={`flex gap-8 text-sm ${isDark ? 'text-zinc-500' : 'text-slate-500'}`}>
