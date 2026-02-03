@@ -859,7 +859,7 @@ export default function CursoNegocioLanding() {
                         o 3 cuotas de 349€
                       </div>
                       <a
-                        href="https://pay.aprende.software/checkout/curso-negocio"
+                        href="https://yenze.lemonsqueezy.com/checkout/buy/4bec4db6-6245-4822-a577-4fba37c541de"
                         className="btn-shine block w-full lg:w-auto bg-white dark:bg-white text-[#050505] hover:bg-slate-100 px-10 py-5 rounded-2xl text-lg font-extrabold transition-all shadow-xl"
                       >
                         Reservar mi plaza
