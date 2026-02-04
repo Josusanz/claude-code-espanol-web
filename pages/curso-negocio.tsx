@@ -1,224 +1,103 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 
 export default function CursoNegocioLanding() {
-  const [isDark, setIsDark] = useState(true) // Dark by default
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [activeAccordion, setActiveAccordion] = useState<number | null>(0)
+  const [mounted, setMounted] = useState(false)
+  const [isDark, setIsDark] = useState(true)
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme-curso')
-    if (savedTheme) {
-      setIsDark(savedTheme === 'dark')
-    } else {
-      // Dark mode por defecto
-      setIsDark(true)
-    }
+    setMounted(true)
+    const saved = localStorage.getItem('theme-curso')
+    if (saved) setIsDark(saved === 'dark')
   }, [])
 
-  useEffect(() => {
-    document.documentElement.classList.toggle('dark', isDark)
-  }, [isDark])
-
-  const toggleDarkMode = () => {
-    const newState = !isDark
-    setIsDark(newState)
-    localStorage.setItem('theme-curso', newState ? 'dark' : 'light')
+  const toggleTheme = () => {
+    const next = !isDark
+    setIsDark(next)
+    localStorage.setItem('theme-curso', next ? 'dark' : 'light')
   }
 
   const curriculum = [
-    { week: '1', title: 'Validación de tu idea de negocio', desc: 'Análisis de mercado con IA y definición de tu propuesta de valor única' },
-    { week: '2', title: 'Tu marca e identidad digital', desc: 'Creación de marca, logo y materiales con herramientas de IA' },
-    { week: '3', title: 'Tu web profesional sin código', desc: 'Diseño y lanzamiento de tu web con IA en menos de una semana' },
-    { week: '4', title: 'Contenido que vende', desc: 'Estrategia de contenidos y copywriting con IA para atraer clientes' },
-    { week: '5', title: 'Automatización inteligente', desc: 'Flujos automáticos de email, CRM y atención al cliente con IA' },
-    { week: '6', title: 'Tu primer producto digital', desc: 'Creación y empaquetado de tu oferta con IA generativa' },
-    { week: '7', title: 'Estrategia de ventas', desc: 'Funnels de venta y sistemas de pago automatizados' },
-    { week: '8', title: 'Marketing con IA', desc: 'Publicidad y growth hacking potenciado con inteligencia artificial' },
-    { week: '9', title: 'Escalar tu negocio', desc: 'Sistemas para multiplicar ingresos sin multiplicar trabajo' },
-    { week: '10', title: 'Lanzamiento y celebración', desc: 'Lanzas tu negocio al mundo con todo listo para facturar', highlight: true }
+    { week: '1', title: 'Validación de tu idea', desc: 'Análisis de mercado con IA y propuesta de valor' },
+    { week: '2', title: 'Marca e identidad', desc: 'Logo, branding y materiales con IA' },
+    { week: '3', title: 'Tu web profesional', desc: 'Diseño y lanzamiento sin código' },
+    { week: '4', title: 'Contenido que vende', desc: 'Copywriting y estrategia con IA' },
+    { week: '5', title: 'Automatización', desc: 'Email, CRM y atención al cliente' },
+    { week: '6', title: 'Producto digital', desc: 'Creación de tu primera oferta' },
+    { week: '7', title: 'Sistema de ventas', desc: 'Funnels y pagos automatizados' },
+    { week: '8', title: 'Marketing con IA', desc: 'Publicidad y growth hacking' },
+    { week: '9', title: 'Escalar', desc: 'Multiplicar sin multiplicar trabajo' },
+    { week: '10', title: 'Lanzamiento', desc: 'Tu negocio listo para facturar' }
+  ]
+
+  const features = [
+    { icon: '📹', title: 'Clases en vivo', desc: '10 sesiones de 2h trabajando en tu proyecto real' },
+    { icon: '👤', title: 'Mentoría 1:1', desc: 'Seguimiento individual cada semana' },
+    { icon: '👥', title: 'Grupo reducido', desc: 'Máximo 10 personas para atención personalizada' },
+    { icon: '🚀', title: 'De 0 a lanzamiento', desc: 'Terminas con tu negocio funcionando' }
   ]
 
   const faqs = [
-    { q: '¿Necesito saber programar?', a: 'No. El curso está diseñado para personas sin conocimientos técnicos. Aprenderás a usar herramientas no-code y a orquestar IA para crear software sin escribir código.' },
-    { q: '¿Qué pasa si no puedo asistir a una clase?', a: 'Todas las sesiones quedan grabadas. Además, puedes resolver dudas en la comunidad privada o en las mentorías semanales.' },
-    { q: '¿Cuánto tiempo necesito dedicar?', a: 'Entre 5-8 horas semanales: 2 horas de clase en directo + 3-6 horas de práctica con tu proyecto personal.' },
-    { q: '¿Qué tipo de negocios puedo crear?', a: 'SaaS, marketplaces, apps, herramientas de productividad, cursos online, servicios de automatización... Las posibilidades son infinitas.' },
-    { q: '¿Cuándo empieza la próxima edición?', a: 'La próxima edición arranca en marzo de 2026. Las plazas son limitadas a 10 personas para garantizar atención personalizada.' }
+    { q: '¿Necesito saber programar?', a: 'No. Usarás herramientas no-code e IA para crear todo.' },
+    { q: '¿Qué pasa si no puedo asistir?', a: 'Las sesiones quedan grabadas y tienes acceso de por vida.' },
+    { q: '¿Cuánto tiempo necesito?', a: '5-8 horas semanales: 2h de clase + práctica.' },
+    { q: '¿Cuándo empieza?', a: 'Marzo 2026. Las plazas son limitadas a 10 personas.' }
   ]
+
+  // Theme colors
+  const t = {
+    bg: isDark ? '#08090a' : '#ffffff',
+    bgSecondary: isDark ? '#0f1011' : '#f8fafc',
+    bgTertiary: isDark ? '#161718' : '#f1f5f9',
+    text: isDark ? '#f5f5f5' : '#0f172a',
+    textSecondary: isDark ? '#a1a1a1' : '#475569',
+    textTertiary: isDark ? '#6b6b6b' : '#94a3b8',
+    accent: '#5e6ad2',
+    accentHover: '#7c85e3',
+    border: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)',
+    borderHover: isDark ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.15)',
+    glow: isDark ? 'rgba(94,106,210,0.08)' : 'rgba(94,106,210,0.05)',
+    glowStrong: isDark ? 'rgba(94,106,210,0.15)' : 'rgba(94,106,210,0.1)',
+    navBg: isDark ? 'rgba(8,9,10,0.8)' : 'rgba(255,255,255,0.8)',
+    cardHover: isDark ? '#161718' : '#f1f5f9',
+    gradientText: isDark
+      ? 'linear-gradient(to right, #fff 20%, #a1a1a1 100%)'
+      : 'linear-gradient(to right, #0f172a 20%, #475569 100%)'
+  }
 
   return (
     <>
       <Head>
         <title>Crea tu Negocio Digital con IA | Curso Presencial Online</title>
-        <meta name="description" content="Aprende a crear tu negocio digital sin escribir código. Curso presencial online de 10 semanas. Domina las herramientas de IA para construir, lanzar y escalar." />
+        <meta name="description" content="De idea a negocio rentable en 10 semanas. Curso práctico con mentoría personalizada." />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
       </Head>
 
       <style jsx global>{`
-        .landing-premium {
+        * {
+          box-sizing: border-box;
+        }
+
+        body {
+          margin: 0;
+          padding: 0;
           font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-          --gradient-start: #3B82F6;
-          --gradient-end: #8B5CF6;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
         }
 
-        /* Mesh gradient background */
-        .mesh-bg {
-          background-color: #09090B;
-          background-image:
-            radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.15) 0, transparent 50%),
-            radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.1) 0, transparent 50%),
-            radial-gradient(at 50% 100%, rgba(59, 130, 246, 0.1) 0, transparent 50%);
-        }
-
-        .light .mesh-bg {
-          background-color: #FFFFFF;
-          background-image:
-            radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.07) 0, transparent 50%),
-            radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.05) 0, transparent 50%),
-            radial-gradient(at 50% 100%, rgba(59, 130, 246, 0.04) 0, transparent 50%);
-        }
-
-        /* Text gradient */
-        .text-gradient {
-          background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-        }
-
-        /* Gradient button with glow */
-        .btn-gradient {
-          background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
-          box-shadow: 0 10px 40px -10px rgba(139, 92, 246, 0.5);
-          transition: all 0.3s ease;
-        }
-
-        .btn-gradient:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 20px 50px -10px rgba(139, 92, 246, 0.6);
-        }
-
-        /* Glass card */
-        .glass-card {
-          background: rgba(255, 255, 255, 0.03);
-          border: 1px solid rgba(255, 255, 255, 0.08);
-          backdrop-filter: blur(20px);
-        }
-
-        .light .glass-card {
-          background: rgba(255, 255, 255, 0.85);
-          border: 1px solid rgba(0, 0, 0, 0.06);
-          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-        }
-
-        /* Light mode gradient button adjustments */
-        .light .btn-gradient {
-          box-shadow: 0 10px 40px -10px rgba(99, 102, 241, 0.4);
-        }
-
-        .light .btn-gradient:hover {
-          box-shadow: 0 20px 50px -10px rgba(99, 102, 241, 0.5);
-        }
-
-        /* Bento card */
-        .bento-card {
-          background: #18181B;
-          border: 1px solid #27272A;
-          transition: all 0.4s ease;
-        }
-
-        .light .bento-card {
-          background: #FFFFFF;
-          border: 1px solid #E2E8F0;
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
-        }
-
-        .light .bento-card:hover {
-          box-shadow: 0 10px 40px -10px rgba(99, 102, 241, 0.15), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
-
-        .bento-card:hover {
-          border-color: rgba(139, 92, 246, 0.3);
-          transform: translateY(-4px);
-        }
-
-        /* Bento highlight card */
-        .bento-highlight {
-          background: linear-gradient(135deg, #1E1B4B 0%, #312E81 100%);
-          border: 1px solid rgba(99, 102, 241, 0.3);
-        }
-
-        .light .bento-highlight {
-          background: linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 100%);
-          border: 1px solid rgba(99, 102, 241, 0.25);
-          box-shadow: 0 4px 20px -4px rgba(99, 102, 241, 0.2);
-        }
-
-        /* Week item */
-        .week-item {
-          background: #18181B;
-          border: 1px solid #27272A;
-          transition: all 0.3s ease;
-        }
-
-        .light .week-item {
-          background: #FFFFFF;
-          border: 1px solid #E2E8F0;
-          box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
-        }
-
-        .light .week-item:hover {
-          background: #F8FAFC;
-          border-color: rgba(99, 102, 241, 0.3);
-          box-shadow: 0 4px 12px -2px rgba(99, 102, 241, 0.1);
-        }
-
-        .week-item:hover {
-          border-color: rgba(139, 92, 246, 0.3);
-        }
-
-        .week-item-highlight {
-          background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
-          border: 2px solid transparent;
-          background-clip: padding-box;
-          position: relative;
-        }
-
-        .week-item-highlight::before {
-          content: '';
-          position: absolute;
-          inset: -2px;
-          background: linear-gradient(135deg, #3B82F6, #8B5CF6);
-          border-radius: 14px;
-          z-index: -1;
-        }
-
-        /* Pricing glassmorphism */
-        .pricing-glass {
-          background: rgba(255, 255, 255, 0.05);
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          backdrop-filter: blur(20px);
-        }
-
-        .light .pricing-glass {
-          background: #FFFFFF;
-          border: 1px solid #E2E8F0;
-          box-shadow: 0 25px 50px -12px rgba(99, 102, 241, 0.15), 0 10px 20px -10px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Animations */
-        @keyframes fadeInUp {
-          from { opacity: 0; transform: translateY(30px); }
+        /* Animation */
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(20px); }
           to { opacity: 1; transform: translateY(0); }
         }
 
-        .animate-in {
-          animation: fadeInUp 0.8s ease forwards;
+        .animate-fade-in {
+          animation: fadeIn 0.6s ease forwards;
         }
 
         .delay-1 { animation-delay: 0.1s; opacity: 0; }
@@ -226,314 +105,336 @@ export default function CursoNegocioLanding() {
         .delay-3 { animation-delay: 0.3s; opacity: 0; }
         .delay-4 { animation-delay: 0.4s; opacity: 0; }
 
-        /* Smooth scroll */
+        /* Scroll smooth */
         html { scroll-behavior: smooth; }
 
-        /* Check icon */
-        .check-circle {
-          width: 24px;
-          height: 24px;
-          border-radius: 100%;
-          background: rgba(34, 197, 94, 0.15);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-shrink: 0;
-        }
-
-        .check-circle span {
-          color: #22C55E;
-          font-size: 14px;
-          font-weight: 700;
-        }
-
-        /* Pulse animation for urgency */
-        @keyframes pulse {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.7; }
-        }
-
-        .pulse {
-          animation: pulse 2s ease-in-out infinite;
-        }
-
-        /* Gradient border animation */
-        @keyframes gradientBorder {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-
-        .animated-border {
-          background: linear-gradient(90deg, #3B82F6, #8B5CF6, #3B82F6);
-          background-size: 200% auto;
-          animation: gradientBorder 3s linear infinite;
-        }
-
-        /* Scroll indicator */
-        @keyframes bounce {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(8px); }
-        }
-
-        .bounce {
-          animation: bounce 2s ease-in-out infinite;
-        }
-
-        /* Light mode photo ring */
-        .light .mentor-photo-ring {
-          --tw-ring-offset-color: #FFFFFF;
-        }
-
-        /* Light mode sections with subtle backgrounds */
-        .light .section-alt {
-          background: linear-gradient(180deg, #F8FAFC 0%, #F1F5F9 100%);
-        }
-
-        /* Light mode trust badges */
-        .light .trust-badge {
-          background: #F1F5F9;
-          border: 1px solid #E2E8F0;
+        /* Selection */
+        ::selection {
+          background: rgba(94, 106, 210, 0.3);
         }
       `}</style>
 
-      <div className={`landing-premium min-h-screen transition-colors duration-300 ${isDark ? 'mesh-bg text-white' : 'light mesh-bg text-slate-900'}`}>
+      <div style={{ minHeight: '100vh', background: t.bg, color: t.text, transition: 'all 0.3s ease' }}>
         {/* Navigation */}
-        <header className={`sticky top-0 z-50 backdrop-blur-xl ${isDark ? 'bg-[#09090B]/80 border-b border-white/5' : 'bg-white/80 border-b border-slate-200/50'}`}>
-          <nav className="max-w-6xl mx-auto px-4 sm:px-6">
-            <div className="flex justify-between items-center h-16">
-              <Link href="/" className="flex items-center gap-2.5">
-                <div className="w-9 h-9 bg-gradient-to-br from-[#3B82F6] to-[#8B5CF6] rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/20">
-                  <span className="text-white font-black text-sm">AS</span>
-                </div>
-                <span className="text-lg font-semibold tracking-tight hidden sm:block">
-                  aprende<span className="text-[#3B82F6]">.software</span>
-                </span>
-              </Link>
+        <header style={{
+          position: 'sticky',
+          top: 0,
+          zIndex: 50,
+          background: t.navBg,
+          backdropFilter: 'blur(12px)',
+          borderBottom: `1px solid ${t.border}`
+        }}>
+          <nav style={{
+            maxWidth: '1100px',
+            margin: '0 auto',
+            padding: '0 24px',
+            height: '60px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between'
+          }}>
+            <Link href="/" style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px',
+              textDecoration: 'none',
+              color: t.text
+            }}>
+              <div style={{
+                width: '32px',
+                height: '32px',
+                background: 'linear-gradient(135deg, #5e6ad2, #8b5cf6)',
+                borderRadius: '8px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '14px',
+                fontWeight: 700,
+                color: 'white'
+              }}>AS</div>
+              <span style={{ fontWeight: 600, fontSize: '15px' }}>aprende.software</span>
+            </Link>
 
-              <div className="hidden md:flex items-center gap-8">
-                <a href="#programa" className={`text-sm font-medium ${isDark ? 'text-zinc-400 hover:text-white' : 'text-slate-600 hover:text-slate-900'} transition-colors`}>Programa</a>
-                <a href="#precio" className={`text-sm font-medium ${isDark ? 'text-zinc-400 hover:text-white' : 'text-slate-600 hover:text-slate-900'} transition-colors`}>Precio</a>
-                <a href="#aplicar" className={`text-sm font-medium ${isDark ? 'text-zinc-400 hover:text-white' : 'text-slate-600 hover:text-slate-900'} transition-colors`}>Aplicar</a>
-              </div>
-
-              <div className="flex items-center gap-3">
-                <button
-                  onClick={toggleDarkMode}
-                  className={`relative w-16 h-8 rounded-full transition-all duration-300 ${isDark ? 'bg-indigo-600' : 'bg-slate-200'}`}
-                  aria-label="Cambiar tema"
-                >
-                  <div className={`absolute top-1 w-6 h-6 rounded-full transition-all duration-300 flex items-center justify-center text-sm ${isDark ? 'left-9 bg-slate-900' : 'left-1 bg-white shadow-md'}`}>
-                    {isDark ? '🌙' : '☀️'}
-                  </div>
-                </button>
-                <a href="#aplicar" className="hidden sm:flex btn-gradient text-white px-5 py-2.5 rounded-xl text-sm font-semibold">
-                  Aplicar →
-                </a>
-              </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              {/* Theme toggle */}
+              <button
+                onClick={toggleTheme}
+                style={{
+                  width: '40px',
+                  height: '40px',
+                  borderRadius: '8px',
+                  border: `1px solid ${t.border}`,
+                  background: 'transparent',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '18px',
+                  transition: 'all 0.2s ease'
+                }}
+                aria-label="Cambiar tema"
+              >
+                {isDark ? '☀️' : '🌙'}
+              </button>
+              <a href="#programa" style={{
+                padding: '8px 16px',
+                fontSize: '14px',
+                borderRadius: '8px',
+                border: `1px solid ${t.border}`,
+                background: 'transparent',
+                color: t.text,
+                textDecoration: 'none',
+                fontWeight: 500,
+                transition: 'all 0.2s ease'
+              }}>
+                Programa
+              </a>
+              <a href="#aplicar" style={{
+                padding: '8px 16px',
+                fontSize: '14px',
+                borderRadius: '8px',
+                background: t.accent,
+                color: 'white',
+                textDecoration: 'none',
+                fontWeight: 500,
+                transition: 'all 0.2s ease'
+              }}>
+                Aplicar
+              </a>
             </div>
           </nav>
         </header>
 
         <main>
-          {/* Hero Section */}
-          <section className="pt-20 lg:pt-32 pb-16 lg:pb-24 px-4 sm:px-6">
-            <div className="max-w-4xl mx-auto text-center">
+          {/* Hero */}
+          <section style={{
+            paddingTop: '100px',
+            paddingBottom: '80px',
+            textAlign: 'center',
+            position: 'relative'
+          }}>
+            {/* Subtle glow background */}
+            <div style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: '600px',
+              height: '400px',
+              background: `radial-gradient(ellipse, ${t.glow} 0%, transparent 70%)`,
+              pointerEvents: 'none'
+            }} />
+
+            <div style={{ maxWidth: '800px', margin: '0 auto', padding: '0 24px', position: 'relative' }}>
               {/* Badge */}
-              <div className={`inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full ${isDark ? 'bg-white/5 border border-white/10' : 'bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-100'} mb-8 animate-in`}>
-                <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-                <span className={`text-sm font-medium ${isDark ? 'text-zinc-300' : 'text-indigo-900'}`}>
-                  🚀 Próxima edición: Marzo 2026 · Solo 10 plazas
-                </span>
+              <div className="animate-fade-in" style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                padding: '6px 14px',
+                background: t.bgSecondary,
+                border: `1px solid ${t.border}`,
+                borderRadius: '100px',
+                fontSize: '13px',
+                color: t.textSecondary,
+                marginBottom: '32px'
+              }}>
+                <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#22c55e' }} />
+                Marzo 2026 · Solo 10 plazas
               </div>
 
-              {/* Headline */}
-              <h1 className={`text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.1] mb-8 animate-in delay-1 ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                Crea tu Negocio<br />Digital con IA
+              {/* Title */}
+              <h1 className="animate-fade-in delay-1" style={{
+                fontSize: 'clamp(40px, 6vw, 64px)',
+                fontWeight: 600,
+                lineHeight: 1.1,
+                letterSpacing: '-0.03em',
+                margin: '0 0 24px 0',
+                background: t.gradientText,
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text'
+              }}>
+                Crea tu negocio digital<br />con inteligencia artificial
               </h1>
 
-              {/* Subheadline with highlight */}
-              <p className={`text-xl sm:text-2xl mb-4 animate-in delay-2 ${isDark ? 'text-zinc-400' : 'text-slate-600'}`}>
-                De idea a negocio rentable en <span className="text-gradient font-bold">10 semanas</span>
-              </p>
-
-              <p className={`text-lg mb-10 max-w-2xl mx-auto animate-in delay-2 ${isDark ? 'text-zinc-500' : 'text-slate-500'}`}>
-                Curso práctico con mentoría personalizada.<br className="hidden sm:block" />
-                Transforma tu idea en un negocio que factura usando inteligencia artificial.
+              {/* Subtitle */}
+              <p className="animate-fade-in delay-2" style={{
+                fontSize: '18px',
+                lineHeight: 1.6,
+                color: t.textSecondary,
+                margin: '0 0 40px 0',
+                maxWidth: '560px',
+                marginLeft: 'auto',
+                marginRight: 'auto'
+              }}>
+                De idea a negocio rentable en <span style={{ color: t.text }}>10 semanas</span>.
+                Curso práctico con mentoría personalizada para lanzar sin escribir código.
               </p>
 
               {/* CTAs */}
-              <div className="flex flex-col sm:flex-row justify-center gap-4 mb-12 animate-in delay-3">
-                <a href="#aplicar" className="btn-gradient text-white px-8 py-4 rounded-xl text-lg font-semibold flex items-center justify-center gap-2">
-                  Reservar mi plaza <span>→</span>
+              <div className="animate-fade-in delay-3" style={{
+                display: 'flex',
+                gap: '12px',
+                justifyContent: 'center',
+                flexWrap: 'wrap'
+              }}>
+                <a href="#aplicar" style={{
+                  padding: '14px 28px',
+                  fontSize: '15px',
+                  borderRadius: '8px',
+                  background: t.accent,
+                  color: 'white',
+                  textDecoration: 'none',
+                  fontWeight: 500,
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  transition: 'all 0.2s ease',
+                  boxShadow: `0 0 40px ${t.glowStrong}`
+                }}>
+                  Reservar plaza <span style={{ opacity: 0.7 }}>→</span>
                 </a>
-                <a href="#programa" className={`px-8 py-4 rounded-xl text-lg font-semibold flex items-center justify-center gap-2 transition-all ${isDark ? 'bg-white/5 border border-white/10 hover:bg-white/10' : 'bg-white border border-slate-200 hover:border-indigo-300 hover:shadow-lg hover:shadow-indigo-100 text-slate-800'}`}>
+                <a href="#programa" style={{
+                  padding: '14px 28px',
+                  fontSize: '15px',
+                  borderRadius: '8px',
+                  border: `1px solid ${t.border}`,
+                  background: 'transparent',
+                  color: t.text,
+                  textDecoration: 'none',
+                  fontWeight: 500,
+                  transition: 'all 0.2s ease'
+                }}>
                   Ver programa
                 </a>
               </div>
 
-              {/* Trust indicators */}
-              <div className="flex flex-wrap justify-center gap-3 animate-in delay-4">
-                <div className={`flex items-center gap-2 px-4 py-2 rounded-full ${isDark ? 'bg-white/5' : 'bg-white border border-slate-200 shadow-sm'}`}>
-                  <span className="text-green-500">✓</span>
-                  <span className={`text-sm font-medium ${isDark ? 'text-zinc-400' : 'text-slate-700'}`}>Clases en directo</span>
-                </div>
-                <div className={`flex items-center gap-2 px-4 py-2 rounded-full ${isDark ? 'bg-white/5' : 'bg-white border border-slate-200 shadow-sm'}`}>
-                  <span className="text-green-500">✓</span>
-                  <span className={`text-sm font-medium ${isDark ? 'text-zinc-400' : 'text-slate-700'}`}>Grupo de 10 personas</span>
-                </div>
-                <div className={`flex items-center gap-2 px-4 py-2 rounded-full ${isDark ? 'bg-white/5' : 'bg-white border border-slate-200 shadow-sm'}`}>
-                  <span className="text-green-500">✓</span>
-                  <span className={`text-sm font-medium ${isDark ? 'text-zinc-400' : 'text-slate-700'}`}>Mentoría 1:1</span>
-                </div>
-              </div>
-
-              {/* Scroll indicator */}
-              <div className="mt-16 bounce">
-                <a href="#metodologia" className={`inline-flex flex-col items-center gap-2 ${isDark ? 'text-zinc-600' : 'text-slate-400'}`}>
-                  <span className="text-xs font-medium uppercase tracking-wider">Descubre más</span>
-                  <span className="text-2xl">↓</span>
-                </a>
-              </div>
-            </div>
-          </section>
-
-          {/* Logo Cloud */}
-          <section className={`py-12 px-4 sm:px-6 ${isDark ? 'border-y border-white/5' : 'border-y border-slate-200'}`}>
-            <div className="max-w-4xl mx-auto">
-              <p className={`text-center text-xs font-semibold uppercase tracking-widest mb-6 ${isDark ? 'text-zinc-600' : 'text-slate-400'}`}>
-                Herramientas que dominarás
-              </p>
-              <div className="flex flex-wrap justify-center items-center gap-8 lg:gap-12">
-                {['Claude AI', 'ChatGPT', 'Cursor', 'v0.dev', 'Stripe', 'Vercel'].map((tool) => (
-                  <span key={tool} className={`text-base font-semibold ${isDark ? 'text-zinc-600' : 'text-slate-500'}`}>
-                    {tool}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </section>
-
-          {/* Stats Section */}
-          <section className={`py-16 px-4 sm:px-6 ${isDark ? 'bg-[#0F0F12]' : 'bg-gradient-to-b from-slate-50 to-white'}`}>
-            <div className="max-w-5xl mx-auto">
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+              {/* Stats */}
+              <div className="animate-fade-in delay-4" style={{
+                display: 'flex',
+                justifyContent: 'center',
+                gap: '48px',
+                marginTop: '64px',
+                flexWrap: 'wrap'
+              }}>
                 {[
                   { value: '20+', label: 'años en tech' },
                   { value: '500+', label: 'webs creadas' },
-                  { value: '20+', label: 'proyectos lanzados' },
-                  { value: '10', label: 'plazas máximo', highlight: true }
+                  { value: '10', label: 'plazas máx.' }
                 ].map((stat, i) => (
-                  <div key={i} className={`text-center py-8 rounded-2xl ${isDark ? '' : 'bg-white/50'}`}>
-                    <div className={`text-5xl lg:text-6xl font-extrabold mb-2 ${stat.highlight ? 'text-gradient' : isDark ? '' : 'text-slate-800'}`}>
-                      {stat.value}
-                    </div>
-                    <div className={`text-sm font-medium ${isDark ? 'text-zinc-500' : 'text-slate-500'}`}>
-                      {stat.label}
-                    </div>
+                  <div key={i} style={{ textAlign: 'center' }}>
+                    <div style={{ fontSize: '32px', fontWeight: 600, color: t.text }}>{stat.value}</div>
+                    <div style={{ fontSize: '13px', color: t.textTertiary, marginTop: '4px' }}>{stat.label}</div>
                   </div>
                 ))}
               </div>
             </div>
           </section>
 
-          {/* Bento Grid - Methodology */}
-          <section id="metodologia" className="py-20 lg:py-28 px-4 sm:px-6">
-            <div className="max-w-5xl mx-auto">
-              <div className="text-center mb-12">
-                <span className="text-[#8B5CF6] text-xs font-bold uppercase tracking-widest mb-4 block">
-                  METODOLOGÍA
-                </span>
-                <h2 className={`text-3xl lg:text-5xl font-bold mb-4 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+          {/* Divider */}
+          <div style={{ height: '1px', background: t.border, maxWidth: '1100px', margin: '0 auto' }} />
+
+          {/* Features */}
+          <section style={{ padding: '80px 24px' }}>
+            <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+              <div style={{ textAlign: 'center', marginBottom: '56px' }}>
+                <p style={{ fontSize: '13px', fontWeight: 500, color: t.accent, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '16px' }}>
+                  Metodología
+                </p>
+                <h2 style={{ fontSize: '36px', fontWeight: 600, letterSpacing: '-0.02em', margin: 0, color: t.text }}>
                   Todo lo que necesitas para lanzar
                 </h2>
-                <p className={`text-lg ${isDark ? 'text-zinc-500' : 'text-slate-500'}`}>
-                  Aprende haciendo. Cada semana construyes algo real para tu negocio.
-                </p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {/* Card 1 - Classes */}
-                <div className="bento-card rounded-3xl p-8 min-h-[280px] flex flex-col">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#3B82F6] to-[#8B5CF6] flex items-center justify-center mb-6">
-                    <span className="text-2xl">📹</span>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+                gap: '16px'
+              }}>
+                {features.map((feature, i) => (
+                  <div key={i} style={{
+                    background: t.bgSecondary,
+                    border: `1px solid ${t.border}`,
+                    borderRadius: '12px',
+                    padding: '24px',
+                    textAlign: 'left',
+                    transition: 'all 0.3s ease'
+                  }}>
+                    <div style={{
+                      width: '40px',
+                      height: '40px',
+                      background: t.bgTertiary,
+                      borderRadius: '10px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '20px',
+                      marginBottom: '16px'
+                    }}>
+                      {feature.icon}
+                    </div>
+                    <h3 style={{ fontSize: '16px', fontWeight: 600, margin: '0 0 8px 0', color: t.text }}>
+                      {feature.title}
+                    </h3>
+                    <p style={{ fontSize: '14px', color: t.textSecondary, margin: 0, lineHeight: 1.5 }}>
+                      {feature.desc}
+                    </p>
                   </div>
-                  <h3 className={`text-xl font-semibold mb-3 ${isDark ? 'text-white' : 'text-slate-900'}`}>Clases en vivo semanales</h3>
-                  <p className={`${isDark ? 'text-zinc-400' : 'text-slate-600'} leading-relaxed`}>
-                    Sesiones de 2 horas donde trabajamos juntos en tu proyecto real. Nada de teoría aburrida, solo práctica.
-                  </p>
-                </div>
-
-                {/* Card 2 - Mentoring */}
-                <div className="bento-card rounded-3xl p-8 min-h-[280px] flex flex-col">
-                  <div className={`w-12 h-12 rounded-xl ${isDark ? 'bg-zinc-800' : 'bg-slate-100'} flex items-center justify-center mb-6`}>
-                    <span className="text-2xl">👤</span>
-                  </div>
-                  <h3 className={`text-xl font-semibold mb-3 ${isDark ? 'text-white' : 'text-slate-900'}`}>Mentoría 1:1 semanal</h3>
-                  <p className={`${isDark ? 'text-zinc-400' : 'text-slate-600'} leading-relaxed`}>
-                    Seguimiento individual para resolver dudas y acelerar tu progreso.
-                  </p>
-                </div>
-
-                {/* Card 3 - Community */}
-                <div className="bento-card rounded-3xl p-8 min-h-[200px] flex flex-col">
-                  <div className={`w-12 h-12 rounded-xl ${isDark ? 'bg-zinc-800' : 'bg-slate-100'} flex items-center justify-center mb-6`}>
-                    <span className="text-2xl">🤝</span>
-                  </div>
-                  <h3 className={`text-xl font-semibold mb-3 ${isDark ? 'text-white' : 'text-slate-900'}`}>Comunidad exclusiva</h3>
-                  <p className={`${isDark ? 'text-zinc-400' : 'text-slate-600'} leading-relaxed`}>
-                    Grupo privado de máximo 10 personas para networking y apoyo mutuo.
-                  </p>
-                </div>
-
-                {/* Card 4 - Highlight */}
-                <div className="bento-highlight rounded-3xl p-8 min-h-[200px] flex flex-col">
-                  <div className={`w-12 h-12 rounded-xl ${isDark ? 'bg-white/10' : 'bg-indigo-100'} flex items-center justify-center mb-6`}>
-                    <span className="text-2xl">🚀</span>
-                  </div>
-                  <h3 className={`text-xl font-semibold mb-3 ${isDark ? 'text-white' : 'text-indigo-900'}`}>De 0 a lanzamiento</h3>
-                  <p className={`${isDark ? 'text-indigo-200' : 'text-indigo-700'} leading-relaxed mb-4`}>
-                    En 10 semanas tendrás tu negocio funcionando: web, producto, sistema de ventas y primeros clientes.
-                  </p>
-                  <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium w-fit ${isDark ? 'bg-white/10 text-white' : 'bg-white text-indigo-700 shadow-sm'}`}>
-                    ✨ Garantía de resultados
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           </section>
 
-          {/* Program Section */}
-          <section id="programa" className={`py-20 lg:py-28 px-4 sm:px-6 ${isDark ? 'bg-[#0F0F12]' : 'bg-gradient-to-b from-white to-slate-50'}`}>
-            <div className="max-w-3xl mx-auto">
-              <div className="text-center mb-12">
-                <span className="text-[#3B82F6] text-xs font-bold uppercase tracking-widest mb-4 block">
-                  10 SEMANAS INTENSIVAS
-                </span>
-                <h2 className={`text-3xl lg:text-5xl font-bold mb-4 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+          {/* Divider */}
+          <div style={{ height: '1px', background: t.border, maxWidth: '1100px', margin: '0 auto' }} />
+
+          {/* Program */}
+          <section id="programa" style={{ padding: '80px 24px' }}>
+            <div style={{ maxWidth: '700px', margin: '0 auto' }}>
+              <div style={{ textAlign: 'center', marginBottom: '56px' }}>
+                <p style={{ fontSize: '13px', fontWeight: 500, color: t.accent, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '16px' }}>
+                  10 semanas
+                </p>
+                <h2 style={{ fontSize: '36px', fontWeight: 600, letterSpacing: '-0.02em', margin: 0, color: t.text }}>
                   Programa completo
                 </h2>
-                <p className={`text-lg ${isDark ? 'text-zinc-500' : 'text-slate-500'}`}>
-                  De la idea al negocio facturando en 10 semanas
-                </p>
               </div>
 
-              <div className="space-y-3">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 {curriculum.map((week, i) => (
-                  <div
-                    key={i}
-                    className={`${week.highlight ? 'week-item-highlight' : 'week-item'} rounded-xl px-5 py-4 flex items-center gap-4`}
-                  >
-                    <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#3B82F6] to-[#8B5CF6] flex items-center justify-center flex-shrink-0">
-                      <span className="text-white font-bold text-sm">{week.week}</span>
+                  <div key={i} style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '16px',
+                    padding: '16px 20px',
+                    background: i === 9 ? (isDark ? 'rgba(94,106,210,0.1)' : 'rgba(94,106,210,0.08)') : t.bgSecondary,
+                    border: `1px solid ${i === 9 ? 'rgba(94,106,210,0.3)' : t.border}`,
+                    borderRadius: '10px',
+                    transition: 'all 0.2s ease'
+                  }}>
+                    <div style={{
+                      width: '32px',
+                      height: '32px',
+                      background: i === 9 ? t.accent : t.bgTertiary,
+                      borderRadius: '8px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '13px',
+                      fontWeight: 600,
+                      color: i === 9 ? 'white' : t.textSecondary,
+                      flexShrink: 0
+                    }}>
+                      {week.week}
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <h3 className={`font-semibold text-base ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                        {week.highlight && '🎉 '}{week.title}
-                      </h3>
-                      <p className={`text-sm ${isDark ? 'text-zinc-500' : 'text-slate-500'} truncate`}>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ fontSize: '15px', fontWeight: 500, color: t.text }}>
+                        {i === 9 && '🎉 '}{week.title}
+                      </div>
+                      <div style={{ fontSize: '13px', color: t.textTertiary, marginTop: '2px' }}>
                         {week.desc}
-                      </p>
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -541,80 +442,111 @@ export default function CursoNegocioLanding() {
             </div>
           </section>
 
-          {/* Instructor Section */}
-          <section className={`py-20 lg:py-28 px-4 sm:px-6 ${isDark ? 'bg-[#0F0F12]' : 'bg-slate-50/50'}`}>
-            <div className="max-w-4xl mx-auto">
-              <div className="flex flex-col md:flex-row items-center gap-10">
-                <div className="relative flex-shrink-0">
-                  <div className={`w-36 h-36 md:w-44 md:h-44 rounded-full overflow-hidden ring-4 ring-offset-4 ring-[#8B5CF6]/30 ${isDark ? 'ring-offset-[#0F0F12]' : 'ring-offset-white'}`}>
-                    <img
-                      src="/images/josu-sanz.jpg"
-                      alt="Josu Sanz"
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div className="absolute -bottom-2 -right-2 w-12 h-12 bg-gradient-to-br from-[#3B82F6] to-[#8B5CF6] rounded-full flex items-center justify-center text-white text-xl shadow-lg shadow-indigo-500/30">
+          {/* Divider */}
+          <div style={{ height: '1px', background: t.border, maxWidth: '1100px', margin: '0 auto' }} />
+
+          {/* Mentor */}
+          <section style={{ padding: '80px 24px' }}>
+            <div style={{ maxWidth: '700px', margin: '0 auto' }}>
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                textAlign: 'center',
+                gap: '24px'
+              }}>
+                <div style={{ position: 'relative' }}>
+                  <img
+                    src="/images/josu-sanz.jpg"
+                    alt="Josu Sanz"
+                    style={{
+                      width: '120px',
+                      height: '120px',
+                      borderRadius: '50%',
+                      objectFit: 'cover',
+                      border: `3px solid ${t.bgTertiary}`
+                    }}
+                  />
+                  <div style={{
+                    position: 'absolute',
+                    bottom: '-4px',
+                    right: '-4px',
+                    width: '36px',
+                    height: '36px',
+                    background: t.accent,
+                    borderRadius: '50%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '16px',
+                    border: `3px solid ${t.bg}`
+                  }}>
                     👨‍💻
                   </div>
                 </div>
-                <div className="text-center md:text-left">
-                  <span className="text-[#8B5CF6] text-xs font-bold uppercase tracking-widest mb-2 block">
-                    TU MENTOR
-                  </span>
-                  <h3 className={`text-2xl lg:text-3xl font-bold mb-3 ${isDark ? 'text-white' : 'text-slate-900'}`}>Josu Sanz</h3>
-                  <p className={`text-lg mb-4 ${isDark ? 'text-zinc-400' : 'text-slate-600'}`}>
-                    +20 años construyendo productos digitales. He creado más de 500 webs y lanzado +20 proyectos propios.
-                    Ahora ayudo a otros a hacer lo mismo usando IA.
+                <div>
+                  <p style={{ fontSize: '13px', fontWeight: 500, color: t.accent, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '8px' }}>
+                    Tu mentor
                   </p>
-                  <div className="flex flex-wrap justify-center md:justify-start gap-3">
-                    <span className={`px-3 py-1.5 rounded-full text-sm font-medium ${isDark ? 'bg-white/5 text-zinc-400' : 'bg-blue-50 text-blue-700 border border-blue-100'}`}>
-                      Fundador de Yenze
-                    </span>
-                    <span className={`px-3 py-1.5 rounded-full text-sm font-medium ${isDark ? 'bg-white/5 text-zinc-400' : 'bg-purple-50 text-purple-700 border border-purple-100'}`}>
-                      Creador de aprende.software
-                    </span>
-                  </div>
+                  <h3 style={{ fontSize: '24px', fontWeight: 600, margin: '0 0 12px 0', color: t.text }}>Josu Sanz</h3>
+                  <p style={{ fontSize: '15px', color: t.textSecondary, lineHeight: 1.6, margin: 0, maxWidth: '480px' }}>
+                    +20 años construyendo productos digitales. Más de 500 webs y +20 proyectos propios lanzados.
+                  </p>
+                </div>
+                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', justifyContent: 'center' }}>
+                  <span style={{
+                    padding: '6px 12px',
+                    background: t.bgSecondary,
+                    border: `1px solid ${t.border}`,
+                    borderRadius: '6px',
+                    fontSize: '13px',
+                    color: t.textSecondary
+                  }}>Fundador de Yenze</span>
+                  <span style={{
+                    padding: '6px 12px',
+                    background: t.bgSecondary,
+                    border: `1px solid ${t.border}`,
+                    borderRadius: '6px',
+                    fontSize: '13px',
+                    color: t.textSecondary
+                  }}>Creador de aprende.software</span>
                 </div>
               </div>
             </div>
           </section>
 
-          {/* Pricing Section */}
-          <section id="precio" className="py-20 lg:py-28 px-4 sm:px-6 relative overflow-hidden">
-            {/* Background mesh for pricing */}
-            <div className={`absolute inset-0 pointer-events-none ${isDark ? 'bg-gradient-to-b from-transparent via-indigo-950/20 to-transparent' : 'bg-gradient-to-b from-transparent via-indigo-50/50 to-transparent'}`}></div>
+          {/* Divider */}
+          <div style={{ height: '1px', background: t.border, maxWidth: '1100px', margin: '0 auto' }} />
 
-            <div className="max-w-xl mx-auto relative">
-              <div className="text-center mb-12">
-                <span className="text-[#8B5CF6] text-xs font-bold uppercase tracking-widest mb-4 block">
-                  INVERSIÓN
-                </span>
-                <h2 className={`text-3xl lg:text-5xl font-bold mb-4 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+          {/* Pricing */}
+          <section id="precio" style={{ padding: '80px 24px' }}>
+            <div style={{ maxWidth: '480px', margin: '0 auto' }}>
+              <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+                <p style={{ fontSize: '13px', fontWeight: 500, color: t.accent, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '16px' }}>
+                  Inversión
+                </p>
+                <h2 style={{ fontSize: '36px', fontWeight: 600, letterSpacing: '-0.02em', margin: 0, color: t.text }}>
                   Una decisión que cambia todo
                 </h2>
-                <p className={`text-lg ${isDark ? 'text-zinc-500' : 'text-slate-500'}`}>
-                  Inversión que se recupera con tu primer cliente
-                </p>
               </div>
 
-              <div className="pricing-glass rounded-3xl p-8 lg:p-10 text-center">
-                {/* Price */}
-                <div className="mb-8">
-                  <div className={`text-xl line-through mb-1 ${isDark ? 'text-zinc-600' : 'text-slate-400'}`}>1.997€</div>
-                  <div className={`text-6xl lg:text-7xl font-extrabold mb-2 ${isDark ? 'text-white' : 'text-slate-900'}`}>997€</div>
-                  <p className={`text-sm ${isDark ? 'text-zinc-500' : 'text-slate-500'}`}>
-                    pago único · IVA incluido
-                  </p>
-                  <div className={`inline-flex items-center gap-2 mt-3 px-3 py-1.5 rounded-full ${isDark ? 'bg-green-500/10 border border-green-500/20' : 'bg-green-50 border border-green-200'}`}>
-                    <span className={`text-sm font-semibold ${isDark ? 'text-green-500' : 'text-green-700'}`}>Ahorras 1.000€</span>
-                  </div>
+              <div style={{
+                padding: '40px',
+                textAlign: 'center',
+                background: t.bgSecondary,
+                border: `1px solid ${t.border}`,
+                borderRadius: '12px',
+                boxShadow: `0 0 60px ${t.glowStrong}`
+              }}>
+                <div style={{ marginBottom: '32px' }}>
+                  <div style={{ fontSize: '16px', color: t.textTertiary, textDecoration: 'line-through', marginBottom: '8px' }}>1.997€</div>
+                  <div style={{ fontSize: '56px', fontWeight: 600, letterSpacing: '-0.02em', color: t.text }}>997€</div>
+                  <div style={{ fontSize: '14px', color: t.textTertiary, marginTop: '8px' }}>pago único · IVA incluido</div>
                 </div>
 
-                {/* Divider */}
-                <div className={`h-px w-full ${isDark ? 'bg-white/10' : 'bg-slate-200'} mb-8`}></div>
+                <div style={{ height: '1px', background: t.border, margin: '0 0 32px 0' }} />
 
-                {/* Features */}
-                <div className="space-y-4 mb-8 text-left">
+                <div style={{ textAlign: 'left', marginBottom: '32px' }}>
                   {[
                     '10 clases en vivo de 2 horas',
                     '10 sesiones de mentoría individual',
@@ -622,80 +554,107 @@ export default function CursoNegocioLanding() {
                     'Comunidad privada exclusiva',
                     'Plantillas y recursos premium'
                   ].map((feature, i) => (
-                    <div key={i} className="flex items-center gap-3">
-                      <div className="check-circle">
-                        <span>✓</span>
-                      </div>
-                      <span className={isDark ? 'text-zinc-300' : 'text-slate-700'}>
-                        {feature}
-                      </span>
+                    <div key={i} style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '12px',
+                      padding: '10px 0',
+                      borderBottom: i < 4 ? `1px solid ${t.border}` : 'none'
+                    }}>
+                      <span style={{ color: '#22c55e', fontSize: '16px' }}>✓</span>
+                      <span style={{ fontSize: '14px', color: t.textSecondary }}>{feature}</span>
                     </div>
                   ))}
                 </div>
 
-                {/* CTA */}
                 <a
                   href="https://yenze.lemonsqueezy.com/checkout/buy/4bec4db6-6245-4822-a577-4fba37c541de"
-                  className="btn-gradient w-full text-white py-4 rounded-xl text-lg font-semibold flex items-center justify-center gap-2 mb-4"
+                  style={{
+                    display: 'flex',
+                    width: '100%',
+                    justifyContent: 'center',
+                    padding: '16px',
+                    fontSize: '16px',
+                    borderRadius: '8px',
+                    background: t.accent,
+                    color: 'white',
+                    textDecoration: 'none',
+                    fontWeight: 500,
+                    transition: 'all 0.2s ease'
+                  }}
                 >
-                  Reservar mi plaza ahora →
+                  Reservar mi plaza →
                 </a>
               </div>
             </div>
           </section>
 
-          {/* For Who Section */}
-          <section className="py-20 lg:py-28 px-4 sm:px-6">
-            <div className="max-w-4xl mx-auto">
-              <div className="text-center mb-12">
-                <span className="text-[#8B5CF6] text-xs font-bold uppercase tracking-widest mb-4 block">
-                  ¿ES PARA TI?
-                </span>
-                <h2 className={`text-3xl lg:text-5xl font-bold mb-4 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+          {/* Divider */}
+          <div style={{ height: '1px', background: t.border, maxWidth: '1100px', margin: '0 auto' }} />
+
+          {/* For Who */}
+          <section style={{ padding: '80px 24px' }}>
+            <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+              <div style={{ textAlign: 'center', marginBottom: '56px' }}>
+                <h2 style={{ fontSize: '36px', fontWeight: 600, letterSpacing: '-0.02em', margin: 0, color: t.text }}>
                   Este curso es para ti si...
                 </h2>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-4">
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+                gap: '12px'
+              }}>
                 {[
-                  { icon: '💡', text: 'Tienes una idea de negocio pero no sabes cómo empezar' },
+                  { icon: '💡', text: 'Tienes una idea pero no sabes cómo empezar' },
                   { icon: '⏰', text: 'Quieres dejar de postergar y lanzar de una vez' },
                   { icon: '🚫', text: 'No sabes programar (ni quieres aprender)' },
                   { icon: '🤖', text: 'Quieres aprovechar la IA para ir más rápido' },
-                  { icon: '👥', text: 'Prefieres aprender en grupo con apoyo personalizado' },
+                  { icon: '👥', text: 'Prefieres aprender con apoyo personalizado' },
                   { icon: '🎯', text: 'Buscas resultados reales, no solo teoría' }
                 ].map((item, i) => (
-                  <div key={i} className={`flex items-center gap-4 p-5 rounded-2xl transition-all duration-300 ${isDark ? 'bg-white/5 border border-white/5 hover:border-white/10' : 'bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-indigo-200'}`}>
-                    <span className="text-2xl">{item.icon}</span>
-                    <span className={`font-medium ${isDark ? 'text-zinc-300' : 'text-slate-700'}`}>{item.text}</span>
+                  <div key={i} style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '12px',
+                    padding: '16px 20px',
+                    background: t.bgSecondary,
+                    border: `1px solid ${t.border}`,
+                    borderRadius: '10px'
+                  }}>
+                    <span style={{ fontSize: '20px' }}>{item.icon}</span>
+                    <span style={{ fontSize: '14px', color: t.textSecondary }}>{item.text}</span>
                   </div>
                 ))}
-              </div>
-
-              <div className="text-center mt-10">
-                <a href="#aplicar" className="btn-gradient inline-flex items-center gap-2 text-white px-8 py-4 rounded-xl text-lg font-semibold">
-                  Quiero aplicar →
-                </a>
               </div>
             </div>
           </section>
 
+          {/* Divider */}
+          <div style={{ height: '1px', background: t.border, maxWidth: '1100px', margin: '0 auto' }} />
+
           {/* Application Form */}
-          <section id="aplicar" className={`py-20 lg:py-28 px-4 sm:px-6 ${isDark ? 'bg-[#0F0F12]' : 'bg-gradient-to-b from-slate-50 to-white'}`}>
-            <div className="max-w-4xl mx-auto">
-              <div className="text-center mb-12">
-                <span className="text-[#3B82F6] text-xs font-bold uppercase tracking-widest mb-4 block">
-                  PLAZAS LIMITADAS
-                </span>
-                <h2 className={`text-3xl lg:text-5xl font-bold mb-4 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+          <section id="aplicar" style={{ padding: '80px 24px' }}>
+            <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+              <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+                <p style={{ fontSize: '13px', fontWeight: 500, color: t.accent, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '16px' }}>
+                  Plazas limitadas
+                </p>
+                <h2 style={{ fontSize: '36px', fontWeight: 600, letterSpacing: '-0.02em', margin: '0 0 16px 0', color: t.text }}>
                   Aplica a la próxima edición
                 </h2>
-                <p className={`text-lg ${isDark ? 'text-zinc-500' : 'text-slate-500'}`}>
+                <p style={{ fontSize: '15px', color: t.textSecondary, margin: 0 }}>
                   Completa este breve cuestionario para reservar tu plaza.
                 </p>
               </div>
 
-              <div className={`${isDark ? 'bg-[#18181B] border-zinc-800' : 'bg-white border-slate-200 shadow-lg shadow-slate-200/50'} rounded-3xl border overflow-hidden`}>
+              <div style={{
+                background: t.bgSecondary,
+                border: `1px solid ${t.border}`,
+                borderRadius: '12px',
+                overflow: 'hidden'
+              }}>
                 <iframe
                   src="https://qualifyform.com/f/0fcpkwpr"
                   width="100%"
@@ -703,25 +662,38 @@ export default function CursoNegocioLanding() {
                   frameBorder="0"
                   style={{ border: 'none', minHeight: '800px', width: '100%' }}
                   allow="camera; microphone"
-                ></iframe>
+                />
               </div>
             </div>
           </section>
 
-          {/* FAQ Section */}
-          <section className="py-20 lg:py-28 px-4 sm:px-6">
-            <div className="max-w-3xl mx-auto">
-              <div className="text-center mb-12">
-                <h2 className={`text-3xl lg:text-4xl font-bold mb-4 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+          {/* Divider */}
+          <div style={{ height: '1px', background: t.border, maxWidth: '1100px', margin: '0 auto' }} />
+
+          {/* FAQ */}
+          <section style={{ padding: '80px 24px' }}>
+            <div style={{ maxWidth: '600px', margin: '0 auto' }}>
+              <div style={{ textAlign: 'center', marginBottom: '56px' }}>
+                <h2 style={{ fontSize: '36px', fontWeight: 600, letterSpacing: '-0.02em', margin: 0, color: t.text }}>
                   Preguntas frecuentes
                 </h2>
               </div>
 
-              <div className="space-y-4">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 {faqs.map((faq, i) => (
-                  <div key={i} className="bento-card rounded-2xl p-6">
-                    <h3 className={`font-semibold text-lg mb-2 ${isDark ? 'text-white' : 'text-slate-900'}`}>{faq.q}</h3>
-                    <p className={isDark ? 'text-zinc-400' : 'text-slate-600'}>{faq.a}</p>
+                  <div key={i} style={{
+                    background: t.bgSecondary,
+                    border: `1px solid ${t.border}`,
+                    borderRadius: '12px',
+                    padding: '24px',
+                    transition: 'all 0.3s ease'
+                  }}>
+                    <h3 style={{ fontSize: '15px', fontWeight: 600, margin: '0 0 8px 0', color: t.text }}>
+                      {faq.q}
+                    </h3>
+                    <p style={{ fontSize: '14px', color: t.textSecondary, margin: 0, lineHeight: 1.6 }}>
+                      {faq.a}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -729,22 +701,73 @@ export default function CursoNegocioLanding() {
           </section>
 
           {/* Final CTA */}
-          <section className={`py-20 lg:py-28 px-4 sm:px-6 ${isDark ? 'bg-[#0F0F12]' : 'bg-gradient-to-b from-white to-indigo-50/30'}`}>
-            <div className="max-w-2xl mx-auto text-center">
-              <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6 pulse ${isDark ? 'bg-amber-500/10 border border-amber-500/20' : 'bg-amber-50 border border-amber-200'}`}>
-                <span className={`text-sm font-semibold ${isDark ? 'text-amber-500' : 'text-amber-700'}`}>⚡ Solo quedan 10 plazas</span>
+          <section style={{
+            padding: '80px 24px',
+            textAlign: 'center',
+            position: 'relative'
+          }}>
+            {/* Subtle glow */}
+            <div style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: '500px',
+              height: '300px',
+              background: `radial-gradient(ellipse, ${t.glow} 0%, transparent 70%)`,
+              pointerEvents: 'none'
+            }} />
+
+            <div style={{ maxWidth: '600px', margin: '0 auto', position: 'relative' }}>
+              <div style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                padding: '6px 14px',
+                background: isDark ? 'rgba(245,158,11,0.1)' : 'rgba(245,158,11,0.15)',
+                border: '1px solid rgba(245,158,11,0.3)',
+                borderRadius: '100px',
+                fontSize: '13px',
+                color: isDark ? '#fbbf24' : '#b45309',
+                marginBottom: '24px'
+              }}>
+                ⚡ Solo quedan 10 plazas
               </div>
-              <h2 className={`text-3xl lg:text-5xl font-bold mb-6 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+
+              <h2 style={{
+                fontSize: 'clamp(28px, 4vw, 40px)',
+                fontWeight: 600,
+                letterSpacing: '-0.02em',
+                margin: '0 0 16px 0',
+                color: t.text
+              }}>
                 Tu negocio digital te espera
               </h2>
-              <p className={`text-lg mb-10 ${isDark ? 'text-zinc-500' : 'text-slate-500'}`}>
-                En 10 semanas podrías estar facturando con tu propio negocio.<br className="hidden sm:block" />
+
+              <p style={{
+                fontSize: '16px',
+                color: t.textSecondary,
+                margin: '0 0 32px 0',
+                lineHeight: 1.6
+              }}>
+                En 10 semanas podrías estar facturando con tu propio negocio.<br />
                 La próxima edición empieza en marzo 2026.
               </p>
-              <a
-                href="#precio"
-                className="btn-gradient inline-flex items-center gap-2 text-white px-10 py-5 rounded-2xl text-lg font-semibold"
-              >
+
+              <a href="#precio" style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                padding: '16px 32px',
+                fontSize: '16px',
+                borderRadius: '8px',
+                background: t.accent,
+                color: 'white',
+                textDecoration: 'none',
+                fontWeight: 500,
+                transition: 'all 0.2s ease',
+                boxShadow: `0 0 40px ${t.glowStrong}`
+              }}>
                 Reservar mi plaza ahora →
               </a>
             </div>
@@ -752,27 +775,44 @@ export default function CursoNegocioLanding() {
         </main>
 
         {/* Footer */}
-        <footer className={`py-12 px-4 sm:px-6 ${isDark ? 'border-t border-white/5' : 'border-t border-slate-200'}`}>
-          <div className="max-w-5xl mx-auto">
-            <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-[#3B82F6] to-[#8B5CF6] rounded-xl flex items-center justify-center">
-                  <span className="text-white font-bold text-sm">AS</span>
-                </div>
-                <span className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-slate-900'}`}>aprende.software</span>
-              </div>
-
-              <div className={`flex gap-8 text-sm ${isDark ? 'text-zinc-500' : 'text-slate-500'}`}>
-                <Link href="/" className="hover:text-[#3B82F6] transition-colors">Inicio</Link>
-                <a href="#programa" className="hover:text-[#3B82F6] transition-colors">Programa</a>
-                <a href="#precio" className="hover:text-[#3B82F6] transition-colors">Precios</a>
-                <Link href="/privacidad" className="hover:text-[#3B82F6] transition-colors">Privacidad</Link>
-              </div>
-
-              <p className={`text-sm ${isDark ? 'text-zinc-600' : 'text-slate-400'}`}>
-                © 2026 Josu Sanz
-              </p>
+        <footer style={{
+          borderTop: `1px solid ${t.border}`,
+          padding: '40px 24px'
+        }}>
+          <div style={{
+            maxWidth: '1100px',
+            margin: '0 auto',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: '24px'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <div style={{
+                width: '28px',
+                height: '28px',
+                background: 'linear-gradient(135deg, #5e6ad2, #8b5cf6)',
+                borderRadius: '6px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '12px',
+                fontWeight: 700,
+                color: 'white'
+              }}>AS</div>
+              <span style={{ fontWeight: 600, fontSize: '14px', color: t.text }}>aprende.software</span>
             </div>
+
+            <div style={{ display: 'flex', gap: '24px', fontSize: '14px' }}>
+              <Link href="/" style={{ color: t.textTertiary, textDecoration: 'none' }}>Inicio</Link>
+              <a href="#programa" style={{ color: t.textTertiary, textDecoration: 'none' }}>Programa</a>
+              <a href="#precio" style={{ color: t.textTertiary, textDecoration: 'none' }}>Precio</a>
+              <Link href="/privacidad" style={{ color: t.textTertiary, textDecoration: 'none' }}>Privacidad</Link>
+            </div>
+
+            <p style={{ fontSize: '13px', color: t.textTertiary, margin: 0 }}>
+              © 2026 Josu Sanz
+            </p>
           </div>
         </footer>
       </div>
