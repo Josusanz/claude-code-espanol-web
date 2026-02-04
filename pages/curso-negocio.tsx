@@ -45,7 +45,6 @@ export default function CursoNegocioLanding() {
     { q: '¿Qué pasa si no puedo asistir a una clase?', a: 'Todas las sesiones quedan grabadas. Además, puedes resolver dudas en la comunidad privada o en las mentorías semanales.' },
     { q: '¿Cuánto tiempo necesito dedicar?', a: 'Entre 5-8 horas semanales: 2 horas de clase en directo + 3-6 horas de práctica con tu proyecto personal.' },
     { q: '¿Qué tipo de negocios puedo crear?', a: 'SaaS, marketplaces, apps, herramientas de productividad, cursos online, servicios de automatización... Las posibilidades son infinitas.' },
-    { q: '¿Hay garantía de devolución?', a: 'Sí. Tienes 14 días para probar el curso. Si no es lo que esperabas, te devolvemos el 100% sin preguntas.' },
     { q: '¿Cuándo empieza la próxima edición?', a: 'La próxima edición arranca en marzo de 2026. Las plazas son limitadas a 10 personas para garantizar atención personalizada.' }
   ]
 
@@ -321,10 +320,12 @@ export default function CursoNegocioLanding() {
               <div className="flex items-center gap-3">
                 <button
                   onClick={toggleDarkMode}
-                  className={`w-10 h-10 flex items-center justify-center rounded-xl ${isDark ? 'bg-white/5 hover:bg-white/10' : 'bg-slate-100 hover:bg-slate-200'} transition-colors`}
+                  className={`relative w-16 h-8 rounded-full transition-all duration-300 ${isDark ? 'bg-indigo-600' : 'bg-slate-200'}`}
                   aria-label="Cambiar tema"
                 >
-                  {isDark ? '☀️' : '🌙'}
+                  <div className={`absolute top-1 w-6 h-6 rounded-full transition-all duration-300 flex items-center justify-center text-sm ${isDark ? 'left-9 bg-slate-900' : 'left-1 bg-white shadow-md'}`}>
+                    {isDark ? '🌙' : '☀️'}
+                  </div>
                 </button>
                 <a href="#aplicar" className="hidden sm:flex btn-gradient text-white px-5 py-2.5 rounded-xl text-sm font-semibold">
                   Aplicar →
@@ -639,10 +640,6 @@ export default function CursoNegocioLanding() {
                 >
                   Reservar mi plaza ahora →
                 </a>
-
-                <p className={`text-sm ${isDark ? 'text-zinc-500' : 'text-slate-500'}`}>
-                  🔒 Garantía de devolución de 14 días
-                </p>
               </div>
             </div>
           </section>
@@ -750,9 +747,6 @@ export default function CursoNegocioLanding() {
               >
                 Reservar mi plaza ahora →
               </a>
-              <p className={`text-sm mt-4 ${isDark ? 'text-zinc-600' : 'text-slate-400'}`}>
-                🔒 Garantía de devolución de 14 días
-              </p>
             </div>
           </section>
         </main>
