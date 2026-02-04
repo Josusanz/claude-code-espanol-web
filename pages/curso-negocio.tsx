@@ -47,23 +47,20 @@ export default function CursoNegocioLanding() {
 
   // Theme colors
   const t = {
-    bg: isDark ? '#08090a' : '#ffffff',
-    bgSecondary: isDark ? '#0f1011' : '#f8fafc',
+    bg: isDark ? '#08090a' : '#fafbfc',
+    bgSecondary: isDark ? '#0f1011' : '#ffffff',
     bgTertiary: isDark ? '#161718' : '#f1f5f9',
-    text: isDark ? '#f5f5f5' : '#0f172a',
-    textSecondary: isDark ? '#a1a1a1' : '#475569',
-    textTertiary: isDark ? '#6b6b6b' : '#94a3b8',
+    text: isDark ? '#f5f5f5' : '#1a1a2e',
+    textSecondary: isDark ? '#a1a1a1' : '#4a5568',
+    textTertiary: isDark ? '#6b6b6b' : '#718096',
     accent: '#5e6ad2',
     accentHover: '#7c85e3',
-    border: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)',
-    borderHover: isDark ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.15)',
-    glow: isDark ? 'rgba(94,106,210,0.08)' : 'rgba(94,106,210,0.05)',
-    glowStrong: isDark ? 'rgba(94,106,210,0.15)' : 'rgba(94,106,210,0.1)',
-    navBg: isDark ? 'rgba(8,9,10,0.8)' : 'rgba(255,255,255,0.8)',
-    cardHover: isDark ? '#161718' : '#f1f5f9',
-    gradientText: isDark
-      ? 'linear-gradient(to right, #fff 20%, #a1a1a1 100%)'
-      : 'linear-gradient(to right, #0f172a 20%, #475569 100%)'
+    border: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)',
+    borderHover: isDark ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.12)',
+    glow: isDark ? 'rgba(94,106,210,0.08)' : 'rgba(94,106,210,0.04)',
+    glowStrong: isDark ? 'rgba(94,106,210,0.15)' : 'rgba(94,106,210,0.08)',
+    navBg: isDark ? 'rgba(8,9,10,0.8)' : 'rgba(255,255,255,0.9)',
+    cardHover: isDark ? '#161718' : '#f8fafc'
   }
 
   return (
@@ -155,26 +152,40 @@ export default function CursoNegocioLanding() {
               <span style={{ fontWeight: 600, fontSize: '15px' }}>aprende.software</span>
             </Link>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              {/* Theme toggle */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              {/* Theme toggle switch */}
               <button
                 onClick={toggleTheme}
                 style={{
-                  width: '40px',
-                  height: '40px',
-                  borderRadius: '8px',
-                  border: `1px solid ${t.border}`,
-                  background: 'transparent',
+                  width: '56px',
+                  height: '28px',
+                  borderRadius: '14px',
+                  border: 'none',
+                  background: isDark ? t.accent : '#e2e8f0',
                   cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '18px',
-                  transition: 'all 0.2s ease'
+                  position: 'relative',
+                  transition: 'all 0.3s ease',
+                  padding: 0
                 }}
                 aria-label="Cambiar tema"
               >
-                {isDark ? '☀️' : '🌙'}
+                <div style={{
+                  position: 'absolute',
+                  top: '3px',
+                  left: isDark ? '31px' : '3px',
+                  width: '22px',
+                  height: '22px',
+                  borderRadius: '50%',
+                  background: 'white',
+                  boxShadow: '0 1px 3px rgba(0,0,0,0.2)',
+                  transition: 'all 0.3s ease',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '12px'
+                }}>
+                  {isDark ? '🌙' : '☀️'}
+                </div>
               </button>
               <a href="#programa" style={{
                 padding: '8px 16px',
@@ -231,13 +242,14 @@ export default function CursoNegocioLanding() {
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '8px',
-                padding: '6px 14px',
-                background: t.bgSecondary,
-                border: `1px solid ${t.border}`,
+                padding: '8px 16px',
+                background: isDark ? t.bgSecondary : '#f0f4ff',
+                border: `1px solid ${isDark ? t.border : 'rgba(94,106,210,0.15)'}`,
                 borderRadius: '100px',
                 fontSize: '13px',
-                color: t.textSecondary,
-                marginBottom: '32px'
+                color: isDark ? t.textSecondary : '#4338ca',
+                marginBottom: '32px',
+                fontWeight: 500
               }}>
                 <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#22c55e' }} />
                 Marzo 2026 · Solo 10 plazas
@@ -250,10 +262,7 @@ export default function CursoNegocioLanding() {
                 lineHeight: 1.1,
                 letterSpacing: '-0.03em',
                 margin: '0 0 24px 0',
-                background: t.gradientText,
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text'
+                color: t.text
               }}>
                 Crea tu negocio digital<br />con inteligencia artificial
               </h1>
@@ -282,29 +291,30 @@ export default function CursoNegocioLanding() {
                 <a href="#aplicar" style={{
                   padding: '14px 28px',
                   fontSize: '15px',
-                  borderRadius: '8px',
+                  borderRadius: '10px',
                   background: t.accent,
                   color: 'white',
                   textDecoration: 'none',
-                  fontWeight: 500,
+                  fontWeight: 600,
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: '8px',
                   transition: 'all 0.2s ease',
-                  boxShadow: `0 0 40px ${t.glowStrong}`
+                  boxShadow: isDark ? `0 0 40px ${t.glowStrong}` : '0 4px 14px rgba(94,106,210,0.25)'
                 }}>
                   Reservar plaza <span style={{ opacity: 0.7 }}>→</span>
                 </a>
                 <a href="#programa" style={{
                   padding: '14px 28px',
                   fontSize: '15px',
-                  borderRadius: '8px',
-                  border: `1px solid ${t.border}`,
-                  background: 'transparent',
+                  borderRadius: '10px',
+                  border: `1px solid ${isDark ? t.border : '#e2e8f0'}`,
+                  background: isDark ? 'transparent' : '#ffffff',
                   color: t.text,
                   textDecoration: 'none',
                   fontWeight: 500,
-                  transition: 'all 0.2s ease'
+                  transition: 'all 0.2s ease',
+                  boxShadow: isDark ? 'none' : '0 1px 3px rgba(0,0,0,0.05)'
                 }}>
                   Ver programa
                 </a>
@@ -354,18 +364,19 @@ export default function CursoNegocioLanding() {
               }}>
                 {features.map((feature, i) => (
                   <div key={i} style={{
-                    background: t.bgSecondary,
-                    border: `1px solid ${t.border}`,
-                    borderRadius: '12px',
-                    padding: '24px',
+                    background: isDark ? t.bgSecondary : '#ffffff',
+                    border: `1px solid ${isDark ? t.border : '#e8ecf4'}`,
+                    borderRadius: '16px',
+                    padding: '28px',
                     textAlign: 'left',
-                    transition: 'all 0.3s ease'
+                    transition: 'all 0.3s ease',
+                    boxShadow: isDark ? 'none' : '0 1px 3px rgba(0,0,0,0.04)'
                   }}>
                     <div style={{
-                      width: '40px',
-                      height: '40px',
-                      background: t.bgTertiary,
-                      borderRadius: '10px',
+                      width: '44px',
+                      height: '44px',
+                      background: isDark ? t.bgTertiary : '#f0f4ff',
+                      borderRadius: '12px',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -377,7 +388,7 @@ export default function CursoNegocioLanding() {
                     <h3 style={{ fontSize: '16px', fontWeight: 600, margin: '0 0 8px 0', color: t.text }}>
                       {feature.title}
                     </h3>
-                    <p style={{ fontSize: '14px', color: t.textSecondary, margin: 0, lineHeight: 1.5 }}>
+                    <p style={{ fontSize: '14px', color: t.textSecondary, margin: 0, lineHeight: 1.6 }}>
                       {feature.desc}
                     </p>
                   </div>
@@ -408,22 +419,25 @@ export default function CursoNegocioLanding() {
                     alignItems: 'center',
                     gap: '16px',
                     padding: '16px 20px',
-                    background: i === 9 ? (isDark ? 'rgba(94,106,210,0.1)' : 'rgba(94,106,210,0.08)') : t.bgSecondary,
-                    border: `1px solid ${i === 9 ? 'rgba(94,106,210,0.3)' : t.border}`,
-                    borderRadius: '10px',
-                    transition: 'all 0.2s ease'
+                    background: i === 9
+                      ? (isDark ? 'rgba(94,106,210,0.1)' : '#f0f4ff')
+                      : (isDark ? t.bgSecondary : '#ffffff'),
+                    border: `1px solid ${i === 9 ? (isDark ? 'rgba(94,106,210,0.3)' : '#c7d2fe') : (isDark ? t.border : '#e8ecf4')}`,
+                    borderRadius: '12px',
+                    transition: 'all 0.2s ease',
+                    boxShadow: isDark ? 'none' : '0 1px 2px rgba(0,0,0,0.03)'
                   }}>
                     <div style={{
-                      width: '32px',
-                      height: '32px',
-                      background: i === 9 ? t.accent : t.bgTertiary,
-                      borderRadius: '8px',
+                      width: '36px',
+                      height: '36px',
+                      background: i === 9 ? t.accent : (isDark ? t.bgTertiary : '#f0f4ff'),
+                      borderRadius: '10px',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
                       fontSize: '13px',
                       fontWeight: 600,
-                      color: i === 9 ? 'white' : t.textSecondary,
+                      color: i === 9 ? 'white' : (isDark ? t.textSecondary : '#5e6ad2'),
                       flexShrink: 0
                     }}>
                       {week.week}
@@ -533,10 +547,10 @@ export default function CursoNegocioLanding() {
               <div style={{
                 padding: '40px',
                 textAlign: 'center',
-                background: t.bgSecondary,
-                border: `1px solid ${t.border}`,
-                borderRadius: '12px',
-                boxShadow: `0 0 60px ${t.glowStrong}`
+                background: isDark ? t.bgSecondary : '#ffffff',
+                border: `1px solid ${isDark ? t.border : '#e8ecf4'}`,
+                borderRadius: '20px',
+                boxShadow: isDark ? `0 0 60px ${t.glowStrong}` : '0 4px 24px rgba(94,106,210,0.1)'
               }}>
                 <div style={{ marginBottom: '32px' }}>
                   <div style={{ fontSize: '16px', color: t.textTertiary, textDecoration: 'line-through', marginBottom: '8px' }}>1.997€</div>
@@ -617,14 +631,15 @@ export default function CursoNegocioLanding() {
                   <div key={i} style={{
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '12px',
-                    padding: '16px 20px',
-                    background: t.bgSecondary,
-                    border: `1px solid ${t.border}`,
-                    borderRadius: '10px'
+                    gap: '14px',
+                    padding: '18px 22px',
+                    background: isDark ? t.bgSecondary : '#ffffff',
+                    border: `1px solid ${isDark ? t.border : '#e8ecf4'}`,
+                    borderRadius: '12px',
+                    boxShadow: isDark ? 'none' : '0 1px 3px rgba(0,0,0,0.04)'
                   }}>
-                    <span style={{ fontSize: '20px' }}>{item.icon}</span>
-                    <span style={{ fontSize: '14px', color: t.textSecondary }}>{item.text}</span>
+                    <span style={{ fontSize: '22px' }}>{item.icon}</span>
+                    <span style={{ fontSize: '14px', color: t.textSecondary, fontWeight: 450 }}>{item.text}</span>
                   </div>
                 ))}
               </div>
@@ -682,11 +697,12 @@ export default function CursoNegocioLanding() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 {faqs.map((faq, i) => (
                   <div key={i} style={{
-                    background: t.bgSecondary,
-                    border: `1px solid ${t.border}`,
-                    borderRadius: '12px',
+                    background: isDark ? t.bgSecondary : '#ffffff',
+                    border: `1px solid ${isDark ? t.border : '#e8ecf4'}`,
+                    borderRadius: '14px',
                     padding: '24px',
-                    transition: 'all 0.3s ease'
+                    transition: 'all 0.3s ease',
+                    boxShadow: isDark ? 'none' : '0 1px 3px rgba(0,0,0,0.04)'
                   }}>
                     <h3 style={{ fontSize: '15px', fontWeight: 600, margin: '0 0 8px 0', color: t.text }}>
                       {faq.q}
