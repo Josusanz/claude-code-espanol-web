@@ -138,8 +138,5 @@ export default {
   },
   blog: {
     display: "hidden"
-  },
-  precurso: {
-    display: "hidden"
   }
 }
