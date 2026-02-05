@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 export default function CursoNegocioLanding() {
   const [mounted, setMounted] = useState(false)
-  const [isDark, setIsDark] = useState(true)
+  const [isDark, setIsDark] = useState(false)
 
   useEffect(() => {
     setMounted(true)
@@ -34,7 +34,7 @@ export default function CursoNegocioLanding() {
   const features = [
     { icon: '📹', title: 'Clases en vivo', desc: '10 sesiones de 2h trabajando en tu proyecto real' },
     { icon: '👤', title: 'Mentoría 1:1', desc: 'Seguimiento individual cada semana' },
-    { icon: '👥', title: 'Grupo reducido', desc: 'Máximo 10 personas para atención personalizada' },
+    { icon: '👥', title: 'Grupo reducido', desc: 'Máximo 5 personas para atención personalizada' },
     { icon: '🚀', title: 'De 0 a lanzamiento', desc: 'Terminas con tu negocio funcionando' }
   ]
 
@@ -42,7 +42,7 @@ export default function CursoNegocioLanding() {
     { q: '¿Necesito saber programar?', a: 'No. Usarás herramientas no-code e IA para crear todo.' },
     { q: '¿Qué pasa si no puedo asistir?', a: 'Las sesiones quedan grabadas y tienes acceso de por vida.' },
     { q: '¿Cuánto tiempo necesito?', a: '5-8 horas semanales: 2h de clase + práctica.' },
-    { q: '¿Cuándo empieza?', a: 'Marzo 2026. Las plazas son limitadas a 10 personas.' }
+    { q: '¿Cuándo empieza?', a: 'Marzo 2026. Las plazas son limitadas a 5 personas.' }
   ]
 
   // Theme colors
@@ -85,6 +85,11 @@ export default function CursoNegocioLanding() {
           font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
+          overflow-x: hidden;
+        }
+
+        html {
+          overflow-x: hidden;
         }
 
         /* Animation */
@@ -108,6 +113,17 @@ export default function CursoNegocioLanding() {
         /* Selection */
         ::selection {
           background: rgba(94, 106, 210, 0.3);
+        }
+
+        /* Mobile responsive nav */
+        @media (max-width: 640px) {
+          .nav-btn-aplicar {
+            display: none !important;
+          }
+          .nav-btn-programa {
+            padding: 6px 12px !important;
+            font-size: 13px !important;
+          }
         }
       `}</style>
 
@@ -187,7 +203,7 @@ export default function CursoNegocioLanding() {
                   {isDark ? '🌙' : '☀️'}
                 </div>
               </button>
-              <a href="#programa" style={{
+              <a href="#programa" className="nav-btn-programa" style={{
                 padding: '8px 16px',
                 fontSize: '14px',
                 borderRadius: '8px',
@@ -200,7 +216,7 @@ export default function CursoNegocioLanding() {
               }}>
                 Programa
               </a>
-              <a href="#aplicar" style={{
+              <a href="#aplicar" className="nav-btn-aplicar" style={{
                 padding: '8px 16px',
                 fontSize: '14px',
                 borderRadius: '8px',
@@ -252,7 +268,7 @@ export default function CursoNegocioLanding() {
                 fontWeight: 500
               }}>
                 <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#22c55e' }} />
-                Marzo 2026 · Solo 10 plazas
+                Marzo 2026 · Solo 5 plazas
               </div>
 
               {/* Title */}
@@ -747,7 +763,7 @@ export default function CursoNegocioLanding() {
                 color: isDark ? '#fbbf24' : '#b45309',
                 marginBottom: '24px'
               }}>
-                ⚡ Solo quedan 10 plazas
+                ⚡ Solo quedan 5 plazas
               </div>
 
               <h2 style={{
