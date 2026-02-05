@@ -95,30 +95,30 @@ export default function CursoNegocioLanding() {
   }
 
   const curriculum = [
-    { week: '1', title: 'Validación de tu idea', desc: 'Análisis de mercado con IA y propuesta de valor' },
-    { week: '2', title: 'Marca e identidad', desc: 'Logo, branding y materiales con IA' },
-    { week: '3', title: 'Tu web profesional', desc: 'Diseño y lanzamiento sin código' },
-    { week: '4', title: 'Contenido que vende', desc: 'Copywriting y estrategia con IA' },
-    { week: '5', title: 'Automatización', desc: 'Email, CRM y atención al cliente' },
-    { week: '6', title: 'Producto digital', desc: 'Creación de tu primera oferta' },
-    { week: '7', title: 'Sistema de ventas', desc: 'Funnels y pagos automatizados' },
-    { week: '8', title: 'Marketing con IA', desc: 'Publicidad y growth hacking' },
-    { week: '9', title: 'Escalar', desc: 'Multiplicar sin multiplicar trabajo' },
-    { week: '10', title: 'Lanzamiento', desc: 'Tu negocio listo para facturar' }
+    { week: '1', title: 'Tu Primera App con Claude Code', desc: 'Crear proyecto Next.js y entender el flujo con IA' },
+    { week: '2', title: 'Diseño y UI Profesional', desc: 'Tailwind + shadcn/ui para interfaces top' },
+    { week: '3', title: 'Base de Datos con Supabase', desc: 'Diseñar y conectar tu base de datos' },
+    { week: '4', title: 'Autenticación de Usuarios', desc: 'Login, registro y gestión de sesiones' },
+    { week: '5', title: 'CRUD y Lógica de Negocio', desc: 'Operaciones de datos y funcionalidad core' },
+    { week: '6', title: 'Features Avanzadas', desc: 'APIs externas, storage, funciones únicas' },
+    { week: '7', title: 'Deploy y Producción', desc: 'Publicar en Vercel con dominio propio' },
+    { week: '8', title: 'Monetización con Stripe', desc: 'Sistema de pagos listo para facturar' },
+    { week: '9', title: 'Superpoderes: Skills + Obsidian', desc: 'Automatización y multiplicar productividad' },
+    { week: '10', title: 'Lanzamiento', desc: 'Tu software en producción con usuarios reales' }
   ]
 
   const features = [
-    { iconKey: 'video', title: 'Clases en vivo', desc: '10 sesiones de 2h trabajando en tu proyecto real' },
-    { iconKey: 'user', title: 'Mentoría 1:1', desc: 'Seguimiento individual cada semana' },
+    { iconKey: 'video', title: '20h de clases en vivo', desc: '10 sesiones de 2h cada jueves trabajando en tu proyecto' },
+    { iconKey: 'user', title: '3 mentorías 1:1', desc: 'Sesiones individuales en semanas 1, 5 y 8' },
     { iconKey: 'users', title: 'Grupo reducido', desc: 'Máximo 5 personas para atención personalizada' },
-    { iconKey: 'rocket', title: 'De 0 a lanzamiento', desc: 'Terminas con tu negocio funcionando' }
+    { iconKey: 'rocket', title: 'De 0 a producción', desc: 'Tu software funcionando y cobrando' }
   ]
 
   const faqs = [
-    { q: '¿Necesito saber programar?', a: 'No. Usarás herramientas no-code e IA para crear todo.' },
-    { q: '¿Qué pasa si no puedo asistir?', a: 'Las sesiones quedan grabadas y tienes acceso de por vida.' },
-    { q: '¿Cuánto tiempo necesito?', a: '5-8 horas semanales: 2h de clase + práctica.' },
-    { q: '¿Cuándo empieza?', a: 'Marzo 2026. Las plazas son limitadas a 5 personas.' }
+    { q: '¿Necesito saber programar?', a: 'No. Hay un pre-curso de 5-6h con los fundamentos. Claude Code escribe el código por ti.' },
+    { q: '¿Qué pasa si no puedo asistir?', a: 'Las clases se graban y tienes acceso de por vida al material.' },
+    { q: '¿Cuánto tiempo necesito?', a: '5-7 horas semanales: 2h clase + 3-5h de trabajo en tu proyecto.' },
+    { q: '¿Cuándo empieza?', a: 'Marzo 2026. Solo 5 plazas disponibles.' }
   ]
 
   // Theme colors
@@ -142,8 +142,8 @@ export default function CursoNegocioLanding() {
   return (
     <>
       <Head>
-        <title>Crea tu Negocio Digital con IA | Curso Presencial Online</title>
-        <meta name="description" content="De idea a negocio rentable en 10 semanas. Curso práctico con mentoría personalizada." />
+        <title>Crea tu Software con IA | De cero a producción en 10 semanas</title>
+        <meta name="description" content="De cero a software en producción en 10 semanas. Curso con Claude Code, Next.js, Supabase y Stripe. Mentoría personalizada." />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
@@ -362,7 +362,7 @@ export default function CursoNegocioLanding() {
                 margin: '0 0 24px 0',
                 color: t.text
               }}>
-                Crea tu negocio digital<br />con inteligencia artificial
+                Crea tu software<br />con inteligencia artificial
               </h1>
 
               {/* Subtitle */}
@@ -375,8 +375,8 @@ export default function CursoNegocioLanding() {
                 marginLeft: 'auto',
                 marginRight: 'auto'
               }}>
-                De idea a negocio rentable en <span style={{ color: t.text }}>10 semanas</span>.
-                Curso práctico con mentoría personalizada para lanzar sin escribir código.
+                De cero a software en producción en <span style={{ color: t.text }}>10 semanas</span>.
+                Curso práctico con Claude Code, Next.js, Supabase y Stripe. Sin experiencia previa.
               </p>
 
               {/* CTAs */}
@@ -732,12 +732,12 @@ export default function CursoNegocioLanding() {
                 gap: '12px'
               }}>
                 {[
-                  { iconKey: 'lightbulb', text: 'Tienes una idea pero no sabes cómo empezar' },
-                  { iconKey: 'clock', text: 'Quieres dejar de postergar y lanzar de una vez' },
-                  { iconKey: 'code', text: 'No sabes programar (ni quieres aprender)' },
-                  { iconKey: 'cpu', text: 'Quieres aprovechar la IA para ir más rápido' },
-                  { iconKey: 'users', text: 'Prefieres aprender con apoyo personalizado' },
-                  { iconKey: 'target', text: 'Buscas resultados reales, no solo teoría' }
+                  { iconKey: 'lightbulb', text: 'Tienes una idea de software pero no sabes programar' },
+                  { iconKey: 'clock', text: 'Quieres crear tu SaaS o app y dejar de postergar' },
+                  { iconKey: 'code', text: 'Prefieres que la IA escriba el código por ti' },
+                  { iconKey: 'cpu', text: 'Quieres aprender el stack moderno: Next.js, Supabase, Vercel' },
+                  { iconKey: 'users', text: 'Valoras mentoría 1:1 y grupo reducido' },
+                  { iconKey: 'target', text: 'Buscas terminar con software en producción real' }
                 ].map((item, i) => (
                   <div key={i} style={{
                     display: 'flex',
@@ -885,7 +885,7 @@ export default function CursoNegocioLanding() {
                 margin: '0 0 16px 0',
                 color: t.text
               }}>
-                Tu negocio digital te espera
+                Tu software te espera
               </h2>
 
               <p style={{
@@ -894,8 +894,8 @@ export default function CursoNegocioLanding() {
                 margin: '0 0 32px 0',
                 lineHeight: 1.6
               }}>
-                En 10 semanas podrías estar facturando con tu propio negocio.<br />
-                La próxima edición empieza en marzo 2026.
+                En 10 semanas tendrás tu propio software en producción.<br />
+                Próxima edición: marzo 2026.
               </p>
 
               <a href="#precio" style={{
