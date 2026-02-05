@@ -2,6 +2,82 @@ import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 
+// Professional SVG Icons (Linear/Stripe style)
+const Icons = {
+  video: (color: string) => (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2" y="4" width="20" height="16" rx="2"/>
+      <path d="M10 9l5 3-5 3V9z" fill={color}/>
+    </svg>
+  ),
+  user: (color: string) => (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="8" r="4"/>
+      <path d="M4 20c0-4 4-6 8-6s8 2 8 6"/>
+    </svg>
+  ),
+  users: (color: string) => (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="9" cy="7" r="3"/>
+      <path d="M2 20c0-3 3-5 7-5s7 2 7 5"/>
+      <circle cx="17" cy="7" r="2.5"/>
+      <path d="M22 20c0-2.5-2-4-5-4"/>
+    </svg>
+  ),
+  rocket: (color: string) => (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 00-2.91-.09z"/>
+      <path d="M12 15l-3-3a22 22 0 012-3.95A12.88 12.88 0 0122 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 01-4 2z"/>
+      <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/>
+      <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/>
+    </svg>
+  ),
+  lightbulb: (color: string) => (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M9 18h6"/>
+      <path d="M10 22h4"/>
+      <path d="M12 2a7 7 0 00-4 12.7V17a1 1 0 001 1h6a1 1 0 001-1v-2.3A7 7 0 0012 2z"/>
+    </svg>
+  ),
+  clock: (color: string) => (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <polyline points="12 6 12 12 16 14"/>
+    </svg>
+  ),
+  code: (color: string) => (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <line x1="4" y1="12" x2="20" y2="12"/>
+      <circle cx="12" cy="12" r="8"/>
+      <line x1="12" y1="4" x2="12" y2="20" strokeDasharray="2 2"/>
+    </svg>
+  ),
+  cpu: (color: string) => (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="4" y="4" width="16" height="16" rx="2"/>
+      <rect x="9" y="9" width="6" height="6"/>
+      <path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/>
+    </svg>
+  ),
+  target: (color: string) => (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <circle cx="12" cy="12" r="6"/>
+      <circle cx="12" cy="12" r="2"/>
+    </svg>
+  ),
+  check: (color: string) => (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="20 6 9 17 4 12"/>
+    </svg>
+  ),
+  zap: (color: string) => (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill={color} stroke="none">
+      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+    </svg>
+  )
+}
+
 export default function CursoNegocioLanding() {
   const [mounted, setMounted] = useState(false)
   const [isDark, setIsDark] = useState(false)
@@ -32,10 +108,10 @@ export default function CursoNegocioLanding() {
   ]
 
   const features = [
-    { icon: '📹', title: 'Clases en vivo', desc: '10 sesiones de 2h trabajando en tu proyecto real' },
-    { icon: '👤', title: 'Mentoría 1:1', desc: 'Seguimiento individual cada semana' },
-    { icon: '👥', title: 'Grupo reducido', desc: 'Máximo 5 personas para atención personalizada' },
-    { icon: '🚀', title: 'De 0 a lanzamiento', desc: 'Terminas con tu negocio funcionando' }
+    { iconKey: 'video', title: 'Clases en vivo', desc: '10 sesiones de 2h trabajando en tu proyecto real' },
+    { iconKey: 'user', title: 'Mentoría 1:1', desc: 'Seguimiento individual cada semana' },
+    { iconKey: 'users', title: 'Grupo reducido', desc: 'Máximo 5 personas para atención personalizada' },
+    { iconKey: 'rocket', title: 'De 0 a lanzamiento', desc: 'Terminas con tu negocio funcionando' }
   ]
 
   const faqs = [
@@ -267,7 +343,13 @@ export default function CursoNegocioLanding() {
                 marginBottom: '32px',
                 fontWeight: 500
               }}>
-                <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#22c55e' }} />
+                <span style={{
+                  width: '8px',
+                  height: '8px',
+                  borderRadius: '50%',
+                  background: '#22c55e',
+                  boxShadow: '0 0 8px rgba(34,197,94,0.6)'
+                }} />
                 Marzo 2026 · Solo 5 plazas
               </div>
 
@@ -389,17 +471,19 @@ export default function CursoNegocioLanding() {
                     boxShadow: isDark ? 'none' : '0 1px 3px rgba(0,0,0,0.04)'
                   }}>
                     <div style={{
-                      width: '44px',
-                      height: '44px',
-                      background: isDark ? t.bgTertiary : '#f0f4ff',
-                      borderRadius: '12px',
+                      width: '48px',
+                      height: '48px',
+                      background: isDark
+                        ? 'linear-gradient(135deg, rgba(94,106,210,0.15) 0%, rgba(94,106,210,0.05) 100%)'
+                        : 'linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%)',
+                      borderRadius: '14px',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      fontSize: '20px',
-                      marginBottom: '16px'
+                      marginBottom: '18px',
+                      border: `1px solid ${isDark ? 'rgba(94,106,210,0.2)' : '#c7d2fe'}`
                     }}>
-                      {feature.icon}
+                      {Icons[feature.iconKey as keyof typeof Icons](isDark ? '#a5b4fc' : '#5e6ad2')}
                     </div>
                     <h3 style={{ fontSize: '16px', fontWeight: 600, margin: '0 0 8px 0', color: t.text }}>
                       {feature.title}
@@ -591,7 +675,18 @@ export default function CursoNegocioLanding() {
                       padding: '10px 0',
                       borderBottom: i < 4 ? `1px solid ${t.border}` : 'none'
                     }}>
-                      <span style={{ color: '#22c55e', fontSize: '16px' }}>✓</span>
+                      <div style={{
+                        width: '20px',
+                        height: '20px',
+                        background: 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)',
+                        borderRadius: '50%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        flexShrink: 0
+                      }}>
+                        {Icons.check('white')}
+                      </div>
                       <span style={{ fontSize: '14px', color: t.textSecondary }}>{feature}</span>
                     </div>
                   ))}
@@ -637,25 +732,40 @@ export default function CursoNegocioLanding() {
                 gap: '12px'
               }}>
                 {[
-                  { icon: '💡', text: 'Tienes una idea pero no sabes cómo empezar' },
-                  { icon: '⏰', text: 'Quieres dejar de postergar y lanzar de una vez' },
-                  { icon: '🚫', text: 'No sabes programar (ni quieres aprender)' },
-                  { icon: '🤖', text: 'Quieres aprovechar la IA para ir más rápido' },
-                  { icon: '👥', text: 'Prefieres aprender con apoyo personalizado' },
-                  { icon: '🎯', text: 'Buscas resultados reales, no solo teoría' }
+                  { iconKey: 'lightbulb', text: 'Tienes una idea pero no sabes cómo empezar' },
+                  { iconKey: 'clock', text: 'Quieres dejar de postergar y lanzar de una vez' },
+                  { iconKey: 'code', text: 'No sabes programar (ni quieres aprender)' },
+                  { iconKey: 'cpu', text: 'Quieres aprovechar la IA para ir más rápido' },
+                  { iconKey: 'users', text: 'Prefieres aprender con apoyo personalizado' },
+                  { iconKey: 'target', text: 'Buscas resultados reales, no solo teoría' }
                 ].map((item, i) => (
                   <div key={i} style={{
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '14px',
-                    padding: '18px 22px',
+                    gap: '16px',
+                    padding: '20px 24px',
                     background: isDark ? t.bgSecondary : '#ffffff',
                     border: `1px solid ${isDark ? t.border : '#e8ecf4'}`,
-                    borderRadius: '12px',
-                    boxShadow: isDark ? 'none' : '0 1px 3px rgba(0,0,0,0.04)'
+                    borderRadius: '14px',
+                    boxShadow: isDark ? 'none' : '0 2px 8px rgba(0,0,0,0.04)',
+                    transition: 'all 0.2s ease'
                   }}>
-                    <span style={{ fontSize: '22px' }}>{item.icon}</span>
-                    <span style={{ fontSize: '14px', color: t.textSecondary, fontWeight: 450 }}>{item.text}</span>
+                    <div style={{
+                      width: '40px',
+                      height: '40px',
+                      background: isDark
+                        ? 'linear-gradient(135deg, rgba(94,106,210,0.12) 0%, rgba(94,106,210,0.04) 100%)'
+                        : 'linear-gradient(135deg, #f0f4ff 0%, #e8ecff 100%)',
+                      borderRadius: '10px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      flexShrink: 0,
+                      border: `1px solid ${isDark ? 'rgba(94,106,210,0.15)' : '#dbe4ff'}`
+                    }}>
+                      {Icons[item.iconKey as keyof typeof Icons](isDark ? '#a5b4fc' : '#5e6ad2')}
+                    </div>
+                    <span style={{ fontSize: '14px', color: t.text, fontWeight: 450 }}>{item.text}</span>
                   </div>
                 ))}
               </div>
@@ -755,15 +865,17 @@ export default function CursoNegocioLanding() {
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '8px',
-                padding: '6px 14px',
-                background: isDark ? 'rgba(245,158,11,0.1)' : 'rgba(245,158,11,0.15)',
-                border: '1px solid rgba(245,158,11,0.3)',
+                padding: '8px 16px',
+                background: isDark ? 'rgba(245,158,11,0.1)' : 'rgba(245,158,11,0.12)',
+                border: '1px solid rgba(245,158,11,0.25)',
                 borderRadius: '100px',
                 fontSize: '13px',
+                fontWeight: 500,
                 color: isDark ? '#fbbf24' : '#b45309',
                 marginBottom: '24px'
               }}>
-                ⚡ Solo quedan 5 plazas
+                {Icons.zap(isDark ? '#fbbf24' : '#d97706')}
+                Solo quedan 5 plazas
               </div>
 
               <h2 style={{
