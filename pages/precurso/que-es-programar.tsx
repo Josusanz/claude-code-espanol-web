@@ -175,15 +175,15 @@ function PageContent() {
           </div>
 
           <VideoEmbed
-            url="https://www.youtube.com/watch?v=X5Sfu8WmFxk"
+            url="https://www.youtube.com/watch?v=6W2wYwHQNT4"
             title="¿Qué es programar?"
           />
 
           <h3 style={{ fontSize: '18px', fontWeight: 600, color: '#1a1a2e', margin: '16px 0 8px 0' }}>
-            ¿Qué es la programación? - Explicado fácil
+            Curso de programación básica - Código Facilito
           </h3>
           <p style={{ fontSize: '14px', color: '#64748b', margin: 0 }}>
-            Una explicación clara y visual de qué significa programar, sin tecnicismos innecesarios.
+            Una introducción clara a los conceptos fundamentales de programación explicados paso a paso.
           </p>
         </div>
 
@@ -316,16 +316,6 @@ function PageContent() {
           <ul style={{ margin: 0, paddingLeft: '20px', color: '#64748b', fontSize: '14px', lineHeight: 2 }}>
             <li>
               <a
-                href="https://www.youtube.com/watch?v=6W2wYwHQNT4"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ color: '#5e6ad2', fontWeight: 500 }}
-              >
-                Curso de programación básica
-              </a> - Código Facilito (más técnico, ~45 min)
-            </li>
-            <li>
-              <a
                 href="https://www.freecodecamp.org/espanol/news/que-es-programacion-manual-para-principiantes/"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -333,6 +323,16 @@ function PageContent() {
               >
                 ¿Qué es programación? Manual para principiantes
               </a> - FreeCodeCamp (lectura)
+            </li>
+            <li>
+              <a
+                href="https://www.youtube.com/watch?v=Kp4Mvapo5kc"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: '#5e6ad2', fontWeight: 500 }}
+              >
+                ¿Qué hace un programador? Explicado para principiantes
+              </a> - Otro video útil
             </li>
           </ul>
         </div>
