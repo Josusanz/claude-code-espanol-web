@@ -3,7 +3,6 @@ import Link from 'next/link'
 import PrecursoEmailGate from '../../components/PrecursoEmailGate'
 
 function VideoEmbed({ url, title }: { url: string; title: string }) {
-  // Convert YouTube URL to embed URL
   let embedUrl = url
   if (url.includes('youtube.com/watch')) {
     const videoId = url.split('v=')[1]?.split('&')[0]
@@ -20,8 +19,7 @@ function VideoEmbed({ url, title }: { url: string; title: string }) {
       height: 0,
       overflow: 'hidden',
       borderRadius: '12px',
-      background: '#000',
-      marginBottom: '16px'
+      background: '#000'
     }}>
       <iframe
         src={embedUrl}
@@ -37,94 +35,6 @@ function VideoEmbed({ url, title }: { url: string; title: string }) {
           border: 'none'
         }}
       />
-    </div>
-  )
-}
-
-function ResourceCard({
-  title,
-  source,
-  duration,
-  url,
-  description,
-  videoUrl
-}: {
-  title: string
-  source: string
-  duration: string
-  url: string
-  description: string
-  videoUrl?: string
-}) {
-  return (
-    <div style={{
-      background: 'white',
-      border: '1px solid #e2e8f0',
-      borderRadius: '16px',
-      padding: '24px',
-      marginBottom: '24px'
-    }}>
-      {videoUrl && <VideoEmbed url={videoUrl} title={title} />}
-      <div style={{
-        display: 'flex',
-        alignItems: 'flex-start',
-        justifyContent: 'space-between',
-        gap: '16px',
-        flexWrap: 'wrap'
-      }}>
-        <div>
-          <h3 style={{
-            fontSize: '18px',
-            fontWeight: 600,
-            color: '#1a1a2e',
-            margin: '0 0 8px 0'
-          }}>
-            {title}
-          </h3>
-          <p style={{
-            fontSize: '14px',
-            color: '#64748b',
-            margin: '0 0 12px 0'
-          }}>
-            {description}
-          </p>
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '16px',
-            fontSize: '13px',
-            color: '#94a3b8'
-          }}>
-            <span>📺 {source}</span>
-            <span>⏱️ {duration}</span>
-          </div>
-        </div>
-        <a
-          href={url}
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '6px',
-            padding: '10px 16px',
-            background: '#f1f5f9',
-            color: '#475569',
-            borderRadius: '8px',
-            textDecoration: 'none',
-            fontSize: '14px',
-            fontWeight: 500,
-            whiteSpace: 'nowrap'
-          }}
-        >
-          Ver recurso
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
-            <polyline points="15 3 21 3 21 9"/>
-            <line x1="10" y1="14" x2="21" y2="3"/>
-          </svg>
-        </a>
-      </div>
     </div>
   )
 }
@@ -171,11 +81,7 @@ function PageContent() {
             </svg>
             Volver al índice
           </Link>
-          <span style={{
-            fontSize: '13px',
-            color: '#5e6ad2',
-            fontWeight: 500
-          }}>
+          <span style={{ fontSize: '13px', color: '#5e6ad2', fontWeight: 500 }}>
             Módulo 1 de 6
           </span>
         </div>
@@ -197,7 +103,7 @@ function PageContent() {
             fontWeight: 500,
             marginBottom: '16px'
           }}>
-            ⏱️ ~45 minutos
+            ⏱️ ~20 minutos
           </div>
           <h1 style={{
             fontSize: '32px',
@@ -205,7 +111,7 @@ function PageContent() {
             color: '#1a1a2e',
             margin: '0 0 16px 0'
           }}>
-            Qué es Programar y Cómo Funciona
+            ¿Qué es programar? 🤔
           </h1>
           <p style={{
             fontSize: '18px',
@@ -213,82 +119,210 @@ function PageContent() {
             margin: 0,
             lineHeight: 1.6
           }}>
-            Entiende los conceptos básicos del software antes de empezar a crear con IA.
+            Una introducción súper simple. No necesitas memorizar nada, solo entender la idea general.
           </p>
         </div>
 
-        {/* Intro */}
+        {/* Reassurance */}
         <div style={{
-          background: 'linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%)',
+          background: 'linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%)',
           borderRadius: '16px',
           padding: '24px',
           marginBottom: '32px',
-          border: '1px solid #c7d2fe'
+          border: '1px solid #86efac'
         }}>
-          <p style={{
-            fontSize: '15px',
-            color: '#4338ca',
-            margin: 0,
-            lineHeight: 1.7
+          <div style={{ display: 'flex', alignItems: 'flex-start', gap: '16px' }}>
+            <span style={{ fontSize: '32px' }}>🎯</span>
+            <div>
+              <h3 style={{ margin: '0 0 8px 0', color: '#166534', fontSize: '16px', fontWeight: 600 }}>
+                Tranquilo, no vas a programar tú
+              </h3>
+              <p style={{ margin: 0, color: '#166534', fontSize: '14px', lineHeight: 1.6 }}>
+                En el curso, <strong>Claude Code escribirá el código por ti</strong>. Este módulo solo te ayuda a entender
+                de qué va todo esto para que puedas comunicarte mejor con la IA. Es como aprender qué es una cocina
+                antes de usar una thermomix.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Main Video */}
+        <div style={{
+          background: 'white',
+          border: '1px solid #e2e8f0',
+          borderRadius: '16px',
+          padding: '24px',
+          marginBottom: '24px'
+        }}>
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            marginBottom: '16px'
           }}>
-            <strong>¿Por qué esto importa?</strong> Aunque la IA va a escribir el código por ti,
-            necesitas entender los conceptos básicos para poder comunicarte con ella y entender
-            lo que está haciendo. Es como aprender los ingredientes básicos de cocina antes de
-            usar una thermomix.
+            <span style={{
+              background: '#fbbf24',
+              color: '#1a1a2e',
+              padding: '4px 10px',
+              borderRadius: '4px',
+              fontSize: '11px',
+              fontWeight: 600,
+              textTransform: 'uppercase'
+            }}>
+              Video principal
+            </span>
+            <span style={{ fontSize: '13px', color: '#64748b' }}>~12 min</span>
+          </div>
+
+          <VideoEmbed
+            url="https://www.youtube.com/watch?v=X5Sfu8WmFxk"
+            title="¿Qué es programar?"
+          />
+
+          <h3 style={{ fontSize: '18px', fontWeight: 600, color: '#1a1a2e', margin: '16px 0 8px 0' }}>
+            ¿Qué es la programación? - Explicado fácil
+          </h3>
+          <p style={{ fontSize: '14px', color: '#64748b', margin: 0 }}>
+            Una explicación clara y visual de qué significa programar, sin tecnicismos innecesarios.
           </p>
         </div>
 
-        {/* Resources */}
+        {/* Simple analogy */}
+        <div style={{
+          background: '#f8fafc',
+          border: '1px solid #e2e8f0',
+          borderRadius: '16px',
+          padding: '24px',
+          marginBottom: '32px'
+        }}>
+          <h3 style={{ fontSize: '18px', fontWeight: 600, color: '#1a1a2e', margin: '0 0 16px 0' }}>
+            🍳 La analogía más simple
+          </h3>
+          <div style={{ display: 'grid', gap: '16px' }}>
+            <div style={{
+              background: 'white',
+              borderRadius: '12px',
+              padding: '16px',
+              border: '1px solid #e2e8f0'
+            }}>
+              <p style={{ margin: 0, color: '#475569', fontSize: '15px', lineHeight: 1.7 }}>
+                <strong>Programar es como escribir una receta de cocina:</strong>
+              </p>
+              <ul style={{ margin: '12px 0 0 0', paddingLeft: '20px', color: '#64748b', fontSize: '14px', lineHeight: 1.8 }}>
+                <li>Los <strong>ingredientes</strong> son los datos (texto, números, imágenes)</li>
+                <li>Los <strong>pasos de la receta</strong> son las instrucciones del código</li>
+                <li>El <strong>plato final</strong> es tu app funcionando</li>
+                <li>El <strong>cocinero</strong> es el ordenador siguiendo tus instrucciones</li>
+              </ul>
+            </div>
+            <div style={{
+              background: 'linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%)',
+              borderRadius: '12px',
+              padding: '16px',
+              border: '1px solid #c7d2fe'
+            }}>
+              <p style={{ margin: 0, color: '#4338ca', fontSize: '14px' }}>
+                💡 <strong>Y aquí viene lo bueno:</strong> Con Claude Code, tú solo describes el plato que quieres
+                ("hazme una tortilla de patatas") y la IA escribe la receta completa por ti.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Key concepts - simplified */}
         <h2 style={{
           fontSize: '20px',
           fontWeight: 600,
           color: '#1a1a2e',
-          marginBottom: '20px'
+          margin: '0 0 20px 0'
         }}>
-          📚 Recurso Principal
+          📝 4 conceptos que es útil conocer
         </h2>
+        <p style={{ fontSize: '14px', color: '#64748b', marginBottom: '16px' }}>
+          No necesitas memorizarlos. Solo familiarizarte con las palabras.
+        </p>
 
-        <ResourceCard
-          title="Curso Programación Básica - Nunca He Programado"
-          source="Código Facilito"
-          duration="45 min (vídeos 1-6)"
-          url="https://www.youtube.com/playlist?list=PLpOqH6AE0tNgqknxjMAKVId3rDOnuTqOl"
-          description="Explica desde cero qué es un lenguaje, variables, funciones, objetos y APIs. Muy bien estructurado y en español."
-          videoUrl="https://www.youtube.com/watch?v=6W2wYwHQNT4"
-        />
+        <div style={{ display: 'grid', gap: '12px', marginBottom: '32px' }}>
+          {[
+            {
+              emoji: '📦',
+              term: 'Variable',
+              simple: 'Una caja con nombre donde guardas cosas',
+              example: 'nombre = "María", edad = 25'
+            },
+            {
+              emoji: '🔧',
+              term: 'Función',
+              simple: 'Una tarea con nombre que puedes repetir',
+              example: 'enviarEmail(), calcularPrecio()'
+            },
+            {
+              emoji: '🔌',
+              term: 'API',
+              simple: 'La forma de que dos programas se hablen',
+              example: 'Tu app habla con Stripe para cobrar'
+            },
+            {
+              emoji: '❓',
+              term: 'Condicional',
+              simple: '"Si pasa esto, haz aquello"',
+              example: 'Si el usuario pagó → mostrar contenido'
+            }
+          ].map(item => (
+            <div
+              key={item.term}
+              style={{
+                background: 'white',
+                border: '1px solid #e2e8f0',
+                borderRadius: '12px',
+                padding: '16px 20px',
+                display: 'flex',
+                alignItems: 'flex-start',
+                gap: '14px'
+              }}
+            >
+              <span style={{ fontSize: '24px' }}>{item.emoji}</span>
+              <div style={{ flex: 1 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                  <span style={{ fontWeight: 600, color: '#1a1a2e' }}>{item.term}</span>
+                  <span style={{ color: '#94a3b8' }}>→</span>
+                  <span style={{ color: '#64748b', fontSize: '14px' }}>{item.simple}</span>
+                </div>
+                <code style={{
+                  fontSize: '12px',
+                  color: '#5e6ad2',
+                  background: '#f1f5f9',
+                  padding: '2px 6px',
+                  borderRadius: '4px'
+                }}>
+                  {item.example}
+                </code>
+              </div>
+            </div>
+          ))}
+        </div>
 
-        <h2 style={{
-          fontSize: '20px',
-          fontWeight: 600,
-          color: '#1a1a2e',
-          marginBottom: '20px'
-        }}>
-          🔄 Alternativas
-        </h2>
-
+        {/* Optional extra video */}
         <div style={{
           background: '#f8fafc',
           border: '1px solid #e2e8f0',
           borderRadius: '12px',
-          padding: '20px'
+          padding: '20px',
+          marginBottom: '32px'
         }}>
-          <ul style={{
-            margin: 0,
-            padding: '0 0 0 20px',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '12px'
-          }}>
+          <h3 style={{ fontSize: '16px', fontWeight: 600, color: '#1a1a2e', margin: '0 0 12px 0' }}>
+            🎬 Opcional: Si quieres profundizar más
+          </h3>
+          <ul style={{ margin: 0, paddingLeft: '20px', color: '#64748b', fontSize: '14px', lineHeight: 2 }}>
             <li>
               <a
-                href="https://www.youtube.com/c/paborras"
+                href="https://www.youtube.com/watch?v=6W2wYwHQNT4"
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{ color: '#5e6ad2', fontWeight: 500 }}
               >
-                Píldoras Informáticas
-              </a>
-              <span style={{ color: '#64748b' }}> - Canal con explicaciones muy didácticas</span>
+                Curso de programación básica
+              </a> - Código Facilito (más técnico, ~45 min)
             </li>
             <li>
               <a
@@ -297,56 +331,27 @@ function PageContent() {
                 rel="noopener noreferrer"
                 style={{ color: '#5e6ad2', fontWeight: 500 }}
               >
-                FreeCodeCamp Español
-              </a>
-              <span style={{ color: '#64748b' }}> - Artículo: ¿Qué es programación? Manual para principiantes</span>
+                ¿Qué es programación? Manual para principiantes
+              </a> - FreeCodeCamp (lectura)
             </li>
           </ul>
         </div>
 
-        {/* Key concepts */}
-        <h2 style={{
-          fontSize: '20px',
-          fontWeight: 600,
-          color: '#1a1a2e',
-          margin: '40px 0 20px 0'
-        }}>
-          🎯 Conceptos Clave que Debes Entender
-        </h2>
-
+        {/* Completion message */}
         <div style={{
-          display: 'grid',
-          gap: '12px'
+          background: 'linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%)',
+          borderRadius: '16px',
+          padding: '24px',
+          textAlign: 'center',
+          border: '1px solid #c7d2fe'
         }}>
-          {[
-            { term: 'Variable', def: 'Un contenedor para guardar datos (como una caja con etiqueta)' },
-            { term: 'Función', def: 'Un conjunto de instrucciones reutilizables (como una receta)' },
-            { term: 'API', def: 'Una forma de que dos programas se comuniquen entre sí' },
-            { term: 'Objeto', def: 'Una estructura que agrupa datos relacionados' },
-            { term: 'Loop/Bucle', def: 'Repetir una acción múltiples veces' },
-            { term: 'Condicional', def: 'Tomar decisiones: "si pasa X, haz Y"' }
-          ].map(item => (
-            <div
-              key={item.term}
-              style={{
-                background: 'white',
-                border: '1px solid #e2e8f0',
-                borderRadius: '10px',
-                padding: '16px 20px',
-                display: 'flex',
-                gap: '12px'
-              }}
-            >
-              <span style={{
-                fontWeight: 600,
-                color: '#5e6ad2',
-                minWidth: '100px'
-              }}>
-                {item.term}
-              </span>
-              <span style={{ color: '#475569' }}>{item.def}</span>
-            </div>
-          ))}
+          <span style={{ fontSize: '32px' }}>✅</span>
+          <h3 style={{ fontSize: '18px', fontWeight: 600, color: '#3730a3', margin: '12px 0 8px 0' }}>
+            ¡Eso es todo por ahora!
+          </h3>
+          <p style={{ fontSize: '14px', color: '#4338ca', margin: 0 }}>
+            No necesitas saber más. En el curso, Claude Code se encarga del código.
+          </p>
         </div>
 
         {/* Navigation */}

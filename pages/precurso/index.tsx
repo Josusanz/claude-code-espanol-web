@@ -147,45 +147,45 @@ function PrecursoContent() {
   const modules = [
     {
       number: 1,
-      title: 'Qué es Programar',
-      desc: 'Entiende los conceptos básicos del software',
+      title: '¿Qué es programar?',
+      desc: 'Explicación súper simple (no vas a programar tú)',
       href: '/precurso/que-es-programar',
-      duration: '45 min'
+      duration: '20 min'
     },
     {
       number: 2,
-      title: 'Frontend, Backend y Bases de Datos',
-      desc: 'La arquitectura de las aplicaciones modernas',
+      title: 'Frontend, Backend y DB',
+      desc: 'La arquitectura web explicada con analogías',
       href: '/precurso/frontend-backend',
-      duration: '25 min'
+      duration: '15 min'
     },
     {
       number: 3,
       title: 'Instalar VS Code',
-      desc: 'Tu editor de código principal',
+      desc: 'Tu editor de código (donde verás lo que hace Claude)',
       href: '/precurso/vscode',
-      duration: '20 min'
+      duration: '15 min'
     },
     {
       number: 4,
       title: 'Terminal Básico',
-      desc: 'Comandos esenciales que usarás a diario',
+      desc: 'Los 10 comandos que necesitas saber',
       href: '/precurso/terminal',
-      duration: '30 min'
+      duration: '20 min'
     },
     {
       number: 5,
       title: 'Instalar Node.js',
-      desc: 'El runtime de JavaScript',
+      desc: 'Instalación rápida + verificación',
       href: '/precurso/nodejs',
       duration: '20 min'
     },
     {
       number: 6,
       title: 'Git y GitHub',
-      desc: 'Control de versiones y colaboración',
+      desc: 'Guardar tu código en la nube (lo esencial)',
       href: '/precurso/git-github',
-      duration: '60 min'
+      duration: '30 min'
     }
   ]
 
@@ -196,7 +196,7 @@ function PrecursoContent() {
       fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif"
     }}>
       <Head>
-        <title>Precurso | Crea tu Negocio Digital con IA</title>
+        <title>Precurso | Crea tu Software con IA</title>
         <meta name="robots" content="noindex, nofollow" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
       </Head>
@@ -266,7 +266,7 @@ function PrecursoContent() {
             color: '#3730a3',
             marginBottom: '12px'
           }}>
-            Bienvenido al Precurso 🚀
+            ¡Bienvenido al Precurso! 🚀
           </h1>
           <p style={{
             fontSize: '16px',
@@ -274,8 +274,17 @@ function PrecursoContent() {
             margin: 0,
             lineHeight: 1.6
           }}>
-            Antes de la primera clase, completa estos módulos para tener las bases necesarias.
-            Hemos curado los mejores recursos gratuitos en español para los fundamentos.
+            Estos módulos te preparan para la primera clase. <strong>Son súper fáciles</strong> -
+            no necesitas memorizar nada, solo familiarizarte con los conceptos.
+            Claude Code escribirá el código por ti, tú solo tienes que entender la idea general.
+          </p>
+          <p style={{
+            fontSize: '14px',
+            color: '#6366f1',
+            marginTop: '12px',
+            marginBottom: 0
+          }}>
+            ⏱️ Tiempo total: ~2 horas (puedes hacerlo en varios días)
           </p>
         </div>
 
