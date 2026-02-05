@@ -118,7 +118,7 @@ export default function CursoNegocioLanding() {
     { q: '¿Necesito saber programar?', a: 'No. Hay un pre-curso de 5-6h con los fundamentos. Claude Code escribe el código por ti.' },
     { q: '¿Qué pasa si no puedo asistir?', a: 'Las clases se graban y tienes acceso de por vida al material.' },
     { q: '¿Cuánto tiempo necesito?', a: '5-7 horas semanales: 2h clase + 3-5h de trabajo en tu proyecto.' },
-    { q: '¿Cuándo empieza?', a: 'Marzo 2026. Solo 5 plazas disponibles.' }
+    { q: '¿Cuándo empieza?', a: '19 de marzo. Solo 3 plazas disponibles.' }
   ]
 
   // Theme colors
@@ -350,7 +350,7 @@ export default function CursoNegocioLanding() {
                   background: '#22c55e',
                   boxShadow: '0 0 8px rgba(34,197,94,0.6)'
                 }} />
-                Marzo 2026 · Solo 5 plazas
+                19 de marzo · Solo 3 plazas
               </div>
 
               {/* Title */}
@@ -875,7 +875,7 @@ export default function CursoNegocioLanding() {
                 marginBottom: '24px'
               }}>
                 {Icons.zap(isDark ? '#fbbf24' : '#d97706')}
-                Solo quedan 5 plazas
+                Solo quedan 3 plazas
               </div>
 
               <h2 style={{
