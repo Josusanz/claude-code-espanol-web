@@ -1,0 +1,272 @@
+---
+title: Configurar MCP en Claude Code
+---
+
+import { Callout } from 'nextra/components'
+
+# Lección 4: Configurar MCP en Claude Code
+
+Vamos a configurar tu primer servidor MCP en Claude Code paso a paso.
+
+---
+
+## Requisitos previos
+
+Antes de empezar, asegúrate de tener:
+
+- ✅ Claude Code instalado y funcionando
+- ✅ Node.js instalado (versión 18 o superior)
+- ✅ Acceso a la terminal
+
+```bash
+# Verificar Node.js
+node --version
+# Debería mostrar v18.x.x o superior
+```
+
+<Callout type="warning">
+  Si no tienes Node.js, descárgalo de [nodejs.org](https://nodejs.org/)
+</Callout>
+
+---
+
+## Paso 1: Localizar el archivo de configuración
+
+Claude Code busca la configuración de MCP en:
+
+**macOS:**
+```
+~/.claude/claude_desktop_config.json
+```
+
+**Windows:**
+```
+%APPDATA%\Claude\claude_desktop_config.json
+```
+
+**Linux:**
+```
+~/.config/claude/claude_desktop_config.json
+```
+
+Si el archivo no existe, créalo:
+
+```bash
+# macOS/Linux
+mkdir -p ~/.claude
+touch ~/.claude/claude_desktop_config.json
+```
+
+---
+
+## Paso 2: Estructura básica del archivo
+
+El archivo debe tener esta estructura:
+
+```json
+{
+  "mcpServers": {
+
+  }
+}
+```
+
+Cada servidor se añade dentro de `mcpServers` con un nombre único.
+
+---
+
+## Paso 3: Añadir tu primer servidor (Filesystem)
+
+Empezaremos con el servidor de **filesystem**, que permite a Claude acceder a archivos en una carpeta específica.
+
+Edita el archivo de configuración:
+
+```json
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/Users/tu-usuario/Documentos"
+      ]
+    }
+  }
+}
+```
+
+<Callout type="info">
+  Cambia `/Users/tu-usuario/Documentos` por la ruta a la carpeta que quieres que Claude pueda acceder.
+</Callout>
+
+**Explicación:**
+- `command`: El comando a ejecutar (`npx`)
+- `args`: Argumentos del comando
+  - `-y`: Acepta instalación automática
+  - `@modelcontextprotocol/server-filesystem`: El paquete del servidor
+  - `/ruta/a/carpeta`: La carpeta permitida
+
+---
+
+## Paso 4: Reiniciar Claude Code
+
+Para que los cambios surtan efecto:
+
+1. Cierra Claude Code completamente
+2. Vuelve a abrirlo
+
+O desde la terminal:
+```bash
+# Cierra y vuelve a ejecutar
+claude
+```
+
+---
+
+## Paso 5: Verificar que funciona
+
+Abre Claude Code y pregunta:
+
+```
+¿Qué archivos hay en mi carpeta de documentos?
+```
+
+Si todo está bien, Claude listará los archivos usando el servidor MCP.
+
+---
+
+## Ejemplo: Añadir servidor de GitHub
+
+Para conectar con GitHub, necesitas un token de acceso personal.
+
+### Crear token en GitHub:
+1. Ve a [github.com/settings/tokens](https://github.com/settings/tokens)
+2. Click en "Generate new token (classic)"
+3. Selecciona permisos: `repo`, `read:user`
+4. Copia el token generado
+
+### Configurar el servidor:
+
+```json
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/Users/tu-usuario/Documentos"]
+    },
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "ghp_tu_token_aqui"
+      }
+    }
+  }
+}
+```
+
+<Callout type="warning">
+  **Seguridad:** Nunca compartas tu archivo de configuración si tiene tokens. Considera usar variables de entorno del sistema.
+</Callout>
+
+---
+
+## Ejemplo: Servidor de Notion
+
+Para Notion necesitas una integración:
+
+### Crear integración en Notion:
+1. Ve a [notion.so/my-integrations](https://www.notion.so/my-integrations)
+2. Click en "Nueva integración"
+3. Dale un nombre y selecciona el workspace
+4. Copia el "Internal Integration Secret"
+5. En Notion, comparte las páginas con tu integración
+
+### Configurar el servidor:
+
+```json
+{
+  "mcpServers": {
+    "notion": {
+      "command": "npx",
+      "args": ["-y", "@notionhq/notion-mcp-server"],
+      "env": {
+        "NOTION_API_KEY": "secret_tu_clave_aqui"
+      }
+    }
+  }
+}
+```
+
+---
+
+## Configuración completa de ejemplo
+
+Aquí tienes un ejemplo con varios servidores:
+
+```json
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/Users/josu/proyectos"]
+    },
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "ghp_xxx"
+      }
+    },
+    "memory": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-memory"]
+    },
+    "fetch": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-fetch"]
+    }
+  }
+}
+```
+
+---
+
+## Solución de problemas
+
+### El servidor no se conecta
+- Verifica que la ruta del archivo de configuración sea correcta
+- Asegúrate de que el JSON sea válido (sin comas extra)
+- Reinicia Claude Code
+
+### Error de permisos
+- Verifica que tienes acceso a la carpeta especificada
+- En macOS, puede que necesites dar permisos en Preferencias del Sistema
+
+### El servidor se desconecta
+- Verifica tu conexión a internet (para servidores remotos)
+- Revisa que las credenciales no hayan expirado
+
+### Ver logs de MCP
+```bash
+# En la terminal de Claude Code
+/mcp
+```
+
+---
+
+## Comandos útiles en Claude Code
+
+| Comando | Descripción |
+|---------|-------------|
+| `/mcp` | Ver estado de servidores MCP |
+| `/tools` | Listar herramientas disponibles |
+
+---
+
+<div className="mt-8 text-center">
+  <a href="/mcp/casos-de-uso" className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+    Siguiente: Casos de uso →
+  </a>
+</div>

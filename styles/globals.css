@@ -316,36 +316,33 @@ a[href*="github.com"] svg {
 }
 
 /* Logo styles */
+:root {
+  --logo-bg: #18181B;
+  --logo-icon: #FAFAFA;
+}
+
+.dark {
+  --logo-bg: #FAFAFA;
+  --logo-icon: #18181B;
+}
+
 .logo-icon-container {
   transition: background 200ms ease;
+  background: var(--logo-bg) !important;
 }
 
-.dark .logo-icon-container {
-  background: white !important;
-}
-
-.logo-stroke {
+.logo-icon-container svg path {
+  stroke: var(--logo-icon);
   transition: stroke 200ms ease;
-}
-
-.dark .logo-stroke {
-  stroke: #111827 !important;
 }
 
 .logo-text {
   transition: color 200ms ease;
+  color: #18181B;
 }
 
 .dark .logo-text {
-  color: white !important;
-}
-
-.logo-text-secondary {
-  transition: color 200ms ease;
-}
-
-.dark .logo-text-secondary {
-  color: #94a3b8 !important;
+  color: #FAFAFA !important;
 }
 
 /* ===== NAVBAR Y BOTÓN PREMIUM (dentro del logo) ===== */

@@ -1,0 +1,119 @@
+---
+title: ¿Qué es MCP?
+---
+
+import { Callout } from 'nextra/components'
+
+# Lección 1: ¿Qué es MCP?
+
+## El problema que resuelve MCP
+
+Imagina que quieres que Claude:
+- Lea tus notas de Notion
+- Consulte tu base de datos
+- Cree archivos en tu Google Drive
+- Revise tus repos de GitHub
+
+**Sin MCP:** Cada herramienta necesita su propia integración personalizada. Caos total.
+
+**Con MCP:** Un protocolo universal. Conectas una vez, funciona con todo.
+
+<Callout type="info">
+  MCP es como el **USB de las IAs**. Antes cada dispositivo tenía su propio cable. Ahora todo usa USB. MCP hace lo mismo para conectar IAs con herramientas.
+</Callout>
+
+---
+
+## ¿Qué significa MCP?
+
+**Model Context Protocol** - Un estándar abierto creado por Anthropic que define cómo las IAs se comunican con herramientas externas.
+
+| Antes de MCP | Con MCP |
+|--------------|---------|
+| Cada IA tiene su propia forma de conectar | Un protocolo universal para todas |
+| Los desarrolladores reinventan la rueda | Se reutilizan "servidores MCP" |
+| Integraciones frágiles y diferentes | Conexiones estándar y confiables |
+
+---
+
+## La analogía del restaurante
+
+Piensa en MCP como el sistema de un restaurante:
+
+- **El cliente (tú):** Pides lo que quieres
+- **El mesero (Claude):** Entiende tu pedido y lo comunica
+- **El protocolo MCP:** El sistema de comandas estándar
+- **La cocina (servidores MCP):** Notion, GitHub, bases de datos...
+
+El mesero no necesita saber cocinar. Solo necesita hablar el mismo idioma que la cocina.
+
+---
+
+## ¿Quién usa MCP?
+
+MCP fue creado por Anthropic en noviembre 2024 y ahora es un **estándar de la industria**:
+
+- **Anthropic** - Claude y Claude Code
+- **OpenAI** - GPT y Codex
+- **Google DeepMind** - En adopción
+- **Herramientas:** Cursor, Zed, Sourcegraph, Windsurf
+
+<Callout type="warning">
+  En diciembre 2025, Anthropic donó MCP a la **Linux Foundation**, convirtiéndolo en un estándar abierto gobernado por la comunidad.
+</Callout>
+
+---
+
+## ¿Qué puede hacer MCP?
+
+Los servidores MCP exponen **tres tipos de capacidades**:
+
+### 1. Herramientas (Tools)
+Acciones que Claude puede ejecutar:
+- Crear un archivo
+- Enviar un mensaje
+- Ejecutar una consulta SQL
+
+### 2. Recursos (Resources)
+Datos que Claude puede leer:
+- Contenido de archivos
+- Registros de base de datos
+- Páginas de Notion
+
+### 3. Prompts
+Plantillas predefinidas para tareas comunes:
+- "Analiza este código"
+- "Resume este documento"
+
+---
+
+## Ejemplo real
+
+Sin MCP:
+```
+Tú: "Claude, ¿puedes revisar mis tareas de Notion?"
+Claude: "No tengo acceso a Notion. Copia y pega el contenido aquí."
+```
+
+Con MCP + servidor de Notion:
+```
+Tú: "Claude, ¿puedes revisar mis tareas de Notion?"
+Claude: *lee directamente tu Notion* "Tienes 5 tareas pendientes..."
+```
+
+---
+
+## Lo que aprenderás en este módulo
+
+1. **Cómo funciona** la arquitectura de MCP
+2. **Qué servidores** existen y cuáles son los más útiles
+3. **Cómo configurar** servidores MCP en Claude Code
+4. **Casos de uso** prácticos para tu trabajo
+
+---
+
+<div className="mt-8 text-center">
+  <a href="/mcp/arquitectura" className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+    Siguiente: Cómo funciona →
+  </a>
+</div>

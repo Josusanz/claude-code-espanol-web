@@ -1,0 +1,180 @@
+---
+title: Cómo funciona MCP
+---
+
+import { Callout } from 'nextra/components'
+
+# Lección 2: Cómo funciona MCP
+
+## Los tres actores
+
+MCP tiene una arquitectura simple con tres componentes:
+
+```
+┌─────────────┐     ┌─────────────┐     ┌─────────────┐
+│   Cliente   │────▶│   Servidor  │────▶│   Recurso   │
+│  (Claude)   │◀────│    (MCP)    │◀────│  (Notion)   │
+└─────────────┘     └─────────────┘     └─────────────┘
+```
+
+### 1. Cliente MCP (Host)
+- Es la aplicación que usa la IA
+- **Ejemplos:** Claude Code, Cursor, tu app personalizada
+- Envía peticiones y recibe respuestas
+
+### 2. Servidor MCP
+- Un programa que "traduce" entre la IA y el recurso
+- **Ejemplos:** servidor de Notion, servidor de GitHub, servidor de PostgreSQL
+- Expone herramientas, recursos y prompts
+
+### 3. Recurso externo
+- El servicio o datos reales
+- **Ejemplos:** Notion, GitHub, una base de datos, archivos locales
+
+---
+
+## El flujo de una petición
+
+<Callout type="info">
+  Cuando le pides a Claude que haga algo con Notion, esto es lo que pasa:
+</Callout>
+
+```
+1. Tú → Claude: "Muéstrame mis tareas de Notion"
+
+2. Claude → Servidor MCP: "Ejecuta tool: notion_query"
+
+3. Servidor MCP → Notion API: "GET /databases/tasks"
+
+4. Notion API → Servidor MCP: [datos de tareas]
+
+5. Servidor MCP → Claude: [datos formateados]
+
+6. Claude → Tú: "Tienes 5 tareas pendientes..."
+```
+
+**Claude nunca habla directamente con Notion.** El servidor MCP hace de intermediario.
+
+---
+
+## ¿Por qué esta arquitectura?
+
+### Seguridad
+- Claude no tiene tus credenciales
+- El servidor MCP maneja la autenticación
+- Puedes controlar qué puede hacer Claude
+
+### Flexibilidad
+- Puedes cambiar de proveedor sin cambiar el cliente
+- Un servidor puede conectar múltiples recursos
+- Reutilizas servidores creados por la comunidad
+
+### Escalabilidad
+- Cada servidor es independiente
+- Puedes tener múltiples servidores activos
+- No hay límite de conexiones
+
+---
+
+## Tipos de transporte
+
+Los servidores MCP pueden comunicarse de dos formas:
+
+### stdio (Standard I/O)
+- El servidor se ejecuta como proceso local
+- Comunicación por entrada/salida estándar
+- **Ideal para:** herramientas locales, desarrollo
+
+```json
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/ruta"]
+    }
+  }
+}
+```
+
+### HTTP/SSE (Server-Sent Events)
+- El servidor corre en un servidor remoto
+- Comunicación por HTTP
+- **Ideal para:** servicios en la nube, APIs remotas
+
+```json
+{
+  "mcpServers": {
+    "remote-server": {
+      "url": "https://mcp.ejemplo.com/sse"
+    }
+  }
+}
+```
+
+---
+
+## Capacidades de un servidor
+
+Cada servidor MCP puede exponer:
+
+| Capacidad | Descripción | Ejemplo |
+|-----------|-------------|---------|
+| **Tools** | Acciones ejecutables | `create_file`, `send_message` |
+| **Resources** | Datos para leer | `file://`, `notion://` |
+| **Prompts** | Plantillas predefinidas | "Analiza este código" |
+
+<Callout type="warning">
+  No todos los servidores exponen las tres capacidades. Algunos solo tienen tools, otros solo resources.
+</Callout>
+
+---
+
+## Ejemplo: Servidor de Filesystem
+
+El servidor oficial de filesystem expone:
+
+**Tools:**
+- `read_file` - Leer contenido de un archivo
+- `write_file` - Escribir en un archivo
+- `list_directory` - Listar contenido de carpeta
+- `create_directory` - Crear carpeta
+- `move_file` - Mover archivo
+- `search_files` - Buscar archivos
+- `get_file_info` - Obtener metadatos
+
+**Resources:**
+- `file://ruta/al/archivo` - Acceso directo a archivos
+
+---
+
+## El archivo de configuración
+
+En Claude Code, los servidores se configuran en:
+
+```
+~/.claude/claude_desktop_config.json
+```
+
+Estructura básica:
+
+```json
+{
+  "mcpServers": {
+    "nombre-servidor": {
+      "command": "comando",
+      "args": ["argumentos"],
+      "env": {
+        "API_KEY": "tu-clave"
+      }
+    }
+  }
+}
+```
+
+---
+
+<div className="mt-8 text-center">
+  <a href="/mcp/servidores-populares" className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+    Siguiente: Servidores populares →
+  </a>
+</div>

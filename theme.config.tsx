@@ -15,12 +15,11 @@ const config: DocsThemeConfig = {
     <div style={{
       display: 'flex',
       alignItems: 'center',
-      gap: '0.5rem',
+      gap: '0.625rem',
       width: '100%'
     }}>
       <div className="logo-icon-container" style={{
-        background: '#111827',
-        padding: '0.25rem',
+        background: 'var(--logo-bg, #18181B)',
         borderRadius: '0.375rem',
         display: 'flex',
         alignItems: 'center',
@@ -29,19 +28,17 @@ const config: DocsThemeConfig = {
         height: '28px',
         flexShrink: 0
       }}>
-        <svg width="20" height="20" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="2" y="6" width="28" height="20" rx="2" className="logo-stroke" stroke="white" strokeWidth="2.5" fill="none"/>
-          <path d="M6 12 L10 16 L6 20" className="logo-stroke" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-          <line x1="14" y1="18" x2="22" y2="18" className="logo-stroke" stroke="white" strokeWidth="2.5" strokeLinecap="round"/>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 17L10 11L4 5" stroke="var(--logo-icon, #FAFAFA)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M12 19H20" stroke="var(--logo-icon, #FAFAFA)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
       </div>
       <span className="logo-text" style={{
         fontSize: '0.9375rem',
         fontWeight: 600,
-        letterSpacing: '-0.01em',
-        color: '#111827'
+        letterSpacing: '-0.02em'
       }}>
-        Claude Code <span className="logo-text-secondary" style={{ color: '#64748b', fontWeight: 400 }}>en Español</span>
+        Aprende <span style={{ fontSize: '0.8125rem', fontWeight: 400, opacity: 0.7 }}>Software</span>
       </span>
       <a
         href="/premium"

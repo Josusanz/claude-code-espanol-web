@@ -1,0 +1,214 @@
+---
+title: Servidores MCP populares
+---
+
+import { Callout } from 'nextra/components'
+
+# Lección 3: Servidores MCP populares
+
+Existen cientos de servidores MCP creados por la comunidad. Aquí están los más útiles organizados por categoría.
+
+<Callout type="info">
+  Todos estos servidores son **gratuitos y de código abierto**. Puedes instalarlos con un simple comando.
+</Callout>
+
+---
+
+## Servidores oficiales de Anthropic
+
+Estos están mantenidos directamente por el equipo de Anthropic:
+
+| Servidor | Descripción | Uso típico |
+|----------|-------------|------------|
+| **filesystem** | Acceso a archivos locales | Leer/escribir archivos en tu computadora |
+| **git** | Operaciones de Git | Commits, branches, historial |
+| **fetch** | Obtener contenido web | Leer páginas web, APIs |
+| **memory** | Memoria persistente | Recordar información entre sesiones |
+| **sequential-thinking** | Razonamiento paso a paso | Problemas complejos |
+
+Repositorio oficial: [github.com/modelcontextprotocol/servers](https://github.com/modelcontextprotocol/servers)
+
+---
+
+## Productividad
+
+### Notion
+```bash
+npx -y @notionhq/notion-mcp-server
+```
+- Leer y escribir páginas
+- Consultar bases de datos
+- Crear contenido
+
+### Slack
+```bash
+npx -y @anthropic/mcp-server-slack
+```
+- Enviar mensajes
+- Leer canales
+- Buscar conversaciones
+
+### Google Drive
+```bash
+npx -y @anthropic/mcp-server-gdrive
+```
+- Listar archivos
+- Leer documentos
+- Buscar contenido
+
+### Todoist
+```bash
+npx -y @anthropic/mcp-server-todoist
+```
+- Gestionar tareas
+- Crear proyectos
+- Marcar completados
+
+---
+
+## Desarrollo
+
+### GitHub
+```bash
+npx -y @modelcontextprotocol/server-github
+```
+- Crear issues y PRs
+- Revisar código
+- Gestionar repos
+
+### PostgreSQL
+```bash
+npx -y @modelcontextprotocol/server-postgres
+```
+- Consultas SQL
+- Explorar esquemas
+- Modificar datos
+
+### SQLite
+```bash
+npx -y @modelcontextprotocol/server-sqlite
+```
+- Bases de datos locales
+- Consultas SQL
+- Ideal para prototipos
+
+### Docker
+```bash
+npx -y @anthropic/mcp-server-docker
+```
+- Gestionar contenedores
+- Ver logs
+- Ejecutar comandos
+
+---
+
+## Datos y análisis
+
+### Supabase
+```bash
+npx -y @supabase/mcp-server
+```
+- Base de datos PostgreSQL en la nube
+- Autenticación
+- Storage
+
+### Pinecone
+```bash
+npx -y @pinecone-database/mcp-server
+```
+- Base de datos vectorial
+- Búsqueda semántica
+- RAG (Retrieval Augmented Generation)
+
+### BigQuery
+```bash
+npx -y @anthropic/mcp-server-bigquery
+```
+- Consultas SQL masivas
+- Análisis de datos
+- Data warehousing
+
+---
+
+## Automatización
+
+### Zapier
+```bash
+npx -y @zapier/mcp-server
+```
+- Conectar 5000+ apps
+- Automatizaciones complejas
+- Webhooks
+
+### Make (Integromat)
+```bash
+npx -y @anthropic/mcp-server-make
+```
+- Escenarios visuales
+- Integraciones avanzadas
+
+### Puppeteer
+```bash
+npx -y @anthropic/mcp-server-puppeteer
+```
+- Automatización de navegador
+- Web scraping
+- Screenshots
+
+---
+
+## Comunicación
+
+### Gmail
+```bash
+npx -y @anthropic/mcp-server-gmail
+```
+- Leer emails
+- Enviar mensajes
+- Buscar correos
+
+### Discord
+```bash
+npx -y @anthropic/mcp-server-discord
+```
+- Enviar mensajes
+- Gestionar servidores
+- Leer canales
+
+### WhatsApp (via Twilio)
+```bash
+npx -y @anthropic/mcp-server-twilio
+```
+- Enviar mensajes
+- Recibir notificaciones
+
+---
+
+## Cómo elegir un servidor
+
+<Callout type="warning">
+  No instales todos los servidores. Solo los que realmente vayas a usar. Cada servidor consume recursos.
+</Callout>
+
+**Preguntas para elegir:**
+
+1. **¿Qué herramienta uso más?** → Empieza por esa
+2. **¿Es un servidor oficial o de comunidad?** → Oficiales más estables
+3. **¿Tiene buena documentación?** → Revisa el README
+4. **¿Está activo el desarrollo?** → Revisa commits recientes
+
+---
+
+## Recursos para encontrar más servidores
+
+- [awesome-mcp-servers](https://github.com/wong2/awesome-mcp-servers) - Lista curada
+- [mcpservers.org](https://mcpservers.org/) - Directorio con búsqueda
+- [MCP oficial](https://modelcontextprotocol.io/) - Documentación del protocolo
+
+---
+
+<div className="mt-8 text-center">
+  <a href="/mcp/instalar-servidores" className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+    Siguiente: Configurar en Claude Code →
+  </a>
+</div>

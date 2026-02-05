@@ -1,0 +1,231 @@
+---
+title: Casos de uso de MCP
+---
+
+import { Callout } from 'nextra/components'
+
+# Lección 5: Casos de uso prácticos
+
+Ahora que sabes configurar MCP, veamos cómo usarlo en situaciones reales.
+
+---
+
+## Caso 1: Gestión de proyectos con Notion
+
+**Escenario:** Tienes tu gestión de proyectos en Notion y quieres que Claude te ayude a organizarla.
+
+**Configuración necesaria:**
+- Servidor de Notion conectado
+
+**Ejemplos de uso:**
+
+```
+"¿Cuáles son mis tareas pendientes para esta semana?"
+
+"Crea una nueva tarea: Revisar propuesta de cliente, prioridad alta,
+ para el viernes"
+
+"Resume el estado de todos mis proyectos activos"
+
+"¿Qué tareas están bloqueadas y por qué?"
+```
+
+<Callout type="info">
+  Claude puede leer tus bases de datos de Notion, crear entradas, actualizar estados y generar reportes automáticamente.
+</Callout>
+
+---
+
+## Caso 2: Análisis de repositorios con GitHub
+
+**Escenario:** Quieres analizar un repositorio de código sin clonarlo.
+
+**Configuración necesaria:**
+- Servidor de GitHub conectado
+
+**Ejemplos de uso:**
+
+```
+"Analiza el repositorio facebook/react y dame un resumen de su estructura"
+
+"¿Cuáles son los issues abiertos más antiguos en mi repo?"
+
+"Crea un issue: Bug en el login - los usuarios no pueden iniciar sesión
+ con Google"
+
+"¿Qué PRs están pendientes de revisión?"
+
+"Resume los cambios del último release"
+```
+
+---
+
+## Caso 3: Investigación web con Fetch
+
+**Escenario:** Necesitas investigar un tema y recopilar información de varias fuentes.
+
+**Configuración necesaria:**
+- Servidor de Fetch conectado
+
+**Ejemplos de uso:**
+
+```
+"Lee este artículo y hazme un resumen: https://ejemplo.com/articulo"
+
+"Compara los precios de estos 3 productos y dime cuál es mejor opción"
+
+"Extrae los datos de contacto de esta página web"
+
+"¿Qué dice la documentación oficial de React sobre hooks?"
+```
+
+<Callout type="warning">
+  El servidor Fetch solo puede leer páginas públicas. No funciona con contenido que requiere login.
+</Callout>
+
+---
+
+## Caso 4: Memoria persistente
+
+**Escenario:** Quieres que Claude recuerde información entre sesiones.
+
+**Configuración necesaria:**
+- Servidor de Memory conectado
+
+**Ejemplos de uso:**
+
+```
+"Recuerda que mi framework favorito es Next.js"
+
+"Guarda que el cliente Acme prefiere comunicación por email"
+
+"¿Qué preferencias he guardado sobre mis proyectos?"
+
+"Recuerda mis convenciones de código:
+ - Siempre usar TypeScript
+ - Tabs de 2 espacios
+ - Nombres de variables en camelCase"
+```
+
+La próxima vez que abras Claude Code, puedes preguntar:
+```
+"¿Cuáles son mis preferencias de código?"
+```
+
+Y Claude las recordará.
+
+---
+
+## Caso 5: Organización de archivos locales
+
+**Escenario:** Tienes una carpeta desordenada y quieres organizarla.
+
+**Configuración necesaria:**
+- Servidor de Filesystem conectado
+
+**Ejemplos de uso:**
+
+```
+"¿Qué archivos tengo en mi carpeta de descargas?"
+
+"Organiza mis PDFs por fecha de creación en subcarpetas"
+
+"Busca todos los archivos .csv y dime cuánto espacio ocupan"
+
+"Renombra todas las fotos con el formato YYYY-MM-DD_nombre"
+
+"Encuentra archivos duplicados en esta carpeta"
+```
+
+<Callout type="warning">
+  **Cuidado:** El servidor filesystem puede modificar y eliminar archivos. Asegúrate de tener backups antes de operaciones masivas.
+</Callout>
+
+---
+
+## Caso 6: Base de datos con PostgreSQL
+
+**Escenario:** Necesitas explorar y consultar una base de datos.
+
+**Configuración necesaria:**
+- Servidor de PostgreSQL conectado
+
+**Ejemplos de uso:**
+
+```
+"¿Qué tablas existen en la base de datos?"
+
+"Muéstrame los últimos 10 usuarios registrados"
+
+"¿Cuántos pedidos se hicieron el mes pasado?"
+
+"Encuentra clientes que no han comprado en 6 meses"
+
+"Genera un reporte de ventas por categoría"
+```
+
+---
+
+## Caso 7: Flujo de trabajo combinado
+
+**Escenario:** Combinar varios servidores para una tarea compleja.
+
+**Ejemplo: Reporte semanal automatizado**
+
+```
+"Genera mi reporte semanal:
+1. Lee mis tareas completadas de Notion esta semana
+2. Revisa los PRs que mergé en GitHub
+3. Calcula las horas trabajadas desde mi archivo timesheet.csv
+4. Guarda el reporte en mi carpeta de Documentos"
+```
+
+Claude usará:
+- Notion → para las tareas
+- GitHub → para los PRs
+- Filesystem → para leer y escribir archivos
+
+---
+
+## Patrones de uso efectivo
+
+### 1. Sé específico
+```
+❌ "Organiza mis archivos"
+✅ "Mueve los archivos .pdf de Descargas a Documentos/PDFs"
+```
+
+### 2. Pide confirmación antes de cambios
+```
+"Muéstrame qué archivos vas a mover antes de hacerlo"
+```
+
+### 3. Empieza pequeño
+```
+"Primero hazlo con 3 archivos de prueba"
+```
+
+### 4. Usa la memoria para preferencias
+```
+"Recuerda que siempre quiero confirmación antes de eliminar archivos"
+```
+
+---
+
+## Ideas para explorar
+
+| Área | Servidores | Posibilidades |
+|------|------------|---------------|
+| Productividad | Notion + Memory | Sistema de GTD automatizado |
+| Desarrollo | GitHub + Filesystem | Code reviews asistidos |
+| Investigación | Fetch + Memory | Base de conocimiento personal |
+| Datos | PostgreSQL + Filesystem | ETL y reportes automáticos |
+| Comunicación | Slack + Memory | Respuestas inteligentes |
+
+---
+
+<div className="mt-8 text-center">
+  <a href="/mcp/mcp-pro" className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+    Siguiente: MCP Pro →
+  </a>
+</div>
