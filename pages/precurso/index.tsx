@@ -3,8 +3,9 @@ import Link from 'next/link'
 import PrecursoEmailGate from '../../components/PrecursoEmailGate'
 import { useState, useEffect } from 'react'
 
-// Estructura simplificada: solo 2 pasos
+// Estructura simplificada: 3 pasos
 export const PRECURSO_SECTIONS = {
+  'intro-completo': 'Introducción completada',
   'glosario-completo': 'Glosario completado',
   'requisitos-completo': 'Requisitos completados',
 }
@@ -81,6 +82,7 @@ function PrecursoContent() {
   const { theme, toggleTheme } = useTheme()
   const t = themes[theme]
 
+  const introCompleted = completed['intro-completo']
   const glosarioCompleted = completed['glosario-completo']
   const requisitosCompleted = completed['requisitos-completo']
 
@@ -202,6 +204,25 @@ function PrecursoContent() {
               <span>🏠</span>
               Inicio
             </Link>
+
+            {/* Intro section */}
+            <div style={{ marginTop: '20px' }}>
+              <Link href="/precurso/programar-con-ia" style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px',
+                padding: '8px 20px',
+                color: t.text,
+                textDecoration: 'none',
+                fontSize: '13px',
+                fontWeight: 600,
+                textTransform: 'uppercase',
+                letterSpacing: '0.3px'
+              }}>
+                <span>🤖</span>
+                Programar con IA
+              </Link>
+            </div>
 
             {/* Glosario section */}
             <div style={{ marginTop: '20px' }}>
@@ -386,6 +407,80 @@ function PrecursoContent() {
 
           {/* Cards */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            {/* Intro: Programar con IA */}
+            <Link href="/precurso/programar-con-ia" style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '24px',
+              padding: '28px',
+              background: introCompleted ? t.successLight : t.bgSecondary,
+              border: `1px solid ${introCompleted ? t.success : t.border}`,
+              borderRadius: '16px',
+              textDecoration: 'none',
+              transition: 'all 0.2s',
+              cursor: 'pointer'
+            }}>
+              <div style={{
+                width: '64px',
+                height: '64px',
+                background: introCompleted
+                  ? t.success
+                  : 'linear-gradient(135deg, #f59e0b, #d97706)',
+                borderRadius: '16px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '28px',
+                flexShrink: 0,
+                color: 'white'
+              }}>
+                {introCompleted ? '✓' : '🤖'}
+              </div>
+              <div style={{ flex: 1 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                  <span style={{
+                    padding: '2px 8px',
+                    background: t.warningLight,
+                    borderRadius: '4px',
+                    fontSize: '11px',
+                    fontWeight: 600,
+                    color: t.warning
+                  }}>EMPIEZA AQUÍ</span>
+                </div>
+                <h3 style={{
+                  fontSize: '20px',
+                  fontWeight: 600,
+                  color: t.text,
+                  margin: '0 0 6px 0'
+                }}>
+                  ¿Por qué ya no necesitas saber programar?
+                </h3>
+                <p style={{
+                  fontSize: '15px',
+                  color: t.textSecondary,
+                  margin: 0
+                }}>
+                  Entiende cómo la IA ha cambiado las reglas del juego
+                </p>
+              </div>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px'
+              }}>
+                <span style={{
+                  fontSize: '14px',
+                  color: introCompleted ? t.success : t.textMuted,
+                  fontWeight: 500
+                }}>
+                  {introCompleted ? 'Completado' : '5 min'}
+                </span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={introCompleted ? t.success : t.textMuted} strokeWidth="2">
+                  <polyline points="9 18 15 12 9 6"/>
+                </svg>
+              </div>
+            </Link>
+
             {/* Glosario */}
             <Link href="/precurso/glosario" style={{
               display: 'flex',

@@ -618,7 +618,7 @@ function GlosarioContent() {
           display: 'flex',
           justifyContent: 'space-between'
         }}>
-          <Link href="/precurso" style={{
+          <Link href="/precurso/programar-con-ia" style={{
             padding: '14px 24px',
             background: t.bgSecondary,
             border: `1px solid ${t.border}`,
@@ -628,7 +628,7 @@ function GlosarioContent() {
             fontSize: '15px',
             fontWeight: 500
           }}>
-            ← Inicio
+            ← Programar con IA
           </Link>
           <Link href="/precurso/requisitos" style={{
             padding: '14px 24px',
