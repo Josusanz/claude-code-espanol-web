@@ -1,0 +1,648 @@
+import Head from 'next/head'
+import Link from 'next/link'
+import { useState } from 'react'
+import PrecursoEmailGate from '../../components/PrecursoEmailGate'
+import { useTheme } from './index'
+
+const themes = {
+  light: {
+    bg: '#ffffff',
+    bgSecondary: '#f8fafc',
+    bgTertiary: '#f1f5f9',
+    text: '#1e293b',
+    textSecondary: '#64748b',
+    textMuted: '#94a3b8',
+    border: '#e2e8f0',
+    accent: '#6366f1',
+    accentLight: '#eef2ff',
+    success: '#22c55e',
+    successLight: '#f0fdf4',
+    error: '#ef4444',
+    errorLight: '#fef2f2',
+    warning: '#f59e0b',
+    warningLight: '#fffbeb',
+  },
+  dark: {
+    bg: '#0f172a',
+    bgSecondary: '#1e293b',
+    bgTertiary: '#334155',
+    text: '#f1f5f9',
+    textSecondary: '#94a3b8',
+    textMuted: '#64748b',
+    border: '#334155',
+    accent: '#818cf8',
+    accentLight: 'rgba(129, 140, 248, 0.1)',
+    success: '#4ade80',
+    successLight: 'rgba(74, 222, 128, 0.1)',
+    error: '#f87171',
+    errorLight: 'rgba(248, 113, 113, 0.1)',
+    warning: '#fbbf24',
+    warningLight: 'rgba(251, 191, 36, 0.1)',
+  }
+}
+
+const ERRORES = [
+  {
+    id: 'node-not-recognized',
+    categoria: 'Node.js',
+    emoji: '📦',
+    error: '"node" no se reconoce como un comando',
+    variantes: [
+      'node: command not found',
+      'node is not recognized as an internal or external command',
+      'zsh: command not found: node'
+    ],
+    causa: 'Node.js no está instalado o no está en el PATH del sistema.',
+    solucion: [
+      'Cierra y vuelve a abrir la terminal',
+      'Si sigue sin funcionar, reinstala Node.js desde nodejs.org',
+      'En Windows: marca la opción "Add to PATH" durante la instalación',
+      'Verifica con: node --version'
+    ],
+    nivel: 'facil'
+  },
+  {
+    id: 'npm-not-recognized',
+    categoria: 'npm',
+    emoji: '📚',
+    error: '"npm" no se reconoce como un comando',
+    variantes: [
+      'npm: command not found',
+      'npm is not recognized'
+    ],
+    causa: 'npm viene con Node.js. Si npm no funciona, Node.js no se instaló correctamente.',
+    solucion: [
+      'Reinstala Node.js desde nodejs.org',
+      'npm se instala automáticamente con Node',
+      'Cierra y abre la terminal después de instalar'
+    ],
+    nivel: 'facil'
+  },
+  {
+    id: 'permission-denied',
+    categoria: 'Permisos',
+    emoji: '🔐',
+    error: 'Permission denied / EACCES',
+    variantes: [
+      'Error: EACCES: permission denied',
+      'Permission denied',
+      'npm ERR! code EACCES'
+    ],
+    causa: 'No tienes permisos para instalar paquetes globalmente.',
+    solucion: [
+      'En Mac/Linux: usa sudo antes del comando',
+      'Ejemplo: sudo npm install -g @anthropic-ai/claude-code',
+      'Te pedirá tu contraseña (es normal que no veas lo que escribes)',
+      'En Windows: abre la terminal como Administrador'
+    ],
+    nivel: 'medio'
+  },
+  {
+    id: 'claude-not-found',
+    categoria: 'Claude Code',
+    emoji: '🤖',
+    error: '"claude" no se reconoce como un comando',
+    variantes: [
+      'claude: command not found',
+      'zsh: command not found: claude'
+    ],
+    causa: 'Claude Code no está instalado o la instalación falló.',
+    solucion: [
+      'Reinstala con: npm install -g @anthropic-ai/claude-code',
+      'Si da error de permisos, usa sudo (Mac/Linux)',
+      'Cierra y abre la terminal después de instalar',
+      'Verifica que tienes una suscripción activa de Claude Pro'
+    ],
+    nivel: 'medio'
+  },
+  {
+    id: 'claude-no-subscription',
+    categoria: 'Claude Code',
+    emoji: '💳',
+    error: 'Claude Code no responde o pide autenticación',
+    variantes: [
+      'Authentication required',
+      'Please log in',
+      'Subscription required',
+      'La pantalla se queda en blanco'
+    ],
+    causa: 'No tienes una suscripción activa de Claude Pro o Max.',
+    solucion: [
+      'Ve a claude.ai y verifica tu suscripción',
+      'Necesitas Claude Pro ($20/mes) o Max ($100/mes)',
+      'Si ya tienes suscripción, haz logout y login de nuevo',
+      'Ejecuta: claude logout y luego claude'
+    ],
+    nivel: 'facil'
+  },
+  {
+    id: 'git-not-found',
+    categoria: 'Git',
+    emoji: '🔀',
+    error: '"git" no se reconoce como un comando',
+    variantes: [
+      'git: command not found',
+      'git is not recognized'
+    ],
+    causa: 'Git no está instalado en tu sistema.',
+    solucion: [
+      'Mac: Ejecuta xcode-select --install en la terminal',
+      'Windows: Descarga Git desde git-scm.com',
+      'Linux: sudo apt install git (Ubuntu/Debian)',
+      'Cierra y abre la terminal después de instalar'
+    ],
+    nivel: 'facil'
+  },
+  {
+    id: 'port-in-use',
+    categoria: 'Servidor local',
+    emoji: '🔌',
+    error: 'El puerto 3000 ya está en uso',
+    variantes: [
+      'Port 3000 is already in use',
+      'EADDRINUSE',
+      'address already in use'
+    ],
+    causa: 'Otra aplicación o proceso está usando el puerto 3000.',
+    solucion: [
+      'Busca la terminal donde está corriendo otro servidor y ciérrala',
+      'O cambia el puerto: npm run dev -- -p 3001',
+      'Mac/Linux: Mata el proceso con kill $(lsof -t -i:3000)',
+      'Windows: Reinicia la computadora si no encuentras el proceso'
+    ],
+    nivel: 'medio'
+  },
+  {
+    id: 'module-not-found',
+    categoria: 'Dependencias',
+    emoji: '📦',
+    error: 'Cannot find module / Module not found',
+    variantes: [
+      'Error: Cannot find module',
+      'Module not found: Error',
+      "Cannot find module 'react'"
+    ],
+    causa: 'Las dependencias del proyecto no están instaladas.',
+    solucion: [
+      'Ejecuta: npm install en la carpeta del proyecto',
+      'Esto instalará todas las dependencias de package.json',
+      'Si sigue fallando, borra node_modules y vuelve a instalar:',
+      'rm -rf node_modules && npm install'
+    ],
+    nivel: 'facil'
+  },
+  {
+    id: 'syntax-error',
+    categoria: 'Código',
+    emoji: '🐛',
+    error: 'Syntax Error / Unexpected token',
+    variantes: [
+      'SyntaxError: Unexpected token',
+      'Parsing error',
+      'Unexpected identifier'
+    ],
+    causa: 'Hay un error de sintaxis en el código (falta una coma, paréntesis, etc).',
+    solucion: [
+      'Pide a Claude que revise el código',
+      'Di: "Hay un error de sintaxis, ¿puedes revisar el código?"',
+      'Claude encontrará y arreglará el error',
+      'Los errores de sintaxis son muy comunes, no te preocupes'
+    ],
+    nivel: 'facil'
+  },
+  {
+    id: 'fetch-failed',
+    categoria: 'Red',
+    emoji: '🌐',
+    error: 'fetch failed / Network Error',
+    variantes: [
+      'TypeError: fetch failed',
+      'Network request failed',
+      'ENOTFOUND',
+      'getaddrinfo ENOTFOUND'
+    ],
+    causa: 'No hay conexión a internet o el servidor está caído.',
+    solucion: [
+      'Verifica tu conexión a internet',
+      'Comprueba si el servicio al que intentas conectar está funcionando',
+      'Si usas VPN, intenta desactivarla',
+      'Espera unos minutos y vuelve a intentar'
+    ],
+    nivel: 'medio'
+  }
+]
+
+function ErroresContent() {
+  const { theme, toggleTheme } = useTheme()
+  const t = themes[theme]
+  const [searchQuery, setSearchQuery] = useState('')
+  const [expandedError, setExpandedError] = useState<string | null>(null)
+  const [filterCategoria, setFilterCategoria] = useState<string | null>(null)
+
+  const categorias = [...new Set(ERRORES.map(e => e.categoria))]
+
+  const filteredErrors = ERRORES.filter(error => {
+    const matchesSearch = searchQuery === '' ||
+      error.error.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      error.variantes.some(v => v.toLowerCase().includes(searchQuery.toLowerCase()))
+    const matchesCategoria = filterCategoria === null || error.categoria === filterCategoria
+    return matchesSearch && matchesCategoria
+  })
+
+  return (
+    <div style={{
+      minHeight: '100vh',
+      background: t.bg,
+      fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
+      color: t.text
+    }}>
+      <Head>
+        <title>Errores Comunes | Precurso</title>
+        <meta name="robots" content="noindex, nofollow" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+      </Head>
+
+      {/* Header */}
+      <header style={{
+        background: t.bg,
+        borderBottom: `1px solid ${t.border}`,
+        padding: '16px 32px',
+        position: 'sticky',
+        top: 0,
+        zIndex: 100,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <Link href="/precurso" style={{
+            color: t.textMuted,
+            textDecoration: 'none',
+            display: 'flex',
+            alignItems: 'center',
+            padding: '8px',
+            borderRadius: '8px'
+          }}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <polyline points="15 18 9 12 15 6"/>
+            </svg>
+          </Link>
+          <span style={{ fontWeight: 600, fontSize: '17px' }}>Errores Comunes</span>
+        </div>
+
+        <button
+          onClick={toggleTheme}
+          style={{
+            width: '40px',
+            height: '40px',
+            borderRadius: '10px',
+            border: `1px solid ${t.border}`,
+            background: t.bgSecondary,
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '18px'
+          }}
+        >
+          {theme === 'light' ? '🌙' : '☀️'}
+        </button>
+      </header>
+
+      <main style={{ maxWidth: '900px', margin: '0 auto', padding: '40px 24px' }}>
+        {/* Hero */}
+        <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+          <h1 style={{ fontSize: '36px', fontWeight: 700, marginBottom: '16px' }}>
+            🔧 Troubleshooting
+          </h1>
+          <p style={{ fontSize: '18px', color: t.textSecondary, lineHeight: 1.7 }}>
+            ¿Algo no funciona? Aquí encontrarás la solución a los errores más comunes.
+          </p>
+        </div>
+
+        {/* Search */}
+        <div style={{
+          marginBottom: '24px',
+          position: 'relative'
+        }}>
+          <input
+            type="text"
+            placeholder="🔍 Busca tu error (ej: 'command not found', 'permission denied')..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            style={{
+              width: '100%',
+              padding: '18px 24px',
+              fontSize: '16px',
+              border: `2px solid ${t.border}`,
+              borderRadius: '14px',
+              background: t.bgSecondary,
+              color: t.text,
+              outline: 'none'
+            }}
+          />
+        </div>
+
+        {/* Category filters */}
+        <div style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: '10px',
+          marginBottom: '32px'
+        }}>
+          <button
+            onClick={() => setFilterCategoria(null)}
+            style={{
+              padding: '10px 18px',
+              borderRadius: '10px',
+              border: `1px solid ${filterCategoria === null ? t.accent : t.border}`,
+              background: filterCategoria === null ? t.accentLight : t.bg,
+              color: filterCategoria === null ? t.accent : t.textSecondary,
+              fontSize: '14px',
+              fontWeight: 500,
+              cursor: 'pointer'
+            }}
+          >
+            Todos ({ERRORES.length})
+          </button>
+          {categorias.map(cat => {
+            const count = ERRORES.filter(e => e.categoria === cat).length
+            return (
+              <button
+                key={cat}
+                onClick={() => setFilterCategoria(cat)}
+                style={{
+                  padding: '10px 18px',
+                  borderRadius: '10px',
+                  border: `1px solid ${filterCategoria === cat ? t.accent : t.border}`,
+                  background: filterCategoria === cat ? t.accentLight : t.bg,
+                  color: filterCategoria === cat ? t.accent : t.textSecondary,
+                  fontSize: '14px',
+                  fontWeight: 500,
+                  cursor: 'pointer'
+                }}
+              >
+                {cat} ({count})
+              </button>
+            )
+          })}
+        </div>
+
+        {/* Errors list */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          {filteredErrors.map(error => {
+            const isExpanded = expandedError === error.id
+            return (
+              <div
+                key={error.id}
+                style={{
+                  background: t.bgSecondary,
+                  borderRadius: '16px',
+                  border: `1px solid ${isExpanded ? t.accent : t.border}`,
+                  overflow: 'hidden',
+                  transition: 'all 0.2s ease'
+                }}
+              >
+                {/* Header */}
+                <button
+                  onClick={() => setExpandedError(isExpanded ? null : error.id)}
+                  style={{
+                    width: '100%',
+                    padding: '20px 24px',
+                    background: 'transparent',
+                    border: 'none',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '16px',
+                    textAlign: 'left'
+                  }}
+                >
+                  <span style={{ fontSize: '28px' }}>{error.emoji}</span>
+                  <div style={{ flex: 1 }}>
+                    <div style={{
+                      fontSize: '12px',
+                      fontWeight: 600,
+                      color: t.textMuted,
+                      marginBottom: '4px',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.5px'
+                    }}>
+                      {error.categoria}
+                    </div>
+                    <div style={{
+                      fontSize: '17px',
+                      fontWeight: 600,
+                      color: t.error,
+                      fontFamily: "'JetBrains Mono', monospace"
+                    }}>
+                      {error.error}
+                    </div>
+                  </div>
+                  <span style={{
+                    fontSize: '14px',
+                    color: error.nivel === 'facil' ? t.success : t.warning,
+                    background: error.nivel === 'facil' ? t.successLight : t.warningLight,
+                    padding: '4px 10px',
+                    borderRadius: '6px',
+                    fontWeight: 500
+                  }}>
+                    {error.nivel === 'facil' ? '✓ Fácil' : '⚡ Medio'}
+                  </span>
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke={t.textMuted}
+                    strokeWidth="2"
+                    style={{
+                      transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
+                      transition: 'transform 0.2s ease'
+                    }}
+                  >
+                    <polyline points="6 9 12 15 18 9"/>
+                  </svg>
+                </button>
+
+                {/* Expanded content */}
+                {isExpanded && (
+                  <div style={{
+                    padding: '0 24px 24px',
+                    borderTop: `1px solid ${t.border}`
+                  }}>
+                    {/* Variantes */}
+                    <div style={{ marginTop: '20px', marginBottom: '20px' }}>
+                      <div style={{
+                        fontSize: '12px',
+                        fontWeight: 600,
+                        color: t.textMuted,
+                        marginBottom: '10px',
+                        textTransform: 'uppercase'
+                      }}>
+                        También puede aparecer como:
+                      </div>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                        {error.variantes.map((v, i) => (
+                          <code key={i} style={{
+                            padding: '6px 12px',
+                            background: t.bgTertiary,
+                            borderRadius: '6px',
+                            fontSize: '13px',
+                            color: t.textSecondary,
+                            fontFamily: "'JetBrains Mono', monospace"
+                          }}>
+                            {v}
+                          </code>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Causa */}
+                    <div style={{
+                      padding: '16px',
+                      background: t.errorLight,
+                      borderRadius: '10px',
+                      marginBottom: '16px'
+                    }}>
+                      <div style={{ fontWeight: 600, color: t.error, marginBottom: '6px' }}>
+                        ❌ ¿Por qué pasa esto?
+                      </div>
+                      <p style={{ margin: 0, color: t.textSecondary, lineHeight: 1.6 }}>
+                        {error.causa}
+                      </p>
+                    </div>
+
+                    {/* Solución */}
+                    <div style={{
+                      padding: '16px',
+                      background: t.successLight,
+                      borderRadius: '10px'
+                    }}>
+                      <div style={{ fontWeight: 600, color: t.success, marginBottom: '12px' }}>
+                        ✅ Solución
+                      </div>
+                      <ol style={{
+                        margin: 0,
+                        paddingLeft: '20px',
+                        color: t.textSecondary,
+                        lineHeight: 2
+                      }}>
+                        {error.solucion.map((paso, i) => (
+                          <li key={i}>{paso}</li>
+                        ))}
+                      </ol>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )
+          })}
+        </div>
+
+        {filteredErrors.length === 0 && (
+          <div style={{
+            textAlign: 'center',
+            padding: '60px 20px',
+            color: t.textMuted
+          }}>
+            <div style={{ fontSize: '48px', marginBottom: '16px' }}>🔍</div>
+            <p>No se encontraron errores que coincidan con tu búsqueda.</p>
+            <p style={{ fontSize: '14px', marginTop: '8px' }}>
+              Prueba con otras palabras clave o revisa el glosario.
+            </p>
+          </div>
+        )}
+
+        {/* Help section */}
+        <div style={{
+          marginTop: '48px',
+          padding: '32px',
+          background: t.bgSecondary,
+          borderRadius: '20px',
+          border: `1px solid ${t.border}`,
+          textAlign: 'center'
+        }}>
+          <h3 style={{ fontSize: '22px', fontWeight: 600, marginBottom: '12px' }}>
+            ¿Tu error no está aquí?
+          </h3>
+          <p style={{ color: t.textSecondary, marginBottom: '24px', lineHeight: 1.7 }}>
+            Copia el mensaje de error exacto y pregúntale a Claude Code directamente.<br />
+            Di: "Tengo este error: [pega el error]. ¿Cómo lo soluciono?"
+          </p>
+          <div style={{
+            display: 'flex',
+            gap: '12px',
+            justifyContent: 'center',
+            flexWrap: 'wrap'
+          }}>
+            <Link href="/precurso/glosario" style={{
+              padding: '14px 28px',
+              background: t.bg,
+              border: `1px solid ${t.border}`,
+              borderRadius: '12px',
+              color: t.textSecondary,
+              textDecoration: 'none',
+              fontSize: '15px',
+              fontWeight: 500
+            }}>
+              📚 Ver glosario
+            </Link>
+            <Link href="/precurso/requisitos" style={{
+              padding: '14px 28px',
+              background: t.accent,
+              border: 'none',
+              borderRadius: '12px',
+              color: 'white',
+              textDecoration: 'none',
+              fontSize: '15px',
+              fontWeight: 500
+            }}>
+              🔧 Reinstalar herramientas
+            </Link>
+          </div>
+        </div>
+
+        {/* Navigation */}
+        <div style={{
+          marginTop: '32px',
+          display: 'flex',
+          justifyContent: 'space-between'
+        }}>
+          <Link href="/precurso/requisitos" style={{
+            padding: '14px 24px',
+            background: t.bgSecondary,
+            border: `1px solid ${t.border}`,
+            borderRadius: '12px',
+            color: t.textSecondary,
+            textDecoration: 'none',
+            fontSize: '15px',
+            fontWeight: 500
+          }}>
+            ← Requisitos
+          </Link>
+          <Link href="/precurso/quiz" style={{
+            padding: '14px 24px',
+            background: t.accent,
+            border: 'none',
+            borderRadius: '12px',
+            color: 'white',
+            textDecoration: 'none',
+            fontSize: '15px',
+            fontWeight: 500
+          }}>
+            Quiz →
+          </Link>
+        </div>
+      </main>
+    </div>
+  )
+}
+
+export default function ErroresComunesPage() {
+  return (
+    <PrecursoEmailGate>
+      <ErroresContent />
+    </PrecursoEmailGate>
+  )
+}

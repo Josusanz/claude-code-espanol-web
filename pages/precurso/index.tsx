@@ -12,7 +12,19 @@ export const PRECURSO_SECTIONS = {
   'req-github': 'Cuenta GitHub creada',
   'req-vercel': 'Cuenta Vercel creada',
   'req-claude': 'Claude Code instalado',
+  'quiz-aprobado': 'Quiz aprobado',
+  'primer-proyecto': 'Primer proyecto completado',
 }
+
+// Páginas del precurso con tiempos estimados
+export const PRECURSO_PAGES = [
+  { href: '/precurso/programar-con-ia', title: 'Programar con IA', emoji: '🤖', tiempo: '5 min' },
+  { href: '/precurso/glosario', title: 'Glosario', emoji: '📚', tiempo: '10 min' },
+  { href: '/precurso/requisitos', title: 'Requisitos', emoji: '🔧', tiempo: '15 min' },
+  { href: '/precurso/errores-comunes', title: 'Errores comunes', emoji: '🔧', tiempo: '5 min' },
+  { href: '/precurso/quiz', title: 'Quiz', emoji: '✅', tiempo: '5 min' },
+  { href: '/precurso/primer-proyecto', title: 'Tu primer proyecto', emoji: '🚀', tiempo: '10 min' },
+]
 
 export function usePrecursoProgress() {
   const [completed, setCompleted] = useState<Record<string, boolean>>({})
@@ -329,6 +341,23 @@ function PrecursoContent() {
             </div>
           </nav>
 
+          {/* Checklist link */}
+          <div style={{ marginTop: '20px' }}>
+            <Link href="/precurso/checklist" style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px',
+              padding: '8px 20px',
+              color: t.textSecondary,
+              textDecoration: 'none',
+              fontSize: '13px',
+              fontWeight: 500
+            }}>
+              <span>📋</span>
+              Checklist (PDF)
+            </Link>
+          </div>
+
           {/* Help box */}
           <div style={{
             margin: '24px 16px 0',
@@ -620,6 +649,196 @@ function PrecursoContent() {
                 </svg>
               </div>
             </Link>
+
+            {/* Errores Comunes */}
+            <Link href="/precurso/errores-comunes" style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '24px',
+              padding: '28px',
+              background: t.bgSecondary,
+              border: `1px solid ${t.border}`,
+              borderRadius: '16px',
+              textDecoration: 'none',
+              transition: 'all 0.2s',
+              cursor: 'pointer'
+            }}>
+              <div style={{
+                width: '64px',
+                height: '64px',
+                background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+                borderRadius: '16px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '28px',
+                flexShrink: 0,
+                color: 'white'
+              }}>
+                🔧
+              </div>
+              <div style={{ flex: 1 }}>
+                <h3 style={{
+                  fontSize: '20px',
+                  fontWeight: 600,
+                  color: t.text,
+                  margin: '0 0 6px 0'
+                }}>
+                  Errores comunes
+                </h3>
+                <p style={{
+                  fontSize: '15px',
+                  color: t.textSecondary,
+                  margin: 0
+                }}>
+                  Soluciones a los problemas más frecuentes
+                </p>
+              </div>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px'
+              }}>
+                <span style={{
+                  fontSize: '14px',
+                  color: t.textMuted,
+                  fontWeight: 500
+                }}>
+                  ⏱️ 5 min
+                </span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={t.textMuted} strokeWidth="2">
+                  <polyline points="9 18 15 12 9 6"/>
+                </svg>
+              </div>
+            </Link>
+
+            {/* Quiz */}
+            <Link href="/precurso/quiz" style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '24px',
+              padding: '28px',
+              background: completed['quiz-aprobado'] ? t.successLight : t.bgSecondary,
+              border: `1px solid ${completed['quiz-aprobado'] ? t.success : t.border}`,
+              borderRadius: '16px',
+              textDecoration: 'none',
+              transition: 'all 0.2s',
+              cursor: 'pointer'
+            }}>
+              <div style={{
+                width: '64px',
+                height: '64px',
+                background: completed['quiz-aprobado']
+                  ? t.success
+                  : 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
+                borderRadius: '16px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '28px',
+                flexShrink: 0,
+                color: 'white'
+              }}>
+                {completed['quiz-aprobado'] ? '✓' : '✅'}
+              </div>
+              <div style={{ flex: 1 }}>
+                <h3 style={{
+                  fontSize: '20px',
+                  fontWeight: 600,
+                  color: t.text,
+                  margin: '0 0 6px 0'
+                }}>
+                  Quiz de conceptos
+                </h3>
+                <p style={{
+                  fontSize: '15px',
+                  color: t.textSecondary,
+                  margin: 0
+                }}>
+                  Verifica que entiendes lo básico (80% para aprobar)
+                </p>
+              </div>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px'
+              }}>
+                <span style={{
+                  fontSize: '14px',
+                  color: completed['quiz-aprobado'] ? t.success : t.textMuted,
+                  fontWeight: 500
+                }}>
+                  {completed['quiz-aprobado'] ? 'Aprobado' : '10 preguntas'}
+                </span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={completed['quiz-aprobado'] ? t.success : t.textMuted} strokeWidth="2">
+                  <polyline points="9 18 15 12 9 6"/>
+                </svg>
+              </div>
+            </Link>
+
+            {/* Primer Proyecto */}
+            <Link href="/precurso/primer-proyecto" style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '24px',
+              padding: '28px',
+              background: completed['primer-proyecto'] ? t.successLight : t.bgSecondary,
+              border: `1px solid ${completed['primer-proyecto'] ? t.success : t.border}`,
+              borderRadius: '16px',
+              textDecoration: 'none',
+              transition: 'all 0.2s',
+              cursor: 'pointer'
+            }}>
+              <div style={{
+                width: '64px',
+                height: '64px',
+                background: completed['primer-proyecto']
+                  ? t.success
+                  : 'linear-gradient(135deg, #ec4899, #db2777)',
+                borderRadius: '16px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '28px',
+                flexShrink: 0,
+                color: 'white'
+              }}>
+                {completed['primer-proyecto'] ? '✓' : '🚀'}
+              </div>
+              <div style={{ flex: 1 }}>
+                <h3 style={{
+                  fontSize: '20px',
+                  fontWeight: 600,
+                  color: t.text,
+                  margin: '0 0 6px 0'
+                }}>
+                  Tu primer proyecto
+                </h3>
+                <p style={{
+                  fontSize: '15px',
+                  color: t.textSecondary,
+                  margin: 0
+                }}>
+                  Crea tu primera página web con Claude Code
+                </p>
+              </div>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px'
+              }}>
+                <span style={{
+                  fontSize: '14px',
+                  color: completed['primer-proyecto'] ? t.success : t.textMuted,
+                  fontWeight: 500
+                }}>
+                  {completed['primer-proyecto'] ? 'Completado' : '⏱️ 10 min'}
+                </span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={completed['primer-proyecto'] ? t.success : t.textMuted} strokeWidth="2">
+                  <polyline points="9 18 15 12 9 6"/>
+                </svg>
+              </div>
+            </Link>
           </div>
 
           {/* Time estimate */}
@@ -630,7 +849,7 @@ function PrecursoContent() {
             color: t.textMuted,
             fontSize: '14px'
           }}>
-            <span>⏱️ ~30 minutos en total</span>
+            <span>⏱️ ~50 minutos en total</span>
             <span>📱 Hazlo a tu ritmo</span>
           </div>
         </main>
