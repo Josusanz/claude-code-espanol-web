@@ -48,24 +48,27 @@ Resumen: Ya no necesitas aprender a programar. Solo necesitas entender los conce
 ¡Vamos a empezar!
 `;
 
-// ============ SLIDES DEL VIDEO ============
+// ============ TIMING SINCRONIZADO CON AUDIO (166s total) ============
+// Narración dividida por secciones con tiempos exactos
+
 const SLIDES = [
-  // INTRO
+  // "¿Por qué ya no necesitas saber programar...? Déjame explicarte."
   {
     type: 'title',
     emoji: '🤖',
     title: '¿Por qué ya no necesitas\nsaber programar?',
     subtitle: 'Programar con Inteligencia Artificial',
-    duration: 6
+    duration: 9  // 0-9s
   },
 
-  // EL GRAN CAMBIO - ANTES
+  // "Antes, programar requería años de aprendizaje..."
   {
     type: 'section',
     number: '1',
     title: 'El gran cambio',
-    duration: 3
+    duration: 4  // 9-13s
   },
+  // "...tenías que memorizar sintaxis, estudiar múltiples lenguajes..."
   {
     type: 'comparison',
     side: 'before',
@@ -77,10 +80,10 @@ const SLIDES = [
       { emoji: '🐛', text: 'Horas depurando errores' },
       { emoji: '⌨️', text: 'Escribir cada línea manualmente' }
     ],
-    duration: 10
+    duration: 14  // 13-27s
   },
 
-  // EL GRAN CAMBIO - AHORA
+  // "Ahora, todo es diferente. Con herramientas como Claude Code..."
   {
     type: 'comparison',
     side: 'after',
@@ -92,68 +95,68 @@ const SLIDES = [
       { emoji: '👀', text: 'Tú supervisas el resultado' },
       { emoji: '🔄', text: 'Iteras hasta conseguirlo' }
     ],
-    duration: 10
+    duration: 14  // 27-41s
   },
 
-  // ANALOGÍA
+  // "Piensa en ello así: No necesitas saber construir un coche..."
   {
     type: 'analogy',
     emoji: '🚗',
     text: 'No necesitas saber construir un coche\npara conducirlo',
     subtext: 'Pero sí necesitas saber qué hacen los pedales,\nel volante, y las señales de tráfico.',
-    duration: 8
+    duration: 11  // 41-52s
   },
 
-  // QUÉ NECESITAS SABER - INTRO
+  // "Entonces, ¿qué necesitas saber? Son solo cinco conceptos básicos."
   {
     type: 'section',
     number: '2',
     title: 'Lo que SÍ necesitas saber',
     subtitle: '5 conceptos básicos',
-    duration: 4
+    duration: 6  // 52-58s
   },
 
-  // CONCEPTO 1
+  // "Primero, estructura de archivos. Cómo se organizan las carpetas..."
   {
     type: 'concept',
     number: '1',
     emoji: '📂',
     title: 'Estructura de archivos',
     description: 'Cómo se organizan las carpetas en un proyecto.\nLa IA te preguntará dónde poner las cosas.',
-    duration: 6
+    duration: 9  // 58-67s
   },
 
-  // CONCEPTO 2
+  // "Segundo, frontend versus backend. Qué parte ve el usuario..."
   {
     type: 'concept',
     number: '2',
     emoji: '🌐',
     title: 'Frontend vs Backend',
     description: 'Qué parte ve el usuario (frontend)\ny qué parte procesa datos (backend).',
-    duration: 6
+    duration: 8  // 67-75s
   },
 
-  // CONCEPTO 3
+  // "Tercero, Git y versiones. Es tu control zeta para proyectos enteros..."
   {
     type: 'concept',
     number: '3',
     emoji: '🔀',
     title: 'Git y versiones',
     description: 'Tu Ctrl+Z para proyectos enteros.\nPuedes volver atrás si algo sale mal.',
-    duration: 5
+    duration: 8  // 75-83s
   },
 
-  // CONCEPTO 4
+  // "Cuarto, deploy y producción. Cómo publicar tu app..."
   {
     type: 'concept',
     number: '4',
     emoji: '🚀',
     title: 'Deploy y producción',
     description: 'Cómo publicar tu app\npara que otros la usen.',
-    duration: 5
+    duration: 6  // 83-89s
   },
 
-  // CONCEPTO 5
+  // "Y quinto, la más importante: saber explicar lo que quieres..."
   {
     type: 'concept',
     number: '5',
@@ -161,28 +164,28 @@ const SLIDES = [
     title: 'Saber explicar lo que quieres',
     description: 'Cuanto mejor describas tu idea,\nmejor código creará la IA.',
     highlight: true,
-    duration: 6
+    duration: 9  // 89-98s
   },
 
-  // NOTA
+  // "Todo esto son conceptos, no código. No tienes que memorizar..."
   {
     type: 'note',
     emoji: '📝',
     text: 'Todo esto son conceptos, no código',
     subtext: 'No tienes que memorizar sintaxis\nni comandos complicados.',
-    duration: 5
+    duration: 7  // 98-105s
   },
 
-  // TU NUEVO ROL - INTRO
+  // "Ahora hablemos de tu nuevo rol. Piensa en Claude Code como..."
   {
     type: 'section',
     number: '3',
     title: 'Tu nuevo rol',
     subtitle: 'Director de IA',
-    duration: 4
+    duration: 6  // 105-111s
   },
 
-  // ROL - VISUAL
+  // "Tu trabajo tiene cuatro partes. Primero, defines el objetivo..."
   {
     type: 'role',
     title: 'Claude Code es tu programador',
@@ -193,16 +196,16 @@ const SLIDES = [
       { emoji: '👀', title: 'Revisa el trabajo', desc: 'Verifica que funcione' },
       { emoji: '🔄', title: 'Pide cambios', desc: 'Ajusta hasta que esté bien' }
     ],
-    duration: 14
+    duration: 18  // 111-129s
   },
 
-  // EJEMPLO
+  // "Por ejemplo, podrías decir: Crea una página web..."
   {
     type: 'example',
-    duration: 12
+    duration: 16  // 129-145s
   },
 
-  // RESUMEN
+  // "Resumen: Ya no necesitas aprender a programar..."
   {
     type: 'summary',
     title: 'Resumen',
@@ -212,16 +215,16 @@ const SLIDES = [
       'Tú pones las ideas',
       'La IA pone el código'
     ],
-    duration: 8
+    duration: 14  // 145-159s
   },
 
-  // FINAL
+  // "¡Vamos a empezar!"
   {
     type: 'final',
     emoji: '🚀',
     title: '¡Vamos a empezar!',
     subtitle: 'Siguiente: Glosario de términos',
-    duration: 5
+    duration: 7  // 159-166s
   }
 ];
 
@@ -697,7 +700,13 @@ async function cleanup() {
 async function main() {
   console.log('🎬 Creando video: Programar con IA\n');
   try {
-    const audioPath = await generateAudio();
+    // Usar audio existente si ya existe
+    const audioPath = path.join(OUTPUT_DIR, 'programar-ia-narration.mp3');
+    if (fs.existsSync(audioPath)) {
+      console.log('🎙️ Usando audio existente...');
+    } else {
+      await generateAudio();
+    }
     await generateFrames();
     await createVideo(audioPath);
     await cleanup();
