@@ -38,7 +38,8 @@ const themes = {
 
 const REQUISITOS = [
   {
-    id: 'requisitos-vscode',
+    id: 'req-vscode',
+    anchorId: 'requisitos-vscode',
     title: 'VS Code',
     description: 'El editor donde verás los archivos que Claude Code crea.',
     icon: '💻',
@@ -51,7 +52,8 @@ const REQUISITOS = [
     verify: 'Abre VS Code y verás una pantalla de bienvenida.'
   },
   {
-    id: 'requisitos-nodejs',
+    id: 'req-nodejs',
+    anchorId: 'requisitos-nodejs',
     title: 'Node.js',
     description: 'El motor que ejecuta JavaScript. Claude Code lo necesita.',
     icon: '⬢',
@@ -64,7 +66,8 @@ const REQUISITOS = [
     verify: 'Deberías ver algo como v20.x.x o v22.x.x'
   },
   {
-    id: 'requisitos-github',
+    id: 'req-github',
+    anchorId: 'requisitos-github',
     title: 'Cuenta de GitHub',
     description: 'Donde guardarás tu código en la nube.',
     icon: '🐙',
@@ -77,7 +80,8 @@ const REQUISITOS = [
     verify: 'Puedes acceder a github.com con tu cuenta.'
   },
   {
-    id: 'requisitos-vercel',
+    id: 'req-vercel',
+    anchorId: 'requisitos-vercel',
     title: 'Cuenta de Vercel',
     description: 'Donde publicarás tus apps.',
     icon: '▲',
@@ -90,7 +94,8 @@ const REQUISITOS = [
     verify: 'Puedes acceder al dashboard de Vercel.'
   },
   {
-    id: 'requisitos-claude',
+    id: 'req-claude',
+    anchorId: 'requisitos-claude',
     title: 'Claude Code',
     description: 'La herramienta de IA que usarás.',
     icon: '🤖',
@@ -110,7 +115,8 @@ function RequisitosContent() {
   const { theme, toggleTheme } = useTheme()
   const t = themes[theme]
 
-  const isCompleted = completed['requisitos-completo']
+  const completedCount = REQUISITOS.filter(req => completed[req.id]).length
+  const allCompleted = completedCount === REQUISITOS.length
 
   return (
     <div style={{
@@ -294,165 +300,179 @@ function RequisitosContent() {
 
           {/* Steps */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            {REQUISITOS.map((req, index) => (
-              <div key={req.id} id={req.id} style={{
-                background: t.bgSecondary,
-                borderRadius: '16px',
-                border: `1px solid ${t.border}`,
-                overflow: 'hidden'
-              }}>
-                {/* Header */}
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  padding: '20px 24px',
-                  background: t.bgTertiary,
-                  borderBottom: `1px solid ${t.border}`
+            {REQUISITOS.map((req, index) => {
+              const isStepCompleted = completed[req.id]
+              return (
+                <div key={req.id} id={req.anchorId} style={{
+                  background: isStepCompleted ? t.successLight : t.bgSecondary,
+                  borderRadius: '16px',
+                  border: `1px solid ${isStepCompleted ? t.success : t.border}`,
+                  overflow: 'hidden',
+                  transition: 'all 0.2s'
                 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                    <div style={{
-                      width: '48px',
-                      height: '48px',
-                      background: t.bg,
-                      borderRadius: '12px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontSize: '24px',
-                      color: t.text,
-                      fontWeight: 600,
-                      border: `1px solid ${t.border}`
-                    }}>
-                      {req.icon}
-                    </div>
-                    <div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                        <span style={{
-                          fontSize: '12px',
-                          fontWeight: 600,
-                          color: t.textMuted,
-                          background: t.bg,
-                          padding: '2px 8px',
-                          borderRadius: '4px'
-                        }}>
-                          Paso {index + 1}
-                        </span>
-                        <h3 style={{ fontSize: '18px', fontWeight: 600, color: t.text, margin: 0 }}>
-                          {req.title}
-                        </h3>
-                      </div>
-                      <p style={{ fontSize: '14px', color: t.textSecondary, margin: '4px 0 0' }}>
-                        {req.description}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Content */}
-                <div style={{ padding: '24px' }}>
-                  <ol style={{
-                    margin: '0 0 16px',
-                    padding: '0 0 0 24px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '12px'
-                  }}>
-                    {req.steps.map((step, i) => (
-                      <li key={i} style={{ fontSize: '15px', color: t.textSecondary }}>
-                        {step.url ? (
-                          <a href={step.url} target="_blank" rel="noopener noreferrer" style={{
-                            color: t.accent,
-                            textDecoration: 'none',
-                            fontWeight: 500
-                          }}>
-                            {step.text} ↗
-                          </a>
-                        ) : (
-                          <span>{step.text}</span>
-                        )}
-                      </li>
-                    ))}
-                  </ol>
-
+                  {/* Header */}
                   <div style={{
-                    padding: '14px 18px',
-                    background: t.bgTertiary,
-                    borderRadius: '10px',
-                    fontSize: '14px',
-                    color: t.textMuted,
                     display: 'flex',
-                    alignItems: 'flex-start',
-                    gap: '10px'
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    padding: '20px 24px',
+                    background: isStepCompleted ? 'transparent' : t.bgTertiary,
+                    borderBottom: `1px solid ${isStepCompleted ? t.success + '40' : t.border}`
                   }}>
-                    <span style={{ fontSize: '16px' }}>✅</span>
-                    <span><strong style={{ color: t.text }}>Verificar:</strong> {req.verify}</span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                      <div style={{
+                        width: '48px',
+                        height: '48px',
+                        background: isStepCompleted ? t.success : t.bg,
+                        borderRadius: '12px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: isStepCompleted ? '20px' : '24px',
+                        color: isStepCompleted ? 'white' : t.text,
+                        fontWeight: 600,
+                        border: isStepCompleted ? 'none' : `1px solid ${t.border}`
+                      }}>
+                        {isStepCompleted ? '✓' : req.icon}
+                      </div>
+                      <div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                          <span style={{
+                            fontSize: '12px',
+                            fontWeight: 600,
+                            color: isStepCompleted ? t.success : t.textMuted,
+                            background: isStepCompleted ? t.success + '20' : t.bg,
+                            padding: '2px 8px',
+                            borderRadius: '4px'
+                          }}>
+                            {isStepCompleted ? '✓ Hecho' : `Paso ${index + 1}`}
+                          </span>
+                          <h3 style={{ fontSize: '18px', fontWeight: 600, color: t.text, margin: 0 }}>
+                            {req.title}
+                          </h3>
+                        </div>
+                        <p style={{ fontSize: '14px', color: t.textSecondary, margin: '4px 0 0' }}>
+                          {req.description}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div style={{ padding: '24px' }}>
+                    <ol style={{
+                      margin: '0 0 16px',
+                      padding: '0 0 0 24px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '12px'
+                    }}>
+                      {req.steps.map((step, i) => (
+                        <li key={i} style={{ fontSize: '15px', color: t.textSecondary }}>
+                          {step.url ? (
+                            <a href={step.url} target="_blank" rel="noopener noreferrer" style={{
+                              color: t.accent,
+                              textDecoration: 'none',
+                              fontWeight: 500
+                            }}>
+                              {step.text} ↗
+                            </a>
+                          ) : (
+                            <span>{step.text}</span>
+                          )}
+                        </li>
+                      ))}
+                    </ol>
+
+                    <div style={{
+                      padding: '14px 18px',
+                      background: isStepCompleted ? t.success + '15' : t.bgTertiary,
+                      borderRadius: '10px',
+                      fontSize: '14px',
+                      color: t.textMuted,
+                      display: 'flex',
+                      alignItems: 'flex-start',
+                      gap: '10px',
+                      marginBottom: '16px'
+                    }}>
+                      <span style={{ fontSize: '16px' }}>✅</span>
+                      <span><strong style={{ color: t.text }}>Verificar:</strong> {req.verify}</span>
+                    </div>
+
+                    {/* Individual completion button */}
+                    <button
+                      onClick={() => toggle(req.id)}
+                      style={{
+                        width: '100%',
+                        padding: '14px 20px',
+                        background: isStepCompleted ? t.bg : t.success,
+                        border: `1px solid ${isStepCompleted ? t.border : t.success}`,
+                        borderRadius: '10px',
+                        color: isStepCompleted ? t.textSecondary : 'white',
+                        fontSize: '15px',
+                        fontWeight: 600,
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '8px',
+                        transition: 'all 0.2s'
+                      }}
+                    >
+                      {isStepCompleted ? (
+                        <>Desmarcar</>
+                      ) : (
+                        <>✓ {req.title} instalado</>
+                      )}
+                    </button>
                   </div>
                 </div>
-              </div>
-            ))}
+              )
+            })}
           </div>
 
-          {/* Completion button at the end */}
+          {/* Progress summary */}
           <div style={{
             marginTop: '40px',
             padding: '32px',
-            background: isCompleted ? t.successLight : t.bgSecondary,
+            background: allCompleted ? t.successLight : t.bgSecondary,
             borderRadius: '16px',
-            border: `1px solid ${isCompleted ? t.success : t.border}`,
+            border: `1px solid ${allCompleted ? t.success : t.border}`,
             textAlign: 'center'
           }}>
-            {isCompleted ? (
+            {allCompleted ? (
               <>
                 <span style={{ fontSize: '48px' }}>🎉</span>
                 <h3 style={{ fontSize: '20px', fontWeight: 600, color: t.success, margin: '12px 0 8px' }}>
                   ¡Todo listo!
                 </h3>
-                <p style={{ fontSize: '15px', color: t.textSecondary, margin: '0 0 20px' }}>
+                <p style={{ fontSize: '15px', color: t.textSecondary, margin: 0 }}>
                   Tienes todo lo necesario para la primera clase.
                 </p>
-                <button
-                  onClick={() => toggle('requisitos-completo')}
-                  style={{
-                    padding: '12px 24px',
-                    background: t.bg,
-                    border: `1px solid ${t.border}`,
-                    borderRadius: '10px',
-                    color: t.textSecondary,
-                    fontSize: '14px',
-                    fontWeight: 500,
-                    cursor: 'pointer'
-                  }}
-                >
-                  Desmarcar
-                </button>
               </>
             ) : (
               <>
+                <div style={{
+                  width: '64px',
+                  height: '64px',
+                  background: t.bgTertiary,
+                  borderRadius: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  margin: '0 auto 16px',
+                  fontSize: '24px',
+                  fontWeight: 700,
+                  color: t.accent
+                }}>
+                  {completedCount}/5
+                </div>
                 <h3 style={{ fontSize: '18px', fontWeight: 600, color: t.text, margin: '0 0 8px' }}>
-                  ¿Has instalado todo?
+                  {completedCount === 0 ? 'Empieza por el primer paso' : `Te faltan ${5 - completedCount} herramientas`}
                 </h3>
-                <p style={{ fontSize: '14px', color: t.textSecondary, margin: '0 0 20px' }}>
-                  Marca como completado cuando tengas todas las herramientas listas.
+                <p style={{ fontSize: '14px', color: t.textSecondary, margin: 0 }}>
+                  Marca cada herramienta como instalada cuando la tengas lista.
                 </p>
-                <button
-                  onClick={() => toggle('requisitos-completo')}
-                  style={{
-                    padding: '16px 32px',
-                    background: `linear-gradient(135deg, ${t.success}, #16a34a)`,
-                    border: 'none',
-                    borderRadius: '12px',
-                    color: 'white',
-                    fontSize: '16px',
-                    fontWeight: 600,
-                    cursor: 'pointer',
-                    boxShadow: '0 4px 14px rgba(34, 197, 94, 0.3)',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '8px'
-                  }}
-                >
-                  ✓ Todo instalado, siguiente paso
-                </button>
               </>
             )}
           </div>

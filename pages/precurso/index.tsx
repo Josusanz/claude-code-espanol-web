@@ -3,11 +3,15 @@ import Link from 'next/link'
 import PrecursoEmailGate from '../../components/PrecursoEmailGate'
 import { useState, useEffect } from 'react'
 
-// Estructura simplificada: 3 pasos
+// Estructura del precurso
 export const PRECURSO_SECTIONS = {
   'intro-completo': 'Introducción completada',
   'glosario-completo': 'Glosario completado',
-  'requisitos-completo': 'Requisitos completados',
+  'req-vscode': 'VS Code instalado',
+  'req-nodejs': 'Node.js instalado',
+  'req-github': 'Cuenta GitHub creada',
+  'req-vercel': 'Cuenta Vercel creada',
+  'req-claude': 'Claude Code instalado',
 }
 
 export function usePrecursoProgress() {
@@ -84,7 +88,11 @@ function PrecursoContent() {
 
   const introCompleted = completed['intro-completo']
   const glosarioCompleted = completed['glosario-completo']
-  const requisitosCompleted = completed['requisitos-completo']
+
+  // Requisitos: check if all 5 steps are done
+  const reqSteps = ['req-vscode', 'req-nodejs', 'req-github', 'req-vercel', 'req-claude']
+  const reqCompletedCount = reqSteps.filter(key => completed[key]).length
+  const requisitosCompleted = reqCompletedCount === 5
 
   return (
     <div style={{
@@ -601,7 +609,7 @@ function PrecursoContent() {
                   color: requisitosCompleted ? t.success : t.textMuted,
                   fontWeight: 500
                 }}>
-                  {requisitosCompleted ? 'Completado' : '5 pasos'}
+                  {requisitosCompleted ? 'Completado' : `${reqCompletedCount}/5 instalados`}
                 </span>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={requisitosCompleted ? t.success : t.textMuted} strokeWidth="2">
                   <polyline points="9 18 15 12 9 6"/>
