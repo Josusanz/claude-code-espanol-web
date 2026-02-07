@@ -67,6 +67,151 @@ const ClaudeLogo = () => (
   </svg>
 )
 
+// Componente especial para la sección de Terminal
+const TerminalSection = ({ t, theme }: { t: typeof themes.light, theme: 'light' | 'dark' }) => (
+  <div style={{
+    background: t.bgSecondary,
+    borderRadius: '16px',
+    border: `1px solid ${t.border}`,
+    overflow: 'hidden',
+    marginBottom: '20px'
+  }}>
+    <div style={{
+      padding: '20px 24px',
+      background: t.bgTertiary,
+      borderBottom: `1px solid ${t.border}`
+    }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+        <div style={{
+          width: '52px',
+          height: '52px',
+          background: '#1e1e1e',
+          borderRadius: '12px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: '24px'
+        }}>
+          ⬛
+        </div>
+        <div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <span style={{
+              fontSize: '12px',
+              fontWeight: 600,
+              color: '#f59e0b',
+              background: '#fffbeb',
+              padding: '2px 8px',
+              borderRadius: '4px'
+            }}>
+              IMPORTANTE
+            </span>
+            <h3 style={{ fontSize: '18px', fontWeight: 600, color: t.text, margin: 0 }}>
+              Cómo abrir la Terminal
+            </h3>
+          </div>
+          <p style={{ fontSize: '14px', color: t.textSecondary, margin: '4px 0 0' }}>
+            Necesitas saber esto antes de instalar Node.js y Claude Code
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div style={{ padding: '24px' }}>
+      <p style={{ fontSize: '15px', color: t.textSecondary, marginBottom: '20px', lineHeight: 1.7 }}>
+        La terminal es donde escribirás comandos. Parece intimidante pero es muy fácil.
+        Solo tienes que abrirla y copiar/pegar lo que te diga.
+      </p>
+
+      {/* macOS */}
+      <div style={{
+        background: t.bgTertiary,
+        borderRadius: '12px',
+        padding: '20px',
+        marginBottom: '16px'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
+          <span style={{ fontSize: '20px' }}>🍎</span>
+          <h4 style={{ fontSize: '16px', fontWeight: 600, color: t.text, margin: 0 }}>macOS</h4>
+        </div>
+        <ol style={{ margin: 0, padding: '0 0 0 20px', color: t.textSecondary, lineHeight: 2 }}>
+          <li>Pulsa <strong style={{ color: t.text }}>Cmd + Espacio</strong> (abre Spotlight)</li>
+          <li>Escribe <strong style={{ color: t.text }}>"Terminal"</strong></li>
+          <li>Pulsa Enter</li>
+        </ol>
+        <div style={{
+          marginTop: '12px',
+          padding: '12px',
+          background: t.bg,
+          borderRadius: '8px',
+          fontSize: '13px',
+          color: t.textMuted
+        }}>
+          💡 También la encuentras en: Aplicaciones → Utilidades → Terminal
+        </div>
+      </div>
+
+      {/* Windows */}
+      <div style={{
+        background: t.bgTertiary,
+        borderRadius: '12px',
+        padding: '20px',
+        marginBottom: '16px'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
+          <span style={{ fontSize: '20px' }}>🪟</span>
+          <h4 style={{ fontSize: '16px', fontWeight: 600, color: t.text, margin: 0 }}>Windows</h4>
+        </div>
+        <ol style={{ margin: 0, padding: '0 0 0 20px', color: t.textSecondary, lineHeight: 2 }}>
+          <li>Pulsa <strong style={{ color: t.text }}>Windows + R</strong></li>
+          <li>Escribe <strong style={{ color: t.text }}>"cmd"</strong> o <strong style={{ color: t.text }}>"powershell"</strong></li>
+          <li>Pulsa Enter</li>
+        </ol>
+        <div style={{
+          marginTop: '12px',
+          padding: '12px',
+          background: t.bg,
+          borderRadius: '8px',
+          fontSize: '13px',
+          color: t.textMuted
+        }}>
+          💡 Alternativa: Click derecho en el menú inicio → "Terminal" o "PowerShell"
+        </div>
+      </div>
+
+      {/* Linux */}
+      <div style={{
+        background: t.bgTertiary,
+        borderRadius: '12px',
+        padding: '20px'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
+          <span style={{ fontSize: '20px' }}>🐧</span>
+          <h4 style={{ fontSize: '16px', fontWeight: 600, color: t.text, margin: 0 }}>Linux</h4>
+        </div>
+        <ol style={{ margin: 0, padding: '0 0 0 20px', color: t.textSecondary, lineHeight: 2 }}>
+          <li>Pulsa <strong style={{ color: t.text }}>Ctrl + Alt + T</strong></li>
+          <li>¡Listo! (funciona en Ubuntu, Debian, y la mayoría de distros)</li>
+        </ol>
+      </div>
+
+      {/* Screenshot placeholder */}
+      <div style={{
+        marginTop: '20px',
+        padding: '16px',
+        background: t.bg,
+        borderRadius: '12px',
+        border: `1px dashed ${t.border}`,
+        textAlign: 'center'
+      }}>
+        <p style={{ margin: 0, fontSize: '14px', color: t.textMuted }}>
+          📸 Aquí irá un video/screenshot mostrando cómo abrir la terminal
+        </p>
+      </div>
+    </div>
+  </div>
+)
+
 const REQUISITOS = [
   {
     id: 'req-vscode',
@@ -92,7 +237,8 @@ const REQUISITOS = [
     steps: [
       { text: 'Descarga Node.js LTS', url: 'https://nodejs.org/' },
       { text: 'Instálalo con las opciones por defecto' },
-      { text: 'Abre la terminal y escribe: node --version' }
+      { text: 'Abre la terminal (ver instrucciones arriba)' },
+      { text: 'Escribe: node --version y pulsa Enter' }
     ],
     verify: 'Deberías ver algo como v20.x.x o v22.x.x'
   },
@@ -278,6 +424,10 @@ function RequisitosContent() {
               }}>
                 <span>🛠️</span> Requisitos
               </div>
+              <a href="#como-abrir-terminal" style={{
+                display: 'block', padding: '8px 20px 8px 48px', color: '#f59e0b',
+                textDecoration: 'none', fontSize: '13px', fontWeight: 500
+              }}>⚡ Cómo abrir Terminal</a>
               <a href="#requisitos-vscode" style={{
                 display: 'block', padding: '8px 20px 8px 48px', color: t.textSecondary,
                 textDecoration: 'none', fontSize: '13px'
@@ -327,6 +477,11 @@ function RequisitosContent() {
             <p style={{ fontSize: '16px', color: t.textSecondary, lineHeight: 1.7 }}>
               Instala estas herramientas antes de la primera clase. Marca cada paso cuando lo completes.
             </p>
+          </div>
+
+          {/* Terminal Section - Before Node.js */}
+          <div id="como-abrir-terminal">
+            <TerminalSection t={t} theme={theme} />
           </div>
 
           {/* Steps */}
