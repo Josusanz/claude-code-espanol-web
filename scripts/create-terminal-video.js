@@ -7,80 +7,161 @@ const OUTPUT_DIR = path.join(__dirname, '../public/videos');
 const FRAMES_DIR = path.join(__dirname, '../temp-frames');
 const ELEVENLABS_API_KEY = process.env.ELEVENLABS_API_KEY || 'sk_6c1dc04e5fe5cb38c2c293cd1be0d3678a3eee82af063c04';
 
-// Spanish narration - mejor estructurada para el timing
+// Spanish narration - sincronizada con las pantallas
 const NARRATION_SCRIPT = `
-Vamos a verificar que tienes todo instalado correctamente.
+Primero, vamos a abrir el terminal en tu sistema operativo.
 
-Abre tu terminal. En Mac pulsa Comando más Espacio, escribe Terminal, y pulsa Enter.
+Si usas Mac, pulsa Comando más Espacio para abrir Spotlight, escribe Terminal, y pulsa Enter.
 
-Ahora escribe node guión guión version y pulsa Enter.
+Si usas Windows, pulsa la tecla Windows más R, escribe cmd o powershell, y pulsa Enter.
 
-Perfecto. Ves que tenemos Node versión 20 punto 11 instalada.
+Si usas Linux, simplemente pulsa Control más Alt más T.
+
+Ahora que tienes el terminal abierto, vamos a verificar que todo está instalado.
+
+Escribe node guión guión version y pulsa Enter.
+
+Perfecto. Tenemos Node versión 20 instalada.
 
 Ahora escribe npm guión guión version.
 
-Bien, npm versión 10 punto 2 también está listo.
+Bien, npm también está listo.
 
 Finalmente, escribe claude y pulsa Enter.
 
-Excelente. Ya tienes Claude Code funcionando. Estás listo para empezar a programar con inteligencia artificial.
+Excelente. Claude Code está funcionando. Ya estás listo para programar con inteligencia artificial.
 `;
 
 const FPS = 30;
-const TYPING_SPEED = 80; // ms per character
+const TYPING_SPEED = 80;
 
-// Definimos los comandos y sus tiempos de aparición
-const TERMINAL_SCRIPT = [
-  { type: 'wait', duration: 2000 },
-  { type: 'type', text: 'node --version', postDelay: 500 },
-  { type: 'output', text: 'v20.11.0', delay: 300 },
-  { type: 'wait', duration: 2500 },
-  { type: 'type', text: 'npm --version', postDelay: 500 },
-  { type: 'output', text: '10.2.4', delay: 300 },
-  { type: 'wait', duration: 2500 },
-  { type: 'type', text: 'claude', postDelay: 500 },
-  { type: 'claude-welcome', delay: 500 },
-  { type: 'wait', duration: 4000 },
-];
+// Función para generar HTML de instrucciones de OS
+function generateOSInstructionHTML(os, steps, tip, emoji) {
+  const bgColors = {
+    mac: 'linear-gradient(135deg, #1a1a2e 0%, #2d1b4e 100%)',
+    windows: 'linear-gradient(135deg, #0078d4 0%, #005a9e 100%)',
+    linux: 'linear-gradient(135deg, #2e1a47 0%, #1a1a2e 100%)'
+  };
 
-async function generateAudio() {
-  console.log('🎙️ Generando audio con ElevenLabs...');
+  const accentColors = {
+    mac: '#a855f7',
+    windows: '#00bcf2',
+    linux: '#f59e0b'
+  };
 
-  const response = await fetch('https://api.elevenlabs.io/v1/text-to-speech/pFZP5JQG7iQjIQuC4Bku', {
-    method: 'POST',
-    headers: {
-      'Accept': 'audio/mpeg',
-      'Content-Type': 'application/json',
-      'xi-api-key': ELEVENLABS_API_KEY
-    },
-    body: JSON.stringify({
-      text: NARRATION_SCRIPT,
-      model_id: 'eleven_multilingual_v2',
-      voice_settings: {
-        stability: 0.6,
-        similarity_boost: 0.8,
-        style: 0.3,
-        use_speaker_boost: true
-      }
-    })
-  });
-
-  if (!response.ok) {
-    const error = await response.text();
-    throw new Error(`ElevenLabs API error: ${response.status} - ${error}`);
-  }
-
-  const audioBuffer = await response.arrayBuffer();
-  const audioPath = path.join(OUTPUT_DIR, 'terminal-narration.mp3');
-  fs.writeFileSync(audioPath, Buffer.from(audioBuffer));
-  console.log('   ✓ Audio generado: terminal-narration.mp3');
-  return audioPath;
+  return `<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: ${bgColors[os]};
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 60px;
+      font-family: 'Inter', -apple-system, sans-serif;
+    }
+    .card {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(20px);
+      border-radius: 24px;
+      padding: 48px;
+      width: 800px;
+      border: 1px solid rgba(255,255,255,0.2);
+      box-shadow: 0 25px 80px rgba(0,0,0,0.3);
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 36px;
+    }
+    .emoji {
+      font-size: 64px;
+    }
+    .title {
+      color: white;
+      font-size: 42px;
+      font-weight: 700;
+    }
+    .steps {
+      margin-bottom: 32px;
+    }
+    .step {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+      color: rgba(255,255,255,0.9);
+      font-size: 22px;
+    }
+    .step-number {
+      width: 36px;
+      height: 36px;
+      background: ${accentColors[os]};
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 18px;
+      color: white;
+    }
+    .key {
+      background: rgba(255,255,255,0.2);
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-weight: 600;
+      border: 1px solid rgba(255,255,255,0.3);
+    }
+    .tip {
+      background: rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 16px 20px;
+      color: rgba(255,255,255,0.7);
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .tip-icon {
+      font-size: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="header">
+      <span class="emoji">${emoji}</span>
+      <h1 class="title">${os === 'mac' ? 'macOS' : os === 'windows' ? 'Windows' : 'Linux'}</h1>
+    </div>
+    <div class="steps">
+      ${steps.map((step, i) => `
+        <div class="step">
+          <div class="step-number">${i + 1}</div>
+          <div>${step}</div>
+        </div>
+      `).join('')}
+    </div>
+    ${tip ? `
+    <div class="tip">
+      <span class="tip-icon">💡</span>
+      <span>${tip}</span>
+    </div>
+    ` : ''}
+  </div>
+</body>
+</html>`;
 }
 
-function generateTerminalHTML(lines, cursorVisible = true) {
+// Función para generar HTML del terminal
+function generateTerminalHTML(lines) {
   const linesHtml = lines.map(line => {
     if (line.type === 'prompt') {
-      return `<div class="line"><span class="prompt">➜</span> <span class="path">~/proyectos</span> <span class="typed">${line.text || ''}</span>${cursorVisible && line.cursor ? '<span class="cursor">▊</span>' : ''}</div>`;
+      return `<div class="line"><span class="prompt">➜</span> <span class="path">~/proyectos</span> <span class="typed">${line.text || ''}</span>${line.cursor ? '<span class="cursor">▊</span>' : ''}</div>`;
     } else if (line.type === 'output') {
       return `<div class="line output">${line.text}</div>`;
     } else if (line.type === 'claude') {
@@ -122,12 +203,7 @@ function generateTerminalHTML(lines, cursorVisible = true) {
       gap: 10px;
       border-bottom: 1px solid rgba(255,255,255,0.05);
     }
-    .dot {
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    }
+    .dot { width: 14px; height: 14px; border-radius: 50%; }
     .dot.red { background: linear-gradient(180deg, #ff6b6b 0%, #ee5a5a 100%); }
     .dot.yellow { background: linear-gradient(180deg, #feca57 0%, #f5b942 100%); }
     .dot.green { background: linear-gradient(180deg, #5fd068 0%, #4ac054 100%); }
@@ -135,8 +211,6 @@ function generateTerminalHTML(lines, cursorVisible = true) {
       color: rgba(255,255,255,0.5);
       margin-left: 20px;
       font-size: 13px;
-      font-weight: 500;
-      letter-spacing: 0.5px;
     }
     .terminal-body {
       padding: 28px 24px;
@@ -144,37 +218,16 @@ function generateTerminalHTML(lines, cursorVisible = true) {
       line-height: 1.9;
       min-height: 320px;
     }
-    .line {
-      white-space: pre;
-    }
-    .prompt {
-      color: #5fd068;
-      font-weight: 600;
-    }
-    .path {
-      color: #60a5fa;
-      font-weight: 500;
-    }
-    .typed {
-      color: #f0f0f0;
-    }
-    .output {
-      color: #94a3b8;
-      padding-left: 0;
-    }
-    .claude {
-      color: #f59e0b;
-      font-weight: 500;
-    }
+    .line { white-space: pre; }
+    .prompt { color: #5fd068; font-weight: 600; }
+    .path { color: #60a5fa; font-weight: 500; }
+    .typed { color: #f0f0f0; }
+    .output { color: #94a3b8; }
+    .claude { color: #f59e0b; font-weight: 500; }
     .cursor {
       background: #60a5fa;
       color: transparent;
       margin-left: 2px;
-      animation: blink 1s step-end infinite;
-    }
-    @keyframes blink {
-      0%, 50% { opacity: 1; }
-      51%, 100% { opacity: 0; }
     }
   </style>
 </head>
@@ -184,7 +237,7 @@ function generateTerminalHTML(lines, cursorVisible = true) {
       <div class="dot red"></div>
       <div class="dot yellow"></div>
       <div class="dot green"></div>
-      <span class="terminal-title">Terminal — zsh — 80×24</span>
+      <span class="terminal-title">Terminal — zsh</span>
     </div>
     <div class="terminal-body">
       ${linesHtml}
@@ -194,8 +247,42 @@ function generateTerminalHTML(lines, cursorVisible = true) {
 </html>`;
 }
 
+async function generateAudio() {
+  console.log('🎙️ Generando audio con ElevenLabs...');
+
+  // Usar voz masculina "George" (narrador cálido) con modelo multilingüe para español natural
+  const response = await fetch('https://api.elevenlabs.io/v1/text-to-speech/JBFqnCBsd6RMkjVDRZzb', {
+    method: 'POST',
+    headers: {
+      'Accept': 'audio/mpeg',
+      'Content-Type': 'application/json',
+      'xi-api-key': ELEVENLABS_API_KEY
+    },
+    body: JSON.stringify({
+      text: NARRATION_SCRIPT,
+      model_id: 'eleven_multilingual_v2',
+      voice_settings: {
+        stability: 0.5,
+        similarity_boost: 0.75,
+        style: 0.4,
+        use_speaker_boost: true
+      }
+    })
+  });
+
+  if (!response.ok) {
+    throw new Error(`ElevenLabs API error: ${response.status}`);
+  }
+
+  const audioBuffer = await response.arrayBuffer();
+  const audioPath = path.join(OUTPUT_DIR, 'terminal-narration.mp3');
+  fs.writeFileSync(audioPath, Buffer.from(audioBuffer));
+  console.log('   ✓ Audio generado');
+  return audioPath;
+}
+
 async function generateFrames() {
-  console.log('🎬 Generando frames del terminal con animación...');
+  console.log('🎬 Generando frames...');
 
   if (!fs.existsSync(FRAMES_DIR)) fs.mkdirSync(FRAMES_DIR, { recursive: true });
   if (!fs.existsSync(OUTPUT_DIR)) fs.mkdirSync(OUTPUT_DIR, { recursive: true });
@@ -208,120 +295,131 @@ async function generateFrames() {
   await page.setViewportSize({ width: 1280, height: 720 });
 
   let frameIndex = 0;
-  let lines = [{ type: 'prompt', text: '', cursor: true }];
 
-  async function captureFrame() {
-    const html = generateTerminalHTML(lines);
+  async function captureFrame(html) {
     await page.setContent(html);
-    await page.waitForTimeout(16);
+    await page.waitForTimeout(20);
     const framePath = path.join(FRAMES_DIR, `frame_${String(frameIndex).padStart(5, '0')}.png`);
     await page.screenshot({ path: framePath });
     frameIndex++;
   }
 
-  async function captureFrames(count) {
+  async function captureFrames(html, seconds) {
+    const count = Math.floor(seconds * FPS);
     for (let i = 0; i < count; i++) {
-      await captureFrame();
+      await captureFrame(html);
     }
   }
+
+  // === SECCIÓN 1: Instrucciones de OS ===
+  console.log('   1/4 Instrucciones macOS...');
+  const macHTML = generateOSInstructionHTML('mac', [
+    'Pulsa <span class="key">⌘ Cmd</span> + <span class="key">Espacio</span>',
+    'Escribe <span class="key">Terminal</span>',
+    'Pulsa <span class="key">Enter</span>'
+  ], 'También: Aplicaciones → Utilidades → Terminal', '🍎');
+  await captureFrames(macHTML, 5);
+
+  console.log('   2/4 Instrucciones Windows...');
+  const windowsHTML = generateOSInstructionHTML('windows', [
+    'Pulsa <span class="key">⊞ Win</span> + <span class="key">R</span>',
+    'Escribe <span class="key">cmd</span> o <span class="key">powershell</span>',
+    'Pulsa <span class="key">Enter</span>'
+  ], 'Alternativa: Click derecho en menú inicio → Terminal', '🪟');
+  await captureFrames(windowsHTML, 5);
+
+  console.log('   3/4 Instrucciones Linux...');
+  const linuxHTML = generateOSInstructionHTML('linux', [
+    'Pulsa <span class="key">Ctrl</span> + <span class="key">Alt</span> + <span class="key">T</span>',
+    '¡Listo! Funciona en Ubuntu, Debian y la mayoría de distros'
+  ], null, '🐧');
+  await captureFrames(linuxHTML, 4);
+
+  // === SECCIÓN 2: Terminal con comandos ===
+  console.log('   4/4 Animación terminal...');
+
+  let lines = [{ type: 'prompt', text: '', cursor: true }];
 
   async function typeText(text) {
     const currentLine = lines[lines.length - 1];
     for (let i = 0; i < text.length; i++) {
       currentLine.text = text.substring(0, i + 1);
-      // Capturar 2-3 frames por carácter para que se vea fluido
-      await captureFrames(Math.floor(TYPING_SPEED / (1000 / FPS)));
+      await captureFrame(generateTerminalHTML(lines));
+      await captureFrame(generateTerminalHTML(lines)); // 2 frames por caracter
     }
   }
 
-  console.log('   Generando animación...');
+  // Espera inicial
+  await captureFrames(generateTerminalHTML(lines), 2);
 
-  // Inicio - espera con cursor parpadeante
-  await captureFrames(FPS * 2); // 2 segundos
-
-  // Comando 1: node --version
+  // node --version
   await typeText('node --version');
-  await captureFrames(FPS * 0.5); // pausa después de escribir
-
-  // Quitar cursor de la línea actual y añadir output
+  await captureFrames(generateTerminalHTML(lines), 0.5);
   lines[lines.length - 1].cursor = false;
   lines.push({ type: 'output', text: 'v20.11.0' });
   lines.push({ type: 'prompt', text: '', cursor: true });
-  await captureFrames(FPS * 3); // 3 segundos para ver el resultado
+  await captureFrames(generateTerminalHTML(lines), 3);
 
-  // Comando 2: npm --version
+  // npm --version
   await typeText('npm --version');
-  await captureFrames(FPS * 0.5);
-
+  await captureFrames(generateTerminalHTML(lines), 0.5);
   lines[lines.length - 1].cursor = false;
   lines.push({ type: 'output', text: '10.2.4' });
   lines.push({ type: 'prompt', text: '', cursor: true });
-  await captureFrames(FPS * 3);
+  await captureFrames(generateTerminalHTML(lines), 3);
 
-  // Comando 3: claude
+  // claude
   await typeText('claude');
-  await captureFrames(FPS * 0.5);
-
+  await captureFrames(generateTerminalHTML(lines), 0.5);
   lines[lines.length - 1].cursor = false;
-  lines.push({ type: 'claude', text: '╭─────────────────────────────────────────────╮' });
-  await captureFrames(FPS * 0.3);
-  lines.push({ type: 'claude', text: '│                                             │' });
-  await captureFrames(FPS * 0.2);
-  lines.push({ type: 'claude', text: '│   ✨ Welcome to Claude Code! v1.0.0        │' });
-  await captureFrames(FPS * 0.2);
-  lines.push({ type: 'claude', text: '│                                             │' });
-  await captureFrames(FPS * 0.2);
-  lines.push({ type: 'claude', text: '│   Tu asistente de programación con IA      │' });
-  await captureFrames(FPS * 0.2);
-  lines.push({ type: 'claude', text: '│                                             │' });
-  await captureFrames(FPS * 0.2);
-  lines.push({ type: 'claude', text: '╰─────────────────────────────────────────────╯' });
-  await captureFrames(FPS * 0.3);
+
+  // Claude welcome animation
+  const claudeLines = [
+    '╭─────────────────────────────────────────────╮',
+    '│                                             │',
+    '│   ✨ Welcome to Claude Code! v1.0.0        │',
+    '│                                             │',
+    '│   Tu asistente de programación con IA      │',
+    '│                                             │',
+    '╰─────────────────────────────────────────────╯'
+  ];
+
+  for (const claudeLine of claudeLines) {
+    lines.push({ type: 'claude', text: claudeLine });
+    await captureFrames(generateTerminalHTML(lines), 0.2);
+  }
 
   lines.push({ type: 'prompt', text: '', cursor: true });
-  await captureFrames(FPS * 5); // 5 segundos finales
+  await captureFrames(generateTerminalHTML(lines), 4);
 
   await browser.close();
-  console.log(`   ✓ Total: ${frameIndex} frames generados`);
+  console.log(`   ✓ Total: ${frameIndex} frames`);
   return frameIndex;
 }
 
 async function createVideo(audioPath) {
-  console.log('🎥 Creando video con ffmpeg...');
-
+  console.log('🎥 Creando video...');
   const videoPath = path.join(OUTPUT_DIR, 'terminal-tutorial.mp4');
-
-  // Crear video de alta calidad
   const cmd = `ffmpeg -y -framerate ${FPS} -i "${FRAMES_DIR}/frame_%05d.png" -i "${audioPath}" -c:v libx264 -preset slow -crf 18 -pix_fmt yuv420p -c:a aac -b:a 192k -shortest -movflags +faststart "${videoPath}"`;
-
-  try {
-    execSync(cmd, { stdio: 'pipe' });
-    console.log('   ✓ Video creado: terminal-tutorial.mp4');
-    return videoPath;
-  } catch (error) {
-    console.error('Error creando video:', error.message);
-    throw error;
-  }
+  execSync(cmd, { stdio: 'pipe' });
+  console.log('   ✓ Video creado');
+  return videoPath;
 }
 
 async function cleanup() {
   if (fs.existsSync(FRAMES_DIR)) {
     fs.rmSync(FRAMES_DIR, { recursive: true, force: true });
-    console.log('🧹 Frames temporales eliminados');
   }
 }
 
 async function main() {
-  console.log('🎬 Creando video tutorial del terminal (versión mejorada)\n');
-
+  console.log('🎬 Creando video tutorial completo\n');
   try {
     const audioPath = await generateAudio();
     await generateFrames();
     await createVideo(audioPath);
     await cleanup();
-
-    console.log('\n✅ Video tutorial creado exitosamente!');
-    console.log(`📁 Ubicación: ${path.join(OUTPUT_DIR, 'terminal-tutorial.mp4')}`);
+    console.log('\n✅ Video creado: public/videos/terminal-tutorial.mp4');
   } catch (error) {
     console.error('\n❌ Error:', error.message);
     await cleanup();
