@@ -185,6 +185,22 @@ function PrecursoContent() {
   const { completed, completedCount, totalCount, progress } = usePrecursoProgress()
   const { theme, toggleTheme } = useTheme()
   const t = themes[theme]
+  const [userEmail, setUserEmail] = useState<string>('')
+
+  useEffect(() => {
+    const savedAccess = localStorage.getItem('precurso-access')
+    if (savedAccess) {
+      try {
+        const data = JSON.parse(savedAccess)
+        if (data.email) setUserEmail(data.email)
+      } catch { /* ignore */ }
+    }
+  }, [])
+
+  const handleLogout = () => {
+    localStorage.removeItem('precurso-access')
+    window.location.reload()
+  }
 
   const introCompleted = completed['intro-completo']
   const glosarioCompleted = completed['glosario-completo']
@@ -278,6 +294,39 @@ function PrecursoContent() {
           >
             {theme === 'light' ? '🌙' : '☀️'}
           </button>
+
+          {/* User email + Logout */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            {userEmail && (
+              <span style={{
+                fontSize: '13px',
+                color: t.textMuted,
+                maxWidth: '150px',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap'
+              }}>
+                {userEmail}
+              </span>
+            )}
+            <button
+              onClick={handleLogout}
+              style={{
+                padding: '8px 14px',
+                fontSize: '13px',
+                fontWeight: 500,
+                color: t.textSecondary,
+                background: 'transparent',
+                border: `1px solid ${t.border}`,
+                borderRadius: '8px',
+                cursor: 'pointer',
+                transition: 'all 0.2s'
+              }}
+              title="Cerrar sesión"
+            >
+              Salir
+            </button>
+          </div>
         </div>
       </header>
 
