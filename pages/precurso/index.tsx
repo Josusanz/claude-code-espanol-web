@@ -26,25 +26,109 @@ export const PRECURSO_PAGES = [
   { href: '/precurso/primer-proyecto', title: 'Tu primer proyecto', emoji: '🚀', tiempo: '10 min' },
 ]
 
+// Helper para obtener el email del usuario desde localStorage
+function getUserEmail(): string | null {
+  if (typeof window === 'undefined') return null
+  try {
+    const savedAccess = localStorage.getItem('precurso-access')
+    if (savedAccess) {
+      const data = JSON.parse(savedAccess)
+      return data.email || null
+    }
+  } catch {
+    // Ignore
+  }
+  return null
+}
+
+// Helper para sincronizar progreso con el servidor
+async function syncProgressToServer(email: string, progress: Record<string, boolean>) {
+  try {
+    await fetch('/api/precurso/sync-progress', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, progress })
+    })
+  } catch (error) {
+    console.error('[Precurso] Error syncing progress:', error)
+  }
+}
+
+// Helper para cargar progreso del servidor
+async function loadProgressFromServer(email: string): Promise<Record<string, boolean> | null> {
+  try {
+    const res = await fetch(`/api/precurso/sync-progress?email=${encodeURIComponent(email)}`)
+    if (res.ok) {
+      const data = await res.json()
+      return data.progress || null
+    }
+  } catch (error) {
+    console.error('[Precurso] Error loading progress:', error)
+  }
+  return null
+}
+
 export function usePrecursoProgress() {
   const [completed, setCompleted] = useState<Record<string, boolean>>({})
+  const [initialized, setInitialized] = useState(false)
+  const [userEmail, setUserEmail] = useState<string | null>(null)
 
+  // Cargar progreso (localStorage primero, luego servidor)
   useEffect(() => {
-    const saved = localStorage.getItem('precurso-progress')
-    if (saved) setCompleted(JSON.parse(saved))
+    const email = getUserEmail()
+    setUserEmail(email)
+
+    const loadProgress = async () => {
+      // Primero cargar de localStorage para mostrar algo rápido
+      const saved = localStorage.getItem('precurso-progress')
+      if (saved) {
+        setCompleted(JSON.parse(saved))
+      }
+
+      // Si hay email, intentar cargar del servidor y hacer merge
+      if (email) {
+        const serverProgress = await loadProgressFromServer(email)
+        if (serverProgress) {
+          const localProgress = saved ? JSON.parse(saved) : {}
+          // Merge: tomar el valor true de cualquiera de los dos
+          const merged: Record<string, boolean> = {}
+          const allKeys = new Set([...Object.keys(localProgress), ...Object.keys(serverProgress)])
+          allKeys.forEach(key => {
+            merged[key] = localProgress[key] || serverProgress[key] || false
+          })
+
+          setCompleted(merged)
+          localStorage.setItem('precurso-progress', JSON.stringify(merged))
+
+          // Si hay diferencias, sincronizar el merge de vuelta al servidor
+          if (JSON.stringify(merged) !== JSON.stringify(serverProgress)) {
+            syncProgressToServer(email, merged)
+          }
+        }
+      }
+
+      setInitialized(true)
+    }
+
+    loadProgress()
   }, [])
 
   const toggle = (id: string) => {
     const newCompleted = { ...completed, [id]: !completed[id] }
     setCompleted(newCompleted)
     localStorage.setItem('precurso-progress', JSON.stringify(newCompleted))
+
+    // Sincronizar con el servidor si hay email
+    if (userEmail) {
+      syncProgressToServer(userEmail, newCompleted)
+    }
   }
 
   const completedCount = Object.values(completed).filter(Boolean).length
   const totalCount = Object.keys(PRECURSO_SECTIONS).length
   const progress = totalCount > 0 ? (completedCount / totalCount) * 100 : 0
 
-  return { completed, toggle, completedCount, totalCount, progress }
+  return { completed, toggle, completedCount, totalCount, progress, initialized }
 }
 
 export function useTheme() {

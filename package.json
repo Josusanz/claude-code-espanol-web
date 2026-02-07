@@ -31,6 +31,7 @@
     "@vercel/analytics": "^1.6.1",
     "@vercel/kv": "^3.0.0",
     "@vercel/og": "^0.8.6",
+    "cookie": "^1.1.1",
     "gray-matter": "^4.0.3",
     "next": "^14",
     "next-mdx-remote": "^5.0.0",
@@ -41,6 +42,7 @@
     "resend": "^6.7.0"
   },
   "devDependencies": {
+    "@types/cookie": "^0.6.0",
     "@types/node": "25.0.8",
     "@vercel/node": "^5.5.19",
     "autoprefixer": "^10.4.23",

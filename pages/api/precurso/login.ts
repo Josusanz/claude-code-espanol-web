@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { verifyPrecursoPassword } from '../../../lib/precurso-auth'
+import { isEmailAuthorized, addAuthorizedEmail } from '../../../lib/precurso-kv'
 
 export default async function handler(
   req: NextApiRequest,
@@ -35,7 +36,7 @@ export default async function handler(
     })
   }
 
-  // Verificar contraseña
+  // Verificar contraseña primero
   if (!verifyPrecursoPassword(password)) {
     return res.status(401).json({
       success: false,
@@ -43,11 +44,33 @@ export default async function handler(
     })
   }
 
-  // Éxito - guardar email para analytics (opcional: enviar a un servicio)
-  console.log(`[Precurso Login] ${email} accedió al precurso`)
+  const normalizedEmail = email.toLowerCase().trim()
+
+  // Verificar que el email esté autorizado
+  try {
+    const authorized = await isEmailAuthorized(normalizedEmail)
+    if (!authorized) {
+      return res.status(403).json({
+        success: false,
+        error: 'Tu email no está autorizado para este curso. Contacta al instructor.'
+      })
+    }
+  } catch (error) {
+    // Si hay error de conexión a KV, permitir acceso (fallback graceful)
+    // y añadir el email para tracking
+    console.error('[Precurso Login] Error checking email authorization:', error)
+    try {
+      await addAuthorizedEmail(normalizedEmail)
+    } catch {
+      // Ignorar error de añadir
+    }
+  }
+
+  // Éxito
+  console.log(`[Precurso Login] ${normalizedEmail} accedió al precurso`)
 
   return res.status(200).json({
     success: true,
-    email: email.toLowerCase()
+    email: normalizedEmail
   })
 }
