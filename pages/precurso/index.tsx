@@ -65,6 +65,8 @@ const themes = {
     accentLight: '#eef2ff',
     success: '#22c55e',
     successLight: '#f0fdf4',
+    warning: '#f59e0b',
+    warningLight: '#fffbeb',
   },
   dark: {
     bg: '#0f172a',
@@ -78,6 +80,8 @@ const themes = {
     accentLight: 'rgba(129, 140, 248, 0.1)',
     success: '#4ade80',
     successLight: 'rgba(74, 222, 128, 0.1)',
+    warning: '#fbbf24',
+    warningLight: 'rgba(251, 191, 36, 0.1)',
   }
 }
 
