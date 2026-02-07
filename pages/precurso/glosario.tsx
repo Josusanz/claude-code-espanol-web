@@ -32,6 +32,203 @@ const themes = {
   }
 }
 
+// Diagrama visual Frontend vs Backend
+const FrontendBackendDiagram = ({ t }: { t: typeof themes.light }) => (
+  <div style={{
+    background: t.bgTertiary,
+    borderRadius: '12px',
+    padding: '24px',
+    marginBottom: '24px',
+    display: 'flex',
+    gap: '20px',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexWrap: 'wrap'
+  }}>
+    {/* Usuario */}
+    <div style={{ textAlign: 'center' }}>
+      <div style={{ fontSize: '40px', marginBottom: '8px' }}>👤</div>
+      <div style={{ fontSize: '12px', fontWeight: 600, color: t.textSecondary }}>Usuario</div>
+    </div>
+
+    {/* Flecha */}
+    <div style={{ fontSize: '24px', color: t.textMuted }}>→</div>
+
+    {/* Frontend */}
+    <div style={{
+      background: '#6366f1',
+      color: 'white',
+      padding: '16px 24px',
+      borderRadius: '12px',
+      textAlign: 'center',
+      minWidth: '120px'
+    }}>
+      <div style={{ fontSize: '24px', marginBottom: '4px' }}>🖥️</div>
+      <div style={{ fontWeight: 700, fontSize: '14px' }}>FRONTEND</div>
+      <div style={{ fontSize: '11px', opacity: 0.8, marginTop: '4px' }}>Lo que ves</div>
+    </div>
+
+    {/* Flecha doble */}
+    <div style={{ fontSize: '24px', color: t.textMuted }}>⇄</div>
+
+    {/* Backend */}
+    <div style={{
+      background: '#22c55e',
+      color: 'white',
+      padding: '16px 24px',
+      borderRadius: '12px',
+      textAlign: 'center',
+      minWidth: '120px'
+    }}>
+      <div style={{ fontSize: '24px', marginBottom: '4px' }}>⚙️</div>
+      <div style={{ fontWeight: 700, fontSize: '14px' }}>BACKEND</div>
+      <div style={{ fontSize: '11px', opacity: 0.8, marginTop: '4px' }}>Lo que procesa</div>
+    </div>
+
+    {/* Flecha */}
+    <div style={{ fontSize: '24px', color: t.textMuted }}>→</div>
+
+    {/* Base de datos */}
+    <div style={{
+      background: t.bg,
+      border: `2px solid ${t.border}`,
+      padding: '16px 24px',
+      borderRadius: '12px',
+      textAlign: 'center',
+      minWidth: '120px'
+    }}>
+      <div style={{ fontSize: '24px', marginBottom: '4px' }}>🗄️</div>
+      <div style={{ fontWeight: 700, fontSize: '14px', color: t.text }}>BASE DE DATOS</div>
+      <div style={{ fontSize: '11px', color: t.textMuted, marginTop: '4px' }}>Donde se guarda</div>
+    </div>
+  </div>
+)
+
+// Diagrama Git Flow
+const GitFlowDiagram = ({ t }: { t: typeof themes.light }) => (
+  <div style={{
+    background: t.bgTertiary,
+    borderRadius: '12px',
+    padding: '24px',
+    marginBottom: '24px'
+  }}>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
+      <span style={{ fontSize: '20px' }}>📁</span>
+      <span style={{ fontWeight: 600, color: t.text }}>Tu código local</span>
+    </div>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
+      <div style={{
+        background: t.bg,
+        border: `2px solid ${t.border}`,
+        padding: '12px 16px',
+        borderRadius: '8px',
+        fontSize: '13px',
+        fontWeight: 500
+      }}>
+        1. Editas código
+      </div>
+      <span style={{ color: t.textMuted }}>→</span>
+      <div style={{
+        background: '#f59e0b',
+        color: 'white',
+        padding: '12px 16px',
+        borderRadius: '8px',
+        fontSize: '13px',
+        fontWeight: 600
+      }}>
+        2. git add
+      </div>
+      <span style={{ color: t.textMuted }}>→</span>
+      <div style={{
+        background: '#6366f1',
+        color: 'white',
+        padding: '12px 16px',
+        borderRadius: '8px',
+        fontSize: '13px',
+        fontWeight: 600
+      }}>
+        3. git commit
+      </div>
+      <span style={{ color: t.textMuted }}>→</span>
+      <div style={{
+        background: '#22c55e',
+        color: 'white',
+        padding: '12px 16px',
+        borderRadius: '8px',
+        fontSize: '13px',
+        fontWeight: 600
+      }}>
+        4. git push
+      </div>
+      <span style={{ color: t.textMuted }}>→</span>
+      <div style={{
+        background: '#24292f',
+        color: 'white',
+        padding: '12px 16px',
+        borderRadius: '8px',
+        fontSize: '13px',
+        fontWeight: 600,
+        display: 'flex',
+        alignItems: 'center',
+        gap: '6px'
+      }}>
+        <span>GitHub</span>
+        <span style={{ fontSize: '16px' }}>☁️</span>
+      </div>
+    </div>
+  </div>
+)
+
+// Diagrama Deploy
+const DeployDiagram = ({ t }: { t: typeof themes.light }) => (
+  <div style={{
+    background: t.bgTertiary,
+    borderRadius: '12px',
+    padding: '24px',
+    marginBottom: '24px'
+  }}>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px', flexWrap: 'wrap' }}>
+      <div style={{
+        background: t.bg,
+        border: `2px solid ${t.border}`,
+        padding: '16px 20px',
+        borderRadius: '10px',
+        textAlign: 'center'
+      }}>
+        <div style={{ fontSize: '28px', marginBottom: '4px' }}>💻</div>
+        <div style={{ fontSize: '12px', fontWeight: 600, color: t.text }}>localhost:3000</div>
+        <div style={{ fontSize: '11px', color: t.textMuted }}>Solo tú lo ves</div>
+      </div>
+
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' }}>
+        <div style={{
+          background: '#22c55e',
+          color: 'white',
+          padding: '8px 16px',
+          borderRadius: '6px',
+          fontWeight: 600,
+          fontSize: '13px'
+        }}>
+          DEPLOY
+        </div>
+        <span style={{ fontSize: '20px' }}>→</span>
+      </div>
+
+      <div style={{
+        background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+        padding: '16px 20px',
+        borderRadius: '10px',
+        textAlign: 'center',
+        color: 'white'
+      }}>
+        <div style={{ fontSize: '28px', marginBottom: '4px' }}>🌍</div>
+        <div style={{ fontSize: '12px', fontWeight: 600 }}>tu-app.vercel.app</div>
+        <div style={{ fontSize: '11px', opacity: 0.8 }}>Todo el mundo</div>
+      </div>
+    </div>
+  </div>
+)
+
 const SECCIONES = [
   {
     id: 'lo-basico',
@@ -501,6 +698,11 @@ function GlosarioContent() {
                 {seccion.descripcion}
               </p>
             </div>
+
+            {/* Diagrama visual para secciones específicas */}
+            {seccion.id === 'arquitectura-web' && <FrontendBackendDiagram t={t} />}
+            {seccion.id === 'git-versiones' && <GitFlowDiagram t={t} />}
+            {seccion.id === 'deploy-produccion' && <DeployDiagram t={t} />}
 
             {/* Términos */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
