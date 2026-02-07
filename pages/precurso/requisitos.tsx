@@ -195,7 +195,7 @@ const TerminalSection = ({ t, theme }: { t: typeof themes.light, theme: 'light' 
         </ol>
       </div>
 
-      {/* Video tutorial */}
+      {/* Video 1: Cómo abrir el terminal */}
       <div style={{
         marginTop: '20px',
         borderRadius: '12px',
@@ -212,7 +212,7 @@ const TerminalSection = ({ t, theme }: { t: typeof themes.light, theme: 'light' 
         }}>
           <span style={{ fontSize: '16px' }}>🎬</span>
           <span style={{ fontSize: '14px', fontWeight: 500, color: t.text }}>
-            Video tutorial: Cómo verificar la instalación
+            Video 1: Cómo abrir el terminal
           </span>
         </div>
         <video
@@ -222,9 +222,8 @@ const TerminalSection = ({ t, theme }: { t: typeof themes.light, theme: 'light' 
             display: 'block',
             background: '#1a1a2e'
           }}
-          poster="/images/precurso/terminal.png"
         >
-          <source src="/videos/terminal-tutorial.mp4" type="video/mp4" />
+          <source src="/videos/abrir-terminal.mp4" type="video/mp4" />
           Tu navegador no soporta videos HTML5.
         </video>
         <div style={{
@@ -233,7 +232,48 @@ const TerminalSection = ({ t, theme }: { t: typeof themes.light, theme: 'light' 
           fontSize: '13px',
           color: t.textMuted
         }}>
-          🔊 Este video incluye narración en español
+          🔊 Narración en español (43 seg)
+        </div>
+      </div>
+
+      {/* Video 2: Cómo instalar las herramientas */}
+      <div style={{
+        marginTop: '16px',
+        borderRadius: '12px',
+        overflow: 'hidden',
+        border: `1px solid ${t.border}`
+      }}>
+        <div style={{
+          background: theme === 'dark' ? '#1a1a2e' : '#f1f5f9',
+          padding: '12px 16px',
+          borderBottom: `1px solid ${t.border}`,
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px'
+        }}>
+          <span style={{ fontSize: '16px' }}>🎬</span>
+          <span style={{ fontSize: '14px', fontWeight: 500, color: t.text }}>
+            Video 2: Cómo instalar Node.js y Claude Code
+          </span>
+        </div>
+        <video
+          controls
+          style={{
+            width: '100%',
+            display: 'block',
+            background: '#1a1a2e'
+          }}
+        >
+          <source src="/videos/instalar-herramientas.mp4" type="video/mp4" />
+          Tu navegador no soporta videos HTML5.
+        </video>
+        <div style={{
+          padding: '12px 16px',
+          background: t.bg,
+          fontSize: '13px',
+          color: t.textMuted
+        }}>
+          🔊 Narración en español (72 seg)
         </div>
       </div>
     </div>

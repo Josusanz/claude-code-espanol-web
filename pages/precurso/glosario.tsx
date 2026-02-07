@@ -710,6 +710,56 @@ function GlosarioContent() {
           </p>
         </div>
 
+        {/* Video tutorial */}
+        <div style={{
+          marginBottom: '48px',
+          borderRadius: '16px',
+          overflow: 'hidden',
+          border: `1px solid ${t.border}`,
+          background: t.bgSecondary
+        }}>
+          <div style={{
+            padding: '16px 20px',
+            borderBottom: `1px solid ${t.border}`,
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px'
+          }}>
+            <span style={{ fontSize: '24px' }}>🎬</span>
+            <div>
+              <div style={{ fontSize: '16px', fontWeight: 600, color: t.text }}>
+                Video resumen del glosario
+              </div>
+              <div style={{ fontSize: '13px', color: t.textSecondary }}>
+                Si prefieres ver en vez de leer (2 min)
+              </div>
+            </div>
+          </div>
+          <video
+            controls
+            style={{
+              width: '100%',
+              display: 'block',
+              background: '#1a1a2e'
+            }}
+          >
+            <source src="/videos/glosario.mp4" type="video/mp4" />
+            Tu navegador no soporta videos HTML5.
+          </video>
+          <div style={{
+            padding: '12px 20px',
+            background: t.bgTertiary,
+            fontSize: '13px',
+            color: t.textMuted,
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px'
+          }}>
+            <span>🔊</span>
+            <span>Este video incluye narración en español</span>
+          </div>
+        </div>
+
         {/* Índice rápido */}
         <div style={{
           background: t.bgSecondary,
