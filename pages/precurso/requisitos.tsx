@@ -301,17 +301,21 @@ const REQUISITOS = [
   {
     id: 'req-claude',
     anchorId: 'requisitos-claude',
-    title: 'Claude Code',
-    description: 'La herramienta de IA que usarás.',
+    title: 'Claude Code + Suscripción',
+    description: 'La herramienta de IA que usarás para programar.',
     Logo: ClaudeLogo,
     color: '#D97706',
+    isPaid: true,
+    price: '$20/mes',
     steps: [
+      { text: 'Suscríbete a Claude Pro o Max', url: 'https://claude.ai/upgrade' },
       { text: 'Abre la terminal' },
       { text: 'Ejecuta: npm install -g @anthropic-ai/claude-code' },
       { text: 'Ejecuta: claude' },
-      { text: 'Sigue las instrucciones para conectar tu cuenta' }
+      { text: 'Inicia sesión con tu cuenta de Anthropic' }
     ],
-    verify: 'Al escribir "claude" en la terminal, se abre Claude Code.'
+    verify: 'Al escribir "claude" en la terminal, se abre Claude Code.',
+    note: 'Claude Code requiere una suscripción activa de Claude Pro ($20/mes) o Claude Max ($100/mes). Sin suscripción, no podrás usar la herramienta.'
   }
 ]
 
@@ -550,7 +554,7 @@ function RequisitosContent() {
                         {isStepCompleted ? '✓' : <req.Logo color={theme === 'dark' ? '#fff' : undefined} />}
                       </div>
                       <div>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
                           <span style={{
                             fontSize: '12px',
                             fontWeight: 600,
@@ -561,6 +565,18 @@ function RequisitosContent() {
                           }}>
                             {isStepCompleted ? '✓ Hecho' : `Paso ${index + 1}`}
                           </span>
+                          {req.isPaid && (
+                            <span style={{
+                              fontSize: '12px',
+                              fontWeight: 600,
+                              color: '#dc2626',
+                              background: '#fef2f2',
+                              padding: '2px 8px',
+                              borderRadius: '4px'
+                            }}>
+                              💳 PAGO REQUERIDO: {req.price}
+                            </span>
+                          )}
                           <h3 style={{ fontSize: '18px', fontWeight: 600, color: t.text, margin: 0 }}>
                             {req.title}
                           </h3>
@@ -612,6 +628,24 @@ function RequisitosContent() {
                       <span style={{ fontSize: '16px' }}>✅</span>
                       <span><strong style={{ color: t.text }}>Verificar:</strong> {req.verify}</span>
                     </div>
+
+                    {req.note && (
+                      <div style={{
+                        padding: '14px 18px',
+                        background: '#fef2f2',
+                        border: '1px solid #fecaca',
+                        borderRadius: '10px',
+                        fontSize: '14px',
+                        color: '#991b1b',
+                        display: 'flex',
+                        alignItems: 'flex-start',
+                        gap: '10px',
+                        marginBottom: '16px'
+                      }}>
+                        <span style={{ fontSize: '16px' }}>⚠️</span>
+                        <span>{req.note}</span>
+                      </div>
+                    )}
 
                     {/* Individual completion button */}
                     <button
