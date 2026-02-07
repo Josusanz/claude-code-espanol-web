@@ -74,14 +74,14 @@ const Screenshot = ({
   </div>
 )
 
-// Screenshots de QualifyForm para ilustrar conceptos
+// Screenshots para ilustrar conceptos
 const SCREENSHOTS = {
   frontend: '/images/precurso/qualifyform-frontend.png',
-  dashboard: '/images/precurso/qualifyform-dashboard.png',
-  formBuilder: '/images/precurso/qualifyform-builder.png',
-  terminal: '/images/precurso/terminal-example.png',
+  terminal: '/images/precurso/terminal.png',
   vscode: '/images/precurso/vscode-example.png',
   github: '/images/precurso/github-repo.png',
+  vercel: '/images/precurso/vercel-deploy.png',
+  nodejs: '/images/precurso/nodejs-example.png',
 }
 
 // Diagrama visual Frontend vs Backend
@@ -342,9 +342,7 @@ const SECCIONES = [
         termino: 'Backend',
         definicion: 'Lo que pasa "detrás": verificar contraseñas, guardar datos, enviar emails, procesar pagos.',
         ejemplo: 'QualifyForm guarda las respuestas, calcula puntuaciones y dispara pixels. Eso es backend.',
-        analogia: 'La trastienda: donde se hace el trabajo que el cliente no ve.',
-        screenshot: '/images/precurso/qualifyform-dashboard.png',
-        screenshotCaption: 'Dashboard de QualifyForm: datos procesados por el backend'
+        analogia: 'La trastienda: donde se hace el trabajo que el cliente no ve.'
       },
       {
         termino: 'Full Stack',
@@ -356,9 +354,7 @@ const SECCIONES = [
         termino: 'API',
         definicion: 'El "contrato" entre frontend y backend. Define qué datos puedes pedir y cómo.',
         ejemplo: 'QualifyForm tiene API para webhooks: cuando alguien responde, envía los datos a tu CRM.',
-        analogia: 'El menú de un restaurante: lista qué puedes pedir y cómo.',
-        screenshot: '/images/precurso/qualifyform-webhooks.png',
-        screenshotCaption: 'Configuración de webhooks en QualifyForm'
+        analogia: 'El menú de un restaurante: lista qué puedes pedir y cómo.'
       },
       {
         termino: 'Endpoint',
@@ -370,9 +366,7 @@ const SECCIONES = [
         termino: 'Base de datos',
         definicion: 'Donde se guardan los datos de forma permanente. Usuarios, productos, mensajes, todo.',
         ejemplo: 'QualifyForm guarda cada respuesta, puntuación y evento de pixel en su base de datos.',
-        analogia: 'Un archivador gigante organizado donde guardas toda la información.',
-        screenshot: '/images/precurso/qualifyform-responses.png',
-        screenshotCaption: 'Respuestas guardadas en la base de datos de QualifyForm'
+        analogia: 'Un archivador gigante organizado donde guardas toda la información.'
       },
       {
         termino: 'Servidor',
@@ -428,9 +422,7 @@ const SECCIONES = [
         termino: 'Componente',
         definicion: 'Una pieza reutilizable de la interfaz: un botón, un formulario, una tarjeta.',
         ejemplo: 'En QualifyForm: el selector de pregunta, el botón de continuar, la barra de progreso.',
-        analogia: 'Como las piezas de LEGO: las combinas para crear cosas más grandes.',
-        screenshot: '/images/precurso/qualifyform-builder.png',
-        screenshotCaption: 'Componentes en el builder de QualifyForm: cada tipo de pregunta es un componente'
+        analogia: 'Como las piezas de LEGO: las combinas para crear cosas más grandes.'
       },
       {
         termino: 'Variable',
