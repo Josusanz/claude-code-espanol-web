@@ -3,104 +3,94 @@ import Link from 'next/link'
 import PrecursoEmailGate from '../../components/PrecursoEmailGate'
 import { useState, useEffect } from 'react'
 
-// Checklist items
-const CHECKLIST_ITEMS = [
-  { id: 'modulo1', label: 'Módulo 1: Qué es programar', type: 'module' },
-  { id: 'modulo2', label: 'Módulo 2: Frontend vs Backend', type: 'module' },
-  { id: 'modulo3', label: 'Módulo 3: VS Code instalado', type: 'module' },
-  { id: 'modulo4', label: 'Módulo 4: Terminal básico', type: 'module' },
-  { id: 'modulo5', label: 'Módulo 5: Node.js instalado', type: 'module' },
-  { id: 'modulo6', label: 'Módulo 6: Git y GitHub', type: 'module' },
-  { id: 'divider1', label: '', type: 'divider' },
-  { id: 'vscode', label: 'VS Code funcionando', type: 'check' },
-  { id: 'nodejs', label: 'node -v funciona', type: 'check' },
-  { id: 'git', label: 'git --version funciona', type: 'check' },
-  { id: 'github', label: 'Cuenta GitHub creada', type: 'check' },
-  { id: 'supabase', label: 'Cuenta Supabase creada', type: 'check' },
-  { id: 'vercel', label: 'Cuenta Vercel creada', type: 'check' },
-]
+// Estructura simplificada: solo 2 pasos
+export const PRECURSO_SECTIONS = {
+  'glosario-completo': 'Glosario completado',
+  'requisitos-completo': 'Requisitos completados',
+}
 
-function PrecursoContent() {
-  const [checked, setChecked] = useState<Record<string, boolean>>({})
-  const [sidebarOpen, setSidebarOpen] = useState(false)
+export function usePrecursoProgress() {
+  const [completed, setCompleted] = useState<Record<string, boolean>>({})
 
   useEffect(() => {
-    const saved = localStorage.getItem('precurso-checklist')
-    if (saved) setChecked(JSON.parse(saved))
+    const saved = localStorage.getItem('precurso-progress')
+    if (saved) setCompleted(JSON.parse(saved))
   }, [])
 
   const toggle = (id: string) => {
-    const newChecked = { ...checked, [id]: !checked[id] }
-    setChecked(newChecked)
-    localStorage.setItem('precurso-checklist', JSON.stringify(newChecked))
+    const newCompleted = { ...completed, [id]: !completed[id] }
+    setCompleted(newCompleted)
+    localStorage.setItem('precurso-progress', JSON.stringify(newCompleted))
   }
 
-  const completedCount = CHECKLIST_ITEMS.filter(i => i.type !== 'divider' && checked[i.id]).length
-  const totalCount = CHECKLIST_ITEMS.filter(i => i.type !== 'divider').length
-  const progress = (completedCount / totalCount) * 100
+  const completedCount = Object.values(completed).filter(Boolean).length
+  const totalCount = Object.keys(PRECURSO_SECTIONS).length
+  const progress = totalCount > 0 ? (completedCount / totalCount) * 100 : 0
 
-  const modules = [
-    {
-      number: 1,
-      id: 'modulo1',
-      title: '¿Qué es programar?',
-      desc: 'Explicación súper simple. No vas a programar tú, solo entender la idea.',
-      href: '/precurso/que-es-programar',
-      duration: '15 min',
-      emoji: '🤔'
-    },
-    {
-      number: 2,
-      id: 'modulo2',
-      title: 'Frontend vs Backend',
-      desc: 'La arquitectura web explicada con la analogía del restaurante.',
-      href: '/precurso/frontend-backend',
-      duration: '10 min',
-      emoji: '🏗️'
-    },
-    {
-      number: 3,
-      id: 'modulo3',
-      title: 'Instalar VS Code',
-      desc: 'Tu editor de código. Donde verás lo que hace Claude Code.',
-      href: '/precurso/vscode',
-      duration: '15 min',
-      emoji: '💻'
-    },
-    {
-      number: 4,
-      id: 'modulo4',
-      title: 'Terminal Básico',
-      desc: 'Los 10 comandos que necesitas. Claude ejecutará la mayoría por ti.',
-      href: '/precurso/terminal',
-      duration: '15 min',
-      emoji: '⌨️'
-    },
-    {
-      number: 5,
-      id: 'modulo5',
-      title: 'Instalar Node.js',
-      desc: 'Instalación rápida + verificación. 3 pasos y listo.',
-      href: '/precurso/nodejs',
-      duration: '10 min',
-      emoji: '⬢'
-    },
-    {
-      number: 6,
-      id: 'modulo6',
-      title: 'Git y GitHub',
-      desc: 'Guardar tu código en la nube. Lo esencial para empezar.',
-      href: '/precurso/git-github',
-      duration: '20 min',
-      emoji: '🐙'
-    }
-  ]
+  return { completed, toggle, completedCount, totalCount, progress }
+}
+
+export function useTheme() {
+  const [theme, setTheme] = useState<'light' | 'dark'>('light')
+
+  useEffect(() => {
+    const saved = localStorage.getItem('precurso-theme') as 'light' | 'dark' | null
+    if (saved) setTheme(saved)
+  }, [])
+
+  const toggleTheme = () => {
+    const newTheme = theme === 'light' ? 'dark' : 'light'
+    setTheme(newTheme)
+    localStorage.setItem('precurso-theme', newTheme)
+  }
+
+  return { theme, toggleTheme }
+}
+
+const themes = {
+  light: {
+    bg: '#ffffff',
+    bgSecondary: '#f8fafc',
+    bgTertiary: '#f1f5f9',
+    text: '#1e293b',
+    textSecondary: '#64748b',
+    textMuted: '#94a3b8',
+    border: '#e2e8f0',
+    accent: '#6366f1',
+    accentLight: '#eef2ff',
+    success: '#22c55e',
+    successLight: '#f0fdf4',
+  },
+  dark: {
+    bg: '#0f172a',
+    bgSecondary: '#1e293b',
+    bgTertiary: '#334155',
+    text: '#f1f5f9',
+    textSecondary: '#94a3b8',
+    textMuted: '#64748b',
+    border: '#334155',
+    accent: '#818cf8',
+    accentLight: 'rgba(129, 140, 248, 0.1)',
+    success: '#4ade80',
+    successLight: 'rgba(74, 222, 128, 0.1)',
+  }
+}
+
+function PrecursoContent() {
+  const { completed, completedCount, totalCount, progress } = usePrecursoProgress()
+  const { theme, toggleTheme } = useTheme()
+  const t = themes[theme]
+
+  const glosarioCompleted = completed['glosario-completo']
+  const requisitosCompleted = completed['requisitos-completo']
 
   return (
     <div style={{
       minHeight: '100vh',
-      background: '#f8fafc',
-      fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif"
+      background: t.bg,
+      fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
+      color: t.text,
+      transition: 'background 0.2s, color 0.2s'
     }}>
       <Head>
         <title>Precurso | Crea tu Software con IA</title>
@@ -108,11 +98,11 @@ function PrecursoContent() {
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
       </Head>
 
-      {/* Mobile header */}
+      {/* Header */}
       <header style={{
-        background: 'white',
-        borderBottom: '1px solid #e2e8f0',
-        padding: '12px 16px',
+        background: t.bg,
+        borderBottom: `1px solid ${t.border}`,
+        padding: '16px 32px',
         position: 'sticky',
         top: 0,
         zIndex: 100,
@@ -122,188 +112,200 @@ function PrecursoContent() {
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <div style={{
-            width: '32px',
-            height: '32px',
-            background: 'linear-gradient(135deg, #5e6ad2, #7c3aed)',
-            borderRadius: '8px',
+            width: '36px',
+            height: '36px',
+            background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+            borderRadius: '10px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             color: 'white',
             fontWeight: 700,
-            fontSize: '12px'
-          }}>IA</div>
-          <span style={{ fontWeight: 600, fontSize: '15px', color: '#1a1a2e' }}>Precurso</span>
+            fontSize: '14px'
+          }}>P</div>
+          <span style={{ fontWeight: 600, fontSize: '17px' }}>Precurso</span>
         </div>
 
-        {/* Mobile menu button */}
-        <button
-          onClick={() => setSidebarOpen(!sidebarOpen)}
-          style={{
-            display: 'none',
-            padding: '8px',
-            background: '#f1f5f9',
-            border: 'none',
-            borderRadius: '8px',
-            cursor: 'pointer'
-          }}
-          className="mobile-menu-btn"
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#64748b" strokeWidth="2">
-            <path d="M3 12h18M3 6h18M3 18h18"/>
-          </svg>
-        </button>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+          {/* Progress pill */}
+          <div style={{
+            padding: '8px 16px',
+            background: progress === 100 ? t.successLight : t.bgSecondary,
+            borderRadius: '100px',
+            fontSize: '14px',
+            fontWeight: 500,
+            color: progress === 100 ? t.success : t.textSecondary,
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px'
+          }}>
+            <div style={{
+              width: '8px',
+              height: '8px',
+              borderRadius: '50%',
+              background: progress === 100 ? t.success : t.accent
+            }} />
+            {completedCount}/{totalCount} completado
+          </div>
 
-        {/* Progress badge - desktop */}
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '8px',
-          padding: '6px 12px',
-          background: progress === 100 ? '#dcfce7' : '#f1f5f9',
-          borderRadius: '20px',
-          fontSize: '13px',
-          fontWeight: 500,
-          color: progress === 100 ? '#166534' : '#64748b'
-        }}>
-          {progress === 100 ? '✅' : '📋'} {completedCount}/{totalCount}
+          {/* Theme toggle */}
+          <button
+            onClick={toggleTheme}
+            style={{
+              width: '40px',
+              height: '40px',
+              borderRadius: '10px',
+              border: `1px solid ${t.border}`,
+              background: t.bgSecondary,
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '18px',
+              transition: 'all 0.2s'
+            }}
+            title={theme === 'light' ? 'Cambiar a modo oscuro' : 'Cambiar a modo claro'}
+          >
+            {theme === 'light' ? '🌙' : '☀️'}
+          </button>
         </div>
       </header>
 
-      <div style={{ display: 'flex', minHeight: 'calc(100vh - 57px)' }}>
-        {/* Left Sidebar - Checklist */}
+      <div style={{ display: 'flex', minHeight: 'calc(100vh - 73px)' }}>
+        {/* Sidebar - Solo navegación */}
         <aside style={{
-          width: '280px',
-          background: 'white',
-          borderRight: '1px solid #e2e8f0',
-          padding: '24px 16px',
+          width: '260px',
+          background: t.bgSecondary,
+          borderRight: `1px solid ${t.border}`,
+          padding: '24px 0',
           position: 'sticky',
-          top: '57px',
-          height: 'calc(100vh - 57px)',
+          top: '73px',
+          height: 'calc(100vh - 73px)',
           overflowY: 'auto',
           flexShrink: 0
         }} className="sidebar-desktop">
-          {/* Progress */}
-          <div style={{ marginBottom: '24px' }}>
-            <div style={{
+          <nav>
+            {/* Inicio */}
+            <Link href="/precurso" style={{
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'space-between',
-              marginBottom: '12px'
+              gap: '12px',
+              padding: '12px 20px',
+              color: t.accent,
+              textDecoration: 'none',
+              fontSize: '14px',
+              fontWeight: 600,
+              background: t.accentLight,
+              borderLeft: `3px solid ${t.accent}`,
+              marginLeft: '-1px'
             }}>
-              <span style={{ fontSize: '13px', fontWeight: 600, color: '#1a1a2e' }}>Tu progreso</span>
-              <span style={{
+              <span>🏠</span>
+              Inicio
+            </Link>
+
+            {/* Glosario section */}
+            <div style={{ marginTop: '20px' }}>
+              <Link href="/precurso/glosario" style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px',
+                padding: '8px 20px',
+                color: t.text,
+                textDecoration: 'none',
                 fontSize: '13px',
                 fontWeight: 600,
-                color: progress === 100 ? '#22c55e' : '#5e6ad2'
+                textTransform: 'uppercase',
+                letterSpacing: '0.3px'
               }}>
-                {Math.round(progress)}%
-              </span>
+                <span>📚</span>
+                Glosario
+              </Link>
+              <Link href="/precurso/glosario#glosario-basicos" style={{
+                display: 'block', padding: '8px 20px 8px 48px', color: t.textSecondary,
+                textDecoration: 'none', fontSize: '13px', borderLeft: '3px solid transparent'
+              }}>
+                Conceptos básicos
+              </Link>
+              <Link href="/precurso/glosario#glosario-frontend" style={{
+                display: 'block', padding: '8px 20px 8px 48px', color: t.textSecondary,
+                textDecoration: 'none', fontSize: '13px', borderLeft: '3px solid transparent'
+              }}>
+                Frontend y Backend
+              </Link>
+              <Link href="/precurso/glosario#glosario-git" style={{
+                display: 'block', padding: '8px 20px 8px 48px', color: t.textSecondary,
+                textDecoration: 'none', fontSize: '13px', borderLeft: '3px solid transparent'
+              }}>
+                Git y versiones
+              </Link>
+              <Link href="/precurso/glosario#glosario-deploy" style={{
+                display: 'block', padding: '8px 20px 8px 48px', color: t.textSecondary,
+                textDecoration: 'none', fontSize: '13px', borderLeft: '3px solid transparent'
+              }}>
+                Deploy y producción
+              </Link>
             </div>
-            <div style={{
-              height: '6px',
-              background: '#e2e8f0',
-              borderRadius: '3px',
-              overflow: 'hidden'
-            }}>
-              <div style={{
-                height: '100%',
-                width: `${progress}%`,
-                background: progress === 100
-                  ? 'linear-gradient(90deg, #22c55e, #16a34a)'
-                  : 'linear-gradient(90deg, #5e6ad2, #7c3aed)',
-                borderRadius: '3px',
-                transition: 'width 0.3s ease'
-              }} />
-            </div>
-          </div>
 
-          {/* Checklist */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-            {CHECKLIST_ITEMS.map(item => {
-              if (item.type === 'divider') {
-                return (
-                  <div key={item.id} style={{
-                    height: '1px',
-                    background: '#e2e8f0',
-                    margin: '12px 0'
-                  }} />
-                )
-              }
-
-              const isModule = item.type === 'module'
-              return (
-                <label
-                  key={item.id}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '10px',
-                    padding: '10px 12px',
-                    borderRadius: '8px',
-                    cursor: 'pointer',
-                    background: checked[item.id] ? '#f0fdf4' : 'transparent',
-                    transition: 'all 0.15s ease'
-                  }}
-                >
-                  <input
-                    type="checkbox"
-                    checked={checked[item.id] || false}
-                    onChange={() => toggle(item.id)}
-                    style={{
-                      width: '16px',
-                      height: '16px',
-                      accentColor: '#22c55e',
-                      cursor: 'pointer',
-                      flexShrink: 0
-                    }}
-                  />
-                  <span style={{
-                    fontSize: '13px',
-                    color: checked[item.id] ? '#166534' : '#475569',
-                    textDecoration: checked[item.id] ? 'line-through' : 'none',
-                    fontWeight: isModule ? 500 : 400
-                  }}>
-                    {item.label}
-                  </span>
-                </label>
-              )
-            })}
-          </div>
-
-          {/* Completion message */}
-          {progress === 100 && (
-            <div style={{
-              marginTop: '24px',
-              padding: '16px',
-              background: 'linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%)',
-              borderRadius: '12px',
-              textAlign: 'center',
-              border: '1px solid #86efac'
-            }}>
-              <span style={{ fontSize: '24px' }}>🎉</span>
-              <p style={{
-                margin: '8px 0 0 0',
+            {/* Requisitos section */}
+            <div style={{ marginTop: '20px' }}>
+              <Link href="/precurso/requisitos" style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px',
+                padding: '8px 20px',
+                color: t.text,
+                textDecoration: 'none',
                 fontSize: '13px',
                 fontWeight: 600,
-                color: '#166534'
+                textTransform: 'uppercase',
+                letterSpacing: '0.3px'
               }}>
-                ¡Listo para la clase!
-              </p>
+                <span>🛠️</span>
+                Requisitos
+              </Link>
+              <Link href="/precurso/requisitos#requisitos-vscode" style={{
+                display: 'block', padding: '8px 20px 8px 48px', color: t.textSecondary,
+                textDecoration: 'none', fontSize: '13px', borderLeft: '3px solid transparent'
+              }}>
+                1. VS Code
+              </Link>
+              <Link href="/precurso/requisitos#requisitos-nodejs" style={{
+                display: 'block', padding: '8px 20px 8px 48px', color: t.textSecondary,
+                textDecoration: 'none', fontSize: '13px', borderLeft: '3px solid transparent'
+              }}>
+                2. Node.js
+              </Link>
+              <Link href="/precurso/requisitos#requisitos-github" style={{
+                display: 'block', padding: '8px 20px 8px 48px', color: t.textSecondary,
+                textDecoration: 'none', fontSize: '13px', borderLeft: '3px solid transparent'
+              }}>
+                3. GitHub
+              </Link>
+              <Link href="/precurso/requisitos#requisitos-vercel" style={{
+                display: 'block', padding: '8px 20px 8px 48px', color: t.textSecondary,
+                textDecoration: 'none', fontSize: '13px', borderLeft: '3px solid transparent'
+              }}>
+                4. Vercel
+              </Link>
+              <Link href="/precurso/requisitos#requisitos-claude" style={{
+                display: 'block', padding: '8px 20px 8px 48px', color: t.textSecondary,
+                textDecoration: 'none', fontSize: '13px', borderLeft: '3px solid transparent'
+              }}>
+                5. Claude Code
+              </Link>
             </div>
-          )}
+          </nav>
 
-          {/* Help */}
+          {/* Help box */}
           <div style={{
-            marginTop: '24px',
+            margin: '24px 16px 0',
             padding: '16px',
-            background: '#f8fafc',
-            borderRadius: '12px',
-            border: '1px solid #e2e8f0'
+            background: t.bgTertiary,
+            borderRadius: '12px'
           }}>
-            <p style={{ margin: 0, fontSize: '12px', color: '#64748b' }}>
+            <p style={{ margin: 0, fontSize: '13px', color: t.textMuted }}>
               ¿Dudas? Escríbeme a{' '}
-              <a href="mailto:josu@yenze.io" style={{ color: '#5e6ad2' }}>
+              <a href="mailto:josu@yenze.io" style={{ color: t.accent }}>
                 josu@yenze.io
               </a>
             </p>
@@ -311,186 +313,225 @@ function PrecursoContent() {
         </aside>
 
         {/* Main content */}
-        <main style={{ flex: 1, padding: '32px 24px', maxWidth: '800px' }}>
-          {/* Welcome */}
-          <div style={{
-            background: 'linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%)',
-            borderRadius: '16px',
-            padding: '28px',
-            marginBottom: '32px',
-            border: '1px solid #c7d2fe'
-          }}>
+        <main style={{ flex: 1, padding: '40px 56px', maxWidth: '900px' }}>
+          {/* Hero */}
+          <div style={{ marginBottom: '48px' }}>
             <h1 style={{
-              fontSize: '28px',
+              fontSize: '36px',
               fontWeight: 700,
-              color: '#3730a3',
-              margin: '0 0 12px 0'
+              marginBottom: '16px',
+              color: t.text,
+              lineHeight: 1.2
             }}>
-              ¡Bienvenido! 🚀
+              Bienvenido al Precurso 👋
             </h1>
             <p style={{
-              fontSize: '15px',
-              color: '#4338ca',
-              margin: 0,
-              lineHeight: 1.6
+              fontSize: '18px',
+              color: t.textSecondary,
+              lineHeight: 1.7,
+              maxWidth: '600px'
             }}>
-              Estos módulos te preparan para la primera clase. <strong>Son cortitos y fáciles</strong> -
-              no necesitas memorizar nada. Claude Code escribirá el código, tú solo tienes que entender la idea general.
+              Antes de crear software con IA, necesitas conocer algunos términos y tener las herramientas instaladas. <strong style={{ color: t.text }}>No vas a programar</strong> — solo entender lo básico.
             </p>
-            <div style={{
-              marginTop: '16px',
-              display: 'flex',
-              gap: '16px',
-              flexWrap: 'wrap',
-              fontSize: '13px'
-            }}>
-              <span style={{ color: '#6366f1' }}>⏱️ ~1.5 horas total</span>
-              <span style={{ color: '#6366f1' }}>📱 Hazlo a tu ritmo</span>
-            </div>
           </div>
 
-          {/* Modules */}
-          <h2 style={{
-            fontSize: '18px',
-            fontWeight: 600,
-            color: '#1a1a2e',
-            marginBottom: '16px'
+          {/* Progress bar */}
+          <div style={{
+            marginBottom: '40px',
+            padding: '24px',
+            background: t.bgSecondary,
+            borderRadius: '16px',
+            border: `1px solid ${t.border}`
           }}>
-            Módulos
-          </h2>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-            {modules.map(module => (
-              <Link
-                key={module.number}
-                href={module.href}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '16px',
-                  padding: '20px',
-                  background: checked[module.id] ? '#f0fdf4' : 'white',
-                  border: `1px solid ${checked[module.id] ? '#86efac' : '#e2e8f0'}`,
-                  borderRadius: '12px',
-                  textDecoration: 'none',
-                  transition: 'all 0.2s ease'
-                }}
-              >
-                <div style={{
-                  width: '48px',
-                  height: '48px',
-                  background: checked[module.id]
-                    ? 'linear-gradient(135deg, #22c55e, #16a34a)'
-                    : 'linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%)',
-                  borderRadius: '12px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '20px',
-                  flexShrink: 0
-                }}>
-                  {checked[module.id] ? '✓' : module.emoji}
-                </div>
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <h3 style={{
-                    fontSize: '15px',
-                    fontWeight: 600,
-                    color: '#1a1a2e',
-                    margin: '0 0 4px 0'
-                  }}>
-                    {module.number}. {module.title}
-                  </h3>
-                  <p style={{
-                    fontSize: '13px',
-                    color: '#64748b',
-                    margin: 0,
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    whiteSpace: 'nowrap'
-                  }}>
-                    {module.desc}
-                  </p>
-                </div>
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  color: '#94a3b8',
-                  fontSize: '12px',
-                  flexShrink: 0
-                }}>
-                  <span>{module.duration}</span>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <polyline points="9 18 15 12 9 6"/>
-                  </svg>
-                </div>
-              </Link>
-            ))}
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginBottom: '12px'
+            }}>
+              <span style={{ fontSize: '14px', fontWeight: 600, color: t.text }}>
+                Tu progreso
+              </span>
+              <span style={{ fontSize: '14px', fontWeight: 600, color: t.accent }}>
+                {Math.round(progress)}%
+              </span>
+            </div>
+            <div style={{
+              height: '8px',
+              background: t.bgTertiary,
+              borderRadius: '100px',
+              overflow: 'hidden'
+            }}>
+              <div style={{
+                height: '100%',
+                width: `${progress}%`,
+                background: progress === 100
+                  ? `linear-gradient(90deg, ${t.success}, #16a34a)`
+                  : `linear-gradient(90deg, ${t.accent}, #8b5cf6)`,
+                borderRadius: '100px',
+                transition: 'width 0.3s ease'
+              }} />
+            </div>
+            {progress === 100 && (
+              <p style={{
+                margin: '12px 0 0',
+                fontSize: '14px',
+                color: t.success,
+                fontWeight: 500
+              }}>
+                🎉 ¡Estás listo para la primera clase!
+              </p>
+            )}
           </div>
 
-          {/* Accounts section */}
+          {/* Cards */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            {/* Glosario */}
+            <Link href="/precurso/glosario" style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '24px',
+              padding: '28px',
+              background: glosarioCompleted ? t.successLight : t.bgSecondary,
+              border: `1px solid ${glosarioCompleted ? t.success : t.border}`,
+              borderRadius: '16px',
+              textDecoration: 'none',
+              transition: 'all 0.2s',
+              cursor: 'pointer'
+            }}>
+              <div style={{
+                width: '64px',
+                height: '64px',
+                background: glosarioCompleted
+                  ? t.success
+                  : 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+                borderRadius: '16px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '28px',
+                flexShrink: 0,
+                color: 'white'
+              }}>
+                {glosarioCompleted ? '✓' : '📚'}
+              </div>
+              <div style={{ flex: 1 }}>
+                <h3 style={{
+                  fontSize: '20px',
+                  fontWeight: 600,
+                  color: t.text,
+                  margin: '0 0 6px 0'
+                }}>
+                  Glosario de términos
+                </h3>
+                <p style={{
+                  fontSize: '15px',
+                  color: t.textSecondary,
+                  margin: 0
+                }}>
+                  Los conceptos esenciales para entender lo que hace Claude Code
+                </p>
+              </div>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px'
+              }}>
+                <span style={{
+                  fontSize: '14px',
+                  color: glosarioCompleted ? t.success : t.textMuted,
+                  fontWeight: 500
+                }}>
+                  {glosarioCompleted ? 'Completado' : '6 secciones'}
+                </span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={glosarioCompleted ? t.success : t.textMuted} strokeWidth="2">
+                  <polyline points="9 18 15 12 9 6"/>
+                </svg>
+              </div>
+            </Link>
+
+            {/* Requisitos */}
+            <Link href="/precurso/requisitos" style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '24px',
+              padding: '28px',
+              background: requisitosCompleted ? t.successLight : t.bgSecondary,
+              border: `1px solid ${requisitosCompleted ? t.success : t.border}`,
+              borderRadius: '16px',
+              textDecoration: 'none',
+              transition: 'all 0.2s',
+              cursor: 'pointer'
+            }}>
+              <div style={{
+                width: '64px',
+                height: '64px',
+                background: requisitosCompleted
+                  ? t.success
+                  : 'linear-gradient(135deg, #22c55e, #16a34a)',
+                borderRadius: '16px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '28px',
+                flexShrink: 0,
+                color: 'white'
+              }}>
+                {requisitosCompleted ? '✓' : '🛠️'}
+              </div>
+              <div style={{ flex: 1 }}>
+                <h3 style={{
+                  fontSize: '20px',
+                  fontWeight: 600,
+                  color: t.text,
+                  margin: '0 0 6px 0'
+                }}>
+                  Requisitos técnicos
+                </h3>
+                <p style={{
+                  fontSize: '15px',
+                  color: t.textSecondary,
+                  margin: 0
+                }}>
+                  Las herramientas y cuentas que necesitas antes de empezar
+                </p>
+              </div>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px'
+              }}>
+                <span style={{
+                  fontSize: '14px',
+                  color: requisitosCompleted ? t.success : t.textMuted,
+                  fontWeight: 500
+                }}>
+                  {requisitosCompleted ? 'Completado' : '5 pasos'}
+                </span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={requisitosCompleted ? t.success : t.textMuted} strokeWidth="2">
+                  <polyline points="9 18 15 12 9 6"/>
+                </svg>
+              </div>
+            </Link>
+          </div>
+
+          {/* Time estimate */}
           <div style={{
             marginTop: '32px',
-            padding: '24px',
-            background: 'white',
-            border: '1px solid #e2e8f0',
-            borderRadius: '12px'
+            display: 'flex',
+            gap: '24px',
+            color: t.textMuted,
+            fontSize: '14px'
           }}>
-            <h3 style={{
-              fontSize: '16px',
-              fontWeight: 600,
-              color: '#1a1a2e',
-              margin: '0 0 16px 0'
-            }}>
-              📋 Cuentas que necesitas crear
-            </h3>
-            <div style={{ display: 'grid', gap: '12px' }}>
-              {[
-                { name: 'GitHub', url: 'https://github.com/signup', desc: 'Guardar tu código' },
-                { name: 'Supabase', url: 'https://supabase.com', desc: 'Base de datos' },
-                { name: 'Vercel', url: 'https://vercel.com/signup', desc: 'Publicar tu app' },
-              ].map(account => (
-                <a
-                  key={account.name}
-                  href={account.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    padding: '12px 16px',
-                    background: '#f8fafc',
-                    borderRadius: '8px',
-                    textDecoration: 'none',
-                    border: '1px solid #e2e8f0'
-                  }}
-                >
-                  <div>
-                    <span style={{ fontWeight: 500, color: '#1a1a2e', fontSize: '14px' }}>{account.name}</span>
-                    <span style={{ color: '#64748b', fontSize: '13px', marginLeft: '8px' }}>- {account.desc}</span>
-                  </div>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2">
-                    <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
-                    <polyline points="15 3 21 3 21 9"/>
-                    <line x1="10" y1="14" x2="21" y2="3"/>
-                  </svg>
-                </a>
-              ))}
-            </div>
+            <span>⏱️ ~30 minutos en total</span>
+            <span>📱 Hazlo a tu ritmo</span>
           </div>
         </main>
       </div>
 
-      {/* Responsive styles */}
       <style jsx global>{`
         @media (max-width: 768px) {
-          .sidebar-desktop {
-            display: none !important;
-          }
-          .mobile-menu-btn {
-            display: flex !important;
-          }
+          .sidebar-desktop { display: none !important; }
         }
       `}</style>
     </div>
