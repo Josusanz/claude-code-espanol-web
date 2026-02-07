@@ -225,108 +225,98 @@ function PrecursoContent() {
       </Head>
 
       {/* Header */}
-      <header style={{
+      <header className="precurso-header" style={{
         background: t.bg,
         borderBottom: `1px solid ${t.border}`,
-        padding: '16px 32px',
+        padding: '12px 16px',
         position: 'sticky',
         top: 0,
         zIndex: 100,
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        gap: '12px'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0 }}>
           <div style={{
-            width: '36px',
-            height: '36px',
+            width: '32px',
+            height: '32px',
             background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
-            borderRadius: '10px',
+            borderRadius: '8px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             color: 'white',
             fontWeight: 700,
-            fontSize: '14px'
+            fontSize: '13px'
           }}>P</div>
-          <span style={{ fontWeight: 600, fontSize: '17px' }}>Precurso</span>
+          <span className="header-title" style={{ fontWeight: 600, fontSize: '16px' }}>Precurso</span>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-          {/* Progress pill */}
-          <div style={{
-            padding: '8px 16px',
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          {/* Progress pill - compact on mobile */}
+          <div className="progress-pill" style={{
+            padding: '6px 12px',
             background: progress === 100 ? t.successLight : t.bgSecondary,
             borderRadius: '100px',
-            fontSize: '14px',
+            fontSize: '13px',
             fontWeight: 500,
             color: progress === 100 ? t.success : t.textSecondary,
             display: 'flex',
             alignItems: 'center',
-            gap: '8px'
+            gap: '6px',
+            whiteSpace: 'nowrap'
           }}>
             <div style={{
-              width: '8px',
-              height: '8px',
+              width: '6px',
+              height: '6px',
               borderRadius: '50%',
               background: progress === 100 ? t.success : t.accent
             }} />
-            {completedCount}/{totalCount} completado
+            <span className="progress-text-full">{completedCount}/{totalCount}</span>
           </div>
 
           {/* Theme toggle */}
           <button
             onClick={toggleTheme}
             style={{
-              width: '40px',
-              height: '40px',
-              borderRadius: '10px',
+              width: '36px',
+              height: '36px',
+              borderRadius: '8px',
               border: `1px solid ${t.border}`,
               background: t.bgSecondary,
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              fontSize: '18px',
-              transition: 'all 0.2s'
+              fontSize: '16px',
+              transition: 'all 0.2s',
+              flexShrink: 0
             }}
             title={theme === 'light' ? 'Cambiar a modo oscuro' : 'Cambiar a modo claro'}
           >
             {theme === 'light' ? '🌙' : '☀️'}
           </button>
 
-          {/* User email + Logout */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            {userEmail && (
-              <span style={{
-                fontSize: '13px',
-                color: t.textMuted,
-                maxWidth: '150px',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap'
-              }}>
-                {userEmail}
-              </span>
-            )}
-            <button
-              onClick={handleLogout}
-              style={{
-                padding: '8px 14px',
-                fontSize: '13px',
-                fontWeight: 500,
-                color: t.textSecondary,
-                background: 'transparent',
-                border: `1px solid ${t.border}`,
-                borderRadius: '8px',
-                cursor: 'pointer',
-                transition: 'all 0.2s'
-              }}
-              title="Cerrar sesión"
-            >
-              Salir
-            </button>
-          </div>
+          {/* Logout button */}
+          <button
+            onClick={handleLogout}
+            style={{
+              padding: '8px 12px',
+              fontSize: '13px',
+              fontWeight: 500,
+              color: t.textSecondary,
+              background: 'transparent',
+              border: `1px solid ${t.border}`,
+              borderRadius: '8px',
+              cursor: 'pointer',
+              transition: 'all 0.2s',
+              flexShrink: 0
+            }}
+            title={userEmail ? `Cerrar sesión (${userEmail})` : 'Cerrar sesión'}
+          >
+            Salir
+          </button>
         </div>
       </header>
 
@@ -508,22 +498,22 @@ function PrecursoContent() {
         </aside>
 
         {/* Main content */}
-        <main style={{ flex: 1, padding: '40px 56px', maxWidth: '900px' }}>
+        <main className="precurso-main" style={{ flex: 1, padding: '24px 20px', maxWidth: '900px' }}>
           {/* Hero */}
-          <div style={{ marginBottom: '48px' }}>
-            <h1 style={{
-              fontSize: '36px',
+          <div style={{ marginBottom: '32px' }}>
+            <h1 className="precurso-title" style={{
+              fontSize: '28px',
               fontWeight: 700,
-              marginBottom: '16px',
+              marginBottom: '12px',
               color: t.text,
               lineHeight: 1.2
             }}>
               Bienvenido al Precurso 👋
             </h1>
-            <p style={{
-              fontSize: '18px',
+            <p className="precurso-subtitle" style={{
+              fontSize: '16px',
               color: t.textSecondary,
-              lineHeight: 1.7,
+              lineHeight: 1.6,
               maxWidth: '600px'
             }}>
               Antes de crear software con IA, necesitas conocer algunos términos y tener las herramientas instaladas. <strong style={{ color: t.text }}>No vas a programar</strong> — solo entender lo básico.
@@ -532,10 +522,10 @@ function PrecursoContent() {
 
           {/* Progress bar */}
           <div style={{
-            marginBottom: '40px',
-            padding: '24px',
+            marginBottom: '24px',
+            padding: '16px',
             background: t.bgSecondary,
-            borderRadius: '16px',
+            borderRadius: '12px',
             border: `1px solid ${t.border}`
           }}>
             <div style={{
@@ -580,417 +570,397 @@ function PrecursoContent() {
           </div>
 
           {/* Cards */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
             {/* Intro: Programar con IA */}
-            <Link href="/precurso/programar-con-ia" style={{
+            <Link href="/precurso/programar-con-ia" className="precurso-card" style={{
               display: 'flex',
-              alignItems: 'center',
-              gap: '24px',
-              padding: '28px',
+              alignItems: 'flex-start',
+              gap: '16px',
+              padding: '20px',
               background: introCompleted ? t.successLight : t.bgSecondary,
               border: `1px solid ${introCompleted ? t.success : t.border}`,
-              borderRadius: '16px',
+              borderRadius: '14px',
               textDecoration: 'none',
               transition: 'all 0.2s',
               cursor: 'pointer'
             }}>
               <div style={{
-                width: '64px',
-                height: '64px',
+                width: '48px',
+                height: '48px',
                 background: introCompleted
                   ? t.success
                   : 'linear-gradient(135deg, #f59e0b, #d97706)',
-                borderRadius: '16px',
+                borderRadius: '12px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '28px',
+                fontSize: '22px',
                 flexShrink: 0,
                 color: 'white'
               }}>
                 {introCompleted ? '✓' : '🤖'}
               </div>
-              <div style={{ flex: 1 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px', flexWrap: 'wrap' }}>
                   <span style={{
                     padding: '2px 8px',
                     background: t.warningLight,
                     borderRadius: '4px',
-                    fontSize: '11px',
+                    fontSize: '10px',
                     fontWeight: 600,
                     color: t.warning
                   }}>EMPIEZA AQUÍ</span>
+                  <span style={{
+                    fontSize: '12px',
+                    color: introCompleted ? t.success : t.textMuted,
+                    fontWeight: 500
+                  }}>
+                    {introCompleted ? '✓ Completado' : '5 min'}
+                  </span>
                 </div>
                 <h3 style={{
-                  fontSize: '20px',
+                  fontSize: '16px',
                   fontWeight: 600,
                   color: t.text,
-                  margin: '0 0 6px 0'
+                  margin: '0 0 4px 0',
+                  lineHeight: 1.3
                 }}>
                   ¿Por qué ya no necesitas saber programar?
                 </h3>
                 <p style={{
-                  fontSize: '15px',
+                  fontSize: '14px',
                   color: t.textSecondary,
-                  margin: 0
+                  margin: 0,
+                  lineHeight: 1.4
                 }}>
                   Entiende cómo la IA ha cambiado las reglas del juego
                 </p>
               </div>
-              <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '12px'
-              }}>
-                <span style={{
-                  fontSize: '14px',
-                  color: introCompleted ? t.success : t.textMuted,
-                  fontWeight: 500
-                }}>
-                  {introCompleted ? 'Completado' : '5 min'}
-                </span>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={introCompleted ? t.success : t.textMuted} strokeWidth="2">
-                  <polyline points="9 18 15 12 9 6"/>
-                </svg>
-              </div>
             </Link>
 
             {/* Glosario */}
-            <Link href="/precurso/glosario" style={{
+            <Link href="/precurso/glosario" className="precurso-card" style={{
               display: 'flex',
-              alignItems: 'center',
-              gap: '24px',
-              padding: '28px',
+              alignItems: 'flex-start',
+              gap: '16px',
+              padding: '20px',
               background: glosarioCompleted ? t.successLight : t.bgSecondary,
               border: `1px solid ${glosarioCompleted ? t.success : t.border}`,
-              borderRadius: '16px',
+              borderRadius: '14px',
               textDecoration: 'none',
               transition: 'all 0.2s',
               cursor: 'pointer'
             }}>
               <div style={{
-                width: '64px',
-                height: '64px',
+                width: '48px',
+                height: '48px',
                 background: glosarioCompleted
                   ? t.success
                   : 'linear-gradient(135deg, #6366f1, #8b5cf6)',
-                borderRadius: '16px',
+                borderRadius: '12px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '28px',
+                fontSize: '22px',
                 flexShrink: 0,
                 color: 'white'
               }}>
                 {glosarioCompleted ? '✓' : '📚'}
               </div>
-              <div style={{ flex: 1 }}>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                  <span style={{
+                    fontSize: '12px',
+                    color: glosarioCompleted ? t.success : t.textMuted,
+                    fontWeight: 500
+                  }}>
+                    {glosarioCompleted ? '✓ Completado' : '6 secciones'}
+                  </span>
+                </div>
                 <h3 style={{
-                  fontSize: '20px',
+                  fontSize: '16px',
                   fontWeight: 600,
                   color: t.text,
-                  margin: '0 0 6px 0'
+                  margin: '0 0 4px 0',
+                  lineHeight: 1.3
                 }}>
                   Glosario de términos
                 </h3>
                 <p style={{
-                  fontSize: '15px',
+                  fontSize: '14px',
                   color: t.textSecondary,
-                  margin: 0
+                  margin: 0,
+                  lineHeight: 1.4
                 }}>
                   Los conceptos esenciales para entender lo que hace Claude Code
                 </p>
               </div>
-              <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '12px'
-              }}>
-                <span style={{
-                  fontSize: '14px',
-                  color: glosarioCompleted ? t.success : t.textMuted,
-                  fontWeight: 500
-                }}>
-                  {glosarioCompleted ? 'Completado' : '6 secciones'}
-                </span>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={glosarioCompleted ? t.success : t.textMuted} strokeWidth="2">
-                  <polyline points="9 18 15 12 9 6"/>
-                </svg>
-              </div>
             </Link>
 
             {/* Requisitos */}
-            <Link href="/precurso/requisitos" style={{
+            <Link href="/precurso/requisitos" className="precurso-card" style={{
               display: 'flex',
-              alignItems: 'center',
-              gap: '24px',
-              padding: '28px',
+              alignItems: 'flex-start',
+              gap: '16px',
+              padding: '20px',
               background: requisitosCompleted ? t.successLight : t.bgSecondary,
               border: `1px solid ${requisitosCompleted ? t.success : t.border}`,
-              borderRadius: '16px',
+              borderRadius: '14px',
               textDecoration: 'none',
               transition: 'all 0.2s',
               cursor: 'pointer'
             }}>
               <div style={{
-                width: '64px',
-                height: '64px',
+                width: '48px',
+                height: '48px',
                 background: requisitosCompleted
                   ? t.success
                   : 'linear-gradient(135deg, #22c55e, #16a34a)',
-                borderRadius: '16px',
+                borderRadius: '12px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '28px',
+                fontSize: '22px',
                 flexShrink: 0,
                 color: 'white'
               }}>
                 {requisitosCompleted ? '✓' : '🛠️'}
               </div>
-              <div style={{ flex: 1 }}>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                  <span style={{
+                    fontSize: '12px',
+                    color: requisitosCompleted ? t.success : t.textMuted,
+                    fontWeight: 500
+                  }}>
+                    {requisitosCompleted ? '✓ Completado' : `${reqCompletedCount}/5 instalados`}
+                  </span>
+                </div>
                 <h3 style={{
-                  fontSize: '20px',
+                  fontSize: '16px',
                   fontWeight: 600,
                   color: t.text,
-                  margin: '0 0 6px 0'
+                  margin: '0 0 4px 0',
+                  lineHeight: 1.3
                 }}>
                   Requisitos técnicos
                 </h3>
                 <p style={{
-                  fontSize: '15px',
+                  fontSize: '14px',
                   color: t.textSecondary,
-                  margin: 0
+                  margin: 0,
+                  lineHeight: 1.4
                 }}>
                   Las herramientas y cuentas que necesitas antes de empezar
                 </p>
               </div>
-              <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '12px'
-              }}>
-                <span style={{
-                  fontSize: '14px',
-                  color: requisitosCompleted ? t.success : t.textMuted,
-                  fontWeight: 500
-                }}>
-                  {requisitosCompleted ? 'Completado' : `${reqCompletedCount}/5 instalados`}
-                </span>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={requisitosCompleted ? t.success : t.textMuted} strokeWidth="2">
-                  <polyline points="9 18 15 12 9 6"/>
-                </svg>
-              </div>
             </Link>
 
             {/* Errores Comunes */}
-            <Link href="/precurso/errores-comunes" style={{
+            <Link href="/precurso/errores-comunes" className="precurso-card" style={{
               display: 'flex',
-              alignItems: 'center',
-              gap: '24px',
-              padding: '28px',
+              alignItems: 'flex-start',
+              gap: '16px',
+              padding: '20px',
               background: t.bgSecondary,
               border: `1px solid ${t.border}`,
-              borderRadius: '16px',
+              borderRadius: '14px',
               textDecoration: 'none',
               transition: 'all 0.2s',
               cursor: 'pointer'
             }}>
               <div style={{
-                width: '64px',
-                height: '64px',
+                width: '48px',
+                height: '48px',
                 background: 'linear-gradient(135deg, #f59e0b, #d97706)',
-                borderRadius: '16px',
+                borderRadius: '12px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '28px',
+                fontSize: '22px',
                 flexShrink: 0,
                 color: 'white'
               }}>
                 🔧
               </div>
-              <div style={{ flex: 1 }}>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                  <span style={{
+                    fontSize: '12px',
+                    color: t.textMuted,
+                    fontWeight: 500
+                  }}>
+                    5 min
+                  </span>
+                </div>
                 <h3 style={{
-                  fontSize: '20px',
+                  fontSize: '16px',
                   fontWeight: 600,
                   color: t.text,
-                  margin: '0 0 6px 0'
+                  margin: '0 0 4px 0',
+                  lineHeight: 1.3
                 }}>
                   Errores comunes
                 </h3>
                 <p style={{
-                  fontSize: '15px',
+                  fontSize: '14px',
                   color: t.textSecondary,
-                  margin: 0
+                  margin: 0,
+                  lineHeight: 1.4
                 }}>
                   Soluciones a los problemas más frecuentes
                 </p>
               </div>
-              <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '12px'
-              }}>
-                <span style={{
-                  fontSize: '14px',
-                  color: t.textMuted,
-                  fontWeight: 500
-                }}>
-                  ⏱️ 5 min
-                </span>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={t.textMuted} strokeWidth="2">
-                  <polyline points="9 18 15 12 9 6"/>
-                </svg>
-              </div>
             </Link>
 
             {/* Quiz */}
-            <Link href="/precurso/quiz" style={{
+            <Link href="/precurso/quiz" className="precurso-card" style={{
               display: 'flex',
-              alignItems: 'center',
-              gap: '24px',
-              padding: '28px',
+              alignItems: 'flex-start',
+              gap: '16px',
+              padding: '20px',
               background: completed['quiz-aprobado'] ? t.successLight : t.bgSecondary,
               border: `1px solid ${completed['quiz-aprobado'] ? t.success : t.border}`,
-              borderRadius: '16px',
+              borderRadius: '14px',
               textDecoration: 'none',
               transition: 'all 0.2s',
               cursor: 'pointer'
             }}>
               <div style={{
-                width: '64px',
-                height: '64px',
+                width: '48px',
+                height: '48px',
                 background: completed['quiz-aprobado']
                   ? t.success
                   : 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
-                borderRadius: '16px',
+                borderRadius: '12px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '28px',
+                fontSize: '22px',
                 flexShrink: 0,
                 color: 'white'
               }}>
                 {completed['quiz-aprobado'] ? '✓' : '✅'}
               </div>
-              <div style={{ flex: 1 }}>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                  <span style={{
+                    fontSize: '12px',
+                    color: completed['quiz-aprobado'] ? t.success : t.textMuted,
+                    fontWeight: 500
+                  }}>
+                    {completed['quiz-aprobado'] ? '✓ Aprobado' : '10 preguntas'}
+                  </span>
+                </div>
                 <h3 style={{
-                  fontSize: '20px',
+                  fontSize: '16px',
                   fontWeight: 600,
                   color: t.text,
-                  margin: '0 0 6px 0'
+                  margin: '0 0 4px 0',
+                  lineHeight: 1.3
                 }}>
                   Quiz de conceptos
                 </h3>
                 <p style={{
-                  fontSize: '15px',
+                  fontSize: '14px',
                   color: t.textSecondary,
-                  margin: 0
+                  margin: 0,
+                  lineHeight: 1.4
                 }}>
                   Verifica que entiendes lo básico (80% para aprobar)
                 </p>
               </div>
-              <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '12px'
-              }}>
-                <span style={{
-                  fontSize: '14px',
-                  color: completed['quiz-aprobado'] ? t.success : t.textMuted,
-                  fontWeight: 500
-                }}>
-                  {completed['quiz-aprobado'] ? 'Aprobado' : '10 preguntas'}
-                </span>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={completed['quiz-aprobado'] ? t.success : t.textMuted} strokeWidth="2">
-                  <polyline points="9 18 15 12 9 6"/>
-                </svg>
-              </div>
             </Link>
 
             {/* Primer Proyecto */}
-            <Link href="/precurso/primer-proyecto" style={{
+            <Link href="/precurso/primer-proyecto" className="precurso-card" style={{
               display: 'flex',
-              alignItems: 'center',
-              gap: '24px',
-              padding: '28px',
+              alignItems: 'flex-start',
+              gap: '16px',
+              padding: '20px',
               background: completed['primer-proyecto'] ? t.successLight : t.bgSecondary,
               border: `1px solid ${completed['primer-proyecto'] ? t.success : t.border}`,
-              borderRadius: '16px',
+              borderRadius: '14px',
               textDecoration: 'none',
               transition: 'all 0.2s',
               cursor: 'pointer'
             }}>
               <div style={{
-                width: '64px',
-                height: '64px',
+                width: '48px',
+                height: '48px',
                 background: completed['primer-proyecto']
                   ? t.success
                   : 'linear-gradient(135deg, #ec4899, #db2777)',
-                borderRadius: '16px',
+                borderRadius: '12px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '28px',
+                fontSize: '22px',
                 flexShrink: 0,
                 color: 'white'
               }}>
                 {completed['primer-proyecto'] ? '✓' : '🚀'}
               </div>
-              <div style={{ flex: 1 }}>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                  <span style={{
+                    fontSize: '12px',
+                    color: completed['primer-proyecto'] ? t.success : t.textMuted,
+                    fontWeight: 500
+                  }}>
+                    {completed['primer-proyecto'] ? '✓ Completado' : '10 min'}
+                  </span>
+                </div>
                 <h3 style={{
-                  fontSize: '20px',
+                  fontSize: '16px',
                   fontWeight: 600,
                   color: t.text,
-                  margin: '0 0 6px 0'
+                  margin: '0 0 4px 0',
+                  lineHeight: 1.3
                 }}>
                   Tu primer proyecto
                 </h3>
                 <p style={{
-                  fontSize: '15px',
+                  fontSize: '14px',
                   color: t.textSecondary,
-                  margin: 0
+                  margin: 0,
+                  lineHeight: 1.4
                 }}>
                   Crea tu primera página web con Claude Code
                 </p>
-              </div>
-              <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '12px'
-              }}>
-                <span style={{
-                  fontSize: '14px',
-                  color: completed['primer-proyecto'] ? t.success : t.textMuted,
-                  fontWeight: 500
-                }}>
-                  {completed['primer-proyecto'] ? 'Completado' : '⏱️ 10 min'}
-                </span>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={completed['primer-proyecto'] ? t.success : t.textMuted} strokeWidth="2">
-                  <polyline points="9 18 15 12 9 6"/>
-                </svg>
               </div>
             </Link>
           </div>
 
           {/* Time estimate */}
           <div style={{
-            marginTop: '32px',
+            marginTop: '24px',
             display: 'flex',
-            gap: '24px',
+            flexWrap: 'wrap',
+            gap: '12px',
             color: t.textMuted,
-            fontSize: '14px'
+            fontSize: '13px'
           }}>
-            <span>⏱️ ~50 minutos en total</span>
-            <span>📱 Hazlo a tu ritmo</span>
+            <span>⏱️ ~50 min total</span>
+            <span>📱 A tu ritmo</span>
           </div>
         </main>
       </div>
 
       <style jsx global>{`
+        @media (min-width: 769px) {
+          .precurso-header { padding: 16px 32px !important; }
+          .precurso-main { padding: 40px 56px !important; }
+          .precurso-title { font-size: 32px !important; }
+          .precurso-subtitle { font-size: 17px !important; }
+          .precurso-card { padding: 24px !important; gap: 20px !important; }
+          .precurso-card > div:first-child { width: 56px !important; height: 56px !important; font-size: 24px !important; }
+          .precurso-card h3 { font-size: 18px !important; }
+          .precurso-card p { font-size: 15px !important; }
+        }
         @media (max-width: 768px) {
           .sidebar-desktop { display: none !important; }
+          .header-title { display: none !important; }
         }
       `}</style>
     </div>
