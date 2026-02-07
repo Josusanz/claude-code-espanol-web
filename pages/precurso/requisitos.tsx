@@ -195,18 +195,46 @@ const TerminalSection = ({ t, theme }: { t: typeof themes.light, theme: 'light' 
         </ol>
       </div>
 
-      {/* Screenshot placeholder */}
+      {/* Video tutorial */}
       <div style={{
         marginTop: '20px',
-        padding: '16px',
-        background: t.bg,
         borderRadius: '12px',
-        border: `1px dashed ${t.border}`,
-        textAlign: 'center'
+        overflow: 'hidden',
+        border: `1px solid ${t.border}`
       }}>
-        <p style={{ margin: 0, fontSize: '14px', color: t.textMuted }}>
-          📸 Aquí irá un video/screenshot mostrando cómo abrir la terminal
-        </p>
+        <div style={{
+          background: theme === 'dark' ? '#1a1a2e' : '#f1f5f9',
+          padding: '12px 16px',
+          borderBottom: `1px solid ${t.border}`,
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px'
+        }}>
+          <span style={{ fontSize: '16px' }}>🎬</span>
+          <span style={{ fontSize: '14px', fontWeight: 500, color: t.text }}>
+            Video tutorial: Cómo verificar la instalación
+          </span>
+        </div>
+        <video
+          controls
+          style={{
+            width: '100%',
+            display: 'block',
+            background: '#1a1a2e'
+          }}
+          poster="/images/precurso/terminal.png"
+        >
+          <source src="/videos/terminal-tutorial.mp4" type="video/mp4" />
+          Tu navegador no soporta videos HTML5.
+        </video>
+        <div style={{
+          padding: '12px 16px',
+          background: t.bg,
+          fontSize: '13px',
+          color: t.textMuted
+        }}>
+          🔊 Este video incluye narración en español
+        </div>
       </div>
     </div>
   </div>
