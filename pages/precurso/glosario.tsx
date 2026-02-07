@@ -32,6 +32,58 @@ const themes = {
   }
 }
 
+// Componente para mostrar screenshots
+const Screenshot = ({
+  src,
+  alt,
+  caption,
+  t
+}: {
+  src: string
+  alt: string
+  caption?: string
+  t: typeof themes.light
+}) => (
+  <div style={{
+    background: t.bgTertiary,
+    borderRadius: '12px',
+    padding: '12px',
+    marginTop: '16px',
+    marginBottom: '8px'
+  }}>
+    <img
+      src={src}
+      alt={alt}
+      style={{
+        width: '100%',
+        borderRadius: '8px',
+        border: `1px solid ${t.border}`
+      }}
+    />
+    {caption && (
+      <p style={{
+        margin: '10px 0 0',
+        fontSize: '12px',
+        color: t.textMuted,
+        textAlign: 'center',
+        fontStyle: 'italic'
+      }}>
+        {caption}
+      </p>
+    )}
+  </div>
+)
+
+// Screenshots de QualifyForm para ilustrar conceptos
+const SCREENSHOTS = {
+  frontend: '/images/precurso/qualifyform-frontend.png',
+  dashboard: '/images/precurso/qualifyform-dashboard.png',
+  formBuilder: '/images/precurso/qualifyform-builder.png',
+  terminal: '/images/precurso/terminal-example.png',
+  vscode: '/images/precurso/vscode-example.png',
+  github: '/images/precurso/github-repo.png',
+}
+
 // Diagrama visual Frontend vs Backend
 const FrontendBackendDiagram = ({ t }: { t: typeof themes.light }) => (
   <div style={{
@@ -240,7 +292,9 @@ const SECCIONES = [
         termino: 'Terminal',
         definicion: 'La pantalla donde escribes comandos. Es como enviar mensajes de texto a tu computadora.',
         ejemplo: 'Escribes "claude" → se abre Claude Code. Escribes "npm install" → instala dependencias.',
-        analogia: 'Como el chat de WhatsApp, pero para hablar con tu computadora.'
+        analogia: 'Como el chat de WhatsApp, pero para hablar con tu computadora.',
+        screenshot: '/images/precurso/terminal.png',
+        screenshotCaption: 'Así se ve una terminal con comandos'
       },
       {
         termino: 'Comando',
@@ -252,7 +306,9 @@ const SECCIONES = [
         termino: 'Carpeta / Directorio',
         definicion: 'Donde viven tus archivos. "Directorio" es el término técnico, pero es lo mismo.',
         ejemplo: '/Users/tu-nombre/Proyectos/mi-app',
-        analogia: 'Las carpetas físicas de toda la vida.'
+        analogia: 'Las carpetas físicas de toda la vida.',
+        screenshot: '/images/precurso/vscode-carpetas.png',
+        screenshotCaption: 'Estructura de carpetas en VS Code'
       },
       {
         termino: 'Ruta / Path',
@@ -277,14 +333,18 @@ const SECCIONES = [
       {
         termino: 'Frontend',
         definicion: 'Todo lo que el usuario ve y toca: botones, colores, texto, animaciones, formularios.',
-        ejemplo: 'La página de login de Instagram. El botón de "Me gusta". El feed de publicaciones.',
-        analogia: 'El escaparate de una tienda: lo que ves desde la calle.'
+        ejemplo: 'La página de QualifyForm que ves al entrar: el formulario, los botones, el diseño.',
+        analogia: 'El escaparate de una tienda: lo que ves desde la calle.',
+        screenshot: '/images/precurso/qualifyform-frontend.png',
+        screenshotCaption: 'Frontend de QualifyForm: lo que el usuario ve'
       },
       {
         termino: 'Backend',
         definicion: 'Lo que pasa "detrás": verificar contraseñas, guardar datos, enviar emails, procesar pagos.',
-        ejemplo: 'Cuando haces login, el backend verifica si tu contraseña es correcta.',
-        analogia: 'La trastienda: donde se hace el trabajo que el cliente no ve.'
+        ejemplo: 'QualifyForm guarda las respuestas, calcula puntuaciones y dispara pixels. Eso es backend.',
+        analogia: 'La trastienda: donde se hace el trabajo que el cliente no ve.',
+        screenshot: '/images/precurso/qualifyform-dashboard.png',
+        screenshotCaption: 'Dashboard de QualifyForm: datos procesados por el backend'
       },
       {
         termino: 'Full Stack',
@@ -295,20 +355,24 @@ const SECCIONES = [
       {
         termino: 'API',
         definicion: 'El "contrato" entre frontend y backend. Define qué datos puedes pedir y cómo.',
-        ejemplo: 'GET /usuarios → devuelve lista de usuarios. POST /login → intenta iniciar sesión.',
-        analogia: 'El menú de un restaurante: lista qué puedes pedir y cómo.'
+        ejemplo: 'QualifyForm tiene API para webhooks: cuando alguien responde, envía los datos a tu CRM.',
+        analogia: 'El menú de un restaurante: lista qué puedes pedir y cómo.',
+        screenshot: '/images/precurso/qualifyform-webhooks.png',
+        screenshotCaption: 'Configuración de webhooks en QualifyForm'
       },
       {
         termino: 'Endpoint',
         definicion: 'Una URL específica de la API a la que puedes hacer peticiones.',
-        ejemplo: '/api/users, /api/products/123, /api/auth/login',
+        ejemplo: '/api/forms/123/responses → devuelve las respuestas del formulario 123.',
         analogia: 'Cada plato del menú tiene su propio nombre y precio.'
       },
       {
         termino: 'Base de datos',
         definicion: 'Donde se guardan los datos de forma permanente. Usuarios, productos, mensajes, todo.',
-        ejemplo: 'Cuando te registras, tu email y contraseña se guardan en la base de datos.',
-        analogia: 'Un archivador gigante organizado donde guardas toda la información.'
+        ejemplo: 'QualifyForm guarda cada respuesta, puntuación y evento de pixel en su base de datos.',
+        analogia: 'Un archivador gigante organizado donde guardas toda la información.',
+        screenshot: '/images/precurso/qualifyform-responses.png',
+        screenshotCaption: 'Respuestas guardadas en la base de datos de QualifyForm'
       },
       {
         termino: 'Servidor',
@@ -363,8 +427,10 @@ const SECCIONES = [
       {
         termino: 'Componente',
         definicion: 'Una pieza reutilizable de la interfaz: un botón, un formulario, una tarjeta.',
-        ejemplo: 'Creas un componente "Botón" y lo usas 50 veces en tu app.',
-        analogia: 'Como las piezas de LEGO: las combinas para crear cosas más grandes.'
+        ejemplo: 'En QualifyForm: el selector de pregunta, el botón de continuar, la barra de progreso.',
+        analogia: 'Como las piezas de LEGO: las combinas para crear cosas más grandes.',
+        screenshot: '/images/precurso/qualifyform-builder.png',
+        screenshotCaption: 'Componentes en el builder de QualifyForm: cada tipo de pregunta es un componente'
       },
       {
         termino: 'Variable',
@@ -407,8 +473,10 @@ const SECCIONES = [
       {
         termino: 'GitHub',
         definicion: 'Una web donde guardas tus repositorios en la nube. Como Google Drive para código.',
-        ejemplo: 'Tu proyecto está en github.com/tu-usuario/mi-proyecto',
-        analogia: 'Dropbox o Google Drive, pero diseñado para código.'
+        ejemplo: 'El código de QualifyForm está en github.com/josusanz/qualifyform',
+        analogia: 'Dropbox o Google Drive, pero diseñado para código.',
+        screenshot: '/images/precurso/github-repo.png',
+        screenshotCaption: 'Repositorio de QualifyForm en GitHub'
       },
       {
         termino: 'Repositorio (Repo)',
@@ -519,13 +587,15 @@ const SECCIONES = [
       {
         termino: 'Deploy',
         definicion: 'Publicar tu app para que cualquiera en el mundo pueda acceder.',
-        ejemplo: 'Haces deploy en Vercel → tu app está en https://mi-app.vercel.app',
-        analogia: 'Abrir las puertas de tu tienda al público.'
+        ejemplo: 'QualifyForm está desplegado en qualifyform.com. Tú harás lo mismo.',
+        analogia: 'Abrir las puertas de tu tienda al público.',
+        screenshot: '/images/precurso/vercel-deploy.png',
+        screenshotCaption: 'Deploy de QualifyForm en Vercel'
       },
       {
         termino: 'Producción',
         definicion: 'El entorno donde los usuarios reales usan tu app. Lo contrario de desarrollo.',
-        ejemplo: 'Tu app en producción es la que ven tus clientes. No es para pruebas.',
+        ejemplo: 'qualifyform.com es producción. localhost:3000 es desarrollo.',
         analogia: 'La versión final, no el ensayo.'
       },
       {
@@ -747,6 +817,16 @@ function GlosarioContent() {
                         {item.analogia}
                       </p>
                     </div>
+
+                    {/* Screenshot si existe */}
+                    {item.screenshot && (
+                      <Screenshot
+                        src={item.screenshot}
+                        alt={item.termino}
+                        caption={item.screenshotCaption}
+                        t={t}
+                      />
+                    )}
                   </div>
                 </div>
               ))}
