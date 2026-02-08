@@ -33,7 +33,7 @@ function getUserEmail(): string | null {
     const savedAccess = localStorage.getItem('precurso-access')
     if (savedAccess) {
       const data = JSON.parse(savedAccess)
-      return data.email || null
+      return data.email ? data.email.toLowerCase().trim() : null
     }
   } catch {
     // Ignore
@@ -41,17 +41,27 @@ function getUserEmail(): string | null {
   return null
 }
 
-// Helper para sincronizar progreso con el servidor
-async function syncProgressToServer(email: string, progress: Record<string, boolean>) {
-  try {
-    await fetch('/api/precurso/sync-progress', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, progress })
-    })
-  } catch (error) {
-    console.error('[Precurso] Error syncing progress:', error)
+// Helper para sincronizar progreso con el servidor (con retry)
+async function syncProgressToServer(email: string, progress: Record<string, boolean>, retries = 2): Promise<boolean> {
+  for (let i = 0; i <= retries; i++) {
+    try {
+      const res = await fetch('/api/precurso/sync-progress', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, progress })
+      })
+      const data = await res.json()
+      if (data.success) {
+        return true
+      }
+    } catch (error) {
+      console.error(`[Precurso] Sync attempt ${i + 1} failed:`, error)
+      if (i < retries) {
+        await new Promise(r => setTimeout(r, 1000 * (i + 1))) // Exponential backoff
+      }
+    }
   }
+  return false
 }
 
 // Helper para cargar progreso del servidor
@@ -72,6 +82,7 @@ export function usePrecursoProgress() {
   const [completed, setCompleted] = useState<Record<string, boolean>>({})
   const [initialized, setInitialized] = useState(false)
   const [userEmail, setUserEmail] = useState<string | null>(null)
+  const [syncStatus, setSyncStatus] = useState<'idle' | 'syncing' | 'synced' | 'error'>('idle')
 
   // Cargar progreso (localStorage primero, luego servidor)
   useEffect(() => {
@@ -80,16 +91,23 @@ export function usePrecursoProgress() {
 
     const loadProgress = async () => {
       // Primero cargar de localStorage para mostrar algo rápido
-      const saved = localStorage.getItem('precurso-progress')
-      if (saved) {
-        setCompleted(JSON.parse(saved))
+      let localProgress: Record<string, boolean> = {}
+      try {
+        const saved = localStorage.getItem('precurso-progress')
+        if (saved) {
+          localProgress = JSON.parse(saved)
+          setCompleted(localProgress)
+        }
+      } catch {
+        // localStorage inválido, ignorar
       }
 
       // Si hay email, intentar cargar del servidor y hacer merge
       if (email) {
+        setSyncStatus('syncing')
         const serverProgress = await loadProgressFromServer(email)
-        if (serverProgress) {
-          const localProgress = saved ? JSON.parse(saved) : {}
+
+        if (serverProgress && Object.keys(serverProgress).length > 0) {
           // Merge: tomar el valor true de cualquiera de los dos
           const merged: Record<string, boolean> = {}
           const allKeys = new Set([...Object.keys(localProgress), ...Object.keys(serverProgress)])
@@ -100,10 +118,20 @@ export function usePrecursoProgress() {
           setCompleted(merged)
           localStorage.setItem('precurso-progress', JSON.stringify(merged))
 
-          // Si hay diferencias, sincronizar el merge de vuelta al servidor
-          if (JSON.stringify(merged) !== JSON.stringify(serverProgress)) {
-            syncProgressToServer(email, merged)
+          // Si hay diferencias locales, sincronizar de vuelta al servidor
+          const hasLocalOnlyChanges = Object.keys(localProgress).some(
+            key => localProgress[key] && !serverProgress[key]
+          )
+          if (hasLocalOnlyChanges) {
+            await syncProgressToServer(email, merged)
           }
+          setSyncStatus('synced')
+        } else if (Object.keys(localProgress).length > 0) {
+          // No hay datos en servidor pero sí locales, subir al servidor
+          const synced = await syncProgressToServer(email, localProgress)
+          setSyncStatus(synced ? 'synced' : 'error')
+        } else {
+          setSyncStatus('synced')
         }
       }
 
@@ -116,7 +144,13 @@ export function usePrecursoProgress() {
   const toggle = (id: string) => {
     const newCompleted = { ...completed, [id]: !completed[id] }
     setCompleted(newCompleted)
-    localStorage.setItem('precurso-progress', JSON.stringify(newCompleted))
+
+    // Guardar en localStorage inmediatamente
+    try {
+      localStorage.setItem('precurso-progress', JSON.stringify(newCompleted))
+    } catch {
+      // localStorage lleno o no disponible
+    }
 
     // Sincronizar con el servidor si hay email
     if (userEmail) {

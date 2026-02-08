@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { verifyPrecursoPassword } from '../../../lib/precurso-auth'
-import { isEmailAuthorized, addAuthorizedEmail } from '../../../lib/precurso-kv'
+import { isEmailAuthorized, addAuthorizedEmail, getUserProgress } from '../../../lib/precurso-kv'
 
 export default async function handler(
   req: NextApiRequest,
@@ -46,24 +46,31 @@ export default async function handler(
 
   const normalizedEmail = email.toLowerCase().trim()
 
-  // Verificar que el email esté autorizado
+  // Verificar que el email esté autorizado y crear registro si no existe
   try {
     const authorized = await isEmailAuthorized(normalizedEmail)
     if (!authorized) {
+      console.log(`[Precurso Login] Email no autorizado: ${normalizedEmail}`)
       return res.status(403).json({
         success: false,
         error: 'Tu email no está autorizado para este curso. Contacta al instructor.'
       })
     }
-  } catch (error) {
-    // Si hay error de conexión a KV, permitir acceso (fallback graceful)
-    // y añadir el email para tracking
-    console.error('[Precurso Login] Error checking email authorization:', error)
-    try {
+
+    // Asegurar que existe el registro del usuario (por si solo estaba en el set)
+    const userExists = await getUserProgress(normalizedEmail)
+    if (!userExists) {
       await addAuthorizedEmail(normalizedEmail)
-    } catch {
-      // Ignorar error de añadir
+      console.log(`[Precurso Login] Creado registro para: ${normalizedEmail}`)
     }
+
+  } catch (error) {
+    // Si hay error de conexión a KV, bloquear acceso para evitar inconsistencias
+    console.error('[Precurso Login] Error de KV:', error)
+    return res.status(500).json({
+      success: false,
+      error: 'Error del servidor. Inténtalo de nuevo.'
+    })
   }
 
   // Éxito

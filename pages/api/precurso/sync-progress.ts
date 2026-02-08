@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { syncUserProgress, getUserProgress, isEmailAuthorized } from '../../../lib/precurso-kv'
+import { syncUserProgress, getUserProgress, isEmailAuthorized, addAuthorizedEmail } from '../../../lib/precurso-kv'
 
 export default async function handler(
   req: NextApiRequest,
@@ -17,21 +17,36 @@ export default async function handler(
       return res.status(400).json({ error: 'Progreso requerido' })
     }
 
+    const normalizedEmail = email.toLowerCase().trim()
+
     try {
       // Verificar que el email esté autorizado
-      const authorized = await isEmailAuthorized(email)
+      const authorized = await isEmailAuthorized(normalizedEmail)
       if (!authorized) {
-        return res.status(403).json({ error: 'Email no autorizado' })
+        console.log(`[Sync Progress] Email no autorizado, ignorando: ${normalizedEmail}`)
+        // No devolver error, simplemente no guardar (el usuario puede seguir usando localStorage)
+        return res.status(200).json({
+          success: false,
+          message: 'Email no autorizado para sincronización',
+          progress: progress
+        })
       }
 
-      const updatedUser = await syncUserProgress(email, progress)
+      const updatedUser = await syncUserProgress(normalizedEmail, progress)
+      console.log(`[Sync Progress] Guardado para ${normalizedEmail}: ${Object.keys(progress).length} items`)
+
       return res.status(200).json({
         success: true,
         progress: updatedUser.progress
       })
     } catch (error) {
-      console.error('Error syncing progress:', error)
-      return res.status(500).json({ error: 'Error al sincronizar progreso' })
+      console.error('[Sync Progress] Error:', error)
+      // No fallar, devolver el progreso local
+      return res.status(200).json({
+        success: false,
+        message: 'Error de servidor, usando datos locales',
+        progress: progress
+      })
     }
   }
 
@@ -43,16 +58,20 @@ export default async function handler(
       return res.status(400).json({ error: 'Email requerido' })
     }
 
+    const normalizedEmail = (email as string).toLowerCase().trim()
+
     try {
-      const user = await getUserProgress(email)
+      const user = await getUserProgress(normalizedEmail)
       if (!user) {
+        console.log(`[Sync Progress] Sin datos para: ${normalizedEmail}`)
         return res.status(200).json({ progress: {} })
       }
 
+      console.log(`[Sync Progress] Cargado para ${normalizedEmail}: ${Object.keys(user.progress).length} items`)
       return res.status(200).json({ progress: user.progress })
     } catch (error) {
-      console.error('Error fetching progress:', error)
-      return res.status(500).json({ error: 'Error al obtener progreso' })
+      console.error('[Sync Progress] Error cargando:', error)
+      return res.status(200).json({ progress: {} })
     }
   }
 
