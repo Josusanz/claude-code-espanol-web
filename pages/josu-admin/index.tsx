@@ -38,6 +38,9 @@ export default function PrecursoAdminPage() {
   // Search/filter
   const [search, setSearch] = useState('')
 
+  // Expanded user detail
+  const [expandedUser, setExpandedUser] = useState<string | null>(null)
+
   // Check authentication on mount
   useEffect(() => {
     checkAuth()
@@ -122,7 +125,6 @@ export default function PrecursoAdminPage() {
         const data = await res.json()
         setAddResult({ added: data.added, skipped: data.skipped })
         setNewEmails('')
-        // Reload data to show new users
         loadData()
       }
     } catch (error) {
@@ -154,6 +156,37 @@ export default function PrecursoAdminPage() {
   const filteredUsers = users.filter(user =>
     user.email.toLowerCase().includes(search.toLowerCase())
   )
+
+  // Calculate section stats
+  const sectionStats = Object.keys(sections).map(sectionId => {
+    const completedCount = users.filter(u => u.progress[sectionId]).length
+    return {
+      id: sectionId,
+      label: sections[sectionId],
+      completedCount,
+      percent: users.length > 0 ? Math.round((completedCount / users.length) * 100) : 0
+    }
+  })
+
+  // Users with activity (have synced at least once)
+  const activeUsers = users.filter(u => u.lastSyncAt)
+  const usersStarted = users.filter(u => u.completedCount > 0)
+
+  // Format relative time
+  const formatRelativeTime = (dateStr: string) => {
+    const date = new Date(dateStr)
+    const now = new Date()
+    const diffMs = now.getTime() - date.getTime()
+    const diffMins = Math.floor(diffMs / 60000)
+    const diffHours = Math.floor(diffMs / 3600000)
+    const diffDays = Math.floor(diffMs / 86400000)
+
+    if (diffMins < 1) return 'Ahora'
+    if (diffMins < 60) return `Hace ${diffMins} min`
+    if (diffHours < 24) return `Hace ${diffHours}h`
+    if (diffDays < 7) return `Hace ${diffDays}d`
+    return date.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' })
+  }
 
   // Loading state
   if (loading) {
@@ -211,7 +244,7 @@ export default function PrecursoAdminPage() {
               type="password"
               value={secret}
               onChange={e => setSecret(e.target.value)}
-              placeholder="ADMIN_SECRET"
+              placeholder="Contraseña"
               style={{
                 width: '100%',
                 padding: '14px 16px',
@@ -288,88 +321,177 @@ export default function PrecursoAdminPage() {
           Panel Admin - Precurso
         </h1>
 
-        <button
-          onClick={handleLogout}
-          style={{
-            padding: '8px 16px',
-            fontSize: '14px',
-            color: '#64748b',
-            background: 'transparent',
-            border: '1px solid #e2e8f0',
-            borderRadius: '6px',
-            cursor: 'pointer'
-          }}
-        >
-          Logout
-        </button>
+        <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+          <button
+            onClick={loadData}
+            style={{
+              padding: '8px 16px',
+              fontSize: '14px',
+              color: '#6366f1',
+              background: '#eef2ff',
+              border: 'none',
+              borderRadius: '6px',
+              cursor: 'pointer'
+            }}
+          >
+            Actualizar
+          </button>
+          <button
+            onClick={handleLogout}
+            style={{
+              padding: '8px 16px',
+              fontSize: '14px',
+              color: '#64748b',
+              background: 'transparent',
+              border: '1px solid #e2e8f0',
+              borderRadius: '6px',
+              cursor: 'pointer'
+            }}
+          >
+            Salir
+          </button>
+        </div>
       </header>
 
-      <main style={{ padding: '32px', maxWidth: '1200px', margin: '0 auto' }}>
-        {/* Stats */}
+      <main style={{ padding: '24px', maxWidth: '1400px', margin: '0 auto' }}>
+        {/* Stats Grid */}
         {stats && (
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: '20px',
-            marginBottom: '32px'
+            gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
+            gap: '16px',
+            marginBottom: '24px'
           }}>
             <div style={{
               background: 'white',
-              padding: '24px',
+              padding: '20px',
               borderRadius: '12px',
               border: '1px solid #e2e8f0'
             }}>
-              <p style={{ fontSize: '32px', fontWeight: 700, color: '#1e293b', margin: 0 }}>
+              <p style={{ fontSize: '28px', fontWeight: 700, color: '#1e293b', margin: 0 }}>
                 {stats.totalUsers}
               </p>
-              <p style={{ fontSize: '14px', color: '#64748b', margin: '4px 0 0' }}>
-                Alumnos
+              <p style={{ fontSize: '13px', color: '#64748b', margin: '4px 0 0' }}>
+                Alumnos registrados
               </p>
             </div>
 
             <div style={{
               background: 'white',
-              padding: '24px',
+              padding: '20px',
               borderRadius: '12px',
               border: '1px solid #e2e8f0'
             }}>
-              <p style={{ fontSize: '32px', fontWeight: 700, color: '#22c55e', margin: 0 }}>
+              <p style={{ fontSize: '28px', fontWeight: 700, color: '#f59e0b', margin: 0 }}>
+                {usersStarted.length}
+              </p>
+              <p style={{ fontSize: '13px', color: '#64748b', margin: '4px 0 0' }}>
+                Han empezado
+              </p>
+            </div>
+
+            <div style={{
+              background: 'white',
+              padding: '20px',
+              borderRadius: '12px',
+              border: '1px solid #e2e8f0'
+            }}>
+              <p style={{ fontSize: '28px', fontWeight: 700, color: '#22c55e', margin: 0 }}>
                 {stats.completedUsers}
               </p>
-              <p style={{ fontSize: '14px', color: '#64748b', margin: '4px 0 0' }}>
-                Completos
+              <p style={{ fontSize: '13px', color: '#64748b', margin: '4px 0 0' }}>
+                Completados 100%
               </p>
             </div>
 
             <div style={{
               background: 'white',
-              padding: '24px',
+              padding: '20px',
               borderRadius: '12px',
               border: '1px solid #e2e8f0'
             }}>
-              <p style={{ fontSize: '32px', fontWeight: 700, color: '#6366f1', margin: 0 }}>
+              <p style={{ fontSize: '28px', fontWeight: 700, color: '#6366f1', margin: 0 }}>
                 {stats.averageProgress}%
               </p>
-              <p style={{ fontSize: '14px', color: '#64748b', margin: '4px 0 0' }}>
-                Promedio
+              <p style={{ fontSize: '13px', color: '#64748b', margin: '4px 0 0' }}>
+                Progreso promedio
+              </p>
+            </div>
+
+            <div style={{
+              background: 'white',
+              padding: '20px',
+              borderRadius: '12px',
+              border: '1px solid #e2e8f0'
+            }}>
+              <p style={{ fontSize: '28px', fontWeight: 700, color: '#8b5cf6', margin: 0 }}>
+                {activeUsers.length}
+              </p>
+              <p style={{ fontSize: '13px', color: '#64748b', margin: '4px 0 0' }}>
+                Con actividad
               </p>
             </div>
           </div>
         )}
 
-        {/* Add emails */}
+        {/* Progress by Section */}
         <div style={{
           background: 'white',
-          padding: '24px',
+          padding: '20px',
           borderRadius: '12px',
           border: '1px solid #e2e8f0',
-          marginBottom: '32px'
+          marginBottom: '24px'
         }}>
           <h2 style={{
-            fontSize: '16px',
+            fontSize: '15px',
             fontWeight: 600,
             color: '#1e293b',
             margin: '0 0 16px'
+          }}>
+            Progreso por módulo
+          </h2>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            {sectionStats.map(section => (
+              <div key={section.id} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <div style={{ width: '200px', fontSize: '13px', color: '#64748b', flexShrink: 0 }}>
+                  {section.label}
+                </div>
+                <div style={{
+                  flex: 1,
+                  height: '8px',
+                  background: '#e2e8f0',
+                  borderRadius: '4px',
+                  overflow: 'hidden'
+                }}>
+                  <div style={{
+                    width: `${section.percent}%`,
+                    height: '100%',
+                    background: section.percent === 100 ? '#22c55e' : '#6366f1',
+                    borderRadius: '4px',
+                    transition: 'width 0.3s'
+                  }} />
+                </div>
+                <div style={{ width: '80px', fontSize: '13px', color: '#64748b', textAlign: 'right' }}>
+                  {section.completedCount}/{users.length} ({section.percent}%)
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Add emails */}
+        <div style={{
+          background: 'white',
+          padding: '20px',
+          borderRadius: '12px',
+          border: '1px solid #e2e8f0',
+          marginBottom: '24px'
+        }}>
+          <h2 style={{
+            fontSize: '15px',
+            fontWeight: 600,
+            color: '#1e293b',
+            margin: '0 0 12px'
           }}>
             Añadir emails
           </h2>
@@ -382,7 +504,7 @@ export default function PrecursoAdminPage() {
               placeholder="email1@gmail.com, email2@outlook.com..."
               style={{
                 flex: 1,
-                padding: '12px 16px',
+                padding: '10px 14px',
                 fontSize: '14px',
                 border: '1px solid #e2e8f0',
                 borderRadius: '8px'
@@ -392,7 +514,7 @@ export default function PrecursoAdminPage() {
               type="submit"
               disabled={addingEmails}
               style={{
-                padding: '12px 24px',
+                padding: '10px 20px',
                 fontSize: '14px',
                 fontWeight: 600,
                 color: 'white',
@@ -408,11 +530,7 @@ export default function PrecursoAdminPage() {
           </form>
 
           {addResult && (
-            <p style={{
-              fontSize: '14px',
-              color: '#22c55e',
-              marginTop: '12px'
-            }}>
+            <p style={{ fontSize: '13px', color: '#22c55e', marginTop: '8px' }}>
               {addResult.added} email(s) añadido(s)
               {addResult.skipped > 0 && `, ${addResult.skipped} ya existía(n)`}
             </p>
@@ -427,14 +545,16 @@ export default function PrecursoAdminPage() {
           overflow: 'hidden'
         }}>
           <div style={{
-            padding: '20px 24px',
+            padding: '16px 20px',
             borderBottom: '1px solid #e2e8f0',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'space-between'
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+            gap: '12px'
           }}>
             <h2 style={{
-              fontSize: '16px',
+              fontSize: '15px',
               fontWeight: 600,
               color: '#1e293b',
               margin: 0
@@ -446,7 +566,7 @@ export default function PrecursoAdminPage() {
               type="text"
               value={search}
               onChange={e => setSearch(e.target.value)}
-              placeholder="Buscar..."
+              placeholder="Buscar email..."
               style={{
                 padding: '8px 12px',
                 fontSize: '14px',
@@ -464,154 +584,138 @@ export default function PrecursoAdminPage() {
               </p>
             </div>
           ) : (
-            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-              <thead>
-                <tr style={{ background: '#f8fafc' }}>
-                  <th style={{
-                    textAlign: 'left',
-                    padding: '12px 24px',
-                    fontSize: '12px',
-                    fontWeight: 600,
-                    color: '#64748b',
-                    textTransform: 'uppercase'
-                  }}>
-                    Email
-                  </th>
-                  <th style={{
-                    textAlign: 'left',
-                    padding: '12px 24px',
-                    fontSize: '12px',
-                    fontWeight: 600,
-                    color: '#64748b',
-                    textTransform: 'uppercase'
-                  }}>
-                    Registro
-                  </th>
-                  <th style={{
-                    textAlign: 'left',
-                    padding: '12px 24px',
-                    fontSize: '12px',
-                    fontWeight: 600,
-                    color: '#64748b',
-                    textTransform: 'uppercase'
-                  }}>
-                    Progreso
-                  </th>
-                  <th style={{
-                    textAlign: 'right',
-                    padding: '12px 24px',
-                    fontSize: '12px',
-                    fontWeight: 600,
-                    color: '#64748b',
-                    textTransform: 'uppercase'
-                  }}>
-                    Acciones
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredUsers.map(user => (
-                  <tr key={user.email} style={{ borderTop: '1px solid #e2e8f0' }}>
-                    <td style={{ padding: '16px 24px' }}>
-                      <span style={{ fontSize: '14px', color: '#1e293b' }}>
-                        {user.email}
-                      </span>
-                    </td>
-                    <td style={{ padding: '16px 24px' }}>
-                      <span style={{ fontSize: '14px', color: '#64748b' }}>
-                        {new Date(user.addedAt).toLocaleDateString('es-ES', {
-                          day: 'numeric',
-                          month: 'short',
-                          year: 'numeric'
-                        })}
-                      </span>
-                    </td>
-                    <td style={{ padding: '16px 24px' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                        <div style={{
-                          flex: 1,
-                          maxWidth: '120px',
-                          height: '8px',
-                          background: '#e2e8f0',
-                          borderRadius: '4px',
-                          overflow: 'hidden'
-                        }}>
-                          <div style={{
-                            width: `${user.progressPercent}%`,
-                            height: '100%',
-                            background: user.isCompleted ? '#22c55e' : '#6366f1',
-                            borderRadius: '4px'
-                          }} />
-                        </div>
-                        <span style={{
-                          fontSize: '14px',
-                          fontWeight: 500,
-                          color: user.isCompleted ? '#22c55e' : '#64748b',
-                          minWidth: '40px'
-                        }}>
-                          {user.progressPercent}%
-                        </span>
-                      </div>
-                    </td>
-                    <td style={{ padding: '16px 24px', textAlign: 'right' }}>
-                      <button
-                        onClick={() => handleDeleteEmail(user.email)}
-                        style={{
-                          padding: '6px 12px',
-                          fontSize: '12px',
-                          color: '#dc2626',
-                          background: '#fef2f2',
-                          border: '1px solid #fecaca',
-                          borderRadius: '4px',
-                          cursor: 'pointer'
-                        }}
-                      >
-                        Eliminar
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
-        </div>
+            <div>
+              {filteredUsers.map(user => (
+                <div key={user.email} style={{ borderTop: '1px solid #e2e8f0' }}>
+                  {/* User row */}
+                  <div
+                    onClick={() => setExpandedUser(expandedUser === user.email ? null : user.email)}
+                    style={{
+                      padding: '14px 20px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '16px',
+                      cursor: 'pointer',
+                      background: expandedUser === user.email ? '#f8fafc' : 'white',
+                      transition: 'background 0.15s'
+                    }}
+                  >
+                    {/* Expand icon */}
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="#94a3b8"
+                      strokeWidth="2"
+                      style={{
+                        transform: expandedUser === user.email ? 'rotate(90deg)' : 'rotate(0)',
+                        transition: 'transform 0.15s',
+                        flexShrink: 0
+                      }}
+                    >
+                      <polyline points="9 18 15 12 9 6"/>
+                    </svg>
 
-        {/* Sections reference */}
-        {Object.keys(sections).length > 0 && (
-          <div style={{
-            marginTop: '32px',
-            padding: '20px 24px',
-            background: '#f8fafc',
-            borderRadius: '12px',
-            border: '1px solid #e2e8f0'
-          }}>
-            <h3 style={{
-              fontSize: '14px',
-              fontWeight: 600,
-              color: '#64748b',
-              margin: '0 0 12px'
-            }}>
-              Secciones del precurso ({Object.keys(sections).length})
-            </h3>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-              {Object.entries(sections).map(([key, label]) => (
-                <span
-                  key={key}
-                  style={{
-                    padding: '4px 10px',
-                    fontSize: '12px',
-                    background: 'white',
-                    borderRadius: '4px',
-                    border: '1px solid #e2e8f0',
-                    color: '#64748b'
-                  }}
-                >
-                  {label}
-                </span>
+                    {/* Email */}
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <p style={{ fontSize: '14px', color: '#1e293b', margin: 0, fontWeight: 500 }}>
+                        {user.email}
+                      </p>
+                      <p style={{ fontSize: '12px', color: '#94a3b8', margin: '2px 0 0' }}>
+                        Registrado {new Date(user.addedAt).toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' })}
+                        {user.lastSyncAt && ` · Última actividad ${formatRelativeTime(user.lastSyncAt)}`}
+                      </p>
+                    </div>
+
+                    {/* Progress */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                      <div style={{
+                        width: '100px',
+                        height: '6px',
+                        background: '#e2e8f0',
+                        borderRadius: '3px',
+                        overflow: 'hidden'
+                      }}>
+                        <div style={{
+                          width: `${user.progressPercent}%`,
+                          height: '100%',
+                          background: user.isCompleted ? '#22c55e' : user.progressPercent > 0 ? '#6366f1' : '#e2e8f0',
+                          borderRadius: '3px'
+                        }} />
+                      </div>
+                      <span style={{
+                        fontSize: '13px',
+                        fontWeight: 600,
+                        color: user.isCompleted ? '#22c55e' : '#64748b',
+                        minWidth: '45px',
+                        textAlign: 'right'
+                      }}>
+                        {user.progressPercent}%
+                      </span>
+                    </div>
+
+                    {/* Delete button */}
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        handleDeleteEmail(user.email)
+                      }}
+                      style={{
+                        padding: '6px 10px',
+                        fontSize: '12px',
+                        color: '#dc2626',
+                        background: '#fef2f2',
+                        border: '1px solid #fecaca',
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                        flexShrink: 0
+                      }}
+                    >
+                      Eliminar
+                    </button>
+                  </div>
+
+                  {/* Expanded detail */}
+                  {expandedUser === user.email && (
+                    <div style={{
+                      padding: '16px 20px 20px 52px',
+                      background: '#f8fafc',
+                      borderTop: '1px solid #e2e8f0'
+                    }}>
+                      <p style={{ fontSize: '13px', fontWeight: 600, color: '#64748b', margin: '0 0 12px' }}>
+                        Módulos completados ({user.completedCount}/{user.totalSections})
+                      </p>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                        {Object.entries(sections).map(([sectionId, label]) => {
+                          const isCompleted = user.progress[sectionId]
+                          return (
+                            <span
+                              key={sectionId}
+                              style={{
+                                padding: '6px 12px',
+                                fontSize: '12px',
+                                background: isCompleted ? '#dcfce7' : 'white',
+                                color: isCompleted ? '#16a34a' : '#94a3b8',
+                                borderRadius: '6px',
+                                border: `1px solid ${isCompleted ? '#bbf7d0' : '#e2e8f0'}`,
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '6px'
+                              }}
+                            >
+                              {isCompleted ? '✓' : '○'} {label}
+                            </span>
+                          )
+                        })}
+                      </div>
+                    </div>
+                  )}
+                </div>
               ))}
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </main>
     </div>
   )
