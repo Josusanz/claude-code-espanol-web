@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { serialize, parse } from 'cookie'
 
-const ADMIN_SECRET = process.env.ADMIN_SECRET || 'claude-code-admin'
+const ADMIN_SECRET = process.env.ADMIN_SECRET || '32403240'
 const COOKIE_NAME = 'admin-session'
 const COOKIE_MAX_AGE = 30 * 24 * 60 * 60 // 30 días en segundos
 
