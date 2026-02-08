@@ -577,6 +577,54 @@ export default function PrecursoAdminPage() {
             />
           </div>
 
+          {/* Module headers */}
+          {Object.keys(sections).length > 0 && filteredUsers.length > 0 && (
+            <div style={{
+              padding: '12px 20px',
+              background: '#f8fafc',
+              borderBottom: '1px solid #e2e8f0',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px'
+            }}>
+              <div style={{ width: '250px', flexShrink: 0 }}>
+                <span style={{ fontSize: '11px', fontWeight: 600, color: '#64748b', textTransform: 'uppercase' }}>
+                  Alumno
+                </span>
+              </div>
+              <div style={{ flex: 1, display: 'flex', gap: '4px', justifyContent: 'center' }}>
+                {Object.entries(sections).map(([sectionId, label], index) => (
+                  <div
+                    key={sectionId}
+                    title={label}
+                    style={{
+                      width: '28px',
+                      height: '28px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '10px',
+                      fontWeight: 600,
+                      color: '#64748b',
+                      background: 'white',
+                      borderRadius: '6px',
+                      border: '1px solid #e2e8f0',
+                      cursor: 'help'
+                    }}
+                  >
+                    {index + 1}
+                  </div>
+                ))}
+              </div>
+              <div style={{ width: '80px', textAlign: 'center', flexShrink: 0 }}>
+                <span style={{ fontSize: '11px', fontWeight: 600, color: '#64748b', textTransform: 'uppercase' }}>
+                  Total
+                </span>
+              </div>
+              <div style={{ width: '70px', flexShrink: 0 }}></div>
+            </div>
+          )}
+
           {filteredUsers.length === 0 ? (
             <div style={{ padding: '40px', textAlign: 'center' }}>
               <p style={{ color: '#64748b' }}>
@@ -587,69 +635,72 @@ export default function PrecursoAdminPage() {
             <div>
               {filteredUsers.map(user => (
                 <div key={user.email} style={{ borderTop: '1px solid #e2e8f0' }}>
-                  {/* User row */}
+                  {/* User row with module progress */}
                   <div
-                    onClick={() => setExpandedUser(expandedUser === user.email ? null : user.email)}
                     style={{
-                      padding: '14px 20px',
+                      padding: '12px 20px',
                       display: 'flex',
                       alignItems: 'center',
-                      gap: '16px',
-                      cursor: 'pointer',
-                      background: expandedUser === user.email ? '#f8fafc' : 'white',
-                      transition: 'background 0.15s'
+                      gap: '12px',
+                      background: 'white'
                     }}
                   >
-                    {/* Expand icon */}
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="#94a3b8"
-                      strokeWidth="2"
-                      style={{
-                        transform: expandedUser === user.email ? 'rotate(90deg)' : 'rotate(0)',
-                        transition: 'transform 0.15s',
-                        flexShrink: 0
-                      }}
-                    >
-                      <polyline points="9 18 15 12 9 6"/>
-                    </svg>
-
-                    {/* Email */}
-                    <div style={{ flex: 1, minWidth: 0 }}>
+                    {/* Email & Info */}
+                    <div style={{ width: '250px', flexShrink: 0 }}>
                       <p style={{ fontSize: '14px', color: '#1e293b', margin: 0, fontWeight: 500 }}>
                         {user.email}
                       </p>
-                      <p style={{ fontSize: '12px', color: '#94a3b8', margin: '2px 0 0' }}>
-                        Registrado {new Date(user.addedAt).toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' })}
-                        {user.lastSyncAt && ` · Última actividad ${formatRelativeTime(user.lastSyncAt)}`}
+                      <p style={{ fontSize: '11px', color: '#94a3b8', margin: '2px 0 0' }}>
+                        {user.lastSyncAt ? `Activo ${formatRelativeTime(user.lastSyncAt)}` : 'Sin actividad'}
                       </p>
                     </div>
 
-                    {/* Progress */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                      <div style={{
-                        width: '100px',
-                        height: '6px',
-                        background: '#e2e8f0',
-                        borderRadius: '3px',
-                        overflow: 'hidden'
-                      }}>
-                        <div style={{
-                          width: `${user.progressPercent}%`,
-                          height: '100%',
-                          background: user.isCompleted ? '#22c55e' : user.progressPercent > 0 ? '#6366f1' : '#e2e8f0',
-                          borderRadius: '3px'
-                        }} />
-                      </div>
+                    {/* Module checkmarks */}
+                    <div style={{ flex: 1, display: 'flex', gap: '4px', justifyContent: 'center' }}>
+                      {Object.entries(sections).map(([sectionId, label]) => {
+                        const isCompleted = user.progress[sectionId]
+                        return (
+                          <div
+                            key={sectionId}
+                            title={`${label}: ${isCompleted ? 'Completado' : 'Pendiente'}`}
+                            style={{
+                              width: '28px',
+                              height: '28px',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              fontSize: '14px',
+                              background: isCompleted ? '#dcfce7' : '#f1f5f9',
+                              borderRadius: '6px',
+                              border: `1px solid ${isCompleted ? '#bbf7d0' : '#e2e8f0'}`,
+                              cursor: 'help',
+                              transition: 'all 0.15s'
+                            }}
+                          >
+                            {isCompleted ? (
+                              <span style={{ color: '#16a34a' }}>✓</span>
+                            ) : (
+                              <span style={{ color: '#cbd5e1' }}>○</span>
+                            )}
+                          </div>
+                        )
+                      })}
+                    </div>
+
+                    {/* Progress percentage */}
+                    <div style={{
+                      width: '80px',
+                      textAlign: 'center',
+                      flexShrink: 0
+                    }}>
                       <span style={{
+                        display: 'inline-block',
+                        padding: '4px 10px',
                         fontSize: '13px',
                         fontWeight: 600,
-                        color: user.isCompleted ? '#22c55e' : '#64748b',
-                        minWidth: '45px',
-                        textAlign: 'right'
+                        borderRadius: '12px',
+                        background: user.isCompleted ? '#dcfce7' : user.progressPercent > 50 ? '#dbeafe' : user.progressPercent > 0 ? '#fef3c7' : '#f1f5f9',
+                        color: user.isCompleted ? '#16a34a' : user.progressPercent > 50 ? '#2563eb' : user.progressPercent > 0 ? '#d97706' : '#94a3b8'
                       }}>
                         {user.progressPercent}%
                       </span>
@@ -657,11 +708,9 @@ export default function PrecursoAdminPage() {
 
                     {/* Delete button */}
                     <button
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        handleDeleteEmail(user.email)
-                      }}
+                      onClick={() => handleDeleteEmail(user.email)}
                       style={{
+                        width: '70px',
                         padding: '6px 10px',
                         fontSize: '12px',
                         color: '#dc2626',
@@ -675,44 +724,38 @@ export default function PrecursoAdminPage() {
                       Eliminar
                     </button>
                   </div>
-
-                  {/* Expanded detail */}
-                  {expandedUser === user.email && (
-                    <div style={{
-                      padding: '16px 20px 20px 52px',
-                      background: '#f8fafc',
-                      borderTop: '1px solid #e2e8f0'
-                    }}>
-                      <p style={{ fontSize: '13px', fontWeight: 600, color: '#64748b', margin: '0 0 12px' }}>
-                        Módulos completados ({user.completedCount}/{user.totalSections})
-                      </p>
-                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-                        {Object.entries(sections).map(([sectionId, label]) => {
-                          const isCompleted = user.progress[sectionId]
-                          return (
-                            <span
-                              key={sectionId}
-                              style={{
-                                padding: '6px 12px',
-                                fontSize: '12px',
-                                background: isCompleted ? '#dcfce7' : 'white',
-                                color: isCompleted ? '#16a34a' : '#94a3b8',
-                                borderRadius: '6px',
-                                border: `1px solid ${isCompleted ? '#bbf7d0' : '#e2e8f0'}`,
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '6px'
-                              }}
-                            >
-                              {isCompleted ? '✓' : '○'} {label}
-                            </span>
-                          )
-                        })}
-                      </div>
-                    </div>
-                  )}
                 </div>
               ))}
+            </div>
+          )}
+
+          {/* Legend */}
+          {Object.keys(sections).length > 0 && filteredUsers.length > 0 && (
+            <div style={{
+              padding: '16px 20px',
+              background: '#f8fafc',
+              borderTop: '1px solid #e2e8f0'
+            }}>
+              <p style={{ fontSize: '12px', fontWeight: 600, color: '#64748b', margin: '0 0 10px' }}>
+                Leyenda de módulos:
+              </p>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                {Object.entries(sections).map(([sectionId, label], index) => (
+                  <span
+                    key={sectionId}
+                    style={{
+                      padding: '4px 10px',
+                      fontSize: '11px',
+                      background: 'white',
+                      borderRadius: '4px',
+                      border: '1px solid #e2e8f0',
+                      color: '#64748b'
+                    }}
+                  >
+                    <strong>{index + 1}.</strong> {label}
+                  </span>
+                ))}
+              </div>
             </div>
           )}
         </div>
