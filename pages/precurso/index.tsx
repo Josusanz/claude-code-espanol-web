@@ -12,6 +12,7 @@ export const PRECURSO_SECTIONS = {
   'req-github': 'Cuenta GitHub creada',
   'req-vercel': 'Cuenta Vercel creada',
   'req-claude': 'Claude Code instalado',
+  'reglas-prompting': '7 Reglas de Prompting',
   'quiz-aprobado': 'Quiz aprobado',
   'primer-proyecto': 'Primer proyecto completado',
 }
@@ -506,6 +507,25 @@ function PrecursoContent() {
             </div>
           </nav>
 
+          {/* 7 Reglas Prompting */}
+          <div style={{ marginTop: '20px' }}>
+            <Link href="/precurso/reglas-prompting" style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px',
+              padding: '8px 20px',
+              color: t.text,
+              textDecoration: 'none',
+              fontSize: '13px',
+              fontWeight: 600,
+              textTransform: 'uppercase',
+              letterSpacing: '0.3px'
+            }}>
+              <span>🎯</span>
+              7 Reglas Prompting
+            </Link>
+          </div>
+
           {/* Checklist link */}
           <div style={{ marginTop: '20px' }}>
             <Link href="/precurso/checklist" style={{
@@ -798,6 +818,73 @@ function PrecursoContent() {
               </div>
             </Link>
 
+            {/* 7 Reglas de Prompting */}
+            <Link href="/precurso/reglas-prompting" className="precurso-card" style={{
+              display: 'flex',
+              alignItems: 'flex-start',
+              gap: '16px',
+              padding: '20px',
+              background: completed['reglas-prompting'] ? t.successLight : t.bgSecondary,
+              border: `1px solid ${completed['reglas-prompting'] ? t.success : t.border}`,
+              borderRadius: '14px',
+              textDecoration: 'none',
+              transition: 'all 0.2s',
+              cursor: 'pointer'
+            }}>
+              <div style={{
+                width: '48px',
+                height: '48px',
+                background: completed['reglas-prompting']
+                  ? t.success
+                  : 'linear-gradient(135deg, #f97316, #ea580c)',
+                borderRadius: '12px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '22px',
+                flexShrink: 0,
+                color: 'white'
+              }}>
+                {completed['reglas-prompting'] ? '✓' : '🎯'}
+              </div>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px', flexWrap: 'wrap' }}>
+                  <span style={{
+                    padding: '2px 8px',
+                    background: t.accentLight,
+                    borderRadius: '4px',
+                    fontSize: '10px',
+                    fontWeight: 600,
+                    color: t.accent
+                  }}>FUNDAMENTAL</span>
+                  <span style={{
+                    fontSize: '12px',
+                    color: completed['reglas-prompting'] ? t.success : t.textMuted,
+                    fontWeight: 500
+                  }}>
+                    {completed['reglas-prompting'] ? '✓ Completado' : '15 min'}
+                  </span>
+                </div>
+                <h3 style={{
+                  fontSize: '16px',
+                  fontWeight: 600,
+                  color: t.text,
+                  margin: '0 0 4px 0',
+                  lineHeight: 1.3
+                }}>
+                  Las 7 Reglas de Prompting
+                </h3>
+                <p style={{
+                  fontSize: '14px',
+                  color: t.textSecondary,
+                  margin: 0,
+                  lineHeight: 1.4
+                }}>
+                  Cómo hablar con Claude para obtener los mejores resultados
+                </p>
+              </div>
+            </Link>
+
             {/* Errores Comunes */}
             <Link href="/precurso/errores-comunes" className="precurso-card" style={{
               display: 'flex',
@@ -983,7 +1070,7 @@ function PrecursoContent() {
             color: t.textMuted,
             fontSize: '13px'
           }}>
-            <span>⏱️ ~50 min total</span>
+            <span>⏱️ ~65 min total</span>
             <span>📱 A tu ritmo</span>
           </div>
         </main>
