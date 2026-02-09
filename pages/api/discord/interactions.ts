@@ -247,14 +247,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       })
     }
 
-    if (name === 'pregunta') {
-      const pregunta = options?.find((o: { name: string }) => o.name === 'duda')?.value
+    if (name === 'pregunta' || name === 'duda') {
+      // Support both /pregunta duda:... and /duda pregunta:...
+      const pregunta = options?.find((o: { name: string }) => o.name === 'duda' || o.name === 'pregunta')?.value
 
       if (!pregunta) {
         return res.status(200).json({
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
           data: {
-            content: '❌ Usa: `/pregunta duda:¿Cómo conecto Supabase?`',
+            content: '❌ Usa: `/pregunta duda:¿Cómo conecto Supabase?` o `/duda pregunta:...`',
             flags: 64,
           },
         })
