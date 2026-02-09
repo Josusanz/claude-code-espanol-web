@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { kv } from '@vercel/kv'
 import nacl from 'tweetnacl'
+import Anthropic from '@anthropic-ai/sdk'
 
 // Discord interaction types
 const InteractionType = {
@@ -11,6 +12,81 @@ const InteractionType = {
 const InteractionResponseType = {
   PONG: 1,
   CHANNEL_MESSAGE_WITH_SOURCE: 4,
+  DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE: 5,
+}
+
+// Course context for Claude
+const CURSO_CONTEXT = `Eres el asistente del curso "Crea tu Software con IA" de Josu Sanz.
+
+INFORMACIÓN DEL CURSO:
+- Duración: 10 semanas (19 febrero - 24 abril 2026)
+- Formato: Clases en vivo por Zoom + contenido + comunidad Discord
+- Objetivo: Crear tu propio SaaS usando IA como copiloto
+
+TECNOLOGÍAS DEL CURSO:
+- Next.js 14 (App Router)
+- React + TypeScript
+- Tailwind CSS + shadcn/ui
+- Supabase (base de datos + auth)
+- Vercel (deploy)
+- Claude/ChatGPT para desarrollo con IA
+
+ESTRUCTURA SEMANAL:
+- Semana 1: LaunchPad - Proyecto conjunto (waitlist)
+- Semana 2: Tu proyecto - Setup + UI con shadcn/ui
+- Semana 3: Base de datos con Supabase
+- Semana 4: Autenticación de usuarios
+- Semana 5: CRUD y lógica de negocio
+- Semana 6: Pagos con Stripe
+- Semana 7: Email y notificaciones
+- Semana 8: SEO y rendimiento
+- Semana 9: Testing y calidad
+- Semana 10: Lanzamiento y marketing
+
+REGLAS DE RESPUESTA:
+- Responde en español
+- Sé conciso (máximo 1500 caracteres)
+- Si la pregunta no es del curso, redirige amablemente
+- Usa ejemplos de código cuando sea útil
+- Menciona recursos del curso si aplica`
+
+// Ask Claude a question
+async function askClaude(question: string): Promise<string> {
+  const client = new Anthropic()
+
+  try {
+    const response = await client.messages.create({
+      model: 'claude-sonnet-4-20250514',
+      max_tokens: 500,
+      messages: [
+        {
+          role: 'user',
+          content: question
+        }
+      ],
+      system: CURSO_CONTEXT
+    })
+
+    const textBlock = response.content.find(block => block.type === 'text')
+    if (textBlock && textBlock.type === 'text') {
+      return textBlock.text
+    }
+    return 'No pude generar una respuesta.'
+  } catch (error) {
+    console.error('Claude API error:', error)
+    return 'Error al consultar con Claude. Inténtalo de nuevo.'
+  }
+}
+
+// Send followup message to Discord
+async function sendFollowup(applicationId: string, token: string, content: string): Promise<void> {
+  const url = `https://discord.com/api/v10/webhooks/${applicationId}/${token}`
+
+  await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ content })
+  })
 }
 
 // Get raw body from request
@@ -169,6 +245,48 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           flags: 64,
         },
       })
+    }
+
+    if (name === 'pregunta') {
+      const pregunta = options?.find((o: { name: string }) => o.name === 'pregunta')?.value
+
+      if (!pregunta) {
+        return res.status(200).json({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: '❌ Usa: `/pregunta pregunta:¿Cómo conecto Supabase?`',
+            flags: 64,
+          },
+        })
+      }
+
+      // Defer the response (we need time to call Claude)
+      res.status(200).json({
+        type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
+      })
+
+      // Call Claude and send followup (async, after response)
+      const applicationId = process.env.DISCORD_APP_ID
+      const interactionToken = body.token
+
+      if (applicationId && interactionToken) {
+        try {
+          const answer = await askClaude(pregunta)
+          const formattedResponse = `**Pregunta:** ${pregunta}\n\n**Respuesta:**\n${answer}`
+
+          // Truncate if too long (Discord limit is 2000 chars)
+          const finalResponse = formattedResponse.length > 1900
+            ? formattedResponse.substring(0, 1900) + '...'
+            : formattedResponse
+
+          await sendFollowup(applicationId, interactionToken, finalResponse)
+        } catch (error) {
+          console.error('Pregunta error:', error)
+          await sendFollowup(applicationId, interactionToken, '❌ Error al procesar la pregunta. Inténtalo de nuevo.')
+        }
+      }
+
+      return // Already sent response
     }
   }
 
