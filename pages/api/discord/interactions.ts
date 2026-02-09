@@ -50,14 +50,14 @@ REGLAS DE RESPUESTA:
 - Usa ejemplos de código cuando sea útil
 - Menciona recursos del curso si aplica`
 
-// Ask Claude a question
+// Ask Claude a question (using Haiku for speed)
 async function askClaude(question: string): Promise<string> {
   const client = new Anthropic()
 
   try {
     const response = await client.messages.create({
-      model: 'claude-sonnet-4-20250514',
-      max_tokens: 500,
+      model: 'claude-3-5-haiku-20241022',
+      max_tokens: 400,
       messages: [
         {
           role: 'user',
@@ -261,33 +261,32 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         })
       }
 
-      // Defer the response (we need time to call Claude)
-      res.status(200).json({
-        type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
-      })
+      try {
+        // Call Claude directly (Haiku is fast enough)
+        const answer = await askClaude(pregunta)
+        const formattedResponse = `**Pregunta:** ${pregunta}\n\n**Respuesta:**\n${answer}`
 
-      // Call Claude and send followup (async, after response)
-      const applicationId = process.env.DISCORD_APP_ID
-      const interactionToken = body.token
+        // Truncate if too long (Discord limit is 2000 chars)
+        const finalResponse = formattedResponse.length > 1900
+          ? formattedResponse.substring(0, 1900) + '...'
+          : formattedResponse
 
-      if (applicationId && interactionToken) {
-        try {
-          const answer = await askClaude(pregunta)
-          const formattedResponse = `**Pregunta:** ${pregunta}\n\n**Respuesta:**\n${answer}`
-
-          // Truncate if too long (Discord limit is 2000 chars)
-          const finalResponse = formattedResponse.length > 1900
-            ? formattedResponse.substring(0, 1900) + '...'
-            : formattedResponse
-
-          await sendFollowup(applicationId, interactionToken, finalResponse)
-        } catch (error) {
-          console.error('Pregunta error:', error)
-          await sendFollowup(applicationId, interactionToken, '❌ Error al procesar la pregunta. Inténtalo de nuevo.')
-        }
+        return res.status(200).json({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: finalResponse,
+          },
+        })
+      } catch (error) {
+        console.error('Pregunta error:', error)
+        return res.status(200).json({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: '❌ Error al procesar la pregunta. Inténtalo de nuevo.',
+            flags: 64,
+          },
+        })
       }
-
-      return // Already sent response
     }
   }
 
