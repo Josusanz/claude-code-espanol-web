@@ -164,16 +164,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
 
       try {
-        console.log(`[VERIFICAR] Checking email: "${email}"`)
-        const isEnrolled = await kv.sismember('curso:emails', email)
-        const isPrecurso = await kv.sismember('precurso:emails', email)
-        console.log(`[VERIFICAR] Results - curso: ${isEnrolled}, precurso: ${isPrecurso}`)
+        // Verificar en paralelo para mayor velocidad
+        const [isEnrolled, isPrecurso] = await Promise.all([
+          kv.sismember('curso:emails', email),
+          kv.sismember('precurso:emails', email)
+        ])
 
         if (!isEnrolled && !isPrecurso) {
-          // Debug: listar todos los emails para comparar
-          const allPrecurso = await kv.smembers('precurso:emails')
-          console.log(`[VERIFICAR] All precurso emails: ${JSON.stringify(allPrecurso)}`)
-
           return res.status(200).json({
             type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
             data: {
@@ -183,13 +180,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           })
         }
 
+        // Asignar rol y guardar en background (no esperar)
         const ALUMNO_ROLE_ID = process.env.DISCORD_ALUMNO_ROLE_ID
         if (ALUMNO_ROLE_ID && guild_id && member?.user?.id) {
-          await assignRole(guild_id, member.user.id, ALUMNO_ROLE_ID)
-          await kv.hset(`curso:user:${email}`, {
-            discordId: member.user.id,
-            discordVerifiedAt: new Date().toISOString(),
-          })
+          // No await - ejecutar en background
+          Promise.all([
+            assignRole(guild_id, member.user.id, ALUMNO_ROLE_ID),
+            kv.hset(`curso:user:${email}`, {
+              discordId: member.user.id,
+              discordVerifiedAt: new Date().toISOString(),
+            })
+          ]).catch(console.error)
         }
 
         return res.status(200).json({
@@ -200,7 +201,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           },
         })
       } catch (error) {
-        console.error('Error:', error)
+        console.error('Verificar error:', error)
         return res.status(200).json({
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
           data: {
@@ -234,17 +235,25 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         })
       }
 
-      // Direct response - Haiku should be fast enough
-      const answer = await askClaude(pregunta)
-      const formattedResponse = `**${pregunta}**\n\n${answer}`
-      const finalResponse = formattedResponse.length > 1900
-        ? formattedResponse.substring(0, 1900) + '...'
-        : formattedResponse
-
-      return res.status(200).json({
-        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-        data: { content: finalResponse },
+      // Responder inmediatamente que estamos "pensando"
+      res.status(200).json({
+        type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
       })
+
+      // Procesar y enviar followup
+      try {
+        const answer = await askClaude(pregunta)
+        const formattedResponse = `**${pregunta}**\n\n${answer}`
+        const finalResponse = formattedResponse.length > 1900
+          ? formattedResponse.substring(0, 1900) + '...'
+          : formattedResponse
+
+        await sendFollowup(body.application_id, body.token, finalResponse)
+      } catch (error) {
+        console.error('Duda error:', error)
+        await sendFollowup(body.application_id, body.token, '❌ Error al procesar. Inténtalo de nuevo.')
+      }
+      return
     }
   }
 
