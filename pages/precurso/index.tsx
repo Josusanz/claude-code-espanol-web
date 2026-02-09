@@ -1123,6 +1123,70 @@ function PrecursoContent() {
                 </p>
               </div>
             </a>
+
+            {/* Calendario */}
+            <a
+              href="https://calendar.google.com/calendar/u/0/r?cid=43979bc920a7c33e572266e10021d4934f9ce7eea323fa948471566d5f25d11f@group.calendar.google.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="precurso-card"
+              style={{
+                display: 'flex',
+                alignItems: 'flex-start',
+                gap: '16px',
+                padding: '20px',
+                background: 'linear-gradient(135deg, rgba(66, 133, 244, 0.1), rgba(66, 133, 244, 0.05))',
+                border: '1px solid rgba(66, 133, 244, 0.3)',
+                borderRadius: '14px',
+                textDecoration: 'none',
+                transition: 'all 0.2s',
+                cursor: 'pointer'
+              }}
+            >
+              <div style={{
+                width: '48px',
+                height: '48px',
+                background: 'linear-gradient(135deg, #4285F4, #34A853)',
+                borderRadius: '12px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '22px',
+                flexShrink: 0,
+                color: 'white'
+              }}>
+                📅
+              </div>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                  <span style={{
+                    padding: '2px 8px',
+                    background: 'rgba(66, 133, 244, 0.2)',
+                    borderRadius: '4px',
+                    fontSize: '10px',
+                    fontWeight: 600,
+                    color: '#4285F4'
+                  }}>CALENDARIO</span>
+                </div>
+                <h3 style={{
+                  fontSize: '16px',
+                  fontWeight: 600,
+                  color: t.text,
+                  margin: '0 0 4px 0',
+                  lineHeight: 1.3
+                }}>
+                  Añade las clases a tu calendario
+                </h3>
+                <p style={{
+                  fontSize: '14px',
+                  color: t.textSecondary,
+                  margin: 0,
+                  lineHeight: 1.4
+                }}>
+                  Sincroniza todas las clases en vivo con Google Calendar
+                </p>
+              </div>
+            </a>
           </div>
 
           {/* Time estimate */}
