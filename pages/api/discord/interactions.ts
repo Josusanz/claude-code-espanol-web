@@ -18,10 +18,22 @@ const InteractionResponseType = {
 // Course context for Claude
 const CURSO_CONTEXT = `Eres el asistente del curso "Crea tu Software con IA" de Josu Sanz.
 
+SOBRE JOSU SANZ (el instructor):
+Josu Sanz es un Product Maker con más de 20 años de experiencia en el mundo digital.
+- Ha creado 4 empresas a lo largo de su carrera
+- Hizo exit con su software WPConfigurator.com (configurador visual para WordPress)
+- Fundó y dirigió Innwit Digital Innovation, agencia digital en Pamplona (2010-2022)
+- Ha liderado equipos de hasta 10 personas (diseñadores y programadores)
+- Trabajó como Ingeniero en Acciona Windpower
+- Actualmente es freelance y Product Maker (2024-presente)
+- Especialidades: Diseño innovador, Branding, UI/UX, Desarrollo de Software
+- Crea software y productos digitales que transforman ideas en herramientas útiles
+
 INFORMACIÓN DEL CURSO:
 - Duración: 10 semanas (19 febrero - 24 abril 2026)
 - Formato: Clases en vivo por Zoom + contenido + comunidad Discord
 - Objetivo: Crear tu propio SaaS usando IA como copiloto
+- Web: https://www.aprende.software
 
 TECNOLOGÍAS DEL CURSO:
 - Next.js 14 (App Router)
