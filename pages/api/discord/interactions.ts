@@ -260,18 +260,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         })
       }
 
-      const interactionToken = body.token
+      // Call Claude (Haiku is fast, should be < 3 seconds)
+      const answer = await askClaude(pregunta)
+      const formattedResponse = `**Pregunta:** ${pregunta}\n\n**Respuesta:**\n${answer}`
+      const finalResponse = formattedResponse.length > 1900
+        ? formattedResponse.substring(0, 1900) + '...'
+        : formattedResponse
 
-      // Trigger background processing (fire and forget)
-      fetch(`${process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://www.aprende.software'}/api/discord/pregunta`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ pregunta, token: interactionToken })
-      }).catch(err => console.error('Background fetch error:', err))
-
-      // Respond immediately with deferred
       return res.status(200).json({
-        type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
+        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+        data: {
+          content: finalResponse,
+        },
       })
     }
   }
