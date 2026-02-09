@@ -275,22 +275,39 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const interactionToken = body.token
       const applicationId = process.env.DISCORD_APP_ID
 
-      // 1. Send deferred response immediately
+      // Race: Claude vs 2.5s timeout
+      const claudePromise = askClaude(pregunta)
+      const timeoutPromise = new Promise<null>((resolve) => setTimeout(() => resolve(null), 2500))
+
+      const result = await Promise.race([claudePromise, timeoutPromise])
+
+      if (result !== null) {
+        // Claude responded in time - send direct response
+        const formattedResponse = `**Pregunta:** ${pregunta}\n\n**Respuesta:**\n${result}`
+        const finalResponse = formattedResponse.length > 1900
+          ? formattedResponse.substring(0, 1900) + '...'
+          : formattedResponse
+
+        return res.status(200).json({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: { content: finalResponse },
+        })
+      }
+
+      // Claude is slow - send deferred, then wait for Claude and send followup
       res.status(200).json({
         type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
       })
 
-      // 2. Call Claude (this can take time)
-      const answer = await askClaude(pregunta)
+      // Wait for Claude to finish
+      const answer = await claudePromise
       const formattedResponse = `**Pregunta:** ${pregunta}\n\n**Respuesta:**\n${answer}`
       const finalResponse = formattedResponse.length > 1900
         ? formattedResponse.substring(0, 1900) + '...'
         : formattedResponse
 
-      // 3. Send followup message
+      // Send followup
       await sendFollowup(applicationId!, interactionToken, finalResponse)
-
-      // Don't return - function ends naturally after followup
       return
     }
   }
@@ -303,4 +320,5 @@ export const config = {
   api: {
     bodyParser: false,
   },
+  maxDuration: 30, // Allow up to 30 seconds for Claude responses
 }
