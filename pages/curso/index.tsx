@@ -162,7 +162,7 @@ function CursoDashboard() {
     return (
       <div style={{
         minHeight: '100vh',
-        background: '#0f172a',
+        background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center'
@@ -170,7 +170,7 @@ function CursoDashboard() {
         <div style={{
           width: '48px',
           height: '48px',
-          border: '4px solid #334155',
+          border: '4px solid #e2e8f0',
           borderTop: '4px solid #6366f1',
           borderRadius: '50%',
           animation: 'spin 1s linear infinite',
@@ -183,9 +183,9 @@ function CursoDashboard() {
   return (
     <div style={{
       minHeight: '100vh',
-      background: '#0f172a',
+      background: 'linear-gradient(135deg, #f8fafc 0%, #eef2f6 100%)',
       fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
-      color: '#f1f5f9'
+      color: '#1e293b'
     }}>
       <Head>
         <title>Curso | Crea tu Software con IA</title>
@@ -195,48 +195,51 @@ function CursoDashboard() {
 
       {/* Header */}
       <header style={{
-        background: 'rgba(15, 23, 42, 0.8)',
+        background: 'rgba(255, 255, 255, 0.9)',
         backdropFilter: 'blur(12px)',
-        borderBottom: '1px solid #334155',
+        borderBottom: '1px solid rgba(0,0,0,0.06)',
         padding: '16px 24px',
         position: 'sticky',
         top: 0,
         zIndex: 100,
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        boxShadow: '0 1px 3px rgba(0,0,0,0.04)'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <div style={{
-            width: '40px',
-            height: '40px',
+            width: '42px',
+            height: '42px',
             background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
-            borderRadius: '10px',
+            borderRadius: '12px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: '20px'
+            fontSize: '20px',
+            boxShadow: '0 4px 12px rgba(99, 102, 241, 0.25)'
           }}>🚀</div>
           <div>
-            <h1 style={{ margin: 0, fontSize: '18px', fontWeight: 600 }}>Crea tu Software con IA</h1>
-            <p style={{ margin: 0, fontSize: '13px', color: '#94a3b8' }}>Primera Promoción</p>
+            <h1 style={{ margin: 0, fontSize: '18px', fontWeight: 700, color: '#0f172a' }}>Crea tu Software con IA</h1>
+            <p style={{ margin: 0, fontSize: '13px', color: '#64748b', fontWeight: 500 }}>Primera Promoción</p>
           </div>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <span style={{ fontSize: '13px', color: '#64748b' }}>{userEmail}</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+          <span style={{ fontSize: '13px', color: '#64748b', fontWeight: 500 }}>{userEmail}</span>
           <button
             onClick={handleLogout}
             style={{
-              padding: '8px 16px',
+              padding: '8px 18px',
               fontSize: '13px',
-              fontWeight: 500,
-              color: '#94a3b8',
-              background: 'transparent',
-              border: '1px solid #334155',
-              borderRadius: '8px',
+              fontWeight: 600,
+              color: '#64748b',
+              background: 'white',
+              border: '1px solid #e2e8f0',
+              borderRadius: '10px',
               cursor: 'pointer',
-              transition: 'all 0.2s'
+              transition: 'all 0.2s',
+              boxShadow: '0 1px 2px rgba(0,0,0,0.04)'
             }}
           >
             Salir
@@ -244,24 +247,25 @@ function CursoDashboard() {
         </div>
       </header>
 
-      <main style={{ maxWidth: '1000px', margin: '0 auto', padding: '32px 24px' }}>
+      <main style={{ maxWidth: '1000px', margin: '0 auto', padding: '40px 24px' }}>
         {/* Welcome section */}
         <div style={{ marginBottom: '32px' }}>
-          <h2 style={{ margin: '0 0 8px', fontSize: '28px', fontWeight: 700 }}>
+          <h2 style={{ margin: '0 0 8px', fontSize: '32px', fontWeight: 700, color: '#0f172a' }}>
             Bienvenido al curso 👋
           </h2>
-          <p style={{ margin: 0, fontSize: '16px', color: '#94a3b8' }}>
+          <p style={{ margin: 0, fontSize: '16px', color: '#64748b', fontWeight: 500 }}>
             Primera Promoción • Semana {currentWeek} de 10
           </p>
         </div>
 
         {/* Progress bar */}
         <div style={{
-          background: '#1e293b',
-          borderRadius: '16px',
-          padding: '24px',
-          marginBottom: '32px',
-          border: '1px solid #334155'
+          background: 'white',
+          borderRadius: '20px',
+          padding: '28px',
+          marginBottom: '24px',
+          border: '1px solid rgba(0,0,0,0.06)',
+          boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.03), 0 2px 4px -1px rgba(0, 0, 0, 0.02)'
         }}>
           <div style={{
             display: 'flex',
@@ -269,14 +273,14 @@ function CursoDashboard() {
             alignItems: 'center',
             marginBottom: '16px'
           }}>
-            <span style={{ fontSize: '15px', fontWeight: 600 }}>Tu progreso</span>
-            <span style={{ fontSize: '15px', fontWeight: 600, color: '#6366f1' }}>
+            <span style={{ fontSize: '15px', fontWeight: 600, color: '#374151' }}>Tu progreso</span>
+            <span style={{ fontSize: '15px', fontWeight: 700, color: '#6366f1' }}>
               {Math.round(totalPercentage)}% ({completedItems}/{totalItems})
             </span>
           </div>
           <div style={{
             height: '12px',
-            background: '#334155',
+            background: '#f1f5f9',
             borderRadius: '100px',
             overflow: 'hidden'
           }}>
@@ -287,11 +291,12 @@ function CursoDashboard() {
                 ? 'linear-gradient(90deg, #22c55e, #16a34a)'
                 : 'linear-gradient(90deg, #6366f1, #8b5cf6)',
               borderRadius: '100px',
-              transition: 'width 0.3s ease'
+              transition: 'width 0.3s ease',
+              boxShadow: '0 2px 4px rgba(99, 102, 241, 0.3)'
             }} />
           </div>
           {totalPercentage === 100 && (
-            <p style={{ margin: '12px 0 0', fontSize: '14px', color: '#22c55e', fontWeight: 500 }}>
+            <p style={{ margin: '16px 0 0', fontSize: '14px', color: '#22c55e', fontWeight: 600 }}>
               🎉 ¡Has completado el curso!
             </p>
           )}
@@ -302,91 +307,98 @@ function CursoDashboard() {
           display: 'flex',
           alignItems: 'center',
           gap: '16px',
-          padding: '20px 24px',
-          background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(249, 115, 22, 0.1))',
-          border: '1px solid rgba(245, 158, 11, 0.3)',
-          borderRadius: '16px',
-          marginBottom: '32px',
+          padding: '24px',
+          background: 'linear-gradient(135deg, #fffbeb, #fef3c7)',
+          border: '1px solid rgba(245, 158, 11, 0.2)',
+          borderRadius: '20px',
+          marginBottom: '24px',
           textDecoration: 'none',
-          transition: 'all 0.2s'
+          transition: 'all 0.2s',
+          boxShadow: '0 4px 6px -1px rgba(245, 158, 11, 0.08)'
         }}>
           <span style={{
-            width: '48px',
-            height: '48px',
+            width: '56px',
+            height: '56px',
             background: 'linear-gradient(135deg, #f59e0b, #f97316)',
-            borderRadius: '12px',
+            borderRadius: '16px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: '24px',
-            flexShrink: 0
+            fontSize: '28px',
+            flexShrink: 0,
+            boxShadow: '0 4px 12px rgba(245, 158, 11, 0.3)'
           }}>
             🎯
           </span>
           <div style={{ flex: 1 }}>
-            <h3 style={{ margin: '0 0 4px', fontSize: '16px', fontWeight: 600, color: '#f1f5f9' }}>
+            <h3 style={{ margin: '0 0 4px', fontSize: '17px', fontWeight: 700, color: '#92400e' }}>
               Rueda del Creador
             </h3>
-            <p style={{ margin: 0, fontSize: '14px', color: '#94a3b8' }}>
+            <p style={{ margin: 0, fontSize: '14px', color: '#a16207', fontWeight: 500 }}>
               Evalúa tus 8 áreas clave y ve tu transformación
             </p>
           </div>
-          <span style={{ color: '#f59e0b', fontSize: '20px' }}>→</span>
+          <span style={{ color: '#f59e0b', fontSize: '24px', fontWeight: 600 }}>→</span>
         </Link>
 
         {/* Próxima clase */}
         {proximaSemana && (
           <div style={{
-            background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1))',
-            border: '1px solid rgba(99, 102, 241, 0.3)',
-            borderRadius: '16px',
-            padding: '24px',
-            marginBottom: '32px'
+            background: 'linear-gradient(135deg, #eef2ff, #e0e7ff)',
+            border: '1px solid rgba(99, 102, 241, 0.2)',
+            borderRadius: '20px',
+            padding: '28px',
+            marginBottom: '32px',
+            boxShadow: '0 4px 6px -1px rgba(99, 102, 241, 0.08)'
           }}>
             <div style={{
-              display: 'flex',
+              display: 'inline-flex',
               alignItems: 'center',
-              gap: '8px',
-              marginBottom: '12px'
+              gap: '6px',
+              padding: '6px 12px',
+              background: 'rgba(99, 102, 241, 0.15)',
+              borderRadius: '100px',
+              marginBottom: '16px'
             }}>
-              <span style={{ fontSize: '13px', fontWeight: 600, color: '#a5b4fc', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                📌 Próxima clase
+              <span style={{ fontSize: '12px' }}>🚀</span>
+              <span style={{ fontSize: '12px', fontWeight: 700, color: '#4f46e5', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                Próxima clase
               </span>
             </div>
-            <h3 style={{ margin: '0 0 8px', fontSize: '20px', fontWeight: 600 }}>
+            <h3 style={{ margin: '0 0 8px', fontSize: '22px', fontWeight: 700, color: '#1e1b4b' }}>
               Semana {proximaSemana.num}: {proximaSemana.titulo}
             </h3>
-            <p style={{ margin: '0 0 16px', fontSize: '14px', color: '#94a3b8' }}>
+            <p style={{ margin: '0 0 20px', fontSize: '15px', color: '#4338ca', fontWeight: 500 }}>
               {proximaSemana.clase.fecha} • {proximaSemana.clase.hora}
             </p>
-            <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-              <Link href={`/curso/semana/${proximaSemana.num}`} style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                padding: '12px 20px',
-                background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
-                color: 'white',
-                textDecoration: 'none',
-                borderRadius: '10px',
-                fontSize: '14px',
-                fontWeight: 600,
-                boxShadow: '0 4px 14px rgba(99, 102, 241, 0.3)'
-              }}>
-                Ver contenido
-              </Link>
-            </div>
+            <Link href={`/curso/semana/${proximaSemana.num}`} style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
+              padding: '14px 24px',
+              background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+              color: 'white',
+              textDecoration: 'none',
+              borderRadius: '12px',
+              fontSize: '15px',
+              fontWeight: 600,
+              boxShadow: '0 4px 14px rgba(99, 102, 241, 0.35)',
+              transition: 'all 0.2s'
+            }}>
+              Ver contenido
+            </Link>
           </div>
         )}
 
-        {/* Semanas grid */}
-        <h3 style={{ margin: '0 0 20px', fontSize: '18px', fontWeight: 600 }}>
-          📅 Semanas
+        {/* Semanas header */}
+        <h3 style={{ margin: '0 0 20px', fontSize: '20px', fontWeight: 700, color: '#0f172a' }}>
+          📅 Semanas del curso
         </h3>
 
+        {/* Semanas grid */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
           gap: '16px'
         }}>
           {CURSO_SEMANAS.map(semana => {
@@ -400,40 +412,58 @@ function CursoDashboard() {
                 href={isUnlocked ? `/curso/semana/${semana.num}` : '#'}
                 onClick={e => { if (!isUnlocked) e.preventDefault() }}
                 style={{
-                  background: isComplete ? 'rgba(34, 197, 94, 0.1)' : '#1e293b',
-                  border: `1px solid ${isComplete ? 'rgba(34, 197, 94, 0.3)' : isUnlocked ? '#334155' : '#1e293b'}`,
-                  borderRadius: '14px',
+                  background: isComplete
+                    ? 'linear-gradient(135deg, #f0fdf4, #dcfce7)'
+                    : 'white',
+                  border: `1px solid ${isComplete ? 'rgba(34, 197, 94, 0.2)' : 'rgba(0,0,0,0.06)'}`,
+                  borderRadius: '16px',
                   padding: '20px',
                   textDecoration: 'none',
                   transition: 'all 0.2s',
                   cursor: isUnlocked ? 'pointer' : 'not-allowed',
-                  opacity: isUnlocked ? 1 : 0.5,
+                  opacity: isUnlocked ? 1 : 0.6,
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: '12px'
+                  gap: '14px',
+                  boxShadow: isUnlocked
+                    ? '0 4px 6px -1px rgba(0, 0, 0, 0.03), 0 2px 4px -1px rgba(0, 0, 0, 0.02)'
+                    : 'none'
                 }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                   <span style={{
-                    width: '40px',
-                    height: '40px',
+                    width: '44px',
+                    height: '44px',
                     background: isComplete
                       ? 'linear-gradient(135deg, #22c55e, #16a34a)'
                       : isUnlocked
                         ? 'linear-gradient(135deg, #6366f1, #8b5cf6)'
-                        : '#334155',
-                    borderRadius: '10px',
+                        : '#e2e8f0',
+                    borderRadius: '12px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    fontSize: '18px'
+                    fontSize: '20px',
+                    color: 'white',
+                    boxShadow: isUnlocked
+                      ? isComplete
+                        ? '0 4px 12px rgba(34, 197, 94, 0.25)'
+                        : '0 4px 12px rgba(99, 102, 241, 0.25)'
+                      : 'none'
                   }}>
                     {isComplete ? '✓' : isUnlocked ? semana.emoji : '🔒'}
                   </span>
                   <span style={{
-                    fontSize: '12px',
-                    fontWeight: 600,
-                    color: isComplete ? '#22c55e' : '#64748b'
+                    fontSize: '13px',
+                    fontWeight: 700,
+                    color: isComplete ? '#16a34a' : isUnlocked ? '#6366f1' : '#94a3b8',
+                    background: isComplete
+                      ? 'rgba(34, 197, 94, 0.1)'
+                      : isUnlocked
+                        ? 'rgba(99, 102, 241, 0.1)'
+                        : '#f1f5f9',
+                    padding: '4px 10px',
+                    borderRadius: '100px'
                   }}>
                     {isUnlocked ? (isComplete ? '100%' : `${completed}/3`) : 'Bloq.'}
                   </span>
@@ -443,17 +473,19 @@ function CursoDashboard() {
                   <p style={{
                     margin: '0 0 4px',
                     fontSize: '12px',
-                    color: '#64748b',
-                    fontWeight: 500
+                    color: '#94a3b8',
+                    fontWeight: 600,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.5px'
                   }}>
-                    SEMANA {semana.num}
+                    Semana {semana.num}
                   </p>
                   <p style={{
                     margin: 0,
-                    fontSize: '14px',
+                    fontSize: '15px',
                     fontWeight: 600,
-                    color: '#f1f5f9',
-                    lineHeight: 1.3
+                    color: '#1e293b',
+                    lineHeight: 1.4
                   }}>
                     {semana.titulo}
                   </p>
@@ -461,15 +493,17 @@ function CursoDashboard() {
 
                 {isUnlocked && (
                   <div style={{
-                    height: '4px',
-                    background: '#334155',
+                    height: '6px',
+                    background: '#f1f5f9',
                     borderRadius: '100px',
                     overflow: 'hidden'
                   }}>
                     <div style={{
                       height: '100%',
                       width: `${percentage}%`,
-                      background: isComplete ? '#22c55e' : '#6366f1',
+                      background: isComplete
+                        ? 'linear-gradient(90deg, #22c55e, #16a34a)'
+                        : 'linear-gradient(90deg, #6366f1, #8b5cf6)',
                       borderRadius: '100px',
                       transition: 'width 0.3s ease'
                     }} />
@@ -482,15 +516,21 @@ function CursoDashboard() {
 
         {/* Quick links */}
         <div style={{
-          marginTop: '40px',
+          marginTop: '48px',
+          paddingTop: '24px',
+          borderTop: '1px solid rgba(0,0,0,0.06)',
           display: 'flex',
-          gap: '12px',
+          gap: '24px',
           flexWrap: 'wrap',
           fontSize: '14px'
         }}>
           <Link href="/precurso" style={{
             color: '#64748b',
-            textDecoration: 'underline'
+            textDecoration: 'none',
+            fontWeight: 500,
+            display: 'flex',
+            alignItems: 'center',
+            gap: '6px'
           }}>
             ← Ir al precurso
           </Link>
@@ -499,8 +539,8 @@ function CursoDashboard() {
 
       <style jsx global>{`
         @media (max-width: 640px) {
-          main { padding: 20px 16px !important; }
-          h2 { font-size: 24px !important; }
+          main { padding: 24px 16px !important; }
+          h2 { font-size: 26px !important; }
         }
       `}</style>
     </div>
