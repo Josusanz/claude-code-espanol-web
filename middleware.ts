@@ -30,16 +30,10 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(url)
   }
 
-  // Redirigir /curso a /empezar/introduccion
-  if (pathname === '/curso' || pathname.startsWith('/curso/')) {
-    const url = request.nextUrl.clone()
-    url.pathname = '/empezar/introduccion'
-    return NextResponse.redirect(url)
-  }
-
   return NextResponse.next()
 }
 
 export const config = {
-  matcher: ['/curso/:path*', '/acceso', '/fundamentos/:path*', '/empezar/:path*', '/proyectos/:path*']
+  // /curso/* tiene su propio sistema de auth (CursoEmailGate), no usar middleware
+  matcher: ['/acceso', '/fundamentos/:path*', '/empezar/:path*', '/proyectos/:path*']
 }
