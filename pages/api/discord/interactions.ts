@@ -15,52 +15,8 @@ const InteractionResponseType = {
   DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE: 5,
 }
 
-// Course context for Claude
-const CURSO_CONTEXT = `Eres el asistente del curso "Crea tu Software con IA" de Josu Sanz.
-
-SOBRE JOSU SANZ (el instructor):
-Josu Sanz es un Product Maker con más de 20 años de experiencia en el mundo digital.
-- Ha creado 4 empresas a lo largo de su carrera
-- Hizo exit con su software WPConfigurator.com (configurador visual para WordPress)
-- Fundó y dirigió Innwit Digital Innovation, agencia digital en Pamplona (2010-2022)
-- Ha liderado equipos de hasta 10 personas (diseñadores y programadores)
-- Trabajó como Ingeniero en Acciona Windpower
-- Actualmente es freelance y Product Maker (2024-presente)
-- Especialidades: Diseño innovador, Branding, UI/UX, Desarrollo de Software
-- Crea software y productos digitales que transforman ideas en herramientas útiles
-
-INFORMACIÓN DEL CURSO:
-- Duración: 10 semanas (19 febrero - 24 abril 2026)
-- Formato: Clases en vivo por Zoom + contenido + comunidad Discord
-- Objetivo: Crear tu propio SaaS usando IA como copiloto
-- Web: https://www.aprende.software
-
-TECNOLOGÍAS DEL CURSO:
-- Next.js 14 (App Router)
-- React + TypeScript
-- Tailwind CSS + shadcn/ui
-- Supabase (base de datos + auth)
-- Vercel (deploy)
-- Claude/ChatGPT para desarrollo con IA
-
-ESTRUCTURA SEMANAL:
-- Semana 1: LaunchPad - Proyecto conjunto (waitlist)
-- Semana 2: Tu proyecto - Setup + UI con shadcn/ui
-- Semana 3: Base de datos con Supabase
-- Semana 4: Autenticación de usuarios
-- Semana 5: CRUD y lógica de negocio
-- Semana 6: Pagos con Stripe
-- Semana 7: Email y notificaciones
-- Semana 8: SEO y rendimiento
-- Semana 9: Testing y calidad
-- Semana 10: Lanzamiento y marketing
-
-REGLAS DE RESPUESTA:
-- Responde en español
-- Sé conciso (máximo 1500 caracteres)
-- Si la pregunta no es del curso, redirige amablemente
-- Usa ejemplos de código cuando sea útil
-- Menciona recursos del curso si aplica`
+// Course context for Claude (short for speed)
+const CURSO_CONTEXT = `Asistente del curso "Crea tu Software con IA" de Josu Sanz. Curso de 10 semanas para crear un SaaS con Next.js, Supabase, Tailwind y Claude. Web: aprende.software. Responde en español, muy breve (máx 500 chars).`
 
 // Ask Claude a question (using Haiku for speed)
 async function askClaude(question: string): Promise<string> {
@@ -69,7 +25,7 @@ async function askClaude(question: string): Promise<string> {
   try {
     const response = await client.messages.create({
       model: 'claude-3-5-haiku-20241022',
-      max_tokens: 400,
+      max_tokens: 200,
       messages: [
         {
           role: 'user',
@@ -272,43 +228,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         })
       }
 
-      const interactionToken = body.token
-      const applicationId = process.env.DISCORD_APP_ID
-
-      // Race: Claude vs 2.5s timeout
-      const claudePromise = askClaude(pregunta)
-      const timeoutPromise = new Promise<null>((resolve) => setTimeout(() => resolve(null), 2500))
-
-      const result = await Promise.race([claudePromise, timeoutPromise])
-
-      if (result !== null) {
-        // Claude responded in time - send direct response
-        const formattedResponse = `**Pregunta:** ${pregunta}\n\n**Respuesta:**\n${result}`
-        const finalResponse = formattedResponse.length > 1900
-          ? formattedResponse.substring(0, 1900) + '...'
-          : formattedResponse
-
-        return res.status(200).json({
-          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-          data: { content: finalResponse },
-        })
-      }
-
-      // Claude is slow - send deferred, then wait for Claude and send followup
-      res.status(200).json({
-        type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
-      })
-
-      // Wait for Claude to finish
-      const answer = await claudePromise
-      const formattedResponse = `**Pregunta:** ${pregunta}\n\n**Respuesta:**\n${answer}`
+      // Direct response - Haiku should be fast enough
+      const answer = await askClaude(pregunta)
+      const formattedResponse = `**${pregunta}**\n\n${answer}`
       const finalResponse = formattedResponse.length > 1900
         ? formattedResponse.substring(0, 1900) + '...'
         : formattedResponse
 
-      // Send followup
-      await sendFollowup(applicationId!, interactionToken, finalResponse)
-      return
+      return res.status(200).json({
+        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+        data: { content: finalResponse },
+      })
     }
   }
 
