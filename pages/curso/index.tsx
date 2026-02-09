@@ -304,7 +304,7 @@ function CursoDashboard() {
 
         {/* Discord */}
         <a
-          href="https://discord.gg/INVITE_CODE"
+          href="https://discord.gg/RFU7P2vpqa"
           target="_blank"
           rel="noopener noreferrer"
           style={{
