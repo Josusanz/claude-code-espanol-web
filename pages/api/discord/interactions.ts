@@ -261,32 +261,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         })
       }
 
-      try {
-        // Call Claude directly (Haiku is fast enough)
-        const answer = await askClaude(pregunta)
-        const formattedResponse = `**Pregunta:** ${pregunta}\n\n**Respuesta:**\n${answer}`
+      const interactionToken = body.token
 
-        // Truncate if too long (Discord limit is 2000 chars)
-        const finalResponse = formattedResponse.length > 1900
-          ? formattedResponse.substring(0, 1900) + '...'
-          : formattedResponse
+      // Trigger background processing (fire and forget)
+      fetch(`${process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://www.aprende.software'}/api/discord/pregunta`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pregunta, token: interactionToken })
+      }).catch(err => console.error('Background fetch error:', err))
 
-        return res.status(200).json({
-          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-          data: {
-            content: finalResponse,
-          },
-        })
-      } catch (error) {
-        console.error('Pregunta error:', error)
-        return res.status(200).json({
-          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-          data: {
-            content: '❌ Error al procesar la pregunta. Inténtalo de nuevo.',
-            flags: 64,
-          },
-        })
-      }
+      // Respond immediately with deferred
+      return res.status(200).json({
+        type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
+      })
     }
   }
 
