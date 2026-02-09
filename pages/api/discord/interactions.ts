@@ -275,19 +275,23 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const interactionToken = body.token
       const applicationId = process.env.DISCORD_APP_ID
 
-      // Call Claude first, then respond
+      // 1. Send deferred response immediately
+      res.status(200).json({
+        type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
+      })
+
+      // 2. Call Claude (this can take time)
       const answer = await askClaude(pregunta)
       const formattedResponse = `**Pregunta:** ${pregunta}\n\n**Respuesta:**\n${answer}`
       const finalResponse = formattedResponse.length > 1900
         ? formattedResponse.substring(0, 1900) + '...'
         : formattedResponse
 
-      return res.status(200).json({
-        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-        data: {
-          content: finalResponse,
-        },
-      })
+      // 3. Send followup message
+      await sendFollowup(applicationId!, interactionToken, finalResponse)
+
+      // Don't return - function ends naturally after followup
+      return
     }
   }
 
