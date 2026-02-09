@@ -1,6 +1,32 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { syncUserProgress, getUserProgress, isEmailAuthorized, addAuthorizedEmail } from '../../../lib/precurso-kv'
 
+// Módulos requeridos para completar el precurso
+const PRECURSO_MODULES = [
+  'modulo-0', 'modulo-1', 'modulo-2', 'modulo-3', 'modulo-4'
+]
+
+function isPrecursoComplete(progress: Record<string, boolean>): boolean {
+  return PRECURSO_MODULES.every(mod => progress[mod] === true)
+}
+
+async function assignPrecursoRoleIfComplete(email: string, progress: Record<string, boolean>): Promise<void> {
+  if (!isPrecursoComplete(progress)) return
+
+  try {
+    await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'https://www.aprende.software'}/api/discord/assign-precurso-role`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-internal-secret': process.env.INTERNAL_API_SECRET || ''
+      },
+      body: JSON.stringify({ email })
+    })
+  } catch (error) {
+    console.error('Error assigning precurso role:', error)
+  }
+}
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -35,9 +61,13 @@ export default async function handler(
       const updatedUser = await syncUserProgress(normalizedEmail, progress)
       console.log(`[Sync Progress] Guardado para ${normalizedEmail}: ${Object.keys(progress).length} items`)
 
+      // Si completó el precurso, asignar rol en Discord (en background)
+      assignPrecursoRoleIfComplete(normalizedEmail, updatedUser.progress).catch(console.error)
+
       return res.status(200).json({
         success: true,
-        progress: updatedUser.progress
+        progress: updatedUser.progress,
+        precursoComplete: isPrecursoComplete(updatedUser.progress)
       })
     } catch (error) {
       console.error('[Sync Progress] Error:', error)

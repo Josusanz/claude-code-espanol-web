@@ -109,6 +109,34 @@ function getProximaClase(): typeof CLASES[0] | null {
   return proxima?.clase || CLASES[CLASES.length - 1]
 }
 
+// Canal de proyectos (forum)
+const PROYECTOS_CHANNEL_ID = '1470560307049926779'
+
+// Crear hilo de proyecto
+async function crearHiloProyecto(nombre: string, contenido: string): Promise<{ id: string; name: string } | null> {
+  try {
+    const res = await fetch(`https://discord.com/api/v10/channels/${PROYECTOS_CHANNEL_ID}/threads`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bot ${process.env.DISCORD_BOT_TOKEN}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: nombre,
+        message: { content: contenido },
+        applied_tags: []
+      })
+    })
+    if (res.ok) {
+      return await res.json()
+    }
+    return null
+  } catch (error) {
+    console.error('Error creating thread:', error)
+    return null
+  }
+}
+
 // Ask Claude a question (using Haiku for speed)
 async function askClaude(question: string): Promise<string> {
   const client = new Anthropic()
@@ -384,6 +412,64 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           flags: 64,
         },
       })
+    }
+
+    // Comando /miproyecto - Crear hilo en #proyectos
+    if (name === 'miproyecto') {
+      const nombreProyecto = options?.find((o: { name: string }) => o.name === 'nombre')?.value
+      const descripcion = options?.find((o: { name: string }) => o.name === 'descripcion')?.value || ''
+      const username = member?.user?.username || 'Alumno'
+
+      if (!nombreProyecto) {
+        return res.status(200).json({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: '❌ Usa: `/miproyecto nombre:Mi SaaS descripcion:Herramienta para...`',
+            flags: 64,
+          },
+        })
+      }
+
+      const contenidoHilo = `# 🚀 ${nombreProyecto}
+
+**Creado por:** ${username}
+
+---
+
+${descripcion || '_Sin descripción todavía_'}
+
+---
+
+**Plantilla sugerida para actualizar:**
+\`\`\`
+📅 Semana: X
+✅ Completado: ...
+🔨 Trabajando en: ...
+🆘 Bloqueado por: ...
+📸 Captura: [imagen]
+\`\`\`
+
+¡Actualiza este hilo cada semana con tu progreso! 💪`
+
+      const hilo = await crearHiloProyecto(`🛠️ ${nombreProyecto} - ${username}`, contenidoHilo)
+
+      if (hilo) {
+        return res.status(200).json({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: `✅ ¡Proyecto creado!\n\n**${nombreProyecto}**\n🔗 <#${hilo.id}>\n\n¡Ve a tu hilo y actualiza tu progreso cada semana!`,
+            flags: 64,
+          },
+        })
+      } else {
+        return res.status(200).json({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: '❌ Error al crear el proyecto. Inténtalo de nuevo.',
+            flags: 64,
+          },
+        })
+      }
     }
 
     if (name === 'duda') {
