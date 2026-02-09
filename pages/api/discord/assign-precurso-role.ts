@@ -5,7 +5,7 @@ const DISCORD_BOT_TOKEN = process.env.DISCORD_BOT_TOKEN
 const GUILD_ID = '1470467868150857852'
 const PRECURSO_ROLE_ID = '1470548487740325918' // 🌱 Precurso
 
-interface UserData {
+interface UserData extends Record<string, unknown> {
   discordId?: string
   discordVerifiedAt?: string
 }
