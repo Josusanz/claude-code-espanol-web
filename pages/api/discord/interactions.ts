@@ -272,11 +272,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         })
       }
 
-      // Test: respuesta simple primero
+      const interactionToken = body.token
+      const applicationId = process.env.DISCORD_APP_ID
+
+      // Call Claude first, then respond
+      const answer = await askClaude(pregunta)
+      const formattedResponse = `**Pregunta:** ${pregunta}\n\n**Respuesta:**\n${answer}`
+      const finalResponse = formattedResponse.length > 1900
+        ? formattedResponse.substring(0, 1900) + '...'
+        : formattedResponse
+
       return res.status(200).json({
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: {
-          content: `**Tu pregunta:** ${pregunta}\n\n🤖 El bot está funcionando. Pronto añadiré respuestas con IA.`,
+          content: finalResponse,
         },
       })
     }
