@@ -1,0 +1,3683 @@
+{
+  "version": "2.6",
+  "children": [
+    {
+      "type": "frame",
+      "id": "S7HnD",
+      "x": 100,
+      "y": 100,
+      "name": "Landing Page - Curso Negocio IA",
+      "width": 1440,
+      "fill": "#FAFAFA",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "t2IHC",
+          "name": "Hero Section",
+          "width": "fill_container",
+          "fill": {
+            "type": "gradient",
+            "gradientType": "linear",
+            "enabled": true,
+            "rotation": 135,
+            "size": {
+              "height": 1
+            },
+            "colors": [
+              {
+                "color": "#F8FAFC",
+                "position": 0
+              },
+              {
+                "color": "#EEF2FF",
+                "position": 1
+              }
+            ]
+          },
+          "layout": "vertical",
+          "gap": 32,
+          "padding": [
+            80,
+            120
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "4sSpz",
+              "name": "badge",
+              "fill": "#2563EB18",
+              "cornerRadius": 100,
+              "gap": 8,
+              "padding": [
+                8,
+                16
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "ZJuee",
+                  "name": "badgeIcon",
+                  "content": "🚀",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "vL5zC",
+                  "name": "badgeText",
+                  "fill": "#2563EB",
+                  "content": "Próxima edición: Marzo 2026",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "600"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "6CkBn",
+              "name": "headline",
+              "fill": "#111827",
+              "textGrowth": "fixed-width",
+              "width": 900,
+              "content": "Crea tu Negocio Digital con IA",
+              "textAlign": "center",
+              "fontFamily": "Inter",
+              "fontSize": 56,
+              "fontWeight": "800",
+              "letterSpacing": -1
+            },
+            {
+              "type": "text",
+              "id": "7Fhw0",
+              "name": "subheadline",
+              "fill": "#6B7280",
+              "textGrowth": "fixed-width",
+              "width": 700,
+              "content": "Transforma tu idea en un negocio rentable usando inteligencia artificial.\nCurso práctico de 10 semanas con mentoría personalizada.",
+              "lineHeight": 1.6,
+              "textAlign": "center",
+              "fontFamily": "Inter",
+              "fontSize": 22,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "frame",
+              "id": "uvJbs",
+              "name": "ctaContainer",
+              "gap": 16,
+              "padding": [
+                16,
+                0,
+                0,
+                0
+              ],
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "J9t54",
+                  "name": "ctaPrimary",
+                  "fill": {
+                    "type": "gradient",
+                    "gradientType": "linear",
+                    "enabled": true,
+                    "rotation": 135,
+                    "size": {
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "#2563EB",
+                        "position": 0
+                      },
+                      {
+                        "color": "#7C3AED",
+                        "position": 1
+                      }
+                    ]
+                  },
+                  "cornerRadius": 12,
+                  "gap": 8,
+                  "padding": [
+                    16,
+                    32
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "bRwGX",
+                      "name": "ctaPrimaryText",
+                      "fill": "#FFFFFF",
+                      "content": "Reservar mi plaza",
+                      "fontFamily": "Inter",
+                      "fontSize": 18,
+                      "fontWeight": "700"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "Wre0I",
+                  "name": "ctaSecondary",
+                  "cornerRadius": 12,
+                  "stroke": {
+                    "thickness": 2,
+                    "fill": "#E5E7EB"
+                  },
+                  "gap": 8,
+                  "padding": [
+                    16,
+                    32
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "GePHF",
+                      "name": "ctaSecondaryText",
+                      "fill": "#374151",
+                      "content": "Ver programa",
+                      "fontFamily": "Inter",
+                      "fontSize": 18,
+                      "fontWeight": "600"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "K23b2",
+              "name": "trustLine",
+              "fill": "#9CA3AF",
+              "content": "🔒 Solo 10 plazas disponibles · Grupo exclusivo",
+              "fontFamily": "Inter",
+              "fontSize": 14,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "RvIt9",
+          "name": "Stats Section",
+          "width": "fill_container",
+          "fill": "#FFFFFF",
+          "gap": 48,
+          "padding": [
+            48,
+            120
+          ],
+          "justifyContent": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "TLeXK",
+              "name": "stat1",
+              "width": 200,
+              "layout": "vertical",
+              "gap": 4,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "2qz7d",
+                  "name": "stat1Value",
+                  "fill": {
+                    "type": "gradient",
+                    "gradientType": "linear",
+                    "enabled": true,
+                    "rotation": 135,
+                    "size": {
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "#2563EB",
+                        "position": 0
+                      },
+                      {
+                        "color": "#7C3AED",
+                        "position": 1
+                      }
+                    ]
+                  },
+                  "content": "20+",
+                  "fontFamily": "Inter",
+                  "fontSize": 48,
+                  "fontWeight": "800"
+                },
+                {
+                  "type": "text",
+                  "id": "mrcYr",
+                  "name": "stat1Label",
+                  "fill": "#6B7280",
+                  "content": "años en tech",
+                  "fontFamily": "Inter",
+                  "fontSize": 16,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "vy9jf",
+              "name": "stat2",
+              "width": 200,
+              "layout": "vertical",
+              "gap": 4,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "E5M5B",
+                  "name": "stat2Value",
+                  "fill": {
+                    "type": "gradient",
+                    "gradientType": "linear",
+                    "enabled": true,
+                    "rotation": 135,
+                    "size": {
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "#2563EB",
+                        "position": 0
+                      },
+                      {
+                        "color": "#7C3AED",
+                        "position": 1
+                      }
+                    ]
+                  },
+                  "content": "500+",
+                  "fontFamily": "Inter",
+                  "fontSize": 48,
+                  "fontWeight": "800"
+                },
+                {
+                  "type": "text",
+                  "id": "qw7CO",
+                  "name": "stat2Label",
+                  "fill": "#6B7280",
+                  "content": "webs creadas",
+                  "fontFamily": "Inter",
+                  "fontSize": 16,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "aYjeL",
+              "name": "stat3",
+              "width": 200,
+              "layout": "vertical",
+              "gap": 4,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "0mFN8",
+                  "name": "stat3Value",
+                  "fill": {
+                    "type": "gradient",
+                    "gradientType": "linear",
+                    "enabled": true,
+                    "rotation": 135,
+                    "size": {
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "#2563EB",
+                        "position": 0
+                      },
+                      {
+                        "color": "#7C3AED",
+                        "position": 1
+                      }
+                    ]
+                  },
+                  "content": "20+",
+                  "fontFamily": "Inter",
+                  "fontSize": 48,
+                  "fontWeight": "800"
+                },
+                {
+                  "type": "text",
+                  "id": "dP7s4",
+                  "name": "stat3Label",
+                  "fill": "#6B7280",
+                  "content": "proyectos lanzados",
+                  "fontFamily": "Inter",
+                  "fontSize": 16,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "pnzAl",
+              "name": "stat4",
+              "width": 200,
+              "layout": "vertical",
+              "gap": 4,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "i3TvU",
+                  "name": "stat4Value",
+                  "fill": {
+                    "type": "gradient",
+                    "gradientType": "linear",
+                    "enabled": true,
+                    "rotation": 135,
+                    "size": {
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "#2563EB",
+                        "position": 0
+                      },
+                      {
+                        "color": "#7C3AED",
+                        "position": 1
+                      }
+                    ]
+                  },
+                  "content": "10",
+                  "fontFamily": "Inter",
+                  "fontSize": 48,
+                  "fontWeight": "800"
+                },
+                {
+                  "type": "text",
+                  "id": "w7Ktj",
+                  "name": "stat4Label",
+                  "fill": "#6B7280",
+                  "content": "plazas máximo",
+                  "fontFamily": "Inter",
+                  "fontSize": 16,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "oPeUD",
+          "name": "Methodology Section",
+          "width": "fill_container",
+          "fill": "#F8FAFC",
+          "layout": "vertical",
+          "gap": 48,
+          "padding": [
+            80,
+            120
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "hcRS5",
+              "name": "methodHeader",
+              "layout": "vertical",
+              "gap": 16,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "B0kxL",
+                  "name": "methodBadge",
+                  "fill": "#7C3AED18",
+                  "cornerRadius": 100,
+                  "padding": [
+                    6,
+                    12
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "aoHJ9",
+                      "name": "methodBadgeText",
+                      "fill": "#7C3AED",
+                      "content": "Metodología única",
+                      "fontFamily": "Inter",
+                      "fontSize": 12,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "7CR8O",
+                  "name": "methodTitle",
+                  "fill": "#111827",
+                  "content": "Aprende haciendo, no solo mirando",
+                  "textAlign": "center",
+                  "fontFamily": "Inter",
+                  "fontSize": 40,
+                  "fontWeight": "800"
+                },
+                {
+                  "type": "text",
+                  "id": "YOS6N",
+                  "name": "methodSub",
+                  "fill": "#6B7280",
+                  "content": "Cada semana construirás algo real para tu negocio",
+                  "textAlign": "center",
+                  "fontFamily": "Inter",
+                  "fontSize": 18,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "oJrr4",
+              "name": "methodCards",
+              "width": "fill_container",
+              "gap": 24,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "7uqDv",
+                  "name": "card1",
+                  "width": "fill_container",
+                  "fill": "#FFFFFF",
+                  "cornerRadius": 16,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#E5E7EB"
+                  },
+                  "layout": "vertical",
+                  "gap": 16,
+                  "padding": 32,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "hWMtr",
+                      "name": "card1Icon",
+                      "width": 56,
+                      "height": 56,
+                      "fill": {
+                        "type": "gradient",
+                        "gradientType": "linear",
+                        "enabled": true,
+                        "rotation": 135,
+                        "size": {
+                          "height": 1
+                        },
+                        "colors": [
+                          {
+                            "color": "#2563EB",
+                            "position": 0
+                          },
+                          {
+                            "color": "#7C3AED",
+                            "position": 1
+                          }
+                        ]
+                      },
+                      "cornerRadius": 12,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "7Tboe",
+                          "name": "card1IconText",
+                          "content": "📹",
+                          "fontFamily": "Inter",
+                          "fontSize": 24,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "Ag0km",
+                      "name": "card1Title",
+                      "fill": "#111827",
+                      "content": "1 clase semanal en vivo",
+                      "fontFamily": "Inter",
+                      "fontSize": 20,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "BkSIx",
+                      "name": "card1Desc",
+                      "fill": "#6B7280",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Sesiones de 2 horas donde trabajamos juntos en tu proyecto real",
+                      "lineHeight": 1.5,
+                      "fontFamily": "Inter",
+                      "fontSize": 16,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "lH02P",
+                  "name": "card2",
+                  "width": "fill_container",
+                  "fill": "#FFFFFF",
+                  "cornerRadius": 16,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#E5E7EB"
+                  },
+                  "layout": "vertical",
+                  "gap": 16,
+                  "padding": 32,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "daoQG",
+                      "name": "card2Icon",
+                      "width": 56,
+                      "height": 56,
+                      "fill": {
+                        "type": "gradient",
+                        "gradientType": "linear",
+                        "enabled": true,
+                        "rotation": 135,
+                        "size": {
+                          "height": 1
+                        },
+                        "colors": [
+                          {
+                            "color": "#2563EB",
+                            "position": 0
+                          },
+                          {
+                            "color": "#7C3AED",
+                            "position": 1
+                          }
+                        ]
+                      },
+                      "cornerRadius": 12,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "mrCuA",
+                          "name": "card2IconText",
+                          "content": "👤",
+                          "fontFamily": "Inter",
+                          "fontSize": 24,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "Rokrl",
+                      "name": "card2Title",
+                      "fill": "#111827",
+                      "content": "Seguimiento individual",
+                      "fontFamily": "Inter",
+                      "fontSize": 20,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "4j7Lh",
+                      "name": "card2Desc",
+                      "fill": "#6B7280",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Mentoría 1:1 semanal para resolver dudas y acelerar tu progreso",
+                      "lineHeight": 1.5,
+                      "fontFamily": "Inter",
+                      "fontSize": 16,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "wcItC",
+                  "name": "card3",
+                  "width": "fill_container",
+                  "fill": "#FFFFFF",
+                  "cornerRadius": 16,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#E5E7EB"
+                  },
+                  "layout": "vertical",
+                  "gap": 16,
+                  "padding": 32,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "X1ED6",
+                      "name": "card3Icon",
+                      "width": 56,
+                      "height": 56,
+                      "fill": {
+                        "type": "gradient",
+                        "gradientType": "linear",
+                        "enabled": true,
+                        "rotation": 135,
+                        "size": {
+                          "height": 1
+                        },
+                        "colors": [
+                          {
+                            "color": "#2563EB",
+                            "position": 0
+                          },
+                          {
+                            "color": "#7C3AED",
+                            "position": 1
+                          }
+                        ]
+                      },
+                      "cornerRadius": 12,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "Yvroq",
+                          "name": "card3IconText",
+                          "content": "🤝",
+                          "fontFamily": "Inter",
+                          "fontSize": 24,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "sYXcN",
+                      "name": "card3Title",
+                      "fill": "#111827",
+                      "content": "Comunidad exclusiva",
+                      "fontFamily": "Inter",
+                      "fontSize": 20,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "bEFr9",
+                      "name": "card3Desc",
+                      "fill": "#6B7280",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Grupo privado de máximo 10 personas para networking y apoyo mutuo",
+                      "lineHeight": 1.5,
+                      "fontFamily": "Inter",
+                      "fontSize": 16,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "Ia2LR",
+          "name": "Program Section",
+          "width": "fill_container",
+          "fill": "#FFFFFF",
+          "layout": "vertical",
+          "gap": 48,
+          "padding": [
+            80,
+            120
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "2Zwub",
+              "name": "progHeader",
+              "layout": "vertical",
+              "gap": 16,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "bCrKx",
+                  "name": "progBadge",
+                  "fill": "#2563EB18",
+                  "cornerRadius": 100,
+                  "padding": [
+                    6,
+                    12
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "EE2xy",
+                      "name": "progBadgeText",
+                      "fill": "#2563EB",
+                      "content": "10 semanas intensivas",
+                      "fontFamily": "Inter",
+                      "fontSize": 12,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "DJ3gW",
+                  "name": "progTitle",
+                  "fill": "#111827",
+                  "content": "Programa completo",
+                  "textAlign": "center",
+                  "fontFamily": "Inter",
+                  "fontSize": 40,
+                  "fontWeight": "800"
+                },
+                {
+                  "type": "text",
+                  "id": "yuBcC",
+                  "name": "progSub",
+                  "fill": "#6B7280",
+                  "content": "De la idea al negocio facturando en 10 semanas",
+                  "textAlign": "center",
+                  "fontFamily": "Inter",
+                  "fontSize": 18,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "mTo1X",
+              "name": "weeks",
+              "width": 900,
+              "layout": "vertical",
+              "gap": 16,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "YrsuA",
+                  "name": "w1",
+                  "width": "fill_container",
+                  "fill": "#F8FAFC",
+                  "cornerRadius": 12,
+                  "gap": 16,
+                  "padding": [
+                    20,
+                    24
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "ume06",
+                      "name": "w1Num",
+                      "width": 40,
+                      "height": 40,
+                      "fill": {
+                        "type": "gradient",
+                        "gradientType": "linear",
+                        "enabled": true,
+                        "rotation": 135,
+                        "size": {
+                          "height": 1
+                        },
+                        "colors": [
+                          {
+                            "color": "#2563EB",
+                            "position": 0
+                          },
+                          {
+                            "color": "#7C3AED",
+                            "position": 1
+                          }
+                        ]
+                      },
+                      "cornerRadius": 8,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "t4ksg",
+                          "name": "w1NumText",
+                          "fill": "#FFFFFF",
+                          "content": "1",
+                          "fontFamily": "Inter",
+                          "fontSize": 18,
+                          "fontWeight": "700"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "sUIo8",
+                      "name": "w1Content",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 4,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "vmIUR",
+                          "name": "w1Title",
+                          "fill": "#111827",
+                          "content": "Validación de tu idea de negocio",
+                          "fontFamily": "Inter",
+                          "fontSize": 16,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "S4Mus",
+                          "name": "w1Desc",
+                          "fill": "#6B7280",
+                          "content": "Análisis de mercado con IA y definición de tu propuesta de valor única",
+                          "fontFamily": "Inter",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "9FYgM",
+                  "name": "w2",
+                  "width": "fill_container",
+                  "fill": "#F8FAFC",
+                  "cornerRadius": 12,
+                  "gap": 16,
+                  "padding": [
+                    20,
+                    24
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "XGmRR",
+                      "name": "w2Num",
+                      "width": 40,
+                      "height": 40,
+                      "fill": {
+                        "type": "gradient",
+                        "gradientType": "linear",
+                        "enabled": true,
+                        "rotation": 135,
+                        "size": {
+                          "height": 1
+                        },
+                        "colors": [
+                          {
+                            "color": "#2563EB",
+                            "position": 0
+                          },
+                          {
+                            "color": "#7C3AED",
+                            "position": 1
+                          }
+                        ]
+                      },
+                      "cornerRadius": 8,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "LZll0",
+                          "name": "w2NumText",
+                          "fill": "#FFFFFF",
+                          "content": "2",
+                          "fontFamily": "Inter",
+                          "fontSize": 18,
+                          "fontWeight": "700"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "UxPWS",
+                      "name": "w2Content",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 4,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "Wvwi6",
+                          "name": "w2Title",
+                          "fill": "#111827",
+                          "content": "Tu marca e identidad digital",
+                          "fontFamily": "Inter",
+                          "fontSize": 16,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "hiEOI",
+                          "name": "w2Desc",
+                          "fill": "#6B7280",
+                          "content": "Creación de marca, logo y materiales con herramientas de IA",
+                          "fontFamily": "Inter",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "UZjsq",
+                  "name": "w3",
+                  "width": "fill_container",
+                  "fill": "#F8FAFC",
+                  "cornerRadius": 12,
+                  "gap": 16,
+                  "padding": [
+                    20,
+                    24
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "FADtU",
+                      "name": "w3Num",
+                      "width": 40,
+                      "height": 40,
+                      "fill": {
+                        "type": "gradient",
+                        "gradientType": "linear",
+                        "enabled": true,
+                        "rotation": 135,
+                        "size": {
+                          "height": 1
+                        },
+                        "colors": [
+                          {
+                            "color": "#2563EB",
+                            "position": 0
+                          },
+                          {
+                            "color": "#7C3AED",
+                            "position": 1
+                          }
+                        ]
+                      },
+                      "cornerRadius": 8,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "Y2l7W",
+                          "name": "w3NumText",
+                          "fill": "#FFFFFF",
+                          "content": "3",
+                          "fontFamily": "Inter",
+                          "fontSize": 18,
+                          "fontWeight": "700"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "0dLf6",
+                      "name": "w3Content",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 4,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "2zxax",
+                          "name": "w3Title",
+                          "fill": "#111827",
+                          "content": "Tu web profesional sin código",
+                          "fontFamily": "Inter",
+                          "fontSize": 16,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "X2yg2",
+                          "name": "w3Desc",
+                          "fill": "#6B7280",
+                          "content": "Diseño y lanzamiento de tu web con IA en menos de una semana",
+                          "fontFamily": "Inter",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "1WYxU",
+                  "name": "w4",
+                  "width": "fill_container",
+                  "fill": "#F8FAFC",
+                  "cornerRadius": 12,
+                  "gap": 16,
+                  "padding": [
+                    20,
+                    24
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "Ee0Bu",
+                      "name": "w4Num",
+                      "width": 40,
+                      "height": 40,
+                      "fill": {
+                        "type": "gradient",
+                        "gradientType": "linear",
+                        "enabled": true,
+                        "rotation": 135,
+                        "size": {
+                          "height": 1
+                        },
+                        "colors": [
+                          {
+                            "color": "#2563EB",
+                            "position": 0
+                          },
+                          {
+                            "color": "#7C3AED",
+                            "position": 1
+                          }
+                        ]
+                      },
+                      "cornerRadius": 8,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "yKOMU",
+                          "name": "w4NumText",
+                          "fill": "#FFFFFF",
+                          "content": "4",
+                          "fontFamily": "Inter",
+                          "fontSize": 18,
+                          "fontWeight": "700"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "VseLx",
+                      "name": "w4Content",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 4,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "CXJGL",
+                          "name": "w4Title",
+                          "fill": "#111827",
+                          "content": "Contenido que vende",
+                          "fontFamily": "Inter",
+                          "fontSize": 16,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "bqNRp",
+                          "name": "w4Desc",
+                          "fill": "#6B7280",
+                          "content": "Estrategia de contenidos y copywriting con IA para atraer clientes",
+                          "fontFamily": "Inter",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "0uyIa",
+                  "name": "w5",
+                  "width": "fill_container",
+                  "fill": "#F8FAFC",
+                  "cornerRadius": 12,
+                  "gap": 16,
+                  "padding": [
+                    20,
+                    24
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "4deDq",
+                      "name": "w5Num",
+                      "width": 40,
+                      "height": 40,
+                      "fill": {
+                        "type": "gradient",
+                        "gradientType": "linear",
+                        "enabled": true,
+                        "rotation": 135,
+                        "size": {
+                          "height": 1
+                        },
+                        "colors": [
+                          {
+                            "color": "#2563EB",
+                            "position": 0
+                          },
+                          {
+                            "color": "#7C3AED",
+                            "position": 1
+                          }
+                        ]
+                      },
+                      "cornerRadius": 8,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "eK0z7",
+                          "name": "w5NumText",
+                          "fill": "#FFFFFF",
+                          "content": "5",
+                          "fontFamily": "Inter",
+                          "fontSize": 18,
+                          "fontWeight": "700"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "pXgSm",
+                      "name": "w5Content",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 4,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "xyRYv",
+                          "name": "w5Title",
+                          "fill": "#111827",
+                          "content": "Automatización inteligente",
+                          "fontFamily": "Inter",
+                          "fontSize": 16,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "c00ua",
+                          "name": "w5Desc",
+                          "fill": "#6B7280",
+                          "content": "Flujos automáticos de email, CRM y atención al cliente con IA",
+                          "fontFamily": "Inter",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "2cVZy",
+                  "name": "w6",
+                  "width": "fill_container",
+                  "fill": "#F8FAFC",
+                  "cornerRadius": 12,
+                  "gap": 16,
+                  "padding": [
+                    20,
+                    24
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "0OFvI",
+                      "name": "w6Num",
+                      "width": 40,
+                      "height": 40,
+                      "fill": {
+                        "type": "gradient",
+                        "gradientType": "linear",
+                        "enabled": true,
+                        "rotation": 135,
+                        "size": {
+                          "height": 1
+                        },
+                        "colors": [
+                          {
+                            "color": "#2563EB",
+                            "position": 0
+                          },
+                          {
+                            "color": "#7C3AED",
+                            "position": 1
+                          }
+                        ]
+                      },
+                      "cornerRadius": 8,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "3tdC6",
+                          "name": "w6NumText",
+                          "fill": "#FFFFFF",
+                          "content": "6",
+                          "fontFamily": "Inter",
+                          "fontSize": 18,
+                          "fontWeight": "700"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "YyjDp",
+                      "name": "w6Content",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 4,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "7sWyk",
+                          "name": "w6Title",
+                          "fill": "#111827",
+                          "content": "Tu primer producto digital",
+                          "fontFamily": "Inter",
+                          "fontSize": 16,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "N9a2D",
+                          "name": "w6Desc",
+                          "fill": "#6B7280",
+                          "content": "Creación y empaquetado de tu oferta con IA generativa",
+                          "fontFamily": "Inter",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "LzFVo",
+                  "name": "w7",
+                  "width": "fill_container",
+                  "fill": "#F8FAFC",
+                  "cornerRadius": 12,
+                  "gap": 16,
+                  "padding": [
+                    20,
+                    24
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "PHu3A",
+                      "name": "w7Num",
+                      "width": 40,
+                      "height": 40,
+                      "fill": {
+                        "type": "gradient",
+                        "gradientType": "linear",
+                        "enabled": true,
+                        "rotation": 135,
+                        "size": {
+                          "height": 1
+                        },
+                        "colors": [
+                          {
+                            "color": "#2563EB",
+                            "position": 0
+                          },
+                          {
+                            "color": "#7C3AED",
+                            "position": 1
+                          }
+                        ]
+                      },
+                      "cornerRadius": 8,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "H8hSk",
+                          "name": "w7NumText",
+                          "fill": "#FFFFFF",
+                          "content": "7",
+                          "fontFamily": "Inter",
+                          "fontSize": 18,
+                          "fontWeight": "700"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "g1ChR",
+                      "name": "w7Content",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 4,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "UIyrO",
+                          "name": "w7Title",
+                          "fill": "#111827",
+                          "content": "Estrategia de ventas",
+                          "fontFamily": "Inter",
+                          "fontSize": 16,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "6Vlz7",
+                          "name": "w7Desc",
+                          "fill": "#6B7280",
+                          "content": "Funnels de venta y sistemas de pago automatizados",
+                          "fontFamily": "Inter",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "m5ca0",
+                  "name": "w8",
+                  "width": "fill_container",
+                  "fill": "#F8FAFC",
+                  "cornerRadius": 12,
+                  "gap": 16,
+                  "padding": [
+                    20,
+                    24
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "fKmQn",
+                      "name": "w8Num",
+                      "width": 40,
+                      "height": 40,
+                      "fill": {
+                        "type": "gradient",
+                        "gradientType": "linear",
+                        "enabled": true,
+                        "rotation": 135,
+                        "size": {
+                          "height": 1
+                        },
+                        "colors": [
+                          {
+                            "color": "#2563EB",
+                            "position": 0
+                          },
+                          {
+                            "color": "#7C3AED",
+                            "position": 1
+                          }
+                        ]
+                      },
+                      "cornerRadius": 8,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "6n7ZO",
+                          "name": "w8NumText",
+                          "fill": "#FFFFFF",
+                          "content": "8",
+                          "fontFamily": "Inter",
+                          "fontSize": 18,
+                          "fontWeight": "700"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "vYnEe",
+                      "name": "w8Content",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 4,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "tdUnp",
+                          "name": "w8Title",
+                          "fill": "#111827",
+                          "content": "Marketing con IA",
+                          "fontFamily": "Inter",
+                          "fontSize": 16,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "fEx5E",
+                          "name": "w8Desc",
+                          "fill": "#6B7280",
+                          "content": "Publicidad y growth hacking potenciado con inteligencia artificial",
+                          "fontFamily": "Inter",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "R82y5",
+                  "name": "w9",
+                  "width": "fill_container",
+                  "fill": "#F8FAFC",
+                  "cornerRadius": 12,
+                  "gap": 16,
+                  "padding": [
+                    20,
+                    24
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "IuG7X",
+                      "name": "w9Num",
+                      "width": 40,
+                      "height": 40,
+                      "fill": {
+                        "type": "gradient",
+                        "gradientType": "linear",
+                        "enabled": true,
+                        "rotation": 135,
+                        "size": {
+                          "height": 1
+                        },
+                        "colors": [
+                          {
+                            "color": "#2563EB",
+                            "position": 0
+                          },
+                          {
+                            "color": "#7C3AED",
+                            "position": 1
+                          }
+                        ]
+                      },
+                      "cornerRadius": 8,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "yODsr",
+                          "name": "w9NumText",
+                          "fill": "#FFFFFF",
+                          "content": "9",
+                          "fontFamily": "Inter",
+                          "fontSize": 18,
+                          "fontWeight": "700"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "jPFa7",
+                      "name": "w9Content",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 4,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "56ckB",
+                          "name": "w9Title",
+                          "fill": "#111827",
+                          "content": "Escalar tu negocio",
+                          "fontFamily": "Inter",
+                          "fontSize": 16,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "ntjyS",
+                          "name": "w9Desc",
+                          "fill": "#6B7280",
+                          "content": "Sistemas para multiplicar ingresos sin multiplicar trabajo",
+                          "fontFamily": "Inter",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "ICFbS",
+                  "name": "w10",
+                  "width": "fill_container",
+                  "fill": {
+                    "type": "gradient",
+                    "gradientType": "linear",
+                    "enabled": true,
+                    "rotation": 90,
+                    "size": {
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "#2563EB08",
+                        "position": 0
+                      },
+                      {
+                        "color": "#7C3AED08",
+                        "position": 1
+                      }
+                    ]
+                  },
+                  "cornerRadius": 12,
+                  "stroke": {
+                    "thickness": 2,
+                    "fill": {
+                      "type": "gradient",
+                      "gradientType": "linear",
+                      "enabled": true,
+                      "rotation": 135,
+                      "size": {
+                        "height": 1
+                      },
+                      "colors": [
+                        {
+                          "color": "#2563EB",
+                          "position": 0
+                        },
+                        {
+                          "color": "#7C3AED",
+                          "position": 1
+                        }
+                      ]
+                    }
+                  },
+                  "gap": 16,
+                  "padding": [
+                    20,
+                    24
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "FsyJd",
+                      "name": "w10Num",
+                      "width": 40,
+                      "height": 40,
+                      "fill": {
+                        "type": "gradient",
+                        "gradientType": "linear",
+                        "enabled": true,
+                        "rotation": 135,
+                        "size": {
+                          "height": 1
+                        },
+                        "colors": [
+                          {
+                            "color": "#2563EB",
+                            "position": 0
+                          },
+                          {
+                            "color": "#7C3AED",
+                            "position": 1
+                          }
+                        ]
+                      },
+                      "cornerRadius": 8,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "yyF31",
+                          "name": "w10NumText",
+                          "fill": "#FFFFFF",
+                          "content": "10",
+                          "fontFamily": "Inter",
+                          "fontSize": 16,
+                          "fontWeight": "700"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "oFa3m",
+                      "name": "w10Content",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 4,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "nbAjA",
+                          "name": "w10Title",
+                          "fill": "#111827",
+                          "content": "🎉 Lanzamiento y celebración",
+                          "fontFamily": "Inter",
+                          "fontSize": 16,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "etBtq",
+                          "name": "w10Desc",
+                          "fill": "#6B7280",
+                          "content": "Lanzas tu negocio al mundo con todo listo para facturar",
+                          "fontFamily": "Inter",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "Kbp3p",
+          "name": "Pricing Section",
+          "width": "fill_container",
+          "fill": {
+            "type": "gradient",
+            "gradientType": "linear",
+            "enabled": true,
+            "rotation": 180,
+            "size": {
+              "height": 1
+            },
+            "colors": [
+              {
+                "color": "#111827",
+                "position": 0
+              },
+              {
+                "color": "#1F2937",
+                "position": 1
+              }
+            ]
+          },
+          "layout": "vertical",
+          "gap": 48,
+          "padding": [
+            80,
+            120
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "ebYb4",
+              "name": "priceHeader",
+              "layout": "vertical",
+              "gap": 16,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "VbHBW",
+                  "name": "priceBadge",
+                  "fill": "#7C3AED33",
+                  "cornerRadius": 100,
+                  "padding": [
+                    6,
+                    12
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "S3OTa",
+                      "name": "priceBadgeText",
+                      "fill": "#A78BFA",
+                      "content": "Inversión única",
+                      "fontFamily": "Inter",
+                      "fontSize": 12,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "RAiLw",
+                  "name": "priceTitle",
+                  "fill": "#FFFFFF",
+                  "content": "Transforma tu futuro profesional",
+                  "textAlign": "center",
+                  "fontFamily": "Inter",
+                  "fontSize": 40,
+                  "fontWeight": "800"
+                },
+                {
+                  "type": "text",
+                  "id": "0xY6X",
+                  "name": "priceSub",
+                  "fill": "#9CA3AF",
+                  "content": "Una inversión que se paga sola con tu primer cliente",
+                  "textAlign": "center",
+                  "fontFamily": "Inter",
+                  "fontSize": 18,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "nE1aT",
+              "name": "priceCard",
+              "width": 480,
+              "fill": "#FFFFFF",
+              "cornerRadius": 24,
+              "layout": "vertical",
+              "gap": 32,
+              "padding": 48,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "7ZyY5",
+                  "name": "priceAmount",
+                  "layout": "vertical",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "a0VZ2",
+                      "name": "priceValue",
+                      "fill": {
+                        "type": "gradient",
+                        "gradientType": "linear",
+                        "enabled": true,
+                        "rotation": 135,
+                        "size": {
+                          "height": 1
+                        },
+                        "colors": [
+                          {
+                            "color": "#2563EB",
+                            "position": 0
+                          },
+                          {
+                            "color": "#7C3AED",
+                            "position": 1
+                          }
+                        ]
+                      },
+                      "content": "997€",
+                      "fontFamily": "Inter",
+                      "fontSize": 64,
+                      "fontWeight": "800"
+                    },
+                    {
+                      "type": "text",
+                      "id": "N5ow6",
+                      "name": "pricePer",
+                      "fill": "#6B7280",
+                      "content": "pago único · IVA incluido",
+                      "fontFamily": "Inter",
+                      "fontSize": 16,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "T0y8G",
+                  "name": "priceFeatures",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 16,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "0dAoK",
+                      "name": "pf1",
+                      "gap": 12,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "6mGS6",
+                          "name": "pf1Check",
+                          "fill": "#10B981",
+                          "content": "✓",
+                          "fontFamily": "Inter",
+                          "fontSize": 18,
+                          "fontWeight": "700"
+                        },
+                        {
+                          "type": "text",
+                          "id": "KSBOm",
+                          "name": "pf1Text",
+                          "fill": "#374151",
+                          "content": "10 clases en vivo de 2 horas",
+                          "fontFamily": "Inter",
+                          "fontSize": 16,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "G9d1n",
+                      "name": "pf2",
+                      "gap": 12,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "UZPtX",
+                          "name": "pf2Check",
+                          "fill": "#10B981",
+                          "content": "✓",
+                          "fontFamily": "Inter",
+                          "fontSize": 18,
+                          "fontWeight": "700"
+                        },
+                        {
+                          "type": "text",
+                          "id": "4W7Ky",
+                          "name": "pf2Text",
+                          "fill": "#374151",
+                          "content": "10 sesiones de mentoría individual",
+                          "fontFamily": "Inter",
+                          "fontSize": 16,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "jIUW3",
+                      "name": "pf3",
+                      "gap": 12,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "HBR3O",
+                          "name": "pf3Check",
+                          "fill": "#10B981",
+                          "content": "✓",
+                          "fontFamily": "Inter",
+                          "fontSize": 18,
+                          "fontWeight": "700"
+                        },
+                        {
+                          "type": "text",
+                          "id": "REKJQ",
+                          "name": "pf3Text",
+                          "fill": "#374151",
+                          "content": "Acceso de por vida a materiales",
+                          "fontFamily": "Inter",
+                          "fontSize": 16,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "q8KRy",
+                      "name": "pf4",
+                      "gap": 12,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "RoLqd",
+                          "name": "pf4Check",
+                          "fill": "#10B981",
+                          "content": "✓",
+                          "fontFamily": "Inter",
+                          "fontSize": 18,
+                          "fontWeight": "700"
+                        },
+                        {
+                          "type": "text",
+                          "id": "OeybX",
+                          "name": "pf4Text",
+                          "fill": "#374151",
+                          "content": "Comunidad privada exclusiva",
+                          "fontFamily": "Inter",
+                          "fontSize": 16,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "rueIh",
+                      "name": "pf5",
+                      "gap": 12,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "u0oZg",
+                          "name": "pf5Check",
+                          "fill": "#10B981",
+                          "content": "✓",
+                          "fontFamily": "Inter",
+                          "fontSize": 18,
+                          "fontWeight": "700"
+                        },
+                        {
+                          "type": "text",
+                          "id": "QgrnY",
+                          "name": "pf5Text",
+                          "fill": "#374151",
+                          "content": "Plantillas y recursos premium",
+                          "fontFamily": "Inter",
+                          "fontSize": 16,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "arQvs",
+                  "name": "ctaBtn",
+                  "width": "fill_container",
+                  "fill": {
+                    "type": "gradient",
+                    "gradientType": "linear",
+                    "enabled": true,
+                    "rotation": 135,
+                    "size": {
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "#2563EB",
+                        "position": 0
+                      },
+                      {
+                        "color": "#7C3AED",
+                        "position": 1
+                      }
+                    ]
+                  },
+                  "cornerRadius": 12,
+                  "padding": [
+                    18,
+                    48
+                  ],
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "nd89e",
+                      "name": "ctaBtnText",
+                      "fill": "#FFFFFF",
+                      "content": "Reservar mi plaza ahora",
+                      "fontFamily": "Inter",
+                      "fontSize": 18,
+                      "fontWeight": "700"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "ggn7w",
+                  "name": "guarantee",
+                  "fill": "#6B7280",
+                  "content": "🔒 Garantía de devolución de 14 días",
+                  "textAlign": "center",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "FgE1t",
+          "name": "Footer",
+          "width": "fill_container",
+          "fill": "#F8FAFC",
+          "layout": "vertical",
+          "gap": 24,
+          "padding": [
+            48,
+            120
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "YR4wU",
+              "name": "footerLogo",
+              "gap": 10,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "6dLLq",
+                  "name": "footerLogoIcon",
+                  "width": 36,
+                  "height": 36,
+                  "fill": {
+                    "type": "gradient",
+                    "gradientType": "linear",
+                    "enabled": true,
+                    "rotation": 135,
+                    "size": {
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "#2563EB",
+                        "position": 0
+                      },
+                      {
+                        "color": "#7C3AED",
+                        "position": 1
+                      }
+                    ]
+                  },
+                  "cornerRadius": 10,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "ddfa8",
+                      "name": "footerLogoText",
+                      "fill": "#FFFFFF",
+                      "content": "AS",
+                      "fontFamily": "Inter",
+                      "fontSize": 14,
+                      "fontWeight": "800"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "doYrF",
+                  "name": "footerBrand",
+                  "fill": "#111827",
+                  "content": "aprende.software",
+                  "fontFamily": "Inter",
+                  "fontSize": 18,
+                  "fontWeight": "600"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "np0EN",
+              "name": "footerLinks",
+              "gap": 32,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "OKks4",
+                  "name": "footerLink1",
+                  "fill": "#6B7280",
+                  "content": "Inicio",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "6LyId",
+                  "name": "footerLink2",
+                  "fill": "#6B7280",
+                  "content": "Programa",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "UcMtK",
+                  "name": "footerLink3",
+                  "fill": "#6B7280",
+                  "content": "Precios",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "eW9a8",
+                  "name": "footerLink4",
+                  "fill": "#6B7280",
+                  "content": "Contacto",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "yFHPA",
+              "name": "footerCopy",
+              "fill": "#9CA3AF",
+              "content": "© 2026 Josu Sanz · Todos los derechos reservados",
+              "fontFamily": "Inter",
+              "fontSize": 14,
+              "fontWeight": "normal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "WwZCo",
+      "x": 1700,
+      "y": 100,
+      "name": "Landing V2 - Premium",
+      "width": 1440,
+      "fill": "#09090B",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "ijFTp",
+          "name": "Hero Premium",
+          "width": "fill_container",
+          "height": 800,
+          "layout": "vertical",
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "aMHtr",
+              "name": "heroContent",
+              "layout": "vertical",
+              "gap": 32,
+              "padding": [
+                120,
+                80
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "Zf8xq",
+                  "name": "heroBadge",
+                  "fill": "#FFFFFF08",
+                  "cornerRadius": 100,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#FFFFFF15"
+                  },
+                  "effect": {
+                    "type": "background_blur",
+                    "radius": 10
+                  },
+                  "gap": 8,
+                  "padding": [
+                    10,
+                    20
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "4TLoD",
+                      "name": "heroBadgeIcon",
+                      "width": 8,
+                      "height": 8,
+                      "fill": "#22C55E",
+                      "cornerRadius": 100
+                    },
+                    {
+                      "type": "text",
+                      "id": "wxt7x",
+                      "name": "heroBadgeText",
+                      "fill": "#E5E5E5",
+                      "content": "🚀 Próxima edición: Marzo 2026 · Solo 10 plazas",
+                      "fontFamily": "Inter",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "cyjGc",
+                  "name": "heroTitle",
+                  "fill": "#FFFFFF",
+                  "textGrowth": "fixed-width",
+                  "width": 900,
+                  "content": "Crea tu Negocio\nDigital con IA",
+                  "lineHeight": 1.1,
+                  "textAlign": "center",
+                  "fontFamily": "Inter",
+                  "fontSize": 72,
+                  "fontWeight": "800",
+                  "letterSpacing": -2
+                },
+                {
+                  "type": "frame",
+                  "id": "3Z4kh",
+                  "name": "heroHighlight",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "zL1vv",
+                      "name": "heroHighlightText",
+                      "fill": "#A1A1AA",
+                      "content": "De idea a negocio rentable en ",
+                      "fontFamily": "Inter",
+                      "fontSize": 24,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "xEGSM",
+                      "name": "heroHighlightBold",
+                      "fill": {
+                        "type": "gradient",
+                        "gradientType": "linear",
+                        "enabled": true,
+                        "rotation": 90,
+                        "size": {
+                          "height": 1
+                        },
+                        "colors": [
+                          {
+                            "color": "#3B82F6",
+                            "position": 0
+                          },
+                          {
+                            "color": "#8B5CF6",
+                            "position": 1
+                          }
+                        ]
+                      },
+                      "content": "10 semanas",
+                      "fontFamily": "Inter",
+                      "fontSize": 24,
+                      "fontWeight": "700"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "xKJdO",
+                  "name": "heroSubtitle",
+                  "fill": "#71717A",
+                  "textGrowth": "fixed-width",
+                  "width": 600,
+                  "content": "Curso práctico con mentoría personalizada.\nTransforma tu idea en un negocio que factura usando inteligencia artificial.",
+                  "lineHeight": 1.6,
+                  "textAlign": "center",
+                  "fontFamily": "Inter",
+                  "fontSize": 18,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "m01SR",
+                  "name": "heroCTAs",
+                  "gap": 16,
+                  "padding": [
+                    16,
+                    0,
+                    0,
+                    0
+                  ],
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "YmVZh",
+                      "name": "heroCTA1",
+                      "fill": {
+                        "type": "gradient",
+                        "gradientType": "linear",
+                        "enabled": true,
+                        "rotation": 135,
+                        "size": {
+                          "height": 1
+                        },
+                        "colors": [
+                          {
+                            "color": "#3B82F6",
+                            "position": 0
+                          },
+                          {
+                            "color": "#8B5CF6",
+                            "position": 1
+                          }
+                        ]
+                      },
+                      "cornerRadius": 12,
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#3B82F640",
+                        "offset": {
+                          "x": 0,
+                          "y": 10
+                        },
+                        "blur": 30
+                      },
+                      "gap": 10,
+                      "padding": [
+                        18,
+                        36
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "O7sWw",
+                          "name": "heroCTA1Text",
+                          "fill": "#FFFFFF",
+                          "content": "Reservar mi plaza",
+                          "fontFamily": "Inter",
+                          "fontSize": 16,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "GsM77",
+                          "name": "heroCTA1Arrow",
+                          "fill": "#FFFFFF",
+                          "content": "→",
+                          "fontFamily": "Inter",
+                          "fontSize": 16,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "B3Kw2",
+                      "name": "heroCTA2",
+                      "fill": "#FFFFFF08",
+                      "cornerRadius": 12,
+                      "stroke": {
+                        "thickness": 1,
+                        "fill": "#FFFFFF20"
+                      },
+                      "gap": 10,
+                      "padding": [
+                        18,
+                        36
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "wziZo",
+                          "name": "heroCTA2Text",
+                          "fill": "#FFFFFF",
+                          "content": "Ver programa",
+                          "fontFamily": "Inter",
+                          "fontSize": 16,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "UiIl0",
+          "name": "Logo Cloud",
+          "width": "fill_container",
+          "fill": "#09090B",
+          "layout": "vertical",
+          "gap": 24,
+          "padding": [
+            48,
+            120
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "gGNoR",
+              "name": "logoCloudTitle",
+              "fill": "#52525B",
+              "content": "Herramientas que dominarás",
+              "fontFamily": "Inter",
+              "fontSize": 14,
+              "fontWeight": "500",
+              "letterSpacing": 1
+            },
+            {
+              "type": "frame",
+              "id": "261PC",
+              "name": "logoCloudLogos",
+              "gap": 48,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "e7jCT",
+                  "name": "logo1",
+                  "fill": "#3F3F46",
+                  "content": "Claude AI",
+                  "fontFamily": "Inter",
+                  "fontSize": 18,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "YaBZ3",
+                  "name": "logo2",
+                  "fill": "#3F3F46",
+                  "content": "ChatGPT",
+                  "fontFamily": "Inter",
+                  "fontSize": 18,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "4DNAr",
+                  "name": "logo3",
+                  "fill": "#3F3F46",
+                  "content": "Cursor",
+                  "fontFamily": "Inter",
+                  "fontSize": 18,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "3zsjg",
+                  "name": "logo4",
+                  "fill": "#3F3F46",
+                  "content": "v0.dev",
+                  "fontFamily": "Inter",
+                  "fontSize": 18,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "pzHTd",
+                  "name": "logo5",
+                  "fill": "#3F3F46",
+                  "content": "Stripe",
+                  "fontFamily": "Inter",
+                  "fontSize": 18,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "GnBHE",
+                  "name": "logo6",
+                  "fill": "#3F3F46",
+                  "content": "Vercel",
+                  "fontFamily": "Inter",
+                  "fontSize": 18,
+                  "fontWeight": "600"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "DGzSv",
+          "name": "Stats Premium",
+          "width": "fill_container",
+          "fill": "#0F0F12",
+          "stroke": {
+            "align": "inside",
+            "thickness": 1,
+            "fill": "#FFFFFF08"
+          },
+          "padding": [
+            64,
+            120
+          ],
+          "justifyContent": "space_between",
+          "children": [
+            {
+              "type": "frame",
+              "id": "fhIJm",
+              "name": "statV2_1",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 8,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "fKJ4W",
+                  "name": "statV2_1Val",
+                  "fill": "#FFFFFF",
+                  "content": "20+",
+                  "fontFamily": "Inter",
+                  "fontSize": 56,
+                  "fontWeight": "800"
+                },
+                {
+                  "type": "text",
+                  "id": "w08HC",
+                  "name": "statV2_1Label",
+                  "fill": "#71717A",
+                  "content": "años en tech",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "ZfWY5",
+              "name": "statV2_2",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 8,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "5htrL",
+                  "name": "statV2_2Val",
+                  "fill": "#FFFFFF",
+                  "content": "500+",
+                  "fontFamily": "Inter",
+                  "fontSize": 56,
+                  "fontWeight": "800"
+                },
+                {
+                  "type": "text",
+                  "id": "eIHUD",
+                  "name": "statV2_2Label",
+                  "fill": "#71717A",
+                  "content": "webs creadas",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "yaRtb",
+              "name": "statV2_3",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 8,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "RpUTZ",
+                  "name": "statV2_3Val",
+                  "fill": "#FFFFFF",
+                  "content": "20+",
+                  "fontFamily": "Inter",
+                  "fontSize": 56,
+                  "fontWeight": "800"
+                },
+                {
+                  "type": "text",
+                  "id": "MaMCa",
+                  "name": "statV2_3Label",
+                  "fill": "#71717A",
+                  "content": "proyectos lanzados",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "K6tTt",
+              "name": "statV2_4",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 8,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "IHejF",
+                  "name": "statV2_4Val",
+                  "fill": {
+                    "type": "gradient",
+                    "gradientType": "linear",
+                    "enabled": true,
+                    "rotation": 180,
+                    "size": {
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "#3B82F6",
+                        "position": 0
+                      },
+                      {
+                        "color": "#8B5CF6",
+                        "position": 1
+                      }
+                    ]
+                  },
+                  "content": "10",
+                  "fontFamily": "Inter",
+                  "fontSize": 56,
+                  "fontWeight": "800"
+                },
+                {
+                  "type": "text",
+                  "id": "wYu5f",
+                  "name": "statV2_4Label",
+                  "fill": "#71717A",
+                  "content": "plazas máximo",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "qoVKp",
+          "name": "Bento Features",
+          "width": "fill_container",
+          "fill": "#09090B",
+          "layout": "vertical",
+          "gap": 48,
+          "padding": [
+            80,
+            120
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "kXT39",
+              "name": "bentoHeader",
+              "layout": "vertical",
+              "gap": 16,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "oudyO",
+                  "name": "bentoTag",
+                  "fill": "#8B5CF6",
+                  "content": "METODOLOGÍA",
+                  "fontFamily": "Inter",
+                  "fontSize": 12,
+                  "fontWeight": "600",
+                  "letterSpacing": 2
+                },
+                {
+                  "type": "text",
+                  "id": "eIz8S",
+                  "name": "bentoTitle",
+                  "fill": "#FFFFFF",
+                  "content": "Todo lo que necesitas para lanzar",
+                  "textAlign": "center",
+                  "fontFamily": "Inter",
+                  "fontSize": 44,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "knOGY",
+                  "name": "bentoSub",
+                  "fill": "#71717A",
+                  "content": "Aprende haciendo. Cada semana construyes algo real para tu negocio.",
+                  "textAlign": "center",
+                  "fontFamily": "Inter",
+                  "fontSize": 18,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "EDYPt",
+              "name": "bentoGrid",
+              "width": "fill_container",
+              "gap": 16,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "SZuQH",
+                  "name": "bentoCol1",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 16,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "EiUIE",
+                      "name": "bento1",
+                      "width": "fill_container",
+                      "height": 280,
+                      "fill": "#18181B",
+                      "cornerRadius": 24,
+                      "stroke": {
+                        "thickness": 1,
+                        "fill": "#27272A"
+                      },
+                      "layout": "vertical",
+                      "gap": 20,
+                      "padding": 32,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "Nh41Y",
+                          "name": "bento1Icon",
+                          "width": 48,
+                          "height": 48,
+                          "fill": {
+                            "type": "gradient",
+                            "gradientType": "linear",
+                            "enabled": true,
+                            "rotation": 135,
+                            "size": {
+                              "height": 1
+                            },
+                            "colors": [
+                              {
+                                "color": "#3B82F6",
+                                "position": 0
+                              },
+                              {
+                                "color": "#8B5CF6",
+                                "position": 1
+                              }
+                            ]
+                          },
+                          "cornerRadius": 12,
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "imjLI",
+                              "name": "bento1IconText",
+                              "content": "📹",
+                              "fontFamily": "Inter",
+                              "fontSize": 22,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "gyVo0",
+                          "name": "bento1Title",
+                          "fill": "#FFFFFF",
+                          "content": "Clases en vivo semanales",
+                          "fontFamily": "Inter",
+                          "fontSize": 22,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "yZKDW",
+                          "name": "bento1Desc",
+                          "fill": "#A1A1AA",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Sesiones de 2 horas donde trabajamos juntos en tu proyecto real. Nada de teoría aburrida, solo práctica.",
+                          "lineHeight": 1.6,
+                          "fontFamily": "Inter",
+                          "fontSize": 15,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "NJzI6",
+                      "name": "bento2",
+                      "width": "fill_container",
+                      "height": 200,
+                      "fill": "#18181B",
+                      "cornerRadius": 24,
+                      "stroke": {
+                        "thickness": 1,
+                        "fill": "#27272A"
+                      },
+                      "layout": "vertical",
+                      "gap": 20,
+                      "padding": 32,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "YKuiB",
+                          "name": "bento2Icon",
+                          "width": 48,
+                          "height": 48,
+                          "fill": "#27272A",
+                          "cornerRadius": 12,
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "1QUpr",
+                              "name": "bento2IconText",
+                              "content": "🤝",
+                              "fontFamily": "Inter",
+                              "fontSize": 22,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "mcEjd",
+                          "name": "bento2Title",
+                          "fill": "#FFFFFF",
+                          "content": "Comunidad exclusiva",
+                          "fontFamily": "Inter",
+                          "fontSize": 22,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "QApga",
+                          "name": "bento2Desc",
+                          "fill": "#A1A1AA",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Grupo privado de máximo 10 personas para networking y apoyo mutuo.",
+                          "lineHeight": 1.6,
+                          "fontFamily": "Inter",
+                          "fontSize": 15,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "fbKUt",
+                  "name": "bentoCol2",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 16,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "lngqh",
+                      "name": "bento3",
+                      "width": "fill_container",
+                      "height": 200,
+                      "fill": "#18181B",
+                      "cornerRadius": 24,
+                      "stroke": {
+                        "thickness": 1,
+                        "fill": "#27272A"
+                      },
+                      "layout": "vertical",
+                      "gap": 20,
+                      "padding": 32,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "qwFhz",
+                          "name": "bento3Icon",
+                          "width": 48,
+                          "height": 48,
+                          "fill": "#27272A",
+                          "cornerRadius": 12,
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "j3ulg",
+                              "name": "bento3IconText",
+                              "content": "👤",
+                              "fontFamily": "Inter",
+                              "fontSize": 22,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "HTZoh",
+                          "name": "bento3Title",
+                          "fill": "#FFFFFF",
+                          "content": "Mentoría 1:1 semanal",
+                          "fontFamily": "Inter",
+                          "fontSize": 22,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "2oCAS",
+                          "name": "bento3Desc",
+                          "fill": "#A1A1AA",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Seguimiento individual para resolver dudas y acelerar tu progreso.",
+                          "lineHeight": 1.6,
+                          "fontFamily": "Inter",
+                          "fontSize": 15,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "THcpG",
+                      "name": "bento4",
+                      "width": "fill_container",
+                      "height": 280,
+                      "fill": {
+                        "type": "gradient",
+                        "gradientType": "linear",
+                        "enabled": true,
+                        "rotation": 135,
+                        "size": {
+                          "height": 1
+                        },
+                        "colors": [
+                          {
+                            "color": "#1E1B4B",
+                            "position": 0
+                          },
+                          {
+                            "color": "#312E81",
+                            "position": 1
+                          }
+                        ]
+                      },
+                      "cornerRadius": 24,
+                      "stroke": {
+                        "thickness": 1,
+                        "fill": "#4338CA40"
+                      },
+                      "layout": "vertical",
+                      "gap": 20,
+                      "padding": 32,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "wICqR",
+                          "name": "bento4Icon",
+                          "width": 48,
+                          "height": 48,
+                          "fill": "#FFFFFF15",
+                          "cornerRadius": 12,
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "7GSKf",
+                              "name": "bento4IconText",
+                              "content": "🚀",
+                              "fontFamily": "Inter",
+                              "fontSize": 22,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "VWHFf",
+                          "name": "bento4Title",
+                          "fill": "#FFFFFF",
+                          "content": "De 0 a lanzamiento",
+                          "fontFamily": "Inter",
+                          "fontSize": 22,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "brZD8",
+                          "name": "bento4Desc",
+                          "fill": "#C7D2FE",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "En 10 semanas tendrás tu negocio funcionando: web, producto, sistema de ventas y primeros clientes.",
+                          "lineHeight": 1.6,
+                          "fontFamily": "Inter",
+                          "fontSize": 15,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "xqd6m",
+                          "name": "bento4Badge",
+                          "fill": "#FFFFFF15",
+                          "cornerRadius": 100,
+                          "padding": [
+                            8,
+                            16
+                          ],
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "iLcg5",
+                              "name": "bento4BadgeText",
+                              "fill": "#E0E7FF",
+                              "content": "✨ Garantía de resultados",
+                              "fontFamily": "Inter",
+                              "fontSize": 13,
+                              "fontWeight": "500"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "9ns6Q",
+          "name": "Pricing Premium",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 48,
+          "padding": [
+            100,
+            120
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "sr7pE",
+              "name": "pricingV2Header",
+              "layout": "vertical",
+              "gap": 16,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "SZJYx",
+                  "name": "pricingV2Tag",
+                  "fill": "#8B5CF6",
+                  "content": "INVERSIÓN",
+                  "fontFamily": "Inter",
+                  "fontSize": 12,
+                  "fontWeight": "600",
+                  "letterSpacing": 2
+                },
+                {
+                  "type": "text",
+                  "id": "zDw1b",
+                  "name": "pricingV2Title",
+                  "fill": "#FFFFFF",
+                  "content": "Una decisión que cambia todo",
+                  "textAlign": "center",
+                  "fontFamily": "Inter",
+                  "fontSize": 44,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "XjepS",
+                  "name": "pricingV2Sub",
+                  "fill": "#71717A",
+                  "content": "Inversión que se recupera con tu primer cliente",
+                  "textAlign": "center",
+                  "fontFamily": "Inter",
+                  "fontSize": 18,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "iBAnE",
+              "name": "pricingV2Card",
+              "width": 500,
+              "fill": "#FFFFFF08",
+              "cornerRadius": 32,
+              "stroke": {
+                "thickness": 1,
+                "fill": "#FFFFFF15"
+              },
+              "effect": {
+                "type": "background_blur",
+                "radius": 20
+              },
+              "layout": "vertical",
+              "gap": 32,
+              "padding": 48,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "E36bB",
+                  "name": "pricingV2Amount",
+                  "layout": "vertical",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "hCoHA",
+                      "name": "pricingV2Price",
+                      "fill": "#FFFFFF",
+                      "content": "997€",
+                      "fontFamily": "Inter",
+                      "fontSize": 72,
+                      "fontWeight": "800",
+                      "letterSpacing": -2
+                    },
+                    {
+                      "type": "text",
+                      "id": "yFLNk",
+                      "name": "pricingV2Per",
+                      "fill": "#71717A",
+                      "content": "pago único · IVA incluido",
+                      "fontFamily": "Inter",
+                      "fontSize": 16,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "47Da8",
+                  "name": "pricingV2Divider",
+                  "width": "fill_container",
+                  "height": 1,
+                  "fill": "#FFFFFF10"
+                },
+                {
+                  "type": "frame",
+                  "id": "3UkQd",
+                  "name": "pricingV2Features",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 16,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "9PhPQ",
+                      "name": "pf2_1",
+                      "gap": 14,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "jDeiE",
+                          "name": "pf2_1Icon",
+                          "width": 24,
+                          "height": 24,
+                          "fill": "#22C55E20",
+                          "cornerRadius": 100,
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "eBQ9i",
+                              "name": "pf2_1Check",
+                              "fill": "#22C55E",
+                              "content": "✓",
+                              "fontFamily": "Inter",
+                              "fontSize": 12,
+                              "fontWeight": "700"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "zSSlm",
+                          "name": "pf2_1Text",
+                          "fill": "#E5E5E5",
+                          "content": "10 clases en vivo de 2 horas",
+                          "fontFamily": "Inter",
+                          "fontSize": 16,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "CU9YO",
+                      "name": "pf2_2",
+                      "gap": 14,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "Bl7vD",
+                          "name": "pf2_2Icon",
+                          "width": 24,
+                          "height": 24,
+                          "fill": "#22C55E20",
+                          "cornerRadius": 100,
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "AB0aa",
+                              "name": "pf2_2Check",
+                              "fill": "#22C55E",
+                              "content": "✓",
+                              "fontFamily": "Inter",
+                              "fontSize": 12,
+                              "fontWeight": "700"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "41zUg",
+                          "name": "pf2_2Text",
+                          "fill": "#E5E5E5",
+                          "content": "10 sesiones de mentoría individual",
+                          "fontFamily": "Inter",
+                          "fontSize": 16,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "2VK06",
+                      "name": "pf2_3",
+                      "gap": 14,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "z3EJi",
+                          "name": "pf2_3Icon",
+                          "width": 24,
+                          "height": 24,
+                          "fill": "#22C55E20",
+                          "cornerRadius": 100,
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "608Gg",
+                              "name": "pf2_3Check",
+                              "fill": "#22C55E",
+                              "content": "✓",
+                              "fontFamily": "Inter",
+                              "fontSize": 12,
+                              "fontWeight": "700"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "Nx8e8",
+                          "name": "pf2_3Text",
+                          "fill": "#E5E5E5",
+                          "content": "Acceso de por vida a materiales",
+                          "fontFamily": "Inter",
+                          "fontSize": 16,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "qT8LN",
+                      "name": "pf2_4",
+                      "gap": 14,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "GNvtG",
+                          "name": "pf2_4Icon",
+                          "width": 24,
+                          "height": 24,
+                          "fill": "#22C55E20",
+                          "cornerRadius": 100,
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "3fmXm",
+                              "name": "pf2_4Check",
+                              "fill": "#22C55E",
+                              "content": "✓",
+                              "fontFamily": "Inter",
+                              "fontSize": 12,
+                              "fontWeight": "700"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "cCJke",
+                          "name": "pf2_4Text",
+                          "fill": "#E5E5E5",
+                          "content": "Comunidad privada exclusiva",
+                          "fontFamily": "Inter",
+                          "fontSize": 16,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "Rt2yw",
+                      "name": "pf2_5",
+                      "gap": 14,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "1NRhZ",
+                          "name": "pf2_5Icon",
+                          "width": 24,
+                          "height": 24,
+                          "fill": "#22C55E20",
+                          "cornerRadius": 100,
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "ieRHZ",
+                              "name": "pf2_5Check",
+                              "fill": "#22C55E",
+                              "content": "✓",
+                              "fontFamily": "Inter",
+                              "fontSize": 12,
+                              "fontWeight": "700"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "gCc3i",
+                          "name": "pf2_5Text",
+                          "fill": "#E5E5E5",
+                          "content": "Plantillas y recursos premium",
+                          "fontFamily": "Inter",
+                          "fontSize": 16,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "wqgLc",
+                  "name": "pricingV2CTA",
+                  "width": "fill_container",
+                  "fill": {
+                    "type": "gradient",
+                    "gradientType": "linear",
+                    "enabled": true,
+                    "rotation": 135,
+                    "size": {
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "#3B82F6",
+                        "position": 0
+                      },
+                      {
+                        "color": "#8B5CF6",
+                        "position": 1
+                      }
+                    ]
+                  },
+                  "cornerRadius": 14,
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#8B5CF640",
+                    "offset": {
+                      "x": 0,
+                      "y": 10
+                    },
+                    "blur": 30
+                  },
+                  "padding": [
+                    20,
+                    0
+                  ],
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "BuQWj",
+                      "name": "pricingV2CTAText",
+                      "fill": "#FFFFFF",
+                      "content": "Reservar mi plaza ahora →",
+                      "fontFamily": "Inter",
+                      "fontSize": 17,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "tGXBt",
+                  "name": "pricingV2Guarantee",
+                  "fill": "#71717A",
+                  "content": "🔒 Garantía de devolución de 14 días",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "6qKtj",
+          "name": "Footer Premium",
+          "width": "fill_container",
+          "fill": "#09090B",
+          "stroke": {
+            "align": "inside",
+            "thickness": 1,
+            "fill": "#FFFFFF08"
+          },
+          "layout": "vertical",
+          "gap": 32,
+          "padding": [
+            64,
+            120
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "vvVXP",
+              "name": "footerV2Top",
+              "gap": 12,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "rBbt7",
+                  "name": "footerV2Logo",
+                  "width": 40,
+                  "height": 40,
+                  "fill": {
+                    "type": "gradient",
+                    "gradientType": "linear",
+                    "enabled": true,
+                    "rotation": 135,
+                    "size": {
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "#3B82F6",
+                        "position": 0
+                      },
+                      {
+                        "color": "#8B5CF6",
+                        "position": 1
+                      }
+                    ]
+                  },
+                  "cornerRadius": 10,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "UO9fl",
+                      "name": "footerV2LogoText",
+                      "fill": "#FFFFFF",
+                      "content": "AS",
+                      "fontFamily": "Inter",
+                      "fontSize": 15,
+                      "fontWeight": "800"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "6vB4u",
+                  "name": "footerV2Brand",
+                  "fill": "#FFFFFF",
+                  "content": "aprende.software",
+                  "fontFamily": "Inter",
+                  "fontSize": 18,
+                  "fontWeight": "600"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "OcFBN",
+              "name": "footerV2Links",
+              "gap": 32,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "EFpbA",
+                  "name": "footerV2Link1",
+                  "fill": "#71717A",
+                  "content": "Inicio",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "K9oS7",
+                  "name": "footerV2Link2",
+                  "fill": "#71717A",
+                  "content": "Programa",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "YKmYi",
+                  "name": "footerV2Link3",
+                  "fill": "#71717A",
+                  "content": "Precios",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "zZ6kD",
+                  "name": "footerV2Link4",
+                  "fill": "#71717A",
+                  "content": "Contacto",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "vDbeB",
+              "name": "footerV2Copy",
+              "fill": "#52525B",
+              "content": "© 2026 Josu Sanz · Todos los derechos reservados",
+              "fontFamily": "Inter",
+              "fontSize": 13,
+              "fontWeight": "normal"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
