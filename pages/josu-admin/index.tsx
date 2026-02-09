@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Link from 'next/link'
 import { useState, useEffect, FormEvent } from 'react'
 
 interface UserProgress {
@@ -74,6 +75,8 @@ export default function PrecursoAdminPage() {
       })
 
       if (res.ok) {
+        // Guardar para el panel del curso
+        localStorage.setItem('josu-admin-password', secret)
         setAuthenticated(true)
         loadData()
       } else {
@@ -88,6 +91,7 @@ export default function PrecursoAdminPage() {
 
   const handleLogout = async () => {
     await fetch('/api/admin/precurso/auth', { method: 'DELETE' })
+    localStorage.removeItem('josu-admin-password')
     setAuthenticated(false)
     setStats(null)
     setUsers([])
@@ -322,6 +326,22 @@ export default function PrecursoAdminPage() {
         </h1>
 
         <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+          <Link
+            href="/josu-admin/curso"
+            style={{
+              padding: '8px 16px',
+              fontSize: '14px',
+              fontWeight: 600,
+              color: 'white',
+              background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+              border: 'none',
+              borderRadius: '6px',
+              textDecoration: 'none',
+              boxShadow: '0 2px 8px rgba(99, 102, 241, 0.3)'
+            }}
+          >
+            Panel Curso 10 Semanas
+          </Link>
           <button
             onClick={loadData}
             style={{

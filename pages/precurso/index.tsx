@@ -1073,6 +1073,27 @@ function PrecursoContent() {
             <span>⏱️ ~65 min total</span>
             <span>📱 A tu ritmo</span>
           </div>
+
+          {/* Link al curso completo */}
+          {progress === 100 && (
+            <Link href="/curso" style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '12px',
+              marginTop: '32px',
+              padding: '20px 24px',
+              background: `linear-gradient(135deg, ${t.accent}, #8b5cf6)`,
+              borderRadius: '14px',
+              textDecoration: 'none',
+              color: 'white',
+              fontSize: '16px',
+              fontWeight: 600,
+              boxShadow: `0 8px 32px ${t.accent}40`
+            }}>
+              🚀 Ir al Curso Completo
+            </Link>
+          )}
         </main>
       </div>
 
