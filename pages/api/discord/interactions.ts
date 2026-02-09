@@ -13,6 +13,20 @@ const InteractionResponseType = {
   CHANNEL_MESSAGE_WITH_SOURCE: 4,
 }
 
+// Get raw body from request
+async function getRawBody(req: NextApiRequest): Promise<string> {
+  return new Promise((resolve, reject) => {
+    let data = ''
+    req.on('data', (chunk) => {
+      data += chunk
+    })
+    req.on('end', () => {
+      resolve(data)
+    })
+    req.on('error', reject)
+  })
+}
+
 // Verify Discord request signature using tweetnacl
 function verifyDiscordRequest(
   rawBody: string,
@@ -22,23 +36,19 @@ function verifyDiscordRequest(
   const publicKey = process.env.DISCORD_PUBLIC_KEY
 
   if (!signature || !timestamp || !publicKey) {
-    console.log('Missing verification params:', { signature: !!signature, timestamp: !!timestamp, publicKey: !!publicKey })
+    console.log('Missing params:', { sig: !!signature, ts: !!timestamp, pk: !!publicKey })
     return false
   }
 
   try {
     const message = timestamp + rawBody
-    const signatureBuffer = Buffer.from(signature, 'hex')
-    const publicKeyBuffer = Buffer.from(publicKey, 'hex')
-    const messageBuffer = Buffer.from(message)
-
     return nacl.sign.detached.verify(
-      messageBuffer,
-      signatureBuffer,
-      publicKeyBuffer
+      Buffer.from(message),
+      Buffer.from(signature, 'hex'),
+      Buffer.from(publicKey, 'hex')
     )
   } catch (error) {
-    console.error('Verification error:', error)
+    console.error('Verify error:', error)
     return false
   }
 }
@@ -46,7 +56,6 @@ function verifyDiscordRequest(
 // Assign role to user
 async function assignRole(guildId: string, userId: string, roleId: string): Promise<boolean> {
   const token = process.env.DISCORD_BOT_TOKEN
-
   try {
     const res = await fetch(
       `https://discord.com/api/v10/guilds/${guildId}/members/${userId}/roles/${roleId}`,
@@ -60,7 +69,7 @@ async function assignRole(guildId: string, userId: string, roleId: string): Prom
     )
     return res.ok
   } catch (error) {
-    console.error('Error assigning role:', error)
+    console.error('Role error:', error)
     return false
   }
 }
@@ -70,23 +79,26 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(405).json({ error: 'Method not allowed' })
   }
 
-  // Get raw body for signature verification
-  const rawBody = JSON.stringify(req.body)
   const signature = req.headers['x-signature-ed25519'] as string
   const timestamp = req.headers['x-signature-timestamp'] as string
+
+  // Get raw body for signature verification
+  const rawBody = await getRawBody(req)
 
   // Verify the request is from Discord
   const isValid = verifyDiscordRequest(rawBody, signature, timestamp)
   if (!isValid) {
-    console.log('Invalid signature')
+    console.log('Invalid signature for body:', rawBody.substring(0, 100))
     return res.status(401).json({ error: 'Invalid request signature' })
   }
 
-  const { type, data, member, guild_id } = req.body
+  // Parse the body
+  const body = JSON.parse(rawBody)
+  const { type, data, member, guild_id } = body
 
-  // Handle Discord PING (required for endpoint verification)
+  // Handle Discord PING
   if (type === InteractionType.PING) {
-    console.log('Received PING, responding with PONG')
+    console.log('PING received, sending PONG')
     return res.status(200).json({ type: InteractionResponseType.PONG })
   }
 
@@ -101,69 +113,48 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(200).json({
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
           data: {
-            content: '❌ Por favor, proporciona tu email: `/verificar email:tu@email.com`',
-            flags: 64, // Ephemeral (only visible to user)
+            content: '❌ Usa: `/verificar email:tu@email.com`',
+            flags: 64,
           },
         })
       }
 
       try {
-        // Check if email is enrolled in the course
         const isEnrolled = await kv.sismember('curso:emails', email)
+        const isPrecurso = !isEnrolled && await kv.sismember('precurso:emails', email)
 
-        if (!isEnrolled) {
-          // Also check precurso emails
-          const isPrecurso = await kv.sismember('precurso:emails', email)
-
-          if (!isPrecurso) {
-            return res.status(200).json({
-              type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-              data: {
-                content: `❌ El email **${email}** no está registrado en el curso.\n\nSi crees que es un error, contacta con Josu.`,
-                flags: 64,
-              },
-            })
-          }
+        if (!isEnrolled && !isPrecurso) {
+          return res.status(200).json({
+            type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+            data: {
+              content: `❌ **${email}** no está registrado.\n\nContacta a Josu si crees que es un error.`,
+              flags: 64,
+            },
+          })
         }
 
-        // Email is enrolled - assign role
         const ALUMNO_ROLE_ID = process.env.DISCORD_ALUMNO_ROLE_ID
-
         if (ALUMNO_ROLE_ID && guild_id && member?.user?.id) {
-          const assigned = await assignRole(guild_id, member.user.id, ALUMNO_ROLE_ID)
-
-          if (assigned) {
-            // Save verification to KV
-            await kv.hset(`curso:user:${email}`, {
-              discordId: member.user.id,
-              discordVerifiedAt: new Date().toISOString(),
-            })
-
-            return res.status(200).json({
-              type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-              data: {
-                content: `✅ ¡Verificado! Bienvenido/a al curso, **${member.user.username}**!\n\nYa tienes acceso a todos los canales. 🚀`,
-                flags: 64,
-              },
-            })
-          }
+          await assignRole(guild_id, member.user.id, ALUMNO_ROLE_ID)
+          await kv.hset(`curso:user:${email}`, {
+            discordId: member.user.id,
+            discordVerifiedAt: new Date().toISOString(),
+          })
         }
 
-        // Fallback if role assignment failed but email was valid
         return res.status(200).json({
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
           data: {
-            content: `✅ Email verificado: **${email}**\n\nSi no tienes acceso a los canales, contacta a Josu.`,
+            content: `✅ ¡Verificado, **${member?.user?.username || 'alumno'}**! Ya tienes acceso a los canales. 🚀`,
             flags: 64,
           },
         })
-
       } catch (error) {
-        console.error('Verification error:', error)
+        console.error('Error:', error)
         return res.status(200).json({
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
           data: {
-            content: '❌ Error al verificar. Inténtalo de nuevo más tarde.',
+            content: '❌ Error al verificar. Inténtalo de nuevo.',
             flags: 64,
           },
         })
@@ -174,11 +165,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(200).json({
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: {
-          content: `📚 **Crea tu Software con IA**\n\n` +
-            `Este es el servidor del curso de 10 semanas.\n\n` +
-            `🔗 Accede al curso: https://www.aprende.software/curso\n` +
-            `📅 Inicio: 19 febrero 2026\n` +
-            `👨‍🏫 Instructor: Josu Sanz`,
+          content: `📚 **Crea tu Software con IA**\n🔗 https://www.aprende.software/curso\n📅 Inicio: 19 febrero 2026`,
           flags: 64,
         },
       })
@@ -188,8 +175,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   return res.status(200).json({ type: InteractionResponseType.PONG })
 }
 
+// Disable body parsing to get raw body for signature verification
 export const config = {
   api: {
-    bodyParser: true,
+    bodyParser: false,
   },
 }
