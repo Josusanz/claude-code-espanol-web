@@ -351,15 +351,15 @@ export default function LandingPage() {
                   </div>
                 </div>
 
-                {/* Mega Menu: Premium */}
+                {/* Mega Menu: Cursos Avanzados */}
                 <div className="relative group">
                   <button className="flex items-center gap-1 text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors text-sm font-medium py-4">
-                    Premium
+                    Cursos Avanzados
                     <span className="material-symbols-outlined text-sm transition-transform group-hover:rotate-180">expand_more</span>
                   </button>
                   <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out transform group-hover:translate-y-0 translate-y-2">
                     <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-2xl p-6 min-w-[500px]">
-                      <h3 className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-4">Cursos Premium</h3>
+                      <h3 className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-4">Cursos Avanzados</h3>
                       <div className="space-y-3">
                         {/* Ralph Loop Card */}
                         <Link href="/ralph" className="block p-4 rounded-xl border-2 border-transparent hover:border-purple-300 dark:hover:border-purple-700 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 transition-all group/item">
@@ -432,13 +432,13 @@ export default function LandingPage() {
                   </div>
                 </div>
 
-                {/* Premium button - always visible */}
+                {/* Cursos Avanzados button - always visible */}
                 <Link
                   href="/premium"
                   className="btn-premium-nav flex items-center gap-1 px-3 py-1.5 rounded-full text-sm font-semibold transition-all shadow-md hover:shadow-lg"
                 >
                   <span>✨</span>
-                  <span className="hidden sm:inline">Premium</span>
+                  <span className="hidden sm:inline">Avanzados</span>
                 </Link>
 
                 {/* User nav - shows account or login */}
@@ -507,9 +507,9 @@ export default function LandingPage() {
                     </div>
                   </div>
 
-                  {/* Premium section */}
+                  {/* Cursos Avanzados section */}
                   <div className="pt-3">
-                    <span className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider px-2">Premium</span>
+                    <span className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider px-2">Cursos Avanzados</span>
                     <div className="mt-1 space-y-1">
                       <Link href="/ralph" className="flex items-center justify-between text-slate-600 dark:text-slate-400 hover:text-purple-600 hover:bg-purple-50 dark:hover:bg-purple-900/30 py-2 px-2 rounded-lg" onClick={() => setMobileMenuOpen(false)}>
                         Ralph Loop
@@ -536,7 +536,7 @@ export default function LandingPage() {
                       className="btn-premium-nav flex items-center justify-center gap-2 px-4 py-3 rounded-lg text-base font-semibold transition-all"
                       onClick={() => setMobileMenuOpen(false)}
                     >
-                      ✨ Acceder a Premium
+                      ✨ Ver Cursos Avanzados
                     </Link>
                   </div>
                 </div>
@@ -575,7 +575,7 @@ export default function LandingPage() {
                 className="btn-cta-primary w-full sm:w-auto font-bold py-4 px-8 rounded-2xl transition-all duration-200 flex items-center justify-center gap-2"
               >
                 <span className="material-symbols-outlined">rocket_launch</span>
-                Empezar Curso Gratis
+                Accede al Curso Completo
               </Link>
               <Link
                 href="/empezar/introduccion"
@@ -785,7 +785,7 @@ export default function LandingPage() {
                     className="w-full sm:w-auto bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-700 hover:to-orange-700 text-white font-semibold py-3 px-6 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2"
                   >
                     <span className="material-symbols-outlined">play_arrow</span>
-                    Empezar Curso Gratis
+                    Accede al Curso Completo
                   </Link>
                   <span className="text-sm text-slate-500 dark:text-slate-400">
                     7 lecciones · Gratis

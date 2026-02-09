@@ -6,7 +6,7 @@ const config: DocsThemeConfig = {
     key: 'premium-banner-2026',
     content: (
       <a href="/premium" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
-        ✨ <span className="banner-text-full">Accede al curso Premium con soporte personalizado</span><span className="banner-text-short">Curso Premium disponible</span> →
+        ✨ <span className="banner-text-full">Cursos avanzados con soporte personalizado</span><span className="banner-text-short">Cursos avanzados</span> →
       </a>
     ),
     dismissible: true,
@@ -61,7 +61,7 @@ const config: DocsThemeConfig = {
         }}
       >
         <span>✨</span>
-        <span className="premium-text-nav">Premium</span>
+        <span className="premium-text-nav">Avanzados</span>
       </a>
     </div>
   ),
