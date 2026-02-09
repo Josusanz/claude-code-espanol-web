@@ -1059,6 +1059,70 @@ function PrecursoContent() {
                 </p>
               </div>
             </Link>
+
+            {/* Discord */}
+            <a
+              href="https://discord.gg/RFU7P2vpqa"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="precurso-card"
+              style={{
+                display: 'flex',
+                alignItems: 'flex-start',
+                gap: '16px',
+                padding: '20px',
+                background: 'linear-gradient(135deg, rgba(88, 101, 242, 0.1), rgba(88, 101, 242, 0.05))',
+                border: '1px solid rgba(88, 101, 242, 0.3)',
+                borderRadius: '14px',
+                textDecoration: 'none',
+                transition: 'all 0.2s',
+                cursor: 'pointer'
+              }}
+            >
+              <div style={{
+                width: '48px',
+                height: '48px',
+                background: 'linear-gradient(135deg, #5865F2, #7289DA)',
+                borderRadius: '12px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '22px',
+                flexShrink: 0,
+                color: 'white'
+              }}>
+                💬
+              </div>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                  <span style={{
+                    padding: '2px 8px',
+                    background: 'rgba(88, 101, 242, 0.2)',
+                    borderRadius: '4px',
+                    fontSize: '10px',
+                    fontWeight: 600,
+                    color: '#5865F2'
+                  }}>COMUNIDAD</span>
+                </div>
+                <h3 style={{
+                  fontSize: '16px',
+                  fontWeight: 600,
+                  color: t.text,
+                  margin: '0 0 4px 0',
+                  lineHeight: 1.3
+                }}>
+                  Únete al Discord
+                </h3>
+                <p style={{
+                  fontSize: '14px',
+                  color: t.textSecondary,
+                  margin: 0,
+                  lineHeight: 1.4
+                }}>
+                  Conecta con otros alumnos. Usa <code style={{ background: t.bgTertiary, padding: '2px 6px', borderRadius: '4px', fontSize: '12px' }}>/verificar email:tu@email.com</code> para acceder
+                </p>
+              </div>
+            </a>
           </div>
 
           {/* Time estimate */}
