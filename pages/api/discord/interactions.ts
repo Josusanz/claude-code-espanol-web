@@ -485,25 +485,37 @@ ${descripcion || '_Sin descripción todavía_'}
         })
       }
 
-      // Responder inmediatamente que estamos "pensando"
-      res.status(200).json({
-        type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
-      })
-
-      // Procesar y enviar followup
+      // Intentar respuesta directa con timeout de 2.5s
       try {
-        const answer = await askClaude(pregunta)
+        const timeoutPromise = new Promise<string>((_, reject) =>
+          setTimeout(() => reject(new Error('timeout')), 2500)
+        )
+
+        const answer = await Promise.race([
+          askClaude(pregunta),
+          timeoutPromise
+        ])
+
         const formattedResponse = `**${pregunta}**\n\n${answer}`
         const finalResponse = formattedResponse.length > 1900
           ? formattedResponse.substring(0, 1900) + '...'
           : formattedResponse
 
-        await sendFollowup(body.application_id, body.token, finalResponse)
+        return res.status(200).json({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: { content: finalResponse },
+        })
       } catch (error) {
         console.error('Duda error:', error)
-        await sendFollowup(body.application_id, body.token, '❌ Error al procesar. Inténtalo de nuevo.')
+        // Si hay timeout, sugerir alternativa
+        return res.status(200).json({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: `❓ **${pregunta}**\n\n⏳ La respuesta tardó demasiado. Prueba:\n• Usa \`/recurso\` para links a documentación\n• Pregunta en #❓-dudas para respuesta de compañeros\n• Consulta directamente en [claude.ai](https://claude.ai)`,
+            flags: 64,
+          },
+        })
       }
-      return
     }
   }
 
