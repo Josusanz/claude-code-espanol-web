@@ -114,7 +114,7 @@ async function setupServer() {
       name: '👋 BIENVENIDA',
       type: ChannelType.CATEGORY,
       children: [
-        { name: '📢-anuncios', type: ChannelType.ANNOUNCEMENT },
+        { name: '📢-anuncios', type: ChannelType.TEXT },
         { name: '📖-reglas', type: ChannelType.TEXT },
         { name: '🎉-presentaciones', type: ChannelType.TEXT },
       ]
