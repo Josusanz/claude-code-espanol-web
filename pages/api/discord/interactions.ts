@@ -18,6 +18,97 @@ const InteractionResponseType = {
 // Course context for Claude (short for speed)
 const CURSO_CONTEXT = `Asistente del curso "Crea tu Software con IA" de Josu Sanz. Curso de 10 semanas para crear un SaaS con Next.js, Supabase, Tailwind y Claude. Web: aprende.software. Responde en español, muy breve (máx 500 chars).`
 
+// Recursos predefinidos (respuestas instantáneas)
+const RECURSOS: Record<string, { titulo: string; descripcion: string; url: string }> = {
+  supabase: {
+    titulo: '🗄️ Supabase',
+    descripcion: 'Base de datos y autenticación',
+    url: 'https://supabase.com/docs'
+  },
+  nextjs: {
+    titulo: '⚡ Next.js',
+    descripcion: 'Framework de React',
+    url: 'https://nextjs.org/docs'
+  },
+  tailwind: {
+    titulo: '🎨 Tailwind CSS',
+    descripcion: 'Framework de estilos',
+    url: 'https://tailwindcss.com/docs'
+  },
+  shadcn: {
+    titulo: '🧩 shadcn/ui',
+    descripcion: 'Componentes de UI',
+    url: 'https://ui.shadcn.com'
+  },
+  claude: {
+    titulo: '🤖 Claude API',
+    descripcion: 'Inteligencia artificial',
+    url: 'https://docs.anthropic.com'
+  },
+  stripe: {
+    titulo: '💳 Stripe',
+    descripcion: 'Pagos online',
+    url: 'https://stripe.com/docs'
+  },
+  vercel: {
+    titulo: '🚀 Vercel',
+    descripcion: 'Deploy y hosting',
+    url: 'https://vercel.com/docs'
+  },
+  github: {
+    titulo: '📦 GitHub',
+    descripcion: 'Control de versiones',
+    url: 'https://docs.github.com'
+  },
+  typescript: {
+    titulo: '📘 TypeScript',
+    descripcion: 'JavaScript con tipos',
+    url: 'https://www.typescriptlang.org/docs'
+  },
+  precurso: {
+    titulo: '📚 Precurso',
+    descripcion: 'Contenido preparatorio',
+    url: 'https://www.aprende.software/precurso'
+  },
+  zoom: {
+    titulo: '📹 Zoom',
+    descripcion: 'Link de clases en vivo',
+    url: 'https://us06web.zoom.us/j/81059741055?pwd=Xqh8R7S3jwIYLo0gC8X0eRvJz66YOy.1'
+  },
+  calendario: {
+    titulo: '📅 Calendario',
+    descripcion: 'Añadir eventos a tu calendario',
+    url: 'https://calendar.google.com/calendar/u/0/r?cid=43979bc920a7c33e572266e10021d4934f9ce7eea323fa948471566d5f25d11f@group.calendar.google.com'
+  }
+}
+
+// Horario de clases
+const CLASES = [
+  { semana: 1, fecha: '19-20 Feb 2026', dia: 'Mié-Jue', hora: '18:00 CET', tema: 'LaunchPad - Proyecto conjunto' },
+  { semana: 2, fecha: '27 Feb 2026', dia: 'Jueves', hora: '18:00 CET', tema: 'Tu proyecto - Setup + UI' },
+  { semana: 3, fecha: '6 Mar 2026', dia: 'Jueves', hora: '18:00 CET', tema: 'Base de datos con Supabase' },
+  { semana: 4, fecha: '13 Mar 2026', dia: 'Jueves', hora: '18:00 CET', tema: 'Autenticación' },
+  { semana: 5, fecha: '20 Mar 2026', dia: 'Jueves', hora: '18:00 CET', tema: 'APIs y Backend' },
+  { semana: 6, fecha: '27 Mar 2026', dia: 'Jueves', hora: '18:00 CET', tema: 'Integración con Claude' },
+  { semana: 7, fecha: '3 Abr 2026', dia: 'Jueves', hora: '18:00 CET', tema: 'Pagos con Stripe' },
+  { semana: 8, fecha: '10 Abr 2026', dia: 'Jueves', hora: '18:00 CET', tema: 'Testing y QA' },
+  { semana: 9, fecha: '17 Abr 2026', dia: 'Jueves', hora: '18:00 CET', tema: 'Deploy y DevOps' },
+  { semana: 10, fecha: '24 Abr 2026', dia: 'Jueves', hora: '18:00 CET', tema: 'Lanzamiento y Marketing' },
+]
+
+function getProximaClase(): typeof CLASES[0] | null {
+  const hoy = new Date()
+  const fechas: { clase: typeof CLASES[0]; date: Date }[] = CLASES.map(c => {
+    const [dia, mes, año] = c.fecha.split(' ')[0].split('-')
+    const meses: Record<string, number> = { Ene: 0, Feb: 1, Mar: 2, Abr: 3, May: 4, Jun: 5, Jul: 6, Ago: 7, Sep: 8, Oct: 9, Nov: 10, Dic: 11 }
+    const date = new Date(parseInt('20' + año), meses[mes] || 1, parseInt(dia))
+    return { clase: c, date }
+  })
+
+  const proxima = fechas.find(f => f.date >= hoy)
+  return proxima?.clase || CLASES[CLASES.length - 1]
+}
+
 // Ask Claude a question (using Haiku for speed)
 async function askClaude(question: string): Promise<string> {
   const client = new Anthropic()
@@ -217,6 +308,79 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: {
           content: `📚 **Crea tu Software con IA**\n🔗 https://www.aprende.software/curso\n📅 Inicio: 19 febrero 2026`,
+          flags: 64,
+        },
+      })
+    }
+
+    // Comando /recurso - respuestas instantáneas
+    if (name === 'recurso') {
+      const tema = options?.find((o: { name: string }) => o.name === 'tema')?.value?.toLowerCase()
+
+      if (!tema) {
+        const lista = Object.keys(RECURSOS).join(', ')
+        return res.status(200).json({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: `📚 **Recursos disponibles:**\n\`${lista}\`\n\nUsa: \`/recurso tema:supabase\``,
+            flags: 64,
+          },
+        })
+      }
+
+      const recurso = RECURSOS[tema]
+      if (!recurso) {
+        const lista = Object.keys(RECURSOS).join(', ')
+        return res.status(200).json({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: `❌ No encontré "${tema}".\n\n**Disponibles:** \`${lista}\``,
+            flags: 64,
+          },
+        })
+      }
+
+      return res.status(200).json({
+        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+        data: {
+          content: `${recurso.titulo}\n${recurso.descripcion}\n🔗 ${recurso.url}`,
+          flags: 64,
+        },
+      })
+    }
+
+    // Comando /horario - próxima clase
+    if (name === 'horario') {
+      const proxima = getProximaClase()
+      const todas = options?.find((o: { name: string }) => o.name === 'todas')?.value
+
+      if (todas) {
+        const lista = CLASES.map(c =>
+          `**S${c.semana}** - ${c.fecha} (${c.dia}) → ${c.tema}`
+        ).join('\n')
+        return res.status(200).json({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: `📅 **Calendario completo:**\n\n${lista}`,
+            flags: 64,
+          },
+        })
+      }
+
+      if (proxima) {
+        return res.status(200).json({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: `📅 **Próxima clase:**\n\n**Semana ${proxima.semana}: ${proxima.tema}**\n🗓️ ${proxima.fecha} (${proxima.dia})\n⏰ ${proxima.hora}\n🔗 [Unirse a Zoom](https://us06web.zoom.us/j/81059741055?pwd=Xqh8R7S3jwIYLo0gC8X0eRvJz66YOy.1)`,
+            flags: 64,
+          },
+        })
+      }
+
+      return res.status(200).json({
+        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+        data: {
+          content: `📅 No hay más clases programadas. ¡El curso ha terminado! 🎓`,
           flags: 64,
         },
       })

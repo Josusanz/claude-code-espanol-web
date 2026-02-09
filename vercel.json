@@ -3,6 +3,14 @@
     {
       "path": "/api/cron/email-sequence",
       "schedule": "0 9 * * *"
+    },
+    {
+      "path": "/api/cron/discord-clase-reminder",
+      "schedule": "0 16 * * 4"
+    },
+    {
+      "path": "/api/cron/discord-entregable-reminder",
+      "schedule": "0 10 * * 0"
     }
   ]
 }
