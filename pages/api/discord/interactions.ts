@@ -164,10 +164,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
 
       try {
+        console.log(`[VERIFICAR] Checking email: "${email}"`)
         const isEnrolled = await kv.sismember('curso:emails', email)
-        const isPrecurso = !isEnrolled && await kv.sismember('precurso:emails', email)
+        const isPrecurso = await kv.sismember('precurso:emails', email)
+        console.log(`[VERIFICAR] Results - curso: ${isEnrolled}, precurso: ${isPrecurso}`)
 
         if (!isEnrolled && !isPrecurso) {
+          // Debug: listar todos los emails para comparar
+          const allPrecurso = await kv.smembers('precurso:emails')
+          console.log(`[VERIFICAR] All precurso emails: ${JSON.stringify(allPrecurso)}`)
+
           return res.status(200).json({
             type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
             data: {
