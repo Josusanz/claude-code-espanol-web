@@ -543,6 +543,23 @@ function PrecursoContent() {
             </Link>
           </div>
 
+          {/* Discord guide link */}
+          <div style={{ marginTop: '8px' }}>
+            <Link href="/precurso/discord" style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px',
+              padding: '8px 20px',
+              color: t.textSecondary,
+              textDecoration: 'none',
+              fontSize: '13px',
+              fontWeight: 500
+            }}>
+              <span>💬</span>
+              Guía de Discord
+            </Link>
+          </div>
+
           {/* Help box */}
           <div style={{
             margin: '24px 16px 0',
@@ -1061,10 +1078,8 @@ function PrecursoContent() {
             </Link>
 
             {/* Discord */}
-            <a
-              href="https://discord.gg/RFU7P2vpqa"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href="/precurso/discord"
               className="precurso-card"
               style={{
                 display: 'flex',
@@ -1111,7 +1126,7 @@ function PrecursoContent() {
                   margin: '0 0 4px 0',
                   lineHeight: 1.3
                 }}>
-                  Únete al Discord
+                  Guía del Discord
                 </h3>
                 <p style={{
                   fontSize: '14px',
@@ -1119,10 +1134,10 @@ function PrecursoContent() {
                   margin: 0,
                   lineHeight: 1.4
                 }}>
-                  Conecta con otros alumnos. Usa <code style={{ background: t.bgTertiary, padding: '2px 6px', borderRadius: '4px', fontSize: '12px' }}>/verificar email:tu@email.com</code> para acceder
+                  Aprende a usar el servidor: canales, comandos, logros y más
                 </p>
               </div>
-            </a>
+            </Link>
 
             {/* Calendario */}
             <a
