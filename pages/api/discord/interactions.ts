@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { kv } from '@vercel/kv'
+import nacl from 'tweetnacl'
 
 // Discord interaction types
 const InteractionType = {
@@ -12,50 +13,34 @@ const InteractionResponseType = {
   CHANNEL_MESSAGE_WITH_SOURCE: 4,
 }
 
-// Verify Discord request signature
-async function verifyDiscordRequest(req: NextApiRequest): Promise<boolean> {
-  const signature = req.headers['x-signature-ed25519'] as string
-  const timestamp = req.headers['x-signature-timestamp'] as string
+// Verify Discord request signature using tweetnacl
+function verifyDiscordRequest(
+  rawBody: string,
+  signature: string,
+  timestamp: string
+): boolean {
   const publicKey = process.env.DISCORD_PUBLIC_KEY
 
   if (!signature || !timestamp || !publicKey) {
+    console.log('Missing verification params:', { signature: !!signature, timestamp: !!timestamp, publicKey: !!publicKey })
     return false
   }
 
   try {
-    const { subtle } = await import('crypto').then(c => c.webcrypto)
+    const message = timestamp + rawBody
+    const signatureBuffer = Buffer.from(signature, 'hex')
+    const publicKeyBuffer = Buffer.from(publicKey, 'hex')
+    const messageBuffer = Buffer.from(message)
 
-    const body = JSON.stringify(req.body)
-    const message = timestamp + body
-
-    const signatureBuffer = hexToUint8Array(signature)
-    const publicKeyBuffer = hexToUint8Array(publicKey)
-    const messageBuffer = new TextEncoder().encode(message)
-
-    const key = await subtle.importKey(
-      'raw',
-      publicKeyBuffer,
-      { name: 'Ed25519' },
-      false,
-      ['verify']
-    )
-
-    return await subtle.verify(
-      'Ed25519',
-      key,
+    return nacl.sign.detached.verify(
+      messageBuffer,
       signatureBuffer,
-      messageBuffer
+      publicKeyBuffer
     )
   } catch (error) {
     console.error('Verification error:', error)
     return false
   }
-}
-
-function hexToUint8Array(hex: string): Uint8Array {
-  const matches = hex.match(/.{1,2}/g)
-  if (!matches) return new Uint8Array()
-  return new Uint8Array(matches.map(byte => parseInt(byte, 16)))
 }
 
 // Assign role to user
@@ -85,16 +70,23 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(405).json({ error: 'Method not allowed' })
   }
 
+  // Get raw body for signature verification
+  const rawBody = JSON.stringify(req.body)
+  const signature = req.headers['x-signature-ed25519'] as string
+  const timestamp = req.headers['x-signature-timestamp'] as string
+
   // Verify the request is from Discord
-  const isValid = await verifyDiscordRequest(req)
+  const isValid = verifyDiscordRequest(rawBody, signature, timestamp)
   if (!isValid) {
+    console.log('Invalid signature')
     return res.status(401).json({ error: 'Invalid request signature' })
   }
 
   const { type, data, member, guild_id } = req.body
 
-  // Handle Discord PING (required for verification)
+  // Handle Discord PING (required for endpoint verification)
   if (type === InteractionType.PING) {
+    console.log('Received PING, responding with PONG')
     return res.status(200).json({ type: InteractionResponseType.PONG })
   }
 
@@ -127,7 +119,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             return res.status(200).json({
               type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
               data: {
-                content: `❌ El email **${email}** no está registrado en el curso.\n\nSi crees que es un error, contacta con el instructor.`,
+                content: `❌ El email **${email}** no está registrado en el curso.\n\nSi crees que es un error, contacta con Josu.`,
                 flags: 64,
               },
             })
@@ -150,7 +142,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             return res.status(200).json({
               type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
               data: {
-                content: `✅ ¡Verificado! Bienvenido/a al curso, **${member.user.username}**!\n\nAhora tienes acceso a todos los canales del curso. 🚀`,
+                content: `✅ ¡Verificado! Bienvenido/a al curso, **${member.user.username}**!\n\nYa tienes acceso a todos los canales. 🚀`,
                 flags: 64,
               },
             })
@@ -161,7 +153,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(200).json({
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
           data: {
-            content: `✅ Email verificado: **${email}**\n\nSi no tienes acceso a los canales, contacta al instructor.`,
+            content: `✅ Email verificado: **${email}**\n\nSi no tienes acceso a los canales, contacta a Josu.`,
             flags: 64,
           },
         })
@@ -177,12 +169,25 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         })
       }
     }
+
+    if (name === 'info') {
+      return res.status(200).json({
+        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+        data: {
+          content: `📚 **Crea tu Software con IA**\n\n` +
+            `Este es el servidor del curso de 10 semanas.\n\n` +
+            `🔗 Accede al curso: https://www.aprende.software/curso\n` +
+            `📅 Inicio: 19 febrero 2026\n` +
+            `👨‍🏫 Instructor: Josu Sanz`,
+          flags: 64,
+        },
+      })
+    }
   }
 
   return res.status(200).json({ type: InteractionResponseType.PONG })
 }
 
-// Disable body parsing to get raw body for signature verification
 export const config = {
   api: {
     bodyParser: true,

@@ -39,7 +39,9 @@
     "nextra-theme-docs": "^3",
     "react": "^18",
     "react-dom": "^18",
-    "resend": "^6.7.0"
+    "resend": "^6.7.0",
+    "tweetnacl": "^1.0.3",
+    "tweetnacl-util": "^0.15.1"
   },
   "devDependencies": {
     "@types/cookie": "^0.6.0",
