@@ -302,6 +302,49 @@ function CursoDashboard() {
           )}
         </div>
 
+        {/* Discord */}
+        <a
+          href="https://discord.gg/INVITE_CODE"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '16px',
+          padding: '24px',
+          background: 'linear-gradient(135deg, #e0e7ff, #c7d2fe)',
+          border: '1px solid rgba(99, 102, 241, 0.2)',
+          borderRadius: '20px',
+          marginBottom: '16px',
+          textDecoration: 'none',
+          transition: 'all 0.2s',
+          boxShadow: '0 4px 6px -1px rgba(99, 102, 241, 0.08)'
+        }}>
+          <span style={{
+            width: '56px',
+            height: '56px',
+            background: 'linear-gradient(135deg, #5865F2, #7289DA)',
+            borderRadius: '16px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '28px',
+            flexShrink: 0,
+            boxShadow: '0 4px 12px rgba(88, 101, 242, 0.3)'
+          }}>
+            💬
+          </span>
+          <div style={{ flex: 1 }}>
+            <h3 style={{ margin: '0 0 4px', fontSize: '17px', fontWeight: 700, color: '#3730a3' }}>
+              Comunidad Discord
+            </h3>
+            <p style={{ margin: 0, fontSize: '14px', color: '#4338ca', fontWeight: 500 }}>
+              Conecta con otros alumnos y resuelve dudas
+            </p>
+          </div>
+          <span style={{ color: '#5865F2', fontSize: '24px', fontWeight: 600 }}>→</span>
+        </a>
+
         {/* Rueda del Creador */}
         <Link href="/curso/rueda" style={{
           display: 'flex',
