@@ -248,13 +248,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     if (name === 'pregunta') {
-      const pregunta = options?.find((o: { name: string }) => o.name === 'pregunta')?.value
+      const pregunta = options?.find((o: { name: string }) => o.name === 'duda')?.value
 
       if (!pregunta) {
         return res.status(200).json({
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
           data: {
-            content: '❌ Usa: `/pregunta pregunta:¿Cómo conecto Supabase?`',
+            content: '❌ Usa: `/pregunta duda:¿Cómo conecto Supabase?`',
             flags: 64,
           },
         })
