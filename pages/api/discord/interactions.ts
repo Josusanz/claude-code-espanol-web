@@ -15,8 +15,26 @@ const InteractionResponseType = {
   DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE: 5,
 }
 
-// Course context for Claude (short for speed)
-const CURSO_CONTEXT = `Asistente del curso "Crea tu Software con IA" de Josu Sanz. Curso de 10 semanas para crear un SaaS con Next.js, Supabase, Tailwind y Claude. Web: aprende.software. Responde en español, muy breve (máx 500 chars).`
+// Course context for Claude (with accurate tool info)
+const CURSO_CONTEXT = `Asistente del curso "Crea tu Software con IA" de Josu Sanz. Curso de 10 semanas para crear un SaaS.
+
+TECNOLOGÍAS DEL CURSO:
+- Next.js 14 (App Router) - Framework React
+- Supabase - Base de datos PostgreSQL + Auth
+- Tailwind CSS + shadcn/ui - Estilos y componentes
+- Claude Code - CLI de Anthropic para programar con IA
+- Vercel - Deploy y hosting
+
+IMPORTANTE SOBRE CLAUDE CODE:
+- Es una herramienta CLI (línea de comandos), NO una extensión de VS Code
+- Se instala con: npm install -g @anthropic-ai/claude-code
+- Se ejecuta escribiendo "claude" en la terminal
+- Requiere API key de Anthropic (ANTHROPIC_API_KEY)
+- Funciona con cualquier editor, no solo VS Code
+- Documentación: https://docs.anthropic.com/en/docs/claude-code
+
+Web del curso: aprende.software
+Responde en español, muy breve (máx 500 chars).`
 
 // Recursos predefinidos (respuestas instantáneas)
 const RECURSOS: Record<string, { titulo: string; descripcion: string; url: string }> = {
