@@ -3,6 +3,7 @@ import { kv } from '@vercel/kv'
 import nacl from 'tweetnacl'
 import Anthropic from '@anthropic-ai/sdk'
 import { QUICK_KNOWLEDGE } from '../../../lib/discord-knowledge-base'
+import { CURSO_SEMANAS } from '../../../lib/curso-data'
 
 // Discord interaction types
 const InteractionType = {
@@ -483,16 +484,25 @@ ${descripcion || '_Sin descripción todavía_'}
         })
       }
 
-      // Respuestas instantaneas para preguntas comunes (sin API)
+      // Respuestas instantaneas desde datos reales del curso (sin API)
       const preguntaLower = pregunta.toLowerCase()
+
+      // Genera calendario dinamico desde curso-data.ts
+      const calendario = CURSO_SEMANAS.slice(0, 5).map(s =>
+        `• S${s.num} (${s.fechaInicio.slice(5).replace('-', '/')}): ${s.emoji} ${s.titulo}`
+      ).join('\n')
+
       const QUICK_ANSWERS: Record<string, string> = {
         'terminal': '**Abrir Terminal:**\n• **Mac:** Cmd+Espacio → escribe "Terminal"\n• **Windows:** Busca "PowerShell" → click derecho → Ejecutar como admin\n• **Linux:** Ctrl+Alt+T',
         'instalar claude': '**Instalar Claude Code:**\n```\n# Mac/Linux:\ncurl -fsSL https://claude.ai/install | sh\n\n# Windows PowerShell (admin):\nirm https://claude.ai/install.ps1 | iex\n```\nLuego: `claude --version` y `claude` para iniciar.\nRequiere Claude Pro ($20/mes)',
         'claude code': '**Claude Code** es una herramienta CLI (linea de comandos), NO una extension de VS Code.\n\nInstalacion: `curl -fsSL https://claude.ai/install | sh`\nRequiere: Claude Pro ($20/mes)',
         'precio': '**Precios:**\n• Claude gratis: ~30 msgs/dia\n• Claude Pro: $20/mes (necesario para Claude Code)\n• Claude Max: $100/mes',
-        'cuando': '**Curso "Crea tu Software con IA":**\n• Inicio: 19 febrero 2026\n• Clases: Jueves 18:00 CET\n• Duracion: 10 semanas',
+        'cuando': `**Curso "Crea tu Software con IA":**\n• Inicio: ${CURSO_SEMANAS[0].fechaInicio}\n• Clases: Jueves 18:00 CET\n• Duracion: 10 semanas\n• Zoom: https://us06web.zoom.us/j/81059741055`,
+        'calendario': `**Calendario del curso:**\n${calendario}\n... y 5 semanas mas`,
+        'semana': `**Proximas semanas:**\n${calendario}`,
         'supabase': '**Supabase** es la base de datos del curso.\nDocs: https://supabase.com/docs\nUsa `/recurso supabase` para el link directo.',
         'nextjs': '**Next.js 14** es el framework del curso.\nDocs: https://nextjs.org/docs\nUsa `/recurso nextjs` para el link directo.',
+        'zoom': '**Link de Zoom para clases:**\nhttps://us06web.zoom.us/j/81059741055\n\nClases: Jueves 18:00 CET',
       }
 
       for (const [key, answer] of Object.entries(QUICK_ANSWERS)) {

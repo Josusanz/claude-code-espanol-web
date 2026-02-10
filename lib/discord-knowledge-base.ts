@@ -1,5 +1,12 @@
 // Base de conocimiento para el bot de Discord
-// Incluye todo el contenido de aprende.software
+// Sincronizada con los datos reales del curso
+
+import { CURSO_SEMANAS } from './curso-data'
+
+// Genera el calendario dinamicamente desde curso-data.ts
+const calendarioSemanas = CURSO_SEMANAS.map(s =>
+  `S${s.num} (${s.fechaInicio.slice(5)}): ${s.emoji} ${s.titulo}`
+).join('\n')
 
 // Version corta y rapida para respuestas inmediatas
 export const QUICK_KNOWLEDGE = `Eres el asistente de aprende.software (curso de Josu Sanz para crear software con IA).
@@ -26,10 +33,14 @@ CURSOS DISPONIBLES:
 - Course Builder (premium): Crear tus propios cursos
 
 CURSO 10 SEMANAS "Crea tu Software con IA":
-- Inicio: 19 febrero 2026
+- Inicio: ${CURSO_SEMANAS[0].fechaInicio}
 - Clases: Jueves 18:00 CET
 - Tecnologias: Next.js, Supabase, Tailwind, Claude Code, Vercel, Stripe
+- Zoom: https://us06web.zoom.us/j/81059741055
 - Web: aprende.software/curso
+
+CALENDARIO:
+${calendarioSemanas}
 
 PRECIOS:
 - Claude gratuito: ~30 msgs/dia
