@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { kv } from '@vercel/kv'
 import nacl from 'tweetnacl'
 import Anthropic from '@anthropic-ai/sdk'
+import { KNOWLEDGE_BASE } from '../../../lib/discord-knowledge-base'
 
 // Discord interaction types
 const InteractionType = {
@@ -14,27 +15,6 @@ const InteractionResponseType = {
   CHANNEL_MESSAGE_WITH_SOURCE: 4,
   DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE: 5,
 }
-
-// Course context for Claude (with accurate tool info)
-const CURSO_CONTEXT = `Asistente del curso "Crea tu Software con IA" de Josu Sanz. Curso de 10 semanas para crear un SaaS.
-
-TECNOLOGÍAS DEL CURSO:
-- Next.js 14 (App Router) - Framework React
-- Supabase - Base de datos PostgreSQL + Auth
-- Tailwind CSS + shadcn/ui - Estilos y componentes
-- Claude Code - CLI de Anthropic para programar con IA
-- Vercel - Deploy y hosting
-
-IMPORTANTE SOBRE CLAUDE CODE:
-- Es una herramienta CLI (línea de comandos), NO una extensión de VS Code
-- Se instala con: npm install -g @anthropic-ai/claude-code
-- Se ejecuta escribiendo "claude" en la terminal
-- Requiere API key de Anthropic (ANTHROPIC_API_KEY)
-- Funciona con cualquier editor, no solo VS Code
-- Documentación: https://docs.anthropic.com/en/docs/claude-code
-
-Web del curso: aprende.software
-Responde en español, muy breve (máx 500 chars).`
 
 // Recursos predefinidos (respuestas instantáneas)
 const RECURSOS: Record<string, { titulo: string; descripcion: string; url: string }> = {
@@ -155,21 +135,31 @@ async function crearHiloProyecto(nombre: string, contenido: string): Promise<{ i
   }
 }
 
-// Ask Claude a question (using Haiku for speed)
+// Ask Claude a question (using Haiku for speed, with full knowledge base)
 async function askClaude(question: string): Promise<string> {
   const client = new Anthropic()
+
+  const systemPrompt = `${KNOWLEDGE_BASE}
+
+---
+INSTRUCCIONES:
+- Responde en espanol
+- Se conciso (maximo 500 caracteres)
+- Usa la informacion de arriba para responder con precision
+- Si no encuentras la respuesta en la base de conocimiento, sugiere consultar la web aprende.software
+- No inventes informacion que no este en la base de conocimiento`
 
   try {
     const response = await client.messages.create({
       model: 'claude-3-5-haiku-20241022',
-      max_tokens: 200,
+      max_tokens: 300,
       messages: [
         {
           role: 'user',
           content: question
         }
       ],
-      system: CURSO_CONTEXT
+      system: systemPrompt
     })
 
     const textBlock = response.content.find(block => block.type === 'text')
