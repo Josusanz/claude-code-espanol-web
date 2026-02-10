@@ -483,10 +483,31 @@ ${descripcion || '_Sin descripción todavía_'}
         })
       }
 
-      // Intentar respuesta directa con timeout de 2.8s (Discord permite 3s)
+      // Respuestas instantaneas para preguntas comunes (sin API)
+      const preguntaLower = pregunta.toLowerCase()
+      const QUICK_ANSWERS: Record<string, string> = {
+        'terminal': '**Abrir Terminal:**\n• **Mac:** Cmd+Espacio → escribe "Terminal"\n• **Windows:** Busca "PowerShell" → click derecho → Ejecutar como admin\n• **Linux:** Ctrl+Alt+T',
+        'instalar claude': '**Instalar Claude Code:**\n```\n# Mac/Linux:\ncurl -fsSL https://claude.ai/install | sh\n\n# Windows PowerShell (admin):\nirm https://claude.ai/install.ps1 | iex\n```\nLuego: `claude --version` y `claude` para iniciar.\nRequiere Claude Pro ($20/mes)',
+        'claude code': '**Claude Code** es una herramienta CLI (linea de comandos), NO una extension de VS Code.\n\nInstalacion: `curl -fsSL https://claude.ai/install | sh`\nRequiere: Claude Pro ($20/mes)',
+        'precio': '**Precios:**\n• Claude gratis: ~30 msgs/dia\n• Claude Pro: $20/mes (necesario para Claude Code)\n• Claude Max: $100/mes',
+        'cuando': '**Curso "Crea tu Software con IA":**\n• Inicio: 19 febrero 2026\n• Clases: Jueves 18:00 CET\n• Duracion: 10 semanas',
+        'supabase': '**Supabase** es la base de datos del curso.\nDocs: https://supabase.com/docs\nUsa `/recurso supabase` para el link directo.',
+        'nextjs': '**Next.js 14** es el framework del curso.\nDocs: https://nextjs.org/docs\nUsa `/recurso nextjs` para el link directo.',
+      }
+
+      for (const [key, answer] of Object.entries(QUICK_ANSWERS)) {
+        if (preguntaLower.includes(key)) {
+          return res.status(200).json({
+            type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+            data: { content: answer, flags: 64 },
+          })
+        }
+      }
+
+      // Si no hay respuesta rapida, intentar con Claude API (timeout 2.3s)
       try {
         const timeoutPromise = new Promise<string>((_, reject) =>
-          setTimeout(() => reject(new Error('timeout')), 2800)
+          setTimeout(() => reject(new Error('timeout')), 2300)
         )
 
         const answer = await Promise.race([
@@ -501,7 +522,7 @@ ${descripcion || '_Sin descripción todavía_'}
 
         return res.status(200).json({
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-          data: { content: finalResponse },
+          data: { content: finalResponse, flags: 64 },
         })
       } catch (error) {
         console.error('Duda error:', error)
