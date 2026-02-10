@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { kv } from '@vercel/kv'
 import nacl from 'tweetnacl'
 import Anthropic from '@anthropic-ai/sdk'
-import { KNOWLEDGE_BASE } from '../../../lib/discord-knowledge-base'
+import { QUICK_KNOWLEDGE } from '../../../lib/discord-knowledge-base'
 
 // Discord interaction types
 const InteractionType = {
@@ -135,31 +135,21 @@ async function crearHiloProyecto(nombre: string, contenido: string): Promise<{ i
   }
 }
 
-// Ask Claude a question (using Haiku for speed, with full knowledge base)
+// Ask Claude a question (using Haiku for speed, with optimized knowledge)
 async function askClaude(question: string): Promise<string> {
   const client = new Anthropic()
-
-  const systemPrompt = `${KNOWLEDGE_BASE}
-
----
-INSTRUCCIONES:
-- Responde en espanol
-- Se conciso (maximo 500 caracteres)
-- Usa la informacion de arriba para responder con precision
-- Si no encuentras la respuesta en la base de conocimiento, sugiere consultar la web aprende.software
-- No inventes informacion que no este en la base de conocimiento`
 
   try {
     const response = await client.messages.create({
       model: 'claude-3-5-haiku-20241022',
-      max_tokens: 300,
+      max_tokens: 250,
+      system: QUICK_KNOWLEDGE,
       messages: [
         {
           role: 'user',
           content: question
         }
-      ],
-      system: systemPrompt
+      ]
     })
 
     const textBlock = response.content.find(block => block.type === 'text')
@@ -493,10 +483,10 @@ ${descripcion || '_Sin descripción todavía_'}
         })
       }
 
-      // Intentar respuesta directa con timeout de 2.5s
+      // Intentar respuesta directa con timeout de 2.8s (Discord permite 3s)
       try {
         const timeoutPromise = new Promise<string>((_, reject) =>
-          setTimeout(() => reject(new Error('timeout')), 2500)
+          setTimeout(() => reject(new Error('timeout')), 2800)
         )
 
         const answer = await Promise.race([
