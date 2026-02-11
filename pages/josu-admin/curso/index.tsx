@@ -155,16 +155,30 @@ export default function AdminCursoDashboard() {
             Panel Instructor
           </h1>
         </div>
-        <Link href="/josu-admin" style={{
-          padding: '8px 16px',
-          fontSize: '14px',
-          color: '#64748b',
-          textDecoration: 'none',
-          border: '1px solid #e2e8f0',
-          borderRadius: '8px'
-        }}>
-          ← Volver a Admin
-        </Link>
+        <div style={{ display: 'flex', gap: '12px' }}>
+          <Link href="/josu-admin/curso/videos" style={{
+            padding: '8px 16px',
+            fontSize: '14px',
+            color: 'white',
+            background: '#6366f1',
+            textDecoration: 'none',
+            border: 'none',
+            borderRadius: '8px',
+            fontWeight: 500
+          }}>
+            🎬 Videos
+          </Link>
+          <Link href="/josu-admin" style={{
+            padding: '8px 16px',
+            fontSize: '14px',
+            color: '#64748b',
+            textDecoration: 'none',
+            border: '1px solid #e2e8f0',
+            borderRadius: '8px'
+          }}>
+            ← Volver a Admin
+          </Link>
+        </div>
       </header>
 
       <main style={{ maxWidth: '1200px', margin: '0 auto', padding: '32px 24px' }}>
@@ -234,6 +248,51 @@ export default function AdminCursoDashboard() {
             <p style={{ margin: 0, fontSize: '32px', fontWeight: 700, color: '#f59e0b' }}>
               {stats?.alumnosActivos || 0}
             </p>
+          </div>
+        </div>
+
+        {/* Videos por grabar */}
+        <div style={{
+          background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)',
+          borderRadius: '12px',
+          padding: '24px',
+          marginBottom: '32px',
+          color: 'white'
+        }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+            <div>
+              <h2 style={{ margin: '0 0 8px', fontSize: '18px', fontWeight: 600 }}>
+                🎬 Videos por grabar
+              </h2>
+              <p style={{ margin: '0 0 16px', opacity: 0.9, fontSize: '14px' }}>
+                13 videos en total: 3 precurso + 10 intros semanales
+              </p>
+              <div style={{ display: 'flex', gap: '24px', fontSize: '14px' }}>
+                <div>
+                  <span style={{ opacity: 0.7 }}>Precurso:</span>
+                  <span style={{ marginLeft: '8px', fontWeight: 600 }}>~20 min</span>
+                </div>
+                <div>
+                  <span style={{ opacity: 0.7 }}>Intros:</span>
+                  <span style={{ marginLeft: '8px', fontWeight: 600 }}>~25 min</span>
+                </div>
+                <div>
+                  <span style={{ opacity: 0.7 }}>Total:</span>
+                  <span style={{ marginLeft: '8px', fontWeight: 600 }}>~45 min</span>
+                </div>
+              </div>
+            </div>
+            <Link href="/josu-admin/curso/videos" style={{
+              padding: '12px 24px',
+              background: 'white',
+              color: '#6366f1',
+              borderRadius: '8px',
+              textDecoration: 'none',
+              fontWeight: 600,
+              fontSize: '14px'
+            }}>
+              Ver guiones →
+            </Link>
           </div>
         </div>
 
