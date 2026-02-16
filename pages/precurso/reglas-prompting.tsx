@@ -224,7 +224,7 @@ function ReglasContent() {
             Las 7 Reglas de Prompting
           </h1>
           <p style={{ fontSize: '17px', color: t.textSecondary, lineHeight: 1.6 }}>
-            Con Claude Opus 4, el prompting funciona diferente. Estas reglas marcan la diferencia entre <strong style={{ color: t.text }}>usar</strong> Claude Code y <strong style={{ color: t.text }}>dominar</strong> Claude Code.
+            Con Claude Opus 4.6, el prompting funciona diferente. Estas reglas marcan la diferencia entre <strong style={{ color: t.text }}>usar</strong> Claude Code y <strong style={{ color: t.text }}>dominar</strong> Claude Code.
           </p>
         </div>
 

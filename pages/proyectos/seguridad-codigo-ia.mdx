@@ -1,0 +1,335 @@
+---
+title: "2.11 Seguridad del Codigo Generado por IA"
+---
+
+import { Callout, Steps } from 'nextra/components'
+
+# Leccion 2.11: Seguridad del Codigo Generado por IA
+
+Usar Claude Code para generar codigo es poderoso. Pero todo codigo --sea escrito por humanos o por IA-- necesita una revision antes de llegar a produccion. En esta leccion vas a aprender a revisar codigo generado por IA con ojo critico, detectar vulnerabilidades comunes y convertirte en un mejor desarrollador en el proceso.
+
+<Callout type="info">
+  Esto no es para asustarte. Es para empoderarte. Entender seguridad te da una ventaja enorme sobre quienes simplemente copian y pegan codigo sin revisar.
+</Callout>
+
+## La realidad del codigo generado por IA
+
+Segun estudios recientes, **mas del 70% de los desarrolladores** necesitan reescribir o refactorizar el codigo generado por IA antes de usarlo en produccion. Esto no significa que la IA sea mala --significa que necesita supervision.
+
+| Codigo de IA | Tu rol |
+|--------------|--------|
+| Genera soluciones rapidas | Verificas que sean seguras |
+| Puede incluir patrones inseguros | Detectas y corriges vulnerabilidades |
+| No conoce el contexto completo de tu app | Aportas el conocimiento del negocio |
+| A veces usa librerias desactualizadas | Confirmas que todo este al dia |
+
+Piensa en Claude como un programador junior muy rapido: produce mucho codigo, pero necesita que un senior (tu) lo revise antes de desplegarlo.
+
+## Vulnerabilidades comunes en codigo de IA
+
+Estas son las fallas de seguridad que mas aparecen en codigo generado por IA. Aprende a reconocerlas y estaras por delante del 90% de quienes usan estas herramientas.
+
+### 1. Inyeccion SQL
+
+La IA a veces genera consultas a bases de datos concatenando texto directamente, lo cual permite que un atacante inyecte comandos maliciosos.
+
+```javascript
+// PELIGROSO - Codigo que la IA podria generar
+const query = `SELECT * FROM usuarios WHERE email = '${email}'`;
+
+// SEGURO - Siempre usa consultas parametrizadas
+const query = 'SELECT * FROM usuarios WHERE email = ?';
+db.execute(query, [email]);
+```
+
+**Como detectarlo:** Busca cualquier consulta SQL que incluya variables con `${}` o concatenacion con `+`.
+
+### 2. XSS (Cross-Site Scripting)
+
+Ocurre cuando el codigo inserta datos del usuario directamente en el HTML sin sanitizar. Un atacante podria inyectar scripts maliciosos.
+
+```javascript
+// PELIGROSO - Inserta HTML del usuario directamente
+element.innerHTML = userInput;
+
+// SEGURO - Usa textContent o sanitiza el input
+element.textContent = userInput;
+// O usa una libreria de sanitizacion
+import DOMPurify from 'dompurify';
+element.innerHTML = DOMPurify.sanitize(userInput);
+```
+
+**Como detectarlo:** Busca `innerHTML`, `document.write()`, o `dangerouslySetInnerHTML` con datos que vengan del usuario.
+
+### 3. Secretos y credenciales en el codigo
+
+Este es de los errores mas peligrosos y la IA lo comete frecuentemente al generar ejemplos "funcionales".
+
+```javascript
+// PELIGROSO - La IA a veces genera esto como ejemplo
+const API_KEY = "sk-1234567890abcdef";
+const DB_PASSWORD = "mi_password_secreto";
+
+// SEGURO - Usa variables de entorno
+const API_KEY = process.env.API_KEY;
+const DB_PASSWORD = process.env.DB_PASSWORD;
+```
+
+**Como detectarlo:** Busca strings que parezcan claves, tokens, passwords o URLs con credenciales. Si ves algo como `sk-`, `api_key`, `password`, `secret` o `token` con un valor hardcodeado, es una alerta roja.
+
+### 4. Endpoints de API inseguros
+
+La IA puede generar endpoints que no verifican si el usuario tiene permiso para acceder a un recurso.
+
+```javascript
+// PELIGROSO - Cualquiera puede ver datos de cualquier usuario
+app.get('/api/usuario/:id', (req, res) => {
+  const datos = db.getUsuario(req.params.id);
+  res.json(datos);
+});
+
+// SEGURO - Verifica que el usuario autenticado tenga acceso
+app.get('/api/usuario/:id', authMiddleware, (req, res) => {
+  if (req.user.id !== req.params.id && !req.user.isAdmin) {
+    return res.status(403).json({ error: 'No autorizado' });
+  }
+  const datos = db.getUsuario(req.params.id);
+  res.json(datos);
+});
+```
+
+**Como detectarlo:** Revisa que cada endpoint tenga autenticacion y autorizacion. Si ves una ruta sin middleware de auth, preguntate: "Quien deberia poder acceder a esto?"
+
+### 5. Falta de validacion de inputs
+
+La IA a menudo asume que los datos del usuario llegan correctos. En el mundo real, nunca es asi.
+
+```javascript
+// PELIGROSO - Confia ciegamente en el input
+app.post('/api/transferencia', (req, res) => {
+  const { monto, destino } = req.body;
+  hacerTransferencia(monto, destino);
+});
+
+// SEGURO - Valida antes de procesar
+app.post('/api/transferencia', (req, res) => {
+  const { monto, destino } = req.body;
+
+  if (!monto || typeof monto !== 'number' || monto <= 0) {
+    return res.status(400).json({ error: 'Monto invalido' });
+  }
+  if (!destino || typeof destino !== 'string') {
+    return res.status(400).json({ error: 'Destino invalido' });
+  }
+
+  hacerTransferencia(monto, destino);
+});
+```
+
+**Como detectarlo:** Si ves que un endpoint toma datos de `req.body`, `req.params` o `req.query` y los usa sin verificar, hay un problema.
+
+### 6. OWASP Top 10 -- Lo basico
+
+El **OWASP Top 10** es la lista de las 10 vulnerabilidades web mas criticas. Es el estandar de la industria para seguridad web. Aqui tienes un resumen simplificado:
+
+| # | Vulnerabilidad | Ejemplo rapido |
+|---|---------------|----------------|
+| 1 | Control de acceso roto | Acceder a datos de otro usuario cambiando el ID en la URL |
+| 2 | Fallos criptograficos | Guardar passwords en texto plano |
+| 3 | Inyeccion | SQL injection, XSS (los que ya vimos) |
+| 4 | Diseno inseguro | No pensar en seguridad desde el principio |
+| 5 | Configuracion insegura | Dejar credenciales por defecto |
+| 6 | Componentes vulnerables | Usar librerias con vulnerabilidades conocidas |
+| 7 | Fallos de autenticacion | Permitir passwords debiles |
+| 8 | Fallos de integridad | No verificar actualizaciones de software |
+| 9 | Fallos en el logging | No registrar intentos de acceso fallidos |
+| 10 | SSRF | Permitir que el servidor haga requests a URLs internas |
+
+<Callout type="info">
+  No necesitas memorizar todo esto. Solo necesitas saber que existe y consultarlo cuando revises codigo. Puedes ver la lista completa en [owasp.org/Top10](https://owasp.org/www-project-top-ten/).
+</Callout>
+
+## Checklist practico para revisar codigo de IA
+
+Cada vez que Claude (o cualquier IA) te genere codigo, pasa por esta lista antes de desplegarlo:
+
+### Antes de hacer deploy
+
+- [ ] **Lei y entendi el codigo** -- Si no entiendes algo, pidele a Claude que te lo explique
+- [ ] **No hay secretos hardcodeados** -- Ni API keys, ni passwords, ni tokens en el codigo
+- [ ] **Los inputs del usuario se validan** -- Todo dato externo se verifica antes de usarse
+- [ ] **Se usan variables de entorno** -- Los secretos van en `.env`, no en el codigo fuente
+- [ ] **Revise los endpoints** -- Tienen autenticacion y autorizacion
+- [ ] **Las consultas SQL son parametrizadas** -- No hay concatenacion de strings en queries
+- [ ] **Probe los edge cases** -- Que pasa con inputs vacios, negativos o enormes?
+- [ ] **Ejecute un scan de seguridad basico** -- `npm audit` o herramienta equivalente
+
+<Callout type="warning">
+  **Regla de oro:** Si no entiendes una linea de codigo, no la despliegues. Pidele a Claude que te la explique primero.
+</Callout>
+
+## Herramientas que te ayudan
+
+No tienes que hacer todo manualmente. Estas herramientas automatizan parte de la revision de seguridad.
+
+### 1. ESLint con plugins de seguridad
+
+ESLint revisa tu codigo automaticamente y detecta patrones peligrosos.
+
+```bash
+# Instalar ESLint con el plugin de seguridad
+npm install eslint eslint-plugin-security --save-dev
+```
+
+```javascript
+// .eslintrc.js - Configuracion basica
+module.exports = {
+  plugins: ['security'],
+  extends: ['plugin:security/recommended']
+};
+```
+
+Pidele a Claude que configure esto por ti:
+
+```
+Configura ESLint con el plugin de seguridad en mi proyecto Node.js.
+Quiero que detecte automaticamente vulnerabilidades comunes.
+```
+
+### 2. npm audit
+
+Revisa si tus dependencias tienen vulnerabilidades conocidas. Viene incluido con npm.
+
+```bash
+# Revisar vulnerabilidades
+npm audit
+
+# Intentar corregir automaticamente
+npm audit fix
+```
+
+Hazlo parte de tu rutina: cada vez que instales paquetes nuevos, ejecuta `npm audit`.
+
+### 3. GitHub Dependabot
+
+Si tu codigo esta en GitHub, Dependabot te avisa automaticamente cuando una de tus dependencias tiene una vulnerabilidad. Se configura una sola vez y trabaja solo.
+
+```
+Configura Dependabot en mi repositorio de GitHub.
+Quiero que revise las dependencias de npm semanalmente.
+```
+
+### 4. Claude como revisor de seguridad
+
+Esta es una de las tecnicas mas potentes: **pedirle a Claude que revise su propio codigo buscando problemas de seguridad.**
+
+```
+Revisa el codigo que acabas de generar y dime:
+
+1. Hay alguna vulnerabilidad de seguridad?
+2. Hay secretos hardcodeados?
+3. Se validan todos los inputs del usuario?
+4. Las consultas a la base de datos son seguras?
+5. Hay algo del OWASP Top 10 que deba preocuparme?
+```
+
+<Callout type="info">
+  Esto funciona sorprendentemente bien. Claude puede encontrar problemas en su propio codigo cuando se lo pides explicitamente. Es como tener un segundo par de ojos gratis.
+</Callout>
+
+## La mentalidad "confia, pero verifica"
+
+La clave para usar IA de forma segura no es desconfiar de todo. Es adoptar la mentalidad de **"trust but verify"** (confia, pero verifica):
+
+### La IA es tu asistente, no tu reemplazo
+
+```
+Tu rol:           Arquitecto, reviewer, tomador de decisiones
+Rol de la IA:     Generador de codigo, asistente de implementacion
+```
+
+Tu decides que se construye y como. La IA te ayuda a construirlo mas rapido.
+
+### Tu eres el ultimo filtro
+
+Antes de que cualquier codigo llegue a produccion, pasa por ti. Esto no es una carga --es tu superpoder. Cada vez que revisas codigo estas:
+
+- Aprendiendo patrones nuevos
+- Desarrollando intuicion de seguridad
+- Construyendo experiencia real
+- Protegiendo a tus usuarios
+
+### Cuanto mas aprendes, mejor evaluas
+
+Cada leccion de este curso te hace mejor revisor. No necesitas ser experto en seguridad para detectar un password hardcodeado o una consulta SQL sin parametrizar. Con esta leccion ya tienes las bases.
+
+## Ejercicio practico
+
+<Steps>
+### Genera una app de ejemplo con Claude
+
+```
+Crea una API basica en Node.js con Express que tenga:
+- Endpoint para registrar usuarios (email y password)
+- Endpoint para login
+- Endpoint para ver el perfil del usuario
+- Usa una base de datos SQLite simple
+```
+
+### Pidele a Claude que revise la seguridad
+
+```
+Revisa el codigo que acabas de crear y busca:
+1. Vulnerabilidades de seguridad
+2. Secretos hardcodeados
+3. Inputs sin validar
+4. Consultas SQL inseguras
+5. Endpoints sin autenticacion
+
+Dame una lista de problemas encontrados y como corregir cada uno.
+```
+
+### Aplica las correcciones
+
+```
+Aplica todas las correcciones de seguridad que identificaste.
+Asegurate de:
+- Hashear passwords (nunca guardarlos en texto plano)
+- Parametrizar todas las consultas SQL
+- Validar todos los inputs
+- Agregar autenticacion a los endpoints que lo necesiten
+- Mover cualquier secreto a variables de entorno
+```
+
+### Ejecuta un scan final
+
+```bash
+npm audit
+npx eslint . --ext .js
+```
+
+### Compara el antes y despues
+
+Mira las dos versiones del codigo. Esa diferencia entre el codigo "funcional" y el codigo "seguro" es exactamente lo que aprendiste en esta leccion.
+</Steps>
+
+## Resumen
+
+| Concepto | Lo que aprendiste |
+|----------|-------------------|
+| Vulnerabilidades comunes | SQL injection, XSS, secretos hardcodeados, endpoints inseguros, inputs sin validar |
+| Checklist de revision | 8 puntos para revisar antes de cada deploy |
+| Herramientas | ESLint security, npm audit, Dependabot, Claude como reviewer |
+| Mentalidad | Confia en la IA, pero verifica. Tu eres el filtro final |
+
+<Callout type="info">
+  **Felicidades.** Ahora no solo sabes generar codigo con IA --sabes revisarlo como un profesional. Esta habilidad te diferencia del 90% de las personas que usan herramientas de IA para programar.
+</Callout>
+
+---
+
+<div className="mt-8 text-center">
+  <a href="/ralph" className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+    Siguiente modulo: Ralph Loop →
+  </a>
+</div>

@@ -51,16 +51,42 @@ El mesero no necesita saber cocinar. Solo necesita hablar el mismo idioma que la
 
 ## ¿Quién usa MCP?
 
-MCP fue creado por Anthropic en noviembre 2024 y ahora es un **estándar de la industria**:
+MCP fue creado por Anthropic en noviembre 2024 y en poco más de un año se convirtió en **el estándar universal de la industria**:
 
+**Creadores de IA:**
 - **Anthropic** - Claude y Claude Code
 - **OpenAI** - GPT y Codex
-- **Google DeepMind** - En adopción
-- **Herramientas:** Cursor, Zed, Sourcegraph, Windsurf
+- **Google DeepMind** - Gemini y herramientas de Google
+
+**Grandes plataformas cloud:**
+- **Microsoft** - Integrado en Copilot Studio, soporte para 40+ servicios de Azure
+- **AWS** - Servidores oficiales para ECS, EKS, Lambda y Serverless
+- **Google Cloud** - Maps, BigQuery, Compute Engine, Kubernetes Engine
+
+**Herramientas de desarrollo:**
+- Cursor, Zed, Sourcegraph, Windsurf, Replit, Block
 
 <Callout type="warning">
-  En diciembre 2025, Anthropic donó MCP a la **Linux Foundation**, convirtiéndolo en un estándar abierto gobernado por la comunidad.
+  En diciembre 2025, Anthropic donó MCP a la **Linux Foundation** bajo la nueva **Agentic AI Foundation**, convirtiéndolo en un estándar abierto gobernado por la comunidad — al mismo nivel que Linux o Kubernetes.
 </Callout>
+
+---
+
+## Novedades del protocolo (2026)
+
+MCP ha evolucionado mucho desde su lanzamiento. Estas son las capacidades más recientes:
+
+### MCP Apps (enero 2026)
+Los servidores ahora pueden enviar **elementos de UI interactivos** que se renderizan directamente en la conversación. Claude puede mostrarte formularios, tablas y controles sin salir del chat.
+
+### Soporte multimedia
+MCP ahora soporta **imágenes, video y audio** además de texto. Los agentes pueden ver, escuchar y procesar contenido multimedia.
+
+### Mensajes chunked
+Para outputs largos, el protocolo ahora soporta **streaming por chunks** y **streams multipart** que mezclan distintos tipos de datos.
+
+### Streamable HTTP
+Una evolución del transporte SSE que permite comunicación bidireccional más eficiente entre cliente y servidor.
 
 ---
 

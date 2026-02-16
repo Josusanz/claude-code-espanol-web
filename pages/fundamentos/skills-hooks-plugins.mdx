@@ -1,0 +1,397 @@
+---
+title: Skills, Hooks y Plugins
+---
+
+import { Callout, FileTree, Steps } from 'nextra/components'
+
+# Leccion 1.9: Skills, Hooks y Plugins
+
+## Lleva a Claude al siguiente nivel
+
+Ya sabes crear comandos slash y sub-agentes. Ahora vamos a ver tres herramientas que convierten a Claude Code en una **plataforma extensible y automatizada**: Skills, Hooks y Plugins.
+
+| Herramienta | Que es | Para que sirve |
+|-------------|--------|----------------|
+| **Skills** | Briefs en Markdown | Dar a Claude conocimiento especializado |
+| **Hooks** | Scripts automaticos | Ejecutar acciones en momentos clave |
+| **Plugins** | Paquetes compartibles | Extender Claude con superpoderes de la comunidad |
+
+---
+
+## Skills: conocimiento bajo demanda
+
+Las skills son **archivos Markdown** que le dan a Claude instrucciones detalladas para tareas especificas. Piensa en ellas como manuales de procedimiento que Claude consulta cuando los necesita.
+
+### Donde se guardan
+
+<FileTree>
+  <FileTree.Folder name=".claude" defaultOpen>
+    <FileTree.Folder name="skills" defaultOpen>
+      <FileTree.File name="deploy-produccion.md" />
+      <FileTree.File name="crear-endpoint.md" />
+      <FileTree.File name="revisar-pr.md" />
+    </FileTree.Folder>
+  </FileTree.Folder>
+</FileTree>
+
+### Como funciona
+
+1. Creas un archivo `.md` en `.claude/skills/`
+2. Escribes instrucciones detalladas para una tarea
+3. Claude las lee automaticamente cuando detecta que son relevantes
+
+<Callout type="info">
+  Las skills tienen **hot reload**: cualquier cambio que hagas esta disponible inmediatamente. No necesitas reiniciar Claude.
+</Callout>
+
+### Ejemplo: Skill para desplegar a produccion
+
+```markdown
+# Deploy a Produccion
+
+## Pasos obligatorios antes del deploy
+1. Ejecutar todos los tests: `npm run test`
+2. Verificar que no hay warnings en el build: `npm run build`
+3. Comprobar que el linter pasa: `npm run lint`
+
+## Proceso de deploy
+1. Crear tag de version: `git tag v{VERSION}`
+2. Push del tag: `git push origin v{VERSION}`
+3. Ejecutar: `npm run deploy:production`
+
+## Verificacion post-deploy
+1. Comprobar que la URL responde: `curl -I https://miapp.com`
+2. Verificar logs: `npm run logs:production`
+3. Ejecutar smoke tests: `npm run test:smoke`
+
+## Si algo falla
+- Rollback inmediato: `npm run deploy:rollback`
+- Notificar al equipo en #deploys
+```
+
+Guardalo como `.claude/skills/deploy-produccion.md` y la proxima vez que digas "despliega a produccion", Claude seguira estos pasos exactos.
+
+### Ejemplo: Skill para crear endpoints de API
+
+```markdown
+# Crear Nuevo Endpoint de API
+
+## Estructura requerida
+Cada endpoint debe tener:
+- Archivo de ruta en `src/routes/`
+- Schema de validacion en `src/schemas/`
+- Tests en `src/tests/`
+
+## Convenciones
+- Usar camelCase para nombres de funciones
+- Todos los endpoints deben tener autenticacion
+- Respuestas siempre en formato { data, error, status }
+
+## Template base
+El endpoint debe seguir este patron:
+- Validar input con Zod
+- Verificar permisos del usuario
+- Ejecutar logica de negocio
+- Retornar respuesta estandarizada
+- Manejar errores con try/catch
+```
+
+### Diferencia con CLAUDE.md y sub-agentes
+
+| | CLAUDE.md | Skills | Sub-agentes |
+|---|-----------|--------|-------------|
+| **Proposito** | Contexto general del proyecto | Instrucciones para tareas especificas | Personalidad especializada |
+| **Se carga** | Siempre, al inicio | Cuando es relevante | Cuando se invoca |
+| **Contenido** | Reglas y preferencias | Procedimientos paso a paso | Forma de pensar y responder |
+
+<Callout emoji="💡">
+  Usa CLAUDE.md para las reglas generales, skills para procedimientos especificos, y sub-agentes cuando necesites una perspectiva diferente.
+</Callout>
+
+---
+
+## Hooks: automatizacion en piloto automatico
+
+Los hooks son **scripts que se ejecutan automaticamente** en momentos especificos del ciclo de vida de Claude Code. Es como tener un asistente invisible que se encarga de tareas mecanicas.
+
+### Cuando se activan
+
+| Hook | Se ejecuta cuando... | Ejemplo de uso |
+|------|----------------------|----------------|
+| `PreToolUse` | Claude va a usar una herramienta | Validar antes de escribir archivos |
+| `PostToolUse` | Claude termino de usar una herramienta | Formatear codigo despues de editar |
+| `Notification` | Claude envia una notificacion | Enviar alerta a Slack |
+| `Stop` | Claude termina su turno | Ejecutar tests automaticamente |
+
+### Como se configuran
+
+Los hooks se definen en tu archivo de configuracion `.claude/settings.json`:
+
+```json
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "npx prettier --write $FILEPATH"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+Este hook ejecuta Prettier automaticamente cada vez que Claude escribe o edita un archivo.
+
+### Ejemplo: Auto-formatear codigo
+
+```json
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "npx prettier --write $FILEPATH"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+Cada vez que Claude crea o modifica un archivo, Prettier lo formatea automaticamente.
+
+### Ejemplo: Ejecutar tests despues de cambios
+
+```json
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "npm run test -- --changed"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+Cuando Claude termina una tarea, los tests se ejecutan automaticamente para los archivos que cambiaron.
+
+### Ejemplo: Validar antes de escribir
+
+```json
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 .claude/scripts/validate-write.py $FILEPATH"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+Antes de que Claude escriba un archivo, un script de Python valida que no se esten modificando archivos protegidos.
+
+<Callout type="warning">
+  Los hooks ejecutan comandos reales en tu sistema. Asegurate de que los scripts que uses sean seguros y esten bien testeados antes de activarlos.
+</Callout>
+
+### Variables disponibles en hooks
+
+| Variable | Descripcion |
+|----------|-------------|
+| `$FILEPATH` | Ruta del archivo afectado |
+| `$TOOL_NAME` | Nombre de la herramienta usada |
+| `$TOOL_INPUT` | Input en formato JSON de la herramienta |
+
+---
+
+## Plugins: el ecosistema de Claude Code
+
+<Callout type="info">
+  Los plugins estan disponibles desde **febrero de 2026**. Es la forma oficial de compartir y distribuir extensiones para Claude Code.
+</Callout>
+
+Los plugins son **paquetes que agrupan todo lo que hemos visto** (y mas) en un solo paquete instalable:
+
+- Comandos slash personalizados
+- Sub-agentes especializados
+- Skills
+- Hooks
+- Servidores MCP (Model Context Protocol)
+- Servidores LSP (Language Server Protocol)
+
+### Instalar plugins
+
+```bash
+claude plugin install @empresa/mi-plugin
+```
+
+Asi de simple. El plugin se descarga, configura y esta listo para usar.
+
+### El marketplace oficial
+
+Claude Code tiene un **marketplace oficial** donde puedes explorar plugins creados por la comunidad y por Anthropic:
+
+```bash
+# Explorar plugins disponibles
+claude plugin search "deploy"
+
+# Ver detalles de un plugin
+claude plugin info @vercel/deploy
+
+# Instalar un plugin
+claude plugin install @vercel/deploy
+
+# Listar plugins instalados
+claude plugin list
+
+# Desinstalar un plugin
+claude plugin remove @vercel/deploy
+```
+
+### Ejemplos de plugins populares
+
+| Plugin | Que hace |
+|--------|----------|
+| `@vercel/deploy` | Despliega tu app a Vercel con un comando |
+| `@prisma/db-agent` | Sub-agente experto en bases de datos Prisma |
+| `@testing/coverage` | Analiza y mejora la cobertura de tests |
+| `@docs/generator` | Genera documentacion automatica del codigo |
+| `@i18n/translator` | Traduce tu app a multiples idiomas |
+
+<Callout emoji="💡">
+  Antes de crear algo desde cero, busca en el marketplace. Es probable que alguien ya haya creado un plugin para lo que necesitas.
+</Callout>
+
+### Crear tu propio plugin
+
+Si quieres compartir tus skills, hooks y comandos con el mundo, puedes crear tu propio plugin.
+
+<Steps>
+### Inicializa el plugin
+
+```bash
+claude plugin init mi-plugin
+```
+
+Esto crea la estructura basica:
+
+<FileTree>
+  <FileTree.Folder name="mi-plugin" defaultOpen>
+    <FileTree.File name="plugin.json" />
+    <FileTree.Folder name="commands" defaultOpen>
+      <FileTree.File name="ejemplo.md" />
+    </FileTree.Folder>
+    <FileTree.Folder name="skills" defaultOpen>
+      <FileTree.File name="ejemplo.md" />
+    </FileTree.Folder>
+    <FileTree.Folder name="hooks" defaultOpen>
+      <FileTree.File name="post-edit.sh" />
+    </FileTree.Folder>
+  </FileTree.Folder>
+</FileTree>
+
+### Configura el manifiesto
+
+El archivo `plugin.json` describe tu plugin:
+
+```json
+{
+  "name": "@tuusuario/mi-plugin",
+  "version": "1.0.0",
+  "description": "Mi plugin para Claude Code",
+  "commands": ["commands/*.md"],
+  "skills": ["skills/*.md"],
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "hooks/post-edit.sh $FILEPATH"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+### Agrega tu contenido
+
+Rellena los archivos con tus comandos, skills y hooks.
+
+### Publica
+
+```bash
+claude plugin publish
+```
+
+Tu plugin estara disponible en el marketplace para que cualquiera lo instale.
+</Steps>
+
+<Callout emoji="🌍">
+  Los plugins convierten a Claude Code en una plataforma. Lo que antes era configuracion local ahora puede compartirse con toda la comunidad.
+</Callout>
+
+---
+
+## Como encaja todo junto
+
+```
+Tu proyecto
+├── CLAUDE.md              ← Reglas generales (siempre se lee)
+├── .claude/
+│   ├── settings.json      ← Configuracion + Hooks
+│   ├── commands/           ← Comandos slash (/deploy, /test)
+│   ├── agents/             ← Sub-agentes especializados
+│   ├── skills/             ← Procedimientos detallados
+│   └── plugins/            ← Plugins instalados
+```
+
+| Necesitas... | Usa... |
+|--------------|--------|
+| Reglas que apliquen siempre | CLAUDE.md |
+| Atajos para tareas frecuentes | Comandos slash |
+| Una perspectiva especializada | Sub-agentes |
+| Procedimientos paso a paso | Skills |
+| Automatizacion transparente | Hooks |
+| Herramientas de la comunidad | Plugins |
+
+---
+
+## Lo que aprendiste
+
+- ✅ Que son las skills y como crear briefs para Claude
+- ✅ Como configurar hooks para automatizar tareas
+- ✅ El ecosistema de plugins y el marketplace
+- ✅ Como instalar y crear tus propios plugins
+- ✅ Como encajan todas las piezas del sistema de extension
+
+<div className="mt-8 text-center">
+  <a href="/fundamentos/proximos-pasos" className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+    Siguiente: Proximos pasos →
+  </a>
+</div>

@@ -706,7 +706,7 @@ function GlosarioContent() {
           <p style={{ fontSize: '18px', color: t.textSecondary, lineHeight: 1.7, maxWidth: '600px', margin: '0 auto' }}>
             Este glosario tiene todos los conceptos que usarás durante el curso.
             No tienes que memorizarlos — solo entender la idea general.
-            Claude Code hará el trabajo técnico por ti.
+            Claude Code (con modelos como Opus 4.6 y Sonnet 4.5) hará el trabajo técnico por ti.
           </p>
         </div>
 

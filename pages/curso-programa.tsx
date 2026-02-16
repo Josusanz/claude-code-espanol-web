@@ -460,7 +460,7 @@ export default function CursoNegocioPage() {
                 Las 7 Reglas de Prompting 🎯
               </h1>
               <p style={{ fontSize: '17px', color: t.textSecondary, marginBottom: '32px' }}>
-                Con Claude Opus 4, el prompting funciona diferente. Estas reglas son FUNDAMENTALES.
+                Con Claude Opus 4.6, el prompting funciona diferente. Estas reglas son FUNDAMENTALES.
               </p>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>

@@ -1,0 +1,359 @@
+---
+title: Agent Teams
+---
+
+import { Callout } from 'nextra/components'
+import RalphAccessGate from '../../components/RalphAccessGate'
+
+# Leccion 3.9: Agent Teams
+
+<RalphAccessGate>
+
+## Ralph Loop con Esteroides
+
+Ya dominas el Ralph Loop: un agente que trabaja en bucle, reiniciandose con contexto fresco. Funciona genial. Pero tiene una limitacion: **es un solo agente haciendo una tarea a la vez**.
+
+¿Que pasaria si pudieras tener un *equipo* de agentes trabajando en paralelo, cada uno con su propio contexto fresco, coordinandose entre si?
+
+Eso es exactamente lo que son **Agent Teams**.
+
+---
+
+## ¿Que son Agent Teams?
+
+Agent Teams es una funcionalidad de Claude Code lanzada el **5 de febrero de 2026** junto con Opus 4.6. La idea es simple pero poderosa:
+
+> Una sesion de Claude Code actua como **team lead** (lider del equipo) y puede crear multiples sesiones "teammate" (companeros) que trabajan en paralelo.
+
+Piensalo asi:
+
+```
+┌──────────────────────────────────────────────────────────────┐
+│                     AGENT TEAMS                               │
+│                                                               │
+│              ┌──────────────────┐                             │
+│              │    TEAM LEAD     │                             │
+│              │  (tu sesion)     │                             │
+│              └────────┬─────────┘                             │
+│                       │                                       │
+│          ┌────────────┼────────────┐                         │
+│          │            │            │                          │
+│   ┌──────▼──────┐ ┌──▼──────────┐ ┌▼─────────────┐         │
+│   │ TEAMMATE 1  │ │ TEAMMATE 2  │ │ TEAMMATE 3   │         │
+│   │ Investiga   │ │ Implementa  │ │ Escribe tests │         │
+│   │ la API      │ │ el frontend │ │ de integracion│         │
+│   └─────────────┘ └─────────────┘ └──────────────┘          │
+│                                                               │
+│   Cada uno con su propia ventana de contexto y herramientas  │
+└──────────────────────────────────────────────────────────────┘
+```
+
+Es como pasar de tener **un desarrollador junior muy rapido** a tener **un equipo completo**.
+
+---
+
+## ¿Como Funciona?
+
+### Cada Teammate es Independiente
+
+Cuando el team lead crea un teammate, le pasa:
+
+- Una **descripcion de la tarea** a realizar
+- Acceso a las **mismas herramientas** (lectura de archivos, terminal, etc.)
+- Su propia **ventana de contexto** completamente fresca
+
+Esto es clave: cada teammate arranca con contexto limpio, dedicado 100% a su tarea. No hay Context Rot cruzado entre ellos.
+
+### El Sistema de Mailbox
+
+La comunicacion entre el team lead y los teammates funciona a traves de un **sistema de buzones (mailbox)**:
+
+```
+┌─────────────┐                    ┌─────────────┐
+│  TEAM LEAD  │  ── mensaje ──▶   │  TEAMMATE 1  │
+│             │  ◀── respuesta ── │             │
+│             │                    └─────────────┘
+│             │                    ┌─────────────┐
+│             │  ── mensaje ──▶   │  TEAMMATE 2  │
+│             │  ◀── respuesta ── │             │
+└─────────────┘                    └─────────────┘
+```
+
+El team lead puede:
+
+1. **Enviar tareas** a cada teammate
+2. **Revisar el progreso** de cada uno
+3. **Coordinar** cuando un teammate necesita el resultado de otro
+4. **Recibir resultados** cuando terminan
+
+### Interaccion Directa con Teammates
+
+No estas limitado a solo observar. Puedes **hablar directamente** con cualquier teammate para:
+
+- Darle contexto adicional
+- Corregir el rumbo
+- Pedirle que priorice algo diferente
+
+<Callout type="info">
+  Piensa en Agent Teams como un grupo de Slack donde tu eres el manager y cada teammate tiene su propio canal de trabajo.
+</Callout>
+
+---
+
+## Casos de Uso Ideales
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
+  <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-700/50">
+    <h4 className="font-bold text-blue-600 dark:text-blue-400">Investigacion y Review</h4>
+    <p className="text-sm text-slate-600 dark:text-gray-400 mt-2">
+      Un teammate investiga la documentacion de una API externa, otro revisa el codigo existente, un tercero analiza los tests. El team lead sintetiza todo.
+    </p>
+  </div>
+  <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-700/50">
+    <h4 className="font-bold text-green-600 dark:text-green-400">Modulos Nuevos en Paralelo</h4>
+    <p className="text-sm text-slate-600 dark:text-gray-400 mt-2">
+      ¿Necesitas auth, pagos y notificaciones? Lanza un teammate por modulo. Cada uno trabaja independientemente con specs claras.
+    </p>
+  </div>
+  <div className="p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border border-purple-200 dark:border-purple-700/50">
+    <h4 className="font-bold text-purple-600 dark:text-purple-400">Debugging con Hipotesis</h4>
+    <p className="text-sm text-slate-600 dark:text-gray-400 mt-2">
+      Tienes un bug misterioso. Lanza 3 teammates, cada uno explorando una hipotesis diferente. El que lo encuentre primero gana.
+    </p>
+  </div>
+  <div className="p-4 bg-orange-50 dark:bg-orange-900/20 rounded-lg border border-orange-200 dark:border-orange-700/50">
+    <h4 className="font-bold text-orange-600 dark:text-orange-400">Coordinacion Cross-Layer</h4>
+    <p className="text-sm text-slate-600 dark:text-gray-400 mt-2">
+      Un teammate en el backend, otro en el frontend, otro en la base de datos. Todos trabajando en la misma feature, coordinados por el team lead.
+    </p>
+  </div>
+</div>
+
+---
+
+## Ejemplo Practico: Feature Completa con Agent Teams
+
+Imagina que necesitas agregar un sistema de comentarios a tu app. Con Ralph Loop clasico, harias una tarea a la vez. Con Agent Teams:
+
+### Paso 1: Tu le dices al Team Lead
+
+```
+"Necesito agregar un sistema de comentarios. Los usuarios pueden
+comentar en posts, responder a otros comentarios, y recibir
+notificaciones. La base de datos es PostgreSQL, el backend es
+Express con TypeScript y el frontend es React."
+```
+
+### Paso 2: El Team Lead Organiza
+
+El team lead analiza la tarea y decide crear teammates:
+
+```
+Team Lead: "Voy a dividir esto en 3 subtareas paralelas."
+
+→ Teammate 1: "Crea el modelo de datos y las migraciones de
+   PostgreSQL para comentarios y notificaciones"
+
+→ Teammate 2: "Implementa los endpoints REST para CRUD de
+   comentarios con autenticacion y validacion"
+
+→ Teammate 3: "Crea los componentes React para la seccion
+   de comentarios con respuestas anidadas"
+```
+
+### Paso 3: Trabajo en Paralelo
+
+Mientras los teammates trabajan, puedes ver su progreso:
+
+```bash
+# El team lead te mantiene informado:
+"Teammate 1 termino las migraciones. Teammate 2 esta al 60%
+ de los endpoints. Teammate 3 empezo los componentes."
+```
+
+### Paso 4: Coordinacion
+
+Cuando Teammate 2 necesita saber la estructura de las tablas que creo Teammate 1, el team lead coordina:
+
+```
+Team Lead → Teammate 2:
+"Las tablas son: comments (id, post_id, user_id, parent_id,
+ content, created_at) y notifications (id, user_id, comment_id,
+ read, created_at). Aqui esta la migracion completa: ..."
+```
+
+### Paso 5: Resultado
+
+Lo que con Ralph Loop secuencial hubiera tomado **2-3 horas**, con Agent Teams se completa en **30-45 minutos**.
+
+---
+
+## El Trade-Off: Tokens vs Tiempo
+
+<div className="my-6 p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border border-yellow-200 dark:border-yellow-700/50">
+  <h4 className="font-bold text-yellow-700 dark:text-yellow-300">Mas rapido, pero mas caro</h4>
+  <p className="text-yellow-600 dark:text-yellow-400 mt-2">
+    Agent Teams usa aproximadamente <strong>3-4x mas tokens</strong> que una sesion individual. Cada teammate tiene su propia ventana de contexto, y la coordinacion entre ellos tambien consume tokens.
+  </p>
+</div>
+
+| Metrica | Ralph Loop | Agent Teams |
+|---------|-----------|-------------|
+| Tokens | 1x (base) | 3-4x |
+| Tiempo | Horas | Minutos |
+| Paralelismo | Secuencial | Hasta ~5 teammates |
+| Coordinacion | Manual (archivos .md) | Automatica (mailbox) |
+| Context Rot | Lo evitas reiniciando | Cada teammate tiene contexto fresco |
+
+**¿Cuando vale la pena pagar el costo extra?**
+
+- Cuando el **tiempo** es mas importante que los tokens
+- Cuando tienes tareas que son **genuinamente paralelas**
+- Cuando la coordinacion manual seria **mas costosa** que dejarla en manos del team lead
+
+---
+
+## Agent Teams vs Ralph Loop
+
+No son competidores. Son complementarios:
+
+```
+RALPH LOOP                           AGENT TEAMS
+═══════════                          ═══════════
+
+Un agente, secuencial               Multiples agentes, paralelo
+Control total via archivos .md       Coordinacion via mailbox
+Ideal para tareas lineales           Ideal para tareas paralelas
+Bajo costo en tokens                 3-4x mas tokens
+Tu manejas la coordinacion           El team lead coordina
+
+                    ┌──────────────┐
+                    │  COMBINADOS  │
+                    └──────────────┘
+
+   Usa Ralph Loop para definir las specs y el plan.
+   Luego usa Agent Teams para ejecutar las tareas
+   del plan en paralelo.
+```
+
+<Callout type="warning">
+  Agent Teams es como Ralph Loop con esteroides: la misma filosofia de contexto fresco y tareas atomicas, pero ejecutadas en paralelo por un equipo coordinado.
+</Callout>
+
+### La Combinacion Ganadora
+
+1. **Escribe tus specs** con la misma disciplina del Ralph Loop
+2. **Crea un plan** con tareas atomicas e independientes
+3. **Lanza Agent Teams** y deja que el team lead distribuya las tareas
+4. **Monitorea** el progreso general
+5. Si una tarea es demasiado grande, el teammate puede usar internamente un enfoque tipo Ralph (iterar sobre subtareas)
+
+---
+
+## Como Empezar con Agent Teams
+
+### Requisitos
+
+- Claude Code con **Opus 4.6** o superior
+- Plan que soporte Agent Teams (revisa tu plan de suscripcion)
+
+### Activar Agent Teams
+
+Agent Teams se activa de forma natural. Solo pidele a Claude Code que use multiples agentes:
+
+```
+"Quiero que trabajes en esto usando agent teams.
+ Crea teammates para las siguientes tareas: ..."
+```
+
+O deja que Claude decida cuando tiene sentido:
+
+```
+"Implementa este sistema de notificaciones. Si tiene sentido
+ paralelizar el trabajo, usa agent teams."
+```
+
+### Tips para Buenos Resultados
+
+<div className="my-6 space-y-4">
+  <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border-l-4 border-green-500">
+    <h4 className="font-bold text-green-600 dark:text-green-400">Se especifico con las tareas</h4>
+    <p className="text-sm text-slate-600 dark:text-gray-400 mt-1">
+      Cuanto mas claras sean las subtareas, mejor trabajan los teammates. Aplica todo lo que aprendiste en las fases de Specs y Plan.
+    </p>
+  </div>
+
+  <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border-l-4 border-green-500">
+    <h4 className="font-bold text-green-600 dark:text-green-400">Minimiza dependencias entre teammates</h4>
+    <p className="text-sm text-slate-600 dark:text-gray-400 mt-1">
+      Si Teammate 2 necesita esperar a que Teammate 1 termine, pierdes la ventaja del paralelismo. Diseña tareas lo mas independientes posible.
+    </p>
+  </div>
+
+  <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border-l-4 border-green-500">
+    <h4 className="font-bold text-green-600 dark:text-green-400">Define contratos claros</h4>
+    <p className="text-sm text-slate-600 dark:text-gray-400 mt-1">
+      Si un teammate crea el backend y otro el frontend, define la API de antemano. Mismo principio que el SHARED_PROGRESS.md de la leccion anterior.
+    </p>
+  </div>
+
+  <div className="p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border-l-4 border-yellow-500">
+    <h4 className="font-bold text-yellow-600 dark:text-yellow-400">No abuses del numero de teammates</h4>
+    <p className="text-sm text-slate-600 dark:text-gray-400 mt-1">
+      Mas teammates no siempre es mejor. 2-4 teammates enfocados suelen ser mas efectivos que 8 teammates con tareas diminutas. El costo de coordinacion crece con cada teammate adicional.
+    </p>
+  </div>
+</div>
+
+---
+
+## Ejemplo: Agent Teams + Ralph Loop
+
+Para proyectos realmente grandes, puedes combinar ambas tecnicas:
+
+```markdown
+# Mi super-proyecto
+
+## Fase 1: Specs y Plan (Ralph Loop)
+- Usa Ralph Loop para iterar sobre las specs
+- Genera un plan detallado con tareas atomicas
+
+## Fase 2: Ejecucion Paralela (Agent Teams)
+- Agrupa las tareas del plan por modulo
+- Lanza Agent Teams con un teammate por modulo
+- El team lead coordina dependencias
+
+## Fase 3: Integracion (Ralph Loop)
+- Vuelve a Ralph Loop para integrar todo
+- Tests end-to-end
+- Ajustes finales
+```
+
+Este patron **Specs → Paralelo → Integracion** es extremadamente efectivo para proyectos medianos y grandes.
+
+<Callout type="info">
+  Agent Teams no reemplaza la disciplina de escribir buenas specs y planes. La amplifica. Cuanto mejores son tus specs, mejor trabaja el equipo de agentes.
+</Callout>
+
+---
+
+## Resumen
+
+| Concepto | Descripcion |
+|----------|-------------|
+| **Agent Teams** | Un team lead que coordina multiples teammates en paralelo |
+| **Teammates** | Sesiones independientes con contexto fresco y herramientas propias |
+| **Mailbox** | Sistema de mensajes para coordinacion entre team lead y teammates |
+| **Costo** | ~3-4x mas tokens, pero reduccion dramatica de tiempo |
+| **Mejor uso** | Tareas paralelas, debugging multi-hipotesis, features cross-layer |
+| **Combinacion ideal** | Ralph Loop para specs/plan + Agent Teams para ejecucion |
+
+---
+
+<div className="mt-8 text-center">
+  <a href="/ralph/consejos-avanzados" className="inline-block px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition">
+    ← Volver a Consejos Avanzados
+  </a>
+</div>
+
+</RalphAccessGate>

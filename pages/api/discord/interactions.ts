@@ -142,7 +142,7 @@ async function askClaude(question: string): Promise<string> {
 
   try {
     const response = await client.messages.create({
-      model: 'claude-3-5-haiku-20241022',
+      model: 'claude-haiku-4-5-20250929',
       max_tokens: 250,
       system: QUICK_KNOWLEDGE,
       messages: [

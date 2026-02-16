@@ -9,5 +9,6 @@ export default {
   "investigacion-intro": "2.7 Investigación: Intro",
   "investigacion-proyecto": "2.8 Investigación: Proyecto",
   "datos-intro": "2.9 Análisis de Datos: Intro",
-  "datos-proyecto": "2.10 Análisis de Datos: Proyecto"
+  "datos-proyecto": "2.10 Análisis de Datos: Proyecto",
+  "seguridad-codigo-ia": "2.11 Seguridad del Código IA"
 }

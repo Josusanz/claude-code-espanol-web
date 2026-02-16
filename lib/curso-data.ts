@@ -128,6 +128,42 @@ Para la parte práctica, necesitas tener listo:
 - Panel admin para ver registros
 - Desplegado en tu propio dominio
 
+### 🧠 CLAUDE.md — El truco que marca la diferencia
+
+Cada vez que abres Claude Code en un proyecto, **empieza de cero**. No recuerda lo que hicieron ayer.
+
+La solución: crea un archivo \`CLAUDE.md\` en la raíz de tu proyecto. Claude lo lee automáticamente al iniciar.
+
+\`\`\`markdown
+# Mi Proyecto SaaS
+
+## Arquitectura
+- Next.js 15 App Router + TypeScript
+- Supabase (auth + DB)
+- shadcn/ui para componentes
+- Desplegado en Vercel
+
+## Estado actual
+- Landing page terminada
+- Formulario de captura funcionando
+- Pendiente: conectar pagos con Stripe
+
+## Convenciones
+- Componentes en /components
+- Servidor en /app/api
+- Estilos con Tailwind
+\`\`\`
+
+**Truco pro:** Al final de cada sesión de trabajo, dile a Claude:
+
+> "Actualiza el CLAUDE.md con lo que hemos trabajado hoy y el estado actual del proyecto"
+
+Así la próxima vez que abras el proyecto, Claude arranca con todo el contexto. Es como dejarle notas a tu "yo del futuro".
+
+También puedes tener un CLAUDE.md global en \`~/.claude/CLAUDE.md\` con tus preferencias generales (idioma, estilo de código, etc.) que aplica a todos tus proyectos.
+
+---
+
 ### Mentalidad para esta semana
 
 > "No te preocupes por entender todo el código. Enfócate en el FLUJO: crear → conectar → desplegar."
@@ -179,6 +215,7 @@ La IA escribirá el código por ti. Tu trabajo es:
         'Base de datos conectada (Supabase)',
         'Emails guardándose correctamente',
         'Desplegado en Vercel',
+        'CLAUDE.md creado en la raíz del proyecto',
         'URL compartida en Discord',
       ],
     },

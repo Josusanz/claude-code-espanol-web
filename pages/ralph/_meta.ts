@@ -7,5 +7,6 @@ export default {
   "fase-plan": "3.5 Fase 2: El Plan",
   "fase-ejecutar": "3.6 Fase 3: Ejecutar",
   "proyecto-practico": "3.7 Proyecto Práctico",
-  "consejos-avanzados": "3.8 Consejos Avanzados"
+  "consejos-avanzados": "3.8 Consejos Avanzados",
+  "agent-teams": "3.9 Agent Teams"
 }

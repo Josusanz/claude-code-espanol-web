@@ -342,7 +342,7 @@ const REQUISITOS = [
     id: 'req-claude',
     anchorId: 'requisitos-claude',
     title: 'Claude Code + Suscripción',
-    description: 'La herramienta de IA que usarás para programar.',
+    description: 'La herramienta de IA (con Opus 4.6 y Sonnet 4.5) que usarás para crear software.',
     Logo: ClaudeLogo,
     color: '#D97706',
     isPaid: true,
@@ -355,7 +355,7 @@ const REQUISITOS = [
       { text: 'Inicia sesión con tu cuenta de Anthropic' }
     ],
     verify: 'Al escribir "claude" en la terminal, se abre Claude Code.',
-    note: 'Claude Code requiere una suscripción activa de Claude Pro ($20/mes) o Claude Max ($100/mes). Sin suscripción, no podrás usar la herramienta.'
+    note: 'Claude Code requiere una suscripción activa de Claude Pro ($20/mes) o Claude Max ($100/mes). Tendrás acceso a modelos como Opus 4.6, Sonnet 4.5 y Haiku 4.5. Sin suscripción, no podrás usar la herramienta.'
   }
 ]
 

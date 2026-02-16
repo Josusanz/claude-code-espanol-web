@@ -426,7 +426,7 @@ function PrimerProyectoContent() {
           ) : (
             <div style={{ textAlign: 'center' }}>
               <p style={{ fontSize: '18px', color: t.textSecondary, marginBottom: '24px' }}>
-                Has creado tu primera página web con Claude Code.<br />
+                Has creado tu primera página web con Claude Code usando "vibe coding" — describir lo que quieres y dejar que la IA lo construya.<br />
                 <strong>¡Ya estás listo para empezar el curso!</strong>
               </p>
               <Link href="/empezar/introduccion" style={{

@@ -848,7 +848,7 @@ export default function LandingPage() {
                     Necesitas Claude Pro para empezar
                   </h2>
                   <p className="text-slate-600 dark:text-slate-400">
-                    Claude Code requiere una suscripción a Claude Pro ($20/mes). Acceso ilimitado a Claude Sonnet 4.5 y Opus 4.5.
+                    Claude Code requiere una suscripción a Claude Pro ($20/mes). Acceso ilimitado a Claude Sonnet 4.5 y Opus 4.6.
                   </p>
                 </div>
               </div>

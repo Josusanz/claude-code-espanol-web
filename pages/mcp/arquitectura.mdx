@@ -111,6 +111,12 @@ Los servidores MCP pueden comunicarse de dos formas:
 }
 ```
 
+### Streamable HTTP (2026)
+- Evolución del transporte SSE
+- Comunicación bidireccional más eficiente
+- Soporte para streaming de chunks y multipart
+- **Ideal para:** outputs largos, contenido multimedia, interacción en tiempo real
+
 ---
 
 ## Capacidades de un servidor
@@ -125,6 +131,22 @@ Cada servidor MCP puede exponer:
 
 <Callout type="warning">
   No todos los servidores exponen las tres capacidades. Algunos solo tienen tools, otros solo resources.
+</Callout>
+
+---
+
+## Nuevas capacidades (2026)
+
+El protocolo MCP ha añadido capacidades importantes:
+
+| Capacidad | Descripción | Ejemplo |
+|-----------|-------------|---------|
+| **MCP Apps** | UI interactiva en el chat | Formularios, tablas, controles |
+| **Multimedia** | Imágenes, video, audio | Ver screenshots, escuchar audio |
+| **Streaming** | Chunks y multipart | Outputs largos sin timeout |
+
+<Callout type="info">
+  Con MCP Apps, un servidor puede renderizar una tabla interactiva o un formulario directamente en tu conversación con Claude. Ya no estás limitado a texto.
 </Callout>
 
 ---

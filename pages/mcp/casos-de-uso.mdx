@@ -212,6 +212,49 @@ Claude usará:
 
 ---
 
+## Caso 8: Infraestructura cloud con AWS/GCP/Azure
+
+**Escenario:** Gestionar tu infraestructura cloud directamente desde Claude Code.
+
+**Configuración necesaria:**
+- Servidor MCP de AWS, Google Cloud o Azure conectado
+
+**Ejemplos de uso:**
+
+```
+"Muéstrame los logs de errores del último deploy en CloudWatch"
+
+"¿Cuántas instancias de mi servicio están corriendo en ECS?"
+
+"Escala mi servicio de Kubernetes a 3 réplicas"
+
+"¿Cuál es el coste estimado de mi infraestructura este mes?"
+```
+
+<Callout type="info">
+  En 2026, las tres grandes plataformas cloud (AWS, Google Cloud, Azure) tienen servidores MCP oficiales. Esto cambia completamente cómo gestionas infraestructura.
+</Callout>
+
+---
+
+## Caso 9: MCP Apps - interfaces interactivas
+
+**Escenario:** Usar servidores que renderizan UI directamente en tu conversación con Claude.
+
+**Ejemplos de uso:**
+
+```
+"Muéstrame una tabla interactiva con los datos de ventas"
+
+"Genera un formulario para crear un nuevo usuario"
+
+"Visualiza el estado de mis deploys en un dashboard"
+```
+
+Con MCP Apps (lanzado en enero 2026), los servidores pueden enviar elementos de UI — formularios, tablas, gráficos — que se renderizan directamente en el chat. Ya no estás limitado a texto plano.
+
+---
+
 ## Ideas para explorar
 
 | Área | Servidores | Posibilidades |
@@ -221,6 +264,8 @@ Claude usará:
 | Investigación | Fetch + Memory | Base de conocimiento personal |
 | Datos | PostgreSQL + Filesystem | ETL y reportes automáticos |
 | Comunicación | Slack + Memory | Respuestas inteligentes |
+| Cloud | AWS + GCP + Azure | Gestión de infraestructura desde el chat |
+| UI interactiva | MCP Apps | Dashboards y formularios en el chat |
 
 ---
 

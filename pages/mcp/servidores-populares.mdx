@@ -6,10 +6,10 @@ import { Callout } from 'nextra/components'
 
 # Lección 3: Servidores MCP populares
 
-Existen cientos de servidores MCP creados por la comunidad. Aquí están los más útiles organizados por categoría.
+Existen **miles** de servidores MCP creados por la comunidad y las grandes empresas tecnológicas. Aquí están los más útiles organizados por categoría.
 
 <Callout type="info">
-  Todos estos servidores son **gratuitos y de código abierto**. Puedes instalarlos con un simple comando.
+  La mayoría de estos servidores son **gratuitos y de código abierto**. En 2026, el ecosistema explotó: Microsoft, AWS y Google lanzaron servidores oficiales, y es cada vez más común que las herramientas vengan con soporte MCP de serie.
 </Callout>
 
 ---
@@ -76,6 +76,21 @@ npx -y @modelcontextprotocol/server-github
 - Revisar código
 - Gestionar repos
 
+### GitLab
+```bash
+npx -y @modelcontextprotocol/server-gitlab
+```
+- Issues, merge requests, pipelines
+- Gestión de repos
+- CI/CD
+
+### Linear
+```bash
+npx -y @anthropic/mcp-server-linear
+```
+- Gestión de proyectos de desarrollo
+- Issues, sprints, roadmaps
+
 ### PostgreSQL
 ```bash
 npx -y @modelcontextprotocol/server-postgres
@@ -99,6 +114,32 @@ npx -y @anthropic/mcp-server-docker
 - Gestionar contenedores
 - Ver logs
 - Ejecutar comandos
+
+---
+
+## Cloud e infraestructura (2026)
+
+Las grandes plataformas cloud ahora tienen servidores MCP oficiales:
+
+### AWS
+- **ECS/EKS** - Gestionar contenedores y Kubernetes
+- **Lambda/Serverless** - Desplegar funciones
+- **CloudWatch** - Monitorización y logs
+
+### Google Cloud
+- **Maps** - Geolocalización y rutas
+- **BigQuery** - Análisis de datos masivos
+- **Compute Engine** - Gestionar VMs
+- **Kubernetes Engine** - Orquestar contenedores
+
+### Microsoft Azure
+- **40+ servicios** integrados
+- Conectado con **Copilot Studio**
+- Gestión de recursos, monitorización, deploy
+
+<Callout type="info">
+  Esto significa que puedes pedirle a Claude: "Despliega esta función en AWS Lambda" o "Muéstrame los logs de errores en CloudWatch" directamente desde tu terminal.
+</Callout>
 
 ---
 
@@ -201,9 +242,11 @@ npx -y @anthropic/mcp-server-twilio
 
 ## Recursos para encontrar más servidores
 
-- [awesome-mcp-servers](https://github.com/wong2/awesome-mcp-servers) - Lista curada
+- [awesome-mcp-servers](https://github.com/wong2/awesome-mcp-servers) - Lista curada por la comunidad
 - [mcpservers.org](https://mcpservers.org/) - Directorio con búsqueda
 - [MCP oficial](https://modelcontextprotocol.io/) - Documentación del protocolo
+- [mcp.so](https://mcp.so/) - Directorio con miles de servidores
+- Marketplace de Claude Code - Instala servidores directamente desde la CLI
 
 ---
 

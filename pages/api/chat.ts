@@ -39,7 +39,7 @@ Formato de respuesta:
     res.setHeader('Connection', 'keep-alive')
 
     const stream = anthropic.messages.stream({
-      model: 'claude-sonnet-4-20250514',
+      model: 'claude-sonnet-4-5-20250929',
       max_tokens: 4096,
       system: systemPrompt || defaultSystemPrompt,
       messages: messages.map((m: { role: string; content: string }) => ({

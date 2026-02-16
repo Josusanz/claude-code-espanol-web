@@ -114,7 +114,26 @@ Abre Claude Code en esa carpeta y hazle una pregunta sobre el proyecto.
 ### Itera
 
 Ajusta el CLAUDE.md según los resultados que obtengas.
+
+### Truco pro: actualización automática
+
+Al final de cada sesión de trabajo, dile a Claude:
+
+> "Actualiza el CLAUDE.md con lo que hemos trabajado hoy y el estado actual del proyecto"
+
+Así la próxima vez que abras el proyecto, Claude arranca con todo el contexto. Es como dejarle notas a tu "yo del futuro".
 </Steps>
+
+## CLAUDE.md global vs local
+
+Puedes tener dos niveles de memoria:
+
+| Archivo | Ubicación | Alcance |
+|---------|-----------|---------|
+| `proyecto/CLAUDE.md` | Raíz de tu proyecto | Solo ese proyecto |
+| `~/.claude/CLAUDE.md` | Tu carpeta home | Todos tus proyectos |
+
+El **global** es ideal para preferencias generales: tu idioma, estilo de código, convenciones que siempre usas. El **local** es para el contexto específico de cada proyecto.
 
 ---
 

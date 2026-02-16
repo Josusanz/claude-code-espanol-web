@@ -316,7 +316,7 @@ const anthropic = new Anthropic({
           instruction: 'Implementamos streaming para que las respuestas aparezcan en tiempo real.',
           commandToType: 'anthropic.messages.stream({ model, messages })',
           terminalResponse: `const stream = anthropic.messages.stream({
-  model: 'claude-sonnet-4-20250514',
+  model: 'claude-sonnet-4-5-20250929',
   max_tokens: 4096,
   system: systemPrompt,
   messages: messages,

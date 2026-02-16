@@ -595,7 +595,7 @@ function PrecursoContent() {
               lineHeight: 1.6,
               maxWidth: '600px'
             }}>
-              Antes de crear software con IA, necesitas conocer algunos términos y tener las herramientas instaladas. <strong style={{ color: t.text }}>No vas a programar</strong> — solo entender lo básico.
+              En 2026, el 78% de las organizaciones ya usan IA en desarrollo. Antes de crear software con IA, necesitas conocer algunos términos y tener las herramientas instaladas. <strong style={{ color: t.text }}>No vas a programar</strong> — solo entender lo básico.
             </p>
           </div>
 

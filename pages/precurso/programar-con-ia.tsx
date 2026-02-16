@@ -229,7 +229,7 @@ function ProgramarConIAContent() {
               color: t.textSecondary,
               lineHeight: 1.8
             }}>
-              La IA ha cambiado las reglas del juego. Ahora puedes crear software sin escribir código —
+              La IA ha cambiado las reglas del juego. En 2026, el 78% de las organizaciones ya usan IA en desarrollo — es lo que se llama "vibe coding". Ahora puedes crear software sin escribir código,
               pero necesitas entender cómo funciona para dirigir a la IA correctamente.
             </p>
           </div>
