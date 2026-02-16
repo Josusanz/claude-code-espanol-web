@@ -130,6 +130,36 @@ export default {
   "course-builder": {
     display: "hidden"
   },
+  curso: {
+    display: "hidden"
+  },
+  "josu-admin": {
+    display: "hidden"
+  },
+  admin: {
+    display: "hidden"
+  },
+  precurso: {
+    display: "hidden"
+  },
+  acceso: {
+    display: "hidden"
+  },
+  cuenta: {
+    display: "hidden"
+  },
+  "curso-programa": {
+    display: "hidden"
+  },
+  "curso-premium": {
+    display: "hidden"
+  },
+  plataforma: {
+    display: "hidden"
+  },
+  "unsub-ok": {
+    display: "hidden"
+  },
   privacidad: {
     display: "hidden"
   },
