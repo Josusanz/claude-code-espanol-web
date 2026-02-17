@@ -43,14 +43,15 @@ function CodeBlock({ code }: { code: string }) {
       fontFamily: "'JetBrains Mono', 'Fira Code', monospace",
       fontSize: '13px',
       color: '#e2e8f0',
-      overflowX: 'auto',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      gap: '12px',
     }}>
-      <code style={{ whiteSpace: 'pre', flex: 1 }}>{code}</code>
-      <CopyButton text={code} />
+      <div style={{
+        display: 'flex',
+        justifyContent: 'flex-end',
+        marginBottom: '4px',
+      }}>
+        <CopyButton text={code} />
+      </div>
+      <code style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-all', lineHeight: '1.6' }}>{code}</code>
     </div>
   )
 }
