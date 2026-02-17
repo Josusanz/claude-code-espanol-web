@@ -122,11 +122,33 @@ Para la parte práctica, necesitas tener listo:
 4. **Cuenta de Vercel** conectada a GitHub
 
 ### Lo que vamos a construir juntos:
-- Landing page atractiva
+- Landing page atractiva (partiendo de un theme profesional)
 - Formulario de captura de emails
 - Base de datos con Supabase
 - Panel admin para ver registros
 - Desplegado en tu propio dominio
+
+### 🎨 Elige tu theme base
+
+En vez de empezar desde cero, vamos a usar uno de los **20 themes premium** incluidos en el curso. Son templates profesionales de Next.js + Tailwind que te dan un punto de partida espectacular.
+
+1. Entra a [/curso/themes](/curso/themes) y explora la galería
+2. Para tu primera landing de waitlist, te recomendamos uno de estos:
+   - **Simple** — Ultra-limpio, ideal si quieres algo minimalista
+   - **Waitlist** — Diseñado específicamente para captar emails
+   - **Gray** — Profesional y sobrio, perfecto para B2B
+3. Pide acceso al repo con tu usuario de GitHub (es automático)
+4. Clona el repo y copia el theme que elijas:
+
+\`\`\`bash
+git clone https://github.com/Josusanz/aprende-themes.git
+cp -r aprende-themes/simple-next mi-waitlist
+cd mi-waitlist && npm install && npm run dev
+\`\`\`
+
+5. En clase, le diremos a Claude Code que personalice el theme con tu contenido
+
+> **¿Por qué un theme?** Porque el diseño ya está resuelto. Tú te enfocas en tu mensaje y tu producto. Claude se encarga de adaptar colores, textos e imágenes.
 
 ### 🧠 CLAUDE.md — El truco que marca la diferencia
 
@@ -288,9 +310,9 @@ La IA escribirá el código por ti. Tu trabajo es:
 - Ejercicio: Visualización del "yo del futuro"
 
 **Segunda hora: Manos a la obra**
-- Creamos el proyecto Next.js
-- Diseñamos la landing page
-- Implementamos el formulario
+- Elegimos un theme base de la [galería de themes](/curso/themes)
+- Personalizamos el theme con Claude Code (colores, textos, imágenes)
+- Implementamos el formulario de captura de emails
 
 ### Día 2 (Jueves 20)
 - Conectamos Supabase
@@ -305,8 +327,9 @@ La IA escribirá el código por ti. Tu trabajo es:
       checklist: [
         'Rueda del Creador completada y compartida',
         'Presentación hecha en la primera clase',
-        'Proyecto creado con Next.js',
-        'Landing page con formulario',
+        'Theme base elegido de /curso/themes',
+        'Proyecto creado a partir del theme',
+        'Landing page personalizada con formulario',
         'Base de datos conectada (Supabase)',
         'Emails guardándose correctamente',
         'Desplegado en Vercel',
