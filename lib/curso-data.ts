@@ -164,6 +164,51 @@ También puedes tener un CLAUDE.md global en \`~/.claude/CLAUDE.md\` con tus pre
 
 ---
 
+## 💻 Terminal vs VS Code: ¿Dónde usar Claude Code?
+
+Claude Code funciona en dos entornos. Cada uno tiene ventajas:
+
+### Terminal (standalone)
+
+\`\`\`bash
+# Abres una terminal normal y escribes:
+claude
+\`\`\`
+
+**Ventajas:**
+- **Pantalla completa** para Claude — ves todo el output sin distracciones
+- **Más rápido** — no carga extensiones ni UI adicional
+- **Multi-monitor** — Claude en una pantalla, código en otra
+- **Ideal para tareas largas** — refactoring masivo, migraciones, análisis
+
+**Cuándo usarlo:**
+- Proyectos nuevos desde cero (vibe coding)
+- Tareas de infraestructura (deploy, CI/CD, Docker)
+- Cuando quieres máxima velocidad
+
+### VS Code (terminal integrado)
+
+\`\`\`
+# Abres VS Code → Terminal → escribes: claude
+\`\`\`
+
+**Ventajas:**
+- **Ves los cambios en tiempo real** — Claude edita y tú ves el diff al instante
+- **Extensiones** — Pencil, GitHub Copilot, linters al lado
+- **Explorador de archivos** — navegas el proyecto visualmente
+- **Preview integrado** — ves tu web mientras Claude la modifica
+
+**Cuándo usarlo:**
+- Editar código existente (ves los cambios mientras ocurren)
+- Diseño de UI (con Pencil puedes ver el canvas)
+- Debugging (ves errores en el editor + terminal)
+
+### Recomendación
+
+Para este curso usaremos **VS Code** porque es más visual y puedes ver todo junto. Pero prueba ambos y quédate con lo que te funcione mejor — el resultado es idéntico.
+
+---
+
 ### Mentalidad para esta semana
 
 > "No te preocupes por entender todo el código. Enfócate en el FLUJO: crear → conectar → desplegar."
@@ -253,16 +298,68 @@ Antes de diseñar, observa:
 - [Notion](https://notion.so) - Limpio y flexible
 - [Vercel](https://vercel.com) - Moderno y rápido
 
+---
+
+## ✏️ Pencil: Diseño visual que Claude entiende
+
+[Pencil](https://www.pencil.dev/) es un canvas de diseño integrado en VS Code. La magia: Claude Code puede **leer y escribir** archivos \`.pen\` directamente.
+
+### ¿Por qué Pencil y no Figma?
+
+| | Figma | Pencil |
+|---|---|---|
+| ¿Dónde? | Navegador | VS Code |
+| ¿Archivos? | En la nube | \`.pen\` en tu repo |
+| ¿Claude lo lee? | No | **Sí, directamente** |
+| ¿Git? | No | **Sí** |
+| ¿Precio? | De pago | **Gratis** |
+
+### El flujo de trabajo
+
+1. **Diseñas** en Pencil (arrastras componentes, ajustas layout)
+2. **Claude lee** el archivo \`.pen\` via MCP (Model Context Protocol)
+3. **Claude genera** el código React/Tailwind exacto de tu diseño
+4. **Iteras**: ajustas el diseño → Claude actualiza el código
+
+### Ejemplo práctico
+
+\`\`\`bash
+# 1. Crea un archivo de diseño
+touch mi-dashboard.pen
+# 2. Ábrelo en VS Code (se abre el canvas de Pencil)
+# 3. Diseña tu dashboard arrastrando componentes
+# 4. Luego dile a Claude:
+\`\`\`
+
+> "Mira mi diseño en mi-dashboard.pen y genera los componentes React con Tailwind"
+
+Claude lee las coordenadas exactas, colores, tipografía y estructura del \`.pen\` y genera código pixel-perfect.
+
+### Configurar Pencil con Claude Code (MCP)
+
+Pencil se conecta con Claude Code automáticamente via MCP. Cuando tienes la extensión instalada y un archivo \`.pen\` en tu proyecto, Claude puede:
+
+- **Leer** el diseño completo (layout, colores, componentes)
+- **Modificar** el diseño desde la terminal
+- **Generar screenshots** para verificar el resultado
+- **Extraer variables** de estilo (tokens de diseño)
+
+> "Pencil convierte tu diseño en código. Es como tener un diseñador y un frontend developer trabajando juntos."
+
+---
+
 ### Tu tarea antes de la clase
 
 1. **Define tu proyecto**: ¿Qué problema resuelve?
-2. **Dibuja 3 pantallas**: Dashboard, formulario principal, settings
+2. **Crea un archivo \`.pen\`** y dibuja 3 pantallas: Dashboard, formulario principal, settings
 3. **Elige colores**: Máximo 3 colores principales
+4. **Prueba el flujo**: Pídele a Claude que genere código desde tu \`.pen\`
 
 > "Un buen diseño no es decoración, es comunicación clara."
       `,
       recursos: [
         { titulo: 'Catálogo shadcn/ui', url: 'https://ui.shadcn.com', tipo: 'link' },
+        { titulo: 'Pencil — Diseño en VS Code', url: 'https://www.pencil.dev/', tipo: 'link' },
         { titulo: 'Tailwind CSS Docs', url: 'https://tailwindcss.com/docs', tipo: 'link' },
         { titulo: 'Colores Tailwind', url: 'https://tailwindcss.com/docs/customizing-colors', tipo: 'link' },
       ],
@@ -279,6 +376,7 @@ Antes de diseñar, observa:
       checklist: [
         'Proyecto creado en GitHub',
         'shadcn/ui instalado y configurado',
+        'Diseño en Pencil (.pen) de las pantallas principales',
         'Dashboard principal diseñado',
         'Al menos 3 páginas creadas',
         'Navegación funcionando',

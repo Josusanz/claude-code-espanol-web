@@ -12,6 +12,7 @@ export const PRECURSO_SECTIONS = {
   'req-github': 'Cuenta GitHub creada',
   'req-vercel': 'Cuenta Vercel creada',
   'req-claude': 'Claude Code instalado',
+  'req-pencil': 'Pencil instalado',
   'reglas-prompting': '7 Reglas de Prompting',
   'quiz-aprobado': 'Quiz aprobado',
   'primer-proyecto': 'Primer proyecto completado',
@@ -240,10 +241,10 @@ function PrecursoContent() {
   const introCompleted = completed['intro-completo']
   const glosarioCompleted = completed['glosario-completo']
 
-  // Requisitos: check if all 5 steps are done
-  const reqSteps = ['req-vscode', 'req-nodejs', 'req-github', 'req-vercel', 'req-claude']
+  // Requisitos: check if all 6 steps are done
+  const reqSteps = ['req-vscode', 'req-nodejs', 'req-github', 'req-vercel', 'req-claude', 'req-pencil']
   const reqCompletedCount = reqSteps.filter(key => completed[key]).length
-  const requisitosCompleted = reqCompletedCount === 5
+  const requisitosCompleted = reqCompletedCount === 6
 
   return (
     <div style={{
@@ -812,7 +813,7 @@ function PrecursoContent() {
                     color: requisitosCompleted ? t.success : t.textMuted,
                     fontWeight: 500
                   }}>
-                    {requisitosCompleted ? '✓ Completado' : `${reqCompletedCount}/5 instalados`}
+                    {requisitosCompleted ? '✓ Completado' : `${reqCompletedCount}/6 instalados`}
                   </span>
                 </div>
                 <h3 style={{

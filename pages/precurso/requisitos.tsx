@@ -356,6 +356,26 @@ const REQUISITOS = [
     ],
     verify: 'Al escribir "claude" en la terminal, se abre Claude Code.',
     note: 'Claude Code requiere una suscripción activa de Claude Pro ($20/mes) o Claude Max ($100/mes). Tendrás acceso a modelos como Opus 4.6, Sonnet 4.5 y Haiku 4.5. Sin suscripción, no podrás usar la herramienta.'
+  },
+  {
+    id: 'req-pencil',
+    anchorId: 'requisitos-pencil',
+    title: 'Pencil (extensión de diseño)',
+    description: 'Canvas de diseño que se integra con Claude Code para crear interfaces visuales.',
+    Logo: () => (
+      <svg viewBox="0 0 24 24" width="32" height="32">
+        <path fill="#6366f1" d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+      </svg>
+    ),
+    color: '#6366f1',
+    steps: [
+      { text: 'Abre VS Code' },
+      { text: 'Ve a Extensiones (Cmd/Ctrl + Shift + X)' },
+      { text: 'Busca "Pencil" e instálalo' },
+      { text: 'Crea un archivo test.pen para verificar que funciona' },
+    ],
+    verify: 'Al abrir un archivo .pen en VS Code, verás el canvas de diseño de Pencil.',
+    note: 'Pencil es gratuito. Se conecta con Claude Code via MCP para que puedas diseñar interfaces visualmente y generar código directamente desde el diseño.'
   }
 ]
 
@@ -520,6 +540,10 @@ function RequisitosContent() {
                 display: 'block', padding: '8px 20px 8px 48px', color: t.textSecondary,
                 textDecoration: 'none', fontSize: '13px'
               }}>5. Claude Code</a>
+              <a href="#requisitos-pencil" style={{
+                display: 'block', padding: '8px 20px 8px 48px', color: t.textSecondary,
+                textDecoration: 'none', fontSize: '13px'
+              }}>6. Pencil</a>
             </div>
           </nav>
 
@@ -753,10 +777,10 @@ function RequisitosContent() {
                   fontWeight: 700,
                   color: t.accent
                 }}>
-                  {completedCount}/5
+                  {completedCount}/6
                 </div>
                 <h3 style={{ fontSize: '18px', fontWeight: 600, color: t.text, margin: '0 0 8px' }}>
-                  {completedCount === 0 ? 'Empieza por el primer paso' : `Te faltan ${5 - completedCount} herramientas`}
+                  {completedCount === 0 ? 'Empieza por el primer paso' : `Te faltan ${6 - completedCount} herramientas`}
                 </h3>
                 <p style={{ fontSize: '14px', color: t.textSecondary, margin: 0 }}>
                   Marca cada herramienta como instalada cuando la tengas lista.

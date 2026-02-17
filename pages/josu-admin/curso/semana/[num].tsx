@@ -46,16 +46,29 @@ function GuiaContent({ semana, guia }: { semana: typeof CURSO_SEMANAS[0], guia: 
             📋 Guía Semana {semana.num}: {semana.titulo}
           </h1>
         </div>
-        <span style={{
-          padding: '6px 12px',
-          background: '#f0f9ff',
-          color: '#0369a1',
-          borderRadius: '6px',
-          fontSize: '13px',
-          fontWeight: 500
-        }}>
-          {semana.clase.fecha} • {semana.clase.hora}
-        </span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <Link href={`/curso/clase/${semana.num}`} target="_blank" style={{
+            padding: '6px 14px',
+            background: '#6366f1',
+            color: 'white',
+            borderRadius: '6px',
+            fontSize: '13px',
+            fontWeight: 500,
+            textDecoration: 'none',
+          }}>
+            📺 Abrir Pizarra
+          </Link>
+          <span style={{
+            padding: '6px 12px',
+            background: '#f0f9ff',
+            color: '#0369a1',
+            borderRadius: '6px',
+            fontSize: '13px',
+            fontWeight: 500
+          }}>
+            {semana.clase.fecha} • {semana.clase.hora}
+          </span>
+        </div>
       </header>
 
       <main style={{ maxWidth: '900px', margin: '0 auto', padding: '32px 24px' }}>
