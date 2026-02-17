@@ -1,0 +1,173 @@
+export interface Theme {
+  slug: string
+  nombre: string
+  descripcion: string
+  categoria: 'Landing' | 'Dashboard' | 'SaaS' | 'Blog' | 'Portfolio' | 'Docs'
+  demoUrl: string
+  imagen: string
+}
+
+export const CATEGORIAS = ['Todos', 'Landing', 'Dashboard', 'SaaS', 'Blog', 'Portfolio', 'Docs'] as const
+
+export const THEMES: Theme[] = [
+  {
+    slug: 'appy-next',
+    nombre: 'Appy',
+    descripcion: 'Landing page moderna para apps móviles y SaaS. Incluye secciones de features, pricing, testimonios y CTA.',
+    categoria: 'Landing',
+    demoUrl: 'https://cruip.com/demos/appy/',
+    imagen: '/images/themes/appy-next.jpg',
+  },
+  {
+    slug: 'community-next',
+    nombre: 'Community',
+    descripcion: 'Plataforma de comunidad con listados de miembros, perfiles y secciones de contenido social.',
+    categoria: 'SaaS',
+    demoUrl: 'https://cruip.com/demos/community/',
+    imagen: '/images/themes/community-next.jpg',
+  },
+  {
+    slug: 'creative-next',
+    nombre: 'Creative',
+    descripcion: 'Template para agencias creativas y freelancers. Galería de proyectos con animaciones elegantes.',
+    categoria: 'Portfolio',
+    demoUrl: 'https://cruip.com/demos/creative/',
+    imagen: '/images/themes/creative-next.jpg',
+  },
+  {
+    slug: 'cube-next',
+    nombre: 'Cube',
+    descripcion: 'Landing page minimalista para productos digitales. Diseño limpio con secciones modulares.',
+    categoria: 'Landing',
+    demoUrl: 'https://cruip.com/demos/cube/',
+    imagen: '/images/themes/cube-next.jpg',
+  },
+  {
+    slug: 'devfolio-next',
+    nombre: 'DevFolio',
+    descripcion: 'Portfolio profesional para desarrolladores. Secciones de proyectos, skills y contacto.',
+    categoria: 'Portfolio',
+    demoUrl: 'https://cruip.com/demos/devfolio/',
+    imagen: '/images/themes/devfolio-next.jpg',
+  },
+  {
+    slug: 'devspace-next',
+    nombre: 'DevSpace',
+    descripcion: 'Landing para herramientas de desarrollo y DevTools. Incluye documentación y changelog.',
+    categoria: 'SaaS',
+    demoUrl: 'https://cruip.com/demos/devspace/',
+    imagen: '/images/themes/devspace-next.jpg',
+  },
+  {
+    slug: 'docs-next',
+    nombre: 'Docs',
+    descripcion: 'Sitio de documentación completo con sidebar, búsqueda y navegación por secciones.',
+    categoria: 'Docs',
+    demoUrl: 'https://cruip.com/demos/docs/',
+    imagen: '/images/themes/docs-next.jpg',
+  },
+  {
+    slug: 'fintech-next',
+    nombre: 'Fintech',
+    descripcion: 'Landing para apps financieras y fintech. Gráficos, métricas y secciones de confianza.',
+    categoria: 'Landing',
+    demoUrl: 'https://cruip.com/demos/fintech/',
+    imagen: '/images/themes/fintech-next.jpg',
+  },
+  {
+    slug: 'gray-next',
+    nombre: 'Gray',
+    descripcion: 'Template empresarial minimalista. Diseño sobrio y profesional para startups B2B.',
+    categoria: 'Landing',
+    demoUrl: 'https://cruip.com/demos/gray/',
+    imagen: '/images/themes/gray-next.jpg',
+  },
+  {
+    slug: 'job-board-next',
+    nombre: 'Job Board',
+    descripcion: 'Plataforma de ofertas de empleo con filtros, listados y páginas de detalle.',
+    categoria: 'SaaS',
+    demoUrl: 'https://cruip.com/demos/jobboard/',
+    imagen: '/images/themes/job-board-next.jpg',
+  },
+  {
+    slug: 'mosaic-next',
+    nombre: 'Mosaic',
+    descripcion: 'Dashboard administrativo completo con gráficos, tablas, formularios y gestión de usuarios.',
+    categoria: 'Dashboard',
+    demoUrl: 'https://cruip.com/demos/mosaic/',
+    imagen: '/images/themes/mosaic-next.jpg',
+  },
+  {
+    slug: 'neon-next',
+    nombre: 'Neon',
+    descripcion: 'Landing page con estética neón y dark mode. Ideal para productos tech y gaming.',
+    categoria: 'Landing',
+    demoUrl: 'https://cruip.com/demos/neon/',
+    imagen: '/images/themes/neon-next.jpg',
+  },
+  {
+    slug: 'open-pro-next',
+    nombre: 'Open Pro',
+    descripcion: 'Template completo para SaaS con hero, features, pricing, testimonios y blog.',
+    categoria: 'SaaS',
+    demoUrl: 'https://cruip.com/demos/open-pro/',
+    imagen: '/images/themes/open-pro-next.jpg',
+  },
+  {
+    slug: 'podcast-next',
+    nombre: 'Podcast',
+    descripcion: 'Plataforma para podcasts con reproductor, episodios, show notes y suscripción.',
+    categoria: 'Blog',
+    demoUrl: 'https://cruip.com/demos/podcast/',
+    imagen: '/images/themes/podcast-next.jpg',
+  },
+  {
+    slug: 'quoty-next',
+    nombre: 'Quoty',
+    descripcion: 'Landing page de testimonios y reviews. Perfecto para mostrar social proof.',
+    categoria: 'Landing',
+    demoUrl: 'https://cruip.com/demos/quoty/',
+    imagen: '/images/themes/quoty-next.jpg',
+  },
+  {
+    slug: 'simple-next',
+    nombre: 'Simple',
+    descripcion: 'Landing page ultra-limpia y minimalista. Ideal como punto de partida para cualquier proyecto.',
+    categoria: 'Landing',
+    demoUrl: 'https://cruip.com/demos/simple/',
+    imagen: '/images/themes/simple-next.jpg',
+  },
+  {
+    slug: 'stellar-next',
+    nombre: 'Stellar',
+    descripcion: 'Landing page premium con parallax, animaciones y secciones de producto detalladas.',
+    categoria: 'Landing',
+    demoUrl: 'https://cruip.com/demos/stellar/',
+    imagen: '/images/themes/stellar-next.jpg',
+  },
+  {
+    slug: 'talent-next',
+    nombre: 'Talent',
+    descripcion: 'Plataforma de recruiting y talento. Perfiles, búsqueda y gestión de candidatos.',
+    categoria: 'SaaS',
+    demoUrl: 'https://cruip.com/demos/talent/',
+    imagen: '/images/themes/talent-next.jpg',
+  },
+  {
+    slug: 'tidy-next',
+    nombre: 'Tidy',
+    descripcion: 'Dashboard moderno y limpio con sidebar, widgets, gráficos y gestión de tareas.',
+    categoria: 'Dashboard',
+    demoUrl: 'https://cruip.com/demos/tidy/',
+    imagen: '/images/themes/tidy-next.jpg',
+  },
+  {
+    slug: 'waitlist-next',
+    nombre: 'Waitlist',
+    descripcion: 'Página de waitlist / coming soon con formulario de email y cuenta regresiva.',
+    categoria: 'Landing',
+    demoUrl: 'https://cruip.com/demos/waitlist/',
+    imagen: '/images/themes/waitlist-next.jpg',
+  },
+]
