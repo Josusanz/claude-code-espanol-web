@@ -209,6 +209,56 @@ Para este curso usaremos **VS Code** porque es más visual y puedes ver todo jun
 
 ---
 
+## ⚡ Quitar las confirmaciones de Claude Code
+
+Por defecto, Claude Code te pide confirmación cada vez que va a ejecutar un comando o editar un archivo. Esto está bien para empezar, pero cuando estás en flujo creativo es un freno constante.
+
+### Opción 1: Modo auto-accept (la más directa)
+
+\`\`\`bash
+claude --dangerously-skip-permissions
+\`\`\`
+
+Con esta flag, Claude ejecuta todo sin preguntar. Ideal para trabajar rápido.
+
+### Opción 2: Allowlist de herramientas (más segura)
+
+Crea o edita \`~/.claude/settings.json\`:
+
+\`\`\`json
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run*)",
+      "Bash(cd*)",
+      "Bash(ls*)",
+      "Bash(mkdir*)",
+      "Read",
+      "Write",
+      "Edit"
+    ]
+  }
+}
+\`\`\`
+
+Así solo le das permiso a los comandos habituales y el resto sí te lo pregunta.
+
+### Opción 3: "Always allow" durante la sesión
+
+Cuando Claude te pide confirmación, fíjate que a veces aparece la opción **"Always allow"**. Si la aceptas, no te vuelve a preguntar por esa acción en esa sesión.
+
+### ¿Cuál usar?
+
+| Situación | Recomendación |
+|-----------|---------------|
+| Clase en vivo / vibe coding | \`--dangerously-skip-permissions\` |
+| Proyecto personal | Allowlist en settings.json |
+| Proyecto de cliente / producción | Confirmaciones manuales |
+
+> **Para este curso**, usaremos \`--dangerously-skip-permissions\` en clase para que todo fluya sin interrupciones.
+
+---
+
 ### Mentalidad para esta semana
 
 > "No te preocupes por entender todo el código. Enfócate en el FLUJO: crear → conectar → desplegar."

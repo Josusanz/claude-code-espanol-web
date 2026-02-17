@@ -56,14 +56,15 @@ export const PIZARRAS: PizarraSemana[] = [
         tip: 'Si "code ." no funciona, abre VS Code manualmente y selecciona la carpeta mi-waitlist.',
       },
       {
-        titulo: '3. Abrir Claude Code',
+        titulo: '3. Abrir Claude Code (sin confirmaciones)',
         descripcion: 'Abre el terminal integrado de VS Code (Ctrl+` o Cmd+`) y escribe:',
         bloques: [
           {
             lenguaje: 'bash',
-            codigo: 'claude',
+            codigo: 'claude --dangerously-skip-permissions',
           },
         ],
+        tip: 'La flag --dangerously-skip-permissions hace que Claude no te pida confirmación cada vez que ejecuta un comando o edita un archivo. Así todo fluye sin interrupciones. Para proyectos de cliente donde quieras más control, usa "claude" sin la flag.',
       },
       {
         titulo: '4. Crear la landing page',
