@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import CursoEmailGate from '../../components/CursoEmailGate'
 import { THEMES, CATEGORIAS, type Theme } from '../../lib/themes-data'
 
@@ -51,6 +51,185 @@ function CodeBlock({ code }: { code: string }) {
     }}>
       <code style={{ whiteSpace: 'pre', flex: 1 }}>{code}</code>
       <CopyButton text={code} />
+    </div>
+  )
+}
+
+function GitHubAccessBanner() {
+  const [githubUser, setGithubUser] = useState('')
+  const [status, setStatus] = useState<'idle' | 'loading' | 'invited' | 'already' | 'error'>('idle')
+  const [errorMsg, setErrorMsg] = useState('')
+
+  // Check if user already requested access
+  useEffect(() => {
+    const saved = localStorage.getItem('themes-github-user')
+    if (saved) {
+      setGithubUser(saved)
+      setStatus('invited')
+    }
+  }, [])
+
+  const handleRequest = async () => {
+    if (!githubUser.trim()) return
+    setStatus('loading')
+    setErrorMsg('')
+
+    try {
+      const res = await fetch('/api/themes/request-access', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ githubUsername: githubUser.trim() }),
+      })
+      const data = await res.json()
+
+      if (data.success) {
+        localStorage.setItem('themes-github-user', githubUser.trim().replace(/^@/, ''))
+        setStatus(data.status === 'already_collaborator' ? 'already' : 'invited')
+      } else {
+        setErrorMsg(data.error || 'Error al pedir acceso')
+        setStatus('error')
+      }
+    } catch {
+      setErrorMsg('Error de conexión. Inténtalo de nuevo.')
+      setStatus('error')
+    }
+  }
+
+  if (status === 'invited' || status === 'already') {
+    const savedUser = localStorage.getItem('themes-github-user') || githubUser
+    return (
+      <div style={{
+        background: 'rgba(0,0,0,0.2)',
+        borderRadius: '14px',
+        padding: '20px',
+        backdropFilter: 'blur(8px)',
+        maxWidth: '600px',
+      }}>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '10px',
+          marginBottom: '12px',
+        }}>
+          <span style={{
+            width: '8px',
+            height: '8px',
+            background: '#22c55e',
+            borderRadius: '50%',
+          }} />
+          <span style={{ fontSize: '14px', fontWeight: 600, color: 'white' }}>
+            {status === 'already' ? 'Ya tienes acceso' : 'Invitación enviada'}
+          </span>
+        </div>
+        <p style={{
+          fontSize: '13px',
+          color: 'rgba(255,255,255,0.7)',
+          margin: '0 0 14px 0',
+          lineHeight: '1.5',
+        }}>
+          {status === 'already'
+            ? `Tu usuario @${savedUser} ya tiene acceso al repo. Clona y empieza:`
+            : `Revisa tu email de GitHub (@${savedUser}) y acepta la invitación. Después clona:`}
+        </p>
+        <div style={{
+          background: 'rgba(0,0,0,0.3)',
+          borderRadius: '10px',
+          padding: '12px 16px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: '12px',
+        }}>
+          <code style={{
+            fontSize: '13px',
+            color: 'rgba(255,255,255,0.9)',
+            fontFamily: "'JetBrains Mono', 'Fira Code', monospace",
+          }}>
+            git clone https://github.com/Josusanz/aprende-themes.git
+          </code>
+          <CopyButton text="git clone https://github.com/Josusanz/aprende-themes.git" />
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div style={{
+      background: 'rgba(0,0,0,0.2)',
+      borderRadius: '14px',
+      padding: '20px',
+      backdropFilter: 'blur(8px)',
+      maxWidth: '600px',
+    }}>
+      <p style={{
+        fontSize: '14px',
+        fontWeight: 600,
+        color: 'white',
+        margin: '0 0 6px 0',
+      }}>
+        Pide acceso al repositorio
+      </p>
+      <p style={{
+        fontSize: '13px',
+        color: 'rgba(255,255,255,0.65)',
+        margin: '0 0 14px 0',
+        lineHeight: '1.5',
+      }}>
+        Introduce tu usuario de GitHub y te daremos acceso automáticamente al repo con los 20 themes.
+      </p>
+      <div style={{
+        display: 'flex',
+        gap: '10px',
+      }}>
+        <input
+          type="text"
+          value={githubUser}
+          onChange={e => setGithubUser(e.target.value)}
+          placeholder="tu-usuario-github"
+          onKeyDown={e => { if (e.key === 'Enter') handleRequest() }}
+          style={{
+            flex: 1,
+            padding: '12px 16px',
+            fontSize: '14px',
+            border: '2px solid rgba(255,255,255,0.15)',
+            borderRadius: '10px',
+            outline: 'none',
+            background: 'rgba(255,255,255,0.1)',
+            color: 'white',
+            fontFamily: "'JetBrains Mono', 'Fira Code', monospace",
+            transition: 'border-color 0.2s ease',
+          }}
+          onFocus={e => { e.target.style.borderColor = 'rgba(255,255,255,0.4)' }}
+          onBlur={e => { e.target.style.borderColor = 'rgba(255,255,255,0.15)' }}
+        />
+        <button
+          onClick={handleRequest}
+          disabled={status === 'loading' || !githubUser.trim()}
+          style={{
+            padding: '12px 24px',
+            fontSize: '14px',
+            fontWeight: 600,
+            color: '#4338ca',
+            background: status === 'loading' ? 'rgba(255,255,255,0.5)' : 'white',
+            border: 'none',
+            borderRadius: '10px',
+            cursor: status === 'loading' || !githubUser.trim() ? 'not-allowed' : 'pointer',
+            transition: 'all 0.2s ease',
+            whiteSpace: 'nowrap',
+          }}
+        >
+          {status === 'loading' ? 'Enviando...' : 'Pedir acceso'}
+        </button>
+      </div>
+      {status === 'error' && (
+        <p style={{
+          fontSize: '13px',
+          color: '#fca5a5',
+          margin: '10px 0 0 0',
+        }}>
+          {errorMsg}
+        </p>
+      )}
     </div>
   )
 }
@@ -322,30 +501,8 @@ function ThemesGallery() {
             Clona el repositorio y empieza a construir.
           </p>
 
-          {/* Quick start */}
-          <div style={{
-            background: 'rgba(0,0,0,0.2)',
-            borderRadius: '14px',
-            padding: '16px 20px',
-            backdropFilter: 'blur(8px)',
-            maxWidth: '600px',
-          }}>
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              gap: '12px',
-            }}>
-              <code style={{
-                fontSize: '14px',
-                color: 'rgba(255,255,255,0.9)',
-                fontFamily: "'JetBrains Mono', 'Fira Code', monospace",
-              }}>
-                git clone https://github.com/Josusanz/aprende-themes.git
-              </code>
-              <CopyButton text="git clone https://github.com/Josusanz/aprende-themes.git" />
-            </div>
-          </div>
+          {/* GitHub access */}
+          <GitHubAccessBanner />
         </div>
       </div>
 
@@ -480,7 +637,7 @@ function ThemesGallery() {
                   Clona el repositorio de themes
                 </h3>
                 <p style={{ fontSize: '14px', color: '#64748b', margin: '0 0 12px 0' }}>
-                  Necesitas tener acceso al repo privado. Si no lo tienes, pídelo en Discord.
+                  Introduce tu usuario de GitHub arriba para obtener acceso automático al repo privado.
                 </p>
                 <CodeBlock code="git clone https://github.com/Josusanz/aprende-themes.git" />
               </div>
