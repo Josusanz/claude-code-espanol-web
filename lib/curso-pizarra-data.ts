@@ -126,17 +126,36 @@ El producto es: [DESCRIBE TU IDEA AQUÍ]`,
         tip: 'Al final de cada sesión, dile a Claude: "Actualiza el CLAUDE.md con lo que hemos trabajado hoy"',
       },
       {
-        titulo: '8. Subir a GitHub',
+        titulo: '8. Conectar Git con GitHub',
+        descripcion: 'Antes de subir código, necesitas que tu terminal sepa quién eres y pueda acceder a GitHub.',
         bloques: [
           {
             lenguaje: 'bash',
-            codigo: `git add .
-git commit -m "Landing page de waitlist"
-git remote add origin https://github.com/TU-USUARIO/mi-waitlist.git
-git push -u origin main`,
+            codigo: `# 1. Configura tu nombre y email (solo la primera vez)
+git config --global user.name "Tu Nombre"
+git config --global user.email "tu@email.com"
+
+# 2. Instala GitHub CLI (si no lo tienes)
+brew install gh        # Mac
+# o: sudo apt install gh  # Linux
+# o: winget install GitHub.cli  # Windows
+
+# 3. Autentícate con GitHub
+gh auth login`,
           },
         ],
-        tip: 'Sustituye TU-USUARIO por tu nombre de usuario de GitHub. Si no tienes repo, créalo primero en github.com.',
+        tip: 'Al ejecutar "gh auth login", selecciona: GitHub.com → HTTPS → Login with a web browser. Se abrirá el navegador para autorizar. Solo necesitas hacer esto una vez.',
+      },
+      {
+        titulo: '9. Crear repo y subir a GitHub',
+        bloques: [
+          {
+            lenguaje: 'bash',
+            codigo: `# Crear repositorio en GitHub y subirlo (todo en un comando)
+gh repo create mi-waitlist --public --source=. --push`,
+          },
+        ],
+        tip: 'Este comando crea el repo en GitHub, lo conecta con tu proyecto local y sube todo el código de una vez. Si prefieres repo privado, cambia --public por --private.',
       },
       // — DÍA 2 —
       {
@@ -144,7 +163,7 @@ git push -u origin main`,
         descripcion: 'Hoy conectamos Supabase, creamos el panel admin y desplegamos en Vercel.',
       },
       {
-        titulo: '9. Crear proyecto en Supabase',
+        titulo: '10. Crear proyecto en Supabase',
         descripcion: 'Ve a Supabase y crea un nuevo proyecto.',
         links: [
           { texto: 'Abrir Supabase', url: 'https://supabase.com/dashboard' },
@@ -152,7 +171,7 @@ git push -u origin main`,
         tip: 'Apunta la contraseña de la base de datos. El nombre del proyecto puede ser "mi-waitlist".',
       },
       {
-        titulo: '10. Crear tabla de emails',
+        titulo: '11. Crear tabla de emails',
         descripcion: 'En el SQL Editor de Supabase, ejecuta:',
         bloques: [
           {
@@ -173,7 +192,7 @@ CREATE POLICY "Allow public inserts" ON waitlist
         ],
       },
       {
-        titulo: '11. Instalar Supabase en el proyecto',
+        titulo: '12. Instalar Supabase en el proyecto',
         bloques: [
           {
             lenguaje: 'bash',
@@ -182,7 +201,7 @@ CREATE POLICY "Allow public inserts" ON waitlist
         ],
       },
       {
-        titulo: '12. Configurar variables de entorno',
+        titulo: '13. Configurar variables de entorno',
         descripcion: 'Crea un archivo .env.local en la raíz del proyecto. Las keys están en Supabase → Settings → API.',
         bloques: [
           {
@@ -198,7 +217,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIs...`,
         ],
       },
       {
-        titulo: '13. Conectar el formulario',
+        titulo: '14. Conectar el formulario',
         descripcion: 'Dile a Claude que conecte el formulario con Supabase:',
         bloques: [
           {
@@ -215,7 +234,7 @@ Usa las variables de entorno NEXT_PUBLIC_SUPABASE_URL y NEXT_PUBLIC_SUPABASE_ANO
         ],
       },
       {
-        titulo: '14. Crear panel admin',
+        titulo: '15. Crear panel admin',
         bloques: [
           {
             lenguaje: 'text',
@@ -228,7 +247,7 @@ Usa las variables de entorno NEXT_PUBLIC_SUPABASE_URL y NEXT_PUBLIC_SUPABASE_ANO
         ],
       },
       {
-        titulo: '15. Deploy en Vercel',
+        titulo: '16. Deploy en Vercel',
         descripcion: 'La forma más fácil: conecta tu repo de GitHub a Vercel.',
         links: [
           { texto: 'Abrir Vercel', url: 'https://vercel.com/new' },
@@ -247,7 +266,7 @@ Usa las variables de entorno NEXT_PUBLIC_SUPABASE_URL y NEXT_PUBLIC_SUPABASE_ANO
         tip: 'También puedes hacer: npx vercel (desde la terminal)',
       },
       {
-        titulo: '16. ¡Comparte tu URL!',
+        titulo: '17. ¡Comparte tu URL!',
         descripcion: 'Tu waitlist está en producción. Copia la URL de Vercel y compártela en el Discord del curso.',
         tip: 'Actualiza el CLAUDE.md: "Actualiza el CLAUDE.md con todo lo que hemos hecho. El proyecto está desplegado en [tu-url].vercel.app"',
       },
