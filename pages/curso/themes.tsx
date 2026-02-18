@@ -244,7 +244,7 @@ const CATEGORIA_COLORES: Record<string, { bg: string; text: string }> = {
   Docs: { bg: '#e0e7ff', text: '#4338ca' },
 }
 
-function ThemeCard({ theme }: { theme: Theme }) {
+function ThemeCard({ theme, onUsar }: { theme: Theme; onUsar: (slug: string) => void }) {
   const [imgError, setImgError] = useState(false)
   const colores = CATEGORIA_COLORES[theme.categoria]
 
@@ -385,6 +385,7 @@ function ThemeCard({ theme }: { theme: Theme }) {
             href={`#usar-${theme.slug}`}
             onClick={(e) => {
               e.preventDefault()
+              onUsar(theme.slug)
               const el = document.getElementById('como-usar')
               if (el) el.scrollIntoView({ behavior: 'smooth' })
             }}
@@ -422,6 +423,7 @@ function ThemeCard({ theme }: { theme: Theme }) {
 
 function ThemesGallery() {
   const [categoriaActiva, setCategoriaActiva] = useState<string>('Todos')
+  const [selectedSlug, setSelectedSlug] = useState<string>('simple-next')
 
   const themesFiltrados = categoriaActiva === 'Todos'
     ? THEMES
@@ -572,7 +574,7 @@ function ThemesGallery() {
           marginBottom: '60px',
         }}>
           {themesFiltrados.map(theme => (
-            <ThemeCard key={theme.slug} theme={theme} />
+            <ThemeCard key={theme.slug} theme={theme} onUsar={setSelectedSlug} />
           ))}
         </div>
 
@@ -668,7 +670,7 @@ function ThemesGallery() {
                 <p style={{ fontSize: '14px', color: '#64748b', margin: '0 0 12px 0' }}>
                   Cada theme es una carpeta independiente con su propio package.json.
                 </p>
-                <CodeBlock code="cp -r aprende-themes/simple-next mi-proyecto" />
+                <CodeBlock code={`cp -r aprende-themes/${selectedSlug} mi-proyecto`} />
               </div>
             </div>
 

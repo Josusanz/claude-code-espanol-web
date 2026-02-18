@@ -52,6 +52,32 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     const data = await response.json().catch(() => ({}))
+
+    // Log para diagnosticar errores de la API de GitHub
+    console.error('[themes/request-access] GitHub API error:', {
+      status: response.status,
+      message: data.message,
+      errors: data.errors,
+      username,
+    })
+
+    if (response.status === 422) {
+      // "Validation Failed" — puede ser PAT sin permisos, invitación duplicada, etc.
+      const detail = data.errors?.[0]?.message || ''
+      if (detail.toLowerCase().includes('already')) {
+        return res.status(200).json({ success: true, status: 'invited' })
+      }
+      return res.status(400).json({
+        error: 'No se pudo enviar la invitación. Comprueba que tu usuario de GitHub es correcto y que tu cuenta puede recibir invitaciones.',
+      })
+    }
+
+    if (response.status === 403) {
+      return res.status(500).json({
+        error: 'Error de permisos del servidor. Contacta al administrador.',
+      })
+    }
+
     return res.status(response.status).json({
       error: data.message || 'Error al añadir colaborador',
     })
