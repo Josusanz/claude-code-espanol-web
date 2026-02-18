@@ -305,10 +305,10 @@ La IA escribirá el código por ti. Tu trabajo es:
 - Leer la pre-clase completa (setup técnico + elegir theme)
 - Tener VS Code + Claude Code listos
 - Crear cuentas de Supabase y Vercel
-- Elegir un theme base de /curso/themes
+- Elegir un theme base de la galería
 
 ### Día 2 (Viernes 20)
-- Elegimos el theme base de la [galería de themes](/curso/themes)
+- Elegimos el theme base y lo personalizamos con Claude Code
 - Personalizamos el theme con Claude Code (colores, textos, imágenes)
 - Implementamos el formulario de captura de emails
 - Conectamos Supabase
@@ -323,7 +323,7 @@ La IA escribirá el código por ti. Tu trabajo es:
       checklist: [
         'Rueda del Creador completada (se hace en la clase del Día 1)',
         'Presentación hecha en la primera clase',
-        'Theme base elegido de /curso/themes',
+        'Theme base elegido y personalizado',
         'Proyecto creado a partir del theme',
         'Landing page personalizada con formulario',
         'Base de datos conectada (Supabase)',
