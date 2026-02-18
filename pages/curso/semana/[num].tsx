@@ -83,8 +83,121 @@ function useSemanaProgress(semanaNum: number) {
   }
 }
 
+function useChecklist(semanaNum: number, totalItems: number) {
+  const [checked, setChecked] = useState<Record<number, boolean>>({})
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('curso-checklist')
+      if (saved) {
+        const all = JSON.parse(saved)
+        if (all[semanaNum]) {
+          setChecked(all[semanaNum])
+        }
+      }
+    } catch {
+      // Ignore
+    }
+  }, [semanaNum])
+
+  const toggleItem = (index: number) => {
+    const newChecked = { ...checked, [index]: !checked[index] }
+    setChecked(newChecked)
+    try {
+      const saved = localStorage.getItem('curso-checklist')
+      const all = saved ? JSON.parse(saved) : {}
+      all[semanaNum] = newChecked
+      localStorage.setItem('curso-checklist', JSON.stringify(all))
+    } catch {
+      // Ignore
+    }
+  }
+
+  const completedCount = Object.values(checked).filter(Boolean).length
+
+  return { checked, toggleItem, completedCount, totalItems }
+}
+
+function ProgressStepper({ preclaseCompleted, claseCompleted, entregableCompleted }: {
+  preclaseCompleted: boolean
+  claseCompleted: boolean
+  entregableCompleted: boolean
+}) {
+  const steps = [
+    { label: 'Pre-clase', completed: preclaseCompleted },
+    { label: 'Clase', completed: claseCompleted },
+    { label: 'Entregable', completed: entregableCompleted },
+  ]
+
+  // Determine current step (first non-completed)
+  let currentIndex = steps.findIndex(s => !s.completed)
+  if (currentIndex === -1) currentIndex = steps.length // all done
+
+  return (
+    <div style={{
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: '0',
+      padding: '24px 0',
+      marginBottom: '8px'
+    }}>
+      {steps.map((step, i) => (
+        <div key={i} style={{ display: 'flex', alignItems: 'center' }}>
+          {/* Circle */}
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px' }}>
+            <div className="stepper-circle" style={{
+              width: '40px',
+              height: '40px',
+              borderRadius: '50%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '14px',
+              fontWeight: 600,
+              transition: 'all 0.3s',
+              ...(step.completed
+                ? { background: 'linear-gradient(135deg, #22c55e, #16a34a)', color: '#fff' }
+                : i === currentIndex
+                  ? { background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', color: '#fff' }
+                  : { background: '#e2e8f0', color: '#94a3b8' }
+              )
+            }}>
+              {step.completed ? '✓' : i + 1}
+            </div>
+            <span style={{
+              fontSize: '12px',
+              fontWeight: 500,
+              color: step.completed ? '#16a34a' : i === currentIndex ? '#6366f1' : '#94a3b8'
+            }}>
+              {step.label}
+            </span>
+          </div>
+          {/* Connector line */}
+          {i < steps.length - 1 && (
+            <div style={{
+              width: '60px',
+              height: '2px',
+              background: steps[i + 1].completed || step.completed && steps[i + 1].completed
+                ? '#22c55e'
+                : step.completed
+                  ? '#22c55e'
+                  : '#e2e8f0',
+              marginBottom: '22px',
+              marginLeft: '8px',
+              marginRight: '8px',
+              borderRadius: '1px'
+            }} />
+          )}
+        </div>
+      ))}
+    </div>
+  )
+}
+
 function SemanaContent({ semana }: { semana: Semana }) {
   const { toggle, ids, preclaseCompleted, claseCompleted, entregableCompleted } = useSemanaProgress(semana.num)
+  const checklist = useChecklist(semana.num, semana.entregable.checklist.length)
 
   const handleLogout = () => {
     localStorage.removeItem('precurso-access')
@@ -95,9 +208,9 @@ function SemanaContent({ semana }: { semana: Semana }) {
   return (
     <div style={{
       minHeight: '100vh',
-      background: '#0f172a',
+      background: 'linear-gradient(135deg, #f8fafc, #eef2f6)',
       fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
-      color: '#f1f5f9'
+      color: '#0f172a'
     }}>
       <Head>
         <title>Semana {semana.num}: {semana.titulo} | Curso</title>
@@ -107,9 +220,9 @@ function SemanaContent({ semana }: { semana: Semana }) {
 
       {/* Header */}
       <header style={{
-        background: 'rgba(15, 23, 42, 0.8)',
+        background: 'rgba(255, 255, 255, 0.9)',
         backdropFilter: 'blur(12px)',
-        borderBottom: '1px solid #334155',
+        borderBottom: '1px solid rgba(0,0,0,0.06)',
         padding: '16px 24px',
         position: 'sticky',
         top: 0,
@@ -123,7 +236,7 @@ function SemanaContent({ semana }: { semana: Semana }) {
             display: 'flex',
             alignItems: 'center',
             gap: '8px',
-            color: '#94a3b8',
+            color: '#64748b',
             textDecoration: 'none',
             fontSize: '14px'
           }}>
@@ -132,9 +245,9 @@ function SemanaContent({ semana }: { semana: Semana }) {
           <div style={{
             width: '1px',
             height: '24px',
-            background: '#334155'
+            background: 'rgba(0,0,0,0.08)'
           }} />
-          <h1 style={{ margin: 0, fontSize: '16px', fontWeight: 600 }}>
+          <h1 style={{ margin: 0, fontSize: '16px', fontWeight: 600, color: '#0f172a' }}>
             Semana {semana.num}: {semana.titulo}
           </h1>
         </div>
@@ -145,9 +258,9 @@ function SemanaContent({ semana }: { semana: Semana }) {
             padding: '8px 16px',
             fontSize: '13px',
             fontWeight: 500,
-            color: '#94a3b8',
+            color: '#64748b',
             background: 'transparent',
-            border: '1px solid #334155',
+            border: '1px solid rgba(0,0,0,0.1)',
             borderRadius: '8px',
             cursor: 'pointer'
           }}
@@ -159,39 +272,50 @@ function SemanaContent({ semana }: { semana: Semana }) {
       <main style={{ maxWidth: '800px', margin: '0 auto', padding: '32px 24px' }}>
         {/* Hero */}
         <div style={{
-          marginBottom: '32px',
-          paddingBottom: '32px',
-          borderBottom: '1px solid #334155'
+          marginBottom: '8px',
+          paddingBottom: '24px',
+          borderBottom: '1px solid rgba(0,0,0,0.06)'
         }}>
           <div style={{
             display: 'inline-flex',
             alignItems: 'center',
             gap: '8px',
             padding: '6px 12px',
-            background: '#1e293b',
+            background: '#fff',
+            border: '1px solid rgba(0,0,0,0.06)',
             borderRadius: '8px',
             fontSize: '13px',
-            color: '#94a3b8',
+            color: '#64748b',
             marginBottom: '16px'
           }}>
             <span>{semana.emoji}</span>
             SEMANA {semana.num}
           </div>
-          <h2 style={{ margin: '0 0 12px', fontSize: '32px', fontWeight: 700 }}>
+          <h2 style={{ margin: '0 0 12px', fontSize: '32px', fontWeight: 700, color: '#0f172a' }}>
             {semana.titulo}
           </h2>
-          <p style={{ margin: 0, fontSize: '17px', color: '#94a3b8', lineHeight: 1.6 }}>
+          <p style={{ margin: 0, fontSize: '17px', color: '#64748b', lineHeight: 1.6 }}>
             {semana.descripcion}
           </p>
         </div>
 
+        {/* Stepper */}
+        <ProgressStepper
+          preclaseCompleted={preclaseCompleted}
+          claseCompleted={claseCompleted}
+          entregableCompleted={entregableCompleted}
+        />
+
         {/* Pre-clase */}
         <section style={{
-          background: preclaseCompleted ? 'rgba(34, 197, 94, 0.05)' : '#1e293b',
-          border: `1px solid ${preclaseCompleted ? 'rgba(34, 197, 94, 0.2)' : '#334155'}`,
-          borderRadius: '16px',
+          background: preclaseCompleted
+            ? 'linear-gradient(135deg, #f0fdf4, #dcfce7)'
+            : '#fff',
+          border: `1px solid ${preclaseCompleted ? 'rgba(34, 197, 94, 0.2)' : 'rgba(0,0,0,0.06)'}`,
+          borderRadius: '20px',
           padding: '24px',
-          marginBottom: '20px'
+          marginBottom: '20px',
+          boxShadow: '0 1px 3px rgba(0,0,0,0.04)'
         }}>
           <div style={{
             display: 'flex',
@@ -221,7 +345,7 @@ function SemanaContent({ semana }: { semana: Semana }) {
                 }}>
                   {preclaseCompleted ? '✓' : '📚'}
                 </span>
-                <h3 style={{ margin: 0, fontSize: '18px', fontWeight: 600 }}>Pre-clase</h3>
+                <h3 style={{ margin: 0, fontSize: '18px', fontWeight: 600, color: '#0f172a' }}>Pre-clase</h3>
               </div>
               <p style={{ margin: 0, fontSize: '14px', color: '#64748b' }}>
                 {semana.preclase.titulo} • {semana.preclase.duracion}
@@ -233,7 +357,7 @@ function SemanaContent({ semana }: { semana: Semana }) {
                 padding: '10px 16px',
                 fontSize: '13px',
                 fontWeight: 600,
-                color: preclaseCompleted ? '#22c55e' : '#f1f5f9',
+                color: preclaseCompleted ? '#22c55e' : '#fff',
                 background: preclaseCompleted ? 'rgba(34, 197, 94, 0.1)' : '#334155',
                 border: `1px solid ${preclaseCompleted ? 'rgba(34, 197, 94, 0.3)' : '#475569'}`,
                 borderRadius: '8px',
@@ -246,27 +370,28 @@ function SemanaContent({ semana }: { semana: Semana }) {
             </button>
           </div>
 
-          {/* Contenido markdown simplificado */}
+          {/* Contenido markdown */}
           <div style={{
-            background: 'rgba(0,0,0,0.2)',
+            background: 'rgba(0,0,0,0.02)',
+            border: '1px solid rgba(0,0,0,0.04)',
             borderRadius: '12px',
             padding: '20px',
             marginBottom: '20px',
             fontSize: '15px',
             lineHeight: 1.7,
-            color: '#cbd5e1'
+            color: '#374151'
           }}>
             <div
               dangerouslySetInnerHTML={{
                 __html: semana.preclase.contenido
-                  .replace(/^## (.+)$/gm, '<h4 style="font-size: 17px; font-weight: 600; color: #f1f5f9; margin: 24px 0 12px;">$1</h4>')
-                  .replace(/^### (.+)$/gm, '<h5 style="font-size: 15px; font-weight: 600; color: #e2e8f0; margin: 20px 0 10px;">$1</h5>')
+                  .replace(/^## (.+)$/gm, '<h4 style="font-size: 17px; font-weight: 600; color: #0f172a; margin: 24px 0 12px;">$1</h4>')
+                  .replace(/^### (.+)$/gm, '<h5 style="font-size: 15px; font-weight: 600; color: #1e293b; margin: 20px 0 10px;">$1</h5>')
                   .replace(/^- (.+)$/gm, '<li style="margin-left: 20px; margin-bottom: 6px;">$1</li>')
                   .replace(/^\d+\. (.+)$/gm, '<li style="margin-left: 20px; margin-bottom: 6px;">$1</li>')
-                  .replace(/`([^`]+)`/g, '<code style="background: #334155; padding: 2px 6px; border-radius: 4px; font-size: 13px;">$1</code>')
-                  .replace(/\*\*([^*]+)\*\*/g, '<strong style="color: #f1f5f9;">$1</strong>')
-                  .replace(/> (.+)/g, '<blockquote style="border-left: 3px solid #6366f1; padding-left: 16px; margin: 16px 0; color: #a5b4fc; font-style: italic;">$1</blockquote>')
-                  .replace(/```(\w+)?\n([\s\S]*?)```/g, '<pre style="background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 16px; overflow-x: auto; font-size: 13px; margin: 16px 0;"><code>$2</code></pre>')
+                  .replace(/`([^`]+)`/g, '<code style="background: #e2e8f0; padding: 2px 6px; border-radius: 4px; font-size: 13px; color: #0f172a;">$1</code>')
+                  .replace(/\*\*([^*]+)\*\*/g, '<strong style="color: #0f172a;">$1</strong>')
+                  .replace(/> (.+)/g, '<blockquote style="border-left: 3px solid #6366f1; padding-left: 16px; margin: 16px 0; color: #6366f1; font-style: italic;">$1</blockquote>')
+                  .replace(/```(\w+)?\n([\s\S]*?)```/g, '<pre style="background: #1e293b; color: #e2e8f0; border: 1px solid #334155; border-radius: 8px; padding: 16px; overflow-x: auto; font-size: 13px; margin: 16px 0;"><code>$2</code></pre>')
                   .replace(/\n\n/g, '<br/><br/>')
               }}
             />
@@ -275,7 +400,7 @@ function SemanaContent({ semana }: { semana: Semana }) {
           {/* Recursos */}
           {semana.preclase.recursos.length > 0 && (
             <div>
-              <h4 style={{ margin: '0 0 12px', fontSize: '14px', fontWeight: 600, color: '#94a3b8' }}>
+              <h4 style={{ margin: '0 0 12px', fontSize: '14px', fontWeight: 600, color: '#64748b' }}>
                 📎 Recursos
               </h4>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -290,10 +415,10 @@ function SemanaContent({ semana }: { semana: Semana }) {
                       alignItems: 'center',
                       gap: '10px',
                       padding: '12px 16px',
-                      background: 'rgba(0,0,0,0.2)',
-                      border: '1px solid #334155',
+                      background: 'rgba(0,0,0,0.02)',
+                      border: '1px solid rgba(0,0,0,0.06)',
                       borderRadius: '10px',
-                      color: '#a5b4fc',
+                      color: '#6366f1',
                       textDecoration: 'none',
                       fontSize: '14px',
                       transition: 'all 0.2s'
@@ -314,11 +439,14 @@ function SemanaContent({ semana }: { semana: Semana }) {
 
         {/* Clase en vivo */}
         <section style={{
-          background: claseCompleted ? 'rgba(34, 197, 94, 0.05)' : '#1e293b',
-          border: `1px solid ${claseCompleted ? 'rgba(34, 197, 94, 0.2)' : '#334155'}`,
-          borderRadius: '16px',
+          background: claseCompleted
+            ? 'linear-gradient(135deg, #f0fdf4, #dcfce7)'
+            : '#fff',
+          border: `1px solid ${claseCompleted ? 'rgba(34, 197, 94, 0.2)' : 'rgba(0,0,0,0.06)'}`,
+          borderRadius: '20px',
           padding: '24px',
-          marginBottom: '20px'
+          marginBottom: '20px',
+          boxShadow: '0 1px 3px rgba(0,0,0,0.04)'
         }}>
           <div style={{
             display: 'flex',
@@ -348,7 +476,7 @@ function SemanaContent({ semana }: { semana: Semana }) {
                 }}>
                   {claseCompleted ? '✓' : '🎥'}
                 </span>
-                <h3 style={{ margin: 0, fontSize: '18px', fontWeight: 600 }}>Clase en vivo</h3>
+                <h3 style={{ margin: 0, fontSize: '18px', fontWeight: 600, color: '#0f172a' }}>Clase en vivo</h3>
               </div>
               <p style={{ margin: 0, fontSize: '14px', color: '#64748b' }}>
                 {semana.clase.fecha} • {semana.clase.hora} • {semana.clase.duracion}
@@ -360,7 +488,7 @@ function SemanaContent({ semana }: { semana: Semana }) {
                 padding: '10px 16px',
                 fontSize: '13px',
                 fontWeight: 600,
-                color: claseCompleted ? '#22c55e' : '#f1f5f9',
+                color: claseCompleted ? '#22c55e' : '#fff',
                 background: claseCompleted ? 'rgba(34, 197, 94, 0.1)' : '#334155',
                 border: `1px solid ${claseCompleted ? 'rgba(34, 197, 94, 0.3)' : '#475569'}`,
                 borderRadius: '8px',
@@ -399,7 +527,8 @@ function SemanaContent({ semana }: { semana: Semana }) {
             </div>
           ) : (
             <div style={{
-              background: 'rgba(0,0,0,0.3)',
+              background: 'rgba(0,0,0,0.03)',
+              border: '1px solid rgba(0,0,0,0.06)',
               borderRadius: '12px',
               padding: '40px',
               textAlign: 'center',
@@ -412,24 +541,45 @@ function SemanaContent({ semana }: { semana: Semana }) {
             </div>
           )}
 
+          {/* Botón Abrir Pizarra */}
+          <Link href={`/curso/clase/${semana.num}`} className="pizarra-btn" style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '8px',
+            padding: '14px 24px',
+            background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+            color: '#fff',
+            fontSize: '15px',
+            fontWeight: 600,
+            borderRadius: '12px',
+            textDecoration: 'none',
+            boxShadow: '0 4px 12px rgba(99, 102, 241, 0.3)',
+            transition: 'all 0.2s',
+            marginBottom: '20px'
+          }}>
+            📋 Abrir Pizarra
+          </Link>
+
           {/* Notas de la clase */}
           {semana.clase.notas && (
             <div>
-              <h4 style={{ margin: '0 0 12px', fontSize: '14px', fontWeight: 600, color: '#94a3b8' }}>
+              <h4 style={{ margin: '0 0 12px', fontSize: '14px', fontWeight: 600, color: '#64748b' }}>
                 📝 Notas de la clase
               </h4>
               <div style={{
-                background: 'rgba(0,0,0,0.2)',
+                background: 'rgba(0,0,0,0.02)',
+                border: '1px solid rgba(0,0,0,0.04)',
                 borderRadius: '10px',
                 padding: '16px',
                 fontSize: '14px',
                 lineHeight: 1.7,
-                color: '#cbd5e1'
+                color: '#374151'
               }}>
                 <div
                   dangerouslySetInnerHTML={{
                     __html: semana.clase.notas
-                      .replace(/^### (.+)$/gm, '<h5 style="font-size: 14px; font-weight: 600; color: #e2e8f0; margin: 16px 0 8px;">$1</h5>')
+                      .replace(/^### (.+)$/gm, '<h5 style="font-size: 14px; font-weight: 600; color: #1e293b; margin: 16px 0 8px;">$1</h5>')
                       .replace(/^- (.+)$/gm, '<li style="margin-left: 16px; margin-bottom: 4px;">$1</li>')
                       .replace(/\n\n/g, '<br/>')
                   }}
@@ -441,10 +591,13 @@ function SemanaContent({ semana }: { semana: Semana }) {
 
         {/* Entregable */}
         <section style={{
-          background: entregableCompleted ? 'rgba(34, 197, 94, 0.05)' : '#1e293b',
-          border: `1px solid ${entregableCompleted ? 'rgba(34, 197, 94, 0.2)' : '#334155'}`,
-          borderRadius: '16px',
-          padding: '24px'
+          background: entregableCompleted
+            ? 'linear-gradient(135deg, #f0fdf4, #dcfce7)'
+            : '#fff',
+          border: `1px solid ${entregableCompleted ? 'rgba(34, 197, 94, 0.2)' : 'rgba(0,0,0,0.06)'}`,
+          borderRadius: '20px',
+          padding: '24px',
+          boxShadow: '0 1px 3px rgba(0,0,0,0.04)'
         }}>
           <div style={{
             display: 'flex',
@@ -474,7 +627,7 @@ function SemanaContent({ semana }: { semana: Semana }) {
                 }}>
                   {entregableCompleted ? '✓' : '📦'}
                 </span>
-                <h3 style={{ margin: 0, fontSize: '18px', fontWeight: 600 }}>Entregable</h3>
+                <h3 style={{ margin: 0, fontSize: '18px', fontWeight: 600, color: '#0f172a' }}>Entregable</h3>
               </div>
               <p style={{ margin: 0, fontSize: '14px', color: '#64748b' }}>
                 {semana.entregable.titulo} • Fecha límite: {semana.entregable.fechaLimite}
@@ -486,7 +639,7 @@ function SemanaContent({ semana }: { semana: Semana }) {
                 padding: '10px 16px',
                 fontSize: '13px',
                 fontWeight: 600,
-                color: entregableCompleted ? '#22c55e' : '#f1f5f9',
+                color: entregableCompleted ? '#22c55e' : '#fff',
                 background: entregableCompleted ? 'rgba(34, 197, 94, 0.1)' : '#334155',
                 border: `1px solid ${entregableCompleted ? 'rgba(34, 197, 94, 0.3)' : '#475569'}`,
                 borderRadius: '8px',
@@ -501,41 +654,72 @@ function SemanaContent({ semana }: { semana: Semana }) {
           <p style={{
             margin: '0 0 20px',
             fontSize: '15px',
-            color: '#cbd5e1',
+            color: '#374151',
             lineHeight: 1.6
           }}>
             {semana.entregable.descripcion}
           </p>
 
           <div style={{
-            background: 'rgba(0,0,0,0.2)',
+            background: 'rgba(0,0,0,0.02)',
+            border: '1px solid rgba(0,0,0,0.04)',
             borderRadius: '10px',
             padding: '16px'
           }}>
-            <h4 style={{ margin: '0 0 12px', fontSize: '14px', fontWeight: 600, color: '#94a3b8' }}>
-              Checklist
-            </h4>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginBottom: '12px'
+            }}>
+              <h4 style={{ margin: 0, fontSize: '14px', fontWeight: 600, color: '#64748b' }}>
+                Checklist
+              </h4>
+              <span style={{
+                fontSize: '13px',
+                fontWeight: 600,
+                color: checklist.completedCount === checklist.totalItems ? '#22c55e' : '#64748b',
+                background: checklist.completedCount === checklist.totalItems ? 'rgba(34,197,94,0.1)' : 'rgba(0,0,0,0.04)',
+                padding: '2px 8px',
+                borderRadius: '6px'
+              }}>
+                {checklist.completedCount}/{checklist.totalItems}
+              </span>
+            </div>
             <ul style={{ margin: 0, padding: 0, listStyle: 'none' }}>
               {semana.entregable.checklist.map((item, i) => (
-                <li key={i} style={{
-                  display: 'flex',
-                  alignItems: 'flex-start',
-                  gap: '10px',
-                  marginBottom: '10px',
-                  fontSize: '14px',
-                  color: '#e2e8f0'
-                }}>
+                <li
+                  key={i}
+                  onClick={() => checklist.toggleItem(i)}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    gap: '10px',
+                    marginBottom: '10px',
+                    fontSize: '14px',
+                    color: checklist.checked[i] ? '#94a3b8' : '#374151',
+                    textDecoration: checklist.checked[i] ? 'line-through' : 'none',
+                    cursor: 'pointer',
+                    userSelect: 'none',
+                    transition: 'all 0.15s'
+                  }}
+                >
                   <span style={{
                     width: '18px',
                     height: '18px',
-                    border: '2px solid #475569',
+                    border: checklist.checked[i] ? 'none' : '2px solid #cbd5e1',
+                    background: checklist.checked[i] ? '#22c55e' : 'transparent',
                     borderRadius: '4px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     flexShrink: 0,
-                    marginTop: '2px'
+                    marginTop: '2px',
+                    fontSize: '11px',
+                    color: '#fff',
+                    transition: 'all 0.15s'
                   }}>
+                    {checklist.checked[i] ? '✓' : ''}
                   </span>
                   {item}
                 </li>
@@ -550,11 +734,11 @@ function SemanaContent({ semana }: { semana: Semana }) {
           justifyContent: 'space-between',
           marginTop: '32px',
           paddingTop: '24px',
-          borderTop: '1px solid #334155'
+          borderTop: '1px solid rgba(0,0,0,0.06)'
         }}>
           {semana.num > 1 ? (
             <Link href={`/curso/semana/${semana.num - 1}`} style={{
-              color: '#94a3b8',
+              color: '#64748b',
               textDecoration: 'none',
               fontSize: '14px'
             }}>
@@ -564,7 +748,7 @@ function SemanaContent({ semana }: { semana: Semana }) {
 
           {semana.num < 10 ? (
             <Link href={`/curso/semana/${semana.num + 1}`} style={{
-              color: '#94a3b8',
+              color: '#64748b',
               textDecoration: 'none',
               fontSize: '14px'
             }}>
@@ -575,10 +759,16 @@ function SemanaContent({ semana }: { semana: Semana }) {
       </main>
 
       <style jsx global>{`
+        .pizarra-btn:hover {
+          transform: translateY(-1px);
+          box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4) !important;
+        }
         @media (max-width: 640px) {
           main { padding: 20px 16px !important; }
           h2 { font-size: 24px !important; }
           section { padding: 20px !important; }
+          .stepper-circle { width: 32px !important; height: 32px !important; font-size: 12px !important; }
+          .pizarra-btn { width: 100% !important; }
         }
       `}</style>
     </div>
@@ -594,16 +784,16 @@ function SemanaPage() {
     return (
       <div style={{
         minHeight: '100vh',
-        background: '#0f172a',
+        background: 'linear-gradient(135deg, #f8fafc, #eef2f6)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        color: '#f1f5f9',
+        color: '#0f172a',
         fontFamily: "'Inter', sans-serif"
       }}>
         <div style={{ textAlign: 'center' }}>
           <h1 style={{ fontSize: '24px', marginBottom: '16px' }}>Semana no encontrada</h1>
-          <Link href="/curso" style={{ color: '#a5b4fc' }}>← Volver al curso</Link>
+          <Link href="/curso" style={{ color: '#6366f1' }}>← Volver al curso</Link>
         </div>
       </div>
     )
@@ -615,16 +805,16 @@ function SemanaPage() {
     return (
       <div style={{
         minHeight: '100vh',
-        background: '#0f172a',
+        background: 'linear-gradient(135deg, #f8fafc, #eef2f6)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        color: '#f1f5f9',
+        color: '#0f172a',
         fontFamily: "'Inter', sans-serif"
       }}>
         <div style={{ textAlign: 'center' }}>
           <h1 style={{ fontSize: '24px', marginBottom: '16px' }}>Semana no encontrada</h1>
-          <Link href="/curso" style={{ color: '#a5b4fc' }}>← Volver al curso</Link>
+          <Link href="/curso" style={{ color: '#6366f1' }}>← Volver al curso</Link>
         </div>
       </div>
     )
