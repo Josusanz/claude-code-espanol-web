@@ -101,9 +101,10 @@ export default function RuedaCreador({
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      background: '#1e293b',
+      background: '#fff',
       borderRadius: '16px',
-      border: '1px solid #334155',
+      border: '1px solid rgba(0,0,0,0.06)',
+      boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
     }}>
       {/* Header */}
       <div style={{ textAlign: 'center', marginBottom: '16px' }}>
@@ -111,14 +112,14 @@ export default function RuedaCreador({
           margin: '0 0 8px',
           fontSize: '20px',
           fontWeight: 600,
-          color: '#f1f5f9',
+          color: '#0f172a',
         }}>
           {tipo === 'antes' ? '🎯 Tu Rueda del Creador' : '🏆 Tu Rueda Final'}
         </h3>
         <p style={{
           margin: 0,
           fontSize: '14px',
-          color: '#94a3b8',
+          color: '#64748b',
         }}>
           {tipo === 'antes'
             ? 'Evalúa cada área del 1 al 10. Sé honesto contigo mismo.'
@@ -141,7 +142,7 @@ export default function RuedaCreador({
               cx={center}
               cy={center}
               r={(radius / 10) * (i + 1)}
-              stroke="#334155"
+              stroke="#e2e8f0"
               strokeWidth={i === 4 || i === 9 ? 2 : 1}
               fill="none"
               strokeDasharray={i === 4 ? '4,4' : 'none'}
@@ -172,7 +173,7 @@ export default function RuedaCreador({
                   y1={center}
                   x2={center + radius * Math.cos(angleMid)}
                   y2={center + radius * Math.sin(angleMid)}
-                  stroke="#475569"
+                  stroke="#cbd5e1"
                   strokeWidth={1}
                 />
                 <text
@@ -183,7 +184,7 @@ export default function RuedaCreador({
                   fontSize="11"
                   fontFamily="Inter, sans-serif"
                   fontWeight={hoveredCategory === i ? 600 : 400}
-                  fill={hoveredCategory === i ? colors[i] : '#94a3b8'}
+                  fill={hoveredCategory === i ? colors[i] : '#64748b'}
                   style={{ transition: 'fill 0.2s' }}
                 >
                   {label}
@@ -216,8 +217,8 @@ export default function RuedaCreador({
                   <path
                     key={i}
                     d={pathData}
-                    fill="#64748b"
-                    stroke="#475569"
+                    fill="#94a3b8"
+                    stroke="#cbd5e1"
                     strokeWidth={1}
                   />
                 )
@@ -250,7 +251,7 @@ export default function RuedaCreador({
                 fill={colors[i]}
                 fillOpacity={hoveredCategory === i ? 0.9 : 0.6}
                 stroke="#fff"
-                strokeWidth={hoveredCategory === i ? 2 : 1}
+                strokeWidth={hoveredCategory === i ? 2.5 : 1.5}
                 style={{ transition: 'all 0.2s', cursor: 'pointer' }}
                 onMouseEnter={() => setHoveredCategory(i)}
                 onMouseLeave={() => setHoveredCategory(null)}
@@ -263,8 +264,8 @@ export default function RuedaCreador({
             cx={center}
             cy={center}
             r={30}
-            fill="#0f172a"
-            stroke="#334155"
+            fill="#fff"
+            stroke="#e2e8f0"
             strokeWidth={2}
           />
           <text
@@ -273,7 +274,7 @@ export default function RuedaCreador({
             textAnchor="middle"
             fontSize="18"
             fontWeight="bold"
-            fill="#f1f5f9"
+            fill="#0f172a"
           >
             {promedio}
           </text>
@@ -282,33 +283,44 @@ export default function RuedaCreador({
             y={center + 12}
             textAnchor="middle"
             fontSize="9"
-            fill="#64748b"
+            fill="#94a3b8"
           >
             promedio
           </text>
         </svg>
       </div>
 
-      {/* Tooltip de categoría */}
-      {hoveredCategory !== null && (
-        <div style={{
-          marginTop: '-10px',
-          marginBottom: '10px',
-          padding: '10px 16px',
-          background: '#0f172a',
-          borderRadius: '8px',
-          border: `2px solid ${colors[hoveredCategory]}`,
-          textAlign: 'center',
-          maxWidth: '300px',
-        }}>
-          <p style={{ margin: 0, fontSize: '14px', color: '#f1f5f9', fontWeight: 600 }}>
-            {categories[hoveredCategory]}: {scores[hoveredCategory]}/10
+      {/* Tooltip de categoría — fixed height to prevent layout shift */}
+      <div style={{
+        height: '54px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: '-10px',
+        marginBottom: '10px',
+      }}>
+        {hoveredCategory !== null ? (
+          <div style={{
+            padding: '10px 16px',
+            background: '#f8fafc',
+            borderRadius: '8px',
+            border: `2px solid ${colors[hoveredCategory]}`,
+            textAlign: 'center',
+            maxWidth: '300px',
+          }}>
+            <p style={{ margin: 0, fontSize: '14px', color: '#0f172a', fontWeight: 600 }}>
+              {categories[hoveredCategory]}: {scores[hoveredCategory]}/10
+            </p>
+            <p style={{ margin: '4px 0 0', fontSize: '12px', color: '#64748b' }}>
+              {descriptions[categories[hoveredCategory]]}
+            </p>
+          </div>
+        ) : (
+          <p style={{ margin: 0, fontSize: '13px', color: '#94a3b8' }}>
+            Pasa el ratón por encima de la rueda para ver detalles
           </p>
-          <p style={{ margin: '4px 0 0', fontSize: '12px', color: '#94a3b8' }}>
-            {descriptions[categories[hoveredCategory]]}
-          </p>
-        </div>
-      )}
+        )}
+      </div>
 
       {/* Sliders */}
       {!readOnly && (
@@ -328,9 +340,9 @@ export default function RuedaCreador({
                 flexDirection: 'column',
                 alignItems: 'center',
                 padding: '10px',
-                background: hoveredCategory === i ? '#334155' : '#0f172a',
+                background: hoveredCategory === i ? '#f8fafc' : '#fff',
                 borderRadius: '10px',
-                border: `1px solid ${hoveredCategory === i ? colors[i] : '#334155'}`,
+                border: `1px solid ${hoveredCategory === i ? colors[i] : 'rgba(0,0,0,0.08)'}`,
                 transition: 'all 0.2s',
               }}
               onMouseEnter={() => setHoveredCategory(i)}
@@ -361,7 +373,7 @@ export default function RuedaCreador({
               <span style={{
                 fontSize: '16px',
                 fontWeight: 600,
-                color: '#f1f5f9',
+                color: '#0f172a',
                 marginTop: '4px',
               }}>
                 {scores[i]}
@@ -375,20 +387,20 @@ export default function RuedaCreador({
       <div style={{
         marginTop: '20px',
         padding: '16px',
-        background: '#0f172a',
+        background: '#f8fafc',
         borderRadius: '12px',
-        border: '1px solid #334155',
+        border: '1px solid rgba(0,0,0,0.06)',
         width: '100%',
         maxWidth: '600px',
       }}>
         <p style={{
           margin: 0,
           fontSize: '14px',
-          color: '#94a3b8',
+          color: '#64748b',
           textAlign: 'center',
         }}>
-          <strong style={{ color: '#f59e0b' }}>Áreas a fortalecer:</strong>{' '}
-          <span style={{ color: '#f1f5f9' }}>{areasTrabajar.join(' y ')}</span>
+          <strong style={{ color: '#d97706' }}>Áreas a fortalecer:</strong>{' '}
+          <span style={{ color: '#0f172a' }}>{areasTrabajar.join(' y ')}</span>
         </p>
 
         {compareTo && promedioAnterior !== null && (
@@ -396,7 +408,7 @@ export default function RuedaCreador({
             margin: '12px 0 0',
             fontSize: '14px',
             textAlign: 'center',
-            color: promedio > promedioAnterior ? '#22c55e' : promedio < promedioAnterior ? '#f87171' : '#94a3b8',
+            color: promedio > promedioAnterior ? '#16a34a' : promedio < promedioAnterior ? '#dc2626' : '#64748b',
           }}>
             {promedio > promedioAnterior
               ? `📈 +${(promedio - promedioAnterior).toFixed(1)} puntos desde el inicio`

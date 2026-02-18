@@ -98,7 +98,7 @@ function RuedaPageContent() {
     return (
       <div style={{
         minHeight: '100vh',
-        background: '#0f172a',
+        background: 'linear-gradient(135deg, #f8fafc, #eef2f6)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center'
@@ -106,7 +106,7 @@ function RuedaPageContent() {
         <div style={{
           width: '48px',
           height: '48px',
-          border: '4px solid #334155',
+          border: '4px solid #e2e8f0',
           borderTop: '4px solid #6366f1',
           borderRadius: '50%',
           animation: 'spin 1s linear infinite',
@@ -119,9 +119,9 @@ function RuedaPageContent() {
   return (
     <div style={{
       minHeight: '100vh',
-      background: '#0f172a',
+      background: 'linear-gradient(135deg, #f8fafc, #eef2f6)',
       fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
-      color: '#f1f5f9'
+      color: '#0f172a'
     }}>
       <Head>
         <title>Rueda del Creador | Curso</title>
@@ -131,9 +131,9 @@ function RuedaPageContent() {
 
       {/* Header */}
       <header style={{
-        background: 'rgba(15, 23, 42, 0.8)',
+        background: 'rgba(255, 255, 255, 0.9)',
         backdropFilter: 'blur(12px)',
-        borderBottom: '1px solid #334155',
+        borderBottom: '1px solid rgba(0,0,0,0.06)',
         padding: '16px 24px',
         position: 'sticky',
         top: 0,
@@ -147,7 +147,7 @@ function RuedaPageContent() {
             display: 'flex',
             alignItems: 'center',
             gap: '8px',
-            color: '#94a3b8',
+            color: '#64748b',
             textDecoration: 'none',
             fontSize: '14px'
           }}>
@@ -156,9 +156,9 @@ function RuedaPageContent() {
           <div style={{
             width: '1px',
             height: '24px',
-            background: '#334155'
+            background: 'rgba(0,0,0,0.08)'
           }} />
-          <h1 style={{ margin: 0, fontSize: '16px', fontWeight: 600 }}>
+          <h1 style={{ margin: 0, fontSize: '16px', fontWeight: 600, color: '#0f172a' }}>
             🎯 Rueda del Creador
           </h1>
         </div>
@@ -170,14 +170,15 @@ function RuedaPageContent() {
           textAlign: 'center',
           marginBottom: '32px',
           padding: '24px',
-          background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1))',
+          background: '#fff',
           borderRadius: '16px',
-          border: '1px solid rgba(99, 102, 241, 0.2)'
+          border: '1px solid rgba(0,0,0,0.06)',
+          boxShadow: '0 1px 3px rgba(0,0,0,0.04)'
         }}>
-          <h2 style={{ margin: '0 0 12px', fontSize: '24px', fontWeight: 700 }}>
+          <h2 style={{ margin: '0 0 12px', fontSize: '24px', fontWeight: 700, color: '#0f172a' }}>
             Conoce tu punto de partida
           </h2>
-          <p style={{ margin: 0, fontSize: '15px', color: '#94a3b8', maxWidth: '600px', marginLeft: 'auto', marginRight: 'auto' }}>
+          <p style={{ margin: 0, fontSize: '15px', color: '#64748b', maxWidth: '600px', marginLeft: 'auto', marginRight: 'auto' }}>
             Esta rueda te ayuda a evaluar 8 áreas clave para crear tu proyecto.
             Complétala al inicio del curso y al final para ver tu transformación.
           </p>
@@ -197,9 +198,9 @@ function RuedaPageContent() {
               padding: '12px 24px',
               fontSize: '14px',
               fontWeight: 600,
-              color: activeTab === 'antes' ? '#f1f5f9' : '#94a3b8',
-              background: activeTab === 'antes' ? '#6366f1' : 'transparent',
-              border: `1px solid ${activeTab === 'antes' ? '#6366f1' : '#334155'}`,
+              color: activeTab === 'antes' ? '#fff' : '#64748b',
+              background: activeTab === 'antes' ? '#6366f1' : '#fff',
+              border: `1px solid ${activeTab === 'antes' ? '#6366f1' : 'rgba(0,0,0,0.1)'}`,
               borderRadius: '10px',
               cursor: 'pointer',
               transition: 'all 0.2s'
@@ -215,9 +216,9 @@ function RuedaPageContent() {
               padding: '12px 24px',
               fontSize: '14px',
               fontWeight: 600,
-              color: activeTab === 'despues' ? '#f1f5f9' : '#94a3b8',
-              background: activeTab === 'despues' ? '#22c55e' : 'transparent',
-              border: `1px solid ${activeTab === 'despues' ? '#22c55e' : '#334155'}`,
+              color: activeTab === 'despues' ? '#fff' : '#64748b',
+              background: activeTab === 'despues' ? '#22c55e' : '#fff',
+              border: `1px solid ${activeTab === 'despues' ? '#22c55e' : 'rgba(0,0,0,0.1)'}`,
               borderRadius: '10px',
               cursor: 'pointer',
               transition: 'all 0.2s'
@@ -234,9 +235,9 @@ function RuedaPageContent() {
                 padding: '12px 24px',
                 fontSize: '14px',
                 fontWeight: 600,
-                color: activeTab === 'comparar' ? '#1e293b' : '#94a3b8',
-                background: activeTab === 'comparar' ? '#f59e0b' : 'transparent',
-                border: `1px solid ${activeTab === 'comparar' ? '#f59e0b' : '#334155'}`,
+                color: activeTab === 'comparar' ? '#fff' : '#64748b',
+                background: activeTab === 'comparar' ? '#f59e0b' : '#fff',
+                border: `1px solid ${activeTab === 'comparar' ? '#f59e0b' : 'rgba(0,0,0,0.1)'}`,
                 borderRadius: '10px',
                 cursor: 'pointer',
                 transition: 'all 0.2s'
@@ -282,15 +283,15 @@ function RuedaPageContent() {
               <div style={{
                 textAlign: 'center',
                 padding: '60px 20px',
-                background: '#1e293b',
+                background: '#fff',
                 borderRadius: '16px',
-                border: '1px solid #334155'
+                border: '1px solid rgba(0,0,0,0.06)'
               }}>
                 <span style={{ fontSize: '48px', display: 'block', marginBottom: '16px' }}>🔒</span>
-                <h3 style={{ margin: '0 0 8px', fontSize: '18px' }}>
+                <h3 style={{ margin: '0 0 8px', fontSize: '18px', color: '#0f172a' }}>
                   Primero completa tu rueda inicial
                 </h3>
-                <p style={{ margin: 0, color: '#94a3b8', fontSize: '14px' }}>
+                <p style={{ margin: 0, color: '#64748b', fontSize: '14px' }}>
                   Necesitas tener un punto de partida para poder comparar al final del curso.
                 </p>
                 <button
@@ -300,7 +301,7 @@ function RuedaPageContent() {
                     padding: '12px 24px',
                     fontSize: '14px',
                     fontWeight: 600,
-                    color: '#f1f5f9',
+                    color: '#fff',
                     background: '#6366f1',
                     border: 'none',
                     borderRadius: '10px',
@@ -384,11 +385,12 @@ function RuedaPageContent() {
             <div style={{
               marginTop: '32px',
               padding: '24px',
-              background: '#1e293b',
+              background: '#fff',
               borderRadius: '16px',
-              border: '1px solid #334155'
+              border: '1px solid rgba(0,0,0,0.06)',
+              boxShadow: '0 1px 3px rgba(0,0,0,0.04)'
             }}>
-              <h3 style={{ margin: '0 0 16px', fontSize: '18px', textAlign: 'center' }}>
+              <h3 style={{ margin: '0 0 16px', fontSize: '18px', textAlign: 'center', color: '#0f172a' }}>
                 📈 Tu transformación
               </h3>
 
@@ -405,18 +407,18 @@ function RuedaPageContent() {
                   return (
                     <div key={i} style={{
                       padding: '12px',
-                      background: '#0f172a',
+                      background: '#f8fafc',
                       borderRadius: '10px',
                       textAlign: 'center'
                     }}>
-                      <p style={{ margin: '0 0 4px', fontSize: '12px', color: '#94a3b8' }}>
+                      <p style={{ margin: '0 0 4px', fontSize: '12px', color: '#64748b' }}>
                         {cat}
                       </p>
                       <p style={{
                         margin: 0,
                         fontSize: '18px',
                         fontWeight: 700,
-                        color: diff > 0 ? '#22c55e' : diff < 0 ? '#f87171' : '#94a3b8'
+                        color: diff > 0 ? '#16a34a' : diff < 0 ? '#dc2626' : '#64748b'
                       }}>
                         {diff > 0 ? '+' : ''}{diff}
                       </p>
