@@ -426,7 +426,31 @@ Mantén el mismo layout (sidebar + header) en todas.`,
         ],
       },
       {
-        titulo: '8. Generar código desde Pencil',
+        titulo: '8. Crear Skills para tu proyecto',
+        descripcion: 'Las Skills son instrucciones que Claude sigue automáticamente. Crea al menos una para tu proyecto:',
+        bloques: [
+          {
+            lenguaje: 'bash',
+            codigo: 'mkdir -p .claude/skills',
+          },
+          {
+            lenguaje: 'text',
+            codigo: `Crea un archivo .claude/skills/crear-componente.md con instrucciones para crear componentes en mi proyecto:
+- Usar shadcn/ui como base
+- Estilos con Tailwind, nunca CSS inline
+- Componentes responsive por defecto
+- Exportar desde /components
+- Incluir tipos TypeScript`,
+          },
+        ],
+        tip: 'Explora skills.sh para ver skills creadas por la comunidad. Puedes copiar las que te sirvan y adaptarlas a tu proyecto.',
+        links: [
+          { texto: 'skills.sh — Directorio de Skills', url: 'https://skills.sh/' },
+          { texto: 'Lección: Skills, Hooks y Plugins', url: '/fundamentos/skills-hooks-plugins' },
+        ],
+      },
+      {
+        titulo: '9. Generar código desde Pencil',
         descripcion: 'Si diseñaste en Pencil, pídele a Claude que genere el código:',
         bloques: [
           {
@@ -436,7 +460,7 @@ Mantén el mismo layout (sidebar + header) en todas.`,
         ],
       },
       {
-        titulo: '9. Inspiración',
+        titulo: '10. Inspiración',
         descripcion: 'Mira estos ejemplos de diseño SaaS:',
         links: [
           { texto: 'Linear (minimalista)', url: 'https://linear.app' },
@@ -445,7 +469,7 @@ Mantén el mismo layout (sidebar + header) en todas.`,
         ],
       },
       {
-        titulo: '10. Subir a GitHub',
+        titulo: '11. Subir a GitHub',
         bloques: [
           {
             lenguaje: 'bash',

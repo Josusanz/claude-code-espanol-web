@@ -436,18 +436,50 @@ Pencil se conecta con Claude Code automáticamente via MCP. Cuando tienes la ext
 
 ---
 
+## 🛠️ Skills: enseña a Claude tus procesos
+
+En la Semana 1 creaste un \`CLAUDE.md\` para dar contexto general. Ahora vamos un paso más allá: las **Skills** son instrucciones especializadas que Claude consulta bajo demanda.
+
+### ¿Qué son?
+
+Son archivos Markdown en \`.claude/skills/\` que le dicen a Claude **cómo hacer tareas concretas** en tu proyecto. Piensa en ellas como recetas que Claude sigue automáticamente.
+
+### Ejemplo: Skill para crear componentes UI
+
+\`\`\`markdown
+# Crear Componente UI
+
+## Reglas
+- Usar shadcn/ui como base
+- Tailwind para estilos, nunca CSS inline
+- Componente responsive por defecto
+- Exportar desde /components
+\`\`\`
+
+Guárdalo como \`.claude/skills/crear-componente.md\` y la próxima vez que le pidas crear un componente, seguirá estas reglas.
+
+### ¿Por qué importa?
+
+Sin skills, tienes que repetir las mismas instrucciones cada vez: "usa shadcn", "hazlo responsive", "ponlo en /components"... Con skills, lo defines una vez y Claude lo aplica siempre.
+
+> Más info y ejemplos avanzados: [Skills, Hooks y Plugins](/fundamentos/skills-hooks-plugins) y [skills.sh](https://skills.sh/)
+
+---
+
 ### Tu tarea antes de la clase
 
 1. **Define tu proyecto**: ¿Qué problema resuelve?
 2. **Crea un archivo \`.pen\`** y dibuja 3 pantallas: Dashboard, formulario principal, settings
 3. **Elige colores**: Máximo 3 colores principales
 4. **Prueba el flujo**: Pídele a Claude que genere código desde tu \`.pen\`
+5. **Explora [skills.sh](https://skills.sh/)**: Mira qué skills existen para inspirarte
 
 > "Un buen diseño no es decoración, es comunicación clara."
       `,
       recursos: [
         { titulo: 'Catálogo shadcn/ui', url: 'https://ui.shadcn.com', tipo: 'link' },
         { titulo: 'Pencil — Diseño en VS Code', url: 'https://www.pencil.dev/', tipo: 'link' },
+        { titulo: 'Skills.sh — Directorio de Skills', url: 'https://skills.sh/', tipo: 'link' },
         { titulo: 'Tailwind CSS Docs', url: 'https://tailwindcss.com/docs', tipo: 'link' },
         { titulo: 'Colores Tailwind', url: 'https://tailwindcss.com/docs/customizing-colors', tipo: 'link' },
       ],
@@ -469,6 +501,7 @@ Pencil se conecta con Claude Code automáticamente via MCP. Cuando tienes la ext
         'Al menos 3 páginas creadas',
         'Navegación funcionando',
         'Responsive (móvil y desktop)',
+        'Al menos 1 skill creada en .claude/skills/',
       ],
     },
   },
