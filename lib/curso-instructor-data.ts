@@ -25,16 +25,30 @@ export const GUIAS_INSTRUCTOR: GuiaInstructor[] = [
   {
     semanaNum: 1,
     antesDeClase: [
+      // Día 1 (Jueves) — Orientación
       { texto: 'Preparar música suave de fondo para la bienvenida' },
-      { texto: 'Tener tu propia Rueda del Creador completada para compartir' },
+      { texto: 'Tener tu propia Rueda del Creador completada (para modelar el ejercicio)' },
+      { texto: 'Tener /curso/rueda abierta para que hagan la Rueda en vivo' },
       { texto: 'Lista de nombres de todos los alumnos impresa' },
       { texto: 'Verificar que Zoom funciona y compartir pantalla OK' },
-      { texto: 'Tener VS Code abierto con proyecto limpio' },
-      { texto: 'Supabase abierto con proyecto demo' },
-      { texto: 'Preparar ejercicio de visualización (guión abajo)' },
+      { texto: 'Preparar ejercicio de visualización (guión en notas adicionales)' },
+      { texto: 'Tener abierto: /curso, /curso/clase/1, /curso/themes, /precurso/discord' },
       { texto: 'Revisar presentaciones del Discord si alguien las subió antes' },
+      // Día 2 (Viernes) — Técnico
+      { texto: 'Tener VS Code abierto con proyecto limpio (para Día 2)' },
+      { texto: 'Supabase abierto con proyecto demo (para Día 2)' },
+      { texto: 'Galería de themes abierta /curso/themes (para Día 2)' },
     ],
     agenda: [
+      // — DÍA 1 (Jueves): Bienvenida y Orientación —
+      {
+        tiempo: '— DÍA 1 (JUEVES) —',
+        titulo: 'Bienvenida y Orientación',
+        detalles: [
+          'Hoy NO hay código. Es una sesión de conexión humana y orientación.',
+          'Objetivo: que se conozcan, que conozcan el ecosistema, que preparen el Día 2.',
+        ],
+      },
       {
         tiempo: '0:00-0:05',
         titulo: 'Bienvenida con intención',
@@ -57,10 +71,12 @@ export const GUIAS_INSTRUCTOR: GuiaInstructor[] = [
         ],
       },
       {
-        tiempo: '0:25-0:40',
-        titulo: 'La Rueda del Creador - Compartir',
+        tiempo: '0:25-0:45',
+        titulo: 'La Rueda del Creador — Hacerla juntos',
         detalles: [
-          'Preguntar: "¿Quién completó la rueda? ¿Qué descubriste?"',
+          'Abrir /curso/rueda en pantalla compartida',
+          'Explicar las 8 áreas una por una brevemente',
+          'Dar 5 minutos para que todos la completen en vivo',
           'Compartir la tuya primero (modelar vulnerabilidad)',
           'Pedir 2-3 voluntarios que compartan sus insights',
           'Reflexión: "¿Qué área necesita más atención estas 10 semanas?"',
@@ -68,7 +84,18 @@ export const GUIAS_INSTRUCTOR: GuiaInstructor[] = [
         ],
       },
       {
-        tiempo: '0:40-0:50',
+        tiempo: '0:45-0:55',
+        titulo: 'Ejercicio: Dificultades y miedos',
+        detalles: [
+          'Preguntar: "¿Qué te frena? ¿Qué miedos tienes?"',
+          'Cada uno comparte brevemente (1 min)',
+          'Normalizar: todos tienen miedos, incluso los seniors',
+          'Agrupar: miedos técnicos vs miedos personales vs síndrome del impostor',
+          'Cerrar con: "Estos miedos son normales. Estamos aquí para superarlos juntos."',
+        ],
+      },
+      {
+        tiempo: '0:55-1:05',
         titulo: 'Visualización: Tu yo del futuro',
         detalles: [
           'Pedir que cierren los ojos (cámaras opcionales apagadas)',
@@ -80,84 +107,188 @@ export const GUIAS_INSTRUCTOR: GuiaInstructor[] = [
         ],
       },
       {
-        tiempo: '0:50-1:00',
-        titulo: 'Transición: Del sueño a la acción',
-        detalles: [
-          '"Ahora vamos a dar el primer paso concreto"',
-          'Explicar el proyecto de la semana: waitlist profesional',
-          'Aclarar: "No tienes que entender todo, solo seguir el proceso"',
-          'Mostrar el resultado final que vamos a conseguir',
-        ],
-      },
-      {
-        tiempo: '1:00-1:15',
-        titulo: 'Setup del proyecto (manos a la obra)',
-        detalles: [
-          'Crear proyecto: npx create-next-app@latest waitlist',
-          'Explicar cada opción del CLI brevemente',
-          'Verificar que todos lo tienen corriendo',
-          'Resolver problemas técnicos rápidos',
-        ],
-      },
-      {
-        tiempo: '1:15-1:25',
+        tiempo: '1:05-1:15',
         titulo: 'DESCANSO',
         detalles: [
           'Poner música de nuevo',
           'Invitar a estirarse, beber agua',
-          '"Cuando volvamos, empezamos a crear"',
         ],
       },
       {
-        tiempo: '1:25-1:50',
-        titulo: 'Landing page con Claude Code',
+        tiempo: '1:15-1:25',
+        titulo: 'Tour: Dashboard del curso',
         detalles: [
-          'Abrir Claude Code en el proyecto',
-          'Prompt en vivo: "Crea una landing page para una waitlist..."',
-          'Mostrar cómo Claude crea componentes',
-          'Hacer ajustes en tiempo real',
-          'Verificar que todos van siguiendo',
+          'Compartir pantalla y navegar /curso',
+          'Mostrar: semanas, progreso, pre-clases, entregables',
+          'Explicar: cómo funciona el desbloqueo semanal',
+          'Mostrar: la barra de progreso y la sidebar de navegación',
+        ],
+      },
+      {
+        tiempo: '1:25-1:35',
+        titulo: 'Tour: Pizarra de clase',
+        detalles: [
+          'Navegar a /curso/clase/1',
+          'Explicar: "Esto es lo que seguimos en cada clase en vivo"',
+          'Mostrar: los pasos, bloques de código, tips, links',
+          'Mostrar: el Día 2 que haremos mañana',
+        ],
+      },
+      {
+        tiempo: '1:35-1:45',
+        titulo: 'Tour: Themes premium',
+        detalles: [
+          'Navegar a /curso/themes',
+          'Mostrar la galería de 20 themes incluidos',
+          'Recomendar: Simple, Waitlist o Gray para la primera landing',
+          'Explicar: mañana elegirán uno como base y Claude lo personaliza',
+        ],
+      },
+      {
+        tiempo: '1:45-1:50',
+        titulo: 'Tour: Discord',
+        detalles: [
+          'Mostrar canales: #dudas, #compartir, #general',
+          'Explicar: cómo pedir ayuda (contexto, screenshots, código)',
+          'Recordar: aquí se comparten los entregables',
         ],
       },
       {
         tiempo: '1:50-2:00',
-        titulo: 'Cierre con intención',
+        titulo: 'Cierre del Día 1 + Tarea para mañana',
         detalles: [
-          'Resumen: lo que logramos hoy (técnico + humano)',
-          'Tarea: tener proyecto en GitHub, preparar Supabase',
-          'Recordar: mañana conectamos la base de datos',
+          'Resumen: lo que hicimos hoy (conexión + ecosistema)',
+          'Tarea OBLIGATORIA para mañana:',
+          '  - Leer la pre-clase completa (sección de setup técnico)',
+          '  - Tener VS Code + Claude Code instalados y funcionando',
+          '  - Crear cuentas de Supabase y Vercel',
+          '  - Elegir un theme base de /curso/themes',
           'Cerrar con gratitud: "Gracias por confiar en este proceso"',
           'Invitar a compartir una palabra en el chat: ¿cómo te sientes?',
+        ],
+      },
+      // — DÍA 2 (Viernes): Tu Primera Web —
+      {
+        tiempo: '— DÍA 2 (VIERNES) —',
+        titulo: 'Tu Primera Web',
+        detalles: [
+          'Hoy sí hay código. Todo el mundo construye su waitlist.',
+          'Objetivo: salir con una web desplegada en internet.',
+        ],
+      },
+      {
+        tiempo: '0:00-0:10',
+        titulo: 'Check-in rápido',
+        detalles: [
+          '¿Todos hicieron la tarea? ¿VS Code listo? ¿Theme elegido?',
+          'Resolver problemas de setup rápidamente',
+          'Si alguien no tiene Claude Code → ayudar ahora',
+        ],
+      },
+      {
+        tiempo: '0:10-0:25',
+        titulo: 'Crear proyecto y elegir theme',
+        detalles: [
+          'npx create-next-app@latest mi-waitlist (o clonar theme)',
+          'Mostrar cómo clonar un theme de /curso/themes',
+          'Verificar que todos lo tienen corriendo con npm run dev',
+        ],
+      },
+      {
+        tiempo: '0:25-0:50',
+        titulo: 'Personalizar con Claude Code',
+        detalles: [
+          'Abrir Claude Code: claude --dangerously-skip-permissions',
+          'Prompt en vivo: personalizar colores, textos, imágenes del theme',
+          'Mostrar cómo Claude modifica el código en tiempo real',
+          'Crear CLAUDE.md con contexto del proyecto',
+          'Verificar que todos van siguiendo',
+        ],
+      },
+      {
+        tiempo: '0:50-1:00',
+        titulo: 'DESCANSO',
+        detalles: [
+          'Poner música',
+          'Invitar a estirarse',
+          '"Cuando volvamos: base de datos y deploy"',
+        ],
+      },
+      {
+        tiempo: '1:00-1:25',
+        titulo: 'Supabase + Formulario de emails',
+        detalles: [
+          'Crear proyecto en Supabase',
+          'Crear tabla waitlist con SQL',
+          'Configurar .env.local con las keys',
+          'Conectar formulario con Supabase',
+          'Mostrar Table Editor para verificar datos',
+        ],
+      },
+      {
+        tiempo: '1:25-1:40',
+        titulo: 'Panel admin + Git/GitHub',
+        detalles: [
+          'Crear página /admin con Claude',
+          'Configurar Git: git config + gh auth login',
+          'Crear repo: gh repo create mi-waitlist --public --source=. --push',
+        ],
+      },
+      {
+        tiempo: '1:40-1:55',
+        titulo: 'Deploy en Vercel',
+        detalles: [
+          'Conectar repo en vercel.com/new',
+          'Añadir variables de entorno',
+          'Deploy y verificar que funciona en producción',
+          'Celebrar: ¡primer proyecto en internet!',
+        ],
+      },
+      {
+        tiempo: '1:55-2:00',
+        titulo: 'Cierre de la semana',
+        detalles: [
+          'Compartir URLs en Discord',
+          'Recordar: actualizar CLAUDE.md con el estado actual',
+          'Entregable: URL en producción + Rueda del Creador compartida',
+          'Próxima semana: empezamos TU proyecto con shadcn/ui',
         ],
       },
     ],
     frasesClave: [
       'Este no es solo un curso, es una comunidad de creadores',
       'Todos empezamos sin saber. El coraje es dar el primer paso',
-      'La rueda desequilibrada no rueda bien - conocerte es el primer paso',
+      'La rueda desequilibrada no rueda bien — conocerte es el primer paso',
       'No te preocupes por entender todo. Enfócate en el flujo',
       'Claude hace el trabajo pesado, tú eres el director',
       'En 10 semanas serás una persona diferente',
       'El mejor momento para empezar fue hace un año. El segundo mejor es ahora',
+      'El Día 1 es para conectar. El Día 2 es para construir.',
     ],
     erroresComunes: [
-      'Alguien no completó la Rueda → invitar a hacerlo en el descanso',
+      // Día 1
+      'Alguien no completa la Rueda en clase → darle más tiempo o ayudarle en el descanso',
       'Presentaciones muy largas → intervenir amablemente a los 2 min',
       'Alguien muy tímido → no forzar, decir "cuando estés listo"',
+      'No pueden acceder a /curso/themes → verificar email gate',
+      // Día 2
       'Node.js no instalado → verificar con "node --version"',
       'npm no encontrado → reinstalar Node.js',
       'Puerto 3000 ocupado → cerrar otras apps o usar otro puerto',
+      'Claude Code no instalado → npm install -g @anthropic-ai/claude-code',
+      'Theme no clonado → ayudar con git clone del repo de themes',
+      'Supabase keys copiadas mal → verificar en Settings → API',
     ],
     despuesDeClase: [
-      { texto: 'Subir grabación a la plataforma' },
-      { texto: 'Escribir resumen en las notas (incluir momento emocional)' },
+      { texto: 'Subir grabaciones de ambos días a la plataforma' },
+      { texto: 'Escribir resumen del Día 1 (incluir momento emocional)' },
       { texto: 'Mensaje en Discord agradeciendo la apertura del grupo' },
       { texto: 'Crear canal #presentaciones si no existe' },
-      { texto: 'Verificar que todos tienen repo en GitHub' },
+      { texto: 'Verificar que todos tienen repo en GitHub y URL de Vercel' },
       { texto: 'Revisar las Ruedas compartidas y dar feedback personal' },
     ],
     notasAdicionales: `
-## Guión para la Visualización (10 min)
+## Guión para la Visualización (Día 1, ~10 min)
 
 "Vamos a hacer un pequeño ejercicio. Si te sientes cómodo, cierra los ojos. Si no, simplemente mira hacia abajo.
 
@@ -177,22 +308,20 @@ Cuando estés listo, abre los ojos y escribe 3 palabras que describan a ese tú 
 
 ---
 
-## Día 2 (Jueves 20)
+## Estructura de los 2 días
 
-### Agenda
-- 0:00-0:10: Check-in rápido: ¿cómo va el proyecto?
-- 0:10-0:40: Supabase setup y tabla de emails
-- 0:40-1:10: Conectar frontend con Supabase
-- 1:10-1:25: Descanso
-- 1:25-1:50: Panel admin básico
-- 1:50-2:00: Deploy en Vercel + cierre de la semana
+Esta es la única semana con 2 días (Jue-Vie en vez de solo Vie). El motivo:
+- **Día 1 = conexión**: necesitan conocerse y sentirse seguros antes de tocar código
+- **Día 2 = acción**: con la confianza del grupo, construyen su primera web
 
-### Puntos clave Día 2
-- Crear proyecto en Supabase
-- Mostrar Table Editor
-- Explicar env variables (.env.local)
-- Deploy con Vercel
-- Celebrar: ¡primer proyecto en producción!
+Si alguien no puede asistir al Día 1, puede ver la grabación. Pero el Día 2 es imprescindible porque es 100% práctico.
+
+### Puntos clave del Día 2
+- Verificar que TODOS tienen VS Code + Claude Code antes de empezar
+- Los themes de /curso/themes son la base — no crear desde cero
+- Explicar env variables (.env.local) con cuidado, es concepto nuevo
+- Deploy con Vercel debe ser el momento de celebración
+- Actualizar CLAUDE.md al final: es el hábito que queremos instalar
     `,
   },
   {
@@ -202,6 +331,7 @@ Cuando estés listo, abre los ojos y escribe 3 palabras que describan a ese tú 
       { texto: 'Tener shadcn/ui docs abierto' },
       { texto: 'Preparar ejemplos de buenos UI (Linear, Notion)' },
       { texto: 'VS Code con proyecto demo limpio' },
+      { texto: 'Tener skills.sh abierto para mostrar ejemplos' },
       { texto: 'Revisar preguntas del Discord' },
     ],
     agenda: [
@@ -219,18 +349,19 @@ Cuando estés listo, abre los ojos y escribe 3 palabras que describan a ese tú 
         titulo: 'Introducción a shadcn/ui',
         detalles: [
           'Qué es y por qué usarlo',
-          'Instalación: npx shadcn-ui@latest init',
-          'Añadir componentes: npx shadcn-ui@latest add button',
+          'Instalación: npx shadcn@latest init',
+          'Añadir componentes: npx shadcn@latest add button card input',
           'Mostrar catálogo de componentes',
         ],
       },
       {
         tiempo: '0:40-1:00',
-        titulo: 'Diseño de dashboard',
+        titulo: 'Diseño de dashboard + Pencil',
         detalles: [
           'Estructura: sidebar + main content',
           'Componentes: Card, Button, Input',
           'Layout responsivo con Tailwind',
+          'Opcional: diseñar en Pencil (.pen) y que Claude genere el código',
         ],
       },
       {
@@ -242,7 +373,18 @@ Cuando estés listo, abre los ojos y escribe 3 palabras que describan a ese tú 
         ],
       },
       {
-        tiempo: '1:15-1:50',
+        tiempo: '1:15-1:30',
+        titulo: 'Skills: enseña a Claude tus procesos',
+        detalles: [
+          'Explicar: la semana pasada creamos CLAUDE.md (contexto general)',
+          'Skills = instrucciones especializadas que Claude consulta bajo demanda',
+          'Demo: crear .claude/skills/crear-componente.md',
+          'Mostrar skills.sh: directorio de skills de la comunidad',
+          'Cada uno crea al menos 1 skill para su proyecto',
+        ],
+      },
+      {
+        tiempo: '1:30-1:50',
         titulo: 'Práctica guiada: Cada uno diseña su UI',
         detalles: [
           'Cada alumno trabaja en SU proyecto',
@@ -255,28 +397,31 @@ Cuando estés listo, abre los ojos y escribe 3 palabras que describan a ese tú 
         tiempo: '1:50-2:00',
         titulo: 'Cierre + Entregable',
         detalles: [
-          'Explicar entregable: UI completa',
+          'Explicar entregable: UI completa + al menos 1 skill',
           'Recordar: responsive obligatorio',
-          'Próxima clase: base de datos',
+          'Próxima clase: base de datos con Supabase',
         ],
       },
     ],
     frasesClave: [
       'Un buen diseño no es decoración, es comunicación',
-      'Menos es más - no llenes todo de componentes',
+      'Menos es más — no llenes todo de componentes',
       'Copia descaradamente de los mejores (Linear, Notion)',
       'shadcn te da el 80%, tú personalizas el 20%',
+      'Las Skills son como recetas: las defines una vez y Claude las sigue siempre',
     ],
     erroresComunes: [
       'Tailwind no funciona → verificar tailwind.config.js',
       'Componentes no estilizados → falta globals.css import',
       'Confusión con clases → usar Tailwind IntelliSense extension',
       'Diseño no responsivo → empezar mobile-first',
+      'Skills no se detectan → verificar que están en .claude/skills/ (con punto)',
     ],
     despuesDeClase: [
       { texto: 'Subir grabación' },
       { texto: 'Revisar proyectos subidos a GitHub' },
       { texto: 'Dar feedback individual en Discord' },
+      { texto: 'Verificar que cada proyecto tiene al menos 1 skill creada' },
       { texto: 'Preparar ejemplos de schemas para semana 3' },
     ],
   },

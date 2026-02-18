@@ -45,9 +45,10 @@ export const PIZARRAS: PizarraSemana[] = [
       },
       {
         titulo: '3. Rueda del Creador',
-        descripcion: 'Compartimos y reflexionamos sobre nuestras Ruedas del Creador. ¿Dónde tienes más fuerza? ¿Dónde necesitas ayuda?',
+        descripcion: 'Hacemos juntos la Rueda del Creador. Puntúa del 1 al 10 cada una de las 8 áreas clave de tu vida como creador. ¿Dónde tienes más fuerza? ¿Dónde necesitas ayuda?',
         links: [
-          { texto: 'Plantilla Rueda del Creador', url: '/recursos/rueda-creador.pdf' },
+          { texto: 'Rueda del Creador interactiva', url: '/curso/rueda' },
+          { texto: 'Plantilla PDF', url: '/recursos/rueda-creador.pdf' },
         ],
       },
       {

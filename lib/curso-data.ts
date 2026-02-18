@@ -59,7 +59,7 @@ export const CURSO_SEMANAS: Semana[] = [
   {
     num: 1,
     titulo: 'LaunchPad - Proyecto Conjunto',
-    descripcion: 'Nos conocemos, definimos tu visión, y construimos juntos una waitlist profesional.',
+    descripcion: 'Día 1 (Jue 19): Bienvenida y orientación · Día 2 (Vie 20): Tu primera web con Claude Code',
     fechaInicio: '2026-02-19',
     emoji: '🚀',
     preclase: {
@@ -70,55 +70,36 @@ export const CURSO_SEMANAS: Semana[] = [
 
 Este no es solo un curso técnico. Es un viaje de transformación donde vas a crear algo real, conectar con personas increíbles, y descubrir de qué eres capaz.
 
-La Semana 1 tiene dos días:
-- **Día 1 (Jueves 19)**: Nos conocemos, exploramos el ecosistema y nos orientamos
-- **Día 2 (Viernes 20)**: Construimos juntos tu primera web con Claude Code
+La Semana 1 es especial: tiene **dos días**.
+- **Día 1 (Jueves 19)** — Nos conocemos, exploramos el ecosistema y nos orientamos
+- **Día 2 (Viernes 20)** — Construimos juntos tu primera web con Claude Code
+
+Esta pre-clase tiene dos partes: lo que necesitas preparar para cada día.
 
 ---
 
-## 🎯 La Rueda del Creador
+## 📋 ANTES DEL DÍA 1 (Jueves 19)
 
-Antes de escribir una línea de código, necesitas claridad. Completa este ejercicio de reflexión.
+El Día 1 es una sesión de bienvenida y orientación. No hay código. Ven preparado para conectar con el grupo.
 
-Puntúa del 1 al 10 cada área de tu vida como creador:
-
-### Las 8 áreas:
-
-1. **Claridad de visión** - ¿Sabes exactamente qué quieres crear y por qué?
-2. **Habilidades técnicas** - ¿Tienes las herramientas para ejecutar tu idea?
-3. **Tiempo disponible** - ¿Tienes bloques de tiempo protegidos para crear?
-4. **Energía y salud** - ¿Tu cuerpo y mente están listos para el reto?
-5. **Apoyo social** - ¿Tienes personas que creen en ti y te apoyan?
-6. **Finanzas** - ¿Tienes runway o ingresos que te permitan enfocarte?
-7. **Mentalidad** - ¿Crees genuinamente que puedes lograrlo?
-8. **Conexión con tu propósito** - ¿Este proyecto está alineado con quién eres?
-
-### Instrucciones:
-1. Dibuja un círculo dividido en 8 secciones (como una pizza)
-2. Cada sección representa un área
-3. Pinta desde el centro hacia afuera según tu puntuación
-4. Observa: ¿dónde está tu rueda "desinflada"?
-
-> "Una rueda desequilibrada no rueda bien. Identificar tus áreas débiles es el primer paso para fortalecerlas."
-
-**Trae tu rueda completada al Día 1.** La compartiremos en el grupo.
-
----
-
-## 📝 Tu Presentación (2 minutos)
+### 📝 Tu Presentación (2 minutos)
 
 Prepara una mini-presentación para el Día 1:
 
-1. **¿Quién eres?** - Nombre, de dónde eres, a qué te dedicas
-2. **¿Qué quieres crear?** - Tu idea de proyecto (puede ser vaga todavía)
-3. **¿Por qué ahora?** - Qué te motivó a dar este paso
-4. **Un dato curioso** - Algo personal que nos ayude a conocerte
+1. **¿Quién eres?** — Nombre, de dónde eres, a qué te dedicas
+2. **¿Qué quieres crear?** — Tu idea de proyecto (puede ser vaga todavía)
+3. **¿Por qué ahora?** — Qué te motivó a dar este paso
+4. **Un dato curioso** — Algo personal que nos ayude a conocerte
+
+> No necesitas preparar nada técnico ni completar ningún ejercicio antes del Día 1. Solo tu presentación. La Rueda del Creador la haremos juntos durante la clase.
 
 ---
 
-## 🛠️ Preparación técnica (para el Día 2)
+## 📋 ANTES DEL DÍA 2 (Viernes 20)
 
-Entre el Día 1 y el Día 2, asegúrate de tener listo:
+El Día 2 es 100% práctico. Vamos a construir tu primera web con Claude Code. Necesitas tener todo el setup técnico listo **antes de empezar**.
+
+### 🛠️ Setup técnico obligatorio
 
 1. **VS Code** abierto y funcionando
 2. **Claude Code** instalado (del precurso)
@@ -310,7 +291,7 @@ La IA escribirá el código por ti. Tu trabajo es:
 **Bienvenida y conexión**
 - Bienvenida al curso y contexto
 - Ronda de presentaciones (2 min cada uno)
-- Compartir la Rueda del Creador
+- Hacemos juntos la Rueda del Creador
 - Ejercicio: dificultades y miedos — ¿qué te frena?
 
 **Conocer el ecosistema**
@@ -340,7 +321,7 @@ La IA escribirá el código por ti. Tu trabajo es:
       descripcion: 'Tu waitlist funcionando en internet y tu Rueda del Creador compartida en Discord.',
       fechaLimite: '2026-02-26',
       checklist: [
-        'Rueda del Creador completada y compartida',
+        'Rueda del Creador completada (se hace en la clase del Día 1)',
         'Presentación hecha en la primera clase',
         'Theme base elegido de /curso/themes',
         'Proyecto creado a partir del theme',

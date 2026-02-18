@@ -307,6 +307,9 @@ function SemanaContent({ semana }: { semana: Semana }) {
             <p style={{ margin: 0, fontSize: '15px', fontWeight: 600, color: '#0f172a' }}>
               {semana.titulo}
             </p>
+            <p style={{ margin: '6px 0 0', fontSize: '12px', color: '#64748b', lineHeight: 1.5 }}>
+              {semana.descripcion}
+            </p>
           </div>
 
           {/* Nav items */}
