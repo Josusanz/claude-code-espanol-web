@@ -602,7 +602,7 @@ El curso de 10 semanas usa:
 - Semana 9: 17 Abr - Deploy y DevOps
 - Semana 10: 24 Abr - Lanzamiento y Marketing
 
-Clases: Jueves 18:00 CET (excepto semana 1: mie-jue)
+Clases: Jueves 18:00 CET (excepto semana 1: jue-vie)
 
 ## PRECURSO
 

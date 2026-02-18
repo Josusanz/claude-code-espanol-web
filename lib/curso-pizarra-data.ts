@@ -29,13 +29,72 @@ export const PIZARRAS: PizarraSemana[] = [
     emoji: '🚀',
     subtitulo: 'Creamos una waitlist profesional desde cero',
     pasos: [
-      // — DÍA 1 —
+      // — DÍA 1 (Jueves) — Bienvenida y Orientación
       {
-        titulo: '📋 Día 1: Setup + Landing Page',
-        descripcion: 'Hoy creamos el proyecto, diseñamos la landing page y la dejamos lista con un formulario de captura.',
+        titulo: '📋 Día 1 (Jueves): Bienvenida y Orientación',
+        descripcion: 'Hoy nos conocemos, exploramos el ecosistema del curso y nos preparamos para mañana.',
       },
       {
-        titulo: '1. Crear el proyecto Next.js',
+        titulo: '1. Bienvenida',
+        descripcion: 'Contexto del curso: 10 semanas para crear tu SaaS. Qué vamos a hacer, cómo funciona, qué se espera de ti.',
+      },
+      {
+        titulo: '2. Presentaciones',
+        descripcion: 'Cada uno se presenta durante 2 minutos: quién eres, qué quieres crear, por qué ahora y un dato curioso.',
+        tip: 'Si preparaste tu mini-presentación de la pre-clase, es el momento de compartirla.',
+      },
+      {
+        titulo: '3. Rueda del Creador',
+        descripcion: 'Compartimos y reflexionamos sobre nuestras Ruedas del Creador. ¿Dónde tienes más fuerza? ¿Dónde necesitas ayuda?',
+        links: [
+          { texto: 'Plantilla Rueda del Creador', url: '/recursos/rueda-creador.pdf' },
+        ],
+      },
+      {
+        titulo: '4. Dificultades y miedos',
+        descripcion: 'Ejercicio grupal: ¿Qué te frena? ¿Qué miedos tienes? Compartir y normalizar las dificultades.',
+        tip: 'No hay respuestas incorrectas. Todos estamos aquí para aprender.',
+      },
+      {
+        titulo: '5. Tour: Dashboard del curso',
+        descripcion: 'Navegamos juntos el dashboard: semanas, progreso, pre-clases, entregables.',
+        links: [
+          { texto: 'Abrir dashboard del curso', url: '/curso' },
+        ],
+      },
+      {
+        titulo: '6. Tour: Pizarra de clase',
+        descripcion: 'Así funciona la pizarra: pasos en vivo que seguimos durante la clase. ¡Estás viéndola ahora mismo!',
+        links: [
+          { texto: 'Pizarra de la Semana 1', url: '/curso/clase/1' },
+        ],
+      },
+      {
+        titulo: '7. Tour: Themes premium',
+        descripcion: 'Exploramos la galería de 20 themes profesionales. Mañana elegirás uno como base para tu waitlist.',
+        links: [
+          { texto: 'Galería de themes', url: '/curso/themes' },
+        ],
+      },
+      {
+        titulo: '8. Tour: Discord',
+        descripcion: 'Los canales del Discord: #dudas, #compartir, #general. Cómo pedir ayuda y compartir progreso.',
+        links: [
+          { texto: 'Guía de Discord', url: '/precurso/discord' },
+        ],
+      },
+      {
+        titulo: '9. Tarea: preparar la pre-clase para mañana',
+        descripcion: 'Lee la pre-clase completa (setup técnico), ten VS Code + Claude Code listos, crea cuentas de Supabase y Vercel, y elige un theme base.',
+        tip: 'Si tienes dudas con el setup, pregunta ahora o en Discord. Mañana arrancamos directamente a construir.',
+      },
+      // — DÍA 2 (Viernes) — Tu Primera Web
+      {
+        titulo: '📋 Día 2 (Viernes): Tu Primera Web',
+        descripcion: 'Hoy construimos juntos: elegimos un theme, lo personalizamos con Claude Code, conectamos Supabase y desplegamos en Vercel.',
+      },
+      {
+        titulo: '10. Crear el proyecto Next.js',
         descripcion: 'Abre tu terminal y ejecuta este comando. Acepta las opciones por defecto (TypeScript, Tailwind, App Router).',
         bloques: [
           {
@@ -46,7 +105,7 @@ export const PIZARRAS: PizarraSemana[] = [
         tip: 'Si te pregunta opciones: TypeScript ✅, ESLint ✅, Tailwind ✅, src/ ❌, App Router ✅, import alias @/* ✅',
       },
       {
-        titulo: '2. Entrar al proyecto',
+        titulo: '11. Entrar al proyecto',
         bloques: [
           {
             lenguaje: 'bash',
@@ -56,7 +115,7 @@ export const PIZARRAS: PizarraSemana[] = [
         tip: 'Si "code ." no funciona, abre VS Code manualmente y selecciona la carpeta mi-waitlist.',
       },
       {
-        titulo: '3. Abrir Claude Code (sin confirmaciones)',
+        titulo: '12. Abrir Claude Code (sin confirmaciones)',
         descripcion: 'Abre el terminal integrado de VS Code (Ctrl+` o Cmd+`) y escribe:',
         bloques: [
           {
@@ -64,10 +123,10 @@ export const PIZARRAS: PizarraSemana[] = [
             codigo: 'claude --dangerously-skip-permissions',
           },
         ],
-        tip: 'La flag --dangerously-skip-permissions hace que Claude no te pida confirmación cada vez que ejecuta un comando o edita un archivo. Así todo fluye sin interrupciones. Para proyectos de cliente donde quieras más control, usa "claude" sin la flag.',
+        tip: 'La flag --dangerously-skip-permissions hace que Claude no te pida confirmación cada vez que ejecuta un comando o edita un archivo. Así todo fluye sin interrupciones.',
       },
       {
-        titulo: '4. Crear la landing page',
+        titulo: '13. Crear la landing page',
         descripcion: 'Copia este prompt y pégalo en Claude Code:',
         bloques: [
           {
@@ -86,7 +145,7 @@ El producto es: [DESCRIBE TU IDEA AQUÍ]`,
         tip: 'Sustituye [DESCRIBE TU IDEA AQUÍ] por tu idea real. Cuanto más contexto des, mejor resultado.',
       },
       {
-        titulo: '5. Ver el resultado',
+        titulo: '14. Ver el resultado',
         descripcion: 'Abre otra terminal (sin cerrar Claude) y ejecuta:',
         bloques: [
           {
@@ -100,7 +159,7 @@ El producto es: [DESCRIBE TU IDEA AQUÍ]`,
         ],
       },
       {
-        titulo: '6. Ajustar el diseño',
+        titulo: '15. Ajustar el diseño',
         descripcion: 'Si algo no te gusta, pídele cambios a Claude:',
         bloques: [
           {
@@ -111,7 +170,7 @@ El producto es: [DESCRIBE TU IDEA AQUÍ]`,
         tip: 'No hace falta ser técnico. Habla como si le explicaras a un diseñador humano.',
       },
       {
-        titulo: '7. Crear CLAUDE.md',
+        titulo: '16. Crear CLAUDE.md',
         descripcion: 'Esto es la "memoria" de tu proyecto. Claude lo lee cada vez que abres una sesión nueva.',
         bloques: [
           {
@@ -126,7 +185,7 @@ El producto es: [DESCRIBE TU IDEA AQUÍ]`,
         tip: 'Al final de cada sesión, dile a Claude: "Actualiza el CLAUDE.md con lo que hemos trabajado hoy"',
       },
       {
-        titulo: '8. Conectar Git con GitHub',
+        titulo: '17. Conectar Git con GitHub',
         descripcion: 'Antes de subir código, necesitas que tu terminal sepa quién eres y pueda acceder a GitHub.',
         bloques: [
           {
@@ -147,7 +206,7 @@ gh auth login`,
         tip: 'Al ejecutar "gh auth login", selecciona: GitHub.com → HTTPS → Login with a web browser. Se abrirá el navegador para autorizar. Solo necesitas hacer esto una vez.',
       },
       {
-        titulo: '9. Crear repo y subir a GitHub',
+        titulo: '18. Crear repo y subir a GitHub',
         bloques: [
           {
             lenguaje: 'bash',
@@ -157,13 +216,8 @@ gh repo create mi-waitlist --public --source=. --push`,
         ],
         tip: 'Este comando crea el repo en GitHub, lo conecta con tu proyecto local y sube todo el código de una vez. Si prefieres repo privado, cambia --public por --private.',
       },
-      // — DÍA 2 —
       {
-        titulo: '📋 Día 2: Base de datos + Deploy',
-        descripcion: 'Hoy conectamos Supabase, creamos el panel admin y desplegamos en Vercel.',
-      },
-      {
-        titulo: '10. Crear proyecto en Supabase',
+        titulo: '19. Crear proyecto en Supabase',
         descripcion: 'Ve a Supabase y crea un nuevo proyecto.',
         links: [
           { texto: 'Abrir Supabase', url: 'https://supabase.com/dashboard' },
@@ -171,7 +225,7 @@ gh repo create mi-waitlist --public --source=. --push`,
         tip: 'Apunta la contraseña de la base de datos. El nombre del proyecto puede ser "mi-waitlist".',
       },
       {
-        titulo: '11. Crear tabla de emails',
+        titulo: '20. Crear tabla de emails',
         descripcion: 'En el SQL Editor de Supabase, ejecuta:',
         bloques: [
           {
@@ -192,7 +246,7 @@ CREATE POLICY "Allow public inserts" ON waitlist
         ],
       },
       {
-        titulo: '12. Instalar Supabase en el proyecto',
+        titulo: '21. Instalar Supabase en el proyecto',
         bloques: [
           {
             lenguaje: 'bash',
@@ -201,7 +255,7 @@ CREATE POLICY "Allow public inserts" ON waitlist
         ],
       },
       {
-        titulo: '13. Configurar variables de entorno',
+        titulo: '22. Configurar variables de entorno',
         descripcion: 'Crea un archivo .env.local en la raíz del proyecto. Las keys están en Supabase → Settings → API.',
         bloques: [
           {
@@ -217,7 +271,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIs...`,
         ],
       },
       {
-        titulo: '14. Conectar el formulario',
+        titulo: '23. Conectar el formulario',
         descripcion: 'Dile a Claude que conecte el formulario con Supabase:',
         bloques: [
           {
@@ -234,7 +288,7 @@ Usa las variables de entorno NEXT_PUBLIC_SUPABASE_URL y NEXT_PUBLIC_SUPABASE_ANO
         ],
       },
       {
-        titulo: '15. Crear panel admin',
+        titulo: '24. Crear panel admin',
         bloques: [
           {
             lenguaje: 'text',
@@ -247,7 +301,7 @@ Usa las variables de entorno NEXT_PUBLIC_SUPABASE_URL y NEXT_PUBLIC_SUPABASE_ANO
         ],
       },
       {
-        titulo: '16. Deploy en Vercel',
+        titulo: '25. Deploy en Vercel',
         descripcion: 'La forma más fácil: conecta tu repo de GitHub a Vercel.',
         links: [
           { texto: 'Abrir Vercel', url: 'https://vercel.com/new' },
@@ -266,7 +320,7 @@ Usa las variables de entorno NEXT_PUBLIC_SUPABASE_URL y NEXT_PUBLIC_SUPABASE_ANO
         tip: 'También puedes hacer: npx vercel (desde la terminal)',
       },
       {
-        titulo: '17. ¡Comparte tu URL!',
+        titulo: '26. ¡Comparte tu URL!',
         descripcion: 'Tu waitlist está en producción. Copia la URL de Vercel y compártela en el Discord del curso.',
         tip: 'Actualiza el CLAUDE.md: "Actualiza el CLAUDE.md con todo lo que hemos hecho. El proyecto está desplegado en [tu-url].vercel.app"',
       },

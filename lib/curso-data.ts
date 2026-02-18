@@ -43,7 +43,7 @@ export interface Semana {
 
 // Fechas de inicio de cada semana (para desbloqueo automático)
 export const SEMANAS_FECHAS: Record<number, string> = {
-  1: '2026-02-19',  // Miércoles
+  1: '2026-02-19',  // Jueves
   2: '2026-02-27',  // Jueves
   3: '2026-03-06',  // Viernes
   4: '2026-03-13',
@@ -69,6 +69,10 @@ export const CURSO_SEMANAS: Semana[] = [
 ## Bienvenido a la Primera Promoción 🎉
 
 Este no es solo un curso técnico. Es un viaje de transformación donde vas a crear algo real, conectar con personas increíbles, y descubrir de qué eres capaz.
+
+La Semana 1 tiene dos días:
+- **Día 1 (Jueves 19)**: Nos conocemos, exploramos el ecosistema y nos orientamos
+- **Día 2 (Viernes 20)**: Construimos juntos tu primera web con Claude Code
 
 ---
 
@@ -97,13 +101,13 @@ Puntúa del 1 al 10 cada área de tu vida como creador:
 
 > "Una rueda desequilibrada no rueda bien. Identificar tus áreas débiles es el primer paso para fortalecerlas."
 
-**Trae tu rueda completada a la primera clase.** La compartiremos en el grupo.
+**Trae tu rueda completada al Día 1.** La compartiremos en el grupo.
 
 ---
 
 ## 📝 Tu Presentación (2 minutos)
 
-Prepara una mini-presentación para el primer día:
+Prepara una mini-presentación para el Día 1:
 
 1. **¿Quién eres?** - Nombre, de dónde eres, a qué te dedicas
 2. **¿Qué quieres crear?** - Tu idea de proyecto (puede ser vaga todavía)
@@ -112,16 +116,16 @@ Prepara una mini-presentación para el primer día:
 
 ---
 
-## 🛠️ Preparación técnica
+## 🛠️ Preparación técnica (para el Día 2)
 
-Para la parte práctica, necesitas tener listo:
+Entre el Día 1 y el Día 2, asegúrate de tener listo:
 
 1. **VS Code** abierto y funcionando
 2. **Claude Code** instalado (del precurso)
 3. **Cuenta de Supabase** creada (gratis)
 4. **Cuenta de Vercel** conectada a GitHub
 
-### Lo que vamos a construir juntos:
+### Lo que vamos a construir juntos en el Día 2:
 - Landing page atractiva (partiendo de un theme profesional)
 - Formulario de captura de emails
 - Base de datos con Supabase
@@ -146,7 +150,7 @@ cp -r aprende-themes/simple-next mi-waitlist
 cd mi-waitlist && npm install && npm run dev
 \`\`\`
 
-5. En clase, le diremos a Claude Code que personalice el theme con tu contenido
+5. En el Día 2, le diremos a Claude Code que personalice el theme con tu contenido
 
 > **¿Por qué un theme?** Porque el diseño ya está resuelto. Tú te enfocas en tu mensaje y tu producto. Claude se encarga de adaptar colores, textos e imágenes.
 
@@ -301,20 +305,31 @@ La IA escribirá el código por ti. Tu trabajo es:
       hora: '18:00 CET',
       duracion: '2h + 2h',
       notas: `
-### Día 1 (Miércoles 19)
+### Día 1 (Jueves 19)
 
-**Primera hora: Conexión y visión**
-- Bienvenida y contexto del curso
+**Bienvenida y conexión**
+- Bienvenida al curso y contexto
 - Ronda de presentaciones (2 min cada uno)
 - Compartir la Rueda del Creador
-- Ejercicio: Visualización del "yo del futuro"
+- Ejercicio: dificultades y miedos — ¿qué te frena?
 
-**Segunda hora: Manos a la obra**
-- Elegimos un theme base de la [galería de themes](/curso/themes)
+**Conocer el ecosistema**
+- Tour del [dashboard del curso](/curso): semanas, progreso, pizarra
+- Cómo funciona la [pizarra de clase](/curso/clase/1): pasos en vivo
+- La [galería de themes](/curso/themes): 20 templates premium
+- La comunidad de [Discord](/precurso/discord): canales, cómo pedir ayuda
+- Cómo funciona la pre-clase y el entregable
+
+**Tarea para mañana**
+- Leer la pre-clase completa (setup técnico + elegir theme)
+- Tener VS Code + Claude Code listos
+- Crear cuentas de Supabase y Vercel
+- Elegir un theme base de /curso/themes
+
+### Día 2 (Viernes 20)
+- Elegimos el theme base de la [galería de themes](/curso/themes)
 - Personalizamos el theme con Claude Code (colores, textos, imágenes)
 - Implementamos el formulario de captura de emails
-
-### Día 2 (Jueves 20)
 - Conectamos Supabase
 - Creamos el panel admin
 - Desplegamos en Vercel
