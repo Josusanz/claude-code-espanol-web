@@ -362,16 +362,16 @@ shadcn/ui NO es una librería. Es una colección de componentes que copias direc
 
 ### Inspiración: Los mejores diseños SaaS
 
-Antes de diseñar, observa:
-- [Linear](https://linear.app) - Minimalista y potente
-- [Notion](https://notion.so) - Limpio y flexible
-- [Vercel](https://vercel.com) - Moderno y rápido
+Antes de diseñar, observa estos referentes:
+- **Linear** — Minimalista y potente
+- **Notion** — Limpio y flexible
+- **Vercel** — Moderno y rápido
 
 ---
 
 ## ✏️ Pencil: Diseño visual que Claude entiende
 
-[Pencil](https://www.pencil.dev/) es un canvas de diseño integrado en VS Code. La magia: Claude Code puede **leer y escribir** archivos \`.pen\` directamente.
+Pencil es un canvas de diseño integrado en VS Code. La magia: Claude Code puede **leer y escribir** archivos \`.pen\` directamente.
 
 ### ¿Por qué Pencil y no Figma?
 
@@ -443,7 +443,7 @@ Guárdalo como \`.claude/skills/crear-componente.md\` y la próxima vez que le p
 
 Sin skills, tienes que repetir las mismas instrucciones cada vez: "usa shadcn", "hazlo responsive", "ponlo en /components"... Con skills, lo defines una vez y Claude lo aplica siempre.
 
-> Más info y ejemplos avanzados: [Skills, Hooks y Plugins](/fundamentos/skills-hooks-plugins) y [skills.sh](https://skills.sh/)
+> Más info y ejemplos avanzados en la lección de Skills, Hooks y Plugins y en skills.sh (links abajo en recursos).
 
 ---
 
@@ -453,7 +453,7 @@ Sin skills, tienes que repetir las mismas instrucciones cada vez: "usa shadcn", 
 2. **Crea un archivo \`.pen\`** y dibuja 3 pantallas: Dashboard, formulario principal, settings
 3. **Elige colores**: Máximo 3 colores principales
 4. **Prueba el flujo**: Pídele a Claude que genere código desde tu \`.pen\`
-5. **Explora [skills.sh](https://skills.sh/)**: Mira qué skills existen para inspirarte
+5. **Explora skills.sh**: Mira qué skills existen para inspirarte
 
 > "Un buen diseño no es decoración, es comunicación clara."
       `,
@@ -829,7 +829,7 @@ export async function POST(request: Request) {
 
 ### Antes de la clase
 
-1. Crea cuenta en [Stripe](https://stripe.com)
+1. Crea cuenta en Stripe (link abajo en recursos)
 2. Activa el modo Test
 3. Copia tus API keys (test)
 4. Crea un producto de prueba
@@ -1112,9 +1112,9 @@ export const metadata = {
 
 ### Herramientas
 
-- [PageSpeed Insights](https://pagespeed.web.dev)
-- [Lighthouse](https://developers.google.com/web/tools/lighthouse)
-- Vercel Analytics (gratis)
+- **PageSpeed Insights** — mide tu web en segundos
+- **Lighthouse** — auditoría completa en Chrome DevTools
+- **Vercel Analytics** — gratis, integrado con tu deploy
       `,
       recursos: [
         { titulo: 'Next.js Image Optimization', url: 'https://nextjs.org/docs/app/building-your-application/optimizing/images', tipo: 'link' },
