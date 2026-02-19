@@ -579,7 +579,8 @@ function parseContentBlocks(text: string, codeBlocks: { lang: string; code: stri
            !lines[i].startsWith('> ') && !lines[i].startsWith('- ') &&
            !lines[i].match(/^\d+\. /) &&
            !(lines[i].includes('|') && lines[i].trim().startsWith('|')) &&
-           !lines[i].match(/^__CODEBLOCK_\d+__$/)) {
+           !lines[i].match(/^__CODEBLOCK_\d+__$/) &&
+           lines[i].trim() !== '{{THEME_SELECTOR}}') {
       paraLines.push(lines[i])
       i++
     }
