@@ -80,7 +80,12 @@ export const PIZARRAS: PizarraSemana[] = [
         tip: 'No hay respuestas incorrectas. Todos estamos aquí para aprender.',
       },
       {
-        titulo: '8. Tarea para mañana',
+        titulo: '8. Visualización: tu yo del futuro',
+        descripcion: 'Un ejercicio guiado de 5 minutos. Sigue las instrucciones paso a paso.',
+        componente: 'visualizacion',
+      },
+      {
+        titulo: '9. Tarea para mañana',
         descripcion: 'Lee la pre-clase completa (setup técnico), ten terminal + Claude Code listos, crea cuentas de Supabase y Vercel, y elige un theme base de la galería.',
         tip: 'Si tienes dudas con el setup, pregunta en Discord. Mañana arrancamos directamente a construir.',
       },
