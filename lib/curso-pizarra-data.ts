@@ -1043,16 +1043,166 @@ Crea el archivo en .github/workflows/tests.yml`,
   },
   {
     semanaNum: 10,
-    titulo: 'Lanzamiento',
-    emoji: '🎉',
-    subtitulo: 'Tu SaaS en producción, listo para usuarios reales',
+    titulo: 'Agent Swarms y Lanzamiento',
+    emoji: '🤖',
+    subtitulo: 'Claude Code como tu equipo completo + lanzamiento al mundo',
     pasos: [
       {
-        titulo: '📋 Checklist de lanzamiento',
-        descripcion: 'Hoy preparamos todo para lanzar al mundo.',
+        titulo: '📋 Agent Swarms + Lanzamiento',
+        descripcion: 'Hoy configuramos agentes especializados para tu proyecto y lo lanzamos al mundo.',
       },
       {
-        titulo: '1. Checklist técnico',
+        titulo: '1. Reforzar tu CLAUDE.md',
+        descripcion: 'Tu CLAUDE.md es el "briefing" del equipo. Vamos a añadir roles y responsabilidades:',
+        bloques: [
+          {
+            lenguaje: 'text',
+            codigo: `Actualiza el CLAUDE.md de mi proyecto añadiendo:
+
+## Roles y responsabilidades
+- Frontend: carpetas /app y /components, usar shadcn/ui + Tailwind
+- Backend: /app/api y /app/actions.ts, Server Actions con Zod
+- Base de datos: Supabase, migrations, types, RLS policies
+- Tests: Vitest para unit tests, Playwright para E2E
+
+## Reglas de calidad
+- Validar con Zod antes de insertar en DB
+- RLS obligatorio en todas las tablas
+- Componentes responsive por defecto
+- Commits descriptivos en español
+
+Mantén lo que ya hay y añade estas secciones nuevas.`,
+          },
+        ],
+      },
+      {
+        titulo: '2. Crear skill de revisión de código',
+        bloques: [
+          {
+            lenguaje: 'bash',
+            codigo: 'mkdir -p .claude/skills',
+          },
+          {
+            lenguaje: 'text',
+            codigo: `Crea un archivo .claude/skills/review.md con este contenido:
+
+# /review - Revisión de código
+
+Revisa los cambios recientes del proyecto:
+1. Busca vulnerabilidades de seguridad (SQL injection, XSS, secrets expuestos)
+2. Verifica que hay validación con Zod en todos los inputs del usuario
+3. Comprueba que las RLS policies cubren todos los casos
+4. Busca console.log o código de debug olvidado
+5. Verifica que los componentes nuevos son responsive
+6. Sugiere mejoras de rendimiento si las hay`,
+          },
+        ],
+        tip: 'Después de crear la skill, pruébala: escribe /review en Claude Code.',
+      },
+      {
+        titulo: '3. Crear skill de pre-deploy',
+        bloques: [
+          {
+            lenguaje: 'text',
+            codigo: `Crea un archivo .claude/skills/deploy-check.md con este contenido:
+
+# /deploy-check - Verificación pre-deploy
+
+Antes de hacer deploy, verifica:
+1. npm run build sin errores ni warnings
+2. Variables de entorno documentadas en .env.example
+3. No hay secrets hardcodeados en el código (busca strings con "sk_", "key", passwords)
+4. Tests pasando
+5. Migrations de Supabase aplicadas
+6. CLAUDE.md actualizado con el estado actual`,
+          },
+        ],
+      },
+      {
+        titulo: '4. Crear skill de nueva feature',
+        bloques: [
+          {
+            lenguaje: 'text',
+            codigo: `Crea un archivo .claude/skills/new-feature.md con este contenido:
+
+# /new-feature - Implementar feature completa
+
+Cuando implementes una nueva feature, sigue este proceso:
+1. PLANIFICA: Antes de escribir código, describe qué vas a hacer y qué archivos tocas
+2. IMPLEMENTA: Escribe el código siguiendo las convenciones del CLAUDE.md
+3. VALIDA: Añade validación Zod si hay inputs del usuario
+4. PROTEGE: Añade RLS policies si hay nuevas tablas o columnas
+5. TESTA: Corre npm run build para verificar que no hay errores
+6. DOCUMENTA: Actualiza el CLAUDE.md con los cambios`,
+          },
+        ],
+      },
+      {
+        titulo: '5. Practicar: feature compleja con delegación',
+        descripcion: 'Vamos a pedirle a Claude una feature compleja y ver cómo delega a sub-agentes:',
+        bloques: [
+          {
+            lenguaje: 'text',
+            codigo: `Implementa un sistema de notificaciones para mi app:
+1. Tabla "notifications" en Supabase con tipo, mensaje, leída/no leída
+2. Icono de campana en el header con badge del número de no leídas
+3. Dropdown que muestra las últimas 10 notificaciones
+4. Marcar como leída al hacer clic
+5. Server Action para crear notificaciones desde el backend
+6. RLS: cada usuario solo ve sus notificaciones
+
+Usa el proceso de /new-feature para implementarlo.`,
+          },
+        ],
+        tip: 'Fíjate cómo Claude planifica primero, luego implementa paso a paso. Eso es un agent swarm en acción: un agente planifica, otros ejecutan.',
+      },
+      {
+        titulo: '6. Flujo de revisión automatizado',
+        descripcion: 'Después de implementar la feature, usa tus skills:',
+        bloques: [
+          {
+            lenguaje: 'text',
+            codigo: '/review',
+          },
+          {
+            lenguaje: 'text',
+            codigo: '/deploy-check',
+          },
+        ],
+        tip: 'Este es tu flujo profesional: implementar → revisar → verificar → deploy. Como un equipo real pero tú solo con Claude.',
+      },
+      {
+        titulo: '7. Hooks: automatizar acciones',
+        descripcion: 'Los hooks ejecutan comandos automáticamente en ciertos momentos. Ejemplo: lint después de cada edición.',
+        bloques: [
+          {
+            lenguaje: 'text',
+            codigo: `Configura un hook en mi settings de Claude Code que ejecute "npm run build" automáticamente después de cada cambio grande, para detectar errores al momento.`,
+          },
+        ],
+        links: [
+          { texto: 'Lección: Skills, Hooks y Plugins', url: '/fundamentos/skills-hooks-plugins' },
+        ],
+      },
+      {
+        titulo: '8. Subir cambios de Agent Swarm',
+        bloques: [
+          {
+            lenguaje: 'bash',
+            codigo: `git add .
+git commit -m "Agent swarm: skills, CLAUDE.md reforzado"
+git push`,
+          },
+        ],
+        tip: 'Comparte tus skills en Discord. Las mejores las compartimos con todo el grupo.',
+      },
+      // — LANZAMIENTO —
+      {
+        titulo: '📋 ¡Hora de lanzar! 🎉',
+        descripcion: 'Ahora que tienes un equipo de agentes, vamos a preparar el lanzamiento de tu SaaS.',
+      },
+      {
+        titulo: '9. Checklist técnico',
         bloques: [
           {
             lenguaje: 'text',
@@ -1069,14 +1219,14 @@ Crea el archivo en .github/workflows/tests.yml`,
         ],
       },
       {
-        titulo: '2. Configurar dominio',
+        titulo: '10. Configurar dominio',
         descripcion: 'En Vercel → Settings → Domains, añade tu dominio.',
         links: [
           { texto: 'Vercel Domains', url: 'https://vercel.com/dashboard' },
         ],
       },
       {
-        titulo: '3. Stripe en producción',
+        titulo: '11. Stripe en producción',
         descripcion: 'Cambia de test mode a live mode:',
         bloques: [
           {
@@ -1091,7 +1241,7 @@ Crea el archivo en .github/workflows/tests.yml`,
         tip: 'Haz un pago real de prueba con tu propia tarjeta. Puedes reembolsártelo después.',
       },
       {
-        titulo: '4. Legal básico',
+        titulo: '12. Legal básico',
         bloques: [
           {
             lenguaje: 'text',
@@ -1104,7 +1254,7 @@ Personaliza con el nombre de tu empresa y datos de contacto.`,
         ],
       },
       {
-        titulo: '5. Post de lanzamiento',
+        titulo: '13. Post de lanzamiento',
         bloques: [
           {
             lenguaje: 'text',
@@ -1122,7 +1272,7 @@ Personaliza con el nombre de tu empresa y datos de contacto.`,
         ],
       },
       {
-        titulo: '6. ¡LANZA! 🚀',
+        titulo: '14. ¡LANZA! 🚀',
         descripcion: 'Publica tu post, comparte en redes, y celebra. Has creado un SaaS completo en 10 semanas.',
         tip: 'Comparte tu URL en el Discord del curso. Vamos a celebrar juntos.',
       },

@@ -1158,14 +1158,116 @@ export const metadata = {
   },
   {
     num: 10,
-    titulo: 'Lanzamiento',
-    descripcion: 'Prepara tu producto para el lanzamiento. Dominio, analytics, y estrategia.',
+    titulo: 'Agent Swarms y Lanzamiento',
+    descripcion: 'Claude Code como equipo completo + lanzamiento de tu SaaS al mundo.',
     fechaInicio: '2026-04-24',
-    emoji: '🎉',
+    emoji: '🤖',
     preclase: {
-      titulo: 'Preparando el lanzamiento',
+      titulo: 'Agentes especializados y preparación del lanzamiento',
       duracion: '30 min',
       contenido: `
+## Claude Code como tu equipo completo
+
+Hasta ahora has usado Claude Code como un asistente general: le pides algo y lo hace. Pero Claude Code puede ser mucho más. Puede funcionar como **un equipo entero de especialistas** trabajando en tu proyecto.
+
+### ¿Qué es un Agent Swarm?
+
+Un "swarm" (enjambre) es un grupo de agentes especializados que trabajan juntos. En vez de un Claude que hace todo, tienes:
+
+- **Agente Arquitecto**: diseña la estructura y toma decisiones técnicas
+- **Agente Frontend**: implementa UI y componentes
+- **Agente Backend**: APIs, base de datos, lógica de servidor
+- **Agente QA**: revisa código, busca bugs, escribe tests
+- **Agente DevOps**: deploy, CI/CD, monitorización
+
+### Cómo funciona en la práctica
+
+Claude Code ya tiene esta capacidad con **sub-agentes**. Cuando le das una tarea compleja, puede delegar partes a agentes especializados que trabajan en paralelo.
+
+La clave está en cómo configuras tu proyecto para que esto funcione bien:
+
+1. **CLAUDE.md robusto**: cuanto mejor describas tu arquitectura, mejores decisiones toma
+2. **Skills especializadas**: cada skill puede definir un "rol" diferente
+3. **Estructura clara del proyecto**: si tu código está bien organizado, los agentes pueden trabajar en paralelo sin pisarse
+
+### El archivo CLAUDE.md como "briefing del equipo"
+
+\`\`\`markdown
+# Mi SaaS
+
+## Arquitectura
+- Next.js 15 App Router
+- Supabase (auth + DB + storage)
+- Stripe (pagos)
+- Resend (emails)
+- Desplegado en Vercel
+
+## Roles y responsabilidades
+- Frontend: /app y /components (shadcn/ui + Tailwind)
+- Backend: /app/api y /app/actions.ts (Server Actions)
+- Base de datos: /supabase (migrations, types, policies)
+- Tests: /tests (Vitest unit, Playwright E2E)
+
+## Reglas
+- Siempre validar con Zod antes de insertar en DB
+- RLS obligatorio en todas las tablas
+- Componentes responsive por defecto
+- Commits descriptivos en español
+\`\`\`
+
+### Skills como especialistas
+
+Puedes crear skills que actúan como roles especializados:
+
+\`\`\`bash
+mkdir -p .claude/skills
+\`\`\`
+
+**Ejemplo: skill de QA**
+\`\`\`markdown
+# /review - Revisión de código
+
+Revisa el código del último commit:
+1. Busca vulnerabilidades de seguridad (SQL injection, XSS)
+2. Verifica que hay validación con Zod en todos los inputs
+3. Comprueba que las RLS policies cubren todos los casos
+4. Busca console.log o código de debug olvidado
+5. Verifica que los componentes nuevos son responsive
+\`\`\`
+
+**Ejemplo: skill de DevOps**
+\`\`\`markdown
+# /deploy-check - Pre-deploy checklist
+
+Antes de hacer deploy, verifica:
+1. npm run build sin errores
+2. Variables de entorno documentadas en .env.example
+3. No hay secrets hardcodeados en el código
+4. Tests pasando (npm test)
+5. Migrations de Supabase aplicadas
+\`\`\`
+
+### Gestión de contexto y tokens
+
+Cuando trabajas en sesiones largas, Claude puede perder contexto. Trucos:
+
+- **Sesiones cortas y enfocadas**: "Hoy solo trabajamos en el sistema de pagos"
+- **CLAUDE.md actualizado**: al final de cada sesión, actualiza el estado
+- **Compact**: Claude Code compacta automáticamente cuando el contexto es largo
+- **Una tarea a la vez**: mejor 5 sesiones de 1 tarea que 1 sesión de 5 tareas
+
+### Lo que vamos a hacer en clase
+
+Vamos a configurar tu proyecto para trabajar con agentes especializados y preparar el lanzamiento:
+1. Reforzar tu CLAUDE.md con roles y responsabilidades
+2. Crear 3-4 skills especializadas para tu proyecto
+3. Practicar delegación de tareas complejas
+4. Crear un flujo de revisión de código automatizado
+5. Preparar el checklist de lanzamiento
+6. ¡LANZAR!
+
+---
+
 ## Checklist pre-lanzamiento
 
 ### Técnico
@@ -1194,43 +1296,31 @@ export const metadata = {
 4. **Twitter/X**: Tu audiencia personal
 5. **IndieHackers**: Comunidad de makers
 
-## Después del lanzamiento
-
-### Semana 1
-- Responde TODOS los comentarios
-- Arregla bugs reportados inmediatamente
-- Celebra pequeñas victorias
-
-### Mes 1
-- Habla con usuarios (calls de 15 min)
-- Identifica features más pedidos
-- Empieza a iterar
-
-### El mantra
-
-> "Done is better than perfect. Ship it."
-
-Tu producto no tiene que ser perfecto. Tiene que resolver un problema real para personas reales. El feedback del mercado vale más que meses de desarrollo en silencio.
+> "Done is better than perfect. Ship it." Tu producto no tiene que ser perfecto. Tiene que resolver un problema real para personas reales.
       `,
       recursos: [
+        { titulo: 'Lección: Agent Teams', url: '/ralph/agent-teams', tipo: 'link' },
+        { titulo: 'Lección: Skills, Hooks y Plugins', url: '/fundamentos/skills-hooks-plugins', tipo: 'link' },
+        { titulo: 'skills.sh — Directorio de Skills', url: 'https://skills.sh/', tipo: 'link' },
         { titulo: 'Product Hunt', url: 'https://producthunt.com', tipo: 'link' },
-        { titulo: 'Checklist de lanzamiento', url: 'https://www.saasstarters.com/launch-checklist', tipo: 'link' },
       ],
     },
     clase: {
       fecha: '2026-04-24',
-      hora: '18:00 CET',
+      hora: '19:00 CET',
       duracion: '2h',
     },
     entregable: {
-      titulo: 'Producto lanzado',
-      descripcion: 'Tu SaaS en producción, con dominio propio, listo para usuarios reales.',
+      titulo: 'Agent Swarm + Producto lanzado',
+      descripcion: 'Tu proyecto con skills de agentes configuradas y tu SaaS lanzado al mundo.',
       fechaLimite: '2026-04-30',
       checklist: [
+        'CLAUDE.md con roles y responsabilidades definidos',
+        'Al menos 3 skills especializadas creadas (.claude/skills/)',
+        'Skill de revisión de código (/review) funcionando',
         'Dominio propio configurado',
         'Stripe en modo producción',
         'Analytics instalado',
-        'Al menos 1 usuario de prueba (que no seas tú)',
         'Post de lanzamiento publicado',
         'Link compartido en Discord del curso',
       ],
