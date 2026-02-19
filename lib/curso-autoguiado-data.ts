@@ -256,13 +256,13 @@ Y esto es solo el principio. Lo que has hecho hoy es la base de todo lo que vien
   },
   {
     num: 1,
-    titulo: 'Tu Primera Web con IA',
+    titulo: 'LaunchPad: Tu Landing Profesional',
     emoji: '🚀',
-    descripcion: 'Crea y publica una landing page con formulario de emails usando Claude Code.',
+    descripcion: 'Personaliza un theme premium con Next.js, conecta Supabase para capturar emails y despliega en Vercel.',
     duracion: '3-4 horas',
     nivel: 'principiante',
     semanaNum: 1,
-    intro: 'En este módulo vas a crear tu primera web completa: una landing page con formulario de captura de emails, base de datos, panel admin y deploy en producción. Todo guiado por Claude Code.',
+    intro: 'Aquí empieza tu producto real. Vas a personalizar un theme profesional de Next.js con Claude Code, conectar una base de datos con Supabase para capturar emails de usuarios interesados y desplegar tu web en Vercel con dominio propio.',
     leccionesRelacionadas: [
       { titulo: '¿Qué es Claude Code?', url: '/fundamentos/que-es' },
       { titulo: 'CLAUDE.md y memoria', url: '/fundamentos/memoria' },
