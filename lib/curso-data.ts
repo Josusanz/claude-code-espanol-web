@@ -91,7 +91,7 @@ Prepara una mini-presentación para el Día 1:
 3. **¿Por qué ahora?** — Qué te motivó a dar este paso
 4. **Un dato curioso** — Algo personal que nos ayude a conocerte
 
-> No necesitas preparar nada técnico ni completar ningún ejercicio antes del Día 1. Solo tu presentación. La Rueda del Creador la haremos juntos durante la clase.
+> No necesitas preparar nada técnico ni completar ningún ejercicio antes del Día 1. Solo tu presentación.
 
 ---
 
@@ -276,7 +276,6 @@ La IA escribirá el código por ti. Tu trabajo es:
 3. Iterar hasta que esté perfecto
       `,
       recursos: [
-        { titulo: 'Plantilla Rueda del Creador (PDF)', url: '/recursos/rueda-creador.pdf', tipo: 'pdf' },
         { titulo: 'Crear cuenta en Supabase', url: 'https://supabase.com', tipo: 'link' },
         { titulo: 'Documentación Next.js App Router', url: 'https://nextjs.org/docs/app', tipo: 'link' },
       ],
@@ -291,7 +290,6 @@ La IA escribirá el código por ti. Tu trabajo es:
 **Bienvenida y conexión**
 - Bienvenida al curso y contexto
 - Ronda de presentaciones (2 min cada uno)
-- Hacemos juntos la Rueda del Creador
 - Ejercicio: dificultades y miedos — ¿qué te frena?
 
 **Conocer el ecosistema**
@@ -318,11 +316,10 @@ La IA escribirá el código por ti. Tu trabajo es:
       `,
     },
     entregable: {
-      titulo: 'Waitlist desplegada + Rueda del Creador',
-      descripcion: 'Tu waitlist funcionando en internet y tu Rueda del Creador compartida en Discord.',
+      titulo: 'Waitlist desplegada',
+      descripcion: 'Tu waitlist funcionando en internet y compartida en Discord.',
       fechaLimite: '2026-02-26',
       checklist: [
-        'Rueda del Creador completada (se hace en la clase del Día 1)',
         'Presentación hecha en la primera clase',
         'Theme base elegido y personalizado',
         'Proyecto creado a partir del theme',
