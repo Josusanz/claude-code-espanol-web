@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import PrecursoEmailGate from '../../components/PrecursoEmailGate'
 import { useState, useEffect } from 'react'
+import { getExtensionForCourse, getUserCourseId } from '../../lib/precurso-extended-data'
 
 // Estructura del precurso
 export const PRECURSO_SECTIONS = {
@@ -1217,6 +1218,103 @@ function PrecursoContent() {
             <span>⏱️ ~65 min total</span>
             <span>📱 A tu ritmo</span>
           </div>
+
+          {/* Course-specific extension modules */}
+          {(() => {
+            const courseId = getUserCourseId()
+            const extension = courseId ? getExtensionForCourse(courseId) : null
+            if (!extension) return null
+            return (
+              <div style={{ marginTop: '32px' }}>
+                <div style={{
+                  height: '1px',
+                  background: t.border,
+                  marginBottom: '24px',
+                }} />
+                <h2 style={{
+                  fontSize: '20px',
+                  fontWeight: 700,
+                  color: t.text,
+                  margin: '0 0 8px',
+                }}>
+                  🎯 {extension.titulo}
+                </h2>
+                <p style={{
+                  fontSize: '14px',
+                  color: t.textSecondary,
+                  margin: '0 0 16px',
+                  lineHeight: 1.5,
+                }}>
+                  {extension.descripcion}
+                </p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                  {extension.modulos.map(mod => (
+                    <Link
+                      key={mod.id}
+                      href={mod.href}
+                      className="precurso-card"
+                      style={{
+                        display: 'flex',
+                        alignItems: 'flex-start',
+                        gap: '16px',
+                        padding: '20px',
+                        background: t.bgSecondary,
+                        border: `1px solid ${t.border}`,
+                        borderRadius: '14px',
+                        textDecoration: 'none',
+                        transition: 'all 0.2s',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      <div style={{
+                        width: '48px',
+                        height: '48px',
+                        background: `linear-gradient(135deg, ${t.accent}, #8b5cf6)`,
+                        borderRadius: '12px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: '22px',
+                        flexShrink: 0,
+                        color: 'white',
+                      }}>
+                        {mod.emoji}
+                      </div>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                          <span style={{
+                            padding: '2px 8px',
+                            background: `${t.accent}20`,
+                            borderRadius: '4px',
+                            fontSize: '10px',
+                            fontWeight: 600,
+                            color: t.accent,
+                          }}>PREPARACION</span>
+                        </div>
+                        <h3 style={{
+                          fontSize: '16px',
+                          fontWeight: 600,
+                          color: t.text,
+                          margin: '0 0 4px 0',
+                          lineHeight: 1.3,
+                        }}>
+                          {mod.titulo}
+                        </h3>
+                        <p style={{
+                          fontSize: '14px',
+                          color: t.textSecondary,
+                          margin: 0,
+                          lineHeight: 1.4,
+                        }}>
+                          {mod.descripcion}
+                        </p>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )
+          })()}
 
           {/* Link al curso completo */}
           {progress === 100 && (

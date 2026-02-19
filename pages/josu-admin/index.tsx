@@ -327,6 +327,22 @@ export default function PrecursoAdminPage() {
 
         <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
           <Link
+            href="/josu-admin/autoguiado"
+            style={{
+              padding: '8px 16px',
+              fontSize: '14px',
+              fontWeight: 600,
+              color: 'white',
+              background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+              border: 'none',
+              borderRadius: '6px',
+              textDecoration: 'none',
+              boxShadow: '0 2px 8px rgba(245, 158, 11, 0.3)'
+            }}
+          >
+            Panel Autoguiado
+          </Link>
+          <Link
             href="/josu-admin/curso"
             style={{
               padding: '8px 16px',

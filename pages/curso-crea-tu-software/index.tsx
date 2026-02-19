@@ -1,17 +1,32 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
-import CursoEmailGate from '../../components/CursoEmailGate'
 import { MODULOS_AUTOGUIADO } from '../../lib/curso-autoguiado-data'
+import { useTheme, ThemeToggleButton, THEME_GLOBAL_CSS } from '../../lib/theme-utils'
 
-const NIVEL_BADGE: Record<string, { bg: string; text: string; label: string }> = {
-  principiante: { bg: '#d1fae5', text: '#065f46', label: 'Principiante' },
-  intermedio: { bg: '#dbeafe', text: '#1e40af', label: 'Intermedio' },
-  avanzado: { bg: '#ede9fe', text: '#5b21b6', label: 'Avanzado' },
+interface ModuloUnlockStatus {
+  unlocked: boolean
+  availableDate: string
+  daysRemaining: number
+}
+
+const NIVEL_BADGE: Record<string, { label: string }> = {
+  principiante: { label: 'Principiante' },
+  intermedio: { label: 'Intermedio' },
+  avanzado: { label: 'Avanzado' },
+}
+
+function formatUnlockDate(dateStr: string): string {
+  const date = new Date(dateStr)
+  return date.toLocaleDateString('es-ES', { day: 'numeric', month: 'long' })
 }
 
 function Dashboard() {
+  const { isDark, toggleTheme, t, mounted } = useTheme()
   const [progress, setProgress] = useState<Record<string, boolean>>({})
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [unlockStatus, setUnlockStatus] = useState<Record<number, ModuloUnlockStatus> | null>(null)
+  const [userEmail, setUserEmail] = useState<string | null>(null)
 
   useEffect(() => {
     try {
@@ -22,7 +37,32 @@ function Dashboard() {
     } catch {
       // Ignore
     }
+    try {
+      const savedAccess = localStorage.getItem('precurso-access')
+      if (savedAccess) {
+        const data = JSON.parse(savedAccess)
+        if (data.authenticated && data.email) {
+          setIsLoggedIn(true)
+          setUserEmail(data.email.toLowerCase().trim())
+        }
+      }
+    } catch {
+      // Ignore
+    }
   }, [])
+
+  // Fetch unlock status when logged in
+  useEffect(() => {
+    if (!userEmail) return
+    fetch(`/api/autoguiado/unlock-status?email=${encodeURIComponent(userEmail)}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.success && data.modulos) {
+          setUnlockStatus(data.modulos)
+        }
+      })
+      .catch(() => {})
+  }, [userEmail])
 
   const completedCount = MODULOS_AUTOGUIADO.filter(m => progress[`autoguiado-modulo-${m.num}`]).length
   const totalModulos = MODULOS_AUTOGUIADO.length
@@ -33,12 +73,15 @@ function Dashboard() {
     window.location.href = '/curso'
   }
 
+  if (!mounted) return null
+
   return (
     <div style={{
       minHeight: '100vh',
-      background: 'linear-gradient(135deg, #f8fafc, #eef2f6)',
+      background: t.bg,
       fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
-      color: '#0f172a',
+      color: t.text,
+      transition: 'background 0.3s, color 0.3s',
     }}>
       <Head>
         <title>Crea tu Software con IA | Curso Autoguiado</title>
@@ -46,15 +89,17 @@ function Dashboard() {
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
       </Head>
 
-      {/* Header */}
+      {/* Sticky Nav */}
       <header style={{
-        background: 'rgba(255,255,255,0.9)',
-        backdropFilter: 'blur(12px)',
-        borderBottom: '1px solid rgba(0,0,0,0.06)',
-        padding: '16px 24px',
+        background: t.navBg,
+        backdropFilter: 'blur(16px)',
+        WebkitBackdropFilter: 'blur(16px)',
+        borderBottom: `1px solid ${t.border}`,
+        padding: '14px 24px',
         position: 'sticky',
         top: 0,
         zIndex: 100,
+        transition: 'all 0.3s',
       }}>
         <div style={{
           maxWidth: '1000px',
@@ -64,44 +109,82 @@ function Dashboard() {
           justifyContent: 'space-between',
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <span style={{ fontSize: '24px' }}>🚀</span>
+            <div style={{
+              width: '36px',
+              height: '36px',
+              background: `linear-gradient(135deg, ${t.accent}, ${t.accentHover})`,
+              borderRadius: '10px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '18px',
+            }}>
+              🚀
+            </div>
             <div>
-              <h1 style={{ margin: 0, fontSize: '18px', fontWeight: 700, color: '#0f172a' }}>
+              <h1 style={{
+                margin: 0,
+                fontSize: '16px',
+                fontWeight: 700,
+                color: t.text,
+                letterSpacing: '-0.02em',
+              }}>
                 Crea tu Software con IA
               </h1>
-              <p style={{ margin: 0, fontSize: '12px', color: '#64748b' }}>
+              <p style={{ margin: 0, fontSize: '12px', color: t.textTertiary }}>
                 Curso autoguiado
               </p>
             </div>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <Link href="/curso/themes" style={{
-              padding: '8px 14px',
-              fontSize: '13px',
-              fontWeight: 500,
-              color: '#6366f1',
-              background: '#eef2ff',
-              border: '1px solid #c7d2fe',
-              borderRadius: '8px',
-              textDecoration: 'none',
-            }}>
-              🎨 Themes
-            </Link>
-            <button
-              onClick={handleLogout}
-              style={{
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <ThemeToggleButton isDark={isDark} toggleTheme={toggleTheme} />
+            {isLoggedIn && (
+              <Link href="/curso/themes" style={{
                 padding: '8px 14px',
                 fontSize: '13px',
                 fontWeight: 500,
-                color: '#64748b',
-                background: 'transparent',
-                border: '1px solid rgba(0,0,0,0.1)',
+                color: t.accent,
+                background: t.glow,
+                border: `1px solid ${t.border}`,
                 borderRadius: '8px',
-                cursor: 'pointer',
-              }}
-            >
-              Salir
-            </button>
+                textDecoration: 'none',
+                transition: 'all 0.2s',
+              }}>
+                🎨 Themes
+              </Link>
+            )}
+            {isLoggedIn ? (
+              <button
+                onClick={handleLogout}
+                style={{
+                  padding: '8px 14px',
+                  fontSize: '13px',
+                  fontWeight: 500,
+                  color: t.textSecondary,
+                  background: 'transparent',
+                  border: `1px solid ${t.border}`,
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s',
+                }}
+              >
+                Salir
+              </button>
+            ) : (
+              <Link href="/precurso" style={{
+                padding: '8px 16px',
+                fontSize: '13px',
+                fontWeight: 600,
+                color: '#fff',
+                background: t.accent,
+                borderRadius: '8px',
+                textDecoration: 'none',
+                boxShadow: `0 2px 8px ${t.glowStrong}`,
+                transition: 'all 0.2s',
+              }}>
+                Iniciar sesion
+              </Link>
+            )}
           </div>
         </div>
       </header>
@@ -112,8 +195,8 @@ function Dashboard() {
         padding: '32px 24px 80px',
       }}>
         {/* Hero section */}
-        <div style={{
-          background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+        <div className="animate-fade-in" style={{
+          background: `linear-gradient(135deg, ${t.accent}, ${t.accentHover})`,
           borderRadius: '20px',
           padding: '40px 32px',
           color: 'white',
@@ -132,9 +215,10 @@ function Dashboard() {
           }} />
           <h2 style={{
             margin: '0 0 8px',
-            fontSize: '28px',
+            fontSize: 'clamp(22px, 4vw, 28px)',
             fontWeight: 800,
             position: 'relative',
+            letterSpacing: '-0.02em',
           }}>
             Tu camino para crear software con IA
           </h2>
@@ -146,7 +230,7 @@ function Dashboard() {
             lineHeight: 1.6,
             position: 'relative',
           }}>
-            11 módulos, a tu ritmo. Desde cero hasta lanzar tu propio SaaS.
+            11 modulos, a tu ritmo. Desde cero hasta lanzar tu propio SaaS.
           </p>
 
           {/* Progress bar */}
@@ -159,7 +243,7 @@ function Dashboard() {
               fontWeight: 600,
             }}>
               <span>Progreso total</span>
-              <span>{completedCount}/{totalModulos} módulos</span>
+              <span>{completedCount}/{totalModulos} modulos</span>
             </div>
             <div style={{
               height: '10px',
@@ -178,8 +262,59 @@ function Dashboard() {
           </div>
         </div>
 
+        {/* Welcome banner for non-logged users */}
+        {!isLoggedIn && (
+          <div className="animate-fade-in delay-1" style={{
+            background: isDark ? '#0a1f0a' : 'linear-gradient(135deg, #ecfdf5, #d1fae5)',
+            border: `1px solid ${isDark ? 'rgba(34,197,94,0.2)' : '#a7f3d0'}`,
+            borderRadius: '16px',
+            padding: '24px 28px',
+            marginBottom: '24px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+            gap: '16px',
+          }}>
+            <div>
+              <h3 style={{ margin: '0 0 4px', fontSize: '16px', fontWeight: 700, color: isDark ? '#4ade80' : '#065f46' }}>
+                Empieza gratis con el Modulo 0
+              </h3>
+              <p style={{ margin: 0, fontSize: '14px', color: isDark ? '#86efac' : '#047857', lineHeight: 1.5 }}>
+                Construye y publica tu primera web con IA en menos de 1 hora. Sin experiencia previa.
+              </p>
+            </div>
+            <div style={{ display: 'flex', gap: '10px', flexShrink: 0 }}>
+              <Link href="/curso-crea-tu-software/modulo/0" style={{
+                padding: '10px 20px',
+                fontSize: '14px',
+                fontWeight: 600,
+                color: '#fff',
+                background: '#059669',
+                borderRadius: '10px',
+                textDecoration: 'none',
+                boxShadow: '0 2px 8px rgba(5, 150, 105, 0.3)',
+              }}>
+                Empezar gratis
+              </Link>
+              <Link href="/precurso" style={{
+                padding: '10px 20px',
+                fontSize: '14px',
+                fontWeight: 500,
+                color: isDark ? '#86efac' : '#065f46',
+                background: isDark ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.7)',
+                border: `1px solid ${isDark ? 'rgba(34,197,94,0.2)' : '#a7f3d0'}`,
+                borderRadius: '10px',
+                textDecoration: 'none',
+              }}>
+                Ya tengo acceso
+              </Link>
+            </div>
+          </div>
+        )}
+
         {/* Quick links */}
-        <div style={{
+        <div className="animate-fade-in delay-2" style={{
           display: 'flex',
           gap: '12px',
           marginBottom: '28px',
@@ -194,14 +329,15 @@ function Dashboard() {
               alignItems: 'center',
               gap: '8px',
               padding: '10px 16px',
-              background: '#fff',
-              border: '1px solid rgba(0,0,0,0.06)',
+              background: t.bgSecondary,
+              border: `1px solid ${t.border}`,
               borderRadius: '10px',
               fontSize: '14px',
               fontWeight: 500,
               color: '#5865F2',
               textDecoration: 'none',
-              boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
+              boxShadow: `0 1px 3px ${t.glow}`,
+              transition: 'all 0.2s',
             }}
           >
             💬 Discord del curso
@@ -211,18 +347,26 @@ function Dashboard() {
             alignItems: 'center',
             gap: '8px',
             padding: '10px 16px',
-            background: '#fff',
-            border: '1px solid rgba(0,0,0,0.06)',
+            background: t.bgSecondary,
+            border: `1px solid ${t.border}`,
             borderRadius: '10px',
             fontSize: '14px',
             fontWeight: 500,
-            color: '#475569',
+            color: t.textSecondary,
             textDecoration: 'none',
-            boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
+            boxShadow: `0 1px 3px ${t.glow}`,
+            transition: 'all 0.2s',
           }}>
             📚 Lecciones gratuitas
           </Link>
         </div>
+
+        {/* Divider */}
+        <div style={{
+          height: '1px',
+          background: t.border,
+          marginBottom: '28px',
+        }} />
 
         {/* Module grid */}
         <div style={{
@@ -230,30 +374,38 @@ function Dashboard() {
           gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
           gap: '16px',
         }}>
-          {MODULOS_AUTOGUIADO.map(modulo => {
+          {MODULOS_AUTOGUIADO.map((modulo, index) => {
             const isCompleted = progress[`autoguiado-modulo-${modulo.num}`]
             const badge = NIVEL_BADGE[modulo.nivel]
+            const moduloUnlock = unlockStatus?.[modulo.num]
+            const isLocked = isLoggedIn && !modulo.gratis && moduloUnlock && !moduloUnlock.unlocked
 
             return (
               <Link
                 key={modulo.num}
-                href={`/curso-crea-tu-software/modulo/${modulo.num}`}
+                href={isLocked ? '#' : `/curso-crea-tu-software/modulo/${modulo.num}`}
+                onClick={isLocked ? (e: React.MouseEvent) => e.preventDefault() : undefined}
+                className={`animate-fade-in delay-${Math.min(index % 4 + 1, 4)} module-card`}
                 style={{
                   display: 'block',
-                  background: '#fff',
-                  border: isCompleted ? '2px solid #22c55e' : '1px solid rgba(0,0,0,0.06)',
+                  background: isLocked ? t.bgTertiary : t.bgSecondary,
+                  border: isCompleted
+                    ? `2px solid ${isDark ? '#16a34a' : '#22c55e'}`
+                    : `1px solid ${t.border}`,
                   borderRadius: '16px',
                   padding: '24px',
                   textDecoration: 'none',
                   color: 'inherit',
-                  boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
+                  boxShadow: `0 1px 3px ${t.glow}`,
                   transition: 'all 0.2s',
                   position: 'relative',
                   overflow: 'hidden',
+                  opacity: isLocked ? 0.6 : 1,
+                  cursor: isLocked ? 'default' : 'pointer',
                 }}
               >
-                {/* Completed indicator */}
-                {isCompleted && (
+                {/* Status indicator */}
+                {isCompleted ? (
                   <div style={{
                     position: 'absolute',
                     top: '16px',
@@ -271,7 +423,50 @@ function Dashboard() {
                   }}>
                     ✓
                   </div>
-                )}
+                ) : modulo.gratis ? (
+                  <span style={{
+                    position: 'absolute',
+                    top: '16px',
+                    right: '16px',
+                    padding: '4px 10px',
+                    fontSize: '11px',
+                    fontWeight: 700,
+                    color: isDark ? '#4ade80' : '#065f46',
+                    background: isDark ? 'rgba(34,197,94,0.15)' : '#d1fae5',
+                    borderRadius: '6px',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em',
+                  }}>
+                    Gratis
+                  </span>
+                ) : isLocked && moduloUnlock ? (
+                  <span style={{
+                    position: 'absolute',
+                    top: '16px',
+                    right: '16px',
+                    padding: '4px 10px',
+                    fontSize: '11px',
+                    fontWeight: 600,
+                    color: isDark ? '#fbbf24' : '#92400e',
+                    background: isDark ? 'rgba(251,191,36,0.12)' : '#fef3c7',
+                    borderRadius: '6px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '4px',
+                  }}>
+                    🔒 {formatUnlockDate(moduloUnlock.availableDate)}
+                  </span>
+                ) : !isLoggedIn ? (
+                  <span style={{
+                    position: 'absolute',
+                    top: '16px',
+                    right: '16px',
+                    fontSize: '18px',
+                    opacity: 0.4,
+                  }}>
+                    🔒
+                  </span>
+                ) : null}
 
                 {/* Module number + emoji */}
                 <div style={{
@@ -285,7 +480,7 @@ function Dashboard() {
                     height: '44px',
                     background: isCompleted
                       ? 'linear-gradient(135deg, #22c55e, #16a34a)'
-                      : 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+                      : `linear-gradient(135deg, ${t.accent}, ${t.accentHover})`,
                     borderRadius: '12px',
                     display: 'flex',
                     alignItems: 'center',
@@ -300,18 +495,19 @@ function Dashboard() {
                       margin: 0,
                       fontSize: '11px',
                       fontWeight: 600,
-                      color: '#94a3b8',
+                      color: t.textTertiary,
                       textTransform: 'uppercase',
                       letterSpacing: '0.05em',
                     }}>
-                      Módulo {modulo.num}
+                      Modulo {modulo.num}
                     </p>
                     <h3 style={{
                       margin: 0,
                       fontSize: '16px',
                       fontWeight: 700,
-                      color: '#0f172a',
+                      color: t.text,
                       lineHeight: 1.3,
+                      letterSpacing: '-0.01em',
                     }}>
                       {modulo.titulo}
                     </h3>
@@ -322,7 +518,7 @@ function Dashboard() {
                 <p style={{
                   margin: '0 0 16px',
                   fontSize: '14px',
-                  color: '#64748b',
+                  color: t.textSecondary,
                   lineHeight: 1.5,
                 }}>
                   {modulo.descripcion}
@@ -340,8 +536,9 @@ function Dashboard() {
                     fontSize: '11px',
                     fontWeight: 600,
                     borderRadius: '6px',
-                    background: badge.bg,
-                    color: badge.text,
+                    background: t.glow,
+                    color: t.accent,
+                    border: `1px solid ${t.border}`,
                   }}>
                     {badge.label}
                   </span>
@@ -350,8 +547,8 @@ function Dashboard() {
                     fontSize: '11px',
                     fontWeight: 500,
                     borderRadius: '6px',
-                    background: '#f1f5f9',
-                    color: '#64748b',
+                    background: t.bgTertiary,
+                    color: t.textTertiary,
                   }}>
                     ⏱ {modulo.duracion}
                   </span>
@@ -362,24 +559,26 @@ function Dashboard() {
         </div>
 
         {/* Recommended order note */}
-        <div style={{
+        <div className="animate-fade-in delay-4" style={{
           marginTop: '32px',
           padding: '16px 20px',
-          background: '#fef9c3',
-          border: '1px solid #fde047',
+          background: isDark ? 'rgba(251,191,36,0.08)' : '#fef9c3',
+          border: `1px solid ${isDark ? 'rgba(251,191,36,0.15)' : '#fde047'}`,
           borderRadius: '12px',
           fontSize: '14px',
-          color: '#854d0e',
+          color: isDark ? '#fbbf24' : '#854d0e',
           lineHeight: 1.6,
         }}>
-          <strong>💡 Orden recomendado:</strong> Los módulos están ordenados de forma progresiva (0 → 10). Puedes acceder a cualquiera en cualquier momento, pero te recomendamos seguir el orden para no perderte nada.
+          <strong>💡 Orden recomendado:</strong> Los modulos estan ordenados de forma progresiva (0 → 10). Puedes acceder a cualquiera en cualquier momento, pero te recomendamos seguir el orden para no perderte nada.
         </div>
       </main>
 
       <style jsx global>{`
-        a[href^="/curso-crea-tu-software/modulo/"]:hover {
+        ${THEME_GLOBAL_CSS}
+        .module-card:hover {
           transform: translateY(-2px);
-          box-shadow: 0 4px 12px rgba(0,0,0,0.08) !important;
+          box-shadow: 0 4px 16px ${t.glowStrong} !important;
+          border-color: ${t.borderHover} !important;
         }
         @media (max-width: 640px) {
           h2 { font-size: 22px !important; }
@@ -390,9 +589,5 @@ function Dashboard() {
 }
 
 export default function CursoAutoguiadoPage() {
-  return (
-    <CursoEmailGate>
-      <Dashboard />
-    </CursoEmailGate>
-  )
+  return <Dashboard />
 }

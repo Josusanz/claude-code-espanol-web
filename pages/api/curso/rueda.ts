@@ -7,9 +7,35 @@ interface RuedaData {
   savedAt: string
 }
 
-interface UserRuedas {
+// New dual format
+interface DualRuedas {
+  creador?: { antes?: RuedaData; despues?: RuedaData }
+  vida?: { antes?: RuedaData; despues?: RuedaData }
+}
+
+// Old format (backward compat)
+interface OldRuedas {
   antes?: RuedaData
   despues?: RuedaData
+}
+
+type StoredRuedas = DualRuedas & OldRuedas
+
+function migrateRuedas(data: StoredRuedas): DualRuedas {
+  // If old format detected, migrate to new
+  if (data.antes || data.despues) {
+    return {
+      creador: {
+        antes: data.antes,
+        despues: data.despues,
+      },
+      vida: data.vida,
+    }
+  }
+  return {
+    creador: data.creador,
+    vida: data.vida,
+  }
 }
 
 const RUEDA_KEY_PREFIX = 'curso:rueda:'
@@ -25,24 +51,32 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     try {
       const normalizedEmail = email.toLowerCase().trim()
-      const ruedas = await kv.get<UserRuedas>(`${RUEDA_KEY_PREFIX}${normalizedEmail}`)
+      const stored = await kv.get<StoredRuedas>(`${RUEDA_KEY_PREFIX}${normalizedEmail}`)
+
+      if (!stored) {
+        return res.status(200).json({ success: true, ruedas: {} })
+      }
+
+      const migrated = migrateRuedas(stored)
+
+      // If migration happened, persist the new format
+      if (stored.antes || stored.despues) {
+        await kv.set(`${RUEDA_KEY_PREFIX}${normalizedEmail}`, migrated)
+      }
 
       return res.status(200).json({
         success: true,
-        ruedas: ruedas || {}
+        ruedas: migrated,
       })
     } catch (error) {
       console.error('Error getting ruedas:', error)
-      return res.status(200).json({
-        success: true,
-        ruedas: {}
-      })
+      return res.status(200).json({ success: true, ruedas: {} })
     }
   }
 
   // POST: guardar rueda
   if (req.method === 'POST') {
-    const { email, tipo, scores } = req.body
+    const { email, tipo, scores, ruedaType } = req.body
 
     if (!email || typeof email !== 'string') {
       return res.status(400).json({ error: 'Email requerido' })
@@ -52,36 +86,46 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(400).json({ error: 'Tipo debe ser "antes" o "despues"' })
     }
 
-    if (!scores || !Array.isArray(scores) || scores.length !== 8) {
-      return res.status(400).json({ error: 'Scores debe ser un array de 8 números' })
+    // ruedaType defaults to 'creador' for backward compat
+    const wheelType = ruedaType || 'creador'
+    if (wheelType !== 'creador' && wheelType !== 'vida') {
+      return res.status(400).json({ error: 'ruedaType debe ser "creador" o "vida"' })
+    }
+
+    const expectedLength = wheelType === 'creador' ? 8 : 9
+    if (!scores || !Array.isArray(scores) || scores.length !== expectedLength) {
+      return res.status(400).json({ error: `Scores debe ser un array de ${expectedLength} numeros` })
     }
 
     try {
       const normalizedEmail = email.toLowerCase().trim()
 
-      // Verificar que el email está autorizado
       const isAuthorized = await isEmailAuthorizedForCurso(normalizedEmail)
       if (!isAuthorized) {
         return res.status(403).json({ error: 'Email no autorizado' })
       }
 
-      // Obtener ruedas existentes
-      const existingRuedas = await kv.get<UserRuedas>(`${RUEDA_KEY_PREFIX}${normalizedEmail}`) || {}
+      const stored = await kv.get<StoredRuedas>(`${RUEDA_KEY_PREFIX}${normalizedEmail}`) || {}
+      const existing = migrateRuedas(stored)
 
-      // Actualizar con la nueva rueda
-      const updatedRuedas: UserRuedas = {
-        ...existingRuedas,
-        [tipo]: {
-          scores,
-          savedAt: new Date().toISOString()
-        }
+      const newData: RuedaData = {
+        scores,
+        savedAt: new Date().toISOString(),
       }
 
-      await kv.set(`${RUEDA_KEY_PREFIX}${normalizedEmail}`, updatedRuedas)
+      const updated: DualRuedas = {
+        ...existing,
+        [wheelType]: {
+          ...existing[wheelType],
+          [tipo]: newData,
+        },
+      }
+
+      await kv.set(`${RUEDA_KEY_PREFIX}${normalizedEmail}`, updated)
 
       return res.status(200).json({
         success: true,
-        ruedas: updatedRuedas
+        ruedas: updated,
       })
     } catch (error) {
       console.error('Error saving rueda:', error)

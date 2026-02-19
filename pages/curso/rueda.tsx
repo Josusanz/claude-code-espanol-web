@@ -2,17 +2,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import CursoEmailGate from '../../components/CursoEmailGate'
-import RuedaCreador from '../../components/RuedaCreador'
-
-interface RuedaData {
-  scores: number[]
-  savedAt: string
-}
-
-interface UserRuedas {
-  antes?: RuedaData
-  despues?: RuedaData
-}
+import DualRueda, { DualRuedaState } from '../../components/DualRueda'
 
 function getUserEmail(): string | null {
   if (typeof window === 'undefined') return null
@@ -30,9 +20,8 @@ function getUserEmail(): string | null {
 
 function RuedaPageContent() {
   const [loading, setLoading] = useState(true)
-  const [ruedas, setRuedas] = useState<UserRuedas>({})
+  const [ruedas, setRuedas] = useState<DualRuedaState>({})
   const [userEmail, setUserEmail] = useState<string | null>(null)
-  const [activeTab, setActiveTab] = useState<'antes' | 'despues' | 'comparar'>('antes')
 
   useEffect(() => {
     const email = getUserEmail()
@@ -51,13 +40,6 @@ function RuedaPageContent() {
       if (res.ok) {
         const data = await res.json()
         setRuedas(data.ruedas || {})
-
-        // Si ya tiene la rueda "antes", mostrar comparación si también tiene "después"
-        if (data.ruedas?.antes && data.ruedas?.despues) {
-          setActiveTab('comparar')
-        } else if (data.ruedas?.antes) {
-          setActiveTab('antes')
-        }
       }
     } catch (error) {
       console.error('Error loading ruedas:', error)
@@ -66,14 +48,14 @@ function RuedaPageContent() {
     }
   }
 
-  const handleSaveRueda = async (tipo: 'antes' | 'despues', scores: number[]) => {
+  const handleSaveRueda = async (ruedaType: 'creador' | 'vida', tipo: 'antes' | 'despues', scores: number[]) => {
     if (!userEmail) return
 
     try {
       const res = await fetch('/api/curso/rueda', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: userEmail, tipo, scores })
+        body: JSON.stringify({ email: userEmail, tipo, scores, ruedaType })
       })
 
       if (res.ok) {
@@ -84,14 +66,6 @@ function RuedaPageContent() {
       console.error('Error saving rueda:', error)
       throw error
     }
-  }
-
-  const formatDate = (dateStr: string) => {
-    return new Date(dateStr).toLocaleDateString('es-ES', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric'
-    })
   }
 
   if (loading) {
@@ -124,7 +98,7 @@ function RuedaPageContent() {
       color: '#0f172a'
     }}>
       <Head>
-        <title>Rueda del Creador | Curso</title>
+        <title>Ruedas del Creador y Vida | Curso</title>
         <meta name="robots" content="noindex, nofollow" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
       </Head>
@@ -159,7 +133,7 @@ function RuedaPageContent() {
             background: 'rgba(0,0,0,0.08)'
           }} />
           <h1 style={{ margin: 0, fontSize: '16px', fontWeight: 600, color: '#0f172a' }}>
-            🎯 Rueda del Creador
+            🎯 Mis Ruedas
           </h1>
         </div>
       </header>
@@ -179,259 +153,13 @@ function RuedaPageContent() {
             Conoce tu punto de partida
           </h2>
           <p style={{ margin: 0, fontSize: '15px', color: '#64748b', maxWidth: '600px', marginLeft: 'auto', marginRight: 'auto' }}>
-            Esta rueda te ayuda a evaluar 8 áreas clave para crear tu proyecto.
-            Complétala al inicio del curso y al final para ver tu transformación.
+            Dos ruedas para evaluar tu vida como creador y tu bienestar personal.
+            Completalas al inicio y al final del curso para ver tu transformacion.
           </p>
         </div>
 
-        {/* Tabs */}
-        <div style={{
-          display: 'flex',
-          gap: '8px',
-          marginBottom: '24px',
-          justifyContent: 'center',
-          flexWrap: 'wrap'
-        }}>
-          <button
-            onClick={() => setActiveTab('antes')}
-            style={{
-              padding: '12px 24px',
-              fontSize: '14px',
-              fontWeight: 600,
-              color: activeTab === 'antes' ? '#fff' : '#64748b',
-              background: activeTab === 'antes' ? '#6366f1' : '#fff',
-              border: `1px solid ${activeTab === 'antes' ? '#6366f1' : 'rgba(0,0,0,0.1)'}`,
-              borderRadius: '10px',
-              cursor: 'pointer',
-              transition: 'all 0.2s'
-            }}
-          >
-            📍 Inicio del curso
-            {ruedas.antes && <span style={{ marginLeft: '8px', opacity: 0.7 }}>✓</span>}
-          </button>
-
-          <button
-            onClick={() => setActiveTab('despues')}
-            style={{
-              padding: '12px 24px',
-              fontSize: '14px',
-              fontWeight: 600,
-              color: activeTab === 'despues' ? '#fff' : '#64748b',
-              background: activeTab === 'despues' ? '#22c55e' : '#fff',
-              border: `1px solid ${activeTab === 'despues' ? '#22c55e' : 'rgba(0,0,0,0.1)'}`,
-              borderRadius: '10px',
-              cursor: 'pointer',
-              transition: 'all 0.2s'
-            }}
-          >
-            🏆 Final del curso
-            {ruedas.despues && <span style={{ marginLeft: '8px', opacity: 0.7 }}>✓</span>}
-          </button>
-
-          {ruedas.antes && ruedas.despues && (
-            <button
-              onClick={() => setActiveTab('comparar')}
-              style={{
-                padding: '12px 24px',
-                fontSize: '14px',
-                fontWeight: 600,
-                color: activeTab === 'comparar' ? '#fff' : '#64748b',
-                background: activeTab === 'comparar' ? '#f59e0b' : '#fff',
-                border: `1px solid ${activeTab === 'comparar' ? '#f59e0b' : 'rgba(0,0,0,0.1)'}`,
-                borderRadius: '10px',
-                cursor: 'pointer',
-                transition: 'all 0.2s'
-              }}
-            >
-              📊 Comparar
-            </button>
-          )}
-        </div>
-
-        {/* Content based on tab */}
-        {activeTab === 'antes' && (
-          <div>
-            {ruedas.antes ? (
-              <div>
-                <p style={{
-                  textAlign: 'center',
-                  fontSize: '14px',
-                  color: '#22c55e',
-                  marginBottom: '16px'
-                }}>
-                  ✓ Completada el {formatDate(ruedas.antes.savedAt)}
-                </p>
-                <RuedaCreador
-                  tipo="antes"
-                  initialScores={ruedas.antes.scores}
-                  onSave={(scores) => handleSaveRueda('antes', scores)}
-                  readOnly={false}
-                />
-              </div>
-            ) : (
-              <RuedaCreador
-                tipo="antes"
-                onSave={(scores) => handleSaveRueda('antes', scores)}
-              />
-            )}
-          </div>
-        )}
-
-        {activeTab === 'despues' && (
-          <div>
-            {!ruedas.antes ? (
-              <div style={{
-                textAlign: 'center',
-                padding: '60px 20px',
-                background: '#fff',
-                borderRadius: '16px',
-                border: '1px solid rgba(0,0,0,0.06)'
-              }}>
-                <span style={{ fontSize: '48px', display: 'block', marginBottom: '16px' }}>🔒</span>
-                <h3 style={{ margin: '0 0 8px', fontSize: '18px', color: '#0f172a' }}>
-                  Primero completa tu rueda inicial
-                </h3>
-                <p style={{ margin: 0, color: '#64748b', fontSize: '14px' }}>
-                  Necesitas tener un punto de partida para poder comparar al final del curso.
-                </p>
-                <button
-                  onClick={() => setActiveTab('antes')}
-                  style={{
-                    marginTop: '20px',
-                    padding: '12px 24px',
-                    fontSize: '14px',
-                    fontWeight: 600,
-                    color: '#fff',
-                    background: '#6366f1',
-                    border: 'none',
-                    borderRadius: '10px',
-                    cursor: 'pointer'
-                  }}
-                >
-                  Ir a completar rueda inicial
-                </button>
-              </div>
-            ) : ruedas.despues ? (
-              <div>
-                <p style={{
-                  textAlign: 'center',
-                  fontSize: '14px',
-                  color: '#22c55e',
-                  marginBottom: '16px'
-                }}>
-                  ✓ Completada el {formatDate(ruedas.despues.savedAt)}
-                </p>
-                <RuedaCreador
-                  tipo="despues"
-                  initialScores={ruedas.despues.scores}
-                  onSave={(scores) => handleSaveRueda('despues', scores)}
-                  compareTo={ruedas.antes?.scores}
-                />
-              </div>
-            ) : (
-              <RuedaCreador
-                tipo="despues"
-                onSave={(scores) => handleSaveRueda('despues', scores)}
-                compareTo={ruedas.antes?.scores}
-              />
-            )}
-          </div>
-        )}
-
-        {activeTab === 'comparar' && ruedas.antes && ruedas.despues && (
-          <div>
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-              gap: '24px'
-            }}>
-              {/* Rueda Antes */}
-              <div>
-                <h3 style={{
-                  textAlign: 'center',
-                  margin: '0 0 16px',
-                  fontSize: '16px',
-                  color: '#6366f1'
-                }}>
-                  📍 Inicio ({formatDate(ruedas.antes.savedAt)})
-                </h3>
-                <RuedaCreador
-                  tipo="antes"
-                  initialScores={ruedas.antes.scores}
-                  readOnly={true}
-                />
-              </div>
-
-              {/* Rueda Después */}
-              <div>
-                <h3 style={{
-                  textAlign: 'center',
-                  margin: '0 0 16px',
-                  fontSize: '16px',
-                  color: '#22c55e'
-                }}>
-                  🏆 Final ({formatDate(ruedas.despues.savedAt)})
-                </h3>
-                <RuedaCreador
-                  tipo="despues"
-                  initialScores={ruedas.despues.scores}
-                  readOnly={true}
-                  compareTo={ruedas.antes.scores}
-                />
-              </div>
-            </div>
-
-            {/* Resumen de cambios */}
-            <div style={{
-              marginTop: '32px',
-              padding: '24px',
-              background: '#fff',
-              borderRadius: '16px',
-              border: '1px solid rgba(0,0,0,0.06)',
-              boxShadow: '0 1px 3px rgba(0,0,0,0.04)'
-            }}>
-              <h3 style={{ margin: '0 0 16px', fontSize: '18px', textAlign: 'center', color: '#0f172a' }}>
-                📈 Tu transformación
-              </h3>
-
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
-                gap: '12px'
-              }}>
-                {['Claridad de visión', 'Habilidades técnicas', 'Tiempo disponible', 'Energía y salud', 'Apoyo social', 'Finanzas', 'Mentalidad', 'Propósito'].map((cat, i) => {
-                  const antes = ruedas.antes!.scores[i]
-                  const despues = ruedas.despues!.scores[i]
-                  const diff = despues - antes
-
-                  return (
-                    <div key={i} style={{
-                      padding: '12px',
-                      background: '#f8fafc',
-                      borderRadius: '10px',
-                      textAlign: 'center'
-                    }}>
-                      <p style={{ margin: '0 0 4px', fontSize: '12px', color: '#64748b' }}>
-                        {cat}
-                      </p>
-                      <p style={{
-                        margin: 0,
-                        fontSize: '18px',
-                        fontWeight: 700,
-                        color: diff > 0 ? '#16a34a' : diff < 0 ? '#dc2626' : '#64748b'
-                      }}>
-                        {diff > 0 ? '+' : ''}{diff}
-                      </p>
-                      <p style={{ margin: '4px 0 0', fontSize: '11px', color: '#64748b' }}>
-                        {antes} → {despues}
-                      </p>
-                    </div>
-                  )
-                })}
-              </div>
-            </div>
-          </div>
-        )}
+        {/* Dual Rueda */}
+        <DualRueda ruedas={ruedas} onSave={handleSaveRueda} />
       </main>
 
       <style jsx global>{`
