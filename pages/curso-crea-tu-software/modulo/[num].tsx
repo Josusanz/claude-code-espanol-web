@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 import CursoEmailGate from '../../../components/CursoEmailGate'
+import FreeEmailGate from '../../../components/FreeEmailGate'
 import { MODULOS_AUTOGUIADO, getModuloAutoguiado } from '../../../lib/curso-autoguiado-data'
 import { CURSO_SEMANAS } from '../../../lib/curso-data'
 import { getPizarra } from '../../../lib/curso-pizarra-data'
@@ -919,7 +920,11 @@ export default function ModuloPage() {
   }
 
   if (modulo?.gratis) {
-    return <ModuloContent moduloNum={moduloNum} />
+    return (
+      <FreeEmailGate>
+        <ModuloContent moduloNum={moduloNum} />
+      </FreeEmailGate>
+    )
   }
 
   return (

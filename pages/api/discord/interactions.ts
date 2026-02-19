@@ -494,12 +494,12 @@ ${descripcion || '_Sin descripción todavía_'}
         'instalar claude': '**Instalar Claude Code:**\n```\n# Mac/Linux:\ncurl -fsSL https://claude.ai/install | sh\n\n# Windows PowerShell (admin):\nirm https://claude.ai/install.ps1 | iex\n```\nLuego: `claude --version` y `claude` para iniciar.\nRequiere Claude Pro ($20/mes)',
         'claude code': '**Claude Code** es una herramienta CLI (linea de comandos), NO una extension de VS Code.\n\nInstalacion: `curl -fsSL https://claude.ai/install | sh`\nRequiere: Claude Pro ($20/mes)',
         'precio': '**Precios:**\n• Claude gratis: ~30 msgs/dia\n• Claude Pro: $20/mes (necesario para Claude Code)\n• Claude Max: $100/mes',
-        'cuando': `**Curso "Crea tu Software con IA":**\n• Inicio: ${CURSO_SEMANAS[0].fechaInicio}\n• Clases: Viernes 18:00 CET (S1: Jue-Vie 19-20 Feb)\n• Duracion: 10 semanas\n• Zoom: https://us06web.zoom.us/j/81059741055`,
+        'cuando': `**Curso "Crea tu Software con IA":**\n• Inicio: ${CURSO_SEMANAS[0].fechaInicio}\n• Clases: Viernes 19:00 CET (S1: Jue-Vie 19-20 Feb)\n• Duracion: 10 semanas\n• Zoom: https://us06web.zoom.us/j/81059741055`,
         'calendario': `**Calendario del curso:**\n${calendario}\n... y 5 semanas mas`,
         'semana': `**Proximas semanas:**\n${calendario}`,
         'supabase': '**Supabase** es la base de datos del curso.\nDocs: https://supabase.com/docs\nUsa `/recurso supabase` para el link directo.',
         'nextjs': '**Next.js 14** es el framework del curso.\nDocs: https://nextjs.org/docs\nUsa `/recurso nextjs` para el link directo.',
-        'zoom': '**Link de Zoom para clases:**\nhttps://us06web.zoom.us/j/81059741055\n\nClases: Viernes 18:00 CET (S1: Jue-Vie, S10: 19:00 CET)',
+        'zoom': '**Link de Zoom para clases:**\nhttps://us06web.zoom.us/j/81059741055\n\nClases: Viernes 19:00 CET (S1: Jue-Vie 19-20 Feb)',
       }
 
       for (const [key, answer] of Object.entries(QUICK_ANSWERS)) {

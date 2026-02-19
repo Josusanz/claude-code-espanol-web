@@ -298,7 +298,7 @@ La IA escribirá el código por ti. Tu trabajo es:
     },
     clase: {
       fecha: '2026-02-19',
-      hora: '18:00 CET',
+      hora: '19:00 CET',
       duracion: '2h + 2h',
       notas: `
 ### Día 1 (Jueves 19)
@@ -483,7 +483,7 @@ Sin skills, tienes que repetir las mismas instrucciones cada vez: "usa shadcn", 
     },
     clase: {
       fecha: '2026-02-27',
-      hora: '18:00 CET',
+      hora: '19:00 CET',
       duracion: '2h',
     },
     entregable: {
@@ -583,7 +583,7 @@ tasks
     },
     clase: {
       fecha: '2026-03-06',
-      hora: '18:00 CET',
+      hora: '19:00 CET',
       duracion: '2h',
     },
     entregable: {
@@ -678,7 +678,7 @@ export function middleware(request) {
     },
     clase: {
       fecha: '2026-03-13',
-      hora: '18:00 CET',
+      hora: '19:00 CET',
       duracion: '2h',
     },
     entregable: {
@@ -773,7 +773,7 @@ export async function createUser(data: unknown) {
     },
     clase: {
       fecha: '2026-03-20',
-      hora: '18:00 CET',
+      hora: '19:00 CET',
       duracion: '2h',
     },
     entregable: {
@@ -858,7 +858,7 @@ export async function POST(request: Request) {
     },
     clase: {
       fecha: '2026-03-27',
-      hora: '18:00 CET',
+      hora: '19:00 CET',
       duracion: '2h',
     },
     entregable: {
@@ -952,7 +952,7 @@ Para notificaciones dentro de la app:
     },
     clase: {
       fecha: '2026-04-03',
-      hora: '18:00 CET',
+      hora: '19:00 CET',
       duracion: '2h',
     },
     entregable: {
@@ -1041,7 +1041,7 @@ test('usuario puede loguearse', async ({ page }) => {
     },
     clase: {
       fecha: '2026-04-10',
-      hora: '18:00 CET',
+      hora: '19:00 CET',
       duracion: '2h',
     },
     entregable: {
@@ -1139,7 +1139,7 @@ export const metadata = {
     },
     clase: {
       fecha: '2026-04-17',
-      hora: '18:00 CET',
+      hora: '19:00 CET',
       duracion: '2h',
     },
     entregable: {

@@ -199,7 +199,7 @@ function PrepContent() {
           <p style={{ fontSize: '16px', color: '#374151', marginBottom: '20px' }}>
             ¿Ya tienes tu idea? Empieza a construir.
           </p>
-          <Link href="/curso-crea-tu-software" style={{
+          <Link href="/curso" style={{
             display: 'inline-block',
             padding: '16px 32px',
             fontSize: '16px',

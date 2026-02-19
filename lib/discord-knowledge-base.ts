@@ -49,7 +49,7 @@ CURSOS DISPONIBLES:
 
 CURSO 10 SEMANAS "Crea tu Software con IA":
 - Inicio: ${CURSO_SEMANAS[0].fechaInicio}
-- Clases: Viernes 18:00 CET (S1: Jue-Vie 19-20 Feb, S10: 19:00 CET)
+- Clases: Viernes 19:00 CET (S1: Jue-Vie 19-20 Feb)
 - Tecnologias: Next.js, Supabase, Tailwind, Claude Code, Vercel, Stripe
 - Zoom: https://us06web.zoom.us/j/81059741055
 - Web: aprende.software/curso
@@ -600,9 +600,9 @@ El curso de 10 semanas usa:
 - Semana 7: 3 Abr (Vie) - Email y Notificaciones
 - Semana 8: 10 Abr (Vie) - Testing y Calidad
 - Semana 9: 17 Abr (Vie) - Performance y SEO
-- Semana 10: 24 Abr (Vie) - Agent Swarms y Lanzamiento (19:00 CET)
+- Semana 10: 24 Abr (Vie) - Agent Swarms y Lanzamiento
 
-Clases: Viernes 18:00 CET (S1: Jue-Vie 19-20 Feb, S10: 19:00 CET)
+Clases: Viernes 19:00 CET (S1: Jue-Vie 19-20 Feb)
 
 ## PRECURSO
 

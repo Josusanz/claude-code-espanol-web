@@ -6,7 +6,7 @@
     },
     {
       "path": "/api/cron/discord-clase-reminder",
-      "schedule": "0 16 * * 4"
+      "schedule": "0 16,17 * * 4,5"
     },
     {
       "path": "/api/cron/discord-entregable-reminder",

@@ -49,7 +49,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
 **La clase de la Semana ${semana || '?'}** empieza en **1 hora**.
 
-📅 Hoy a las **18:00 CET**
+📅 Hoy a las **19:00 CET**
 🔗 [Unirse a Zoom](https://us06web.zoom.us/j/81059741055?pwd=Xqh8R7S3jwIYLo0gC8X0eRvJz66YOy.1)
 
 ¡Nos vemos ahí! 🚀`

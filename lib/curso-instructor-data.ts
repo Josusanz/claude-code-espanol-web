@@ -289,21 +289,53 @@ export const GUIAS_INSTRUCTOR: GuiaInstructor[] = [
     notasAdicionales: `
 ## Guión para la Visualización (Día 1, ~10 min)
 
-"Vamos a hacer un pequeño ejercicio. Si te sientes cómodo, cierra los ojos. Si no, simplemente mira hacia abajo.
+**Preparación**: Baja las luces de tu pantalla si puedes. Habla despacio, con pausas reales (los "..." son silencios de 3-5 segundos).
 
-Respira profundo... inhala... exhala...
+"Vale, vamos a hacer algo diferente. No hace falta que hagáis nada. Solo escuchad.
 
-Imagina que han pasado 10 semanas. Es abril de 2026. Estás sentado exactamente donde estás ahora, pero algo es diferente.
+Si os apetece, cerrad los ojos. Si no, simplemente bajad la mirada hacia un punto fijo. Lo que os resulte más cómodo.
 
-Tu proyecto existe. Está en internet. Tiene usuarios reales. Gente que nunca conociste está usando algo que TÚ creaste.
+...
 
-¿Cómo se siente eso? Nota las sensaciones en tu cuerpo...
+Vamos a respirar juntos. Inhala por la nariz... dos, tres, cuatro... y exhala por la boca... dos, tres, cuatro, cinco, seis...
 
-Mira hacia atrás estos 10 semanas. ¿Qué obstáculos superaste? ¿Qué aprendiste sobre ti mismo?
+Una vez más. Inhala... y exhala despacio...
 
-¿Quién eres ahora que no eras hace 10 semanas?
+...
 
-Cuando estés listo, abre los ojos y escribe 3 palabras que describan a ese tú del futuro."
+Bien. Ahora quiero que imaginéis algo conmigo.
+
+Han pasado diez semanas. Estamos a finales de abril de 2026. Es un jueves por la noche, como hoy. Acabáis de terminar la última clase del curso.
+
+Pero esta noche es diferente. Porque lo que empezó como una idea — esa idea que tenéis ahora mismo en la cabeza — existe. De verdad. Está en internet. Tiene una URL. Tiene usuarios.
+
+Alguien que no conocéis, en algún lugar, está usando algo que vosotros creasteis.
+
+...
+
+Fijaos en cómo os hace sentir eso. No penséis en ello — sentidlo. ¿Dónde lo notáis? ¿En el pecho? ¿En las manos? ¿En la sonrisa que se os está escapando?
+
+...
+
+Ahora rebobinad. Mirad hacia atrás estas diez semanas. Hubo momentos difíciles. Hubo un día en que algo no funcionaba y no sabíais por qué. Hubo una semana en que pensasteis que igual esto no era para vosotros.
+
+Pero seguisteis. ¿Qué fue lo que os hizo seguir?
+
+...
+
+Pensad en lo que sabéis hacer ahora que hace diez semanas no sabíais. En la confianza que habéis ganado. En la sensación de crear algo de la nada.
+
+¿Quiénes sois ahora que no erais hace diez semanas?
+
+...
+
+Vale. Cuando estéis listos, abrid los ojos despacio.
+
+En la pizarra, en el paso 8, tenéis un espacio para escribir tres palabras. Tres palabras que describan a ese yo del futuro. El que acaba de lanzar su proyecto.
+
+Tomad un momento y escribidlas."
+
+**Después**: Lee algunas respuestas en voz alta. Celebra cada una. Conecta las palabras con el viaje que van a hacer juntos.
 
 ---
 

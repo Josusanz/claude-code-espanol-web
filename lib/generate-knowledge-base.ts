@@ -30,7 +30,7 @@ function generateCursoSummary(): string {
 ## CURSO 10 SEMANAS "Crea tu Software con IA"
 
 **Fechas:** 19 febrero - 24 abril 2026
-**Clases:** Jueves 18:00 CET
+**Clases:** Viernes 19:00 CET
 **Tecnologias:** Next.js 14, Supabase, Tailwind, Claude Code, Vercel, Stripe
 
 ### Calendario:
@@ -133,7 +133,7 @@ CLAUDE CODE (CLI, NO extension VS Code):
 
 CURSO 10 SEMANAS:
 - Inicio: 19 febrero 2026
-- Clases: Jueves 18:00 CET
+- Clases: Viernes 19:00 CET
 - Tecnologias: Next.js, Supabase, Tailwind, Claude Code, Vercel
 - Zoom: https://us06web.zoom.us/j/81059741055
 

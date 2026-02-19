@@ -11,7 +11,13 @@ for (const s of CURSO_SEMANAS) {
   CLASES[s.clase.fecha] = { semana: s.num, tema: s.titulo, hora: s.clase.hora }
 }
 // S1 tiene dos días: Día 2 el viernes
-CLASES['2026-02-20'] = { semana: 1, tema: 'LaunchPad - Día 2', hora: '18:00 CET' }
+CLASES['2026-02-20'] = { semana: 1, tema: 'LaunchPad - Día 2', hora: '19:00 CET' }
+
+function getMadridHour(): number {
+  const now = new Date()
+  const madridTime = new Date(now.toLocaleString('en-US', { timeZone: 'Europe/Madrid' }))
+  return madridTime.getHours()
+}
 
 async function sendDiscordMessage(content: string): Promise<boolean> {
   try {
@@ -40,12 +46,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
   }
 
-  // Obtener fecha de hoy
-  const hoy = new Date().toISOString().split('T')[0]
-  const clase = CLASES[hoy]
+  // Verificar que son las 18:00 hora de Madrid (1h antes de la clase a las 19:00)
+  // El cron se ejecuta a las 16 y 17 UTC para cubrir CET (UTC+1) y CEST (UTC+2)
+  const madridHour = getMadridHour()
+  if (madridHour !== 18) {
+    return res.status(200).json({ message: 'No es la hora del recordatorio en Madrid', madridHour })
+  }
+
+  // Obtener fecha de hoy en zona horaria de Madrid
+  const madridDate = new Date().toLocaleDateString('en-CA', { timeZone: 'Europe/Madrid' })
+  const clase = CLASES[madridDate]
 
   if (!clase) {
-    return res.status(200).json({ message: 'No hay clase hoy', fecha: hoy })
+    return res.status(200).json({ message: 'No hay clase hoy', fecha: madridDate })
   }
 
   const mensaje = `# 🔔 ¡Clase en 1 hora!
