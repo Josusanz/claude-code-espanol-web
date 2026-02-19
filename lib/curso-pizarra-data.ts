@@ -33,39 +33,39 @@ export const PIZARRAS: PizarraSemana[] = [
       // — DÍA 1 (Jueves) — Bienvenida y Orientación
       {
         titulo: '📋 Día 1 (Jueves): Bienvenida y Orientación',
-        descripcion: 'Hoy nos conocemos, evaluamos dónde estamos, exploramos las herramientas del curso y nos preparamos para mañana. Duración: ~90 min.',
+        descripcion: 'Hoy nos conocemos, evaluamos dónde estamos, definimos nuestro proyecto y nos preparamos para mañana.',
       },
       {
-        titulo: '1. Bienvenida (10 min)',
-        descripcion: '🎤 Qué decir:\n\n"Bienvenidos al curso. Durante 10 semanas vamos a crear un SaaS completo — desde cero hasta tener usuarios reales pagando. No necesitáis saber programar: vais a usar Claude Code, que es la IA que escribe el código por vosotros. Vosotros ponéis la visión, Claude pone el código."\n\n"El curso funciona así: cada semana tenéis una pre-clase (teoría que leéis antes), dos días de clase en vivo donde construimos juntos, y un entregable que subís al Discord. Si os atascáis, preguntad en Discord — yo respondo todos los días."\n\n"Lo más importante: vais a terminar con algo REAL publicado en internet. No es un curso teórico."',
+        titulo: '1. Bienvenida',
+        descripcion: 'Contexto del curso: 10 semanas para crear tu SaaS con IA. Qué vamos a hacer, cómo funciona, qué se espera de ti.',
       },
       {
-        titulo: '2. Presentaciones (15 min)',
-        descripcion: '🎤 Qué decir:\n\n"Vamos a presentarnos. Cada uno tiene 2 minutos. Quiero saber 4 cosas:"\n\n1. ¿Quién eres? (nombre, de dónde eres)\n2. ¿Qué quieres crear? (tu idea de proyecto)\n3. ¿Por qué ahora? (qué te ha motivado a empezar)\n4. Un dato curioso sobre ti\n\n🎤 Después de las presentaciones:\n\n"Perfecto. Ya veis que hay ideas muy diferentes — eso es bueno. Cada uno va a construir SU proyecto durante las 10 semanas. No hay un proyecto único para todos."',
-        tip: 'Empieza tú presentándote primero para romper el hielo. Si alguien no tiene idea de proyecto, dile que no pasa nada — lo trabajamos ahora mismo.',
+        titulo: '2. Presentaciones',
+        descripcion: 'Cada uno se presenta durante 2 minutos: quién eres, qué quieres crear, por qué ahora y un dato curioso.',
+        tip: 'Si preparaste tu mini-presentación de la pre-clase, es el momento de compartirla.',
       },
       {
-        titulo: '3. Rueda de la Vida Personal (15 min)',
-        descripcion: '🎤 Qué decir:\n\n"Antes de meternos en el curso, quiero que evaluéis cómo estáis AHORA como personas. Esto es importante porque crear un proyecto requiere energía, tiempo y claridad — y si hay áreas de tu vida que están flojas, es mejor saberlo desde el principio."\n\n"Abrid este enlace. Vais a ver la Rueda de la Vida Personal con 9 áreas: Salud, Familia, Amigos, Vínculos, Crecimiento, Diversión, Ambiente, Carrera y Economía."\n\n"Puntúa cada área del 1 al 10. Sed honestos — esto es solo para vosotros. Nadie más ve vuestras puntuaciones."\n\n⏱ Darles 5 minutos para rellenar.\n\n🎤 Después:\n\n"¿Alguien quiere compartir qué área tiene más baja? No hace falta decir el número, solo el área. [...] Esto es normal. La rueda os va a servir para ver cómo cambiáis durante el curso. Al final la rellenáis otra vez y comparáis."',
+        titulo: '3. Rueda de la Vida Personal',
+        descripcion: 'Evaluamos cómo estamos AHORA en 9 áreas de nuestra vida: Salud, Familia, Amigos, Vínculos, Crecimiento, Diversión, Ambiente, Carrera y Economía. Puntúa cada una del 1 al 10.',
         links: [
           { texto: 'Abrir Rueda (tab Persona)', url: '/curso/rueda' },
         ],
-        tip: 'Asegúrate de que están en el tab "🌿 Persona" que es el primero. Que hagan clic en "Guardar mi rueda" al terminar.',
+        tip: 'Asegúrate de estar en el tab "🌿 Persona". Guarda tu rueda al terminar.',
       },
       {
-        titulo: '4. Rueda del Creador (10 min)',
-        descripcion: '🎤 Qué decir:\n\n"Ahora pasad al segundo tab: Creador. Esta rueda evalúa 8 áreas específicas para crear tu proyecto: Claridad de visión, Habilidades técnicas, Tiempo disponible, Energía, Apoyo social, Finanzas, Mentalidad y Propósito."\n\n"Rellenadla igual — del 1 al 10 cada área. Cuando terminéis, guardad."\n\n⏱ Darles 4 minutos.\n\n🎤 Después:\n\n"Si vais al tab Estadísticas, veis vuestra puntuación global combinando las dos ruedas. Este número es vuestro punto de partida. En la semana 10 lo comparamos."',
+        titulo: '4. Rueda del Creador',
+        descripcion: 'Ahora evaluamos 8 áreas clave para crear tu proyecto: Claridad de visión, Habilidades técnicas, Tiempo, Energía, Apoyo social, Finanzas, Mentalidad y Propósito. Al terminar, ve al tab Estadísticas para ver tu puntuación global.',
         links: [
           { texto: 'Abrir Rueda (tab Creador)', url: '/curso/rueda' },
         ],
       },
       {
-        titulo: '5. Definir tu proyecto (15 min)',
-        descripcion: '🎤 Qué decir:\n\n"Ahora la parte más importante del día: definir qué vais a construir. Si ya tenéis una idea clara, genial. Si no la tenéis o no estáis seguros, vamos a trabajarlo ahora."\n\n"Abrid Claude Code o Claude.ai y copiad este prompt:"\n\n🎤 Para los que NO tienen idea:\n\n"Decidle a Claude vuestros intereses, problemas que tenéis, y que os sugiera 3 ideas de proyecto. Elegid la que más os motive."\n\n🎤 Para los que SÍ tienen idea:\n\n"Describid vuestra idea a Claude y pedidle que la evalúe: ¿es viable en 10 semanas? ¿Cómo podéis cobrar?"',
+        titulo: '5. Define tu proyecto con Claude',
+        descripcion: 'Si ya tienes una idea, pídele a Claude que la evalúe. Si no la tienes, Claude te ayuda a encontrarla. Copia el prompt que mejor se ajuste a tu situación.',
         bloques: [
           {
             lenguaje: 'text',
-            archivo: 'Prompt para los que NO tienen idea',
+            archivo: 'Si NO tienes idea de proyecto',
             codigo: `Soy un alumno de un curso de 10 semanas donde voy a crear un SaaS (software como servicio) usando Claude Code. No necesito saber programar — la IA escribe el código.
 
 Mis intereses: [ESCRIBE 3-4 COSAS QUE TE INTERESAN]
@@ -80,7 +80,7 @@ Para cada idea dame: nombre, qué problema resuelve, quién pagaría por esto, y
           },
           {
             lenguaje: 'text',
-            archivo: 'Prompt para los que YA tienen idea',
+            archivo: 'Si YA tienes idea de proyecto',
             codigo: `Soy un alumno de un curso de 10 semanas donde voy a crear un SaaS con Claude Code.
 
 Mi idea de proyecto: [DESCRIBE TU IDEA EN 2-3 FRASES]
@@ -93,27 +93,27 @@ Evalúa mi idea:
 5. Sugiéreme un nombre si no tengo uno.`,
           },
         ],
-        tip: 'Pasea por las pantallas mientras trabajan. Ayuda a los que estén bloqueados. Al final pide que 2-3 personas compartan su idea y el feedback de Claude.',
+        tip: 'Abre Claude.ai o Claude Code y pega el prompt. Cambia los textos entre corchetes por tu información real.',
       },
       {
-        titulo: '6. Tour rápido: herramientas del curso (10 min)',
-        descripcion: '🎤 Qué decir:\n\n"Ahora os enseño rápidamente las 4 herramientas que vais a usar cada semana. Abridlas conmigo:"\n\n**1. Dashboard del curso** — "Aquí veis las 10 semanas, vuestro progreso, y accedéis a las pre-clases y entregables. Cada semana se desbloquea automáticamente."\n\n**2. Pizarra de clase** — "Esto que estáis viendo ahora. Cada clase tiene una pizarra con los pasos que seguimos en vivo. Podéis consultarla después."\n\n**3. Themes premium** — "Mañana vais a elegir uno de estos 20 themes profesionales como base para vuestra primera web. Echadles un ojo esta noche."\n\n**4. Discord** — "El canal #dudas es para preguntas técnicas, #compartir para enseñar lo que hacéis, #general para charlar. Preguntad sin miedo."',
+        titulo: '6. Tour: herramientas del curso',
+        descripcion: 'Exploramos juntos las 4 herramientas que usarás cada semana: dashboard, pizarra de clase, galería de themes y Discord.',
         links: [
-          { texto: '1. Dashboard del curso', url: '/curso' },
-          { texto: '2. Pizarra de clase', url: '/curso/clase/1' },
-          { texto: '3. Galería de themes', url: '/curso/themes' },
-          { texto: '4. Guía de Discord', url: '/precurso/discord' },
+          { texto: 'Dashboard del curso', url: '/curso' },
+          { texto: 'Pizarra de clase', url: '/curso/clase/1' },
+          { texto: 'Galería de themes', url: '/curso/themes' },
+          { texto: 'Guía de Discord', url: '/precurso/discord' },
         ],
       },
       {
-        titulo: '7. Dificultades y miedos (10 min)',
-        descripcion: '🎤 Qué decir:\n\n"Antes de terminar hoy, quiero que compartamos algo: ¿qué os da miedo de este curso? ¿Qué creéis que os va a costar más?"\n\n"Yo empiezo: [comparte algo tuyo]. ¿Quién más?"\n\n🎤 Después de que hablen:\n\n"Todo lo que habéis dicho es completamente normal. La mayoría de la gente que ha hecho este curso sentía lo mismo al principio. La clave es: no tenéis que saber programar. Claude lo hace. Vosotros solo tenéis que tener clara la visión de lo que queréis crear — y eso ya lo hemos trabajado hoy."',
-        tip: 'Si nadie habla, ve preguntando uno a uno. Los miedos más comunes: "no sé programar", "no tengo tiempo", "mi idea no es lo bastante buena". Normalízalos todos.',
+        titulo: '7. Dificultades y miedos',
+        descripcion: 'Ejercicio grupal: ¿Qué te frena? ¿Qué miedos tienes? Compartimos y normalizamos las dificultades.',
+        tip: 'No hay respuestas incorrectas. Todos estamos aquí para aprender.',
       },
       {
-        titulo: '8. Tarea para mañana (5 min)',
-        descripcion: '🎤 Qué decir:\n\n"Para mañana necesito que hagáis 3 cosas:"\n\n**1. Leed la pre-clase completa** — es el setup técnico. Si ya hicisteis el precurso, solo verificad que todo sigue funcionando.\n\n**2. Tened todo listo:**\n- Terminal abierta\n- Claude Code instalado (claude --version)\n- Cuentas creadas en Supabase y Vercel\n- Carpeta ~/curso-ia creada\n\n**3. Elegid un theme** de la galería — mañana lo personalizamos con Claude Code.\n\n🎤 Cierre:\n\n"Si algo no funciona, preguntad en Discord esta noche y os ayudo. Mañana arrancamos directamente a construir. ¡Nos vemos!"',
-        tip: 'Si alguien tiene dudas de setup, quédate 5 min extra después de clase para ayudarle.',
+        titulo: '8. Tarea para mañana',
+        descripcion: 'Lee la pre-clase completa (setup técnico), ten terminal + Claude Code listos, crea cuentas de Supabase y Vercel, y elige un theme base de la galería.',
+        tip: 'Si tienes dudas con el setup, pregunta en Discord. Mañana arrancamos directamente a construir.',
       },
       // — DÍA 2 (Viernes) — Tu Primera Web
       {
