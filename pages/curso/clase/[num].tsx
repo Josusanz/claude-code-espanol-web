@@ -227,7 +227,7 @@ ${beneficios ? beneficios.split('\n').filter(l => l.trim()).map(l => `- ${l.trim
 1. Cambia el título del hero por algo que enganche y describa "${nombre || 'mi producto'}"
 2. Cambia el subtítulo por una frase que explique el valor para ${paraQuien || 'mi público'}
 3. Reemplaza los textos de features/beneficios por los míos
-4. Asegúrate de que el formulario de email funcione como captura de waitlist
+4. Añade un formulario de captura de email (input + botón "Unirme a la waitlist") bien visible en el hero o justo debajo. Si ya existe un formulario, asegúrate de que funcione
 5. Adapta el footer con el nombre del proyecto
 6. Mantén el diseño profesional del theme, solo personaliza el contenido y los textos`
 
