@@ -12,6 +12,7 @@ export interface PasoClase {
   bloques?: BloqueCodigo[]
   tip?: string
   links?: { texto: string; url: string }[]
+  componente?: string // componente interactivo especial (ej: 'prompt-builder')
 }
 
 export interface PizarraSemana {
@@ -137,24 +138,8 @@ cd ~/curso-ia/mi-waitlist`,
       },
       {
         titulo: '13. Personalizar el theme con Claude',
-        descripcion: 'El theme ya tiene un diseño profesional. Ahora dile a Claude que lo adapte a tu proyecto:',
-        bloques: [
-          {
-            lenguaje: 'text',
-            codigo: `Mira la web actual y personalízala para mi proyecto.
-
-Mi proyecto es: [DESCRIBE TU IDEA AQUÍ]
-
-Cambia:
-- El título y subtítulo del hero por algo que describa mi producto
-- Los textos de beneficios/features por los de mi producto
-- Los colores principales si quieres
-- Asegúrate de que el formulario de email funcione como captura de waitlist
-
-Mantén el diseño profesional del theme, solo cambia el contenido.`,
-          },
-        ],
-        tip: 'Sustituye [DESCRIBE TU IDEA AQUÍ] por tu idea real. Cuanto más contexto des, mejor resultado. Refresca localhost:3000 para ver los cambios.',
+        descripcion: 'El theme ya tiene un diseño profesional. Rellena los campos y se generará el prompt perfecto para que Claude lo personalice:',
+        componente: 'prompt-builder',
       },
       {
         titulo: '14. Iterar el diseño',

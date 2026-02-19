@@ -90,6 +90,260 @@ function BloqueCodigoComponent({ bloque }: { bloque: BloqueCodigo }) {
   )
 }
 
+const TONOS = [
+  { id: 'profesional', label: 'Profesional', desc: 'Serio, confiable, corporativo' },
+  { id: 'moderno', label: 'Moderno y fresco', desc: 'Startup, tech, innovador' },
+  { id: 'cercano', label: 'Cercano y cálido', desc: 'Amigable, personal, humano' },
+  { id: 'bold', label: 'Bold y atrevido', desc: 'Impactante, disruptivo, llamativo' },
+]
+
+function PromptBuilder() {
+  const [nombre, setNombre] = useState('')
+  const [queHace, setQueHace] = useState('')
+  const [paraQuien, setParaQuien] = useState('')
+  const [beneficios, setBeneficios] = useState('')
+  const [tono, setTono] = useState('moderno')
+  const [colores, setColores] = useState('')
+  const [copiado, setCopiado] = useState(false)
+
+  const prompt = `Mira la web actual y personalízala completamente para mi proyecto.
+
+## Mi proyecto
+- **Nombre**: ${nombre || '[nombre de tu proyecto]'}
+- **Qué es**: ${queHace || '[descripción del producto]'}
+- **Para quién**: ${paraQuien || '[tu público objetivo]'}
+
+## Beneficios principales que quiero destacar
+${beneficios ? beneficios.split('\n').filter(l => l.trim()).map(l => `- ${l.trim()}`).join('\n') : '- [beneficio 1]\n- [beneficio 2]\n- [beneficio 3]'}
+
+## Estilo y tono
+- Tono: ${TONOS.find(t => t.id === tono)?.label || 'Moderno y fresco'}${colores ? `\n- Colores preferidos: ${colores}` : ''}
+
+## Lo que necesito que hagas
+1. Cambia el título del hero por algo que enganche y describa "${nombre || 'mi producto'}"
+2. Cambia el subtítulo por una frase que explique el valor para ${paraQuien || 'mi público'}
+3. Reemplaza los textos de features/beneficios por los míos
+4. Asegúrate de que el formulario de email funcione como captura de waitlist
+5. Adapta el footer con el nombre del proyecto
+6. Mantén el diseño profesional del theme, solo personaliza el contenido y los textos`
+
+  const camposCompletos = nombre && queHace && paraQuien && beneficios
+
+  const copiar = async () => {
+    try {
+      await navigator.clipboard.writeText(prompt)
+      setCopiado(true)
+      setTimeout(() => setCopiado(false), 2000)
+    } catch {
+      const textarea = document.createElement('textarea')
+      textarea.value = prompt
+      document.body.appendChild(textarea)
+      textarea.select()
+      document.execCommand('copy')
+      document.body.removeChild(textarea)
+      setCopiado(true)
+      setTimeout(() => setCopiado(false), 2000)
+    }
+  }
+
+  const inputStyle = {
+    width: '100%',
+    padding: '10px 14px',
+    border: '1px solid #d1d5db',
+    borderRadius: '8px',
+    fontSize: '14px',
+    fontFamily: 'inherit',
+    color: '#1e293b',
+    background: 'white',
+    outline: 'none',
+    transition: 'border-color 0.2s',
+  } as const
+
+  const labelStyle = {
+    display: 'block',
+    fontSize: '14px',
+    fontWeight: 600 as const,
+    color: '#374151',
+    marginBottom: '6px',
+  }
+
+  const hintStyle = {
+    fontSize: '12px',
+    color: '#9ca3af',
+    marginTop: '4px',
+    lineHeight: 1.4,
+  }
+
+  return (
+    <div style={{ marginTop: '16px' }}>
+      {/* Formulario */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+        {/* Nombre */}
+        <div>
+          <label style={labelStyle}>🏷️ Nombre de tu proyecto</label>
+          <input
+            style={inputStyle}
+            placeholder="Ej: VeganSpot, FitTracker, MiTienda..."
+            value={nombre}
+            onChange={e => setNombre(e.target.value)}
+          />
+        </div>
+
+        {/* Qué hace */}
+        <div>
+          <label style={labelStyle}>💡 ¿Qué hace tu producto? (en una frase)</label>
+          <input
+            style={inputStyle}
+            placeholder="Ej: Encuentra restaurantes veganos cerca de ti en segundos"
+            value={queHace}
+            onChange={e => setQueHace(e.target.value)}
+          />
+          <p style={hintStyle}>Piensa: si alguien te pregunta "¿qué es?", ¿qué le dirías en 10 segundos?</p>
+        </div>
+
+        {/* Para quién */}
+        <div>
+          <label style={labelStyle}>👥 ¿Para quién es?</label>
+          <input
+            style={inputStyle}
+            placeholder="Ej: Personas veganas que viajan y quieren comer bien"
+            value={paraQuien}
+            onChange={e => setParaQuien(e.target.value)}
+          />
+          <p style={hintStyle}>Describe a tu usuario ideal. Cuanto más específico, mejor resultado.</p>
+        </div>
+
+        {/* Beneficios */}
+        <div>
+          <label style={labelStyle}>✨ Beneficios principales (uno por línea)</label>
+          <textarea
+            style={{ ...inputStyle, minHeight: '90px', resize: 'vertical' as const }}
+            placeholder={`Ej:\nEncuentra restaurantes en 3 clics\nReseñas de la comunidad vegana\nFunciona sin conexión`}
+            value={beneficios}
+            onChange={e => setBeneficios(e.target.value)}
+          />
+          <p style={hintStyle}>Escribe 3-4 beneficios, uno por línea. No features técnicas, sino valor para el usuario.</p>
+        </div>
+
+        {/* Tono */}
+        <div>
+          <label style={labelStyle}>🎨 Tono y estilo</label>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '8px' }}>
+            {TONOS.map(t => (
+              <button
+                key={t.id}
+                onClick={() => setTono(t.id)}
+                style={{
+                  padding: '10px 14px',
+                  border: tono === t.id ? '2px solid #6366f1' : '1px solid #d1d5db',
+                  borderRadius: '8px',
+                  background: tono === t.id ? '#eef2ff' : 'white',
+                  cursor: 'pointer',
+                  textAlign: 'left',
+                  fontFamily: 'inherit',
+                  transition: 'all 0.2s',
+                }}
+              >
+                <div style={{ fontSize: '14px', fontWeight: 600, color: tono === t.id ? '#4338ca' : '#374151' }}>
+                  {t.label}
+                </div>
+                <div style={{ fontSize: '12px', color: '#9ca3af', marginTop: '2px' }}>
+                  {t.desc}
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Colores (opcional) */}
+        <div>
+          <label style={labelStyle}>🎯 Colores preferidos <span style={{ fontWeight: 400, color: '#9ca3af' }}>(opcional)</span></label>
+          <input
+            style={inputStyle}
+            placeholder="Ej: azul oscuro y verde, tonos cálidos, blanco y negro..."
+            value={colores}
+            onChange={e => setColores(e.target.value)}
+          />
+        </div>
+      </div>
+
+      {/* Preview del prompt */}
+      <div style={{ marginTop: '24px' }}>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          marginBottom: '8px',
+        }}>
+          <span style={{ fontSize: '14px', fontWeight: 600, color: '#374151' }}>
+            📋 Tu prompt personalizado:
+          </span>
+          {camposCompletos && (
+            <span style={{ fontSize: '12px', color: '#22c55e', fontWeight: 500 }}>
+              ✓ Listo para copiar
+            </span>
+          )}
+        </div>
+        <div style={{ position: 'relative' }}>
+          <div style={{
+            background: '#0f172a',
+            borderRadius: '8px',
+            padding: '16px 60px 16px 16px',
+            overflow: 'auto',
+            maxHeight: '300px',
+          }}>
+            <button
+              onClick={copiar}
+              style={{
+                position: 'absolute',
+                top: '8px',
+                right: '8px',
+                padding: '8px 16px',
+                background: copiado ? '#22c55e' : camposCompletos ? '#6366f1' : 'rgba(255,255,255,0.1)',
+                color: 'white',
+                border: 'none',
+                borderRadius: '6px',
+                fontSize: '13px',
+                fontWeight: 600,
+                cursor: 'pointer',
+                transition: 'all 0.2s',
+                fontFamily: 'inherit',
+              }}
+            >
+              {copiado ? '✓ Copiado' : 'Copiar prompt'}
+            </button>
+            <pre style={{
+              margin: 0,
+              fontSize: '13px',
+              lineHeight: 1.7,
+              color: '#e2e8f0',
+              fontFamily: "'JetBrains Mono', 'Fira Code', Consolas, monospace",
+              whiteSpace: 'pre-wrap',
+              wordBreak: 'break-word',
+            }}>
+              {prompt}
+            </pre>
+          </div>
+        </div>
+      </div>
+
+      {/* Tip */}
+      <div style={{
+        marginTop: '14px',
+        padding: '12px 16px',
+        background: '#fef9c3',
+        border: '1px solid #fde047',
+        borderRadius: '8px',
+        fontSize: '14px',
+        color: '#854d0e',
+        lineHeight: 1.6,
+      }}>
+        <strong>💡 Tip:</strong> Copia el prompt y pégalo en Claude Code. Refresca localhost:3000 para ver los cambios. Si algo no te gusta, pídele ajustes en el paso siguiente.
+      </div>
+    </div>
+  )
+}
+
 function PasoComponent({ paso, index }: { paso: PasoClase; index: number }) {
   const esSeparador = paso.titulo.startsWith('📋')
 
@@ -156,11 +410,13 @@ function PasoComponent({ paso, index }: { paso: PasoClase; index: number }) {
         </p>
       )}
 
+      {paso.componente === 'prompt-builder' && <PromptBuilder />}
+
       {paso.bloques?.map((bloque, i) => (
         <BloqueCodigoComponent key={i} bloque={bloque} />
       ))}
 
-      {paso.tip && (
+      {!paso.componente && paso.tip && (
         <div style={{
           marginTop: '14px',
           padding: '12px 16px',
