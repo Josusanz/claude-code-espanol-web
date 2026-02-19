@@ -48,24 +48,26 @@ No necesitas saber programar. Solo necesitas curiosidad y ganas de crear."
 
 ## INTRO (30 seg)
 "En este video vamos a instalar todo lo que necesitas para el curso. Son 5 cosas:
-1. VS Code (editor de codigo)
-2. Node.js (para ejecutar JavaScript)
-3. Una cuenta en GitHub
-4. Una cuenta en Vercel
-5. Claude Code (la herramienta de IA)
+1. Node.js (para ejecutar JavaScript)
+2. Una cuenta en GitHub
+3. Una cuenta en Vercel
+4. Claude Code (la herramienta de IA)
+5. Pencil (para diseñar interfaces)
+
+La buena noticia: tu terminal ya la tienes. Es la herramienta que vamos a usar durante todo el curso.
 
 Vamos paso a paso."
 
-## VS CODE (2 min)
-"Primero, VS Code. Es el editor donde veras tu codigo.
+## TERMINAL (30 seg)
+"Lo primero: tu terminal. Ya la tienes instalada en tu ordenador.
 
 [MOSTRAR PANTALLA]
-1. Ve a code.visualstudio.com
-2. Click en Download
-3. Instala como cualquier programa
-4. Abrelo para confirmar que funciona
+- En Mac: abre Spotlight (Cmd+Espacio) y escribe 'Terminal'
+- En Windows: busca 'Terminal' o 'PowerShell'
 
-VS Code es gratis y lo usan millones de desarrolladores."
+Esta es la herramienta principal del curso. Todo lo haremos desde aqui: crear proyectos, ejecutar Claude Code, desplegar tu app.
+
+Nota: hay alternativas como VS Code, Cursor o Antigravity que tambien funcionan con Claude Code. Lo veremos en la primera clase."
 
 ## NODE.JS (2 min)
 "Ahora Node.js. Esto permite que tu computadora ejecute codigo JavaScript.
@@ -115,6 +117,17 @@ IMPORTANTE: Claude Code NO es una extension de VS Code. Es una herramienta de te
 
 Para Windows es diferente, lo tienes en la pagina de requisitos."
 
+## PENCIL (1.5 min)
+"Por ultimo, Pencil. Es una herramienta de diseño visual que se conecta con Claude Code.
+
+[MOSTRAR PANTALLA]
+1. Ve a pencil.dev
+2. Descarga e instala
+3. Pencil se conecta con Claude Code via MCP
+4. Claude puede leer y escribir diseños directamente
+
+Lo configuraremos en la Semana 2, pero dejalo instalado."
+
 ## CIERRE (30 seg)
 "Ya tienes todo instalado! Si algo fallo, no te preocupes - en la pagina de requisitos tienes instrucciones mas detalladas y solucion a errores comunes.
 
@@ -138,8 +151,10 @@ Sera una pagina web sencilla, pero REAL. Algo que podras enseñar y decir: 'Esto
 ## PREPARACION (1 min)
 "Antes de empezar:
 1. Abre la terminal
-2. Navega a tu carpeta de proyectos (o crea una)
-3. Crea una carpeta para este proyecto:
+2. Crea tu carpeta de trabajo para el curso:
+   mkdir ~/curso-ia
+   cd ~/curso-ia
+3. Ahora crea la carpeta del proyecto:
    mkdir mi-primer-proyecto
    cd mi-primer-proyecto
 
@@ -223,18 +238,18 @@ Es perfecta para:
 Al final de esta semana tendras una waitlist publicada con tu propio dominio."
 
 ## ESTRUCTURA (45 seg)
-"La semana tiene 2 clases:
-- Miercoles: Creamos el proyecto juntos, landing page, formulario
-- Jueves: Conectamos base de datos, deploy, personalizacion
+"La semana tiene 2 dias de clase:
+- Dia 1: Repasamos el setup (terminal, Claude Code, Pencil) y la teoria
+- Dia 2: Construimos juntos tu primera web a partir de un theme premium
 
-Antes de la clase, revisa el contenido de 'Pre-clase'. Son 30 minutos que te prepararan."
+Antes de la clase, revisa la 'Pre-clase'. Ahi tienes el setup tecnico, un selector interactivo para elegir tu theme, y los comandos para clonarlo."
 
 ## ENTREGABLE (30 seg)
 "Tu entregable esta semana: tu waitlist publicada.
 
-Sube el link al canal de Discord de la semana 1. Quiero ver lo que creas!
+Asegurate de tener terminal + Claude Code + Pencil listos, la carpeta ~/curso-ia creada, y un theme elegido antes de la clase.
 
-Nos vemos en la clase del miercoles."
+Sube el link al canal de Discord de la semana 1. Quiero ver lo que creas!"
       `
     },
     {
@@ -255,14 +270,16 @@ Es momento de darle forma a esa idea que tienes en la cabeza."
 "Esta semana nos enfocamos en:
 1. Definir tu proyecto (que problema resuelve, para quien)
 2. Crear la estructura inicial con Next.js
-3. Diseñar la interfaz con shadcn/ui y Tailwind
+3. Diseñar la interfaz con Pencil, shadcn/ui y Tailwind
 
 Al final tendras un proyecto con todas las pantallas diseñadas, aunque todavia sin funcionalidad."
 
-## SHADCN/UI (30 seg)
-"shadcn/ui es una libreria de componentes increible. Botones, formularios, modales... todo listo para usar.
+## PENCIL + SHADCN/UI (30 seg)
+"Esta semana configuramos Pencil con Claude Code. Pencil te deja diseñar visualmente y Claude traduce esos diseños a codigo.
 
-En la pre-clase te muestro como instalarla y los componentes mas utiles."
+Ademas usamos shadcn/ui, una libreria de componentes: botones, formularios, modales... todo listo para usar.
+
+En la pre-clase te muestro como configurarlo todo."
 
 ## ENTREGABLE (30 seg)
 "Tu entregable: el repositorio de GitHub con tu proyecto y la UI completa.
