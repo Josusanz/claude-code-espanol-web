@@ -95,14 +95,20 @@ export const PIZARRAS: PizarraSemana[] = [
       },
       {
         titulo: '10. Abrir tu proyecto',
-        descripcion: 'Ya tienes un theme instalado de la pre-clase. Abre tu terminal y ve a la carpeta del proyecto:',
+        descripcion: 'Ya tienes un theme instalado de la pre-clase. Primero mira qué proyectos tienes:',
         bloques: [
           {
             lenguaje: 'bash',
-            codigo: 'cd ~/curso-ia/mi-proyecto',
+            codigo: `# Mira qué carpetas tienes en curso-ia
+ls ~/curso-ia`,
+          },
+          {
+            lenguaje: 'bash',
+            codigo: `# Entra en tu proyecto (sustituye por el nombre que veas)
+cd ~/curso-ia/mi-waitlist`,
           },
         ],
-        tip: 'Sustituye "mi-proyecto" por el nombre que le diste en la pre-clase (mi-waitlist, mi-fintech, etc.).',
+        tip: 'El comando ls te muestra las carpetas. Verás "themes" (el repo de themes) y la carpeta de tu proyecto (mi-waitlist, mi-fintech, etc.). Entra en la de tu proyecto, NO en "themes".',
       },
       {
         titulo: '11. Abrir Claude Code (sin confirmaciones)',
