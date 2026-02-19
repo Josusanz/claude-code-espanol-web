@@ -127,41 +127,42 @@ export const PIZARRAS: PizarraSemana[] = [
       },
       {
         titulo: '13. Conectar Git con GitHub',
-        descripcion: 'Antes de subir código, necesitas que tu terminal sepa quién eres y pueda acceder a GitHub.',
+        descripcion: 'Configura tu nombre y email (solo la primera vez):',
         bloques: [
           {
             lenguaje: 'bash',
-            codigo: `# 1. Configura tu nombre y email (solo la primera vez)
-git config --global user.name "Tu Nombre"
-git config --global user.email "tu@email.com"
-
-# 2. Instala GitHub CLI (si no lo tienes)
-brew install gh        # Mac
-# o: sudo apt install gh  # Linux
-# o: winget install GitHub.cli  # Windows
-
-# 3. Autentícate con GitHub
-gh auth login`,
+            codigo: `git config --global user.name "Tu Nombre"
+git config --global user.email "tu@email.com"`,
+          },
+          {
+            lenguaje: 'bash',
+            archivo: 'Instala GitHub CLI (si no lo tienes)',
+            codigo: 'brew install gh',
+          },
+          {
+            lenguaje: 'bash',
+            archivo: 'Autentícate con GitHub',
+            codigo: 'gh auth login',
           },
         ],
-        tip: 'Al ejecutar "gh auth login", selecciona: GitHub.com → HTTPS → Login with a web browser. Se abrirá el navegador para autorizar. Solo necesitas hacer esto una vez.',
+        tip: 'Al ejecutar "gh auth login", selecciona: GitHub.com → HTTPS → Login with a web browser. Se abrirá el navegador para autorizar. Solo necesitas hacer esto una vez. En Linux: sudo apt install gh. En Windows: winget install GitHub.cli.',
       },
       {
         titulo: '14. Crear repo y subir a GitHub',
+        descripcion: 'Inicializa git y sube tu proyecto (sustituye "mi-proyecto" por el nombre de tu carpeta):',
         bloques: [
           {
             lenguaje: 'bash',
-            codigo: `# Inicializar git y hacer el primer commit
-git init
+            codigo: `git init
 git add .
-git commit -m "Primera versión de mi landing"
-
-# Crear repositorio en GitHub y subirlo
-# Sustituye "mi-proyecto" por el nombre de tu carpeta
-gh repo create mi-proyecto --public --source=. --push`,
+git commit -m "Primera versión de mi landing"`,
+          },
+          {
+            lenguaje: 'bash',
+            codigo: 'gh repo create mi-proyecto --public --source=. --push',
           },
         ],
-        tip: 'Este comando crea el repo en GitHub, lo conecta con tu proyecto local y sube todo el código de una vez. Si prefieres repo privado, cambia --public por --private.',
+        tip: 'Si prefieres repo privado, cambia --public por --private.',
       },
       {
         titulo: '15. Crear proyecto en Supabase',
