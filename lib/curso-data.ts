@@ -141,25 +141,11 @@ A partir de ahora, siempre que creemos un proyecto nuevo, lo haremos dentro de e
 
 En vez de empezar desde cero, vamos a usar uno de los **20 themes premium** incluidos en el curso. Son templates profesionales de Next.js + Tailwind que te dan un punto de partida espectacular.
 
-1. Entra a [/curso/themes](/curso/themes) y explora la galería
-2. Para tu primera landing de waitlist, te recomendamos uno de estos:
-   - **Simple** — Ultra-limpio, ideal si quieres algo minimalista
-   - **Waitlist** — Diseñado específicamente para captar emails
-   - **Gray** — Profesional y sobrio, perfecto para B2B
-3. Pide acceso al repo con tu usuario de GitHub (es automático)
-4. Desde tu carpeta de trabajo, clona los themes y copia el que elijas:
+Entra a [/curso/themes](/curso/themes) para explorar la galería completa. Para tu primera landing, elige uno de los recomendados y sigue las instrucciones:
 
-\`\`\`bash
-cd ~/curso-ia
-git clone https://github.com/Josusanz/aprende-themes.git
-cp -r aprende-themes/simple-next mi-waitlist
-cd mi-waitlist
-npm install
-npm run dev
-\`\`\`
+{{THEME_SELECTOR}}
 
-5. Abre tu navegador en \`http://localhost:3000\` para ver el theme funcionando
-6. En el Día 2, le diremos a Claude Code que personalice el theme con tu contenido
+En el Día 2, le diremos a Claude Code que personalice el theme con tu contenido.
 
 > **¿Por qué un theme?** Porque el diseño ya está resuelto. Tú te enfocas en tu mensaje y tu producto. Claude se encarga de adaptar colores, textos e imágenes.
 

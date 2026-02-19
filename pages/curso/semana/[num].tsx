@@ -168,6 +168,179 @@ function CopyButton({ texto }: { texto: string }) {
   )
 }
 
+const THEME_OPTIONS = [
+  { id: 'simple-next', name: 'Simple', emoji: '✨', desc: 'Ultra-limpio y minimalista', defaultProject: 'mi-landing' },
+  { id: 'waitlist', name: 'Waitlist', emoji: '📧', desc: 'Captar emails de espera', defaultProject: 'mi-waitlist' },
+  { id: 'gray', name: 'Gray', emoji: '🏢', desc: 'Profesional y sobrio', defaultProject: 'mi-proyecto' },
+]
+
+function ThemeSelector() {
+  const [selected, setSelected] = useState(THEME_OPTIONS[0])
+  const [projectName, setProjectName] = useState(THEME_OPTIONS[0].defaultProject)
+  const [customTheme, setCustomTheme] = useState('')
+  const [showCustom, setShowCustom] = useState(false)
+
+  const themeFolder = showCustom ? (customTheme || 'nombre-del-theme') : selected.id
+  const safeName = projectName.replace(/[^a-zA-Z0-9_-]/g, '') || 'mi-proyecto'
+
+  const commands = `cd ~/curso-ia
+git clone https://github.com/Josusanz/aprende-themes.git
+cp -r aprende-themes/${themeFolder} ${safeName}
+cd ${safeName}
+npm install
+npm run dev`
+
+  return (
+    <div style={{ margin: '16px 0' }}>
+      {/* Theme cards */}
+      <p style={{ margin: '0 0 10px', fontSize: '13px', fontWeight: 600, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+        1. Elige theme
+      </p>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', gap: '10px', marginBottom: '16px' }}>
+        {THEME_OPTIONS.map(theme => {
+          const isSelected = !showCustom && selected.id === theme.id
+          return (
+            <button
+              key={theme.id}
+              onClick={() => {
+                setSelected(theme)
+                setProjectName(theme.defaultProject)
+                setShowCustom(false)
+              }}
+              style={{
+                padding: '14px 12px',
+                background: isSelected ? 'linear-gradient(135deg, #6366f1, #8b5cf6)' : '#fff',
+                color: isSelected ? '#fff' : '#374151',
+                border: `2px solid ${isSelected ? '#6366f1' : '#e2e8f0'}`,
+                borderRadius: '12px',
+                cursor: 'pointer',
+                textAlign: 'left',
+                transition: 'all 0.15s',
+                fontFamily: 'inherit',
+              }}
+            >
+              <span style={{ fontSize: '20px', display: 'block', marginBottom: '6px' }}>{theme.emoji}</span>
+              <span style={{ fontSize: '14px', fontWeight: 600, display: 'block' }}>{theme.name}</span>
+              <span style={{ fontSize: '12px', opacity: 0.8, display: 'block', marginTop: '2px' }}>{theme.desc}</span>
+            </button>
+          )
+        })}
+        <button
+          onClick={() => setShowCustom(true)}
+          style={{
+            padding: '14px 12px',
+            background: showCustom ? 'linear-gradient(135deg, #6366f1, #8b5cf6)' : '#fff',
+            color: showCustom ? '#fff' : '#374151',
+            border: `2px solid ${showCustom ? '#6366f1' : '#e2e8f0'}`,
+            borderRadius: '12px',
+            cursor: 'pointer',
+            textAlign: 'left',
+            transition: 'all 0.15s',
+            fontFamily: 'inherit',
+          }}
+        >
+          <span style={{ fontSize: '20px', display: 'block', marginBottom: '6px' }}>🎨</span>
+          <span style={{ fontSize: '14px', fontWeight: 600, display: 'block' }}>Otro theme</span>
+          <span style={{ fontSize: '12px', opacity: 0.8, display: 'block', marginTop: '2px' }}>De la galería completa</span>
+        </button>
+      </div>
+
+      {/* Custom theme input */}
+      {showCustom && (
+        <div style={{ marginBottom: '16px' }}>
+          <label style={{ fontSize: '13px', fontWeight: 500, color: '#64748b', display: 'block', marginBottom: '6px' }}>
+            Nombre de la carpeta del theme (como aparece en el repo)
+          </label>
+          <input
+            type="text"
+            value={customTheme}
+            onChange={e => setCustomTheme(e.target.value.replace(/[^a-zA-Z0-9_-]/g, ''))}
+            placeholder="ej: saas-next, starter, minimal..."
+            style={{
+              width: '100%',
+              padding: '10px 14px',
+              fontSize: '14px',
+              border: '2px solid #e2e8f0',
+              borderRadius: '8px',
+              boxSizing: 'border-box',
+              fontFamily: "'JetBrains Mono', monospace",
+              outline: 'none',
+              transition: 'border 0.2s',
+            }}
+            onFocus={e => e.target.style.borderColor = '#6366f1'}
+            onBlur={e => e.target.style.borderColor = '#e2e8f0'}
+          />
+        </div>
+      )}
+
+      {/* Project name */}
+      <p style={{ margin: '0 0 10px', fontSize: '13px', fontWeight: 600, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+        2. Nombre de tu proyecto
+      </p>
+      <input
+        type="text"
+        value={projectName}
+        onChange={e => setProjectName(e.target.value.replace(/[^a-zA-Z0-9_-]/g, ''))}
+        placeholder="mi-proyecto"
+        style={{
+          width: '100%',
+          padding: '10px 14px',
+          fontSize: '14px',
+          border: '2px solid #e2e8f0',
+          borderRadius: '8px',
+          boxSizing: 'border-box',
+          fontFamily: "'JetBrains Mono', monospace",
+          marginBottom: '16px',
+          outline: 'none',
+          transition: 'border 0.2s',
+        }}
+        onFocus={e => e.target.style.borderColor = '#6366f1'}
+        onBlur={e => e.target.style.borderColor = '#e2e8f0'}
+      />
+
+      {/* Generated commands */}
+      <p style={{ margin: '0 0 10px', fontSize: '13px', fontWeight: 600, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+        3. Ejecuta en tu terminal
+      </p>
+      <div style={{ position: 'relative' }}>
+        <div style={{
+          position: 'relative',
+          background: '#0f172a',
+          borderRadius: '8px',
+          padding: '16px 60px 16px 16px',
+          overflow: 'auto',
+        }}>
+          <CopyButton texto={commands} />
+          <pre style={{
+            margin: 0,
+            fontSize: '14px',
+            lineHeight: 1.7,
+            color: '#e2e8f0',
+            fontFamily: "'JetBrains Mono', 'Fira Code', Consolas, monospace",
+            whiteSpace: 'pre-wrap',
+            wordBreak: 'break-word',
+          }}>
+            {commands}
+          </pre>
+        </div>
+      </div>
+
+      {/* localhost hint */}
+      <div style={{
+        margin: '12px 0 0',
+        padding: '10px 14px',
+        background: '#f0fdf4',
+        border: '1px solid #bbf7d0',
+        borderRadius: '8px',
+        fontSize: '13px',
+        color: '#166534',
+      }}>
+        4. Abre <code style={{ background: '#dcfce7', padding: '2px 6px', borderRadius: '4px', fontWeight: 600 }}>http://localhost:3000</code> en tu navegador para ver el theme
+      </div>
+    </div>
+  )
+}
+
 function renderInline(text: string): string {
   return text
     .replace(/&/g, '&amp;')
@@ -186,6 +359,13 @@ function parseContentBlocks(text: string, codeBlocks: { lang: string; code: stri
 
   while (i < lines.length) {
     const line = lines[i]
+
+    // Interactive theme selector placeholder
+    if (line.trim() === '{{THEME_SELECTOR}}') {
+      elements.push(<ThemeSelector key={key++} />)
+      i++
+      continue
+    }
 
     // Code block placeholder
     const codeMatch = line.match(/^__CODEBLOCK_(\d+)__$/)
