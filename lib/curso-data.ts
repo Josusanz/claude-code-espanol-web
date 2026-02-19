@@ -155,6 +155,22 @@ Cada vez que abres Claude Code en un proyecto, **empieza de cero**. No recuerda 
 
 La solución: crea un archivo \`CLAUDE.md\` en la raíz de tu proyecto. Claude lo lee automáticamente al iniciar.
 
+### Cómo crear tu CLAUDE.md
+
+Desde la carpeta de tu proyecto, ejecuta en el terminal:
+
+\`\`\`bash
+touch CLAUDE.md
+\`\`\`
+
+Esto crea el archivo vacío. Luego ábrelo con cualquier editor de texto y pega el contenido que quieras. O mejor aún, dile directamente a Claude Code:
+
+\`\`\`text
+Crea un archivo CLAUDE.md en la raíz del proyecto con la descripción del proyecto, la arquitectura que usamos y el estado actual
+\`\`\`
+
+Claude lo creará por ti con toda la info relevante. Aquí tienes un ejemplo de cómo queda:
+
 \`\`\`markdown
 # Mi Proyecto SaaS
 
