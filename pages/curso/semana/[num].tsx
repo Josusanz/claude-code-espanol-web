@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import React, { useState, useEffect } from 'react'
 import CursoEmailGate from '../../../components/CursoEmailGate'
 import { CURSO_SEMANAS, getCursoTrackingIds, Semana } from '../../../lib/curso-data'
+import { THEMES } from '../../../lib/themes-data'
 
 function getUserEmail(): string | null {
   if (typeof window === 'undefined') return null
@@ -168,112 +169,129 @@ function CopyButton({ texto }: { texto: string }) {
   )
 }
 
-const THEME_OPTIONS = [
-  { id: 'simple-next', name: 'Simple', emoji: '✨', desc: 'Ultra-limpio y minimalista', defaultProject: 'mi-landing' },
-  { id: 'waitlist', name: 'Waitlist', emoji: '📧', desc: 'Captar emails de espera', defaultProject: 'mi-waitlist' },
-  { id: 'gray', name: 'Gray', emoji: '🏢', desc: 'Profesional y sobrio', defaultProject: 'mi-proyecto' },
-]
+const CATEGORIA_EMOJI: Record<string, string> = {
+  Landing: '🌐', Dashboard: '📊', SaaS: '⚡', Blog: '📝', Portfolio: '🎨', Docs: '📚',
+}
+
+const CATEGORIA_COLORS: Record<string, { bg: string; text: string }> = {
+  Landing: { bg: '#ede9fe', text: '#7c3aed' },
+  Dashboard: { bg: '#dbeafe', text: '#2563eb' },
+  SaaS: { bg: '#d1fae5', text: '#059669' },
+  Blog: { bg: '#fef3c7', text: '#d97706' },
+  Portfolio: { bg: '#fce7f3', text: '#db2777' },
+  Docs: { bg: '#e0e7ff', text: '#4338ca' },
+}
 
 function ThemeSelector() {
-  const [selected, setSelected] = useState(THEME_OPTIONS[0])
-  const [projectName, setProjectName] = useState(THEME_OPTIONS[0].defaultProject)
-  const [customTheme, setCustomTheme] = useState('')
-  const [showCustom, setShowCustom] = useState(false)
+  const defaultTheme = THEMES.find(t => t.slug === 'simple-next') || THEMES[0]
+  const [selected, setSelected] = useState(defaultTheme)
+  const [projectName, setProjectName] = useState('mi-landing')
 
-  const themeFolder = showCustom ? (customTheme || 'nombre-del-theme') : selected.id
+  const deriveProjectName = (slug: string) => 'mi-' + slug.replace(/-next$/, '')
+
   const safeName = projectName.replace(/[^a-zA-Z0-9_-]/g, '') || 'mi-proyecto'
 
   const commands = `cd ~/curso-ia
 git clone https://github.com/Josusanz/aprende-themes.git
-cp -r aprende-themes/${themeFolder} ${safeName}
+cp -r aprende-themes/${selected.slug} ${safeName}
 cd ${safeName}
 npm install
 npm run dev`
 
   return (
     <div style={{ margin: '16px 0' }}>
-      {/* Theme cards */}
+      {/* Step 1: Theme grid */}
       <p style={{ margin: '0 0 10px', fontSize: '13px', fontWeight: 600, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
         1. Elige theme
       </p>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', gap: '10px', marginBottom: '16px' }}>
-        {THEME_OPTIONS.map(theme => {
-          const isSelected = !showCustom && selected.id === theme.id
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fill, minmax(130px, 1fr))',
+        gap: '8px',
+        marginBottom: '12px',
+      }}>
+        {THEMES.map(theme => {
+          const isSelected = selected.slug === theme.slug
+          const catColor = CATEGORIA_COLORS[theme.categoria]
           return (
             <button
-              key={theme.id}
+              key={theme.slug}
               onClick={() => {
                 setSelected(theme)
-                setProjectName(theme.defaultProject)
-                setShowCustom(false)
+                setProjectName(deriveProjectName(theme.slug))
               }}
               style={{
-                padding: '14px 12px',
+                padding: '10px 10px 8px',
                 background: isSelected ? 'linear-gradient(135deg, #6366f1, #8b5cf6)' : '#fff',
                 color: isSelected ? '#fff' : '#374151',
                 border: `2px solid ${isSelected ? '#6366f1' : '#e2e8f0'}`,
-                borderRadius: '12px',
+                borderRadius: '10px',
                 cursor: 'pointer',
                 textAlign: 'left',
                 transition: 'all 0.15s',
                 fontFamily: 'inherit',
               }}
             >
-              <span style={{ fontSize: '20px', display: 'block', marginBottom: '6px' }}>{theme.emoji}</span>
-              <span style={{ fontSize: '14px', fontWeight: 600, display: 'block' }}>{theme.name}</span>
-              <span style={{ fontSize: '12px', opacity: 0.8, display: 'block', marginTop: '2px' }}>{theme.desc}</span>
+              <span style={{ fontSize: '14px', fontWeight: 600, display: 'block', lineHeight: 1.3 }}>
+                {theme.nombre}
+              </span>
+              <span style={{
+                display: 'inline-block',
+                marginTop: '4px',
+                fontSize: '10px',
+                fontWeight: 600,
+                padding: '2px 6px',
+                borderRadius: '4px',
+                background: isSelected ? 'rgba(255,255,255,0.2)' : catColor.bg,
+                color: isSelected ? 'rgba(255,255,255,0.9)' : catColor.text,
+              }}>
+                {theme.categoria}
+              </span>
             </button>
           )
         })}
-        <button
-          onClick={() => setShowCustom(true)}
-          style={{
-            padding: '14px 12px',
-            background: showCustom ? 'linear-gradient(135deg, #6366f1, #8b5cf6)' : '#fff',
-            color: showCustom ? '#fff' : '#374151',
-            border: `2px solid ${showCustom ? '#6366f1' : '#e2e8f0'}`,
-            borderRadius: '12px',
-            cursor: 'pointer',
-            textAlign: 'left',
-            transition: 'all 0.15s',
-            fontFamily: 'inherit',
-          }}
-        >
-          <span style={{ fontSize: '20px', display: 'block', marginBottom: '6px' }}>🎨</span>
-          <span style={{ fontSize: '14px', fontWeight: 600, display: 'block' }}>Otro theme</span>
-          <span style={{ fontSize: '12px', opacity: 0.8, display: 'block', marginTop: '2px' }}>De la galería completa</span>
-        </button>
       </div>
 
-      {/* Custom theme input */}
-      {showCustom && (
-        <div style={{ marginBottom: '16px' }}>
-          <label style={{ fontSize: '13px', fontWeight: 500, color: '#64748b', display: 'block', marginBottom: '6px' }}>
-            Nombre de la carpeta del theme (como aparece en el repo)
-          </label>
-          <input
-            type="text"
-            value={customTheme}
-            onChange={e => setCustomTheme(e.target.value.replace(/[^a-zA-Z0-9_-]/g, ''))}
-            placeholder="ej: saas-next, starter, minimal..."
+      {/* Selected theme info */}
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '10px',
+        padding: '10px 14px',
+        background: '#f8fafc',
+        border: '1px solid #e2e8f0',
+        borderRadius: '8px',
+        marginBottom: '16px',
+        fontSize: '13px',
+        color: '#475569',
+        lineHeight: 1.5,
+      }}>
+        <span style={{ fontSize: '16px', flexShrink: 0 }}>{CATEGORIA_EMOJI[selected.categoria] || '🌐'}</span>
+        <span style={{ flex: 1 }}>
+          <strong style={{ color: '#0f172a' }}>{selected.nombre}</strong> — {selected.descripcion}
+        </span>
+        {selected.demoUrl && (
+          <a
+            href={selected.demoUrl}
+            target="_blank"
+            rel="noopener noreferrer"
             style={{
-              width: '100%',
-              padding: '10px 14px',
-              fontSize: '14px',
-              border: '2px solid #e2e8f0',
-              borderRadius: '8px',
-              boxSizing: 'border-box',
-              fontFamily: "'JetBrains Mono', monospace",
-              outline: 'none',
-              transition: 'border 0.2s',
+              flexShrink: 0,
+              padding: '5px 12px',
+              fontSize: '12px',
+              fontWeight: 600,
+              color: '#6366f1',
+              background: '#eef2ff',
+              borderRadius: '6px',
+              textDecoration: 'none',
             }}
-            onFocus={e => e.target.style.borderColor = '#6366f1'}
-            onBlur={e => e.target.style.borderColor = '#e2e8f0'}
-          />
-        </div>
-      )}
+          >
+            Ver demo
+          </a>
+        )}
+      </div>
 
-      {/* Project name */}
+      {/* Step 2: Project name */}
       <p style={{ margin: '0 0 10px', fontSize: '13px', fontWeight: 600, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
         2. Nombre de tu proyecto
       </p>
@@ -298,7 +316,7 @@ npm run dev`
         onBlur={e => e.target.style.borderColor = '#e2e8f0'}
       />
 
-      {/* Generated commands */}
+      {/* Step 3: Generated commands */}
       <p style={{ margin: '0 0 10px', fontSize: '13px', fontWeight: 600, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
         3. Ejecuta en tu terminal
       </p>
@@ -325,7 +343,7 @@ npm run dev`
         </div>
       </div>
 
-      {/* localhost hint */}
+      {/* Step 4: localhost hint */}
       <div style={{
         margin: '12px 0 0',
         padding: '10px 14px',
