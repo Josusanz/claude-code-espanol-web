@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { MODULOS_AUTOGUIADO } from '../../lib/curso-autoguiado-data'
 import { useTheme, ThemeToggleButton, THEME_GLOBAL_CSS } from '../../lib/theme-utils'
+import OnboardingChecklist from '../../components/OnboardingChecklist'
 
 interface ModuloUnlockStatus {
   unlocked: boolean
@@ -261,6 +262,13 @@ function Dashboard() {
             </div>
           </div>
         </div>
+
+        {/* Onboarding checklist */}
+        {!isLoggedIn && (
+          <div className="animate-fade-in delay-1">
+            <OnboardingChecklist isDark={isDark} t={t} />
+          </div>
+        )}
 
         {/* Welcome banner for non-logged users */}
         {!isLoggedIn && (
