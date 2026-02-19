@@ -1,17 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { getAllCursoUsers, getCursoStats } from '../../../../lib/curso-kv'
+import { isAdminAuthenticated } from '../../../../lib/admin-auth'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  // Verificar admin auth (simple password check)
-  const adminPassword = process.env.ADMIN_PASSWORD || 'admin123'
-  const authHeader = req.headers.authorization
-
-  if (!authHeader || authHeader !== `Bearer ${adminPassword}`) {
-    // Verificar también query param para requests simples
-    const { password } = req.query
-    if (password !== adminPassword) {
-      return res.status(401).json({ error: 'No autorizado' })
-    }
+  // Verificar admin auth (cookie-based, mismo sistema que precurso admin)
+  if (!isAdminAuthenticated(req)) {
+    return res.status(401).json({ error: 'No autorizado' })
   }
 
   if (req.method !== 'GET') {

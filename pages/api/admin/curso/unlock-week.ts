@@ -1,12 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { unlockSemana, getSemanasStatus } from '../../../../lib/curso-kv'
+import { isAdminAuthenticated } from '../../../../lib/admin-auth'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  // Verificar admin auth
-  const adminPassword = process.env.ADMIN_PASSWORD || 'admin123'
-  const authHeader = req.headers.authorization
-
-  if (!authHeader || authHeader !== `Bearer ${adminPassword}`) {
+  // Verificar admin auth (cookie-based, mismo sistema que precurso admin)
+  if (!isAdminAuthenticated(req)) {
     return res.status(401).json({ error: 'No autorizado' })
   }
 

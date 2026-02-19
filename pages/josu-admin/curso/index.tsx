@@ -12,20 +12,14 @@ export default function AdminCursoDashboard() {
   const [error, setError] = useState('')
   const [actionLoading, setActionLoading] = useState<number | null>(null)
 
-  const adminPassword = typeof window !== 'undefined'
-    ? localStorage.getItem('josu-admin-password') || ''
-    : ''
-
   useEffect(() => {
     loadData()
   }, [])
 
   const loadData = async () => {
     try {
-      const password = localStorage.getItem('josu-admin-password') || ''
-
-      // Cargar usuarios y stats
-      const progressRes = await fetch(`/api/admin/curso/progress?password=${encodeURIComponent(password)}`)
+      // Cargar usuarios y stats (auth por cookie)
+      const progressRes = await fetch('/api/admin/curso/progress')
       if (progressRes.ok) {
         const data = await progressRes.json()
         setUsers(data.users || [])
@@ -50,13 +44,9 @@ export default function AdminCursoDashboard() {
   const toggleSemana = async (semanaNum: number) => {
     setActionLoading(semanaNum)
     try {
-      const password = localStorage.getItem('josu-admin-password') || ''
       const res = await fetch('/api/admin/curso/unlock-week', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${password}`
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           semanaNum,
           unlock: !semanasStatus[semanaNum]
@@ -66,9 +56,13 @@ export default function AdminCursoDashboard() {
       if (res.ok) {
         const data = await res.json()
         setSemanasStatus(data.semanasStatus || {})
+      } else {
+        const err = await res.json().catch(() => ({}))
+        alert(`Error: ${err.error || 'No se pudo cambiar el estado'}`)
       }
     } catch (err) {
       console.error('Error toggling semana:', err)
+      alert('Error de conexión')
     } finally {
       setActionLoading(null)
     }
