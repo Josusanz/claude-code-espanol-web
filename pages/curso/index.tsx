@@ -183,7 +183,7 @@ function CursoDashboard() {
   return (
     <div style={{
       minHeight: '100vh',
-      background: 'linear-gradient(135deg, #f8fafc 0%, #eef2f6 100%)',
+      background: '#fafbfc',
       fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
       color: '#1e293b'
     }}>
@@ -195,33 +195,33 @@ function CursoDashboard() {
 
       {/* Header */}
       <header style={{
-        background: 'rgba(255, 255, 255, 0.9)',
+        background: 'rgba(250, 251, 252, 0.9)',
         backdropFilter: 'blur(12px)',
         borderBottom: '1px solid rgba(0,0,0,0.06)',
-        padding: '16px 24px',
+        padding: '12px 24px',
         position: 'sticky',
         top: 0,
         zIndex: 100,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        boxShadow: '0 1px 3px rgba(0,0,0,0.04)'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <div style={{
-            width: '42px',
-            height: '42px',
-            background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
-            borderRadius: '12px',
+            width: '36px',
+            height: '36px',
+            background: 'linear-gradient(135deg, #5e6ad2, #8b5cf6)',
+            borderRadius: '8px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: '20px',
-            boxShadow: '0 4px 12px rgba(99, 102, 241, 0.25)'
-          }}>🚀</div>
+            fontSize: '14px',
+            fontWeight: 700,
+            color: 'white',
+          }}>AS</div>
           <div>
-            <h1 style={{ margin: 0, fontSize: '18px', fontWeight: 700, color: '#0f172a' }}>Crea tu Software con IA</h1>
-            <p style={{ margin: 0, fontSize: '13px', color: '#64748b', fontWeight: 500 }}>Primera Promoción</p>
+            <h1 style={{ margin: 0, fontSize: '16px', fontWeight: 600, color: '#0f172a', letterSpacing: '-0.01em' }}>aprende.software</h1>
+            <p style={{ margin: 0, fontSize: '12px', color: '#64748b', fontWeight: 500 }}>Curso · Primera Promoción</p>
           </div>
         </div>
 
@@ -250,36 +250,36 @@ function CursoDashboard() {
       <main style={{ maxWidth: '1000px', margin: '0 auto', padding: '40px 24px' }}>
         {/* Welcome section */}
         <div style={{ marginBottom: '32px' }}>
-          <h2 style={{ margin: '0 0 8px', fontSize: '32px', fontWeight: 700, color: '#0f172a' }}>
-            Bienvenido al curso 👋
+          <h2 style={{ margin: '0 0 8px', fontSize: 'clamp(26px, 4vw, 32px)', fontWeight: 600, color: '#0f172a', letterSpacing: '-0.02em' }}>
+            Bienvenido al curso
           </h2>
-          <p style={{ margin: 0, fontSize: '16px', color: '#64748b', fontWeight: 500 }}>
-            Primera Promoción • Semana {currentWeek} de 10
+          <p style={{ margin: 0, fontSize: '15px', color: '#64748b', fontWeight: 500 }}>
+            Primera Promoción · Semana {currentWeek} de 10
           </p>
         </div>
 
         {/* Progress bar */}
         <div style={{
           background: 'white',
-          borderRadius: '20px',
-          padding: '28px',
-          marginBottom: '24px',
+          borderRadius: '16px',
+          padding: '24px',
+          marginBottom: '20px',
           border: '1px solid rgba(0,0,0,0.06)',
-          boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.03), 0 2px 4px -1px rgba(0, 0, 0, 0.02)'
+          boxShadow: '0 1px 3px rgba(0,0,0,0.04)'
         }}>
           <div style={{
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            marginBottom: '16px'
+            marginBottom: '14px'
           }}>
-            <span style={{ fontSize: '15px', fontWeight: 600, color: '#374151' }}>Tu progreso</span>
-            <span style={{ fontSize: '15px', fontWeight: 700, color: '#6366f1' }}>
+            <span style={{ fontSize: '14px', fontWeight: 600, color: '#374151' }}>Tu progreso</span>
+            <span style={{ fontSize: '14px', fontWeight: 600, color: '#5e6ad2' }}>
               {Math.round(totalPercentage)}% ({completedItems}/{totalItems})
             </span>
           </div>
           <div style={{
-            height: '12px',
+            height: '8px',
             background: '#f1f5f9',
             borderRadius: '100px',
             overflow: 'hidden'
@@ -289,160 +289,185 @@ function CursoDashboard() {
               width: `${totalPercentage}%`,
               background: totalPercentage === 100
                 ? 'linear-gradient(90deg, #22c55e, #16a34a)'
-                : 'linear-gradient(90deg, #6366f1, #8b5cf6)',
+                : 'linear-gradient(90deg, #5e6ad2, #8b5cf6)',
               borderRadius: '100px',
-              transition: 'width 0.3s ease',
-              boxShadow: '0 2px 4px rgba(99, 102, 241, 0.3)'
+              transition: 'width 0.3s ease'
             }} />
           </div>
           {totalPercentage === 100 && (
-            <p style={{ margin: '16px 0 0', fontSize: '14px', color: '#22c55e', fontWeight: 600 }}>
-              🎉 ¡Has completado el curso!
+            <p style={{ margin: '14px 0 0', fontSize: '13px', color: '#22c55e', fontWeight: 600 }}>
+              Has completado el curso
             </p>
           )}
         </div>
 
-        {/* Discord */}
-        <a
-          href="https://discord.gg/RFU7P2vpqa"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '16px',
-          padding: '24px',
-          background: 'linear-gradient(135deg, #e0e7ff, #c7d2fe)',
-          border: '1px solid rgba(99, 102, 241, 0.2)',
-          borderRadius: '20px',
-          marginBottom: '16px',
-          textDecoration: 'none',
-          transition: 'all 0.2s',
-          boxShadow: '0 4px 6px -1px rgba(99, 102, 241, 0.08)'
+        {/* Quick links row */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr',
+          gap: '12px',
+          marginBottom: '20px',
         }}>
-          <span style={{
-            width: '56px',
-            height: '56px',
-            background: 'linear-gradient(135deg, #5865F2, #7289DA)',
-            borderRadius: '16px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '28px',
-            flexShrink: 0,
-            boxShadow: '0 4px 12px rgba(88, 101, 242, 0.3)'
-          }}>
-            💬
-          </span>
-          <div style={{ flex: 1 }}>
-            <h3 style={{ margin: '0 0 4px', fontSize: '17px', fontWeight: 700, color: '#3730a3' }}>
-              Comunidad Discord
-            </h3>
-            <p style={{ margin: 0, fontSize: '14px', color: '#4338ca', fontWeight: 500 }}>
-              Conecta con otros alumnos y resuelve dudas
-            </p>
-          </div>
-          <span style={{ color: '#5865F2', fontSize: '24px', fontWeight: 600 }}>→</span>
-        </a>
+          {/* Discord */}
+          <a
+            href="https://discord.gg/RFU7P2vpqa"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="quick-link-card"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '14px',
+              padding: '20px',
+              background: 'white',
+              border: '1px solid rgba(0,0,0,0.06)',
+              borderRadius: '14px',
+              textDecoration: 'none',
+              transition: 'all 0.2s',
+              boxShadow: '0 1px 3px rgba(0,0,0,0.04)'
+            }}>
+            <div style={{
+              width: '44px',
+              height: '44px',
+              background: 'linear-gradient(135deg, #eef2ff, #e0e7ff)',
+              borderRadius: '12px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '20px',
+              flexShrink: 0,
+              border: '1px solid #c7d2fe'
+            }}>
+              💬
+            </div>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <h3 style={{ margin: '0 0 2px', fontSize: '15px', fontWeight: 600, color: '#1e293b' }}>
+                Discord
+              </h3>
+              <p style={{ margin: 0, fontSize: '13px', color: '#64748b' }}>
+                Comunidad del curso
+              </p>
+            </div>
+            <span style={{ color: '#94a3b8', fontSize: '18px' }}>→</span>
+          </a>
 
-        {/* Rueda del Creador */}
-        <Link href="/curso/rueda" style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '16px',
-          padding: '24px',
-          background: 'linear-gradient(135deg, #fffbeb, #fef3c7)',
-          border: '1px solid rgba(245, 158, 11, 0.2)',
-          borderRadius: '20px',
-          marginBottom: '24px',
-          textDecoration: 'none',
-          transition: 'all 0.2s',
-          boxShadow: '0 4px 6px -1px rgba(245, 158, 11, 0.08)'
-        }}>
-          <span style={{
-            width: '56px',
-            height: '56px',
-            background: 'linear-gradient(135deg, #f59e0b, #f97316)',
-            borderRadius: '16px',
+          {/* Rueda del Creador */}
+          <Link href="/curso/rueda" className="quick-link-card" style={{
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '28px',
-            flexShrink: 0,
-            boxShadow: '0 4px 12px rgba(245, 158, 11, 0.3)'
+            gap: '14px',
+            padding: '20px',
+            background: 'white',
+            border: '1px solid rgba(0,0,0,0.06)',
+            borderRadius: '14px',
+            textDecoration: 'none',
+            transition: 'all 0.2s',
+            boxShadow: '0 1px 3px rgba(0,0,0,0.04)'
           }}>
-            🎯
-          </span>
-          <div style={{ flex: 1 }}>
-            <h3 style={{ margin: '0 0 4px', fontSize: '17px', fontWeight: 700, color: '#92400e' }}>
-              Rueda del Creador
-            </h3>
-            <p style={{ margin: 0, fontSize: '14px', color: '#a16207', fontWeight: 500 }}>
-              Evalúa tus 8 áreas clave y ve tu transformación
-            </p>
-          </div>
-          <span style={{ color: '#f59e0b', fontSize: '24px', fontWeight: 600 }}>→</span>
-        </Link>
+            <div style={{
+              width: '44px',
+              height: '44px',
+              background: 'linear-gradient(135deg, #fffbeb, #fef3c7)',
+              borderRadius: '12px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '20px',
+              flexShrink: 0,
+              border: '1px solid #fde68a'
+            }}>
+              🎯
+            </div>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <h3 style={{ margin: '0 0 2px', fontSize: '15px', fontWeight: 600, color: '#1e293b' }}>
+                Rueda del Creador
+              </h3>
+              <p style={{ margin: 0, fontSize: '13px', color: '#64748b' }}>
+                Evalúa tus 8 áreas
+              </p>
+            </div>
+            <span style={{ color: '#94a3b8', fontSize: '18px' }}>→</span>
+          </Link>
+        </div>
 
         {/* Próxima clase */}
         {proximaSemana && (
           <div style={{
-            background: 'linear-gradient(135deg, #eef2ff, #e0e7ff)',
-            border: '1px solid rgba(99, 102, 241, 0.2)',
-            borderRadius: '20px',
-            padding: '28px',
-            marginBottom: '32px',
-            boxShadow: '0 4px 6px -1px rgba(99, 102, 241, 0.08)'
+            background: 'white',
+            border: '1px solid rgba(0,0,0,0.06)',
+            borderRadius: '16px',
+            padding: '24px',
+            marginBottom: '20px',
+            boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '20px',
           }}>
             <div style={{
-              display: 'inline-flex',
+              width: '52px',
+              height: '52px',
+              background: 'linear-gradient(135deg, #5e6ad2, #8b5cf6)',
+              borderRadius: '14px',
+              display: 'flex',
               alignItems: 'center',
-              gap: '6px',
-              padding: '6px 12px',
-              background: 'rgba(99, 102, 241, 0.15)',
-              borderRadius: '100px',
-              marginBottom: '16px'
+              justifyContent: 'center',
+              fontSize: '22px',
+              flexShrink: 0,
+              color: 'white',
+              fontWeight: 700,
             }}>
-              <span style={{ fontSize: '12px' }}>🚀</span>
-              <span style={{ fontSize: '12px', fontWeight: 700, color: '#4f46e5', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                Próxima clase
-              </span>
+              {proximaSemana.emoji}
             </div>
-            <h3 style={{ margin: '0 0 8px', fontSize: '22px', fontWeight: 700, color: '#1e1b4b' }}>
-              Semana {proximaSemana.num}: {proximaSemana.titulo}
-            </h3>
-            <p style={{ margin: '0 0 20px', fontSize: '15px', color: '#4338ca', fontWeight: 500 }}>
-              {proximaSemana.clase.fecha} • {proximaSemana.clase.hora}
-            </p>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <p style={{ margin: '0 0 2px', fontSize: '12px', fontWeight: 600, color: '#5e6ad2', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                Continuar
+              </p>
+              <h3 style={{ margin: '0 0 4px', fontSize: '16px', fontWeight: 600, color: '#1e293b', letterSpacing: '-0.01em' }}>
+                Semana {proximaSemana.num}: {proximaSemana.titulo}
+              </h3>
+              <p style={{ margin: 0, fontSize: '13px', color: '#64748b' }}>
+                {proximaSemana.clase.fecha} · {proximaSemana.clase.hora}
+              </p>
+            </div>
             <Link href={`/curso/semana/${proximaSemana.num}`} style={{
               display: 'inline-flex',
               alignItems: 'center',
-              gap: '8px',
-              padding: '14px 24px',
-              background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+              gap: '6px',
+              padding: '10px 20px',
+              background: '#5e6ad2',
               color: 'white',
               textDecoration: 'none',
-              borderRadius: '12px',
-              fontSize: '15px',
-              fontWeight: 600,
-              boxShadow: '0 4px 14px rgba(99, 102, 241, 0.35)',
-              transition: 'all 0.2s'
+              borderRadius: '10px',
+              fontSize: '14px',
+              fontWeight: 500,
+              transition: 'all 0.2s',
+              flexShrink: 0,
             }}>
-              Ver contenido
+              Abrir →
             </Link>
           </div>
         )}
 
         {/* Semanas header */}
-        <h3 style={{ margin: '0 0 20px', fontSize: '20px', fontWeight: 700, color: '#0f172a' }}>
-          📅 Semanas del curso
-        </h3>
-
-        {/* Semanas grid */}
         <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
-          gap: '16px'
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          marginBottom: '16px'
+        }}>
+          <h3 style={{ margin: 0, fontSize: '16px', fontWeight: 600, color: '#0f172a', letterSpacing: '-0.01em' }}>
+            Semanas del curso
+          </h3>
+          <span style={{ fontSize: '13px', color: '#64748b' }}>
+            10 semanas
+          </span>
+        </div>
+
+        {/* Semanas list */}
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '8px'
         }}>
           {CURSO_SEMANAS.map(semana => {
             const isUnlocked = semanasStatus[semana.num]
@@ -454,103 +479,97 @@ function CursoDashboard() {
                 key={semana.num}
                 href={isUnlocked ? `/curso/semana/${semana.num}` : '#'}
                 onClick={e => { if (!isUnlocked) e.preventDefault() }}
+                className="semana-card"
                 style={{
-                  background: isComplete
-                    ? 'linear-gradient(135deg, #f0fdf4, #dcfce7)'
-                    : 'white',
-                  border: `1px solid ${isComplete ? 'rgba(34, 197, 94, 0.2)' : 'rgba(0,0,0,0.06)'}`,
-                  borderRadius: '16px',
-                  padding: '20px',
+                  background: isComplete ? '#f0fdf4' : 'white',
+                  border: `1px solid ${isComplete ? 'rgba(34, 197, 94, 0.15)' : 'rgba(0,0,0,0.06)'}`,
+                  borderRadius: '12px',
+                  padding: '16px 20px',
                   textDecoration: 'none',
                   transition: 'all 0.2s',
-                  cursor: isUnlocked ? 'pointer' : 'not-allowed',
-                  opacity: isUnlocked ? 1 : 0.6,
+                  cursor: isUnlocked ? 'pointer' : 'default',
+                  opacity: isUnlocked ? 1 : 0.5,
                   display: 'flex',
-                  flexDirection: 'column',
-                  gap: '14px',
-                  boxShadow: isUnlocked
-                    ? '0 4px 6px -1px rgba(0, 0, 0, 0.03), 0 2px 4px -1px rgba(0, 0, 0, 0.02)'
-                    : 'none'
+                  alignItems: 'center',
+                  gap: '16px',
+                  boxShadow: '0 1px 2px rgba(0,0,0,0.03)'
                 }}
               >
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                  <span style={{
-                    width: '44px',
-                    height: '44px',
-                    background: isComplete
-                      ? 'linear-gradient(135deg, #22c55e, #16a34a)'
-                      : isUnlocked
-                        ? 'linear-gradient(135deg, #6366f1, #8b5cf6)'
-                        : '#e2e8f0',
-                    borderRadius: '12px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '20px',
-                    color: 'white',
-                    boxShadow: isUnlocked
-                      ? isComplete
-                        ? '0 4px 12px rgba(34, 197, 94, 0.25)'
-                        : '0 4px 12px rgba(99, 102, 241, 0.25)'
-                      : 'none'
-                  }}>
-                    {isComplete ? '✓' : isUnlocked ? semana.emoji : '🔒'}
-                  </span>
-                  <span style={{
-                    fontSize: '13px',
-                    fontWeight: 700,
-                    color: isComplete ? '#16a34a' : isUnlocked ? '#6366f1' : '#94a3b8',
-                    background: isComplete
-                      ? 'rgba(34, 197, 94, 0.1)'
-                      : isUnlocked
-                        ? 'rgba(99, 102, 241, 0.1)'
-                        : '#f1f5f9',
-                    padding: '4px 10px',
-                    borderRadius: '100px'
-                  }}>
-                    {isUnlocked ? (isComplete ? '100%' : `${completed}/3`) : 'Bloq.'}
-                  </span>
+                <div style={{
+                  width: '40px',
+                  height: '40px',
+                  background: isComplete
+                    ? 'linear-gradient(135deg, #22c55e, #16a34a)'
+                    : isUnlocked
+                      ? 'linear-gradient(135deg, #eef2ff, #e0e7ff)'
+                      : '#f1f5f9',
+                  borderRadius: '10px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: isComplete ? '14px' : '13px',
+                  fontWeight: 600,
+                  color: isComplete ? 'white' : isUnlocked ? '#5e6ad2' : '#94a3b8',
+                  flexShrink: 0,
+                  border: isComplete ? 'none' : isUnlocked ? '1px solid #c7d2fe' : '1px solid #e2e8f0'
+                }}>
+                  {isComplete ? '✓' : isUnlocked ? semana.num : '🔒'}
                 </div>
 
-                <div>
-                  <p style={{
-                    margin: '0 0 4px',
-                    fontSize: '12px',
-                    color: '#94a3b8',
-                    fontWeight: 600,
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.5px'
-                  }}>
-                    Semana {semana.num}
-                  </p>
-                  <p style={{
-                    margin: 0,
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{
                     fontSize: '15px',
-                    fontWeight: 600,
+                    fontWeight: 500,
                     color: '#1e293b',
-                    lineHeight: 1.4
                   }}>
+                    {isComplete && <span style={{ marginRight: '4px' }}>✓</span>}
                     {semana.titulo}
-                  </p>
+                  </div>
+                  <div style={{ fontSize: '13px', color: '#94a3b8', marginTop: '2px' }}>
+                    Semana {semana.num} · {semana.descripcion.slice(0, 50)}{semana.descripcion.length > 50 ? '...' : ''}
+                  </div>
                 </div>
 
                 {isUnlocked && (
                   <div style={{
-                    height: '6px',
-                    background: '#f1f5f9',
-                    borderRadius: '100px',
-                    overflow: 'hidden'
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '10px',
+                    flexShrink: 0,
                   }}>
                     <div style={{
-                      height: '100%',
-                      width: `${percentage}%`,
-                      background: isComplete
-                        ? 'linear-gradient(90deg, #22c55e, #16a34a)'
-                        : 'linear-gradient(90deg, #6366f1, #8b5cf6)',
+                      width: '60px',
+                      height: '4px',
+                      background: '#f1f5f9',
                       borderRadius: '100px',
-                      transition: 'width 0.3s ease'
-                    }} />
+                      overflow: 'hidden'
+                    }}>
+                      <div style={{
+                        height: '100%',
+                        width: `${percentage}%`,
+                        background: isComplete
+                          ? '#22c55e'
+                          : '#5e6ad2',
+                        borderRadius: '100px',
+                        transition: 'width 0.3s ease'
+                      }} />
+                    </div>
+                    <span style={{
+                      fontSize: '12px',
+                      fontWeight: 600,
+                      color: isComplete ? '#16a34a' : '#5e6ad2',
+                      minWidth: '24px',
+                      textAlign: 'right'
+                    }}>
+                      {completed}/3
+                    </span>
                   </div>
+                )}
+
+                {!isUnlocked && (
+                  <span style={{ fontSize: '12px', color: '#94a3b8', flexShrink: 0 }}>
+                    Bloqueada
+                  </span>
                 )}
               </Link>
             )
@@ -581,9 +600,21 @@ function CursoDashboard() {
       </main>
 
       <style jsx global>{`
+        .semana-card:hover {
+          border-color: rgba(0,0,0,0.12) !important;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
+        }
+        .quick-link-card:hover {
+          border-color: rgba(0,0,0,0.12) !important;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
+        }
         @media (max-width: 640px) {
           main { padding: 24px 16px !important; }
-          h2 { font-size: 26px !important; }
+          .quick-link-card { padding: 16px !important; }
+        }
+        @media (max-width: 480px) {
+          .quick-link-card h3 { font-size: 14px !important; }
+          .quick-link-card p { font-size: 12px !important; }
         }
       `}</style>
     </div>

@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import CursoEmailGate from '../../../components/CursoEmailGate'
 import { CURSO_SEMANAS, getCursoTrackingIds, Semana } from '../../../lib/curso-data'
 
@@ -124,18 +124,335 @@ const SECTIONS: { key: SectionKey; label: string; icon: string; completedIcon: s
   { key: 'entregable', label: 'Entregable', icon: '📦', completedIcon: '✓' },
 ]
 
-function renderMarkdown(content: string) {
-  return content
-    .replace(/^## (.+)$/gm, '<h4 style="font-size: 17px; font-weight: 600; color: #0f172a; margin: 24px 0 12px;">$1</h4>')
-    .replace(/^### (.+)$/gm, '<h5 style="font-size: 15px; font-weight: 600; color: #1e293b; margin: 20px 0 10px;">$1</h5>')
-    .replace(/^- (.+)$/gm, '<li style="margin-left: 20px; margin-bottom: 6px;">$1</li>')
-    .replace(/^\d+\. (.+)$/gm, '<li style="margin-left: 20px; margin-bottom: 6px;">$1</li>')
-    .replace(/`([^`]+)`/g, '<code style="background: #e2e8f0; padding: 2px 6px; border-radius: 4px; font-size: 13px; color: #0f172a;">$1</code>')
-    .replace(/\*\*([^*]+)\*\*/g, '<strong style="color: #0f172a;">$1</strong>')
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" style="color: #6366f1; text-decoration: underline;">$1</a>')
-    .replace(/> (.+)/g, '<blockquote style="border-left: 3px solid #6366f1; padding-left: 16px; margin: 16px 0; color: #6366f1; font-style: italic;">$1</blockquote>')
-    .replace(/```(\w+)?\n([\s\S]*?)```/g, '<pre style="background: #1e293b; color: #e2e8f0; border: 1px solid #334155; border-radius: 8px; padding: 16px; overflow-x: auto; font-size: 13px; margin: 16px 0;"><code>$2</code></pre>')
-    .replace(/\n\n/g, '<br/><br/>')
+function CopyButton({ texto }: { texto: string }) {
+  const [copiado, setCopiado] = useState(false)
+
+  const copiar = async () => {
+    try {
+      await navigator.clipboard.writeText(texto)
+      setCopiado(true)
+      setTimeout(() => setCopiado(false), 2000)
+    } catch {
+      const textarea = document.createElement('textarea')
+      textarea.value = texto
+      document.body.appendChild(textarea)
+      textarea.select()
+      document.execCommand('copy')
+      document.body.removeChild(textarea)
+      setCopiado(true)
+      setTimeout(() => setCopiado(false), 2000)
+    }
+  }
+
+  return (
+    <button
+      onClick={copiar}
+      style={{
+        position: 'absolute',
+        top: '8px',
+        right: '8px',
+        padding: '6px 12px',
+        background: copiado ? '#22c55e' : 'rgba(255,255,255,0.1)',
+        color: copiado ? 'white' : '#94a3b8',
+        border: `1px solid ${copiado ? '#22c55e' : 'rgba(255,255,255,0.15)'}`,
+        borderRadius: '6px',
+        fontSize: '12px',
+        fontWeight: 500,
+        cursor: 'pointer',
+        transition: 'all 0.2s',
+        fontFamily: 'inherit',
+      }}
+    >
+      {copiado ? '✓ Copiado' : 'Copiar'}
+    </button>
+  )
+}
+
+function renderInline(text: string): string {
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/`([^`]+)`/g, '<code style="background:#e2e8f0;padding:2px 6px;border-radius:4px;font-size:13px;color:#0f172a;">$1</code>')
+    .replace(/\*\*([^*]+)\*\*/g, '<strong style="color:#0f172a;">$1</strong>')
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" style="color:#6366f1;text-decoration:none;font-weight:500;">$1</a>')
+}
+
+function parseContentBlocks(text: string, codeBlocks: { lang: string; code: string }[]) {
+  const elements: any[] = []
+  const lines = text.split('\n')
+  let i = 0
+  let key = 0
+
+  while (i < lines.length) {
+    const line = lines[i]
+
+    // Code block placeholder
+    const codeMatch = line.match(/^__CODEBLOCK_(\d+)__$/)
+    if (codeMatch) {
+      const block = codeBlocks[parseInt(codeMatch[1])]
+      elements.push(
+        <div key={key++} style={{ position: 'relative', margin: '16px 0' }}>
+          <div style={{
+            position: 'relative',
+            background: '#0f172a',
+            borderRadius: '8px',
+            padding: '16px 60px 16px 16px',
+            overflow: 'auto',
+          }}>
+            <CopyButton texto={block.code} />
+            <pre style={{
+              margin: 0,
+              fontSize: '14px',
+              lineHeight: 1.7,
+              color: '#e2e8f0',
+              fontFamily: "'JetBrains Mono', 'Fira Code', Consolas, monospace",
+              whiteSpace: 'pre-wrap',
+              wordBreak: 'break-word',
+            }}>
+              {block.code}
+            </pre>
+          </div>
+        </div>
+      )
+      i++
+      continue
+    }
+
+    // ## heading (within section body)
+    if (line.startsWith('## ')) {
+      elements.push(
+        <h3 key={key++} style={{
+          fontSize: '17px',
+          fontWeight: 600,
+          color: '#0f172a',
+          margin: '24px 0 12px',
+        }}>
+          {line.slice(3)}
+        </h3>
+      )
+      i++
+      continue
+    }
+
+    // ### heading with left border accent
+    if (line.startsWith('### ')) {
+      elements.push(
+        <h4 key={key++} style={{
+          fontSize: '15px',
+          fontWeight: 600,
+          color: '#1e293b',
+          margin: '20px 0 10px',
+          paddingLeft: '12px',
+          borderLeft: '3px solid #6366f1',
+        }}>
+          {line.slice(4)}
+        </h4>
+      )
+      i++
+      continue
+    }
+
+    // Blockquote → yellow callout
+    if (line.startsWith('> ')) {
+      const quoteLines: string[] = []
+      while (i < lines.length && lines[i].startsWith('> ')) {
+        quoteLines.push(lines[i].slice(2))
+        i++
+      }
+      elements.push(
+        <div key={key++} style={{
+          margin: '16px 0',
+          padding: '12px 16px',
+          background: '#fef9c3',
+          border: '1px solid #fde047',
+          borderRadius: '8px',
+          fontSize: '14px',
+          color: '#854d0e',
+          lineHeight: 1.6,
+        }}>
+          <span dangerouslySetInnerHTML={{ __html: renderInline('💡 ' + quoteLines.join(' ')) }} />
+        </div>
+      )
+      continue
+    }
+
+    // Table
+    if (line.includes('|') && line.trim().startsWith('|')) {
+      const tableLines: string[] = []
+      while (i < lines.length && lines[i].includes('|') && lines[i].trim().startsWith('|')) {
+        tableLines.push(lines[i])
+        i++
+      }
+      const parsedRows = tableLines
+        .filter(l => !l.match(/^\|[\s\-:|]+\|$/))
+        .map(l => l.split('|').slice(1, -1).map(c => c.trim()))
+
+      if (parsedRows.length > 1) {
+        elements.push(
+          <div key={key++} style={{ margin: '16px 0', overflowX: 'auto' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px' }}>
+              <thead>
+                <tr>
+                  {parsedRows[0].map((h, hi) => (
+                    <th key={hi} style={{
+                      padding: '10px 14px',
+                      textAlign: 'left',
+                      fontWeight: 600,
+                      color: '#1e293b',
+                      background: '#f8fafc',
+                      borderBottom: '2px solid #e2e8f0',
+                    }}>
+                      <span dangerouslySetInnerHTML={{ __html: renderInline(h) }} />
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {parsedRows.slice(1).map((row, ri) => (
+                  <tr key={ri}>
+                    {row.map((cell, ci) => (
+                      <td key={ci} style={{
+                        padding: '10px 14px',
+                        borderBottom: '1px solid #e2e8f0',
+                        color: '#374151',
+                      }}>
+                        <span dangerouslySetInnerHTML={{ __html: renderInline(cell) }} />
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )
+      }
+      continue
+    }
+
+    // Ordered list
+    if (line.match(/^\d+\. /)) {
+      const items: string[] = []
+      while (i < lines.length && lines[i].match(/^\d+\. /)) {
+        items.push(lines[i].replace(/^\d+\. /, ''))
+        i++
+      }
+      elements.push(
+        <ol key={key++} style={{ margin: '12px 0', paddingLeft: '24px' }}>
+          {items.map((item, ii) => (
+            <li key={ii} style={{ marginBottom: '8px', lineHeight: 1.6 }}>
+              <span dangerouslySetInnerHTML={{ __html: renderInline(item) }} />
+            </li>
+          ))}
+        </ol>
+      )
+      continue
+    }
+
+    // Unordered list
+    if (line.startsWith('- ')) {
+      const items: string[] = []
+      while (i < lines.length && lines[i].startsWith('- ')) {
+        items.push(lines[i].slice(2))
+        i++
+      }
+      elements.push(
+        <ul key={key++} style={{ margin: '12px 0', paddingLeft: '24px' }}>
+          {items.map((item, ii) => (
+            <li key={ii} style={{ marginBottom: '8px', lineHeight: 1.6 }}>
+              <span dangerouslySetInnerHTML={{ __html: renderInline(item) }} />
+            </li>
+          ))}
+        </ul>
+      )
+      continue
+    }
+
+    // Empty line
+    if (line.trim() === '') {
+      i++
+      continue
+    }
+
+    // Paragraph — collect consecutive non-special lines
+    const paraLines: string[] = []
+    while (i < lines.length && lines[i].trim() !== '' &&
+           !lines[i].startsWith('## ') && !lines[i].startsWith('### ') &&
+           !lines[i].startsWith('> ') && !lines[i].startsWith('- ') &&
+           !lines[i].match(/^\d+\. /) &&
+           !(lines[i].includes('|') && lines[i].trim().startsWith('|')) &&
+           !lines[i].match(/^__CODEBLOCK_\d+__$/)) {
+      paraLines.push(lines[i])
+      i++
+    }
+    if (paraLines.length > 0) {
+      elements.push(
+        <p key={key++} style={{ margin: '12px 0' }}>
+          <span dangerouslySetInnerHTML={{ __html: renderInline(paraLines.join(' ')) }} />
+        </p>
+      )
+    }
+  }
+
+  return elements
+}
+
+function renderPreclaseContent(contenido: string) {
+  // Step 1: Extract code blocks and replace with placeholders
+  const codeBlocks: { lang: string; code: string }[] = []
+  const withPlaceholders = contenido.replace(/```(\w*)\n([\s\S]*?)```/g, (_, lang, code) => {
+    const idx = codeBlocks.length
+    codeBlocks.push({ lang: lang || '', code: code.replace(/\n$/, '') })
+    return `__CODEBLOCK_${idx}__`
+  })
+
+  // Step 2: Split by --- separators
+  const rawSections = withPlaceholders.trim().split(/\n---\n/)
+
+  // Step 3: Render each section as a card
+  return rawSections.filter(s => s.trim()).map((section, idx) => {
+    const trimmed = section.trim()
+    const lines = trimmed.split('\n')
+
+    // Extract ## heading from start of section as card title
+    let title = ''
+    let bodyLines: string[]
+    const firstContentLine = lines.findIndex(l => l.trim() !== '')
+    if (firstContentLine >= 0 && lines[firstContentLine].startsWith('## ')) {
+      title = lines[firstContentLine].slice(3)
+      bodyLines = lines.slice(firstContentLine + 1)
+    } else {
+      bodyLines = lines
+    }
+
+    const blocks = parseContentBlocks(bodyLines.join('\n'), codeBlocks)
+
+    return (
+      <div key={idx} style={{
+        background: '#fff',
+        border: '1px solid rgba(0,0,0,0.06)',
+        borderRadius: '16px',
+        marginBottom: '16px',
+        overflow: 'hidden',
+        boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
+      }}>
+        {title && (
+          <div style={{
+            background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+            padding: '20px 24px',
+            color: 'white',
+          }}>
+            <h3 style={{ margin: 0, fontSize: '18px', fontWeight: 700, lineHeight: 1.3 }}>
+              {title}
+            </h3>
+          </div>
+        )}
+        <div style={{ padding: '20px 24px', fontSize: '15px', lineHeight: 1.7, color: '#374151' }}>
+          {blocks}
+        </div>
+      </div>
+    )
+  })
 }
 
 function SemanaContent({ semana }: { semana: Semana }) {
@@ -187,7 +504,7 @@ function SemanaContent({ semana }: { semana: Semana }) {
       <Head>
         <title>Semana {semana.num}: {semana.titulo} | Curso</title>
         <meta name="robots" content="noindex, nofollow" />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
       </Head>
 
       {/* Header */}
@@ -444,19 +761,9 @@ function SemanaContent({ semana }: { semana: Semana }) {
                 </button>
               </div>
 
-              {/* Content */}
-              <div style={{
-                background: '#fff',
-                border: '1px solid rgba(0,0,0,0.06)',
-                borderRadius: '16px',
-                padding: '24px',
-                marginBottom: '20px',
-                fontSize: '15px',
-                lineHeight: 1.7,
-                color: '#374151',
-                boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
-              }}>
-                <div dangerouslySetInnerHTML={{ __html: renderMarkdown(semana.preclase.contenido) }} />
+              {/* Content cards */}
+              <div style={{ marginBottom: '20px' }}>
+                {renderPreclaseContent(semana.preclase.contenido)}
               </div>
 
               {/* Resources */}
@@ -902,6 +1209,120 @@ function SemanaContent({ semana }: { semana: Semana }) {
   )
 }
 
+function SemanaLockGuard({ semana, children }: { semana: Semana; children: React.ReactNode }) {
+  const [unlocked, setUnlocked] = useState<boolean | null>(null)
+  const [isAdmin, setIsAdmin] = useState(false)
+
+  useEffect(() => {
+    // Check admin bypass
+    const adminPass = localStorage.getItem('josu-admin-password')
+    if (adminPass) {
+      setIsAdmin(true)
+      setUnlocked(true)
+      return
+    }
+
+    // Check if week is unlocked via API
+    fetch('/api/curso/config')
+      .then(res => res.json())
+      .then(data => {
+        setUnlocked(data.semanasStatus?.[semana.num] || false)
+      })
+      .catch(() => setUnlocked(false))
+  }, [semana.num])
+
+  if (unlocked === null) {
+    return (
+      <div style={{
+        minHeight: '100vh',
+        background: 'linear-gradient(135deg, #f8fafc, #eef2f6)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontFamily: "'Inter', sans-serif"
+      }}>
+        <div style={{
+          width: '48px',
+          height: '48px',
+          border: '4px solid #e2e8f0',
+          borderTop: '4px solid #6366f1',
+          borderRadius: '50%',
+          animation: 'spin 1s linear infinite',
+        }} />
+        <style jsx>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+      </div>
+    )
+  }
+
+  if (!unlocked) {
+    return (
+      <div style={{
+        minHeight: '100vh',
+        background: 'linear-gradient(135deg, #f8fafc, #eef2f6)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
+        color: '#0f172a',
+        padding: '24px'
+      }}>
+        <div style={{
+          textAlign: 'center',
+          maxWidth: '440px',
+          background: '#fff',
+          borderRadius: '20px',
+          padding: '48px 32px',
+          border: '1px solid rgba(0,0,0,0.06)',
+          boxShadow: '0 4px 24px rgba(0,0,0,0.06)'
+        }}>
+          <span style={{ fontSize: '56px', display: 'block', marginBottom: '20px' }}>🔒</span>
+          <h1 style={{ fontSize: '22px', fontWeight: 700, marginBottom: '12px' }}>
+            Semana {semana.num} bloqueada
+          </h1>
+          <p style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.6, marginBottom: '28px' }}>
+            Esta semana aún no está disponible. Se desbloqueará cuando el instructor la active.
+          </p>
+          <Link href="/curso" style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '8px',
+            padding: '14px 28px',
+            background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+            color: '#fff',
+            textDecoration: 'none',
+            borderRadius: '12px',
+            fontSize: '15px',
+            fontWeight: 600,
+            boxShadow: '0 4px 14px rgba(99, 102, 241, 0.3)'
+          }}>
+            ← Volver al curso
+          </Link>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <>
+      {isAdmin && (
+        <div style={{
+          background: '#fef3c7',
+          borderBottom: '1px solid #fde047',
+          padding: '8px 24px',
+          fontSize: '13px',
+          color: '#92400e',
+          fontWeight: 500,
+          textAlign: 'center',
+          fontFamily: "'Inter', sans-serif"
+        }}>
+          👨‍🏫 Vista de admin — Los alumnos ven esto mismo
+        </div>
+      )}
+      {children}
+    </>
+  )
+}
+
 function SemanaPage() {
   const router = useRouter()
   const { num } = router.query
@@ -949,7 +1370,9 @@ function SemanaPage() {
 
   return (
     <CursoEmailGate>
-      <SemanaContent semana={semana} />
+      <SemanaLockGuard semana={semana}>
+        <SemanaContent semana={semana} />
+      </SemanaLockGuard>
     </CursoEmailGate>
   )
 }

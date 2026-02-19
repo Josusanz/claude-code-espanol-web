@@ -357,16 +357,17 @@ export default function AdminCursoDashboard() {
           <div style={{
             display: 'flex',
             gap: '12px',
-            flexWrap: 'wrap'
+            flexWrap: 'wrap',
+            marginBottom: '16px'
           }}>
-            {CURSO_SEMANAS.slice(0, 5).map(semana => {
+            {CURSO_SEMANAS.map(semana => {
               const isUnlocked = semanasStatus[semana.num]
               const isLoading = actionLoading === semana.num
 
               return (
                 <button
                   key={semana.num}
-                  onClick={() => toggleSemana(semana.num)}
+                  onClick={(e) => { e.stopPropagation(); toggleSemana(semana.num) }}
                   disabled={isLoading}
                   style={{
                     padding: '10px 16px',
@@ -380,10 +381,36 @@ export default function AdminCursoDashboard() {
                     opacity: isLoading ? 0.5 : 1
                   }}
                 >
-                  {isLoading ? '...' : (isUnlocked ? `Bloquear S${semana.num}` : `Desbloquear S${semana.num}`)}
+                  {isLoading ? '...' : (isUnlocked ? `🔒 Bloquear S${semana.num}` : `🔓 Desbloquear S${semana.num}`)}
                 </button>
               )
             })}
+          </div>
+
+          <div style={{
+            display: 'flex',
+            gap: '8px',
+            flexWrap: 'wrap'
+          }}>
+            {CURSO_SEMANAS.map(semana => (
+              <Link
+                key={semana.num}
+                href={`/curso/semana/${semana.num}`}
+                target="_blank"
+                style={{
+                  padding: '8px 14px',
+                  fontSize: '12px',
+                  fontWeight: 500,
+                  color: '#6366f1',
+                  background: '#eef2ff',
+                  border: '1px solid #c7d2fe',
+                  borderRadius: '8px',
+                  textDecoration: 'none',
+                }}
+              >
+                👁 Vista alumno S{semana.num}
+              </Link>
+            ))}
           </div>
         </div>
 
