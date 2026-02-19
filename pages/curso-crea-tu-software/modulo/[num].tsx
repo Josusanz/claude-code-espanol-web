@@ -229,6 +229,12 @@ function ModuloContent({ moduloNum }: { moduloNum: number }) {
 
   const { isDark, toggleTheme, t, mounted } = useTheme()
 
+  // Compute these before early returns so hooks are always called in the same order
+  const semana = modulo?.semanaNum ? CURSO_SEMANAS.find(s => s.num === modulo.semanaNum) : null
+  const pizarra = modulo?.semanaNum ? getPizarra(modulo.semanaNum) : null
+  const isCompleted = progress[`autoguiado-modulo-${modulo?.num ?? -1}`] || false
+  const checklist = useChecklist(modulo?.num ?? -1, semana?.entregable.checklist.length || 0)
+
   if (!modulo) return null
 
   // Show countdown if module is locked
@@ -261,12 +267,6 @@ function ModuloContent({ moduloNum }: { moduloNum: number }) {
       </div>
     )
   }
-
-  const semana = modulo.semanaNum ? CURSO_SEMANAS.find(s => s.num === modulo.semanaNum) : null
-  const pizarra = modulo.semanaNum ? getPizarra(modulo.semanaNum) : null
-  const isCompleted = progress[`autoguiado-modulo-${modulo.num}`] || false
-
-  const checklist = useChecklist(modulo.num, semana?.entregable.checklist.length || 0)
 
   const prevModulo = MODULOS_AUTOGUIADO.find(m => m.num === modulo.num - 1)
   const nextModulo = MODULOS_AUTOGUIADO.find(m => m.num === modulo.num + 1)
