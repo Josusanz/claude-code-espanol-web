@@ -452,6 +452,531 @@ ${beneficios ? beneficios.split('\n').filter(l => l.trim()).map(l => `- ${l.trim
   )
 }
 
+// ============= Visualizacion =============
+
+const VISU_STEPS = [
+  {
+    texto: 'Si te sientes cómodo, cierra los ojos. Si no, simplemente mira hacia abajo.',
+    pausa: 'Respira profundo... inhala... exhala...',
+  },
+  {
+    texto: 'Imagina que han pasado 10 semanas. Es abril de 2026. Estás sentado exactamente donde estás ahora, pero algo es diferente.',
+  },
+  {
+    texto: 'Tu proyecto existe. Está en internet. Tiene usuarios reales. Gente que nunca conociste está usando algo que TÚ creaste.',
+    pausa: '¿Cómo se siente eso? Nota las sensaciones en tu cuerpo...',
+  },
+  {
+    texto: 'Mira hacia atrás estas 10 semanas. ¿Qué obstáculos superaste? ¿Qué aprendiste sobre ti mismo?',
+  },
+  {
+    texto: '¿Quién eres ahora que no eras hace 10 semanas?',
+  },
+]
+
+function Visualizacion() {
+  const [step, setStep] = useState(-1) // -1 = no empezado
+  const [palabras, setPalabras] = useState(['', '', ''])
+  const [guardado, setGuardado] = useState(false)
+
+  const started = step >= 0
+  const finished = step >= VISU_STEPS.length
+  const allWords = palabras.every(p => p.trim().length > 0)
+
+  const updatePalabra = (idx: number, val: string) => {
+    const next = [...palabras]
+    next[idx] = val
+    setPalabras(next)
+  }
+
+  if (!started) {
+    return (
+      <div style={{ marginTop: '16px' }}>
+        <div style={{
+          background: 'linear-gradient(135deg, #1e1b4b, #312e81, #3730a3)',
+          borderRadius: '16px',
+          padding: '40px 32px',
+          textAlign: 'center',
+          color: 'white',
+        }}>
+          <div style={{ fontSize: '40px', marginBottom: '16px' }}>🧘</div>
+          <p style={{ fontSize: '17px', lineHeight: 1.7, margin: '0 0 8px', opacity: 0.9 }}>
+            Un ejercicio guiado para conectar con tu yo del futuro.
+          </p>
+          <p style={{ fontSize: '14px', margin: '0 0 24px', opacity: 0.6 }}>
+            ~5 minutos · Puedes cerrar los ojos si quieres
+          </p>
+          <button
+            onClick={() => setStep(0)}
+            style={{
+              padding: '14px 36px',
+              background: 'rgba(255,255,255,0.15)',
+              color: 'white',
+              border: '1px solid rgba(255,255,255,0.3)',
+              borderRadius: '12px',
+              fontSize: '16px',
+              fontWeight: 600,
+              cursor: 'pointer',
+              fontFamily: 'inherit',
+              backdropFilter: 'blur(4px)',
+              transition: 'all 0.2s',
+            }}
+          >
+            Empezar
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div style={{ marginTop: '16px' }}>
+      <div style={{
+        background: 'linear-gradient(135deg, #1e1b4b, #312e81, #3730a3)',
+        borderRadius: '16px',
+        padding: '32px',
+        color: 'white',
+        minHeight: '300px',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+      }}>
+        {/* Pasos de la visualización */}
+        {!finished && (
+          <>
+            <div style={{
+              display: 'flex',
+              gap: '6px',
+              justifyContent: 'center',
+              marginBottom: '32px',
+            }}>
+              {VISU_STEPS.map((_, i) => (
+                <div key={i} style={{
+                  width: '32px',
+                  height: '4px',
+                  borderRadius: '2px',
+                  background: i <= step ? 'rgba(255,255,255,0.8)' : 'rgba(255,255,255,0.15)',
+                  transition: 'background 0.5s',
+                }} />
+              ))}
+            </div>
+
+            <div style={{
+              textAlign: 'center',
+              maxWidth: '500px',
+              margin: '0 auto',
+            }}>
+              <p style={{
+                fontSize: '20px',
+                lineHeight: 1.8,
+                margin: 0,
+                fontWeight: 400,
+                letterSpacing: '0.01em',
+              }}>
+                {VISU_STEPS[step].texto}
+              </p>
+              {VISU_STEPS[step].pausa && (
+                <p style={{
+                  fontSize: '15px',
+                  lineHeight: 1.7,
+                  margin: '20px 0 0',
+                  opacity: 0.6,
+                  fontStyle: 'italic',
+                }}>
+                  {VISU_STEPS[step].pausa}
+                </p>
+              )}
+            </div>
+
+            <div style={{ textAlign: 'center', marginTop: '36px' }}>
+              <button
+                onClick={() => setStep(step + 1)}
+                style={{
+                  padding: '12px 32px',
+                  background: 'rgba(255,255,255,0.12)',
+                  color: 'white',
+                  border: '1px solid rgba(255,255,255,0.25)',
+                  borderRadius: '10px',
+                  fontSize: '14px',
+                  fontWeight: 500,
+                  cursor: 'pointer',
+                  fontFamily: 'inherit',
+                  transition: 'all 0.2s',
+                }}
+              >
+                {step < VISU_STEPS.length - 1 ? 'Siguiente →' : 'Terminar →'}
+              </button>
+            </div>
+          </>
+        )}
+
+        {/* Pantalla final: 3 palabras */}
+        {finished && !guardado && (
+          <div style={{ textAlign: 'center', maxWidth: '460px', margin: '0 auto' }}>
+            <p style={{
+              fontSize: '18px',
+              lineHeight: 1.7,
+              margin: '0 0 24px',
+              opacity: 0.9,
+            }}>
+              Cuando estés listo, escribe <strong>3 palabras</strong> que describan a ese tú del futuro.
+            </p>
+            <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', flexWrap: 'wrap' }}>
+              {palabras.map((p, i) => (
+                <input
+                  key={i}
+                  value={p}
+                  onChange={e => updatePalabra(i, e.target.value)}
+                  placeholder={['Palabra 1', 'Palabra 2', 'Palabra 3'][i]}
+                  style={{
+                    width: '130px',
+                    padding: '12px 14px',
+                    background: 'rgba(255,255,255,0.1)',
+                    border: '1px solid rgba(255,255,255,0.25)',
+                    borderRadius: '10px',
+                    color: 'white',
+                    fontSize: '15px',
+                    fontWeight: 500,
+                    textAlign: 'center',
+                    fontFamily: 'inherit',
+                    outline: 'none',
+                  }}
+                />
+              ))}
+            </div>
+            {allWords && (
+              <button
+                onClick={() => setGuardado(true)}
+                style={{
+                  marginTop: '24px',
+                  padding: '12px 32px',
+                  background: 'rgba(255,255,255,0.15)',
+                  color: 'white',
+                  border: '1px solid rgba(255,255,255,0.3)',
+                  borderRadius: '10px',
+                  fontSize: '14px',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  fontFamily: 'inherit',
+                  transition: 'all 0.2s',
+                }}
+              >
+                ✨ Guardar mis palabras
+              </button>
+            )}
+          </div>
+        )}
+
+        {/* Resultado final */}
+        {finished && guardado && (
+          <div style={{ textAlign: 'center', maxWidth: '460px', margin: '0 auto' }}>
+            <p style={{
+              fontSize: '15px',
+              margin: '0 0 20px',
+              opacity: 0.6,
+            }}>
+              Tu yo del futuro en 3 palabras:
+            </p>
+            <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
+              {palabras.map((p, i) => (
+                <span key={i} style={{
+                  padding: '10px 22px',
+                  background: 'rgba(255,255,255,0.12)',
+                  border: '1px solid rgba(255,255,255,0.2)',
+                  borderRadius: '24px',
+                  fontSize: '17px',
+                  fontWeight: 600,
+                  letterSpacing: '0.02em',
+                }}>
+                  {p.trim()}
+                </span>
+              ))}
+            </div>
+            <p style={{
+              fontSize: '14px',
+              margin: '24px 0 0',
+              opacity: 0.5,
+              lineHeight: 1.6,
+            }}>
+              Recuerda estas palabras. En 10 semanas volveremos a este momento.
+            </p>
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+
+// ============= ProjectPromptBuilder =============
+
+function ProjectPromptBuilder() {
+  const [tieneIdea, setTieneIdea] = useState<null | boolean>(null)
+
+  // Campos para "NO tengo idea"
+  const [intereses, setIntereses] = useState('')
+  const [problemas, setProblemas] = useState('')
+
+  // Campos para "SÍ tengo idea"
+  const [idea, setIdea] = useState('')
+
+  const [copiado, setCopiado] = useState(false)
+
+  const inputStyle = {
+    width: '100%',
+    padding: '12px 14px',
+    border: '1px solid #d1d5db',
+    borderRadius: '8px',
+    fontSize: '14px',
+    fontFamily: 'inherit',
+    color: '#1e293b',
+    background: 'white',
+    outline: 'none',
+    resize: 'vertical' as const,
+    minHeight: '80px',
+  }
+
+  const labelStyle = {
+    display: 'block',
+    fontSize: '14px',
+    fontWeight: 600 as const,
+    color: '#374151',
+    marginBottom: '6px',
+  }
+
+  const hintStyle = {
+    fontSize: '12px',
+    color: '#9ca3af',
+    margin: '4px 0 0',
+    lineHeight: 1.4,
+  }
+
+  // Generar prompt para "NO tengo idea"
+  const promptNoIdea = intereses.trim() && problemas.trim()
+    ? `Soy un alumno de un curso de 10 semanas donde voy a crear un SaaS (software como servicio) usando Claude Code. No necesito saber programar — la IA escribe el código.
+
+Mis intereses: ${intereses.trim()}
+Problemas que tengo en mi día a día: ${problemas.trim()}
+
+Sugiere 3 ideas de proyecto que:
+- Pueda construir en 10 semanas
+- Tenga un modelo de negocio claro (suscripción, pago único, etc.)
+- Resuelva un problema real
+
+Para cada idea dame: nombre, qué problema resuelve, quién pagaría por esto, y modelo de negocio.`
+    : null
+
+  // Generar prompt para "SÍ tengo idea"
+  const promptSiIdea = idea.trim()
+    ? `Soy un alumno de un curso de 10 semanas donde voy a crear un SaaS con Claude Code.
+
+Mi idea de proyecto: ${idea.trim()}
+
+Evalúa mi idea:
+1. ¿Es viable para construir en 10 semanas con IA?
+2. ¿Qué funcionalidades son imprescindibles (MVP)?
+3. ¿Cómo puedo cobrar? (suscripción, freemium, pago único)
+4. ¿Quién es mi usuario ideal?
+5. Sugiéreme un nombre si no tengo uno.`
+    : null
+
+  const promptFinal = tieneIdea ? promptSiIdea : promptNoIdea
+
+  const copiar = async () => {
+    if (!promptFinal) return
+    try {
+      await navigator.clipboard.writeText(promptFinal)
+    } catch {
+      const ta = document.createElement('textarea')
+      ta.value = promptFinal
+      document.body.appendChild(ta)
+      ta.select()
+      document.execCommand('copy')
+      document.body.removeChild(ta)
+    }
+    setCopiado(true)
+    setTimeout(() => setCopiado(false), 2500)
+  }
+
+  const sectionStyle = {
+    padding: '20px',
+    border: '1px solid #e2e8f0',
+    borderRadius: '12px',
+    background: '#fafafa',
+  }
+
+  return (
+    <div style={{ marginTop: '16px', display: 'flex', flexDirection: 'column' as const, gap: '16px' }}>
+      {/* Pregunta inicial */}
+      <div style={sectionStyle}>
+        <p style={{ margin: '0 0 12px', fontSize: '15px', fontWeight: 600, color: '#1e293b' }}>
+          ¿Ya tienes claro qué proyecto quieres crear?
+        </p>
+        <div style={{ display: 'flex', gap: '10px' }}>
+          {[
+            { val: true, label: 'Sí, tengo una idea', emoji: '💡' },
+            { val: false, label: 'No, necesito ayuda', emoji: '🔍' },
+          ].map(opt => (
+            <button
+              key={String(opt.val)}
+              onClick={() => { setTieneIdea(opt.val); setCopiado(false) }}
+              style={{
+                flex: 1,
+                padding: '14px 16px',
+                border: tieneIdea === opt.val ? '2px solid #6366f1' : '1px solid #d1d5db',
+                borderRadius: '10px',
+                background: tieneIdea === opt.val ? '#eef2ff' : 'white',
+                cursor: 'pointer',
+                fontFamily: 'inherit',
+                fontSize: '14px',
+                fontWeight: tieneIdea === opt.val ? 600 : 400,
+                color: tieneIdea === opt.val ? '#4338ca' : '#374151',
+                transition: 'all 0.15s',
+                textAlign: 'center',
+              }}
+            >
+              <span style={{ fontSize: '20px', display: 'block', marginBottom: '4px' }}>{opt.emoji}</span>
+              {opt.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Formulario: NO tengo idea */}
+      {tieneIdea === false && (
+        <div style={{ ...sectionStyle, background: '#fefce8', borderColor: '#fde047' }}>
+          <p style={{ margin: '0 0 4px', fontSize: '15px', fontWeight: 600, color: '#854d0e' }}>
+            🔍 Vamos a descubrir tu proyecto ideal
+          </p>
+          <p style={{ margin: '0 0 16px', fontSize: '13px', color: '#a16207' }}>
+            Responde estas dos preguntas y Claude te sugerirá 3 ideas de proyecto perfectas para ti.
+          </p>
+          <div style={{ display: 'flex', flexDirection: 'column' as const, gap: '14px' }}>
+            <div>
+              <label style={labelStyle}>¿Cuáles son tus intereses? (3-4 cosas)</label>
+              <textarea
+                style={inputStyle}
+                placeholder="Ej: cocina saludable, fitness, viajes, fotografía, marketing digital..."
+                value={intereses}
+                onChange={e => { setIntereses(e.target.value); setCopiado(false) }}
+              />
+              <p style={hintStyle}>Hobbies, pasiones, temas que te apasionan o en los que tienes experiencia.</p>
+            </div>
+            <div>
+              <label style={labelStyle}>¿Qué problemas tienes en tu día a día? (2-3)</label>
+              <textarea
+                style={inputStyle}
+                placeholder="Ej: me cuesta organizar mis recetas, pierdo tiempo buscando gimnasios nuevos, no encuentro vuelos baratos fácilmente..."
+                value={problemas}
+                onChange={e => { setProblemas(e.target.value); setCopiado(false) }}
+              />
+              <p style={hintStyle}>Los mejores proyectos nacen de problemas reales que tú mismo tienes.</p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Formulario: SÍ tengo idea */}
+      {tieneIdea === true && (
+        <div style={{ ...sectionStyle, background: '#f0fdf4', borderColor: '#86efac' }}>
+          <p style={{ margin: '0 0 4px', fontSize: '15px', fontWeight: 600, color: '#166534' }}>
+            💡 Vamos a validar tu idea
+          </p>
+          <p style={{ margin: '0 0 16px', fontSize: '13px', color: '#15803d' }}>
+            Describe tu idea y Claude te dirá si es viable, qué necesitas para el MVP y cómo monetizarla.
+          </p>
+          <div>
+            <label style={labelStyle}>Describe tu idea de proyecto</label>
+            <textarea
+              style={{ ...inputStyle, minHeight: '100px' }}
+              placeholder="Ej: Una app donde los dueños de perros pueden encontrar paseadores de confianza cerca de su zona. Los paseadores se registran, ponen su precio y disponibilidad, y los dueños reservan y pagan desde la app."
+              value={idea}
+              onChange={e => { setIdea(e.target.value); setCopiado(false) }}
+            />
+            <p style={hintStyle}>Cuanto más detalle des, mejor será la evaluación de Claude.</p>
+          </div>
+        </div>
+      )}
+
+      {/* Prompt generado */}
+      {tieneIdea !== null && promptFinal && (
+        <div style={{
+          ...sectionStyle,
+          background: '#eef2ff',
+          borderColor: '#a5b4fc',
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+            <p style={{ margin: 0, fontSize: '15px', fontWeight: 600, color: '#3730a3' }}>
+              ✨ Tu prompt personalizado
+            </p>
+            <button
+              onClick={copiar}
+              style={{
+                padding: '8px 20px',
+                background: copiado ? '#22c55e' : '#6366f1',
+                color: 'white',
+                border: 'none',
+                borderRadius: '8px',
+                fontSize: '14px',
+                fontWeight: 600,
+                cursor: 'pointer',
+                fontFamily: 'inherit',
+                transition: 'all 0.2s',
+              }}
+            >
+              {copiado ? '✓ Copiado' : '📋 Copiar prompt'}
+            </button>
+          </div>
+          <div style={{
+            background: '#0f172a',
+            borderRadius: '8px',
+            padding: '16px',
+            overflow: 'auto',
+          }}>
+            <pre style={{
+              margin: 0,
+              fontSize: '13px',
+              lineHeight: 1.7,
+              color: '#e2e8f0',
+              fontFamily: "'JetBrains Mono', 'Fira Code', Consolas, monospace",
+              whiteSpace: 'pre-wrap',
+              wordBreak: 'break-word',
+            }}>
+              {promptFinal}
+            </pre>
+          </div>
+          <div style={{
+            marginTop: '12px',
+            padding: '10px 14px',
+            background: '#dbeafe',
+            border: '1px solid #93c5fd',
+            borderRadius: '8px',
+            fontSize: '13px',
+            color: '#1e40af',
+            lineHeight: 1.5,
+          }}>
+            <strong>Siguiente paso:</strong> Abre <strong>Claude.ai</strong> o <strong>Claude Code</strong>, pega el prompt y lee lo que te sugiere. Luego comparte con el grupo.
+          </div>
+        </div>
+      )}
+
+      {/* Hint cuando no ha rellenado */}
+      {tieneIdea !== null && !promptFinal && (
+        <div style={{
+          padding: '16px',
+          background: '#f8fafc',
+          border: '1px dashed #cbd5e1',
+          borderRadius: '10px',
+          textAlign: 'center',
+          color: '#94a3b8',
+          fontSize: '14px',
+        }}>
+          Rellena los campos de arriba y tu prompt aparecerá aquí automáticamente ↑
+        </div>
+      )}
+    </div>
+  )
+}
+
 // ============= PasoComponent =============
 
 export function PasoComponent({ paso, index }: { paso: PasoClase; index: number }) {
@@ -521,6 +1046,8 @@ export function PasoComponent({ paso, index }: { paso: PasoClase; index: number 
       )}
 
       {paso.componente === 'dia2-setup' && <Dia2Setup />}
+      {paso.componente === 'prompt-builder' && <ProjectPromptBuilder />}
+      {paso.componente === 'visualizacion' && <Visualizacion />}
 
       {paso.bloques?.map((bloque, i) => (
         <BloqueCodigoComponent key={i} bloque={bloque} />

@@ -61,39 +61,8 @@ export const PIZARRAS: PizarraSemana[] = [
       },
       {
         titulo: '5. Define tu proyecto con Claude',
-        descripcion: 'Si ya tienes una idea, pídele a Claude que la evalúe. Si no la tienes, Claude te ayuda a encontrarla. Copia el prompt que mejor se ajuste a tu situación.',
-        bloques: [
-          {
-            lenguaje: 'text',
-            archivo: 'Si NO tienes idea de proyecto',
-            codigo: `Soy un alumno de un curso de 10 semanas donde voy a crear un SaaS (software como servicio) usando Claude Code. No necesito saber programar — la IA escribe el código.
-
-Mis intereses: [ESCRIBE 3-4 COSAS QUE TE INTERESAN]
-Problemas que tengo en mi día a día: [ESCRIBE 2-3 PROBLEMAS]
-
-Sugiere 3 ideas de proyecto que:
-- Pueda construir en 10 semanas
-- Tenga un modelo de negocio claro (suscripción, pago único, etc.)
-- Resuelva un problema real
-
-Para cada idea dame: nombre, qué problema resuelve, quién pagaría por esto, y modelo de negocio.`,
-          },
-          {
-            lenguaje: 'text',
-            archivo: 'Si YA tienes idea de proyecto',
-            codigo: `Soy un alumno de un curso de 10 semanas donde voy a crear un SaaS con Claude Code.
-
-Mi idea de proyecto: [DESCRIBE TU IDEA EN 2-3 FRASES]
-
-Evalúa mi idea:
-1. ¿Es viable para construir en 10 semanas con IA?
-2. ¿Qué funcionalidades son imprescindibles (MVP)?
-3. ¿Cómo puedo cobrar? (suscripción, freemium, pago único)
-4. ¿Quién es mi usuario ideal?
-5. Sugiéreme un nombre si no tengo uno.`,
-          },
-        ],
-        tip: 'Abre Claude.ai o Claude Code y pega el prompt. Cambia los textos entre corchetes por tu información real.',
+        descripcion: 'Responde unas preguntas y te generamos el prompt perfecto para que Claude te ayude a definir tu proyecto. Solo tienes que copiarlo y pegarlo.',
+        componente: 'prompt-builder',
       },
       {
         titulo: '6. Tour: herramientas del curso',
@@ -111,7 +80,12 @@ Evalúa mi idea:
         tip: 'No hay respuestas incorrectas. Todos estamos aquí para aprender.',
       },
       {
-        titulo: '8. Tarea para mañana',
+        titulo: '8. Visualización: tu yo del futuro',
+        descripcion: 'Un ejercicio guiado de 5 minutos. Sigue las instrucciones paso a paso.',
+        componente: 'visualizacion',
+      },
+      {
+        titulo: '9. Tarea para mañana',
         descripcion: 'Lee la pre-clase completa (setup técnico), ten terminal + Claude Code listos, crea cuentas de Supabase y Vercel, y elige un theme base de la galería.',
         tip: 'Si tienes dudas con el setup, pregunta en Discord. Mañana arrancamos directamente a construir.',
       },
