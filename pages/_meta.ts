@@ -127,6 +127,9 @@ export default {
     type: "page"
   },
   // Hidden pages
+  "curso-crea-tu-software": {
+    display: "hidden"
+  },
   "course-builder": {
     display: "hidden"
   },

@@ -134,8 +134,22 @@ export default async function handler(
 
         // Determinar qué producto se compró y guardar en la clave correcta
         const RALPH_PRODUCT_ID = 793440
+        const AUTOGUIADO_PRODUCT_ID = parseInt(process.env.LEMONSQUEEZY_AUTOGUIADO_PRODUCT_ID || '0', 10)
 
-        if (product_id === RALPH_PRODUCT_ID) {
+        if (AUTOGUIADO_PRODUCT_ID && product_id === AUTOGUIADO_PRODUCT_ID) {
+          // Curso autoguiado — añadir a precurso:emails para acceso via CursoEmailGate
+          const normalizedEmail = email.toLowerCase().trim()
+          await kv.sadd('precurso:emails', normalizedEmail)
+          await kv.set(`autoguiado:${normalizedEmail}`, purchaseData)
+          console.log(`Autoguiado purchase recorded for: ${normalizedEmail}`)
+
+          try {
+            await sendWelcomeEmail(email, 'Crea tu Software con IA')
+            console.log(`Welcome email sent to: ${email}`)
+          } catch (emailError) {
+            console.error('Error sending welcome email:', emailError)
+          }
+        } else if (product_id === RALPH_PRODUCT_ID) {
           // Ralph Loop
           const ralphKey = `ralph_loop:${email.toLowerCase()}`
           await kv.set(ralphKey, purchaseData)
