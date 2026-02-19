@@ -102,9 +102,22 @@ El Día 2 es 100% práctico. Vamos a construir tu primera web con Claude Code. N
 ### 🛠️ Setup técnico obligatorio
 
 1. **Terminal** abierta y funcionando (la de tu Mac/PC)
-2. **Claude Code** instalado (del precurso)
-3. **Cuenta de Supabase** creada (gratis)
-4. **Cuenta de Vercel** conectada a GitHub
+2. **Claude Code** instalado y funcionando (del precurso)
+3. **Pencil** instalado y conectado con Claude Code (extensión de diseño visual)
+4. **Cuenta de Supabase** creada (gratis)
+5. **Cuenta de Vercel** conectada a GitHub
+
+### Verificar que todo funciona
+
+Abre tu terminal y comprueba:
+
+\`\`\`bash
+claude --version
+\`\`\`
+
+Si ves un número de versión, Claude Code está listo. Si no, repasa la [guía de instalación](/empezar).
+
+Para **Pencil**, instálalo desde [pencil.dev](https://pencil.dev). Es una extensión que se conecta con Claude Code via MCP — Claude puede leer y escribir diseños directamente. Lo configuraremos en la Semana 2, pero déjalo instalado.
 
 ### Lo que vamos a construir juntos en el Día 2:
 - Landing page atractiva (partiendo de un theme profesional)
@@ -112,6 +125,17 @@ El Día 2 es 100% práctico. Vamos a construir tu primera web con Claude Code. N
 - Base de datos con Supabase
 - Panel admin para ver registros
 - Desplegado en tu propio dominio
+
+### 📂 Tu carpeta de trabajo
+
+Antes de nada, crea una carpeta donde vivirán todos tus proyectos del curso. Abre el terminal y ejecuta:
+
+\`\`\`bash
+mkdir ~/curso-ia
+cd ~/curso-ia
+\`\`\`
+
+A partir de ahora, siempre que creemos un proyecto nuevo, lo haremos dentro de esta carpeta. Así tienes todo organizado en un solo sitio.
 
 ### 🎨 Elige tu theme base
 
@@ -123,15 +147,19 @@ En vez de empezar desde cero, vamos a usar uno de los **20 themes premium** incl
    - **Waitlist** — Diseñado específicamente para captar emails
    - **Gray** — Profesional y sobrio, perfecto para B2B
 3. Pide acceso al repo con tu usuario de GitHub (es automático)
-4. Clona el repo y copia el theme que elijas:
+4. Desde tu carpeta de trabajo, clona los themes y copia el que elijas:
 
 \`\`\`bash
+cd ~/curso-ia
 git clone https://github.com/Josusanz/aprende-themes.git
 cp -r aprende-themes/simple-next mi-waitlist
-cd mi-waitlist && npm install && npm run dev
+cd mi-waitlist
+npm install
+npm run dev
 \`\`\`
 
-5. En el Día 2, le diremos a Claude Code que personalice el theme con tu contenido
+5. Abre tu navegador en \`http://localhost:3000\` para ver el theme funcionando
+6. En el Día 2, le diremos a Claude Code que personalice el theme con tu contenido
 
 > **¿Por qué un theme?** Porque el diseño ya está resuelto. Tú te enfocas en tu mensaje y tu producto. Claude se encarga de adaptar colores, textos e imágenes.
 
@@ -289,7 +317,8 @@ La IA escribirá el código por ti. Tu trabajo es:
 
 **Tarea para mañana**
 - Leer la pre-clase completa (setup técnico + elegir theme)
-- Tener el terminal + Claude Code listos
+- Tener el terminal + Claude Code + Pencil listos
+- Crear la carpeta \`~/curso-ia\` y clonar los themes
 - Crear cuentas de Supabase y Vercel
 - Elegir un theme base de la galería
 

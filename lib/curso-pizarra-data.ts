@@ -86,7 +86,7 @@ export const PIZARRAS: PizarraSemana[] = [
       },
       {
         titulo: '9. Tarea: preparar la pre-clase para mañana',
-        descripcion: 'Lee la pre-clase completa (setup técnico), ten el terminal + Claude Code listos, crea cuentas de Supabase y Vercel, y elige un theme base.',
+        descripcion: 'Lee la pre-clase completa (setup técnico), ten terminal + Claude Code + Pencil listos, crea la carpeta ~/curso-ia, clona los themes, crea cuentas de Supabase y Vercel, y elige un theme base.',
         tip: 'Si tienes dudas con el setup, pregunta ahora o en Discord. Mañana arrancamos directamente a construir.',
       },
       // — DÍA 2 (Viernes) — Tu Primera Web
