@@ -95,54 +95,12 @@ export const PIZARRAS: PizarraSemana[] = [
         descripcion: 'Hoy personalizamos el theme que elegiste en la pre-clase con Claude Code, conectamos Supabase y desplegamos en Vercel.',
       },
       {
-        titulo: '10. Abrir tu proyecto',
-        descripcion: 'Ya tienes un theme instalado de la pre-clase. Primero mira qué proyectos tienes:',
-        bloques: [
-          {
-            lenguaje: 'bash',
-            codigo: `# Mira qué carpetas tienes en curso-ia
-ls ~/curso-ia`,
-          },
-          {
-            lenguaje: 'bash',
-            codigo: `# Entra en tu proyecto (sustituye por el nombre que veas)
-cd ~/curso-ia/mi-waitlist`,
-          },
-        ],
-        tip: 'El comando ls te muestra las carpetas. Verás "themes" (el repo de themes) y la carpeta de tu proyecto (mi-waitlist, mi-fintech, etc.). Entra en la de tu proyecto, NO en "themes".',
+        titulo: '10. Tu proyecto + Claude Code + Personalizar',
+        descripcion: 'Sigue los 5 pasos: confirma tu theme, abre el proyecto, lanza Claude Code y genera el prompt perfecto para personalizarlo.',
+        componente: 'dia2-setup',
       },
       {
-        titulo: '11. Abrir Claude Code (sin confirmaciones)',
-        descripcion: 'Desde la carpeta de tu proyecto, lanza Claude Code:',
-        bloques: [
-          {
-            lenguaje: 'bash',
-            codigo: 'claude --dangerously-skip-permissions',
-          },
-        ],
-        tip: 'La flag --dangerously-skip-permissions hace que Claude no te pida confirmación cada vez que ejecuta un comando o edita un archivo. Así todo fluye sin interrupciones.',
-      },
-      {
-        titulo: '12. Arrancar el servidor de desarrollo',
-        descripcion: 'Abre otra terminal (sin cerrar Claude) y arranca el proyecto:',
-        bloques: [
-          {
-            lenguaje: 'bash',
-            codigo: 'cd ~/curso-ia/mi-proyecto\nnpm run dev',
-          },
-        ],
-        tip: 'Abre http://localhost:3000 en tu navegador. Verás el theme tal cual. Ahora vamos a personalizarlo.',
-        links: [
-          { texto: 'Abrir localhost:3000', url: 'http://localhost:3000' },
-        ],
-      },
-      {
-        titulo: '13. Personalizar el theme con Claude',
-        descripcion: 'El theme ya tiene un diseño profesional. Rellena los campos y se generará el prompt perfecto para que Claude lo personalice:',
-        componente: 'prompt-builder',
-      },
-      {
-        titulo: '14. Iterar el diseño',
+        titulo: '11. Iterar el diseño',
         descripcion: 'Si algo no te gusta, pídele cambios a Claude:',
         bloques: [
           {
@@ -153,7 +111,7 @@ cd ~/curso-ia/mi-waitlist`,
         tip: 'No hace falta ser técnico. Habla como si le explicaras a un diseñador humano. Itera hasta que te guste.',
       },
       {
-        titulo: '15. Crear CLAUDE.md',
+        titulo: '12. Crear CLAUDE.md',
         descripcion: 'Esto es la "memoria" de tu proyecto. Claude lo lee cada vez que abres una sesión nueva.',
         bloques: [
           {
@@ -168,7 +126,7 @@ cd ~/curso-ia/mi-waitlist`,
         tip: 'Al final de cada sesión, dile a Claude: "Actualiza el CLAUDE.md con lo que hemos trabajado hoy"',
       },
       {
-        titulo: '16. Conectar Git con GitHub',
+        titulo: '13. Conectar Git con GitHub',
         descripcion: 'Antes de subir código, necesitas que tu terminal sepa quién eres y pueda acceder a GitHub.',
         bloques: [
           {
@@ -189,7 +147,7 @@ gh auth login`,
         tip: 'Al ejecutar "gh auth login", selecciona: GitHub.com → HTTPS → Login with a web browser. Se abrirá el navegador para autorizar. Solo necesitas hacer esto una vez.',
       },
       {
-        titulo: '17. Crear repo y subir a GitHub',
+        titulo: '14. Crear repo y subir a GitHub',
         bloques: [
           {
             lenguaje: 'bash',
@@ -206,7 +164,7 @@ gh repo create mi-proyecto --public --source=. --push`,
         tip: 'Este comando crea el repo en GitHub, lo conecta con tu proyecto local y sube todo el código de una vez. Si prefieres repo privado, cambia --public por --private.',
       },
       {
-        titulo: '18. Crear proyecto en Supabase',
+        titulo: '15. Crear proyecto en Supabase',
         descripcion: 'Ve a Supabase y crea un nuevo proyecto.',
         links: [
           { texto: 'Abrir Supabase', url: 'https://supabase.com/dashboard' },
@@ -214,7 +172,7 @@ gh repo create mi-proyecto --public --source=. --push`,
         tip: 'Apunta la contraseña de la base de datos. Usa el mismo nombre que tu proyecto local.',
       },
       {
-        titulo: '19. Crear tabla de emails',
+        titulo: '16. Crear tabla de emails',
         descripcion: 'En el SQL Editor de Supabase, ejecuta:',
         bloques: [
           {
@@ -235,7 +193,7 @@ CREATE POLICY "Allow public inserts" ON waitlist
         ],
       },
       {
-        titulo: '20. Instalar Supabase en el proyecto',
+        titulo: '17. Instalar Supabase en el proyecto',
         bloques: [
           {
             lenguaje: 'bash',
@@ -244,7 +202,7 @@ CREATE POLICY "Allow public inserts" ON waitlist
         ],
       },
       {
-        titulo: '21. Configurar variables de entorno',
+        titulo: '18. Configurar variables de entorno',
         descripcion: 'Crea un archivo .env.local en la raíz del proyecto. Las keys están en Supabase → Settings → API.',
         bloques: [
           {
@@ -260,7 +218,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIs...`,
         ],
       },
       {
-        titulo: '22. Conectar el formulario',
+        titulo: '19. Conectar el formulario',
         descripcion: 'Dile a Claude que conecte el formulario con Supabase:',
         bloques: [
           {
@@ -277,7 +235,7 @@ Usa las variables de entorno NEXT_PUBLIC_SUPABASE_URL y NEXT_PUBLIC_SUPABASE_ANO
         ],
       },
       {
-        titulo: '23. Crear panel admin',
+        titulo: '20. Crear panel admin',
         bloques: [
           {
             lenguaje: 'text',
@@ -290,7 +248,7 @@ Usa las variables de entorno NEXT_PUBLIC_SUPABASE_URL y NEXT_PUBLIC_SUPABASE_ANO
         ],
       },
       {
-        titulo: '24. Deploy en Vercel',
+        titulo: '21. Deploy en Vercel',
         descripcion: 'La forma más fácil: conecta tu repo de GitHub a Vercel.',
         links: [
           { texto: 'Abrir Vercel', url: 'https://vercel.com/new' },
@@ -309,7 +267,7 @@ Usa las variables de entorno NEXT_PUBLIC_SUPABASE_URL y NEXT_PUBLIC_SUPABASE_ANO
         tip: 'También puedes hacer: npx vercel (desde la terminal)',
       },
       {
-        titulo: '25. ¡Comparte tu URL!',
+        titulo: '22. ¡Comparte tu URL!',
         descripcion: 'Tu waitlist está en producción. Copia la URL de Vercel y compártela en el Discord del curso.',
         tip: 'Actualiza el CLAUDE.md: "Actualiza el CLAUDE.md con todo lo que hemos hecho. El proyecto está desplegado en [tu-url].vercel.app"',
       },
