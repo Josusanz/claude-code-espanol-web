@@ -101,7 +101,7 @@ El Día 2 es 100% práctico. Vamos a construir tu primera web con Claude Code. N
 
 ### 🛠️ Setup técnico obligatorio
 
-1. **VS Code** abierto y funcionando
+1. **Terminal** abierta y funcionando (la de tu Mac/PC)
 2. **Claude Code** instalado (del precurso)
 3. **Cuenta de Supabase** creada (gratis)
 4. **Cuenta de Vercel** conectada a GitHub
@@ -171,48 +171,34 @@ También puedes tener un CLAUDE.md global en \`~/.claude/CLAUDE.md\` con tus pre
 
 ---
 
-## 💻 Terminal vs VS Code: ¿Dónde usar Claude Code?
+## 💻 Tu herramienta: el Terminal
 
-Claude Code funciona en dos entornos. Cada uno tiene ventajas:
-
-### Terminal (standalone)
+En este curso trabajamos directamente desde el **terminal**. Es el entorno nativo de Claude Code y el más eficiente para vibe coding.
 
 \`\`\`bash
-# Abres una terminal normal y escribes:
+# Abres tu terminal y escribes:
 claude
 \`\`\`
 
-**Ventajas:**
+Eso es todo. No necesitas ningún editor de código, ni interfaz visual, ni extensiones. Claude Code lee, escribe y ejecuta todo desde el terminal.
+
+### ¿Por qué el terminal?
+
+- **Sin fricción** — abres, escribes \`claude\`, y a trabajar
 - **Pantalla completa** para Claude — ves todo el output sin distracciones
-- **Más rápido** — no carga extensiones ni UI adicional
-- **Multi-monitor** — Claude en una pantalla, código en otra
-- **Ideal para tareas largas** — refactoring masivo, migraciones, análisis
+- **Más rápido** — no carga editores ni UI adicional
+- **Es vibe coding real** — tú describes qué quieres, Claude lo construye
 
-**Cuándo usarlo:**
-- Proyectos nuevos desde cero (vibe coding)
-- Tareas de infraestructura (deploy, CI/CD, Docker)
-- Cuando quieres máxima velocidad
+### Alternativas que existen
 
-### VS Code (terminal integrado)
+Claude Code no es la única opción para crear software con IA. En la primera clase veremos un panorama de las herramientas disponibles:
 
-\`\`\`
-# Abres VS Code → Terminal → escribes: claude
-\`\`\`
+- **Claude Code (terminal)** — Lo que usamos en el curso. Anthropic. Trabaja en tu código local desde el terminal.
+- **Claude Code en VS Code / Cursor** — El mismo Claude Code pero dentro de un editor visual. Puedes ver los archivos y los cambios en tiempo real. Útil si prefieres algo más visual.
+- **Antigravity** — Entorno visual para construir apps con IA. Enfoque más drag-and-drop.
+- **Codex (OpenAI)** — Agente de código de OpenAI que trabaja en un sandbox en la nube.
 
-**Ventajas:**
-- **Ves los cambios en tiempo real** — Claude edita y tú ves el diff al instante
-- **Extensiones** — Pencil, GitHub Copilot, linters al lado
-- **Explorador de archivos** — navegas el proyecto visualmente
-- **Preview integrado** — ves tu web mientras Claude la modifica
-
-**Cuándo usarlo:**
-- Editar código existente (ves los cambios mientras ocurren)
-- Diseño de UI (con Pencil puedes ver el canvas)
-- Debugging (ves errores en el editor + terminal)
-
-### Recomendación
-
-Para este curso usaremos **VS Code** porque es más visual y puedes ver todo junto. Pero prueba ambos y quédate con lo que te funcione mejor — el resultado es idéntico.
+> Lo importante: todas estas herramientas usan el terminal por debajo. Aprendiendo terminal, puedes usar cualquiera de ellas después. Por eso empezamos por la base.
 
 ---
 
@@ -303,7 +289,7 @@ La IA escribirá el código por ti. Tu trabajo es:
 
 **Tarea para mañana**
 - Leer la pre-clase completa (setup técnico + elegir theme)
-- Tener VS Code + Claude Code listos
+- Tener el terminal + Claude Code listos
 - Crear cuentas de Supabase y Vercel
 - Elegir un theme base de la galería
 
@@ -371,13 +357,13 @@ Antes de diseñar, observa estos referentes:
 
 ## ✏️ Pencil: Diseño visual que Claude entiende
 
-Pencil es un canvas de diseño integrado en VS Code. La magia: Claude Code puede **leer y escribir** archivos \`.pen\` directamente.
+Pencil es un canvas de diseño que se integra con Claude Code. La magia: Claude puede **leer y escribir** archivos \`.pen\` directamente desde el terminal.
 
 ### ¿Por qué Pencil y no Figma?
 
 | | Figma | Pencil |
 |---|---|---|
-| ¿Dónde? | Navegador | VS Code |
+| ¿Dónde? | Navegador | Tu editor / terminal |
 | ¿Archivos? | En la nube | \`.pen\` en tu repo |
 | ¿Claude lo lee? | No | **Sí, directamente** |
 | ¿Git? | No | **Sí** |
@@ -395,7 +381,7 @@ Pencil es un canvas de diseño integrado en VS Code. La magia: Claude Code puede
 \`\`\`bash
 # 1. Crea un archivo de diseño
 touch mi-dashboard.pen
-# 2. Ábrelo en VS Code (se abre el canvas de Pencil)
+# 2. Ábrelo en tu editor (se abre el canvas de Pencil)
 # 3. Diseña tu dashboard arrastrando componentes
 # 4. Luego dile a Claude:
 \`\`\`
@@ -459,7 +445,7 @@ Sin skills, tienes que repetir las mismas instrucciones cada vez: "usa shadcn", 
       `,
       recursos: [
         { titulo: 'Catálogo shadcn/ui', url: 'https://ui.shadcn.com', tipo: 'link' },
-        { titulo: 'Pencil — Diseño en VS Code', url: 'https://www.pencil.dev/', tipo: 'link' },
+        { titulo: 'Pencil — Diseño visual para Claude', url: 'https://www.pencil.dev/', tipo: 'link' },
         { titulo: 'Skills.sh — Directorio de Skills', url: 'https://skills.sh/', tipo: 'link' },
         { titulo: 'Tailwind CSS Docs', url: 'https://tailwindcss.com/docs', tipo: 'link' },
         { titulo: 'Colores Tailwind', url: 'https://tailwindcss.com/docs/customizing-colors', tipo: 'link' },

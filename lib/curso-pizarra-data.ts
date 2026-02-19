@@ -86,7 +86,7 @@ export const PIZARRAS: PizarraSemana[] = [
       },
       {
         titulo: '9. Tarea: preparar la pre-clase para mañana',
-        descripcion: 'Lee la pre-clase completa (setup técnico), ten VS Code + Claude Code listos, crea cuentas de Supabase y Vercel, y elige un theme base.',
+        descripcion: 'Lee la pre-clase completa (setup técnico), ten el terminal + Claude Code listos, crea cuentas de Supabase y Vercel, y elige un theme base.',
         tip: 'Si tienes dudas con el setup, pregunta ahora o en Discord. Mañana arrancamos directamente a construir.',
       },
       // — DÍA 2 (Viernes) — Tu Primera Web
@@ -110,14 +110,14 @@ export const PIZARRAS: PizarraSemana[] = [
         bloques: [
           {
             lenguaje: 'bash',
-            codigo: 'cd mi-waitlist\ncode .',
+            codigo: 'cd mi-waitlist',
           },
         ],
-        tip: 'Si "code ." no funciona, abre VS Code manualmente y selecciona la carpeta mi-waitlist.',
+        tip: 'Ya estás dentro de tu proyecto. Desde aquí lanzarás Claude Code.',
       },
       {
         titulo: '12. Abrir Claude Code (sin confirmaciones)',
-        descripcion: 'Abre el terminal integrado de VS Code (Ctrl+` o Cmd+`) y escribe:',
+        descripcion: 'En la misma terminal donde estás, escribe:',
         bloques: [
           {
             lenguaje: 'bash',
@@ -381,7 +381,7 @@ code .`,
             codigo: 'touch diseño-dashboard.pen',
           },
         ],
-        tip: 'Abre el archivo .pen en VS Code → se abre el canvas de Pencil. Arrastra componentes y diseña tu layout. Luego Claude puede leer este diseño y generar el código exacto.',
+        tip: 'Los archivos .pen se abren en el canvas de Pencil. Arrastra componentes y diseña tu layout. Luego Claude puede leer este diseño desde el terminal y generar el código exacto.',
       },
       {
         titulo: '5. Crear el dashboard con Claude',

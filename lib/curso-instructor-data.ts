@@ -35,7 +35,7 @@ export const GUIAS_INSTRUCTOR: GuiaInstructor[] = [
       { texto: 'Tener abierto: /curso, /curso/clase/1, /curso/themes, /precurso/discord' },
       { texto: 'Revisar presentaciones del Discord si alguien las subió antes' },
       // Día 2 (Viernes) — Técnico
-      { texto: 'Tener VS Code abierto con proyecto limpio (para Día 2)' },
+      { texto: 'Tener terminal abierta con proyecto limpio (para Día 2)' },
       { texto: 'Supabase abierto con proyecto demo (para Día 2)' },
       { texto: 'Galería de themes abierta /curso/themes (para Día 2)' },
     ],
@@ -160,7 +160,7 @@ export const GUIAS_INSTRUCTOR: GuiaInstructor[] = [
           'Resumen: lo que hicimos hoy (conexión + ecosistema)',
           'Tarea OBLIGATORIA para mañana:',
           '  - Leer la pre-clase completa (sección de setup técnico)',
-          '  - Tener VS Code + Claude Code instalados y funcionando',
+          '  - Tener terminal + Claude Code instalados y funcionando',
           '  - Crear cuentas de Supabase y Vercel',
           '  - Elegir un theme base de /curso/themes',
           'Cerrar con gratitud: "Gracias por confiar en este proceso"',
@@ -180,7 +180,7 @@ export const GUIAS_INSTRUCTOR: GuiaInstructor[] = [
         tiempo: '0:00-0:10',
         titulo: 'Check-in rápido',
         detalles: [
-          '¿Todos hicieron la tarea? ¿VS Code listo? ¿Theme elegido?',
+          '¿Todos hicieron la tarea? ¿Terminal + Claude Code listo? ¿Theme elegido?',
           'Resolver problemas de setup rápidamente',
           'Si alguien no tiene Claude Code → ayudar ahora',
         ],
@@ -317,7 +317,7 @@ Esta es la única semana con 2 días (Jue-Vie en vez de solo Vie). El motivo:
 Si alguien no puede asistir al Día 1, puede ver la grabación. Pero el Día 2 es imprescindible porque es 100% práctico.
 
 ### Puntos clave del Día 2
-- Verificar que TODOS tienen VS Code + Claude Code antes de empezar
+- Verificar que TODOS tienen terminal + Claude Code antes de empezar
 - Los themes de /curso/themes son la base — no crear desde cero
 - Explicar env variables (.env.local) con cuidado, es concepto nuevo
 - Deploy con Vercel debe ser el momento de celebración
@@ -330,7 +330,7 @@ Si alguien no puede asistir al Día 1, puede ver la grabación. Pero el Día 2 e
       { texto: 'Revisar proyectos que subieron a GitHub' },
       { texto: 'Tener shadcn/ui docs abierto' },
       { texto: 'Preparar ejemplos de buenos UI (Linear, Notion)' },
-      { texto: 'VS Code con proyecto demo limpio' },
+      { texto: 'Terminal con proyecto demo limpio' },
       { texto: 'Tener skills.sh abierto para mostrar ejemplos' },
       { texto: 'Revisar preguntas del Discord' },
     ],
