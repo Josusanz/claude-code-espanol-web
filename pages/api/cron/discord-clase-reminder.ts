@@ -1,23 +1,17 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { CURSO_SEMANAS } from '../../../lib/curso-data'
 
 const DISCORD_BOT_TOKEN = process.env.DISCORD_BOT_TOKEN
 const GENERAL_CHANNEL_ID = '1470470993553395772'
 const ZOOM_LINK = 'https://us06web.zoom.us/j/81059741055?pwd=Xqh8R7S3jwIYLo0gC8X0eRvJz66YOy.1'
 
-// Calendario de clases (fechas en formato YYYY-MM-DD)
-const CLASES: Record<string, { semana: number; tema: string }> = {
-  '2026-02-19': { semana: 1, tema: 'LaunchPad - Día 1' },
-  '2026-02-20': { semana: 1, tema: 'LaunchPad - Día 2' },
-  '2026-02-27': { semana: 2, tema: 'Tu proyecto - Setup + UI' },
-  '2026-03-06': { semana: 3, tema: 'Base de datos con Supabase' },
-  '2026-03-13': { semana: 4, tema: 'Autenticación' },
-  '2026-03-20': { semana: 5, tema: 'APIs y Backend' },
-  '2026-03-27': { semana: 6, tema: 'Integración con Claude' },
-  '2026-04-03': { semana: 7, tema: 'Pagos con Stripe' },
-  '2026-04-10': { semana: 8, tema: 'Testing y QA' },
-  '2026-04-17': { semana: 9, tema: 'Deploy y DevOps' },
-  '2026-04-24': { semana: 10, tema: 'Lanzamiento y Marketing' },
+// Calendario generado desde curso-data.ts (fuente de verdad)
+const CLASES: Record<string, { semana: number; tema: string; hora: string }> = {}
+for (const s of CURSO_SEMANAS) {
+  CLASES[s.clase.fecha] = { semana: s.num, tema: s.titulo, hora: s.clase.hora }
 }
+// S1 tiene dos días: Día 2 el viernes
+CLASES['2026-02-20'] = { semana: 1, tema: 'LaunchPad - Día 2', hora: '18:00 CET' }
 
 async function sendDiscordMessage(content: string): Promise<boolean> {
   try {
@@ -58,7 +52,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
 **Semana ${clase.semana}: ${clase.tema}**
 
-⏰ **18:00 CET** (en 1 hora)
+⏰ **${clase.hora}** (en 1 hora)
 📹 [**Unirse a Zoom**](${ZOOM_LINK})
 
 ¡Nos vemos ahí! 🚀`

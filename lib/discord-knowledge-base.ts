@@ -49,7 +49,7 @@ CURSOS DISPONIBLES:
 
 CURSO 10 SEMANAS "Crea tu Software con IA":
 - Inicio: ${CURSO_SEMANAS[0].fechaInicio}
-- Clases: Jueves 18:00 CET
+- Clases: Viernes 18:00 CET (S1: Jue-Vie 19-20 Feb, S10: 19:00 CET)
 - Tecnologias: Next.js, Supabase, Tailwind, Claude Code, Vercel, Stripe
 - Zoom: https://us06web.zoom.us/j/81059741055
 - Web: aprende.software/curso
@@ -591,18 +591,18 @@ El curso de 10 semanas usa:
 - **Stripe** - Pagos (semana 7)
 
 ### Calendario del curso (Primera Promocion)
-- Semana 1: 19-20 Feb 2026 - LaunchPad (proyecto conjunto)
-- Semana 2: 27 Feb - Tu proyecto + UI
-- Semana 3: 6 Mar - Base de datos Supabase
-- Semana 4: 13 Mar - Autenticacion
-- Semana 5: 20 Mar - APIs y Backend
-- Semana 6: 27 Mar - Integracion con Claude
-- Semana 7: 3 Abr - Pagos con Stripe
-- Semana 8: 10 Abr - Testing y QA
-- Semana 9: 17 Abr - Deploy y DevOps
-- Semana 10: 24 Abr - Lanzamiento y Marketing
+- Semana 1: 19-20 Feb 2026 (Jue-Vie) - LaunchPad (proyecto conjunto)
+- Semana 2: 27 Feb (Vie) - Tu Proyecto - Setup + UI
+- Semana 3: 6 Mar (Vie) - Base de Datos con Supabase
+- Semana 4: 13 Mar (Vie) - Autenticacion de Usuarios
+- Semana 5: 20 Mar (Vie) - APIs y Server Actions
+- Semana 6: 27 Mar (Vie) - Pagos con Stripe
+- Semana 7: 3 Abr (Vie) - Email y Notificaciones
+- Semana 8: 10 Abr (Vie) - Testing y Calidad
+- Semana 9: 17 Abr (Vie) - Performance y SEO
+- Semana 10: 24 Abr (Vie) - Agent Swarms y Lanzamiento (19:00 CET)
 
-Clases: Jueves 18:00 CET (excepto semana 1: jue-vie)
+Clases: Viernes 18:00 CET (S1: Jue-Vie 19-20 Feb, S10: 19:00 CET)
 
 ## PRECURSO
 

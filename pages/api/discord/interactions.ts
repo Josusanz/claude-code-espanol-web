@@ -81,31 +81,28 @@ const RECURSOS: Record<string, { titulo: string; descripcion: string; url: strin
   }
 }
 
-// Horario de clases
-const CLASES = [
-  { semana: 1, fecha: '19-20 Feb 2026', dia: 'Mié-Jue', hora: '18:00 CET', tema: 'LaunchPad - Proyecto conjunto' },
-  { semana: 2, fecha: '27 Feb 2026', dia: 'Jueves', hora: '18:00 CET', tema: 'Tu proyecto - Setup + UI' },
-  { semana: 3, fecha: '6 Mar 2026', dia: 'Jueves', hora: '18:00 CET', tema: 'Base de datos con Supabase' },
-  { semana: 4, fecha: '13 Mar 2026', dia: 'Jueves', hora: '18:00 CET', tema: 'Autenticación' },
-  { semana: 5, fecha: '20 Mar 2026', dia: 'Jueves', hora: '18:00 CET', tema: 'APIs y Backend' },
-  { semana: 6, fecha: '27 Mar 2026', dia: 'Jueves', hora: '18:00 CET', tema: 'Integración con Claude' },
-  { semana: 7, fecha: '3 Abr 2026', dia: 'Jueves', hora: '18:00 CET', tema: 'Pagos con Stripe' },
-  { semana: 8, fecha: '10 Abr 2026', dia: 'Jueves', hora: '18:00 CET', tema: 'Testing y QA' },
-  { semana: 9, fecha: '17 Abr 2026', dia: 'Jueves', hora: '18:00 CET', tema: 'Deploy y DevOps' },
-  { semana: 10, fecha: '24 Abr 2026', dia: 'Jueves', hora: '18:00 CET', tema: 'Lanzamiento y Marketing' },
-]
+// Horario de clases — generado desde CURSO_SEMANAS (fuente de verdad)
+const DIAS_SEMANA = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado']
+const MESES_CORTOS = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
+
+const CLASES = CURSO_SEMANAS.map(s => {
+  const d = new Date(s.clase.fecha + 'T12:00:00')
+  const diaSemana = DIAS_SEMANA[d.getDay()]
+  const fechaHumana = `${d.getDate()} ${MESES_CORTOS[d.getMonth()]} ${d.getFullYear()}`
+  return {
+    semana: s.num,
+    fecha: s.num === 1 ? '19-20 Feb 2026' : fechaHumana,
+    dia: s.num === 1 ? 'Jue-Vie' : diaSemana,
+    hora: s.clase.hora,
+    tema: s.titulo,
+    isoDate: s.clase.fecha,
+  }
+})
 
 function getProximaClase(): typeof CLASES[0] | null {
   const hoy = new Date()
-  const fechas: { clase: typeof CLASES[0]; date: Date }[] = CLASES.map(c => {
-    const [dia, mes, año] = c.fecha.split(' ')[0].split('-')
-    const meses: Record<string, number> = { Ene: 0, Feb: 1, Mar: 2, Abr: 3, May: 4, Jun: 5, Jul: 6, Ago: 7, Sep: 8, Oct: 9, Nov: 10, Dic: 11 }
-    const date = new Date(parseInt('20' + año), meses[mes] || 1, parseInt(dia))
-    return { clase: c, date }
-  })
-
-  const proxima = fechas.find(f => f.date >= hoy)
-  return proxima?.clase || CLASES[CLASES.length - 1]
+  const proxima = CLASES.find(c => new Date(c.isoDate + 'T23:59:59') >= hoy)
+  return proxima || null
 }
 
 // Canal de proyectos (forum)
@@ -497,12 +494,12 @@ ${descripcion || '_Sin descripción todavía_'}
         'instalar claude': '**Instalar Claude Code:**\n```\n# Mac/Linux:\ncurl -fsSL https://claude.ai/install | sh\n\n# Windows PowerShell (admin):\nirm https://claude.ai/install.ps1 | iex\n```\nLuego: `claude --version` y `claude` para iniciar.\nRequiere Claude Pro ($20/mes)',
         'claude code': '**Claude Code** es una herramienta CLI (linea de comandos), NO una extension de VS Code.\n\nInstalacion: `curl -fsSL https://claude.ai/install | sh`\nRequiere: Claude Pro ($20/mes)',
         'precio': '**Precios:**\n• Claude gratis: ~30 msgs/dia\n• Claude Pro: $20/mes (necesario para Claude Code)\n• Claude Max: $100/mes',
-        'cuando': `**Curso "Crea tu Software con IA":**\n• Inicio: ${CURSO_SEMANAS[0].fechaInicio}\n• Clases: Jueves 18:00 CET\n• Duracion: 10 semanas\n• Zoom: https://us06web.zoom.us/j/81059741055`,
+        'cuando': `**Curso "Crea tu Software con IA":**\n• Inicio: ${CURSO_SEMANAS[0].fechaInicio}\n• Clases: Viernes 18:00 CET (S1: Jue-Vie 19-20 Feb)\n• Duracion: 10 semanas\n• Zoom: https://us06web.zoom.us/j/81059741055`,
         'calendario': `**Calendario del curso:**\n${calendario}\n... y 5 semanas mas`,
         'semana': `**Proximas semanas:**\n${calendario}`,
         'supabase': '**Supabase** es la base de datos del curso.\nDocs: https://supabase.com/docs\nUsa `/recurso supabase` para el link directo.',
         'nextjs': '**Next.js 14** es el framework del curso.\nDocs: https://nextjs.org/docs\nUsa `/recurso nextjs` para el link directo.',
-        'zoom': '**Link de Zoom para clases:**\nhttps://us06web.zoom.us/j/81059741055\n\nClases: Jueves 18:00 CET',
+        'zoom': '**Link de Zoom para clases:**\nhttps://us06web.zoom.us/j/81059741055\n\nClases: Viernes 18:00 CET (S1: Jue-Vie, S10: 19:00 CET)',
       }
 
       for (const [key, answer] of Object.entries(QUICK_ANSWERS)) {
