@@ -7,6 +7,7 @@ export interface CursoUser {
   progress: Record<string, boolean> // semana-1-preclase, semana-1-clase, etc.
   lastSyncAt?: string
   nombre?: string
+  autoguiadoOverrides?: Record<number, boolean> // admin overrides per autoguiado module
 }
 
 export interface CursoConfig {
@@ -231,5 +232,134 @@ export async function getCursoStats(): Promise<CursoStats> {
     alumnosActivos,
     promedioProgreso: users.length > 0 ? totalProgreso / users.length : 0,
     porSemana,
+  }
+}
+
+// ============= Desbloqueo autoguiado (por alumno) =============
+
+export function isModuloAutoguiadoUnlocked(
+  moduloNum: number,
+  enrolledAt: string,
+  overrides?: Record<number, boolean>
+): boolean {
+  if (moduloNum === 0) return true // siempre gratis
+  // Admin override tiene prioridad
+  if (overrides && overrides[moduloNum] !== undefined) {
+    return overrides[moduloNum]
+  }
+  const daysSinceEnrollment = (Date.now() - new Date(enrolledAt).getTime()) / (1000 * 60 * 60 * 24)
+  const daysRequired = (moduloNum - 1) * 7
+  return daysSinceEnrollment >= daysRequired
+}
+
+export interface ModuloUnlockStatus {
+  unlocked: boolean
+  availableDate: string // ISO string
+  daysRemaining: number
+}
+
+export function getAllModulosUnlockStatus(
+  enrolledAt: string,
+  overrides?: Record<number, boolean>
+): Record<number, ModuloUnlockStatus> {
+  const result: Record<number, ModuloUnlockStatus> = {}
+  const enrolledTime = new Date(enrolledAt).getTime()
+
+  for (let i = 0; i <= 10; i++) {
+    if (i === 0) {
+      result[i] = { unlocked: true, availableDate: enrolledAt, daysRemaining: 0 }
+      continue
+    }
+
+    // Admin override
+    if (overrides && overrides[i] !== undefined) {
+      result[i] = {
+        unlocked: overrides[i],
+        availableDate: overrides[i] ? enrolledAt : '',
+        daysRemaining: overrides[i] ? 0 : -1,
+      }
+      continue
+    }
+
+    const daysRequired = (i - 1) * 7
+    const availableTime = enrolledTime + daysRequired * 24 * 60 * 60 * 1000
+    const availableDate = new Date(availableTime).toISOString()
+    const daysRemaining = Math.max(0, Math.ceil((availableTime - Date.now()) / (1000 * 60 * 60 * 24)))
+
+    result[i] = {
+      unlocked: Date.now() >= availableTime,
+      availableDate,
+      daysRemaining,
+    }
+  }
+
+  return result
+}
+
+export async function setAutoguiadoOverride(
+  email: string,
+  moduloNum: number,
+  unlock: boolean
+): Promise<CursoUser | null> {
+  const normalizedEmail = email.toLowerCase().trim()
+  const user = await getCursoUser(normalizedEmail)
+  if (!user) return null
+
+  const overrides = { ...user.autoguiadoOverrides, [moduloNum]: unlock }
+  const updatedUser: CursoUser = { ...user, autoguiadoOverrides: overrides }
+  await kv.set(`${USER_KEY_PREFIX}${normalizedEmail}`, updatedUser)
+  return updatedUser
+}
+
+// ============= Stats autoguiado =============
+
+export interface AutoguiadoStats {
+  totalAlumnos: number
+  alumnosActivos: number
+  promedioProgreso: number
+  porModulo: Record<number, number> // módulo -> cuántos lo completaron
+}
+
+export async function getAutoguiadoStats(): Promise<AutoguiadoStats> {
+  const users = await getAllCursoUsers()
+  const ahora = new Date()
+  const haceUnaSemana = new Date(ahora.getTime() - 7 * 24 * 60 * 60 * 1000)
+
+  let totalProgreso = 0
+  let alumnosActivos = 0
+  const porModulo: Record<number, number> = {}
+
+  for (let i = 0; i <= 10; i++) {
+    porModulo[i] = 0
+  }
+
+  for (const user of users) {
+    // Solo contar usuarios que tienen progreso autoguiado
+    const autoguiadoKeys = Object.keys(user.progress).filter(k => k.startsWith('autoguiado-'))
+    if (autoguiadoKeys.length === 0) continue
+
+    if (user.lastSyncAt && new Date(user.lastSyncAt) >= haceUnaSemana) {
+      alumnosActivos++
+    }
+
+    const completedModulos = autoguiadoKeys.filter(k => user.progress[k]).length
+    totalProgreso += (completedModulos / 11) * 100
+
+    for (let i = 0; i <= 10; i++) {
+      if (user.progress[`autoguiado-modulo-${i}`]) {
+        porModulo[i]++
+      }
+    }
+  }
+
+  const alumnosAutoguiado = users.filter(u =>
+    Object.keys(u.progress).some(k => k.startsWith('autoguiado-'))
+  ).length
+
+  return {
+    totalAlumnos: alumnosAutoguiado,
+    alumnosActivos,
+    promedioProgreso: alumnosAutoguiado > 0 ? totalProgreso / alumnosAutoguiado : 0,
+    porModulo,
   }
 }
