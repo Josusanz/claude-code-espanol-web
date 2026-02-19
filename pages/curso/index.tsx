@@ -220,8 +220,8 @@ function CursoDashboard() {
             color: 'white',
           }}>AS</div>
           <div>
-            <h1 style={{ margin: 0, fontSize: '16px', fontWeight: 600, color: '#0f172a', letterSpacing: '-0.01em' }}>aprende.software</h1>
-            <p style={{ margin: 0, fontSize: '12px', color: '#64748b', fontWeight: 500 }}>Curso · Primera Promoción</p>
+            <h1 style={{ margin: 0, fontSize: '16px', fontWeight: 600, color: '#0f172a', letterSpacing: '-0.01em' }}>Crea tu Software con IA</h1>
+            <p style={{ margin: 0, fontSize: '12px', color: '#64748b', fontWeight: 500 }}>Primera Promoción</p>
           </div>
         </div>
 
