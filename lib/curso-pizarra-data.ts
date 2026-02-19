@@ -27,7 +27,7 @@ export const PIZARRAS: PizarraSemana[] = [
     semanaNum: 1,
     titulo: 'LaunchPad - Proyecto Conjunto',
     emoji: '🚀',
-    subtitulo: 'Creamos una waitlist profesional desde cero',
+    subtitulo: 'Personalizamos un theme premium y lo lanzamos al mundo',
     pasos: [
       // — DÍA 1 (Jueves) — Bienvenida y Orientación
       {
@@ -91,32 +91,22 @@ export const PIZARRAS: PizarraSemana[] = [
       // — DÍA 2 (Viernes) — Tu Primera Web
       {
         titulo: '📋 Día 2 (Viernes): Tu Primera Web',
-        descripcion: 'Hoy construimos juntos: elegimos un theme, lo personalizamos con Claude Code, conectamos Supabase y desplegamos en Vercel.',
+        descripcion: 'Hoy personalizamos el theme que elegiste en la pre-clase con Claude Code, conectamos Supabase y desplegamos en Vercel.',
       },
       {
-        titulo: '10. Crear el proyecto Next.js',
-        descripcion: 'Abre tu terminal y ejecuta este comando. Acepta las opciones por defecto (TypeScript, Tailwind, App Router).',
+        titulo: '10. Abrir tu proyecto',
+        descripcion: 'Ya tienes un theme instalado de la pre-clase. Abre tu terminal y ve a la carpeta del proyecto:',
         bloques: [
           {
             lenguaje: 'bash',
-            codigo: 'npx create-next-app@latest mi-waitlist',
+            codigo: 'cd ~/curso-ia/mi-proyecto',
           },
         ],
-        tip: 'Si te pregunta opciones: TypeScript ✅, ESLint ✅, Tailwind ✅, src/ ❌, App Router ✅, import alias @/* ✅',
+        tip: 'Sustituye "mi-proyecto" por el nombre que le diste en la pre-clase (mi-waitlist, mi-fintech, etc.).',
       },
       {
-        titulo: '11. Entrar al proyecto',
-        bloques: [
-          {
-            lenguaje: 'bash',
-            codigo: 'cd mi-waitlist',
-          },
-        ],
-        tip: 'Ya estás dentro de tu proyecto. Desde aquí lanzarás Claude Code.',
-      },
-      {
-        titulo: '12. Abrir Claude Code (sin confirmaciones)',
-        descripcion: 'En la misma terminal donde estás, escribe:',
+        titulo: '11. Abrir Claude Code (sin confirmaciones)',
+        descripcion: 'Desde la carpeta de tu proyecto, lanza Claude Code:',
         bloques: [
           {
             lenguaje: 'bash',
@@ -126,51 +116,53 @@ export const PIZARRAS: PizarraSemana[] = [
         tip: 'La flag --dangerously-skip-permissions hace que Claude no te pida confirmación cada vez que ejecuta un comando o edita un archivo. Así todo fluye sin interrupciones.',
       },
       {
-        titulo: '13. Crear la landing page',
-        descripcion: 'Copia este prompt y pégalo en Claude Code:',
-        bloques: [
-          {
-            lenguaje: 'text',
-            codigo: `Crea una landing page moderna para una waitlist. Debe tener:
-- Hero section con título atractivo y subtítulo
-- Formulario de captura de email (input + botón)
-- 3-4 beneficios del producto con iconos
-- Footer simple
-- Estilo moderno y profesional con Tailwind CSS
-- Responsive (que se vea bien en móvil)
-
-El producto es: [DESCRIBE TU IDEA AQUÍ]`,
-          },
-        ],
-        tip: 'Sustituye [DESCRIBE TU IDEA AQUÍ] por tu idea real. Cuanto más contexto des, mejor resultado.',
-      },
-      {
-        titulo: '14. Ver el resultado',
-        descripcion: 'Abre otra terminal (sin cerrar Claude) y ejecuta:',
+        titulo: '12. Arrancar el servidor de desarrollo',
+        descripcion: 'Abre otra terminal (sin cerrar Claude) y arranca el proyecto:',
         bloques: [
           {
             lenguaje: 'bash',
-            codigo: 'npm run dev',
+            codigo: 'cd ~/curso-ia/mi-proyecto\nnpm run dev',
           },
         ],
-        tip: 'Abre http://localhost:3000 en tu navegador. Cada vez que Claude haga cambios, refresca la página.',
+        tip: 'Abre http://localhost:3000 en tu navegador. Verás el theme tal cual. Ahora vamos a personalizarlo.',
         links: [
           { texto: 'Abrir localhost:3000', url: 'http://localhost:3000' },
         ],
       },
       {
-        titulo: '15. Ajustar el diseño',
+        titulo: '13. Personalizar el theme con Claude',
+        descripcion: 'El theme ya tiene un diseño profesional. Ahora dile a Claude que lo adapte a tu proyecto:',
+        bloques: [
+          {
+            lenguaje: 'text',
+            codigo: `Mira la web actual y personalízala para mi proyecto.
+
+Mi proyecto es: [DESCRIBE TU IDEA AQUÍ]
+
+Cambia:
+- El título y subtítulo del hero por algo que describa mi producto
+- Los textos de beneficios/features por los de mi producto
+- Los colores principales si quieres
+- Asegúrate de que el formulario de email funcione como captura de waitlist
+
+Mantén el diseño profesional del theme, solo cambia el contenido.`,
+          },
+        ],
+        tip: 'Sustituye [DESCRIBE TU IDEA AQUÍ] por tu idea real. Cuanto más contexto des, mejor resultado. Refresca localhost:3000 para ver los cambios.',
+      },
+      {
+        titulo: '14. Iterar el diseño',
         descripcion: 'Si algo no te gusta, pídele cambios a Claude:',
         bloques: [
           {
             lenguaje: 'text',
-            codigo: 'Cambia el color principal a azul oscuro. Haz el título más grande. Añade más espacio entre secciones.',
+            codigo: 'Cambia el color principal a azul oscuro. Haz el título más grande. Añade una sección más de testimonios. Cambia la imagen del hero.',
           },
         ],
-        tip: 'No hace falta ser técnico. Habla como si le explicaras a un diseñador humano.',
+        tip: 'No hace falta ser técnico. Habla como si le explicaras a un diseñador humano. Itera hasta que te guste.',
       },
       {
-        titulo: '16. Crear CLAUDE.md',
+        titulo: '15. Crear CLAUDE.md',
         descripcion: 'Esto es la "memoria" de tu proyecto. Claude lo lee cada vez que abres una sesión nueva.',
         bloques: [
           {
@@ -185,7 +177,7 @@ El producto es: [DESCRIBE TU IDEA AQUÍ]`,
         tip: 'Al final de cada sesión, dile a Claude: "Actualiza el CLAUDE.md con lo que hemos trabajado hoy"',
       },
       {
-        titulo: '17. Conectar Git con GitHub',
+        titulo: '16. Conectar Git con GitHub',
         descripcion: 'Antes de subir código, necesitas que tu terminal sepa quién eres y pueda acceder a GitHub.',
         bloques: [
           {
@@ -206,26 +198,32 @@ gh auth login`,
         tip: 'Al ejecutar "gh auth login", selecciona: GitHub.com → HTTPS → Login with a web browser. Se abrirá el navegador para autorizar. Solo necesitas hacer esto una vez.',
       },
       {
-        titulo: '18. Crear repo y subir a GitHub',
+        titulo: '17. Crear repo y subir a GitHub',
         bloques: [
           {
             lenguaje: 'bash',
-            codigo: `# Crear repositorio en GitHub y subirlo (todo en un comando)
-gh repo create mi-waitlist --public --source=. --push`,
+            codigo: `# Inicializar git y hacer el primer commit
+git init
+git add .
+git commit -m "Primera versión de mi landing"
+
+# Crear repositorio en GitHub y subirlo
+# Sustituye "mi-proyecto" por el nombre de tu carpeta
+gh repo create mi-proyecto --public --source=. --push`,
           },
         ],
         tip: 'Este comando crea el repo en GitHub, lo conecta con tu proyecto local y sube todo el código de una vez. Si prefieres repo privado, cambia --public por --private.',
       },
       {
-        titulo: '19. Crear proyecto en Supabase',
+        titulo: '18. Crear proyecto en Supabase',
         descripcion: 'Ve a Supabase y crea un nuevo proyecto.',
         links: [
           { texto: 'Abrir Supabase', url: 'https://supabase.com/dashboard' },
         ],
-        tip: 'Apunta la contraseña de la base de datos. El nombre del proyecto puede ser "mi-waitlist".',
+        tip: 'Apunta la contraseña de la base de datos. Usa el mismo nombre que tu proyecto local.',
       },
       {
-        titulo: '20. Crear tabla de emails',
+        titulo: '19. Crear tabla de emails',
         descripcion: 'En el SQL Editor de Supabase, ejecuta:',
         bloques: [
           {
@@ -246,7 +244,7 @@ CREATE POLICY "Allow public inserts" ON waitlist
         ],
       },
       {
-        titulo: '21. Instalar Supabase en el proyecto',
+        titulo: '20. Instalar Supabase en el proyecto',
         bloques: [
           {
             lenguaje: 'bash',
@@ -255,7 +253,7 @@ CREATE POLICY "Allow public inserts" ON waitlist
         ],
       },
       {
-        titulo: '22. Configurar variables de entorno',
+        titulo: '21. Configurar variables de entorno',
         descripcion: 'Crea un archivo .env.local en la raíz del proyecto. Las keys están en Supabase → Settings → API.',
         bloques: [
           {
@@ -271,7 +269,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIs...`,
         ],
       },
       {
-        titulo: '23. Conectar el formulario',
+        titulo: '22. Conectar el formulario',
         descripcion: 'Dile a Claude que conecte el formulario con Supabase:',
         bloques: [
           {
@@ -288,7 +286,7 @@ Usa las variables de entorno NEXT_PUBLIC_SUPABASE_URL y NEXT_PUBLIC_SUPABASE_ANO
         ],
       },
       {
-        titulo: '24. Crear panel admin',
+        titulo: '23. Crear panel admin',
         bloques: [
           {
             lenguaje: 'text',
@@ -301,7 +299,7 @@ Usa las variables de entorno NEXT_PUBLIC_SUPABASE_URL y NEXT_PUBLIC_SUPABASE_ANO
         ],
       },
       {
-        titulo: '25. Deploy en Vercel',
+        titulo: '24. Deploy en Vercel',
         descripcion: 'La forma más fácil: conecta tu repo de GitHub a Vercel.',
         links: [
           { texto: 'Abrir Vercel', url: 'https://vercel.com/new' },
@@ -320,7 +318,7 @@ Usa las variables de entorno NEXT_PUBLIC_SUPABASE_URL y NEXT_PUBLIC_SUPABASE_ANO
         tip: 'También puedes hacer: npx vercel (desde la terminal)',
       },
       {
-        titulo: '26. ¡Comparte tu URL!',
+        titulo: '25. ¡Comparte tu URL!',
         descripcion: 'Tu waitlist está en producción. Copia la URL de Vercel y compártela en el Discord del curso.',
         tip: 'Actualiza el CLAUDE.md: "Actualiza el CLAUDE.md con todo lo que hemos hecho. El proyecto está desplegado en [tu-url].vercel.app"',
       },
