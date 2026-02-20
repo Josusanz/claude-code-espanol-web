@@ -211,7 +211,7 @@ CREATE POLICY "Allow public inserts" ON waitlist
       },
       {
         titulo: '18. Configurar variables de entorno',
-        descripcion: 'Pega tus keys de Supabase y te genero el archivo .env.local listo para copiar.',
+        descripcion: 'Conecta Vercel con Supabase desde el terminal (recomendado) o pega tus keys manualmente.',
         componente: 'env-configurator',
         links: [
           { texto: 'Supabase → Settings → API', url: 'https://supabase.com/dashboard/project/_/settings/api' },

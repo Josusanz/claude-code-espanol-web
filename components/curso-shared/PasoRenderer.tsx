@@ -475,10 +475,12 @@ const VISU_STEPS = [
 ]
 
 function EnvConfigurator() {
+  const [tab, setTab] = useState<'cli' | 'manual'>('cli')
   const [url, setUrl] = useState('')
   const [anonKey, setAnonKey] = useState('')
   const [copiado, setCopiado] = useState(false)
   const [creado, setCreado] = useState(false)
+  const [cliStep, setCliStep] = useState(0)
 
   const envContent = `NEXT_PUBLIC_SUPABASE_URL=${url || 'https://xxxxx.supabase.co'}
 NEXT_PUBLIC_SUPABASE_ANON_KEY=${anonKey || 'eyJhbGciOiJIUzI1NiIs...'}`
@@ -500,185 +502,331 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=${anonKey || 'eyJhbGciOiJIUzI1NiIs...'}`
     setTimeout(() => setCopiado(false), 2000)
   }
 
+  const tabStyle = (active: boolean) => ({
+    padding: '10px 20px',
+    fontSize: '14px',
+    fontWeight: 600 as const,
+    color: active ? '#6366f1' : '#64748b',
+    background: active ? '#fff' : 'transparent',
+    border: active ? '1px solid rgba(0,0,0,0.08)' : '1px solid transparent',
+    borderBottom: active ? '1px solid #fff' : '1px solid rgba(0,0,0,0.08)',
+    borderRadius: '10px 10px 0 0',
+    cursor: 'pointer' as const,
+    marginBottom: '-1px',
+    transition: 'all 0.2s',
+    fontFamily: 'inherit',
+  })
+
+  const cliSteps = [
+    {
+      titulo: '1. Inicia sesión en Vercel',
+      desc: 'Conecta tu terminal con tu cuenta de Vercel:',
+      cmd: 'npx vercel login',
+      nota: 'Se abrirá el navegador para autenticarte. Sigue las instrucciones.',
+    },
+    {
+      titulo: '2. Vincula tu proyecto',
+      desc: 'Conecta la carpeta de tu proyecto con Vercel:',
+      cmd: 'npx vercel link',
+      nota: 'Selecciona tu proyecto cuando te lo pregunte.',
+    },
+    {
+      titulo: '3. Añade la integración de Supabase',
+      desc: 'Esto conecta Supabase con Vercel y configura las variables automáticamente:',
+      cmd: 'npx vercel integration add supabase',
+      nota: 'Se abrirá el navegador. Selecciona tu proyecto de Supabase y confirma.',
+    },
+    {
+      titulo: '4. Descarga las variables de entorno',
+      desc: 'Trae todas las variables de entorno a tu máquina:',
+      cmd: 'npx vercel env pull .env.local',
+      nota: 'Esto crea el archivo .env.local automáticamente con todas las keys.',
+    },
+  ]
+
   return (
     <div style={{ marginTop: '16px' }}>
-      {/* Step 1: Instructions */}
+      {/* Tabs */}
       <div style={{
-        background: '#fffbeb',
-        border: '1px solid #fde68a',
-        borderRadius: '12px',
-        padding: '16px 20px',
-        marginBottom: '16px',
-        fontSize: '14px',
-        color: '#92400e',
-        lineHeight: 1.7,
+        display: 'flex',
+        borderBottom: '1px solid rgba(0,0,0,0.08)',
+        marginBottom: '0',
       }}>
-        <strong>¿Dónde encuentro mis keys?</strong>
-        <ol style={{ margin: '8px 0 0', paddingLeft: '20px' }}>
-          <li>Ve a <a href="https://supabase.com/dashboard/project/_/settings/api" target="_blank" rel="noopener noreferrer" style={{ color: '#6366f1', fontWeight: 600 }}>Supabase → Settings → API</a></li>
-          <li>Copia la <strong>Project URL</strong> (empieza por https://)</li>
-          <li>Copia la <strong>anon public</strong> key (empieza por eyJ...)</li>
-        </ol>
+        <button onClick={() => setTab('cli')} style={tabStyle(tab === 'cli')}>
+          CLI (recomendado)
+        </button>
+        <button onClick={() => setTab('manual')} style={tabStyle(tab === 'manual')}>
+          Manual
+        </button>
       </div>
 
-      {/* Step 2: Inputs */}
       <div style={{
-        background: '#fff',
         border: '1px solid rgba(0,0,0,0.08)',
-        borderRadius: '14px',
+        borderTop: 'none',
+        borderRadius: '0 0 14px 14px',
         padding: '20px',
-        marginBottom: '16px',
+        background: '#fff',
       }}>
-        <div style={{ marginBottom: '14px' }}>
-          <label style={{ display: 'block', fontSize: '13px', fontWeight: 600, color: '#374151', marginBottom: '6px' }}>
-            Project URL
-          </label>
-          <input
-            type="text"
-            value={url}
-            onChange={e => { setUrl(e.target.value); setCreado(false) }}
-            placeholder="https://abcdef123.supabase.co"
-            style={{
-              width: '100%',
-              padding: '12px 14px',
-              fontSize: '14px',
-              border: `2px solid ${url && url.includes('supabase.co') ? '#22c55e' : '#e2e8f0'}`,
-              borderRadius: '10px',
-              outline: 'none',
-              fontFamily: "'JetBrains Mono', monospace",
-              boxSizing: 'border-box',
-              transition: 'border-color 0.2s',
-            }}
-          />
-        </div>
-        <div>
-          <label style={{ display: 'block', fontSize: '13px', fontWeight: 600, color: '#374151', marginBottom: '6px' }}>
-            Anon Key (public)
-          </label>
-          <input
-            type="text"
-            value={anonKey}
-            onChange={e => { setAnonKey(e.target.value); setCreado(false) }}
-            placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-            style={{
-              width: '100%',
-              padding: '12px 14px',
-              fontSize: '14px',
-              border: `2px solid ${anonKey.length > 20 ? '#22c55e' : '#e2e8f0'}`,
-              borderRadius: '10px',
-              outline: 'none',
-              fontFamily: "'JetBrains Mono', monospace",
-              boxSizing: 'border-box',
-              transition: 'border-color 0.2s',
-            }}
-          />
-        </div>
-      </div>
-
-      {/* Step 3: Generated file */}
-      <div style={{
-        background: '#1e293b',
-        borderRadius: '12px',
-        overflow: 'hidden',
-        marginBottom: '16px',
-      }}>
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: '10px 16px',
-          background: '#0f172a',
-          borderBottom: '1px solid rgba(255,255,255,0.06)',
-        }}>
-          <span style={{ fontSize: '13px', color: '#94a3b8', fontWeight: 500 }}>.env.local</span>
-          <button
-            onClick={copiar}
-            style={{
-              padding: '6px 14px',
-              fontSize: '12px',
-              fontWeight: 600,
-              color: copiado ? '#22c55e' : '#94a3b8',
-              background: 'rgba(255,255,255,0.06)',
-              border: '1px solid rgba(255,255,255,0.1)',
-              borderRadius: '6px',
-              cursor: 'pointer',
-              fontFamily: 'inherit',
-              transition: 'all 0.2s',
-            }}
-          >
-            {copiado ? '✓ Copiado' : 'Copiar'}
-          </button>
-        </div>
-        <pre style={{
-          margin: 0,
-          padding: '16px',
-          fontSize: '13px',
-          color: '#e2e8f0',
-          fontFamily: "'JetBrains Mono', monospace",
-          lineHeight: 1.7,
-          overflowX: 'auto',
-          whiteSpace: 'pre-wrap',
-          wordBreak: 'break-all',
-        }}>
-          {envContent}
-        </pre>
-      </div>
-
-      {/* Step 4: Create file command */}
-      {isValid && (
-        <div style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '10px',
-        }}>
-          <p style={{ margin: 0, fontSize: '14px', color: '#374151', fontWeight: 500 }}>
-            Pega esto en el terminal para crear el archivo:
-          </p>
-          <CodeBlock
-            codigo={`cat > .env.local << 'EOF'\n${envContent}\nEOF`}
-            label="Terminal"
-          />
-          {!creado && (
-            <button
-              onClick={() => setCreado(true)}
-              style={{
-                alignSelf: 'flex-start',
-                padding: '10px 20px',
-                fontSize: '14px',
-                fontWeight: 600,
-                color: '#fff',
-                background: 'linear-gradient(135deg, #22c55e, #16a34a)',
-                border: 'none',
-                borderRadius: '10px',
-                cursor: 'pointer',
-                transition: 'all 0.2s',
-                boxShadow: '0 2px 8px rgba(34, 197, 94, 0.3)',
-              }}
-            >
-              ✓ Ya lo he creado
-            </button>
-          )}
-          {creado && (
+        {tab === 'cli' && (
+          <div>
+            {/* CLI intro */}
             <div style={{
-              padding: '14px 18px',
-              background: '#f0fdf4',
-              border: '1px solid #bbf7d0',
-              borderRadius: '10px',
+              background: '#eef2ff',
+              border: '1px solid #c7d2fe',
+              borderRadius: '12px',
+              padding: '16px 20px',
+              marginBottom: '20px',
               fontSize: '14px',
-              color: '#166534',
-              fontWeight: 500,
+              color: '#3730a3',
+              lineHeight: 1.7,
             }}>
-              ✅ ¡Perfecto! Tu archivo .env.local está listo. Recuerda: este archivo NO se sube a GitHub (ya está en .gitignore).
+              <strong>La forma más rápida:</strong> Conectar Vercel con Supabase desde el terminal. Vercel configura todas las variables de entorno por ti, sin copiar ni pegar nada.
             </div>
-          )}
-        </div>
-      )}
 
-      {!isValid && (url || anonKey) && (
-        <p style={{ margin: 0, fontSize: '13px', color: '#f59e0b' }}>
-          ⚠️ Pega tus keys reales de Supabase para generar el archivo.
-        </p>
-      )}
+            {/* CLI steps */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              {cliSteps.map((step, i) => (
+                <div
+                  key={i}
+                  style={{
+                    opacity: i <= cliStep ? 1 : 0.4,
+                    transition: 'opacity 0.3s',
+                  }}
+                >
+                  <p style={{ margin: '0 0 6px', fontSize: '15px', fontWeight: 600, color: '#1e293b' }}>
+                    {step.titulo}
+                  </p>
+                  <p style={{ margin: '0 0 8px', fontSize: '14px', color: '#64748b' }}>
+                    {step.desc}
+                  </p>
+                  <CodeBlock codigo={step.cmd} label="Terminal" />
+                  <p style={{ margin: '8px 0 0', fontSize: '13px', color: '#94a3b8', fontStyle: 'italic' }}>
+                    {step.nota}
+                  </p>
+                  {i === cliStep && i < cliSteps.length - 1 && (
+                    <button
+                      onClick={() => setCliStep(cliStep + 1)}
+                      style={{
+                        marginTop: '10px',
+                        padding: '8px 16px',
+                        fontSize: '13px',
+                        fontWeight: 600,
+                        color: '#6366f1',
+                        background: '#eef2ff',
+                        border: '1px solid #c7d2fe',
+                        borderRadius: '8px',
+                        cursor: 'pointer',
+                        fontFamily: 'inherit',
+                        transition: 'all 0.2s',
+                      }}
+                    >
+                      Hecho, siguiente paso →
+                    </button>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            {/* CLI done */}
+            {cliStep >= cliSteps.length - 1 && (
+              <div style={{
+                marginTop: '16px',
+                padding: '14px 18px',
+                background: '#f0fdf4',
+                border: '1px solid #bbf7d0',
+                borderRadius: '10px',
+                fontSize: '14px',
+                color: '#166534',
+                fontWeight: 500,
+              }}>
+                ✅ ¡Listo! Vercel ha creado tu archivo .env.local con todas las variables de Supabase. Además, cuando hagas deploy, las variables estarán configuradas automáticamente en producción.
+              </div>
+            )}
+          </div>
+        )}
+
+        {tab === 'manual' && (
+          <div>
+            {/* Step 1: Instructions */}
+            <div style={{
+              background: '#fffbeb',
+              border: '1px solid #fde68a',
+              borderRadius: '12px',
+              padding: '16px 20px',
+              marginBottom: '16px',
+              fontSize: '14px',
+              color: '#92400e',
+              lineHeight: 1.7,
+            }}>
+              <strong>¿Dónde encuentro mis keys?</strong>
+              <ol style={{ margin: '8px 0 0', paddingLeft: '20px' }}>
+                <li>Ve a <a href="https://supabase.com/dashboard/project/_/settings/api" target="_blank" rel="noopener noreferrer" style={{ color: '#6366f1', fontWeight: 600 }}>Supabase → Settings → API</a></li>
+                <li>Copia la <strong>Project URL</strong> (empieza por https://)</li>
+                <li>Copia la <strong>anon public</strong> key (empieza por eyJ...)</li>
+              </ol>
+            </div>
+
+            {/* Step 2: Inputs */}
+            <div style={{
+              background: '#fafafa',
+              border: '1px solid rgba(0,0,0,0.06)',
+              borderRadius: '14px',
+              padding: '20px',
+              marginBottom: '16px',
+            }}>
+              <div style={{ marginBottom: '14px' }}>
+                <label style={{ display: 'block', fontSize: '13px', fontWeight: 600, color: '#374151', marginBottom: '6px' }}>
+                  Project URL
+                </label>
+                <input
+                  type="text"
+                  value={url}
+                  onChange={e => { setUrl(e.target.value); setCreado(false) }}
+                  placeholder="https://abcdef123.supabase.co"
+                  style={{
+                    width: '100%',
+                    padding: '12px 14px',
+                    fontSize: '14px',
+                    border: `2px solid ${url && url.includes('supabase.co') ? '#22c55e' : '#e2e8f0'}`,
+                    borderRadius: '10px',
+                    outline: 'none',
+                    fontFamily: "'JetBrains Mono', monospace",
+                    boxSizing: 'border-box',
+                    transition: 'border-color 0.2s',
+                  }}
+                />
+              </div>
+              <div>
+                <label style={{ display: 'block', fontSize: '13px', fontWeight: 600, color: '#374151', marginBottom: '6px' }}>
+                  Anon Key (public)
+                </label>
+                <input
+                  type="text"
+                  value={anonKey}
+                  onChange={e => { setAnonKey(e.target.value); setCreado(false) }}
+                  placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                  style={{
+                    width: '100%',
+                    padding: '12px 14px',
+                    fontSize: '14px',
+                    border: `2px solid ${anonKey.length > 20 ? '#22c55e' : '#e2e8f0'}`,
+                    borderRadius: '10px',
+                    outline: 'none',
+                    fontFamily: "'JetBrains Mono', monospace",
+                    boxSizing: 'border-box',
+                    transition: 'border-color 0.2s',
+                  }}
+                />
+              </div>
+            </div>
+
+            {/* Step 3: Generated file */}
+            <div style={{
+              background: '#1e293b',
+              borderRadius: '12px',
+              overflow: 'hidden',
+              marginBottom: '16px',
+            }}>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                padding: '10px 16px',
+                background: '#0f172a',
+                borderBottom: '1px solid rgba(255,255,255,0.06)',
+              }}>
+                <span style={{ fontSize: '13px', color: '#94a3b8', fontWeight: 500 }}>.env.local</span>
+                <button
+                  onClick={copiar}
+                  style={{
+                    padding: '6px 14px',
+                    fontSize: '12px',
+                    fontWeight: 600,
+                    color: copiado ? '#22c55e' : '#94a3b8',
+                    background: 'rgba(255,255,255,0.06)',
+                    border: '1px solid rgba(255,255,255,0.1)',
+                    borderRadius: '6px',
+                    cursor: 'pointer',
+                    fontFamily: 'inherit',
+                    transition: 'all 0.2s',
+                  }}
+                >
+                  {copiado ? '✓ Copiado' : 'Copiar'}
+                </button>
+              </div>
+              <pre style={{
+                margin: 0,
+                padding: '16px',
+                fontSize: '13px',
+                color: '#e2e8f0',
+                fontFamily: "'JetBrains Mono', monospace",
+                lineHeight: 1.7,
+                overflowX: 'auto',
+                whiteSpace: 'pre-wrap',
+                wordBreak: 'break-all',
+              }}>
+                {envContent}
+              </pre>
+            </div>
+
+            {/* Step 4: Create file command */}
+            {isValid && (
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '10px',
+              }}>
+                <p style={{ margin: 0, fontSize: '14px', color: '#374151', fontWeight: 500 }}>
+                  Pega esto en el terminal para crear el archivo:
+                </p>
+                <CodeBlock
+                  codigo={`cat > .env.local << 'EOF'\n${envContent}\nEOF`}
+                  label="Terminal"
+                />
+                {!creado && (
+                  <button
+                    onClick={() => setCreado(true)}
+                    style={{
+                      alignSelf: 'flex-start',
+                      padding: '10px 20px',
+                      fontSize: '14px',
+                      fontWeight: 600,
+                      color: '#fff',
+                      background: 'linear-gradient(135deg, #22c55e, #16a34a)',
+                      border: 'none',
+                      borderRadius: '10px',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s',
+                      boxShadow: '0 2px 8px rgba(34, 197, 94, 0.3)',
+                    }}
+                  >
+                    ✓ Ya lo he creado
+                  </button>
+                )}
+                {creado && (
+                  <div style={{
+                    padding: '14px 18px',
+                    background: '#f0fdf4',
+                    border: '1px solid #bbf7d0',
+                    borderRadius: '10px',
+                    fontSize: '14px',
+                    color: '#166534',
+                    fontWeight: 500,
+                  }}>
+                    ✅ ¡Perfecto! Tu archivo .env.local está listo. Recuerda: este archivo NO se sube a GitHub (ya está en .gitignore).
+                  </div>
+                )}
+              </div>
+            )}
+
+            {!isValid && (url || anonKey) && (
+              <p style={{ margin: 0, fontSize: '13px', color: '#f59e0b' }}>
+                ⚠️ Pega tus keys reales de Supabase para generar el archivo.
+              </p>
+            )}
+          </div>
+        )}
+      </div>
     </div>
   )
 }
