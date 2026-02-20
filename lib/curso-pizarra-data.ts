@@ -127,25 +127,32 @@ export const PIZARRAS: PizarraSemana[] = [
       },
       {
         titulo: '13. Conectar Git con GitHub',
-        descripcion: 'Configura tu nombre y email (solo la primera vez):',
+        descripcion: 'Primero instala GitHub CLI y autentícate. Después configuramos git con tus datos de GitHub automáticamente.',
         bloques: [
           {
             lenguaje: 'bash',
-            codigo: `git config --global user.name "Tu Nombre"
-git config --global user.email "tu@email.com"`,
-          },
-          {
-            lenguaje: 'bash',
-            archivo: 'Instala GitHub CLI (si no lo tienes)',
+            archivo: '1. Instala GitHub CLI',
             codigo: 'brew install gh',
           },
           {
             lenguaje: 'bash',
-            archivo: 'Autentícate con GitHub',
+            archivo: '2. Autentícate con GitHub (se abre el navegador)',
             codigo: 'gh auth login',
           },
+          {
+            lenguaje: 'bash',
+            archivo: '3. Configura git con tu nombre y email de GitHub',
+            codigo: `gh api user --jq '.name' | xargs -I {} git config --global user.name "{}"
+gh api user --jq '.email // empty' | xargs -I {} git config --global user.email "{}"`,
+          },
+          {
+            lenguaje: 'bash',
+            archivo: '4. Comprueba que se guardó bien',
+            codigo: `git config --global user.name
+git config --global user.email`,
+          },
         ],
-        tip: 'Al ejecutar "gh auth login", selecciona: GitHub.com → HTTPS → Login with a web browser. Se abrirá el navegador para autorizar. Solo necesitas hacer esto una vez. En Linux: sudo apt install gh. En Windows: winget install GitHub.cli.',
+        tip: 'Al ejecutar "gh auth login", selecciona: GitHub.com → HTTPS → Login with a web browser. Se abrirá el navegador para autorizar. Solo necesitas hacer esto una vez. En Linux: sudo apt install gh. En Windows: winget install GitHub.cli. Si el email sale vacío, ponlo a mano: git config --global user.email "tu@email.com"',
       },
       {
         titulo: '14. Crear repo y subir a GitHub',
