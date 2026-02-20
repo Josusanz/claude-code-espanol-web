@@ -35,7 +35,7 @@ interface Answers {
 const STORAGE_KEY = 'autoguiado-onboarding'
 
 export default function OnboardingChecklist({ isDark, t }: OnboardingChecklistProps) {
-  const [visible, setVisible] = useState(false)
+  const [visible, setVisible] = useState(true)
   const [completed, setCompleted] = useState(false)
   const [step, setStep] = useState<Step>('experiencia')
   const [answers, setAnswers] = useState<Answers>({

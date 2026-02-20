@@ -263,12 +263,10 @@ function Dashboard() {
           </div>
         </div>
 
-        {/* Onboarding checklist */}
-        {!isLoggedIn && (
-          <div className="animate-fade-in delay-1">
-            <OnboardingChecklist isDark={isDark} t={t} />
-          </div>
-        )}
+        {/* Onboarding checklist — visible para todos hasta completarlo */}
+        <div className="animate-fade-in delay-1">
+          <OnboardingChecklist isDark={isDark} t={t} />
+        </div>
 
         {/* Welcome banner for non-logged users */}
         {!isLoggedIn && (
