@@ -1,5 +1,6 @@
 import React from 'react'
 import { DocsThemeConfig } from 'nextra-theme-docs'
+import LessonProgress from './components/LessonProgress'
 
 const config: DocsThemeConfig = {
   banner: {
@@ -147,6 +148,12 @@ const config: DocsThemeConfig = {
     content: '¿Preguntas? Abre un issue →',
     labels: 'feedback'
   },
+  main: ({ children }) => (
+    <>
+      {children}
+      <LessonProgress />
+    </>
+  ),
   navigation: {
     prev: true,
     next: true,
