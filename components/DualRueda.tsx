@@ -239,7 +239,7 @@ export default function DualRueda({ ruedas, onSave }: DualRuedaProps) {
                     tipo="despues"
                     initialScores={activeRueda.despues?.scores}
                     onSave={(scores) => onSave(activeWheel, 'despues', scores)}
-                    compareTo={activeRueda.antes?.scores}
+                    compareTo={activeRueda.despues ? activeRueda.antes?.scores : undefined}
                   />
                 </div>
               )}
