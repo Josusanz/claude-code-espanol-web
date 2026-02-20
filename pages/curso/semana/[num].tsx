@@ -521,8 +521,86 @@ function SemanaContent({ semana }: { semana: Semana }) {
                 </button>
               </div>
 
-              {/* Video */}
-              {semana.clase.videoUrl ? (
+              {/* Videos */}
+              {semana.clase.videos && semana.clase.videos.length > 0 ? (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '20px' }}>
+                  {semana.clase.videos.map((video, vi) => (
+                    video.tipo === 'embed' ? (
+                      <div key={vi}>
+                        {semana.clase.videos!.length > 1 && (
+                          <p style={{ margin: '0 0 8px', fontSize: '14px', fontWeight: 600, color: '#374151' }}>
+                            🎬 {video.titulo}
+                          </p>
+                        )}
+                        <div style={{
+                          position: 'relative',
+                          paddingBottom: '56.25%',
+                          height: 0,
+                          background: '#0f172a',
+                          borderRadius: '12px',
+                          overflow: 'hidden',
+                        }}>
+                          <iframe
+                            src={video.url}
+                            style={{
+                              position: 'absolute',
+                              top: 0,
+                              left: 0,
+                              width: '100%',
+                              height: '100%',
+                              border: 'none'
+                            }}
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                          />
+                        </div>
+                      </div>
+                    ) : (
+                      <a
+                        key={vi}
+                        href={video.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '14px',
+                          padding: '18px 20px',
+                          background: '#fff',
+                          border: '1px solid rgba(0,0,0,0.06)',
+                          borderRadius: '14px',
+                          textDecoration: 'none',
+                          boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
+                          transition: 'all 0.2s',
+                        }}
+                      >
+                        <span style={{
+                          width: '48px',
+                          height: '48px',
+                          background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+                          borderRadius: '12px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          fontSize: '22px',
+                          flexShrink: 0,
+                        }}>
+                          ▶️
+                        </span>
+                        <div>
+                          <p style={{ margin: 0, fontSize: '15px', fontWeight: 600, color: '#0f172a' }}>
+                            {video.titulo}
+                          </p>
+                          <p style={{ margin: '2px 0 0', fontSize: '13px', color: '#64748b' }}>
+                            {video.passcode ? `Código: ${video.passcode} · ` : ''}Click para ver la grabación
+                          </p>
+                        </div>
+                        <span style={{ marginLeft: 'auto', fontSize: '18px', color: '#94a3b8' }}>↗</span>
+                      </a>
+                    )
+                  ))}
+                </div>
+              ) : semana.clase.videoUrl ? (
                 <div style={{
                   position: 'relative',
                   paddingBottom: '56.25%',

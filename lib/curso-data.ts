@@ -14,11 +14,19 @@ export interface PreClase {
   videoIntro?: string
 }
 
+export interface ClaseVideo {
+  titulo: string
+  url: string
+  tipo: 'embed' | 'link' // embed = iframe (YouTube etc), link = abre en nueva pestaña (Zoom)
+  passcode?: string
+}
+
 export interface ClaseEnVivo {
   fecha: string
   hora: string
   duracion: string
   videoUrl?: string
+  videos?: ClaseVideo[]
   notas?: string // Markdown
   slides?: string
 }
@@ -300,6 +308,14 @@ La IA escribirá el código por ti. Tu trabajo es:
       fecha: '2026-02-19',
       hora: '19:00 CET',
       duracion: '2h + 2h',
+      videos: [
+        {
+          titulo: 'Día 1 — Bienvenida y conexión',
+          url: 'https://us02web.zoom.us/rec/share/1sjG06twWJxAgcoEFeGf5RZLRo8Ib8Ab1gTJ1FyOgU7J1DLe_-PZJO79KMtuEDJ0.75Kr_1vBWsqhEV7U?startTime=1771528087000',
+          tipo: 'link',
+          passcode: 'MH+%g63Q',
+        },
+      ],
       notas: `
 ### Día 1 (Jueves 19)
 
