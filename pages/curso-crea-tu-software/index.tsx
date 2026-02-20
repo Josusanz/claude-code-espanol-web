@@ -172,7 +172,7 @@ function Dashboard() {
                 Salir
               </button>
             ) : (
-              <Link href="/precurso" style={{
+              <Link href="/curso" style={{
                 padding: '8px 16px',
                 fontSize: '13px',
                 fontWeight: 600,
@@ -305,7 +305,7 @@ function Dashboard() {
               }}>
                 Empezar gratis
               </Link>
-              <Link href="/precurso" style={{
+              <Link href="/curso" style={{
                 padding: '10px 20px',
                 fontSize: '14px',
                 fontWeight: 500,
