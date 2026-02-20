@@ -474,6 +474,215 @@ const VISU_STEPS = [
   },
 ]
 
+function EnvConfigurator() {
+  const [url, setUrl] = useState('')
+  const [anonKey, setAnonKey] = useState('')
+  const [copiado, setCopiado] = useState(false)
+  const [creado, setCreado] = useState(false)
+
+  const envContent = `NEXT_PUBLIC_SUPABASE_URL=${url || 'https://xxxxx.supabase.co'}
+NEXT_PUBLIC_SUPABASE_ANON_KEY=${anonKey || 'eyJhbGciOiJIUzI1NiIs...'}`
+
+  const isValid = url.includes('supabase.co') && anonKey.length > 20
+
+  const copiar = async () => {
+    try {
+      await navigator.clipboard.writeText(envContent)
+    } catch {
+      const ta = document.createElement('textarea')
+      ta.value = envContent
+      document.body.appendChild(ta)
+      ta.select()
+      document.execCommand('copy')
+      document.body.removeChild(ta)
+    }
+    setCopiado(true)
+    setTimeout(() => setCopiado(false), 2000)
+  }
+
+  return (
+    <div style={{ marginTop: '16px' }}>
+      {/* Step 1: Instructions */}
+      <div style={{
+        background: '#fffbeb',
+        border: '1px solid #fde68a',
+        borderRadius: '12px',
+        padding: '16px 20px',
+        marginBottom: '16px',
+        fontSize: '14px',
+        color: '#92400e',
+        lineHeight: 1.7,
+      }}>
+        <strong>¿Dónde encuentro mis keys?</strong>
+        <ol style={{ margin: '8px 0 0', paddingLeft: '20px' }}>
+          <li>Ve a <a href="https://supabase.com/dashboard/project/_/settings/api" target="_blank" rel="noopener noreferrer" style={{ color: '#6366f1', fontWeight: 600 }}>Supabase → Settings → API</a></li>
+          <li>Copia la <strong>Project URL</strong> (empieza por https://)</li>
+          <li>Copia la <strong>anon public</strong> key (empieza por eyJ...)</li>
+        </ol>
+      </div>
+
+      {/* Step 2: Inputs */}
+      <div style={{
+        background: '#fff',
+        border: '1px solid rgba(0,0,0,0.08)',
+        borderRadius: '14px',
+        padding: '20px',
+        marginBottom: '16px',
+      }}>
+        <div style={{ marginBottom: '14px' }}>
+          <label style={{ display: 'block', fontSize: '13px', fontWeight: 600, color: '#374151', marginBottom: '6px' }}>
+            Project URL
+          </label>
+          <input
+            type="text"
+            value={url}
+            onChange={e => { setUrl(e.target.value); setCreado(false) }}
+            placeholder="https://abcdef123.supabase.co"
+            style={{
+              width: '100%',
+              padding: '12px 14px',
+              fontSize: '14px',
+              border: `2px solid ${url && url.includes('supabase.co') ? '#22c55e' : '#e2e8f0'}`,
+              borderRadius: '10px',
+              outline: 'none',
+              fontFamily: "'JetBrains Mono', monospace",
+              boxSizing: 'border-box',
+              transition: 'border-color 0.2s',
+            }}
+          />
+        </div>
+        <div>
+          <label style={{ display: 'block', fontSize: '13px', fontWeight: 600, color: '#374151', marginBottom: '6px' }}>
+            Anon Key (public)
+          </label>
+          <input
+            type="text"
+            value={anonKey}
+            onChange={e => { setAnonKey(e.target.value); setCreado(false) }}
+            placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+            style={{
+              width: '100%',
+              padding: '12px 14px',
+              fontSize: '14px',
+              border: `2px solid ${anonKey.length > 20 ? '#22c55e' : '#e2e8f0'}`,
+              borderRadius: '10px',
+              outline: 'none',
+              fontFamily: "'JetBrains Mono', monospace",
+              boxSizing: 'border-box',
+              transition: 'border-color 0.2s',
+            }}
+          />
+        </div>
+      </div>
+
+      {/* Step 3: Generated file */}
+      <div style={{
+        background: '#1e293b',
+        borderRadius: '12px',
+        overflow: 'hidden',
+        marginBottom: '16px',
+      }}>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          padding: '10px 16px',
+          background: '#0f172a',
+          borderBottom: '1px solid rgba(255,255,255,0.06)',
+        }}>
+          <span style={{ fontSize: '13px', color: '#94a3b8', fontWeight: 500 }}>.env.local</span>
+          <button
+            onClick={copiar}
+            style={{
+              padding: '6px 14px',
+              fontSize: '12px',
+              fontWeight: 600,
+              color: copiado ? '#22c55e' : '#94a3b8',
+              background: 'rgba(255,255,255,0.06)',
+              border: '1px solid rgba(255,255,255,0.1)',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              fontFamily: 'inherit',
+              transition: 'all 0.2s',
+            }}
+          >
+            {copiado ? '✓ Copiado' : 'Copiar'}
+          </button>
+        </div>
+        <pre style={{
+          margin: 0,
+          padding: '16px',
+          fontSize: '13px',
+          color: '#e2e8f0',
+          fontFamily: "'JetBrains Mono', monospace",
+          lineHeight: 1.7,
+          overflowX: 'auto',
+          whiteSpace: 'pre-wrap',
+          wordBreak: 'break-all',
+        }}>
+          {envContent}
+        </pre>
+      </div>
+
+      {/* Step 4: Create file command */}
+      {isValid && (
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '10px',
+        }}>
+          <p style={{ margin: 0, fontSize: '14px', color: '#374151', fontWeight: 500 }}>
+            Pega esto en el terminal para crear el archivo:
+          </p>
+          <CodeBlock
+            codigo={`cat > .env.local << 'EOF'\n${envContent}\nEOF`}
+            label="Terminal"
+          />
+          {!creado && (
+            <button
+              onClick={() => setCreado(true)}
+              style={{
+                alignSelf: 'flex-start',
+                padding: '10px 20px',
+                fontSize: '14px',
+                fontWeight: 600,
+                color: '#fff',
+                background: 'linear-gradient(135deg, #22c55e, #16a34a)',
+                border: 'none',
+                borderRadius: '10px',
+                cursor: 'pointer',
+                transition: 'all 0.2s',
+                boxShadow: '0 2px 8px rgba(34, 197, 94, 0.3)',
+              }}
+            >
+              ✓ Ya lo he creado
+            </button>
+          )}
+          {creado && (
+            <div style={{
+              padding: '14px 18px',
+              background: '#f0fdf4',
+              border: '1px solid #bbf7d0',
+              borderRadius: '10px',
+              fontSize: '14px',
+              color: '#166534',
+              fontWeight: 500,
+            }}>
+              ✅ ¡Perfecto! Tu archivo .env.local está listo. Recuerda: este archivo NO se sube a GitHub (ya está en .gitignore).
+            </div>
+          )}
+        </div>
+      )}
+
+      {!isValid && (url || anonKey) && (
+        <p style={{ margin: 0, fontSize: '13px', color: '#f59e0b' }}>
+          ⚠️ Pega tus keys reales de Supabase para generar el archivo.
+        </p>
+      )}
+    </div>
+  )
+}
+
 function Visualizacion() {
   const [step, setStep] = useState(-1) // -1 = no empezado
   const [palabras, setPalabras] = useState(['', '', ''])
@@ -1048,6 +1257,7 @@ export function PasoComponent({ paso, index }: { paso: PasoClase; index: number 
       {paso.componente === 'dia2-setup' && <Dia2Setup />}
       {paso.componente === 'prompt-builder' && <ProjectPromptBuilder />}
       {paso.componente === 'visualizacion' && <Visualizacion />}
+      {paso.componente === 'env-configurator' && <EnvConfigurator />}
 
       {paso.bloques?.map((bloque, i) => (
         <BloqueCodigoComponent key={i} bloque={bloque} />

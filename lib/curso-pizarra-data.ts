@@ -211,16 +211,8 @@ CREATE POLICY "Allow public inserts" ON waitlist
       },
       {
         titulo: '18. Configurar variables de entorno',
-        descripcion: 'Crea un archivo .env.local en la raíz del proyecto. Las keys están en Supabase → Settings → API.',
-        bloques: [
-          {
-            lenguaje: 'env',
-            archivo: '.env.local',
-            codigo: `NEXT_PUBLIC_SUPABASE_URL=https://xxxxx.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIs...`,
-          },
-        ],
-        tip: 'Copia las keys reales de tu proyecto en Supabase. Las de arriba son de ejemplo.',
+        descripcion: 'Pega tus keys de Supabase y te genero el archivo .env.local listo para copiar.',
+        componente: 'env-configurator',
         links: [
           { texto: 'Supabase → Settings → API', url: 'https://supabase.com/dashboard/project/_/settings/api' },
         ],
