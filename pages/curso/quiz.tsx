@@ -1,41 +1,8 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import { useState } from 'react'
-import PrecursoEmailGate from '../../components/PrecursoEmailGate'
-import { usePrecursoProgress, useTheme } from './index'
-
-const themes = {
-  light: {
-    bg: '#ffffff',
-    bgSecondary: '#f8fafc',
-    bgTertiary: '#f1f5f9',
-    text: '#1e293b',
-    textSecondary: '#64748b',
-    textMuted: '#94a3b8',
-    border: '#e2e8f0',
-    accent: '#6366f1',
-    accentLight: '#eef2ff',
-    success: '#22c55e',
-    successLight: '#f0fdf4',
-    error: '#ef4444',
-    errorLight: '#fef2f2',
-  },
-  dark: {
-    bg: '#0f172a',
-    bgSecondary: '#1e293b',
-    bgTertiary: '#334155',
-    text: '#f1f5f9',
-    textSecondary: '#94a3b8',
-    textMuted: '#64748b',
-    border: '#334155',
-    accent: '#818cf8',
-    accentLight: 'rgba(129, 140, 248, 0.1)',
-    success: '#4ade80',
-    successLight: 'rgba(74, 222, 128, 0.1)',
-    error: '#f87171',
-    errorLight: 'rgba(248, 113, 113, 0.1)',
-  }
-}
+import CursoEmailGate from '../../components/CursoEmailGate'
+import { usePrecursoProgress } from '../../lib/precurso-data'
 
 const PREGUNTAS = [
   {
@@ -162,8 +129,6 @@ const PREGUNTAS = [
 
 function QuizContent() {
   const { completed, toggle } = usePrecursoProgress()
-  const { theme, toggleTheme } = useTheme()
-  const t = themes[theme]
 
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [answers, setAnswers] = useState<Record<number, number>>({})
@@ -206,21 +171,22 @@ function QuizContent() {
   return (
     <div style={{
       minHeight: '100vh',
-      background: t.bg,
+      background: '#fafbfc',
       fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
-      color: t.text
+      color: '#1e293b'
     }}>
       <Head>
-        <title>Quiz | Precurso</title>
+        <title>Quiz | Curso</title>
         <meta name="robots" content="noindex, nofollow" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
       </Head>
 
       {/* Header */}
       <header style={{
-        background: t.bg,
-        borderBottom: `1px solid ${t.border}`,
-        padding: '16px 32px',
+        background: 'rgba(250, 251, 252, 0.9)',
+        backdropFilter: 'blur(12px)',
+        borderBottom: '1px solid rgba(0,0,0,0.06)',
+        padding: '12px 24px',
         position: 'sticky',
         top: 0,
         zIndex: 100,
@@ -229,8 +195,8 @@ function QuizContent() {
         justifyContent: 'space-between'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <Link href="/precurso" style={{
-            color: t.textMuted,
+          <Link href="/curso" style={{
+            color: '#94a3b8',
             textDecoration: 'none',
             display: 'flex',
             alignItems: 'center',
@@ -241,51 +207,34 @@ function QuizContent() {
               <polyline points="15 18 9 12 15 6"/>
             </svg>
           </Link>
-          <span style={{ fontWeight: 600, fontSize: '17px' }}>Quiz de conceptos</span>
+          <span style={{ fontWeight: 600, fontSize: '16px', color: '#0f172a' }}>Quiz</span>
         </div>
-
-        <button
-          onClick={toggleTheme}
-          style={{
-            width: '40px',
-            height: '40px',
-            borderRadius: '10px',
-            border: `1px solid ${t.border}`,
-            background: t.bgSecondary,
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '18px'
-          }}
-        >
-          {theme === 'light' ? '🌙' : '☀️'}
-        </button>
+        <button onClick={() => { localStorage.removeItem('precurso-access'); window.location.href = '/curso' }} style={{ padding: '8px 18px', fontSize: '13px', fontWeight: 600, color: '#64748b', background: 'white', border: '1px solid rgba(0,0,0,0.06)', borderRadius: '10px', cursor: 'pointer', boxShadow: '0 1px 2px rgba(0,0,0,0.04)' }}>Salir</button>
       </header>
 
-      <main style={{ maxWidth: '700px', margin: '0 auto', padding: '40px 24px' }}>
+      <main style={{ maxWidth: '800px', margin: '0 auto', padding: '40px 24px' }}>
         {!showResults ? (
           <>
             {/* Progress bar */}
             <div style={{ marginBottom: '32px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-                <span style={{ fontSize: '14px', color: t.textSecondary }}>
+                <span style={{ fontSize: '14px', color: '#64748b' }}>
                   Pregunta {currentQuestion + 1} de {PREGUNTAS.length}
                 </span>
-                <span style={{ fontSize: '14px', color: t.textMuted }}>
+                <span style={{ fontSize: '14px', color: '#94a3b8' }}>
                   {Object.keys(answers).length} respondidas
                 </span>
               </div>
               <div style={{
                 height: '8px',
-                background: t.bgTertiary,
+                background: '#f1f5f9',
                 borderRadius: '4px',
                 overflow: 'hidden'
               }}>
                 <div style={{
                   height: '100%',
                   width: `${((currentQuestion + 1) / PREGUNTAS.length) * 100}%`,
-                  background: t.accent,
+                  background: '#5e6ad2',
                   borderRadius: '4px',
                   transition: 'width 0.3s ease'
                 }} />
@@ -294,10 +243,10 @@ function QuizContent() {
 
             {/* Question card */}
             <div style={{
-              background: t.bgSecondary,
+              background: 'white',
               borderRadius: '20px',
               padding: '32px',
-              border: `1px solid ${t.border}`
+              border: '1px solid rgba(0,0,0,0.06)'
             }}>
               <h2 style={{ fontSize: '24px', fontWeight: 600, marginBottom: '28px', lineHeight: 1.4 }}>
                 {pregunta.pregunta}
@@ -308,20 +257,20 @@ function QuizContent() {
                   const isSelected = selectedAnswer === index
                   const isCorrectAnswer = index === pregunta.correcta
 
-                  let bgColor = t.bg
-                  let borderColor = t.border
+                  let bgColor = '#fafbfc'
+                  let borderColor = 'rgba(0,0,0,0.06)'
 
                   if (showExplanation) {
                     if (isCorrectAnswer) {
-                      bgColor = t.successLight
-                      borderColor = t.success
+                      bgColor = '#f0fdf4'
+                      borderColor = '#22c55e'
                     } else if (isSelected && !isCorrectAnswer) {
-                      bgColor = t.errorLight
-                      borderColor = t.error
+                      bgColor = '#fef2f2'
+                      borderColor = '#ef4444'
                     }
                   } else if (isSelected) {
-                    bgColor = t.accentLight
-                    borderColor = t.accent
+                    bgColor = '#eef2ff'
+                    borderColor = '#5e6ad2'
                   }
 
                   return (
@@ -336,7 +285,7 @@ function QuizContent() {
                         borderRadius: '12px',
                         textAlign: 'left',
                         fontSize: '16px',
-                        color: t.text,
+                        color: '#1e293b',
                         cursor: showExplanation ? 'default' : 'pointer',
                         transition: 'all 0.2s ease',
                         display: 'flex',
@@ -348,8 +297,8 @@ function QuizContent() {
                         width: '28px',
                         height: '28px',
                         borderRadius: '50%',
-                        background: showExplanation && isCorrectAnswer ? t.success : t.bgTertiary,
-                        color: showExplanation && isCorrectAnswer ? 'white' : t.textSecondary,
+                        background: showExplanation && isCorrectAnswer ? '#22c55e' : '#f1f5f9',
+                        color: showExplanation && isCorrectAnswer ? 'white' : '#64748b',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
@@ -370,17 +319,17 @@ function QuizContent() {
                 <div style={{
                   marginTop: '24px',
                   padding: '20px',
-                  background: isCorrect ? t.successLight : t.errorLight,
+                  background: isCorrect ? '#f0fdf4' : '#fef2f2',
                   borderRadius: '12px',
-                  borderLeft: `4px solid ${isCorrect ? t.success : t.error}`
+                  borderLeft: `4px solid ${isCorrect ? '#22c55e' : '#ef4444'}`
                 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
                     <span style={{ fontSize: '20px' }}>{isCorrect ? '✅' : '❌'}</span>
-                    <span style={{ fontWeight: 600, color: isCorrect ? t.success : t.error }}>
+                    <span style={{ fontWeight: 600, color: isCorrect ? '#22c55e' : '#ef4444' }}>
                       {isCorrect ? '¡Correcto!' : 'Incorrecto'}
                     </span>
                   </div>
-                  <p style={{ fontSize: '15px', color: t.textSecondary, margin: 0, lineHeight: 1.6 }}>
+                  <p style={{ fontSize: '15px', color: '#64748b', margin: 0, lineHeight: 1.6 }}>
                     {pregunta.explicacion}
                   </p>
                 </div>
@@ -394,7 +343,7 @@ function QuizContent() {
                     marginTop: '24px',
                     width: '100%',
                     padding: '16px',
-                    background: t.accent,
+                    background: '#5e6ad2',
                     border: 'none',
                     borderRadius: '12px',
                     color: 'white',
@@ -411,11 +360,11 @@ function QuizContent() {
         ) : (
           /* Results */
           <div style={{
-            background: passed ? t.successLight : t.errorLight,
+            background: passed ? '#f0fdf4' : '#fef2f2',
             borderRadius: '24px',
             padding: '48px 32px',
             textAlign: 'center',
-            border: `2px solid ${passed ? t.success : t.error}`
+            border: `2px solid ${passed ? '#22c55e' : '#ef4444'}`
           }}>
             <div style={{ fontSize: '80px', marginBottom: '24px' }}>
               {passed ? '🎉' : '📚'}
@@ -423,12 +372,12 @@ function QuizContent() {
             <h2 style={{
               fontSize: '32px',
               fontWeight: 700,
-              color: passed ? t.success : t.error,
+              color: passed ? '#22c55e' : '#ef4444',
               marginBottom: '16px'
             }}>
               {passed ? '¡Quiz aprobado!' : 'Necesitas repasar'}
             </h2>
-            <p style={{ fontSize: '18px', color: t.textSecondary, marginBottom: '32px' }}>
+            <p style={{ fontSize: '18px', color: '#64748b', marginBottom: '32px' }}>
               Has acertado <strong>{correctCount}</strong> de <strong>{PREGUNTAS.length}</strong> preguntas ({percentage}%)
             </p>
 
@@ -443,7 +392,7 @@ function QuizContent() {
                   onClick={resetQuiz}
                   style={{
                     padding: '16px 32px',
-                    background: t.accent,
+                    background: '#5e6ad2',
                     border: 'none',
                     borderRadius: '12px',
                     color: 'white',
@@ -456,9 +405,9 @@ function QuizContent() {
                 </button>
               )}
               {passed && (
-                <Link href="/precurso/primer-proyecto" style={{
+                <Link href="/curso/primer-proyecto" style={{
                   padding: '16px 32px',
-                  background: t.success,
+                  background: '#22c55e',
                   border: 'none',
                   borderRadius: '12px',
                   color: 'white',
@@ -470,12 +419,12 @@ function QuizContent() {
                   🚀 Ir a tu primer proyecto
                 </Link>
               )}
-              <Link href="/precurso/glosario" style={{
+              <Link href="/curso/glosario" style={{
                 padding: '16px 32px',
-                background: t.bgSecondary,
-                border: `1px solid ${t.border}`,
+                background: 'white',
+                border: '1px solid rgba(0,0,0,0.06)',
                 borderRadius: '12px',
-                color: t.text,
+                color: '#1e293b',
                 fontSize: '16px',
                 fontWeight: 500,
                 cursor: 'pointer',
@@ -486,12 +435,12 @@ function QuizContent() {
             </div>
 
             {passed && (
-              <p style={{ marginTop: '32px', fontSize: '14px', color: t.textMuted }}>
+              <p style={{ marginTop: '32px', fontSize: '14px', color: '#94a3b8' }}>
                 Necesitas 80% para aprobar. ¡Lo has conseguido!
               </p>
             )}
             {!passed && (
-              <p style={{ marginTop: '32px', fontSize: '14px', color: t.textMuted }}>
+              <p style={{ marginTop: '32px', fontSize: '14px', color: '#94a3b8' }}>
                 Necesitas 80% para aprobar. Repasa el glosario y vuelve a intentarlo.
               </p>
             )}
@@ -504,12 +453,12 @@ function QuizContent() {
           display: 'flex',
           justifyContent: 'space-between'
         }}>
-          <Link href="/precurso/requisitos" style={{
+          <Link href="/curso/requisitos" style={{
             padding: '14px 24px',
-            background: t.bgSecondary,
-            border: `1px solid ${t.border}`,
+            background: 'white',
+            border: '1px solid rgba(0,0,0,0.06)',
             borderRadius: '12px',
-            color: t.textSecondary,
+            color: '#64748b',
             textDecoration: 'none',
             fontSize: '15px',
             fontWeight: 500
@@ -524,8 +473,8 @@ function QuizContent() {
 
 export default function QuizPage() {
   return (
-    <PrecursoEmailGate>
+    <CursoEmailGate>
       <QuizContent />
-    </PrecursoEmailGate>
+    </CursoEmailGate>
   )
 }

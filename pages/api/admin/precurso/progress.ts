@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { requireAdmin } from '../../../../lib/admin-auth'
 import { getAllUsersWithProgress } from '../../../../lib/precurso-kv'
-import { PRECURSO_SECTIONS } from '../../../precurso'
+import { PRECURSO_SECTIONS } from '../../../../lib/precurso-data'
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'GET') {

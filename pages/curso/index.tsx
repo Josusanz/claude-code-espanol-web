@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import CursoEmailGate from '../../components/CursoEmailGate'
 import { CURSO_SEMANAS, getCursoTrackingIds } from '../../lib/curso-data'
+import { PRECURSO_PAGES, PRECURSO_SECTIONS, usePrecursoProgress } from '../../lib/precurso-data'
 
 // Helper para obtener el email del usuario desde localStorage
 function getUserEmail(): string | null {
@@ -141,6 +142,7 @@ function getCurrentWeek(): number {
 
 function CursoDashboard() {
   const { semanasStatus, loading, getSemanaProgress, totalPercentage, completedItems, totalItems } = useCursoProgress()
+  const precurso = usePrecursoProgress()
   const [userEmail, setUserEmail] = useState('')
   const currentWeek = getCurrentWeek()
 
@@ -448,6 +450,94 @@ function CursoDashboard() {
           </div>
         )}
 
+        {/* Módulo 0 — Preparación */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          marginBottom: '16px'
+        }}>
+          <h3 style={{ margin: 0, fontSize: '16px', fontWeight: 600, color: '#0f172a', letterSpacing: '-0.01em' }}>
+            Módulo 0 · Preparación
+          </h3>
+          <span style={{ fontSize: '13px', color: '#64748b' }}>
+            {PRECURSO_PAGES.length} lecciones
+          </span>
+        </div>
+
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '8px',
+          marginBottom: '32px'
+        }}>
+          {PRECURSO_PAGES.map((page, i) => {
+            const isComplete = page.trackingId ? precurso.completed[page.trackingId] : false
+
+            return (
+              <Link
+                key={page.href}
+                href={page.href}
+                className="semana-card"
+                style={{
+                  background: isComplete ? '#f0fdf4' : 'white',
+                  border: `1px solid ${isComplete ? 'rgba(34, 197, 94, 0.15)' : 'rgba(0,0,0,0.06)'}`,
+                  borderRadius: '12px',
+                  padding: '16px 20px',
+                  textDecoration: 'none',
+                  transition: 'all 0.2s',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '16px',
+                  boxShadow: '0 1px 2px rgba(0,0,0,0.03)'
+                }}
+              >
+                <div style={{
+                  width: '40px',
+                  height: '40px',
+                  background: isComplete
+                    ? 'linear-gradient(135deg, #22c55e, #16a34a)'
+                    : page.gradient,
+                  borderRadius: '10px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: isComplete ? '14px' : '18px',
+                  fontWeight: 600,
+                  color: 'white',
+                  flexShrink: 0,
+                }}>
+                  {isComplete ? '✓' : page.emoji}
+                </div>
+
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{
+                    fontSize: '15px',
+                    fontWeight: 500,
+                    color: '#1e293b',
+                  }}>
+                    {isComplete && <span style={{ marginRight: '4px' }}>✓</span>}
+                    {page.title}
+                  </div>
+                  <div style={{ fontSize: '13px', color: '#94a3b8', marginTop: '2px' }}>
+                    {page.subtitle}
+                  </div>
+                </div>
+
+                <span style={{
+                  fontSize: '12px',
+                  fontWeight: 500,
+                  color: isComplete ? '#16a34a' : '#94a3b8',
+                  flexShrink: 0,
+                }}>
+                  {isComplete ? 'Completado' : page.tiempo}
+                </span>
+              </Link>
+            )
+          })}
+        </div>
+
         {/* Semanas header */}
         <div style={{
           display: 'flex',
@@ -576,27 +666,6 @@ function CursoDashboard() {
           })}
         </div>
 
-        {/* Quick links */}
-        <div style={{
-          marginTop: '48px',
-          paddingTop: '24px',
-          borderTop: '1px solid rgba(0,0,0,0.06)',
-          display: 'flex',
-          gap: '24px',
-          flexWrap: 'wrap',
-          fontSize: '14px'
-        }}>
-          <Link href="/precurso" style={{
-            color: '#64748b',
-            textDecoration: 'none',
-            fontWeight: 500,
-            display: 'flex',
-            alignItems: 'center',
-            gap: '6px'
-          }}>
-            ← Ir al precurso
-          </Link>
-        </div>
       </main>
 
       <style jsx global>{`

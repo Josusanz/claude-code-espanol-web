@@ -1,28 +1,6 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import PrecursoEmailGate from '../../components/PrecursoEmailGate'
-import { useTheme } from './index'
-
-const themes = {
-  light: {
-    bg: '#ffffff',
-    bgSecondary: '#f8fafc',
-    text: '#1e293b',
-    textSecondary: '#64748b',
-    textMuted: '#94a3b8',
-    border: '#e2e8f0',
-    accent: '#6366f1',
-  },
-  dark: {
-    bg: '#0f172a',
-    bgSecondary: '#1e293b',
-    text: '#f1f5f9',
-    textSecondary: '#94a3b8',
-    textMuted: '#64748b',
-    border: '#334155',
-    accent: '#818cf8',
-  }
-}
+import CursoEmailGate from '../../components/CursoEmailGate'
 
 const CHECKLIST_ITEMS = [
   {
@@ -30,40 +8,37 @@ const CHECKLIST_ITEMS = [
     items: [
       { text: 'Cuenta de GitHub (gratis)', url: 'https://github.com/signup' },
       { text: 'Cuenta de Vercel (gratis)', url: 'https://vercel.com/signup' },
-      { text: 'Suscripción Claude Pro ($20/mes)', url: 'https://claude.ai' },
+      { text: 'Suscripcion Claude Pro ($20/mes)', url: 'https://claude.ai' },
     ]
   },
   {
     categoria: 'Software a instalar',
     items: [
       { text: 'VS Code', url: 'https://code.visualstudio.com/download' },
-      { text: 'Node.js (versión LTS)', url: 'https://nodejs.org/' },
+      { text: 'Node.js (version LTS)', url: 'https://nodejs.org/' },
       { text: 'Claude Code (npm install -g @anthropic-ai/claude-code)', url: null },
     ]
   },
   {
-    categoria: 'Verificar instalación',
+    categoria: 'Verificar instalacion',
     items: [
       { text: 'node --version → debe mostrar v20.x.x o similar', url: null },
-      { text: 'npm --version → debe mostrar un número de versión', url: null },
+      { text: 'npm --version → debe mostrar un numero de version', url: null },
       { text: 'claude → debe mostrar mensaje de bienvenida', url: null },
     ]
   },
   {
     categoria: 'Conceptos clave',
     items: [
-      { text: 'Sé qué es Terminal y cómo abrirlo', url: '/precurso/glosario#lo-basico' },
-      { text: 'Entiendo Frontend vs Backend', url: '/precurso/glosario#arquitectura-web' },
-      { text: 'Sé qué es Git y para qué sirve', url: '/precurso/glosario#git-versiones' },
-      { text: 'Entiendo qué significa "Deploy"', url: '/precurso/glosario#deploy-produccion' },
+      { text: 'Se que es Terminal y como abrirlo', url: '/curso/glosario#lo-basico' },
+      { text: 'Entiendo Frontend vs Backend', url: '/curso/glosario#arquitectura-web' },
+      { text: 'Se que es Git y para que sirve', url: '/curso/glosario#git-versiones' },
+      { text: 'Entiendo que significa "Deploy"', url: '/curso/glosario#deploy-produccion' },
     ]
   }
 ]
 
 function ChecklistContent() {
-  const { theme, toggleTheme } = useTheme()
-  const t = themes[theme]
-
   const handlePrint = () => {
     window.print()
   }
@@ -71,12 +46,12 @@ function ChecklistContent() {
   return (
     <div style={{
       minHeight: '100vh',
-      background: t.bg,
+      background: '#fafbfc',
       fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
-      color: t.text
+      color: '#1e293b'
     }}>
       <Head>
-        <title>Checklist | Precurso</title>
+        <title>Checklist | Curso</title>
         <meta name="robots" content="noindex, nofollow" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
         <style>{`
@@ -93,9 +68,10 @@ function ChecklistContent() {
 
       {/* Header */}
       <header className="no-print" style={{
-        background: t.bg,
-        borderBottom: `1px solid ${t.border}`,
-        padding: '16px 32px',
+        background: 'rgba(250, 251, 252, 0.9)',
+        backdropFilter: 'blur(12px)',
+        borderBottom: '1px solid rgba(0,0,0,0.06)',
+        padding: '12px 24px',
         position: 'sticky',
         top: 0,
         zIndex: 100,
@@ -104,8 +80,8 @@ function ChecklistContent() {
         justifyContent: 'space-between'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <Link href="/precurso" style={{
-            color: t.textMuted,
+          <Link href="/curso" style={{
+            color: '#94a3b8',
             textDecoration: 'none',
             display: 'flex',
             alignItems: 'center',
@@ -116,19 +92,18 @@ function ChecklistContent() {
               <polyline points="15 18 9 12 15 6"/>
             </svg>
           </Link>
-          <span style={{ fontWeight: 600, fontSize: '17px' }}>Checklist</span>
+          <span style={{ fontWeight: 600, fontSize: '16px', color: '#0f172a' }}>Checklist</span>
         </div>
-
         <div style={{ display: 'flex', gap: '12px' }}>
           <button
             onClick={handlePrint}
             style={{
-              padding: '10px 20px',
-              background: t.accent,
+              padding: '8px 18px',
+              background: '#5e6ad2',
               border: 'none',
               borderRadius: '10px',
               color: 'white',
-              fontSize: '14px',
+              fontSize: '13px',
               fontWeight: 600,
               cursor: 'pointer',
               display: 'flex',
@@ -136,24 +111,23 @@ function ChecklistContent() {
               gap: '8px'
             }}
           >
-            🖨️ Imprimir / Guardar PDF
+            Imprimir / Guardar PDF
           </button>
           <button
-            onClick={toggleTheme}
+            onClick={() => { localStorage.removeItem('precurso-access'); window.location.href = '/curso' }}
             style={{
-              width: '40px',
-              height: '40px',
+              padding: '8px 18px',
+              fontSize: '13px',
+              fontWeight: 600,
+              color: '#64748b',
+              background: 'white',
+              border: '1px solid rgba(0,0,0,0.06)',
               borderRadius: '10px',
-              border: `1px solid ${t.border}`,
-              background: t.bgSecondary,
               cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: '18px'
+              boxShadow: '0 1px 2px rgba(0,0,0,0.04)'
             }}
           >
-            {theme === 'light' ? '🌙' : '☀️'}
+            Salir
           </button>
         </div>
       </header>
@@ -162,20 +136,20 @@ function ChecklistContent() {
         {/* Print header */}
         <div className="print-only" style={{ marginBottom: '32px', textAlign: 'center' }}>
           <h1 style={{ fontSize: '28px', fontWeight: 700, marginBottom: '8px' }}>
-            Checklist del Precurso
+            Checklist del Curso
           </h1>
           <p style={{ color: '#64748b' }}>
-            aprende.software/precurso
+            aprende.software/curso
           </p>
         </div>
 
         {/* Hero */}
         <div className="no-print" style={{ textAlign: 'center', marginBottom: '40px' }}>
           <h1 style={{ fontSize: '36px', fontWeight: 700, marginBottom: '16px' }}>
-            📋 Checklist del Precurso
+            Checklist del Curso
           </h1>
-          <p style={{ fontSize: '18px', color: t.textSecondary, lineHeight: 1.7 }}>
-            Imprime esta página o guárdala como PDF para tenerla a mano mientras instalas todo.
+          <p style={{ fontSize: '18px', color: '#64748b', lineHeight: 1.7 }}>
+            Imprime esta pagina o guardala como PDF para tenerla a mano mientras instalas todo.
           </p>
         </div>
 
@@ -187,7 +161,7 @@ function ChecklistContent() {
               fontWeight: 600,
               marginBottom: '16px',
               paddingBottom: '12px',
-              borderBottom: `2px solid ${t.border}`
+              borderBottom: '2px solid rgba(0,0,0,0.06)'
             }}>
               {section.categoria}
             </h2>
@@ -200,16 +174,16 @@ function ChecklistContent() {
                     alignItems: 'flex-start',
                     gap: '16px',
                     padding: '16px',
-                    background: t.bgSecondary,
+                    background: 'white',
                     borderRadius: '12px',
-                    border: `1px solid ${t.border}`
+                    border: '1px solid rgba(0,0,0,0.06)'
                   }}
                 >
                   {/* Checkbox */}
                   <div style={{
                     width: '24px',
                     height: '24px',
-                    border: `2px solid ${t.border}`,
+                    border: '2px solid rgba(0,0,0,0.06)',
                     borderRadius: '6px',
                     flexShrink: 0,
                     marginTop: '2px'
@@ -219,7 +193,7 @@ function ChecklistContent() {
                   <div style={{ flex: 1 }}>
                     <div style={{
                       fontSize: '16px',
-                      color: t.text,
+                      color: '#1e293b',
                       fontWeight: 500
                     }}>
                       {item.text}
@@ -231,7 +205,7 @@ function ChecklistContent() {
                         rel={item.url.startsWith('http') ? 'noopener noreferrer' : undefined}
                         style={{
                           fontSize: '14px',
-                          color: t.accent,
+                          color: '#5e6ad2',
                           textDecoration: 'none',
                           display: 'inline-flex',
                           alignItems: 'center',
@@ -258,18 +232,18 @@ function ChecklistContent() {
         <div style={{
           marginTop: '40px',
           padding: '24px',
-          background: t.bgSecondary,
+          background: 'white',
           borderRadius: '16px',
-          border: `1px solid ${t.border}`
+          border: '1px solid rgba(0,0,0,0.06)'
         }}>
           <h3 style={{ fontSize: '18px', fontWeight: 600, marginBottom: '16px' }}>
-            📝 Notas
+            Notas
           </h3>
           <div style={{
             minHeight: '120px',
-            background: t.bg,
+            background: '#fafbfc',
             borderRadius: '8px',
-            border: `1px dashed ${t.border}`,
+            border: '1px dashed rgba(0,0,0,0.06)',
             padding: '12px'
           }}>
             {/* Empty space for notes when printed */}
@@ -280,20 +254,20 @@ function ChecklistContent() {
         <div className="no-print" style={{
           marginTop: '40px',
           padding: '32px',
-          background: t.bgSecondary,
+          background: 'white',
           borderRadius: '20px',
-          border: `1px solid ${t.border}`,
+          border: '1px solid rgba(0,0,0,0.06)',
           textAlign: 'center'
         }}>
           <h3 style={{ fontSize: '22px', fontWeight: 600, marginBottom: '12px' }}>
             ¿Necesitas ayuda?
           </h3>
-          <p style={{ color: t.textSecondary, marginBottom: '24px' }}>
-            Si algo no funciona, consulta la sección de errores comunes.
+          <p style={{ color: '#64748b', marginBottom: '24px' }}>
+            Si algo no funciona, consulta la seccion de errores comunes.
           </p>
-          <Link href="/precurso/errores-comunes" style={{
+          <Link href="/curso/errores-comunes" style={{
             padding: '14px 28px',
-            background: t.accent,
+            background: '#5e6ad2',
             border: 'none',
             borderRadius: '12px',
             color: 'white',
@@ -301,7 +275,7 @@ function ChecklistContent() {
             fontSize: '15px',
             fontWeight: 600
           }}>
-            🔧 Ver errores comunes
+            Ver errores comunes
           </Link>
         </div>
 
@@ -314,7 +288,7 @@ function ChecklistContent() {
             onClick={handlePrint}
             style={{
               padding: '16px 32px',
-              background: t.accent,
+              background: '#5e6ad2',
               border: 'none',
               borderRadius: '14px',
               color: 'white',
@@ -326,14 +300,14 @@ function ChecklistContent() {
               gap: '10px'
             }}
           >
-            🖨️ Imprimir / Guardar como PDF
+            Imprimir / Guardar como PDF
           </button>
           <p style={{
             marginTop: '12px',
             fontSize: '14px',
-            color: t.textMuted
+            color: '#94a3b8'
           }}>
-            Tip: En el diálogo de impresión, selecciona "Guardar como PDF" como destino
+            Tip: En el dialogo de impresion, selecciona "Guardar como PDF" como destino
           </p>
         </div>
 
@@ -343,17 +317,17 @@ function ChecklistContent() {
           display: 'flex',
           justifyContent: 'center'
         }}>
-          <Link href="/precurso" style={{
+          <Link href="/curso" style={{
             padding: '14px 24px',
-            background: t.bgSecondary,
-            border: `1px solid ${t.border}`,
+            background: 'white',
+            border: '1px solid rgba(0,0,0,0.06)',
             borderRadius: '12px',
-            color: t.textSecondary,
+            color: '#64748b',
             textDecoration: 'none',
             fontSize: '15px',
             fontWeight: 500
           }}>
-            ← Volver al precurso
+            ← Volver al curso
           </Link>
         </div>
       </main>
@@ -363,8 +337,8 @@ function ChecklistContent() {
 
 export default function ChecklistPage() {
   return (
-    <PrecursoEmailGate>
+    <CursoEmailGate>
       <ChecklistContent />
-    </PrecursoEmailGate>
+    </CursoEmailGate>
   )
 }

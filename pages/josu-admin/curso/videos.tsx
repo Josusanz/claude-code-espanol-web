@@ -9,7 +9,7 @@ const VIDEO_SCRIPTS = {
       id: 'bienvenida-precurso',
       titulo: 'Bienvenida al Precurso',
       duracion: '2-3 min',
-      ubicacion: '/precurso (inicio)',
+      ubicacion: '/curso (inicio)',
       grabado: false,
       guion: `
 # Bienvenida al Precurso
@@ -41,7 +41,7 @@ No necesitas saber programar. Solo necesitas curiosidad y ganas de crear."
       id: 'requisitos-instalacion',
       titulo: 'Como Instalar los Requisitos',
       duracion: '8-10 min',
-      ubicacion: '/precurso/requisitos',
+      ubicacion: '/curso/requisitos',
       grabado: false,
       guion: `
 # Como Instalar los Requisitos
@@ -138,7 +138,7 @@ Nos vemos en el siguiente video!"
       id: 'primer-proyecto',
       titulo: 'Tu Primer Proyecto con Claude Code',
       duracion: '8-10 min',
-      ubicacion: '/precurso/primer-proyecto',
+      ubicacion: '/curso/primer-proyecto',
       grabado: false,
       guion: `
 # Tu Primer Proyecto con Claude Code

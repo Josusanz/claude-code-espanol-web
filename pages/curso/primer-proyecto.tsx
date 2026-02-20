@@ -1,37 +1,8 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import { useState } from 'react'
-import PrecursoEmailGate from '../../components/PrecursoEmailGate'
-import { usePrecursoProgress, useTheme } from './index'
-
-const themes = {
-  light: {
-    bg: '#ffffff',
-    bgSecondary: '#f8fafc',
-    bgTertiary: '#f1f5f9',
-    text: '#1e293b',
-    textSecondary: '#64748b',
-    textMuted: '#94a3b8',
-    border: '#e2e8f0',
-    accent: '#6366f1',
-    accentLight: '#eef2ff',
-    success: '#22c55e',
-    successLight: '#f0fdf4',
-  },
-  dark: {
-    bg: '#0f172a',
-    bgSecondary: '#1e293b',
-    bgTertiary: '#334155',
-    text: '#f1f5f9',
-    textSecondary: '#94a3b8',
-    textMuted: '#64748b',
-    border: '#334155',
-    accent: '#818cf8',
-    accentLight: 'rgba(129, 140, 248, 0.1)',
-    success: '#4ade80',
-    successLight: 'rgba(74, 222, 128, 0.1)',
-  }
-}
+import CursoEmailGate from '../../components/CursoEmailGate'
+import { usePrecursoProgress } from '../../lib/precurso-data'
 
 const PASOS = [
   {
@@ -110,8 +81,6 @@ const PASOS = [
 
 function PrimerProyectoContent() {
   const { completed, toggle } = usePrecursoProgress()
-  const { theme, toggleTheme } = useTheme()
-  const t = themes[theme]
 
   const [currentStep, setCurrentStep] = useState(0)
   const [completedSteps, setCompletedSteps] = useState<number[]>([])
@@ -132,21 +101,22 @@ function PrimerProyectoContent() {
   return (
     <div style={{
       minHeight: '100vh',
-      background: t.bg,
+      background: '#fafbfc',
       fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
-      color: t.text
+      color: '#1e293b'
     }}>
       <Head>
-        <title>Tu Primer Proyecto | Precurso</title>
+        <title>Tu Primer Proyecto | Curso</title>
         <meta name="robots" content="noindex, nofollow" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
       </Head>
 
       {/* Header */}
       <header style={{
-        background: t.bg,
-        borderBottom: `1px solid ${t.border}`,
-        padding: '16px 32px',
+        background: 'rgba(250, 251, 252, 0.9)',
+        backdropFilter: 'blur(12px)',
+        borderBottom: '1px solid rgba(0,0,0,0.06)',
+        padding: '12px 24px',
         position: 'sticky',
         top: 0,
         zIndex: 100,
@@ -155,8 +125,8 @@ function PrimerProyectoContent() {
         justifyContent: 'space-between'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <Link href="/precurso" style={{
-            color: t.textMuted,
+          <Link href="/curso" style={{
+            color: '#94a3b8',
             textDecoration: 'none',
             display: 'flex',
             alignItems: 'center',
@@ -167,35 +137,23 @@ function PrimerProyectoContent() {
               <polyline points="15 18 9 12 15 6"/>
             </svg>
           </Link>
-          <span style={{ fontWeight: 600, fontSize: '17px' }}>Tu primer proyecto</span>
-          <span style={{
-            background: t.accentLight,
-            color: t.accent,
-            padding: '4px 10px',
-            borderRadius: '20px',
-            fontSize: '12px',
-            fontWeight: 600
-          }}>
-            ⏱️ 10 min
-          </span>
+          <span style={{ fontWeight: 600, fontSize: '16px', color: '#0f172a' }}>Tu primer proyecto</span>
         </div>
-
         <button
-          onClick={toggleTheme}
+          onClick={() => { localStorage.removeItem('precurso-access'); window.location.href = '/curso' }}
           style={{
-            width: '40px',
-            height: '40px',
+            padding: '8px 18px',
+            fontSize: '13px',
+            fontWeight: 600,
+            color: '#64748b',
+            background: 'white',
+            border: '1px solid rgba(0,0,0,0.06)',
             borderRadius: '10px',
-            border: `1px solid ${t.border}`,
-            background: t.bgSecondary,
             cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '18px'
+            boxShadow: '0 1px 2px rgba(0,0,0,0.04)'
           }}
         >
-          {theme === 'light' ? '🌙' : '☀️'}
+          Salir
         </button>
       </header>
 
@@ -203,10 +161,10 @@ function PrimerProyectoContent() {
         {/* Progress */}
         <div style={{ marginBottom: '32px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
-            <span style={{ fontSize: '14px', color: t.textSecondary }}>
+            <span style={{ fontSize: '14px', color: '#64748b' }}>
               Paso {currentStep + 1} de {PASOS.length}
             </span>
-            <span style={{ fontSize: '14px', color: t.textMuted }}>
+            <span style={{ fontSize: '14px', color: '#94a3b8' }}>
               {completedSteps.length} completados
             </span>
           </div>
@@ -218,7 +176,7 @@ function PrimerProyectoContent() {
                   flex: 1,
                   height: '6px',
                   borderRadius: '3px',
-                  background: index <= currentStep ? t.accent : t.bgTertiary,
+                  background: index <= currentStep ? '#5e6ad2' : '#f1f5f9',
                   transition: 'background 0.3s ease'
                 }}
               />
@@ -228,10 +186,10 @@ function PrimerProyectoContent() {
 
         {/* Step card */}
         <div style={{
-          background: paso.final ? t.successLight : t.bgSecondary,
+          background: paso.final ? '#f0fdf4' : 'white',
           borderRadius: '20px',
           padding: '40px 32px',
-          border: `1px solid ${paso.final ? t.success : t.border}`
+          border: `1px solid ${paso.final ? '#22c55e' : 'rgba(0,0,0,0.06)'}`
         }}>
           {/* Step number */}
           {!paso.final && (
@@ -239,7 +197,7 @@ function PrimerProyectoContent() {
               width: '48px',
               height: '48px',
               borderRadius: '50%',
-              background: t.accent,
+              background: '#5e6ad2',
               color: 'white',
               display: 'flex',
               alignItems: 'center',
@@ -263,14 +221,14 @@ function PrimerProyectoContent() {
             fontWeight: 700,
             marginBottom: '16px',
             textAlign: paso.final ? 'center' : 'left',
-            color: paso.final ? t.success : t.text
+            color: paso.final ? '#22c55e' : '#1e293b'
           }}>
             {paso.titulo}
           </h2>
 
           <p style={{
             fontSize: '17px',
-            color: t.textSecondary,
+            color: '#64748b',
             lineHeight: 1.7,
             marginBottom: '28px',
             textAlign: paso.final ? 'center' : 'left'
@@ -287,7 +245,7 @@ function PrimerProyectoContent() {
                   alignItems: 'center',
                   gap: '12px',
                   padding: '14px 18px',
-                  background: t.bgTertiary,
+                  background: '#f1f5f9',
                   borderRadius: '10px',
                   marginBottom: '10px'
                 }}>
@@ -295,8 +253,8 @@ function PrimerProyectoContent() {
                     {inst.os === 'macOS' ? '🍎' : inst.os === 'Windows' ? '🪟' : '🐧'}
                   </span>
                   <div>
-                    <strong style={{ color: t.text }}>{inst.os}:</strong>
-                    <span style={{ color: t.textSecondary, marginLeft: '8px' }}>{inst.text}</span>
+                    <strong style={{ color: '#1e293b' }}>{inst.os}:</strong>
+                    <span style={{ color: '#64748b', marginLeft: '8px' }}>{inst.text}</span>
                   </div>
                 </div>
               ))}
@@ -306,7 +264,7 @@ function PrimerProyectoContent() {
           {/* Command */}
           {paso.comando && (
             <div style={{ marginBottom: '24px' }}>
-              <div style={{ fontSize: '13px', fontWeight: 600, color: t.textMuted, marginBottom: '8px' }}>
+              <div style={{ fontSize: '13px', fontWeight: 600, color: '#94a3b8', marginBottom: '8px' }}>
                 ESCRIBE ESTE COMANDO:
               </div>
               <div style={{
@@ -342,16 +300,16 @@ function PrimerProyectoContent() {
           {/* Prompt */}
           {paso.prompt && (
             <div style={{ marginBottom: '24px' }}>
-              <div style={{ fontSize: '13px', fontWeight: 600, color: t.textMuted, marginBottom: '8px' }}>
+              <div style={{ fontSize: '13px', fontWeight: 600, color: '#94a3b8', marginBottom: '8px' }}>
                 ESCRIBE ESTO A CLAUDE:
               </div>
               <div style={{
-                background: t.accentLight,
+                background: '#eef2ff',
                 borderRadius: '12px',
                 padding: '20px',
-                border: `2px solid ${t.accent}`,
+                border: '2px solid #5e6ad2',
                 fontSize: '16px',
-                color: t.text,
+                color: '#1e293b',
                 lineHeight: 1.6,
                 fontStyle: 'italic'
               }}>
@@ -363,18 +321,18 @@ function PrimerProyectoContent() {
           {/* Result */}
           {paso.resultado && (
             <div style={{
-              background: t.bgTertiary,
+              background: '#f1f5f9',
               borderRadius: '12px',
               padding: '16px 20px',
               marginBottom: '24px'
             }}>
-              <div style={{ fontSize: '13px', fontWeight: 600, color: t.textMuted, marginBottom: '8px' }}>
+              <div style={{ fontSize: '13px', fontWeight: 600, color: '#94a3b8', marginBottom: '8px' }}>
                 RESULTADO ESPERADO:
               </div>
               <pre style={{
                 fontFamily: "'JetBrains Mono', monospace",
                 fontSize: '14px',
-                color: t.textSecondary,
+                color: '#64748b',
                 margin: 0,
                 whiteSpace: 'pre-wrap'
               }}>
@@ -390,12 +348,12 @@ function PrimerProyectoContent() {
               alignItems: 'flex-start',
               gap: '12px',
               padding: '16px',
-              background: t.bg,
+              background: '#fafbfc',
               borderRadius: '10px',
               marginBottom: '28px'
             }}>
               <span style={{ fontSize: '20px' }}>💡</span>
-              <p style={{ fontSize: '14px', color: t.textMuted, margin: 0, lineHeight: 1.6 }}>
+              <p style={{ fontSize: '14px', color: '#94a3b8', margin: 0, lineHeight: 1.6 }}>
                 {paso.tip}
               </p>
             </div>
@@ -408,7 +366,7 @@ function PrimerProyectoContent() {
               style={{
                 width: '100%',
                 padding: '18px',
-                background: t.accent,
+                background: '#5e6ad2',
                 border: 'none',
                 borderRadius: '12px',
                 color: 'white',
@@ -425,14 +383,14 @@ function PrimerProyectoContent() {
             </button>
           ) : (
             <div style={{ textAlign: 'center' }}>
-              <p style={{ fontSize: '18px', color: t.textSecondary, marginBottom: '24px' }}>
+              <p style={{ fontSize: '18px', color: '#64748b', marginBottom: '24px' }}>
                 Has creado tu primera página web con Claude Code usando "vibe coding" — describir lo que quieres y dejar que la IA lo construya.<br />
                 <strong>¡Ya estás listo para empezar el curso!</strong>
               </p>
               <Link href="/empezar/introduccion" style={{
                 display: 'inline-block',
                 padding: '18px 48px',
-                background: t.success,
+                background: '#22c55e',
                 border: 'none',
                 borderRadius: '12px',
                 color: 'white',
@@ -457,10 +415,10 @@ function PrimerProyectoContent() {
             disabled={currentStep === 0}
             style={{
               padding: '12px 20px',
-              background: t.bgSecondary,
-              border: `1px solid ${t.border}`,
+              background: 'white',
+              border: '1px solid rgba(0,0,0,0.06)',
               borderRadius: '10px',
-              color: currentStep === 0 ? t.textMuted : t.textSecondary,
+              color: currentStep === 0 ? '#94a3b8' : '#64748b',
               fontSize: '14px',
               cursor: currentStep === 0 ? 'not-allowed' : 'pointer'
             }}
@@ -476,9 +434,9 @@ function PrimerProyectoContent() {
                   width: '32px',
                   height: '32px',
                   borderRadius: '50%',
-                  border: `2px solid ${idx === currentStep ? t.accent : t.border}`,
-                  background: completedSteps.includes(idx + 1) ? t.success : (idx === currentStep ? t.accentLight : t.bg),
-                  color: completedSteps.includes(idx + 1) ? 'white' : t.text,
+                  border: `2px solid ${idx === currentStep ? '#5e6ad2' : 'rgba(0,0,0,0.06)'}`,
+                  background: completedSteps.includes(idx + 1) ? '#22c55e' : (idx === currentStep ? '#eef2ff' : '#fafbfc'),
+                  color: completedSteps.includes(idx + 1) ? 'white' : '#1e293b',
                   fontSize: '13px',
                   fontWeight: 600,
                   cursor: 'pointer'
@@ -493,10 +451,10 @@ function PrimerProyectoContent() {
             disabled={currentStep === PASOS.length - 1}
             style={{
               padding: '12px 20px',
-              background: t.bgSecondary,
-              border: `1px solid ${t.border}`,
+              background: 'white',
+              border: '1px solid rgba(0,0,0,0.06)',
               borderRadius: '10px',
-              color: currentStep === PASOS.length - 1 ? t.textMuted : t.textSecondary,
+              color: currentStep === PASOS.length - 1 ? '#94a3b8' : '#64748b',
               fontSize: '14px',
               cursor: currentStep === PASOS.length - 1 ? 'not-allowed' : 'pointer'
             }}
@@ -507,12 +465,12 @@ function PrimerProyectoContent() {
 
         {/* Back link */}
         <div style={{ marginTop: '32px' }}>
-          <Link href="/precurso/quiz" style={{
+          <Link href="/curso/quiz" style={{
             padding: '14px 24px',
-            background: t.bgSecondary,
-            border: `1px solid ${t.border}`,
+            background: 'white',
+            border: '1px solid rgba(0,0,0,0.06)',
             borderRadius: '12px',
-            color: t.textSecondary,
+            color: '#64748b',
             textDecoration: 'none',
             fontSize: '15px',
             fontWeight: 500
@@ -527,8 +485,8 @@ function PrimerProyectoContent() {
 
 export default function PrimerProyectoPage() {
   return (
-    <PrecursoEmailGate>
+    <CursoEmailGate>
       <PrimerProyectoContent />
-    </PrecursoEmailGate>
+    </CursoEmailGate>
   )
 }

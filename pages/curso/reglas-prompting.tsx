@@ -1,8 +1,8 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import PrecursoEmailGate from '../../components/PrecursoEmailGate'
-import { usePrecursoProgress } from './index'
-import { useState, useEffect } from 'react'
+import CursoEmailGate from '../../components/CursoEmailGate'
+import { usePrecursoProgress } from '../../lib/precurso-data'
+import { useState } from 'react'
 
 const REGLAS = [
   {
@@ -77,60 +77,10 @@ const REGLAS = [
   },
 ]
 
-const themes = {
-  light: {
-    bg: '#ffffff',
-    bgSecondary: '#f8fafc',
-    bgTertiary: '#f1f5f9',
-    text: '#1e293b',
-    textSecondary: '#64748b',
-    textMuted: '#94a3b8',
-    border: '#e2e8f0',
-    accent: '#6366f1',
-    accentLight: '#eef2ff',
-    success: '#22c55e',
-    successLight: '#f0fdf4',
-    warning: '#f59e0b',
-    warningLight: '#fffbeb',
-    error: '#ef4444',
-    errorLight: '#fef2f2',
-  },
-  dark: {
-    bg: '#0f172a',
-    bgSecondary: '#1e293b',
-    bgTertiary: '#334155',
-    text: '#f1f5f9',
-    textSecondary: '#94a3b8',
-    textMuted: '#64748b',
-    border: '#334155',
-    accent: '#818cf8',
-    accentLight: 'rgba(129, 140, 248, 0.1)',
-    success: '#4ade80',
-    successLight: 'rgba(74, 222, 128, 0.1)',
-    warning: '#fbbf24',
-    warningLight: 'rgba(251, 191, 36, 0.1)',
-    error: '#f87171',
-    errorLight: 'rgba(248, 113, 113, 0.1)',
-  }
-}
-
 function ReglasContent() {
-  const [theme, setTheme] = useState<'light' | 'dark'>('light')
   const [expandedRegla, setExpandedRegla] = useState<number | null>(1)
   const { completed, toggle } = usePrecursoProgress()
-  const t = themes[theme]
   const isCompleted = completed['reglas-prompting']
-
-  useEffect(() => {
-    const saved = localStorage.getItem('precurso-theme') as 'light' | 'dark' | null
-    if (saved) setTheme(saved)
-  }, [])
-
-  const toggleTheme = () => {
-    const newTheme = theme === 'light' ? 'dark' : 'light'
-    setTheme(newTheme)
-    localStorage.setItem('precurso-theme', newTheme)
-  }
 
   const handleMarkComplete = () => {
     if (!isCompleted) {
@@ -141,69 +91,28 @@ function ReglasContent() {
   return (
     <div style={{
       minHeight: '100vh',
-      background: t.bg,
+      background: '#fafbfc',
       fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
-      color: t.text
+      color: '#1e293b'
     }}>
       <Head>
-        <title>7 Reglas de Prompting | Precurso</title>
+        <title>7 Reglas de Prompting | Curso</title>
         <meta name="robots" content="noindex, nofollow" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
       </Head>
 
       {/* Header */}
-      <header style={{
-        background: t.bg,
-        borderBottom: `1px solid ${t.border}`,
-        padding: '12px 20px',
-        position: 'sticky',
-        top: 0,
-        zIndex: 100,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between'
-      }}>
-        <Link href="/precurso" style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '10px',
-          textDecoration: 'none',
-          color: t.text
-        }}>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={t.textSecondary} strokeWidth="2">
-            <path d="M19 12H5M12 19l-7-7 7-7"/>
-          </svg>
-          <span style={{ fontSize: '14px', color: t.textSecondary }}>Volver al precurso</span>
-        </Link>
-
-        <button
-          onClick={toggleTheme}
-          style={{
-            width: '36px',
-            height: '36px',
-            borderRadius: '8px',
-            border: `1px solid ${t.border}`,
-            background: t.bgSecondary,
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}
-        >
-          {theme === 'light' ? (
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={t.textSecondary} strokeWidth="2">
-              <circle cx="12" cy="12" r="4"/>
-              <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
-            </svg>
-          ) : (
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={t.textSecondary} strokeWidth="2">
-              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-            </svg>
-          )}
-        </button>
+      <header style={{ background: 'rgba(250, 251, 252, 0.9)', backdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(0,0,0,0.06)', padding: '12px 24px', position: 'sticky', top: 0, zIndex: 100, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <Link href="/curso" style={{ color: '#94a3b8', textDecoration: 'none', display: 'flex', alignItems: 'center', padding: '8px', borderRadius: '8px' }}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="15 18 9 12 15 6"/></svg>
+          </Link>
+          <span style={{ fontWeight: 600, fontSize: '16px', color: '#0f172a' }}>7 Reglas de Prompting</span>
+        </div>
+        <button onClick={() => { localStorage.removeItem('precurso-access'); window.location.href = '/curso' }} style={{ padding: '8px 18px', fontSize: '13px', fontWeight: 600, color: '#64748b', background: 'white', border: '1px solid rgba(0,0,0,0.06)', borderRadius: '10px', cursor: 'pointer', boxShadow: '0 1px 2px rgba(0,0,0,0.04)' }}>Salir</button>
       </header>
 
-      <main style={{ maxWidth: '800px', margin: '0 auto', padding: '32px 20px' }}>
+      <main style={{ maxWidth: '800px', margin: '0 auto', padding: '40px 24px' }}>
         {/* Hero */}
         <div style={{ marginBottom: '40px' }}>
           <div style={{
@@ -211,11 +120,11 @@ function ReglasContent() {
             alignItems: 'center',
             gap: '8px',
             padding: '6px 12px',
-            background: t.accentLight,
+            background: '#eef2ff',
             borderRadius: '100px',
             fontSize: '13px',
             fontWeight: 500,
-            color: t.accent,
+            color: '#5e6ad2',
             marginBottom: '16px'
           }}>
             🎯 Fundamental para el curso
@@ -223,8 +132,8 @@ function ReglasContent() {
           <h1 style={{ fontSize: '32px', fontWeight: 700, marginBottom: '12px', lineHeight: 1.2 }}>
             Las 7 Reglas de Prompting
           </h1>
-          <p style={{ fontSize: '17px', color: t.textSecondary, lineHeight: 1.6 }}>
-            Con Claude Opus 4.6, el prompting funciona diferente. Estas reglas marcan la diferencia entre <strong style={{ color: t.text }}>usar</strong> Claude Code y <strong style={{ color: t.text }}>dominar</strong> Claude Code.
+          <p style={{ fontSize: '17px', color: '#64748b', lineHeight: 1.6 }}>
+            Con Claude Opus 4.6, el prompting funciona diferente. Estas reglas marcan la diferencia entre <strong style={{ color: '#1e293b' }}>usar</strong> Claude Code y <strong style={{ color: '#1e293b' }}>dominar</strong> Claude Code.
           </p>
         </div>
 
@@ -234,9 +143,9 @@ function ReglasContent() {
             <div
               key={regla.num}
               style={{
-                background: t.bgSecondary,
+                background: 'white',
                 borderRadius: '16px',
-                border: `1px solid ${expandedRegla === regla.num ? t.accent : t.border}`,
+                border: `1px solid ${expandedRegla === regla.num ? '#5e6ad2' : 'rgba(0,0,0,0.06)'}`,
                 overflow: 'hidden',
                 transition: 'all 0.2s'
               }}
@@ -259,7 +168,7 @@ function ReglasContent() {
                 <div style={{
                   width: '44px',
                   height: '44px',
-                  background: `linear-gradient(135deg, ${t.accent}, #8b5cf6)`,
+                  background: 'linear-gradient(135deg, #5e6ad2, #8b5cf6)',
                   borderRadius: '12px',
                   display: 'flex',
                   alignItems: 'center',
@@ -270,16 +179,16 @@ function ReglasContent() {
                   flexShrink: 0
                 }}>{regla.num}</div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '17px', fontWeight: 600, color: t.text, marginBottom: '4px' }}>
+                  <div style={{ fontSize: '17px', fontWeight: 600, color: '#1e293b', marginBottom: '4px' }}>
                     {regla.titulo}
                   </div>
-                  <div style={{ fontSize: '14px', color: t.textSecondary }}>
+                  <div style={{ fontSize: '14px', color: '#64748b' }}>
                     {regla.descripcion}
                   </div>
                 </div>
                 <svg
                   width="24" height="24" viewBox="0 0 24 24" fill="none"
-                  stroke={t.textMuted} strokeWidth="2"
+                  stroke="#94a3b8" strokeWidth="2"
                   style={{
                     transform: expandedRegla === regla.num ? 'rotate(180deg)' : 'rotate(0)',
                     transition: '0.2s',
@@ -294,7 +203,7 @@ function ReglasContent() {
               {expandedRegla === regla.num && (
                 <div style={{
                   padding: '0 24px 24px',
-                  borderTop: `1px solid ${t.border}`
+                  borderTop: '1px solid rgba(0,0,0,0.06)'
                 }}>
                   <div style={{ paddingTop: '20px' }}>
                     {/* Mal vs Bien */}
@@ -302,27 +211,27 @@ function ReglasContent() {
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '20px' }}>
                         <div style={{
                           padding: '14px 16px',
-                          background: t.errorLight,
+                          background: '#fef2f2',
                           borderRadius: '10px',
-                          border: `1px solid ${t.error}30`
+                          border: '1px solid #ef444430'
                         }}>
-                          <div style={{ fontSize: '11px', fontWeight: 600, color: t.error, marginBottom: '6px' }}>
+                          <div style={{ fontSize: '11px', fontWeight: 600, color: '#ef4444', marginBottom: '6px' }}>
                             ❌ MAL
                           </div>
-                          <div style={{ fontSize: '14px', color: t.text, fontFamily: 'monospace' }}>
+                          <div style={{ fontSize: '14px', color: '#1e293b', fontFamily: 'monospace' }}>
                             {regla.mal}
                           </div>
                         </div>
                         <div style={{
                           padding: '14px 16px',
-                          background: t.successLight,
+                          background: '#f0fdf4',
                           borderRadius: '10px',
-                          border: `1px solid ${t.success}30`
+                          border: '1px solid #22c55e30'
                         }}>
-                          <div style={{ fontSize: '11px', fontWeight: 600, color: t.success, marginBottom: '6px' }}>
+                          <div style={{ fontSize: '11px', fontWeight: 600, color: '#22c55e', marginBottom: '6px' }}>
                             ✅ BIEN
                           </div>
-                          <div style={{ fontSize: '14px', color: t.text, fontFamily: 'monospace' }}>
+                          <div style={{ fontSize: '14px', color: '#1e293b', fontFamily: 'monospace' }}>
                             {regla.bien}
                           </div>
                         </div>
@@ -338,12 +247,12 @@ function ReglasContent() {
                             alignItems: 'center',
                             gap: '10px',
                             padding: '10px 14px',
-                            background: t.bgTertiary,
+                            background: '#f1f5f9',
                             borderRadius: '8px',
                             marginBottom: '8px',
                             fontSize: '14px'
                           }}>
-                            <span style={{ color: t.accent }}>•</span>
+                            <span style={{ color: '#5e6ad2' }}>•</span>
                             {tip}
                           </div>
                         ))}
@@ -353,7 +262,7 @@ function ReglasContent() {
                     {/* Ejemplos */}
                     {regla.ejemplos && (
                       <div style={{ marginBottom: '20px' }}>
-                        <div style={{ fontSize: '13px', fontWeight: 600, color: t.textMuted, marginBottom: '10px' }}>
+                        <div style={{ fontSize: '13px', fontWeight: 600, color: '#94a3b8', marginBottom: '10px' }}>
                           EJEMPLOS
                         </div>
                         <div style={{ display: 'grid', gap: '8px' }}>
@@ -366,15 +275,15 @@ function ReglasContent() {
                             }}>
                               <div style={{
                                 padding: '10px 12px',
-                                background: t.bgTertiary,
+                                background: '#f1f5f9',
                                 borderRadius: '8px',
                                 fontFamily: 'monospace'
                               }}>{ej.prompt}</div>
                               <div style={{
                                 padding: '10px 12px',
-                                background: t.accentLight,
+                                background: '#eef2ff',
                                 borderRadius: '8px',
-                                color: t.accent
+                                color: '#5e6ad2'
                               }}>→ {ej.resultado}</div>
                             </div>
                           ))}
@@ -392,21 +301,21 @@ function ReglasContent() {
                               alignItems: 'center',
                               gap: '12px',
                               padding: '12px 14px',
-                              background: t.bgTertiary,
+                              background: '#f1f5f9',
                               borderRadius: '10px'
                             }}>
                               <span style={{ fontSize: '20px' }}>{n.emoji}</span>
                               <div style={{
                                 padding: '4px 10px',
-                                background: t.accentLight,
+                                background: '#eef2ff',
                                 borderRadius: '6px',
                                 fontSize: '13px',
                                 fontWeight: 600,
-                                color: t.accent,
+                                color: '#5e6ad2',
                                 minWidth: '60px',
                                 textAlign: 'center'
                               }}>{n.nivel}</div>
-                              <span style={{ fontSize: '14px', color: t.textSecondary }}>{n.cuando}</span>
+                              <span style={{ fontSize: '14px', color: '#64748b' }}>{n.cuando}</span>
                             </div>
                           ))}
                         </div>
@@ -416,18 +325,18 @@ function ReglasContent() {
                     {/* Prompts */}
                     {regla.prompts && (
                       <div style={{ marginBottom: '20px' }}>
-                        <div style={{ fontSize: '13px', fontWeight: 600, color: t.textMuted, marginBottom: '10px' }}>
+                        <div style={{ fontSize: '13px', fontWeight: 600, color: '#94a3b8', marginBottom: '10px' }}>
                           PROMPTS QUE PUEDES USAR
                         </div>
                         {regla.prompts.map((prompt, i) => (
                           <div key={i} style={{
                             padding: '12px 14px',
-                            background: t.bgTertiary,
+                            background: '#f1f5f9',
                             borderRadius: '8px',
                             marginBottom: '8px',
                             fontSize: '14px',
                             fontFamily: 'monospace',
-                            color: t.accent
+                            color: '#5e6ad2'
                           }}>
                             {prompt}
                           </div>
@@ -435,16 +344,16 @@ function ReglasContent() {
                       </div>
                     )}
 
-                    {/* Explicación */}
+                    {/* Explicacion */}
                     <div style={{
                       padding: '14px 16px',
-                      background: t.warningLight,
+                      background: '#fffbeb',
                       borderRadius: '10px',
-                      border: `1px solid ${t.warning}30`
+                      border: '1px solid #f59e0b30'
                     }}>
                       <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
                         <span style={{ fontSize: '16px' }}>💡</span>
-                        <p style={{ margin: 0, fontSize: '14px', color: t.text, lineHeight: 1.5 }}>
+                        <p style={{ margin: 0, fontSize: '14px', color: '#1e293b', lineHeight: 1.5 }}>
                           {regla.explicacion}
                         </p>
                       </div>
@@ -460,18 +369,18 @@ function ReglasContent() {
         <div style={{
           marginTop: '40px',
           padding: '24px',
-          background: isCompleted ? t.successLight : `linear-gradient(135deg, ${t.accent}10, ${t.accent}05)`,
+          background: isCompleted ? '#f0fdf4' : 'linear-gradient(135deg, #5e6ad210, #5e6ad205)',
           borderRadius: '16px',
-          border: `1px solid ${isCompleted ? t.success : t.accent}30`,
+          border: `1px solid ${isCompleted ? '#22c55e' : '#5e6ad2'}30`,
           textAlign: 'center'
         }}>
           {isCompleted ? (
             <>
               <div style={{ fontSize: '32px', marginBottom: '12px' }}>✅</div>
-              <h3 style={{ margin: '0 0 8px', fontSize: '18px', fontWeight: 600, color: t.success }}>
+              <h3 style={{ margin: '0 0 8px', fontSize: '18px', fontWeight: 600, color: '#22c55e' }}>
                 ¡Sección completada!
               </h3>
-              <p style={{ margin: '0 0 16px', fontSize: '14px', color: t.textSecondary }}>
+              <p style={{ margin: '0 0 16px', fontSize: '14px', color: '#64748b' }}>
                 Ya dominas las 7 reglas de prompting
               </p>
             </>
@@ -480,7 +389,7 @@ function ReglasContent() {
               <h3 style={{ margin: '0 0 8px', fontSize: '18px', fontWeight: 600 }}>
                 ¿Has leído las 7 reglas?
               </h3>
-              <p style={{ margin: '0 0 16px', fontSize: '14px', color: t.textSecondary }}>
+              <p style={{ margin: '0 0 16px', fontSize: '14px', color: '#64748b' }}>
                 Marca esta sección como completada para continuar
               </p>
               <button
@@ -490,7 +399,7 @@ function ReglasContent() {
                   alignItems: 'center',
                   gap: '8px',
                   padding: '12px 24px',
-                  background: t.success,
+                  background: '#22c55e',
                   color: 'white',
                   borderRadius: '10px',
                   border: 'none',
@@ -505,20 +414,20 @@ function ReglasContent() {
               <br />
             </>
           )}
-          <Link href="/precurso" style={{
+          <Link href="/curso" style={{
             display: 'inline-flex',
             alignItems: 'center',
             gap: '8px',
             padding: '12px 24px',
-            background: isCompleted ? t.accent : 'transparent',
-            color: isCompleted ? 'white' : t.accent,
+            background: isCompleted ? '#5e6ad2' : 'transparent',
+            color: isCompleted ? 'white' : '#5e6ad2',
             borderRadius: '10px',
             textDecoration: 'none',
             fontWeight: 600,
             fontSize: '15px',
-            border: isCompleted ? 'none' : `1px solid ${t.accent}`
+            border: isCompleted ? 'none' : '1px solid #5e6ad2'
           }}>
-            Volver al Precurso →
+            Volver al Curso →
           </Link>
         </div>
       </main>
@@ -528,8 +437,8 @@ function ReglasContent() {
 
 export default function ReglasPromptingPage() {
   return (
-    <PrecursoEmailGate>
+    <CursoEmailGate>
       <ReglasContent />
-    </PrecursoEmailGate>
+    </CursoEmailGate>
   )
 }

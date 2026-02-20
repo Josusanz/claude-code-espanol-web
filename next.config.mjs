@@ -11,4 +11,10 @@ export default withNextra({
     unoptimized: true,
   },
   basePath: '',
+  async redirects() {
+    return [
+      { source: '/precurso', destination: '/curso', permanent: true },
+      { source: '/precurso/:path*', destination: '/curso/:path*', permanent: true },
+    ]
+  },
 })

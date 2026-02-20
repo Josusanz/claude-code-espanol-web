@@ -1,5 +1,4 @@
 import { useState, useEffect, ReactNode, FormEvent } from 'react'
-import Link from 'next/link'
 
 interface CursoGateProps {
   children: ReactNode
@@ -423,14 +422,14 @@ export default function CursoEmailGate({ children }: CursoGateProps) {
         {/* Footer */}
         <div style={{ textAlign: 'center', marginTop: '28px' }}>
           <p style={{ fontSize: '14px', color: '#64748b' }}>
-            ¿Necesitas el precurso?{' '}
-            <Link href="/precurso" style={{
+            ¿Necesitas ayuda?{' '}
+            <a href="mailto:josu@yenze.io" style={{
               color: '#6366f1',
               fontWeight: 600,
               textDecoration: 'none'
             }}>
-              Ir al precurso
-            </Link>
+              josu@yenze.io
+            </a>
           </p>
         </div>
       </div>

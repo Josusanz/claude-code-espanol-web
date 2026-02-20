@@ -1,53 +1,63 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import PrecursoEmailGate from '../../components/PrecursoEmailGate'
+import CursoEmailGate from '../../components/CursoEmailGate'
 
 function PrepContent() {
   return (
     <div style={{
       minHeight: '100vh',
-      background: 'linear-gradient(135deg, #f8fafc, #eef2f6)',
+      background: '#fafbfc',
       fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
-      color: '#0f172a',
+      color: '#1e293b',
     }}>
       <Head>
-        <title>Prepara tu proyecto | Precurso</title>
+        <title>Prepara tu proyecto | Curso</title>
         <meta name="robots" content="noindex, nofollow" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
       </Head>
 
       {/* Header */}
       <header style={{
-        background: 'rgba(255,255,255,0.9)',
+        background: 'rgba(250, 251, 252, 0.9)',
         backdropFilter: 'blur(12px)',
         borderBottom: '1px solid rgba(0,0,0,0.06)',
-        padding: '16px 24px',
+        padding: '12px 24px',
         position: 'sticky',
         top: 0,
         zIndex: 100,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
       }}>
-        <div style={{
-          maxWidth: '800px',
-          margin: '0 auto',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '16px',
-        }}>
-          <Link href="/precurso" style={{
-            color: '#64748b',
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <Link href="/curso" style={{
+            color: '#94a3b8',
             textDecoration: 'none',
-            fontSize: '14px',
+            display: 'flex',
+            alignItems: 'center',
+            padding: '8px',
+            borderRadius: '8px',
           }}>
-            ← Precurso
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="15 18 9 12 15 6"/></svg>
           </Link>
-          <div style={{ width: '1px', height: '24px', background: 'rgba(0,0,0,0.08)' }} />
-          <h1 style={{ margin: 0, fontSize: '16px', fontWeight: 600, color: '#0f172a' }}>
-            🎯 Prepara tu proyecto
-          </h1>
+          <span style={{ fontWeight: 600, fontSize: '16px', color: '#0f172a' }}>Preparación autoguiado</span>
         </div>
+        <button onClick={() => { localStorage.removeItem('precurso-access'); window.location.href = '/curso' }} style={{
+          padding: '8px 18px',
+          fontSize: '13px',
+          fontWeight: 600,
+          color: '#64748b',
+          background: 'white',
+          border: '1px solid rgba(0,0,0,0.06)',
+          borderRadius: '10px',
+          cursor: 'pointer',
+          boxShadow: '0 1px 2px rgba(0,0,0,0.04)',
+        }}>
+          Salir
+        </button>
       </header>
 
-      <main style={{ maxWidth: '800px', margin: '0 auto', padding: '32px 24px 80px' }}>
+      <main style={{ maxWidth: '800px', margin: '0 auto', padding: '40px 24px' }}>
         {/* Hero */}
         <div style={{
           background: 'linear-gradient(135deg, #5e6ad2, #7c85e3)',
@@ -67,7 +77,7 @@ function PrepContent() {
 
         {/* Step 1: Define tu idea */}
         <section style={{
-          background: '#fff',
+          background: 'white',
           border: '1px solid rgba(0,0,0,0.06)',
           borderRadius: '16px',
           padding: '28px',
@@ -110,7 +120,7 @@ function PrepContent() {
 
         {/* Step 2: Configura tu entorno */}
         <section style={{
-          background: '#fff',
+          background: 'white',
           border: '1px solid rgba(0,0,0,0.06)',
           borderRadius: '16px',
           padding: '28px',
@@ -145,13 +155,13 @@ function PrepContent() {
           </div>
           <p style={{ margin: '12px 0 0', fontSize: '14px', color: '#64748b' }}>
             Si algo no funciona, vuelve a la seccion de{' '}
-            <Link href="/precurso/requisitos" style={{ color: '#5e6ad2', fontWeight: 500 }}>Requisitos</Link>.
+            <Link href="/curso/requisitos" style={{ color: '#5e6ad2', fontWeight: 500 }}>Requisitos</Link>.
           </p>
         </section>
 
         {/* Step 3: Crea tu CLAUDE.md */}
         <section style={{
-          background: '#fff',
+          background: 'white',
           border: '1px solid rgba(0,0,0,0.06)',
           borderRadius: '16px',
           padding: '28px',
@@ -220,8 +230,8 @@ function PrepContent() {
 
 export default function PrepAutoguiadoPage() {
   return (
-    <PrecursoEmailGate>
+    <CursoEmailGate>
       <PrepContent />
-    </PrecursoEmailGate>
+    </CursoEmailGate>
   )
 }

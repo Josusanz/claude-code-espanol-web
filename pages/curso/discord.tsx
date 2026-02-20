@@ -1,63 +1,27 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import PrecursoEmailGate from '../../components/PrecursoEmailGate'
-import { useTheme } from './index'
-
-const themes = {
-  light: {
-    bg: '#ffffff',
-    bgSecondary: '#f8fafc',
-    bgTertiary: '#f1f5f9',
-    text: '#1e293b',
-    textSecondary: '#64748b',
-    textMuted: '#94a3b8',
-    border: '#e2e8f0',
-    accent: '#6366f1',
-    accentLight: '#eef2ff',
-    success: '#22c55e',
-    successLight: '#f0fdf4',
-    discord: '#5865F2',
-    discordLight: 'rgba(88, 101, 242, 0.1)',
-  },
-  dark: {
-    bg: '#0f172a',
-    bgSecondary: '#1e293b',
-    bgTertiary: '#334155',
-    text: '#f1f5f9',
-    textSecondary: '#94a3b8',
-    textMuted: '#64748b',
-    border: '#334155',
-    accent: '#818cf8',
-    accentLight: 'rgba(129, 140, 248, 0.1)',
-    success: '#4ade80',
-    successLight: 'rgba(74, 222, 128, 0.1)',
-    discord: '#5865F2',
-    discordLight: 'rgba(88, 101, 242, 0.15)',
-  }
-}
+import CursoEmailGate from '../../components/CursoEmailGate'
 
 function DiscordContent() {
-  const { theme, toggleTheme } = useTheme()
-  const t = themes[theme]
-
   return (
     <div style={{
       minHeight: '100vh',
-      background: t.bg,
+      background: '#fafbfc',
       fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
-      color: t.text
+      color: '#1e293b'
     }}>
       <Head>
-        <title>Guía de Discord | Precurso</title>
+        <title>Guía de Discord | Curso</title>
         <meta name="robots" content="noindex, nofollow" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
       </Head>
 
       {/* Header */}
       <header style={{
-        background: t.bg,
-        borderBottom: `1px solid ${t.border}`,
-        padding: '12px 16px',
+        background: 'rgba(250, 251, 252, 0.9)',
+        backdropFilter: 'blur(12px)',
+        borderBottom: '1px solid rgba(0,0,0,0.06)',
+        padding: '12px 24px',
         position: 'sticky',
         top: 0,
         zIndex: 100,
@@ -65,41 +29,22 @@ function DiscordContent() {
         alignItems: 'center',
         justifyContent: 'space-between'
       }}>
-        <Link href="/precurso" style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '8px',
-          color: t.textSecondary,
-          textDecoration: 'none',
-          fontSize: '14px'
-        }}>
-          ← Volver al precurso
-        </Link>
-        <button
-          onClick={toggleTheme}
-          style={{
-            width: '36px',
-            height: '36px',
-            borderRadius: '8px',
-            border: `1px solid ${t.border}`,
-            background: t.bgSecondary,
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}
-        >
-          {theme === 'light' ? '🌙' : '☀️'}
-        </button>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <Link href="/curso" style={{ color: '#94a3b8', textDecoration: 'none', display: 'flex', alignItems: 'center', padding: '8px', borderRadius: '8px' }}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="15 18 9 12 15 6"/></svg>
+          </Link>
+          <span style={{ fontWeight: 600, fontSize: '16px', color: '#0f172a' }}>Guía del Discord</span>
+        </div>
+        <button onClick={() => { localStorage.removeItem('precurso-access'); window.location.href = '/curso' }} style={{ padding: '8px 18px', fontSize: '13px', fontWeight: 600, color: '#64748b', background: 'white', border: '1px solid rgba(0,0,0,0.06)', borderRadius: '10px', cursor: 'pointer', boxShadow: '0 1px 2px rgba(0,0,0,0.04)' }}>Salir</button>
       </header>
 
-      <main style={{ maxWidth: '800px', margin: '0 auto', padding: '40px 20px' }}>
+      <main style={{ maxWidth: '800px', margin: '0 auto', padding: '40px 24px' }}>
         {/* Hero */}
         <div style={{ textAlign: 'center', marginBottom: '48px' }}>
           <div style={{
             width: '80px',
             height: '80px',
-            background: `linear-gradient(135deg, ${t.discord}, #7289DA)`,
+            background: 'linear-gradient(135deg, #5865F2, #7289DA)',
             borderRadius: '20px',
             display: 'flex',
             alignItems: 'center',
@@ -112,7 +57,7 @@ function DiscordContent() {
           <h1 style={{ fontSize: '32px', fontWeight: 700, marginBottom: '12px' }}>
             Guía del servidor Discord
           </h1>
-          <p style={{ fontSize: '18px', color: t.textSecondary, maxWidth: '500px', margin: '0 auto' }}>
+          <p style={{ fontSize: '18px', color: '#64748b', maxWidth: '500px', margin: '0 auto' }}>
             Todo lo que necesitas saber para sacar el máximo partido a nuestra comunidad
           </p>
         </div>
@@ -128,7 +73,7 @@ function DiscordContent() {
             justifyContent: 'center',
             gap: '12px',
             padding: '16px 24px',
-            background: t.discord,
+            background: '#5865F2',
             borderRadius: '12px',
             color: 'white',
             textDecoration: 'none',
@@ -143,21 +88,21 @@ function DiscordContent() {
         {/* Section: Verificación */}
         <section style={{ marginBottom: '48px' }}>
           <h2 style={{ fontSize: '24px', fontWeight: 700, marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <span style={{ background: t.discordLight, padding: '8px', borderRadius: '8px' }}>1️⃣</span>
+            <span style={{ background: 'rgba(88, 101, 242, 0.1)', padding: '8px', borderRadius: '8px' }}>1️⃣</span>
             Cómo verificarte
           </h2>
-          <div style={{ background: t.bgSecondary, borderRadius: '12px', padding: '24px', border: `1px solid ${t.border}` }}>
-            <p style={{ marginBottom: '16px', color: t.textSecondary }}>
+          <div style={{ background: 'white', borderRadius: '12px', padding: '24px', border: '1px solid rgba(0,0,0,0.06)' }}>
+            <p style={{ marginBottom: '16px', color: '#64748b' }}>
               Al entrar al servidor, solo verás 2 canales. Para acceder a todo el contenido:
             </p>
-            <ol style={{ margin: 0, paddingLeft: '20px', color: t.text }}>
+            <ol style={{ margin: 0, paddingLeft: '20px', color: '#1e293b' }}>
               <li style={{ marginBottom: '12px' }}>
-                Ve al canal <code style={{ background: t.bgTertiary, padding: '2px 8px', borderRadius: '4px' }}>#✅-verificar</code>
+                Ve al canal <code style={{ background: '#f1f5f9', padding: '2px 8px', borderRadius: '4px' }}>#✅-verificar</code>
               </li>
               <li style={{ marginBottom: '12px' }}>
                 Escribe el comando:
                 <div style={{
-                  background: t.bgTertiary,
+                  background: '#f1f5f9',
                   padding: '12px 16px',
                   borderRadius: '8px',
                   marginTop: '8px',
@@ -168,7 +113,7 @@ function DiscordContent() {
                 </div>
               </li>
               <li style={{ marginBottom: '12px' }}>
-                Usa <strong>el mismo email</strong> con el que accediste al precurso
+                Usa <strong>el mismo email</strong> con el que accediste al curso
               </li>
               <li>
                 ¡Listo! Se te asignará el rol <strong>Alumno</strong> y verás todos los canales
@@ -180,43 +125,43 @@ function DiscordContent() {
         {/* Section: Canales */}
         <section style={{ marginBottom: '48px' }}>
           <h2 style={{ fontSize: '24px', fontWeight: 700, marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <span style={{ background: t.discordLight, padding: '8px', borderRadius: '8px' }}>2️⃣</span>
+            <span style={{ background: 'rgba(88, 101, 242, 0.1)', padding: '8px', borderRadius: '8px' }}>2️⃣</span>
             Estructura de canales
           </h2>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             {/* Bienvenida */}
-            <div style={{ background: t.bgSecondary, borderRadius: '12px', padding: '20px', border: `1px solid ${t.border}` }}>
-              <h3 style={{ fontSize: '16px', fontWeight: 600, marginBottom: '12px', color: t.accent }}>
+            <div style={{ background: 'white', borderRadius: '12px', padding: '20px', border: '1px solid rgba(0,0,0,0.06)' }}>
+              <h3 style={{ fontSize: '16px', fontWeight: 600, marginBottom: '12px', color: '#5e6ad2' }}>
                 👋 BIENVENIDA
               </h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '14px' }}>
-                <div><code style={{ background: t.bgTertiary, padding: '2px 6px', borderRadius: '4px' }}>#📢-anuncios</code> — Novedades importantes del curso</div>
-                <div><code style={{ background: t.bgTertiary, padding: '2px 6px', borderRadius: '4px' }}>#✅-verificar</code> — Verifica tu email</div>
-                <div><code style={{ background: t.bgTertiary, padding: '2px 6px', borderRadius: '4px' }}>#🎉-presentaciones</code> — ¡Preséntate!</div>
+                <div><code style={{ background: '#f1f5f9', padding: '2px 6px', borderRadius: '4px' }}>#📢-anuncios</code> — Novedades importantes del curso</div>
+                <div><code style={{ background: '#f1f5f9', padding: '2px 6px', borderRadius: '4px' }}>#✅-verificar</code> — Verifica tu email</div>
+                <div><code style={{ background: '#f1f5f9', padding: '2px 6px', borderRadius: '4px' }}>#🎉-presentaciones</code> — ¡Preséntate!</div>
               </div>
             </div>
 
             {/* Primera Promoción */}
-            <div style={{ background: t.bgSecondary, borderRadius: '12px', padding: '20px', border: `1px solid ${t.border}` }}>
-              <h3 style={{ fontSize: '16px', fontWeight: 600, marginBottom: '12px', color: t.accent }}>
+            <div style={{ background: 'white', borderRadius: '12px', padding: '20px', border: '1px solid rgba(0,0,0,0.06)' }}>
+              <h3 style={{ fontSize: '16px', fontWeight: 600, marginBottom: '12px', color: '#5e6ad2' }}>
                 🚀 PRIMERA PROMOCIÓN
               </h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '14px' }}>
-                <div><code style={{ background: t.bgTertiary, padding: '2px 6px', borderRadius: '4px' }}>#💬-general</code> — Charla general</div>
-                <div><code style={{ background: t.bgTertiary, padding: '2px 6px', borderRadius: '4px' }}>#🏆-logros</code> — Celebra tus avances</div>
-                <div><code style={{ background: t.bgTertiary, padding: '2px 6px', borderRadius: '4px' }}>#📸-capturas</code> — Comparte tu progreso</div>
-                <div><code style={{ background: t.bgTertiary, padding: '2px 6px', borderRadius: '4px' }}>#🛠️-proyectos</code> — Crea un hilo para tu proyecto</div>
-                <div><code style={{ background: t.bgTertiary, padding: '2px 6px', borderRadius: '4px' }}>#☕-off-topic</code> — Charla informal</div>
+                <div><code style={{ background: '#f1f5f9', padding: '2px 6px', borderRadius: '4px' }}>#💬-general</code> — Charla general</div>
+                <div><code style={{ background: '#f1f5f9', padding: '2px 6px', borderRadius: '4px' }}>#🏆-logros</code> — Celebra tus avances</div>
+                <div><code style={{ background: '#f1f5f9', padding: '2px 6px', borderRadius: '4px' }}>#📸-capturas</code> — Comparte tu progreso</div>
+                <div><code style={{ background: '#f1f5f9', padding: '2px 6px', borderRadius: '4px' }}>#🛠️-proyectos</code> — Crea un hilo para tu proyecto</div>
+                <div><code style={{ background: '#f1f5f9', padding: '2px 6px', borderRadius: '4px' }}>#☕-off-topic</code> — Charla informal</div>
               </div>
             </div>
 
             {/* Semanas */}
-            <div style={{ background: t.bgSecondary, borderRadius: '12px', padding: '20px', border: `1px solid ${t.border}` }}>
-              <h3 style={{ fontSize: '16px', fontWeight: 600, marginBottom: '12px', color: t.accent }}>
+            <div style={{ background: 'white', borderRadius: '12px', padding: '20px', border: '1px solid rgba(0,0,0,0.06)' }}>
+              <h3 style={{ fontSize: '16px', fontWeight: 600, marginBottom: '12px', color: '#5e6ad2' }}>
                 📅 SEMANAS
               </h3>
-              <p style={{ fontSize: '14px', color: t.textSecondary, margin: 0 }}>
+              <p style={{ fontSize: '14px', color: '#64748b', margin: 0 }}>
                 Un canal por cada semana del curso (1-10). Cada uno tiene un mensaje fijado con los objetivos, contenido y entregable de la semana.
               </p>
             </div>
@@ -226,7 +171,7 @@ function DiscordContent() {
         {/* Section: Comandos */}
         <section style={{ marginBottom: '48px' }}>
           <h2 style={{ fontSize: '24px', fontWeight: 700, marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <span style={{ background: t.discordLight, padding: '8px', borderRadius: '8px' }}>3️⃣</span>
+            <span style={{ background: 'rgba(88, 101, 242, 0.1)', padding: '8px', borderRadius: '8px' }}>3️⃣</span>
             Comandos del bot
           </h2>
 
@@ -247,12 +192,12 @@ function DiscordContent() {
                 alignItems: 'flex-start',
                 gap: '16px',
                 padding: '16px',
-                background: t.bgSecondary,
+                background: 'white',
                 borderRadius: '10px',
-                border: `1px solid ${t.border}`
+                border: '1px solid rgba(0,0,0,0.06)'
               }}>
                 <code style={{
-                  background: t.bgTertiary,
+                  background: '#f1f5f9',
                   padding: '8px 12px',
                   borderRadius: '6px',
                   fontSize: '13px',
@@ -262,7 +207,7 @@ function DiscordContent() {
                 }}>
                   {item.cmd}
                 </code>
-                <span style={{ color: t.textSecondary, fontSize: '14px' }}>{item.desc}</span>
+                <span style={{ color: '#64748b', fontSize: '14px' }}>{item.desc}</span>
               </div>
             ))}
           </div>
@@ -271,12 +216,12 @@ function DiscordContent() {
         {/* Section: Logros */}
         <section style={{ marginBottom: '48px' }}>
           <h2 style={{ fontSize: '24px', fontWeight: 700, marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <span style={{ background: t.discordLight, padding: '8px', borderRadius: '8px' }}>4️⃣</span>
+            <span style={{ background: 'rgba(88, 101, 242, 0.1)', padding: '8px', borderRadius: '8px' }}>4️⃣</span>
             Sistema de logros
           </h2>
-          <div style={{ background: t.bgSecondary, borderRadius: '12px', padding: '24px', border: `1px solid ${t.border}` }}>
-            <p style={{ marginBottom: '16px', color: t.textSecondary }}>
-              En el canal <code style={{ background: t.bgTertiary, padding: '2px 6px', borderRadius: '4px' }}>#🏆-logros</code> hay un mensaje con emojis. <strong>Haz click en el emoji</strong> cuando completes cada logro:
+          <div style={{ background: 'white', borderRadius: '12px', padding: '24px', border: '1px solid rgba(0,0,0,0.06)' }}>
+            <p style={{ marginBottom: '16px', color: '#64748b' }}>
+              En el canal <code style={{ background: '#f1f5f9', padding: '2px 6px', borderRadius: '4px' }}>#🏆-logros</code> hay un mensaje con emojis. <strong>Haz click en el emoji</strong> cuando completes cada logro:
             </p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
               {[
@@ -292,7 +237,7 @@ function DiscordContent() {
               ].map((item, i) => (
                 <span key={i} style={{
                   padding: '6px 12px',
-                  background: t.bgTertiary,
+                  background: '#f1f5f9',
                   borderRadius: '20px',
                   fontSize: '13px'
                 }}>
@@ -306,11 +251,11 @@ function DiscordContent() {
         {/* Section: Roles */}
         <section style={{ marginBottom: '48px' }}>
           <h2 style={{ fontSize: '24px', fontWeight: 700, marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <span style={{ background: t.discordLight, padding: '8px', borderRadius: '8px' }}>5️⃣</span>
+            <span style={{ background: 'rgba(88, 101, 242, 0.1)', padding: '8px', borderRadius: '8px' }}>5️⃣</span>
             Roles de progreso
           </h2>
-          <div style={{ background: t.bgSecondary, borderRadius: '12px', padding: '24px', border: `1px solid ${t.border}` }}>
-            <p style={{ marginBottom: '16px', color: t.textSecondary }}>
+          <div style={{ background: 'white', borderRadius: '12px', padding: '24px', border: '1px solid rgba(0,0,0,0.06)' }}>
+            <p style={{ marginBottom: '16px', color: '#64748b' }}>
               Tu rol cambiará según tu avance en el curso:
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -324,14 +269,14 @@ function DiscordContent() {
                 <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                   <span style={{
                     padding: '6px 12px',
-                    background: t.accentLight,
+                    background: '#eef2ff',
                     borderRadius: '6px',
                     fontWeight: 600,
                     fontSize: '14px'
                   }}>
                     {item.role}
                   </span>
-                  <span style={{ color: t.textSecondary, fontSize: '14px' }}>{item.desc}</span>
+                  <span style={{ color: '#64748b', fontSize: '14px' }}>{item.desc}</span>
                 </div>
               ))}
             </div>
@@ -341,7 +286,7 @@ function DiscordContent() {
         {/* Section: Tips */}
         <section style={{ marginBottom: '48px' }}>
           <h2 style={{ fontSize: '24px', fontWeight: 700, marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <span style={{ background: t.discordLight, padding: '8px', borderRadius: '8px' }}>💡</span>
+            <span style={{ background: 'rgba(88, 101, 242, 0.1)', padding: '8px', borderRadius: '8px' }}>💡</span>
             Tips para aprovechar la comunidad
           </h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -356,9 +301,9 @@ function DiscordContent() {
             ].map((tip, i) => (
               <div key={i} style={{
                 padding: '16px',
-                background: t.bgSecondary,
+                background: 'white',
                 borderRadius: '10px',
-                border: `1px solid ${t.border}`,
+                border: '1px solid rgba(0,0,0,0.06)',
                 fontSize: '14px'
               }}>
                 {tip}
@@ -371,14 +316,14 @@ function DiscordContent() {
         <div style={{
           textAlign: 'center',
           padding: '32px',
-          background: t.discordLight,
+          background: 'rgba(88, 101, 242, 0.1)',
           borderRadius: '16px',
-          border: `1px solid ${t.discord}30`
+          border: '1px solid #5865F230'
         }}>
           <h3 style={{ fontSize: '20px', fontWeight: 700, marginBottom: '12px' }}>
             ¿Listo para unirte?
           </h3>
-          <p style={{ color: t.textSecondary, marginBottom: '20px' }}>
+          <p style={{ color: '#64748b', marginBottom: '20px' }}>
             La comunidad te espera. No olvides verificar tu email al entrar.
           </p>
           <a
@@ -390,7 +335,7 @@ function DiscordContent() {
               alignItems: 'center',
               gap: '8px',
               padding: '14px 28px',
-              background: t.discord,
+              background: '#5865F2',
               borderRadius: '10px',
               color: 'white',
               textDecoration: 'none',
@@ -408,8 +353,8 @@ function DiscordContent() {
 
 export default function DiscordPage() {
   return (
-    <PrecursoEmailGate>
+    <CursoEmailGate>
       <DiscordContent />
-    </PrecursoEmailGate>
+    </CursoEmailGate>
   )
 }

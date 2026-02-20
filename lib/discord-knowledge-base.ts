@@ -606,7 +606,7 @@ Clases: Viernes 19:00 CET (S1: Jue-Vie 19-20 Feb)
 
 ## PRECURSO
 
-Disponible en: /precurso
+Disponible en: /curso (Módulo 0 — Preparación)
 Modulos:
 1. Introduccion
 2. Requisitos (VS Code, Node.js, GitHub, Vercel, Claude Code)

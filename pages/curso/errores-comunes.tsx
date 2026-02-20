@@ -1,45 +1,7 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import { useState } from 'react'
-import PrecursoEmailGate from '../../components/PrecursoEmailGate'
-import { useTheme } from './index'
-
-const themes = {
-  light: {
-    bg: '#ffffff',
-    bgSecondary: '#f8fafc',
-    bgTertiary: '#f1f5f9',
-    text: '#1e293b',
-    textSecondary: '#64748b',
-    textMuted: '#94a3b8',
-    border: '#e2e8f0',
-    accent: '#6366f1',
-    accentLight: '#eef2ff',
-    success: '#22c55e',
-    successLight: '#f0fdf4',
-    error: '#ef4444',
-    errorLight: '#fef2f2',
-    warning: '#f59e0b',
-    warningLight: '#fffbeb',
-  },
-  dark: {
-    bg: '#0f172a',
-    bgSecondary: '#1e293b',
-    bgTertiary: '#334155',
-    text: '#f1f5f9',
-    textSecondary: '#94a3b8',
-    textMuted: '#64748b',
-    border: '#334155',
-    accent: '#818cf8',
-    accentLight: 'rgba(129, 140, 248, 0.1)',
-    success: '#4ade80',
-    successLight: 'rgba(74, 222, 128, 0.1)',
-    error: '#f87171',
-    errorLight: 'rgba(248, 113, 113, 0.1)',
-    warning: '#fbbf24',
-    warningLight: 'rgba(251, 191, 36, 0.1)',
-  }
-}
+import CursoEmailGate from '../../components/CursoEmailGate'
 
 const ERRORES = [
   {
@@ -233,8 +195,6 @@ const ERRORES = [
 ]
 
 function ErroresContent() {
-  const { theme, toggleTheme } = useTheme()
-  const t = themes[theme]
   const [searchQuery, setSearchQuery] = useState('')
   const [expandedError, setExpandedError] = useState<string | null>(null)
   const [filterCategoria, setFilterCategoria] = useState<string | null>(null)
@@ -252,21 +212,22 @@ function ErroresContent() {
   return (
     <div style={{
       minHeight: '100vh',
-      background: t.bg,
+      background: '#fafbfc',
       fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
-      color: t.text
+      color: '#1e293b'
     }}>
       <Head>
-        <title>Errores Comunes | Precurso</title>
+        <title>Errores Comunes | Curso</title>
         <meta name="robots" content="noindex, nofollow" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
       </Head>
 
       {/* Header */}
       <header style={{
-        background: t.bg,
-        borderBottom: `1px solid ${t.border}`,
-        padding: '16px 32px',
+        background: 'rgba(250, 251, 252, 0.9)',
+        backdropFilter: 'blur(12px)',
+        borderBottom: '1px solid rgba(0,0,0,0.06)',
+        padding: '12px 24px',
         position: 'sticky',
         top: 0,
         zIndex: 100,
@@ -275,8 +236,8 @@ function ErroresContent() {
         justifyContent: 'space-between'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <Link href="/precurso" style={{
-            color: t.textMuted,
+          <Link href="/curso" style={{
+            color: '#94a3b8',
             textDecoration: 'none',
             display: 'flex',
             alignItems: 'center',
@@ -287,35 +248,33 @@ function ErroresContent() {
               <polyline points="15 18 9 12 15 6"/>
             </svg>
           </Link>
-          <span style={{ fontWeight: 600, fontSize: '17px' }}>Errores Comunes</span>
+          <span style={{ fontWeight: 600, fontSize: '16px', color: '#0f172a' }}>Errores comunes</span>
         </div>
-
         <button
-          onClick={toggleTheme}
+          onClick={() => { localStorage.removeItem('precurso-access'); window.location.href = '/curso' }}
           style={{
-            width: '40px',
-            height: '40px',
+            padding: '8px 18px',
+            fontSize: '13px',
+            fontWeight: 600,
+            color: '#64748b',
+            background: 'white',
+            border: '1px solid rgba(0,0,0,0.06)',
             borderRadius: '10px',
-            border: `1px solid ${t.border}`,
-            background: t.bgSecondary,
             cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '18px'
+            boxShadow: '0 1px 2px rgba(0,0,0,0.04)'
           }}
         >
-          {theme === 'light' ? '🌙' : '☀️'}
+          Salir
         </button>
       </header>
 
-      <main style={{ maxWidth: '900px', margin: '0 auto', padding: '40px 24px' }}>
+      <main style={{ maxWidth: '800px', margin: '0 auto', padding: '40px 24px' }}>
         {/* Hero */}
         <div style={{ textAlign: 'center', marginBottom: '40px' }}>
           <h1 style={{ fontSize: '36px', fontWeight: 700, marginBottom: '16px' }}>
             🔧 Troubleshooting
           </h1>
-          <p style={{ fontSize: '18px', color: t.textSecondary, lineHeight: 1.7 }}>
+          <p style={{ fontSize: '18px', color: '#64748b', lineHeight: 1.7 }}>
             ¿Algo no funciona? Aquí encontrarás la solución a los errores más comunes.
           </p>
         </div>
@@ -334,10 +293,10 @@ function ErroresContent() {
               width: '100%',
               padding: '18px 24px',
               fontSize: '16px',
-              border: `2px solid ${t.border}`,
+              border: '2px solid rgba(0,0,0,0.06)',
               borderRadius: '14px',
-              background: t.bgSecondary,
-              color: t.text,
+              background: 'white',
+              color: '#1e293b',
               outline: 'none'
             }}
           />
@@ -355,9 +314,9 @@ function ErroresContent() {
             style={{
               padding: '10px 18px',
               borderRadius: '10px',
-              border: `1px solid ${filterCategoria === null ? t.accent : t.border}`,
-              background: filterCategoria === null ? t.accentLight : t.bg,
-              color: filterCategoria === null ? t.accent : t.textSecondary,
+              border: `1px solid ${filterCategoria === null ? '#5e6ad2' : 'rgba(0,0,0,0.06)'}`,
+              background: filterCategoria === null ? '#eef2ff' : '#fafbfc',
+              color: filterCategoria === null ? '#5e6ad2' : '#64748b',
               fontSize: '14px',
               fontWeight: 500,
               cursor: 'pointer'
@@ -374,9 +333,9 @@ function ErroresContent() {
                 style={{
                   padding: '10px 18px',
                   borderRadius: '10px',
-                  border: `1px solid ${filterCategoria === cat ? t.accent : t.border}`,
-                  background: filterCategoria === cat ? t.accentLight : t.bg,
-                  color: filterCategoria === cat ? t.accent : t.textSecondary,
+                  border: `1px solid ${filterCategoria === cat ? '#5e6ad2' : 'rgba(0,0,0,0.06)'}`,
+                  background: filterCategoria === cat ? '#eef2ff' : '#fafbfc',
+                  color: filterCategoria === cat ? '#5e6ad2' : '#64748b',
                   fontSize: '14px',
                   fontWeight: 500,
                   cursor: 'pointer'
@@ -396,9 +355,9 @@ function ErroresContent() {
               <div
                 key={error.id}
                 style={{
-                  background: t.bgSecondary,
+                  background: 'white',
                   borderRadius: '16px',
-                  border: `1px solid ${isExpanded ? t.accent : t.border}`,
+                  border: `1px solid ${isExpanded ? '#5e6ad2' : 'rgba(0,0,0,0.06)'}`,
                   overflow: 'hidden',
                   transition: 'all 0.2s ease'
                 }}
@@ -423,7 +382,7 @@ function ErroresContent() {
                     <div style={{
                       fontSize: '12px',
                       fontWeight: 600,
-                      color: t.textMuted,
+                      color: '#94a3b8',
                       marginBottom: '4px',
                       textTransform: 'uppercase',
                       letterSpacing: '0.5px'
@@ -433,7 +392,7 @@ function ErroresContent() {
                     <div style={{
                       fontSize: '17px',
                       fontWeight: 600,
-                      color: t.error,
+                      color: '#ef4444',
                       fontFamily: "'JetBrains Mono', monospace"
                     }}>
                       {error.error}
@@ -441,8 +400,8 @@ function ErroresContent() {
                   </div>
                   <span style={{
                     fontSize: '14px',
-                    color: error.nivel === 'facil' ? t.success : t.warning,
-                    background: error.nivel === 'facil' ? t.successLight : t.warningLight,
+                    color: error.nivel === 'facil' ? '#22c55e' : '#f59e0b',
+                    background: error.nivel === 'facil' ? '#f0fdf4' : '#fffbeb',
                     padding: '4px 10px',
                     borderRadius: '6px',
                     fontWeight: 500
@@ -454,7 +413,7 @@ function ErroresContent() {
                     height="20"
                     viewBox="0 0 24 24"
                     fill="none"
-                    stroke={t.textMuted}
+                    stroke="#94a3b8"
                     strokeWidth="2"
                     style={{
                       transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
@@ -469,14 +428,14 @@ function ErroresContent() {
                 {isExpanded && (
                   <div style={{
                     padding: '0 24px 24px',
-                    borderTop: `1px solid ${t.border}`
+                    borderTop: '1px solid rgba(0,0,0,0.06)'
                   }}>
                     {/* Variantes */}
                     <div style={{ marginTop: '20px', marginBottom: '20px' }}>
                       <div style={{
                         fontSize: '12px',
                         fontWeight: 600,
-                        color: t.textMuted,
+                        color: '#94a3b8',
                         marginBottom: '10px',
                         textTransform: 'uppercase'
                       }}>
@@ -486,10 +445,10 @@ function ErroresContent() {
                         {error.variantes.map((v, i) => (
                           <code key={i} style={{
                             padding: '6px 12px',
-                            background: t.bgTertiary,
+                            background: '#f1f5f9',
                             borderRadius: '6px',
                             fontSize: '13px',
-                            color: t.textSecondary,
+                            color: '#64748b',
                             fontFamily: "'JetBrains Mono', monospace"
                           }}>
                             {v}
@@ -501,14 +460,14 @@ function ErroresContent() {
                     {/* Causa */}
                     <div style={{
                       padding: '16px',
-                      background: t.errorLight,
+                      background: '#fef2f2',
                       borderRadius: '10px',
                       marginBottom: '16px'
                     }}>
-                      <div style={{ fontWeight: 600, color: t.error, marginBottom: '6px' }}>
+                      <div style={{ fontWeight: 600, color: '#ef4444', marginBottom: '6px' }}>
                         ❌ ¿Por qué pasa esto?
                       </div>
-                      <p style={{ margin: 0, color: t.textSecondary, lineHeight: 1.6 }}>
+                      <p style={{ margin: 0, color: '#64748b', lineHeight: 1.6 }}>
                         {error.causa}
                       </p>
                     </div>
@@ -516,16 +475,16 @@ function ErroresContent() {
                     {/* Solución */}
                     <div style={{
                       padding: '16px',
-                      background: t.successLight,
+                      background: '#f0fdf4',
                       borderRadius: '10px'
                     }}>
-                      <div style={{ fontWeight: 600, color: t.success, marginBottom: '12px' }}>
+                      <div style={{ fontWeight: 600, color: '#22c55e', marginBottom: '12px' }}>
                         ✅ Solución
                       </div>
                       <ol style={{
                         margin: 0,
                         paddingLeft: '20px',
-                        color: t.textSecondary,
+                        color: '#64748b',
                         lineHeight: 2
                       }}>
                         {error.solucion.map((paso, i) => (
@@ -544,7 +503,7 @@ function ErroresContent() {
           <div style={{
             textAlign: 'center',
             padding: '60px 20px',
-            color: t.textMuted
+            color: '#94a3b8'
           }}>
             <div style={{ fontSize: '48px', marginBottom: '16px' }}>🔍</div>
             <p>No se encontraron errores que coincidan con tu búsqueda.</p>
@@ -558,15 +517,15 @@ function ErroresContent() {
         <div style={{
           marginTop: '48px',
           padding: '32px',
-          background: t.bgSecondary,
+          background: 'white',
           borderRadius: '20px',
-          border: `1px solid ${t.border}`,
+          border: '1px solid rgba(0,0,0,0.06)',
           textAlign: 'center'
         }}>
           <h3 style={{ fontSize: '22px', fontWeight: 600, marginBottom: '12px' }}>
             ¿Tu error no está aquí?
           </h3>
-          <p style={{ color: t.textSecondary, marginBottom: '24px', lineHeight: 1.7 }}>
+          <p style={{ color: '#64748b', marginBottom: '24px', lineHeight: 1.7 }}>
             Copia el mensaje de error exacto y pregúntale a Claude Code directamente.<br />
             Di: "Tengo este error: [pega el error]. ¿Cómo lo soluciono?"
           </p>
@@ -576,21 +535,21 @@ function ErroresContent() {
             justifyContent: 'center',
             flexWrap: 'wrap'
           }}>
-            <Link href="/precurso/glosario" style={{
+            <Link href="/curso/glosario" style={{
               padding: '14px 28px',
-              background: t.bg,
-              border: `1px solid ${t.border}`,
+              background: '#fafbfc',
+              border: '1px solid rgba(0,0,0,0.06)',
               borderRadius: '12px',
-              color: t.textSecondary,
+              color: '#64748b',
               textDecoration: 'none',
               fontSize: '15px',
               fontWeight: 500
             }}>
               📚 Ver glosario
             </Link>
-            <Link href="/precurso/requisitos" style={{
+            <Link href="/curso/requisitos" style={{
               padding: '14px 28px',
-              background: t.accent,
+              background: '#5e6ad2',
               border: 'none',
               borderRadius: '12px',
               color: 'white',
@@ -609,21 +568,21 @@ function ErroresContent() {
           display: 'flex',
           justifyContent: 'space-between'
         }}>
-          <Link href="/precurso/requisitos" style={{
+          <Link href="/curso/requisitos" style={{
             padding: '14px 24px',
-            background: t.bgSecondary,
-            border: `1px solid ${t.border}`,
+            background: 'white',
+            border: '1px solid rgba(0,0,0,0.06)',
             borderRadius: '12px',
-            color: t.textSecondary,
+            color: '#64748b',
             textDecoration: 'none',
             fontSize: '15px',
             fontWeight: 500
           }}>
             ← Requisitos
           </Link>
-          <Link href="/precurso/quiz" style={{
+          <Link href="/curso/quiz" style={{
             padding: '14px 24px',
-            background: t.accent,
+            background: '#5e6ad2',
             border: 'none',
             borderRadius: '12px',
             color: 'white',
@@ -641,8 +600,8 @@ function ErroresContent() {
 
 export default function ErroresComunesPage() {
   return (
-    <PrecursoEmailGate>
+    <CursoEmailGate>
       <ErroresContent />
-    </PrecursoEmailGate>
+    </CursoEmailGate>
   )
 }

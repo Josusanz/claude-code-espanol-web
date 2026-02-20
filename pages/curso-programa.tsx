@@ -436,7 +436,7 @@ export default function CursoNegocioPage() {
                 ))}
               </div>
 
-              <Link href="/precurso" style={{
+              <Link href="/curso" style={{
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '8px',
@@ -1020,7 +1020,7 @@ export default function CursoNegocioPage() {
                 <p style={{ margin: '0 0 16px', fontSize: '14px', color: t.textSecondary }}>
                   Empieza por el pre-curso para llegar preparado a la primera clase
                 </p>
-                <Link href="/precurso" style={{
+                <Link href="/curso" style={{
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: '8px',

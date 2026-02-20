@@ -28,7 +28,7 @@ export const PRECURSO_EXTENSIONS: PrecursoExtension[] = [
         titulo: 'Prepara tu proyecto',
         emoji: '🎯',
         descripcion: 'Define tu idea de software, configura tu entorno y prepara tu plan de accion antes de empezar el modulo 1.',
-        href: '/precurso/prep-autoguiado',
+        href: '/curso/prep-autoguiado',
       },
     ],
   },
