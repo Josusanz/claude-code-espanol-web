@@ -1,17 +1,39 @@
 import React, { useEffect, useState, useRef } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
-import UserNav from '../components/UserNav'
 
-const MODULE_PREVIEW = [
+const MODULOS_PREVIEW = [
   { emoji: '🌱', title: 'Modo Fácil', desc: 'Usa Claude desde el navegador, sin terminal', lessons: 8, href: '/modo-facil' },
+  { emoji: '⚡', title: 'Instalación', desc: 'Instala Claude Code y crea tu primer proyecto', lessons: 3, href: '/empezar' },
   { emoji: '📚', title: 'Fundamentos', desc: 'Domina los conceptos clave de Claude Code', lessons: 11, href: '/fundamentos' },
   { emoji: '🛠️', title: 'Proyectos', desc: '4 proyectos reales paso a paso', lessons: 11, href: '/proyectos' },
+  { emoji: '🔌', title: 'MCP', desc: 'Conecta Claude con APIs y servicios externos', lessons: 6, href: '/mcp' },
+  { emoji: '🦞', title: 'Clawdbot', desc: 'Tu asistente IA para WhatsApp y Telegram', lessons: 7, href: '/clawdbot' },
 ]
 
+// SVG Icons (Linear/Stripe style)
+const Icons = {
+  check: (color: string) => (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="20 6 9 17 4 12"/>
+    </svg>
+  ),
+  terminal: (color: string) => (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 17L10 11L4 5"/>
+      <path d="M12 19H20"/>
+    </svg>
+  ),
+  zap: (color: string) => (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill={color} stroke="none">
+      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+    </svg>
+  ),
+}
+
 export default function LandingPage() {
+  const [mounted, setMounted] = useState(false)
   const [isDark, setIsDark] = useState(false)
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [terminalStep, setTerminalStep] = useState(0)
   const [typedCommand, setTypedCommand] = useState('')
   const [typedResponse, setTypedResponse] = useState('')
@@ -22,15 +44,9 @@ export default function LandingPage() {
   const response = '¡Hola! He analizado tu solicitud. Estoy creando una landing page profesional en español optimizada para conversión. ¿Deseas que añada soporte para modo oscuro?'
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme')
-    if (savedTheme) {
-      const isDarkMode = savedTheme === 'dark'
-      setIsDark(isDarkMode)
-      document.documentElement.classList.toggle('dark', isDarkMode)
-    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      setIsDark(true)
-      document.documentElement.classList.add('dark')
-    }
+    setMounted(true)
+    const saved = localStorage.getItem('theme-curso')
+    if (saved) setIsDark(saved === 'dark')
   }, [])
 
   useEffect(() => {
@@ -74,12 +90,30 @@ export default function LandingPage() {
     }, 40)
   }
 
-  const toggleDarkMode = () => {
-    const newState = !isDark
-    setIsDark(newState)
-    document.documentElement.classList.toggle('dark', newState)
-    localStorage.setItem('theme', newState ? 'dark' : 'light')
+  const toggleTheme = () => {
+    const next = !isDark
+    setIsDark(next)
+    localStorage.setItem('theme-curso', next ? 'dark' : 'light')
   }
+
+  // Theme colors (same system as /curso-negocio)
+  const t = {
+    bg: isDark ? '#08090a' : '#fafbfc',
+    bgSecondary: isDark ? '#0f1011' : '#ffffff',
+    bgTertiary: isDark ? '#161718' : '#f1f5f9',
+    text: isDark ? '#f5f5f5' : '#1a1a2e',
+    textSecondary: isDark ? '#a1a1a1' : '#4a5568',
+    textTertiary: isDark ? '#6b6b6b' : '#718096',
+    accent: '#5e6ad2',
+    accentHover: '#7c85e3',
+    border: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)',
+    borderHover: isDark ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.12)',
+    glow: isDark ? 'rgba(94,106,210,0.08)' : 'rgba(94,106,210,0.04)',
+    glowStrong: isDark ? 'rgba(94,106,210,0.15)' : 'rgba(94,106,210,0.08)',
+    navBg: isDark ? 'rgba(8,9,10,0.8)' : 'rgba(255,255,255,0.9)',
+  }
+
+  if (!mounted) return null
 
   return (
     <>
@@ -126,335 +160,662 @@ export default function LandingPage() {
           }}
         />
 
-        <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
-        <script dangerouslySetInnerHTML={{ __html: `tailwind.config = { darkMode: 'class' }` }} />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
       </Head>
 
       <style jsx global>{`
-        body { font-family: 'Inter', sans-serif; background: #f8fafc; }
-        .dark body { background: #020617; }
-        .hero-section {
-          background: linear-gradient(180deg, rgba(79, 70, 229, 0.08) 0%, rgba(79, 70, 229, 0.03) 30%, transparent 60%);
+        * { box-sizing: border-box; }
+        body {
+          margin: 0; padding: 0;
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+          overflow-x: hidden;
         }
-        .dark .hero-section {
-          background: linear-gradient(180deg, rgba(79, 70, 229, 0.15) 0%, rgba(79, 70, 229, 0.05) 30%, transparent 60%);
-        }
-        @keyframes fade-in {
-          from { opacity: 0; transform: translateY(4px); }
+        html { overflow-x: hidden; scroll-behavior: smooth; }
+        ::selection { background: rgba(94, 106, 210, 0.3); }
+
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(20px); }
           to { opacity: 1; transform: translateY(0); }
         }
-        .animate-fade-in { animation: fade-in 0.3s ease-out forwards; }
-        .btn-cta-primary {
-          background: linear-gradient(to right, #4f46e5, #7c3aed) !important;
-          color: white !important;
-          box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.4), 0 8px 10px -6px rgba(99, 102, 241, 0.3) !important;
-        }
-        .btn-cta-primary:hover {
-          background: linear-gradient(to right, #4338ca, #6d28d9) !important;
-          box-shadow: 0 20px 35px -5px rgba(99, 102, 241, 0.5), 0 10px 15px -6px rgba(99, 102, 241, 0.4) !important;
+        .animate-fade-in { animation: fadeIn 0.6s ease forwards; }
+        .delay-1 { animation-delay: 0.1s; opacity: 0; }
+        .delay-2 { animation-delay: 0.2s; opacity: 0; }
+        .delay-3 { animation-delay: 0.3s; opacity: 0; }
+        .delay-4 { animation-delay: 0.4s; opacity: 0; }
+
+        @keyframes pulse { 50% { opacity: 0.4; } }
+        .animate-pulse { animation: pulse 1s ease-in-out infinite; }
+
+        .module-card:hover {
           transform: translateY(-2px);
+          box-shadow: 0 8px 24px rgba(0,0,0,0.08) !important;
+          border-color: ${t.borderHover} !important;
         }
-        .module-preview:hover { transform: translateY(-4px); box-shadow: 0 12px 24px -8px rgba(0,0,0,0.15); }
+
+        @media (max-width: 640px) {
+          .nav-links { display: none !important; }
+        }
       `}</style>
 
-      <div className="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 min-h-screen transition-colors duration-300">
-        {/* Nav */}
-        <nav className="sticky top-0 z-50 border-b border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-950/80 backdrop-blur-md">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6">
-            <div className="flex justify-between items-center h-16">
-              <div className="flex items-center gap-2">
-                <div className="bg-slate-900 dark:bg-white p-1 rounded-md flex items-center justify-center">
-                  <span className="material-symbols-outlined text-white dark:text-slate-900 text-[20px]">terminal</span>
-                </div>
-                <span className="text-[15px] font-semibold tracking-tight text-slate-900 dark:text-white">
-                  Claude Code <span className="text-slate-500 dark:text-slate-400 font-normal">en Español</span>
-                </span>
-              </div>
+      <div style={{ minHeight: '100vh', background: t.bg, color: t.text, transition: 'all 0.3s ease' }}>
+        {/* Navigation */}
+        <header style={{
+          position: 'sticky',
+          top: 0,
+          zIndex: 50,
+          background: t.navBg,
+          backdropFilter: 'blur(12px)',
+          borderBottom: `1px solid ${t.border}`,
+        }}>
+          <nav style={{
+            maxWidth: '1100px',
+            margin: '0 auto',
+            padding: '0 24px',
+            height: '60px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}>
+            <Link href="/" style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px',
+              textDecoration: 'none',
+              color: t.text,
+            }}>
+              <div style={{
+                width: '32px',
+                height: '32px',
+                background: 'linear-gradient(135deg, #5e6ad2, #8b5cf6)',
+                borderRadius: '8px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '14px',
+                fontWeight: 700,
+                color: 'white',
+              }}>AS</div>
+              <span style={{ fontWeight: 600, fontSize: '15px' }}>aprende.software</span>
+            </Link>
 
-              <div className="hidden md:flex items-center space-x-6">
-                <Link href="/curso-gratis" className="text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors text-sm font-medium">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              {/* Theme toggle switch */}
+              <button
+                onClick={toggleTheme}
+                style={{
+                  width: '56px',
+                  height: '28px',
+                  borderRadius: '14px',
+                  border: 'none',
+                  background: isDark ? t.accent : '#e2e8f0',
+                  cursor: 'pointer',
+                  position: 'relative',
+                  transition: 'all 0.3s ease',
+                  padding: 0,
+                }}
+                aria-label="Cambiar tema"
+              >
+                <div style={{
+                  position: 'absolute',
+                  top: '3px',
+                  left: isDark ? '31px' : '3px',
+                  width: '22px',
+                  height: '22px',
+                  borderRadius: '50%',
+                  background: 'white',
+                  boxShadow: '0 1px 3px rgba(0,0,0,0.2)',
+                  transition: 'all 0.3s ease',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '12px',
+                }}>
+                  {isDark ? '🌙' : '☀️'}
+                </div>
+              </button>
+              <div className="nav-links" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <Link href="/curso-gratis" style={{
+                  padding: '8px 16px',
+                  fontSize: '14px',
+                  borderRadius: '8px',
+                  border: `1px solid ${t.border}`,
+                  background: 'transparent',
+                  color: t.text,
+                  textDecoration: 'none',
+                  fontWeight: 500,
+                  transition: 'all 0.2s ease',
+                }}>
                   Curso Gratis
                 </Link>
-                <Link href="/premium" className="text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors text-sm font-medium">
+                <Link href="/premium" style={{
+                  padding: '8px 16px',
+                  fontSize: '14px',
+                  borderRadius: '8px',
+                  background: t.accent,
+                  color: 'white',
+                  textDecoration: 'none',
+                  fontWeight: 500,
+                  transition: 'all 0.2s ease',
+                }}>
                   Premium
                 </Link>
-                <Link href="/blog" className="text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors text-sm font-medium">
-                  Blog
+              </div>
+            </div>
+          </nav>
+        </header>
+
+        <main>
+          {/* Hero */}
+          <section style={{
+            paddingTop: '100px',
+            paddingBottom: '80px',
+            textAlign: 'center',
+            position: 'relative',
+          }}>
+            {/* Subtle glow background */}
+            <div style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: '600px',
+              height: '400px',
+              background: `radial-gradient(ellipse, ${t.glow} 0%, transparent 70%)`,
+              pointerEvents: 'none',
+            }} />
+
+            <div style={{ maxWidth: '800px', margin: '0 auto', padding: '0 24px', position: 'relative' }}>
+              {/* Badge */}
+              <div className="animate-fade-in" style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                padding: '8px 16px',
+                background: isDark ? t.bgSecondary : '#f0f4ff',
+                border: `1px solid ${isDark ? t.border : 'rgba(94,106,210,0.15)'}`,
+                borderRadius: '100px',
+                fontSize: '13px',
+                color: isDark ? t.textSecondary : '#4338ca',
+                marginBottom: '32px',
+                fontWeight: 500,
+              }}>
+                <span style={{
+                  width: '8px',
+                  height: '8px',
+                  borderRadius: '50%',
+                  background: '#22c55e',
+                  boxShadow: '0 0 8px rgba(34,197,94,0.6)',
+                }} />
+                47 lecciones gratuitas · 7 modulos · En espanol
+              </div>
+
+              {/* Title */}
+              <h1 className="animate-fade-in delay-1" style={{
+                fontSize: 'clamp(40px, 6vw, 64px)',
+                fontWeight: 600,
+                lineHeight: 1.1,
+                letterSpacing: '-0.03em',
+                margin: '0 0 24px 0',
+                color: t.text,
+              }}>
+                Crea software con<br />inteligencia artificial
+              </h1>
+
+              {/* Subtitle */}
+              <p className="animate-fade-in delay-2" style={{
+                fontSize: '18px',
+                lineHeight: 1.6,
+                color: t.textSecondary,
+                margin: '0 0 40px 0',
+                maxWidth: '560px',
+                marginLeft: 'auto',
+                marginRight: 'auto',
+              }}>
+                Aprende <span style={{ color: t.text }}>Claude Code</span> haciendo proyectos reales.
+                Desde tu primera web hasta automatizaciones y bots de IA. Todo gratis, todo en espanol.
+              </p>
+
+              {/* CTAs */}
+              <div className="animate-fade-in delay-3" style={{
+                display: 'flex',
+                gap: '12px',
+                justifyContent: 'center',
+                flexWrap: 'wrap',
+              }}>
+                <Link href="/curso-gratis" style={{
+                  padding: '14px 28px',
+                  fontSize: '15px',
+                  borderRadius: '10px',
+                  background: t.accent,
+                  color: 'white',
+                  textDecoration: 'none',
+                  fontWeight: 600,
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  transition: 'all 0.2s ease',
+                  boxShadow: isDark ? `0 0 40px ${t.glowStrong}` : '0 4px 14px rgba(94,106,210,0.25)',
+                }}>
+                  Empieza gratis <span style={{ opacity: 0.7 }}>→</span>
+                </Link>
+                <Link href="/curso" style={{
+                  padding: '14px 28px',
+                  fontSize: '15px',
+                  borderRadius: '10px',
+                  border: `1px solid ${isDark ? t.border : '#e2e8f0'}`,
+                  background: isDark ? 'transparent' : '#ffffff',
+                  color: t.text,
+                  textDecoration: 'none',
+                  fontWeight: 500,
+                  transition: 'all 0.2s ease',
+                  boxShadow: isDark ? 'none' : '0 1px 3px rgba(0,0,0,0.05)',
+                }}>
+                  Ya tengo cuenta
                 </Link>
               </div>
 
-              <div className="flex items-center gap-3">
-                <UserNav />
-                <button
-                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                  className="md:hidden p-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
-                  aria-label="Abrir menú"
-                >
-                  <span className="material-symbols-outlined text-2xl">
-                    {mobileMenuOpen ? 'close' : 'menu'}
-                  </span>
-                </button>
+              {/* Trust line */}
+              <div className="animate-fade-in delay-4" style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '6px',
+                marginTop: '24px',
+                fontSize: '13px',
+                color: t.textTertiary,
+              }}>
+                <div style={{
+                  width: '16px',
+                  height: '16px',
+                  background: 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)',
+                  borderRadius: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                  {Icons.check('white')}
+                </div>
+                100% gratis · Sin tarjeta de credito · Acceso inmediato
+              </div>
+
+              {/* Product Hunt */}
+              <div className="animate-fade-in delay-4" style={{ marginTop: '24px', display: 'flex', justifyContent: 'center' }}>
+                <a href="https://www.producthunt.com/products/claude-code-en-espanol?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-claude-code-en-espanol" target="_blank" rel="noopener noreferrer">
+                  {isDark ? (
+                    <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1063751&theme=dark&t=1768701681086" alt="Claude Code en Español on Product Hunt" width="250" height="54" />
+                  ) : (
+                    <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1063751&theme=light&t=1768701681086" alt="Claude Code en Español on Product Hunt" width="250" height="54" />
+                  )}
+                </a>
+              </div>
+
+              {/* Stats */}
+              <div className="animate-fade-in delay-4" style={{
+                display: 'flex',
+                justifyContent: 'center',
+                gap: '48px',
+                marginTop: '64px',
+                flexWrap: 'wrap',
+              }}>
+                {[
+                  { value: '47', label: 'lecciones gratis' },
+                  { value: '7', label: 'modulos' },
+                  { value: '20h+', label: 'de contenido' },
+                ].map((stat, i) => (
+                  <div key={i} style={{ textAlign: 'center' }}>
+                    <div style={{ fontSize: '32px', fontWeight: 600, color: t.text }}>{stat.value}</div>
+                    <div style={{ fontSize: '13px', color: t.textTertiary, marginTop: '4px' }}>{stat.label}</div>
+                  </div>
+                ))}
               </div>
             </div>
+          </section>
 
-            {mobileMenuOpen && (
-              <div className="md:hidden border-t border-slate-200 dark:border-slate-800 py-4 px-2 bg-slate-50/95 dark:bg-slate-950/95 backdrop-blur-md">
-                <div className="flex flex-col space-y-1">
-                  <Link href="/curso-gratis" className="text-indigo-600 font-semibold py-2 px-2 rounded-lg" onClick={() => setMobileMenuOpen(false)}>
-                    Curso Gratis (47 lecciones)
-                  </Link>
-                  <Link href="/premium" className="text-slate-600 dark:text-slate-400 hover:text-indigo-600 py-2 px-2 rounded-lg" onClick={() => setMobileMenuOpen(false)}>
-                    Cursos Premium
-                  </Link>
-                  <Link href="/blog" className="text-slate-600 dark:text-slate-400 hover:text-indigo-600 py-2 px-2 rounded-lg" onClick={() => setMobileMenuOpen(false)}>
-                    Blog
-                  </Link>
-                  <Link href="/curso" className="text-slate-600 dark:text-slate-400 hover:text-indigo-600 py-2 px-2 rounded-lg" onClick={() => setMobileMenuOpen(false)}>
-                    Ya tengo cuenta
-                  </Link>
+          {/* Divider */}
+          <div style={{ height: '1px', background: t.border, maxWidth: '1100px', margin: '0 auto' }} />
+
+          {/* Terminal Demo */}
+          <section style={{ padding: '80px 24px' }}>
+            <div style={{ maxWidth: '700px', margin: '0 auto' }}>
+              <div style={{ textAlign: 'center', marginBottom: '48px' }}>
+                <p style={{ fontSize: '13px', fontWeight: 500, color: t.accent, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '16px' }}>
+                  Asi funciona
+                </p>
+                <h2 style={{ fontSize: '36px', fontWeight: 600, letterSpacing: '-0.02em', margin: 0, color: t.text }}>
+                  Pidelo y Claude lo crea
+                </h2>
+              </div>
+
+              <div ref={terminalRef} style={{ position: 'relative' }}>
+                <div style={{
+                  position: 'absolute',
+                  inset: '-16px',
+                  background: `radial-gradient(ellipse, ${t.glowStrong} 0%, transparent 70%)`,
+                  borderRadius: '28px',
+                  pointerEvents: 'none',
+                }} />
+                <div style={{
+                  position: 'relative',
+                  background: isDark ? '#0f1011' : '#ffffff',
+                  borderRadius: '20px',
+                  border: `1px solid ${isDark ? t.border : '#e8ecf4'}`,
+                  overflow: 'hidden',
+                  boxShadow: isDark ? `0 0 60px ${t.glowStrong}` : '0 8px 32px rgba(0,0,0,0.08)',
+                }}>
+                  {/* Terminal header */}
+                  <div style={{
+                    height: '40px',
+                    borderBottom: `1px solid ${isDark ? t.border : '#e8ecf4'}`,
+                    display: 'flex',
+                    alignItems: 'center',
+                    padding: '0 16px',
+                    gap: '8px',
+                    background: isDark ? t.bgTertiary : '#f8fafc',
+                  }}>
+                    <div style={{ display: 'flex', gap: '6px' }}>
+                      <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#ff5f57' }} />
+                      <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#febc2e' }} />
+                      <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#28c840' }} />
+                    </div>
+                    <div style={{ flex: 1, textAlign: 'center' }}>
+                      <span style={{ fontSize: '11px', color: t.textTertiary, fontWeight: 500 }}>Terminal — claude-code</span>
+                    </div>
+                  </div>
+                  {/* Terminal body */}
+                  <div style={{
+                    padding: '24px',
+                    fontFamily: "'SF Mono', 'Fira Code', 'Consolas', monospace",
+                    fontSize: '13px',
+                    lineHeight: 1.8,
+                    background: isDark ? '#0a0b0c' : '#1a1a2e',
+                    color: '#e2e8f0',
+                    minHeight: '220px',
+                  }}>
+                    <div style={{ display: 'flex', gap: '10px', marginBottom: '12px' }}>
+                      <span style={{ color: '#22c55e' }}>➜</span>
+                      <span style={{ color: '#60a5fa' }}>~/proyecto</span>
+                      <span style={{ color: '#f1f5f9' }}>
+                        {typedCommand}
+                        {terminalStep === 0 && <span className="animate-pulse" style={{ display: 'inline-block', width: '8px', height: '16px', background: '#94a3b8', marginLeft: '2px', verticalAlign: 'text-bottom' }} />}
+                      </span>
+                    </div>
+                    {terminalStep >= 1 && (
+                      <div style={{ color: '#94a3b8', marginBottom: '4px' }}>
+                        <span style={{ color: '#eab308' }}>●</span> Analizando estructura del proyecto...
+                      </div>
+                    )}
+                    {terminalStep >= 2 && (
+                      <div style={{ color: '#94a3b8', marginBottom: '12px' }}>
+                        <span style={{ color: '#eab308' }}>●</span> Claude esta pensando...
+                      </div>
+                    )}
+                    {terminalStep >= 3 && (
+                      <div style={{
+                        background: 'rgba(255,255,255,0.05)',
+                        borderRadius: '8px',
+                        padding: '12px 16px',
+                        border: '1px solid rgba(255,255,255,0.08)',
+                        marginBottom: '12px',
+                      }}>
+                        <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
+                          <span style={{ color: '#a78bfa', fontWeight: 600, flexShrink: 0 }}>Claude:</span>
+                          <span style={{ color: '#e2e8f0', lineHeight: 1.6 }}>
+                            {typedResponse}
+                            {terminalStep === 3 && <span className="animate-pulse" style={{ display: 'inline-block', width: '8px', height: '16px', background: '#a78bfa', marginLeft: '2px', verticalAlign: 'text-bottom' }} />}
+                          </span>
+                        </div>
+                      </div>
+                    )}
+                    {terminalStep >= 4 && (
+                      <div style={{ display: 'flex', gap: '10px' }}>
+                        <span style={{ color: '#22c55e' }}>➜</span>
+                        <span style={{ color: '#60a5fa' }}>~/proyecto</span>
+                        <span className="animate-pulse" style={{ display: 'inline-block', width: '8px', height: '16px', background: '#94a3b8' }} />
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
-            )}
-          </div>
-        </nav>
-
-        {/* Hero */}
-        <main className="relative overflow-hidden pb-20 lg:pb-28 hero-section">
-          <div className="max-w-4xl mx-auto px-6 pt-16 lg:pt-20 text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 dark:bg-indigo-500/20 border border-blue-100 dark:border-indigo-400/30 text-blue-600 dark:text-indigo-300 text-sm font-semibold mb-6 shadow-sm">
-              47 lecciones gratuitas · 7 módulos · En español
             </div>
+          </section>
 
-            <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight mb-6 leading-[1.1] text-slate-950 dark:text-white">
-              Crea software con IA<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400">
-                sin experiencia previa
-              </span>
-            </h1>
+          {/* Divider */}
+          <div style={{ height: '1px', background: t.border, maxWidth: '1100px', margin: '0 auto' }} />
 
-            <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-              Aprende Claude Code haciendo proyectos reales. Desde tu primera web hasta automatizaciones y bots de IA. Todo gratis, todo en español.
-            </p>
+          {/* Modules */}
+          <section style={{ padding: '80px 24px' }}>
+            <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+              <div style={{ textAlign: 'center', marginBottom: '56px' }}>
+                <p style={{ fontSize: '13px', fontWeight: 500, color: t.accent, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '16px' }}>
+                  7 modulos gratuitos
+                </p>
+                <h2 style={{ fontSize: '36px', fontWeight: 600, letterSpacing: '-0.02em', margin: 0, color: t.text }}>
+                  Empieza por donde quieras
+                </h2>
+              </div>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link
-                href="/curso-gratis"
-                className="btn-cta-primary w-full sm:w-auto font-bold py-4 px-10 rounded-2xl transition-all duration-200 flex items-center justify-center gap-2 text-lg"
-              >
-                <span className="material-symbols-outlined">rocket_launch</span>
-                Empieza gratis
-              </Link>
-              <Link
-                href="/curso"
-                className="w-full sm:w-auto bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 text-slate-600 dark:text-slate-300 font-medium py-4 px-8 rounded-2xl shadow-sm hover:shadow-md transition-all duration-200 flex items-center justify-center gap-2"
-              >
-                Ya tengo cuenta
-              </Link>
-            </div>
-
-            <div className="mt-6 flex items-center justify-center gap-2 text-sm text-slate-500 dark:text-slate-400">
-              <span className="material-symbols-outlined text-emerald-500">check_circle</span>
-              <span>100% gratis · Sin tarjeta de crédito · Acceso inmediato</span>
-            </div>
-
-            {/* Product Hunt */}
-            <div className="mt-6 flex justify-center">
-              <a href="https://www.producthunt.com/products/claude-code-en-espanol?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-claude-code-en-espanol" target="_blank" rel="noopener noreferrer">
-                <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1063751&theme=light&t=1768701681086" alt="Claude Code en Español on Product Hunt" width="250" height="54" className="dark:hidden" />
-                <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1063751&theme=dark&t=1768701681086" alt="Claude Code en Español on Product Hunt" width="250" height="54" className="hidden dark:block" />
-              </a>
-            </div>
-
-            {/* Terminal Demo */}
-            <div className="mt-16 relative" ref={terminalRef}>
-              <div className="absolute -inset-4 bg-gradient-to-tr from-indigo-600/30 to-purple-500/30 blur-3xl opacity-60"></div>
-              <div className="relative bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden aspect-[16/9] flex flex-col">
-                <div className="h-10 border-b border-slate-200 dark:border-slate-800 flex items-center px-4 gap-2 bg-slate-50 dark:bg-slate-900/50">
-                  <div className="flex gap-1.5">
-                    <div className="w-3 h-3 rounded-full bg-red-400"></div>
-                    <div className="w-3 h-3 rounded-full bg-amber-400"></div>
-                    <div className="w-3 h-3 rounded-full bg-emerald-400"></div>
-                  </div>
-                  <div className="flex-1 text-center">
-                    <span className="text-[10px] text-slate-400 font-medium">Terminal — claude-code</span>
-                  </div>
-                </div>
-                <div className="flex-1 p-6 text-left font-mono text-sm bg-slate-950 text-slate-100 overflow-hidden">
-                  <div className="flex gap-3 mb-4">
-                    <span className="text-emerald-500">➜</span>
-                    <span className="text-blue-400">~/proyecto</span>
-                    <span className="text-white">
-                      {typedCommand}
-                      {terminalStep === 0 && <span className="inline-block h-4 w-2 bg-slate-400 animate-pulse ml-0.5"></span>}
-                    </span>
-                  </div>
-                  {terminalStep >= 1 && (
-                    <div className="text-slate-400 mb-2 animate-fade-in">
-                      <span className="text-yellow-500">●</span> Analizando estructura del proyecto...
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+                gap: '12px',
+              }}>
+                {MODULOS_PREVIEW.map((mod, i) => (
+                  <Link
+                    key={mod.title}
+                    href={mod.href}
+                    className="module-card"
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '16px',
+                      padding: '20px 24px',
+                      background: isDark ? t.bgSecondary : '#ffffff',
+                      border: `1px solid ${isDark ? t.border : '#e8ecf4'}`,
+                      borderRadius: '14px',
+                      textDecoration: 'none',
+                      color: 'inherit',
+                      transition: 'all 0.2s ease',
+                      boxShadow: isDark ? 'none' : '0 1px 3px rgba(0,0,0,0.04)',
+                    }}
+                  >
+                    <div style={{
+                      width: '48px',
+                      height: '48px',
+                      background: isDark
+                        ? 'linear-gradient(135deg, rgba(94,106,210,0.15), rgba(94,106,210,0.05))'
+                        : 'linear-gradient(135deg, #eef2ff, #e0e7ff)',
+                      borderRadius: '14px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '22px',
+                      flexShrink: 0,
+                      border: `1px solid ${isDark ? 'rgba(94,106,210,0.2)' : '#c7d2fe'}`,
+                    }}>
+                      {mod.emoji}
                     </div>
-                  )}
-                  {terminalStep >= 2 && (
-                    <div className="text-slate-400 mb-4 animate-fade-in">
-                      <span className="text-yellow-500">●</span> Claude está pensando...
-                    </div>
-                  )}
-                  {terminalStep >= 3 && (
-                    <div className="text-slate-200 mb-4 bg-slate-800/50 p-4 rounded-lg border border-slate-700 animate-fade-in">
-                      <div className="flex gap-2 items-start">
-                        <span className="text-purple-400 font-semibold shrink-0">Claude:</span>
-                        <span className="leading-relaxed">
-                          {typedResponse}
-                          {terminalStep === 3 && <span className="inline-block h-4 w-2 bg-purple-400 animate-pulse ml-0.5"></span>}
-                        </span>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ fontSize: '15px', fontWeight: 600, color: t.text, marginBottom: '2px' }}>
+                        {mod.title}
+                      </div>
+                      <div style={{ fontSize: '13px', color: t.textSecondary, lineHeight: 1.5 }}>
+                        {mod.desc}
                       </div>
                     </div>
-                  )}
-                  {terminalStep >= 4 && (
-                    <div className="flex gap-3 animate-fade-in">
-                      <span className="text-emerald-500">➜</span>
-                      <span className="text-blue-400">~/proyecto</span>
-                      <span className="inline-block h-4 w-2 bg-slate-400 animate-pulse"></span>
+                    <div style={{
+                      padding: '4px 10px',
+                      fontSize: '11px',
+                      fontWeight: 600,
+                      color: isDark ? '#4ade80' : '#065f46',
+                      background: isDark ? 'rgba(34,197,94,0.15)' : '#d1fae5',
+                      borderRadius: '6px',
+                      flexShrink: 0,
+                    }}>
+                      {mod.lessons}
                     </div>
-                  )}
-                </div>
+                  </Link>
+                ))}
+              </div>
+
+              <div style={{ textAlign: 'center', marginTop: '32px' }}>
+                <Link href="/curso-gratis" style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  padding: '14px 28px',
+                  fontSize: '15px',
+                  borderRadius: '10px',
+                  background: t.accent,
+                  color: 'white',
+                  textDecoration: 'none',
+                  fontWeight: 600,
+                  transition: 'all 0.2s ease',
+                  boxShadow: isDark ? `0 0 40px ${t.glowStrong}` : '0 4px 14px rgba(94,106,210,0.25)',
+                }}>
+                  Ver los 7 modulos →
+                </Link>
               </div>
             </div>
-          </div>
-        </main>
+          </section>
 
-        {/* Module Preview */}
-        <section className="py-20 bg-white dark:bg-slate-950">
-          <div className="max-w-4xl mx-auto px-6">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">
-                Empieza por donde quieras
-              </h2>
-              <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-                7 módulos gratuitos, desde usar Claude en el navegador hasta crear proyectos completos.
-              </p>
-            </div>
+          {/* Divider */}
+          <div style={{ height: '1px', background: t.border, maxWidth: '1100px', margin: '0 auto' }} />
 
-            <div className="grid md:grid-cols-3 gap-6">
-              {MODULE_PREVIEW.map((mod) => (
-                <Link
-                  key={mod.title}
-                  href={mod.href}
-                  className="module-preview block bg-slate-50 dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 transition-all duration-200"
-                >
-                  <div className="w-12 h-12 rounded-xl bg-indigo-100 dark:bg-indigo-900/40 flex items-center justify-center text-2xl mb-4">
-                    {mod.emoji}
-                  </div>
-                  <h3 className="font-bold text-slate-900 dark:text-white mb-2">{mod.title}</h3>
-                  <p className="text-sm text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">{mod.desc}</p>
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-medium text-indigo-600 dark:text-indigo-400">{mod.lessons} lecciones</span>
-                    <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/30 px-2 py-0.5 rounded-full">Gratis</span>
-                  </div>
-                </Link>
-              ))}
-            </div>
+          {/* Premium CTA */}
+          <section style={{ padding: '80px 24px', textAlign: 'center', position: 'relative' }}>
+            <div style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: '500px',
+              height: '300px',
+              background: `radial-gradient(ellipse, ${t.glow} 0%, transparent 70%)`,
+              pointerEvents: 'none',
+            }} />
 
-            <div className="text-center mt-10">
-              <Link
-                href="/curso-gratis"
-                className="inline-flex items-center gap-2 text-indigo-600 dark:text-indigo-400 font-semibold hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors"
-              >
-                Ver los 7 módulos
-                <span className="material-symbols-outlined text-lg">arrow_forward</span>
-              </Link>
-            </div>
-          </div>
-        </section>
+            <div style={{ maxWidth: '600px', margin: '0 auto', position: 'relative' }}>
+              <div style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                padding: '8px 16px',
+                background: isDark ? 'rgba(245,158,11,0.1)' : 'rgba(245,158,11,0.12)',
+                border: '1px solid rgba(245,158,11,0.25)',
+                borderRadius: '100px',
+                fontSize: '13px',
+                fontWeight: 500,
+                color: isDark ? '#fbbf24' : '#b45309',
+                marginBottom: '24px',
+              }}>
+                {Icons.zap(isDark ? '#fbbf24' : '#d97706')}
+                Cursos avanzados disponibles
+              </div>
 
-        {/* Upgrade CTA */}
-        <section className="py-16 bg-slate-50 dark:bg-slate-900/50">
-          <div className="max-w-4xl mx-auto px-6">
-            <div className="bg-gradient-to-br from-indigo-600 to-purple-700 rounded-2xl p-8 md:p-12 text-white text-center relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" />
-              <h2 className="text-2xl md:text-3xl font-bold mb-3 relative">
+              <h2 style={{
+                fontSize: 'clamp(28px, 4vw, 40px)',
+                fontWeight: 600,
+                letterSpacing: '-0.02em',
+                margin: '0 0 16px 0',
+                color: t.text,
+              }}>
                 ¿Quieres crear un SaaS completo?
               </h2>
-              <p className="text-indigo-100 mb-8 max-w-lg mx-auto relative">
-                El curso de pago te lleva de cero a lanzar tu propio producto en 10 semanas. Con base de datos, auth, pagos y deploy.
+
+              <p style={{
+                fontSize: '16px',
+                color: t.textSecondary,
+                margin: '0 0 32px 0',
+                lineHeight: 1.6,
+              }}>
+                El curso de pago te lleva de cero a lanzar tu propio producto en 10 semanas.<br />
+                Con base de datos, auth, pagos y deploy.
               </p>
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 relative">
-                <Link href="/curso-crea-tu-software" className="bg-white text-indigo-700 font-bold py-3 px-8 rounded-xl hover:bg-indigo-50 transition-colors shadow-lg">
-                  Ver curso premium
+
+              <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
+                <Link href="/curso-crea-tu-software" style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  padding: '14px 28px',
+                  fontSize: '15px',
+                  borderRadius: '10px',
+                  background: t.accent,
+                  color: 'white',
+                  textDecoration: 'none',
+                  fontWeight: 600,
+                  transition: 'all 0.2s ease',
+                  boxShadow: `0 0 40px ${t.glowStrong}`,
+                }}>
+                  Ver curso premium →
                 </Link>
-                <Link href="/premium" className="text-white/80 hover:text-white font-medium underline underline-offset-4 transition-colors">
-                  Todos los cursos avanzados
+                <Link href="/premium" style={{
+                  padding: '14px 28px',
+                  fontSize: '15px',
+                  borderRadius: '10px',
+                  border: `1px solid ${isDark ? t.border : '#e2e8f0'}`,
+                  background: isDark ? 'transparent' : '#ffffff',
+                  color: t.text,
+                  textDecoration: 'none',
+                  fontWeight: 500,
+                  transition: 'all 0.2s ease',
+                }}>
+                  Todos los cursos
                 </Link>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
+        </main>
 
         {/* Footer */}
-        <footer className="bg-slate-900 text-slate-300 py-12">
-          <div className="max-w-5xl mx-auto px-6">
-            <div className="grid md:grid-cols-3 gap-8 mb-8">
-              <div>
-                <h3 className="text-white font-bold mb-4 flex items-center gap-2">
-                  <div className="bg-indigo-600 p-1.5 rounded-lg">
-                    <span className="material-symbols-outlined text-white text-lg">terminal</span>
-                  </div>
-                  Claude Code en Español
-                </h3>
-                <p className="text-sm">
-                  Curso gratuito para la comunidad hispanohablante. 47 lecciones, 7 módulos.
-                </p>
-              </div>
-              <div>
-                <h4 className="text-white font-semibold mb-4">Curso</h4>
-                <ul className="space-y-2 text-sm">
-                  <li><Link href="/curso-gratis" className="hover:text-white transition-colors">Curso Gratis</Link></li>
-                  <li><Link href="/fundamentos/que-es" className="hover:text-white transition-colors">Fundamentos</Link></li>
-                  <li><Link href="/proyectos" className="hover:text-white transition-colors">Proyectos</Link></li>
-                  <li><Link href="/clawdbot" className="hover:text-white transition-colors">Clawdbot</Link></li>
-                  <li><Link href="/mcp" className="hover:text-white transition-colors">MCP</Link></li>
-                  <li><Link href="/recursos" className="hover:text-white transition-colors">Recursos</Link></li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="text-white font-semibold mb-4">Más</h4>
-                <ul className="space-y-2 text-sm">
-                  <li><Link href="/premium" className="hover:text-white transition-colors">Cursos Premium</Link></li>
-                  <li><Link href="/blog" className="hover:text-white transition-colors">Blog</Link></li>
-                  <li><a href="https://discord.gg/PeqyDhSBEh" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Discord</a></li>
-                  <li><a href="https://www.josusanz.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Josu Sanz</a></li>
-                  <li><a href="https://github.com/Josusanz" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">GitHub</a></li>
-                </ul>
-              </div>
+        <footer style={{
+          borderTop: `1px solid ${t.border}`,
+          padding: '40px 24px',
+        }}>
+          <div style={{
+            maxWidth: '1100px',
+            margin: '0 auto',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: '24px',
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <div style={{
+                width: '28px',
+                height: '28px',
+                background: 'linear-gradient(135deg, #5e6ad2, #8b5cf6)',
+                borderRadius: '6px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '12px',
+                fontWeight: 700,
+                color: 'white',
+              }}>AS</div>
+              <span style={{ fontWeight: 600, fontSize: '14px', color: t.text }}>aprende.software</span>
             </div>
-            <div className="border-t border-slate-800 pt-8 text-center text-sm">
-              <p>
-                © 2026 Josu Sanz ·{' '}
-                <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
-                  CC BY-NC-SA 4.0
-                </a>
-                {' '}·{' '}
-                <Link href="/privacidad" className="hover:text-white transition-colors">Privacidad</Link>
-              </p>
+
+            <div style={{ display: 'flex', gap: '24px', fontSize: '14px', flexWrap: 'wrap', justifyContent: 'center' }}>
+              <Link href="/curso-gratis" style={{ color: t.textTertiary, textDecoration: 'none' }}>Curso Gratis</Link>
+              <Link href="/premium" style={{ color: t.textTertiary, textDecoration: 'none' }}>Premium</Link>
+              <Link href="/blog" style={{ color: t.textTertiary, textDecoration: 'none' }}>Blog</Link>
+              <a href="https://discord.gg/PeqyDhSBEh" target="_blank" rel="noopener noreferrer" style={{ color: t.textTertiary, textDecoration: 'none' }}>Discord</a>
+              <Link href="/privacidad" style={{ color: t.textTertiary, textDecoration: 'none' }}>Privacidad</Link>
             </div>
+
+            <p style={{ fontSize: '13px', color: t.textTertiary, margin: 0 }}>
+              © 2026 Josu Sanz ·{' '}
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer" style={{ color: t.textTertiary, textDecoration: 'none' }}>
+                CC BY-NC-SA 4.0
+              </a>
+            </p>
           </div>
         </footer>
-
-        {/* Dark Mode Toggle */}
-        <div className="fixed bottom-6 right-6 z-40">
-          <button
-            onClick={toggleDarkMode}
-            aria-label={isDark ? "Activar modo claro" : "Activar modo oscuro"}
-            className="w-12 h-12 flex items-center justify-center bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full shadow-lg hover:scale-110 transition-transform"
-          >
-            <span className="material-symbols-outlined text-slate-600 dark:text-slate-300 text-[20px]">
-              {isDark ? 'light_mode' : 'dark_mode'}
-            </span>
-          </button>
-        </div>
       </div>
     </>
   )

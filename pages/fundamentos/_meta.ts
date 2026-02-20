@@ -1,4 +1,15 @@
 export default {
+  "*": {
+    theme: {
+      sidebar: false,
+      navbar: false,
+      toc: false,
+      footer: false,
+      breadcrumb: false,
+      pagination: false,
+      timestamp: false,
+    }
+  },
   "index": "Fundamentos",
   "que-es": "1.1 ¿Qué es Claude Code?",
   "por-que-claude-code": "1.2 ¿Por qué Claude Code?",

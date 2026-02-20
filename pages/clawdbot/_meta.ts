@@ -1,4 +1,15 @@
 export default {
+  "*": {
+    theme: {
+      sidebar: false,
+      navbar: false,
+      toc: false,
+      footer: false,
+      breadcrumb: false,
+      pagination: false,
+      timestamp: false,
+    }
+  },
   "index": "Clawdbot",
   "que-es": "1. ¿Qué es Clawdbot?",
   "instalacion": "2. Instalación",

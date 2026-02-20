@@ -1,4 +1,15 @@
 export default {
+  "*": {
+    theme: {
+      sidebar: false,
+      navbar: false,
+      toc: false,
+      footer: false,
+      breadcrumb: false,
+      pagination: false,
+      timestamp: false,
+    }
+  },
   "index": "MCP",
   "que-es": "1. ¿Qué es MCP?",
   "arquitectura": "2. Cómo funciona",
