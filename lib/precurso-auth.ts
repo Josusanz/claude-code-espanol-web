@@ -2,14 +2,17 @@
  * CONFIGURACIÓN DE ACCESO AL PRECURSO
  *
  * Contraseña compartida para todos los alumnos.
- * Cámbiala aquí cuando quieras dar acceso a una nueva cohorte.
+ * Configura PRECURSO_PASSWORD en las variables de entorno de Vercel.
  */
-
-export const PRECURSO_PASSWORD = '1raEdic0n'
 
 /**
  * Verifica si la contraseña es correcta
  */
 export function verifyPrecursoPassword(password: string): boolean {
-  return password === PRECURSO_PASSWORD
+  const expected = process.env.PRECURSO_PASSWORD
+  if (!expected) {
+    console.error('[precurso-auth] PRECURSO_PASSWORD no configurada en env vars')
+    return false
+  }
+  return password === expected
 }
