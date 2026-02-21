@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import type { ReactElement } from 'react'
 import CursoEmailGate from '../../../components/CursoEmailGate'
 import { CURSO_SEMANAS, getCursoTrackingIds, Semana, DiaSemana } from '../../../lib/curso-data'
@@ -73,10 +73,37 @@ function useSemanaProgress(semanaNum: number) {
     }
   }
 
+  const markComplete = async (id: string) => {
+    let shouldSync = false
+    let newProgress: Record<string, boolean> = {}
+
+    setProgress(prev => {
+      if (prev[id]) return prev // Already completed
+      shouldSync = true
+      newProgress = { ...prev, [id]: true }
+      return newProgress
+    })
+
+    if (!shouldSync) return
+
+    try { localStorage.setItem('curso-progress', JSON.stringify(newProgress)) } catch {}
+
+    if (userEmail) {
+      try {
+        await fetch('/api/curso/sync-progress', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: userEmail, progress: newProgress })
+        })
+      } catch {}
+    }
+  }
+
   return {
     progress,
     loading,
     toggle,
+    markComplete,
     ids,
     preclaseCompleted: progress[ids.preclase] || false,
     claseCompleted: progress[ids.clase] || false,
@@ -84,11 +111,13 @@ function useSemanaProgress(semanaNum: number) {
   }
 }
 
-function useChecklist(checklistKey: string | number, totalItems: number) {
+function useChecklist(checklistKey: string | number, totalItems: number, onAllCompleted?: () => void) {
   const [checked, setChecked] = useState<Record<number, boolean>>({})
   const key = String(checklistKey)
+  const firedCompleteRef = useRef(false)
 
   useEffect(() => {
+    firedCompleteRef.current = false
     try {
       const saved = localStorage.getItem('curso-checklist')
       if (saved) {
@@ -116,6 +145,12 @@ function useChecklist(checklistKey: string | number, totalItems: number) {
       localStorage.setItem('curso-checklist', JSON.stringify(all))
     } catch {
       // Ignore
+    }
+    // Auto-complete when all items checked
+    const newCount = Object.values(newChecked).filter(Boolean).length
+    if (newCount === totalItems && !firedCompleteRef.current && onAllCompleted) {
+      firedCompleteRef.current = true
+      onAllCompleted()
     }
   }
 
@@ -192,7 +227,7 @@ const DAY_SUB_SECTIONS = [
 ]
 
 function SemanaContentMultiDay({ semana }: { semana: Semana }) {
-  const { toggle, ids, preclaseCompleted, claseCompleted, entregableCompleted } = useSemanaProgress(semana.num)
+  const { toggle, markComplete, ids, preclaseCompleted, claseCompleted, entregableCompleted } = useSemanaProgress(semana.num)
   const [activeKey, setActiveKey] = useState<MultiDayNavKey>('d1-prep')
   const dias = semana.dias!
 
@@ -200,7 +235,7 @@ function SemanaContentMultiDay({ semana }: { semana: Semana }) {
   const activeDayIdx = parseInt(activeKey.split('-')[0].replace('d', '')) - 1
   const activeDayEntregable = dias[activeDayIdx]?.entregable
   const checklistKey = `${semana.num}-d${activeDayIdx + 1}`
-  const checklist = useChecklist(checklistKey, activeDayEntregable?.checklist.length || 0)
+  const checklist = useChecklist(checklistKey, activeDayEntregable?.checklist.length || 0, () => markComplete(ids.entregable))
 
   // Build flat nav list for prev/next navigation
   const allNavKeys: MultiDayNavKey[] = []
@@ -417,22 +452,19 @@ function SemanaContentMultiDay({ semana }: { semana: Semana }) {
                     {activeDia.preclase.titulo} • {activeDia.preclase.duracion}
                   </p>
                 </div>
-                <button
-                  onClick={() => toggle(ids.preclase)}
-                  className="complete-btn"
-                  style={{
+                {preclaseCompleted && (
+                  <span style={{
                     padding: '8px 14px', fontSize: '12px', fontWeight: 600,
-                    color: preclaseCompleted ? '#22c55e' : '#fff',
-                    background: preclaseCompleted ? 'rgba(34, 197, 94, 0.1)' : '#334155',
-                    border: `1px solid ${preclaseCompleted ? 'rgba(34, 197, 94, 0.3)' : '#475569'}`,
-                    borderRadius: '8px', cursor: 'pointer', whiteSpace: 'nowrap'
-                  }}
-                >
-                  {preclaseCompleted ? '✓ Completada' : 'Marcar completada'}
-                </button>
+                    color: '#22c55e', background: 'rgba(34, 197, 94, 0.1)',
+                    border: '1px solid rgba(34, 197, 94, 0.3)',
+                    borderRadius: '8px', whiteSpace: 'nowrap'
+                  }}>
+                    ✓ Completada
+                  </span>
+                )}
               </div>
 
-              {renderPreclaseContent(activeDia.preclase.contenido)}
+              {renderPreclaseContent(activeDia.preclase.contenido, () => markComplete(ids.preclase))}
 
               {activeDia.preclase.recursos.length > 0 && (
                 <div style={{
@@ -547,28 +579,13 @@ function SemanaContentMultiDay({ semana }: { semana: Semana }) {
           {/* === GRABACIÓN === */}
           {activeDia && activeSubSection === 'grab' && (
             <section>
-              <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '16px', marginBottom: '24px' }}>
-                <div>
-                  <h2 style={{ margin: '0 0 6px', fontSize: '24px', fontWeight: 700, color: '#0f172a' }}>
-                    📹 Grabación — Día {activeDayIndex + 1}
-                  </h2>
-                  <p style={{ margin: 0, fontSize: '14px', color: '#64748b' }}>
-                    {activeDia.titulo} • {activeDia.clase.fecha}
-                  </p>
-                </div>
-                <button
-                  onClick={() => toggle(ids.clase)}
-                  className="complete-btn"
-                  style={{
-                    padding: '8px 14px', fontSize: '12px', fontWeight: 600,
-                    color: claseCompleted ? '#22c55e' : '#fff',
-                    background: claseCompleted ? 'rgba(34, 197, 94, 0.1)' : '#334155',
-                    border: `1px solid ${claseCompleted ? 'rgba(34, 197, 94, 0.3)' : '#475569'}`,
-                    borderRadius: '8px', cursor: 'pointer', whiteSpace: 'nowrap'
-                  }}
-                >
-                  {claseCompleted ? '✓ Vista' : 'Marcar como vista'}
-                </button>
+              <div style={{ marginBottom: '24px' }}>
+                <h2 style={{ margin: '0 0 6px', fontSize: '24px', fontWeight: 700, color: '#0f172a' }}>
+                  📹 Grabación — Día {activeDayIndex + 1}
+                </h2>
+                <p style={{ margin: 0, fontSize: '14px', color: '#64748b' }}>
+                  {activeDia.titulo} • {activeDia.clase.fecha}
+                </p>
               </div>
 
               {activeDia.clase.videos && activeDia.clase.videos.length > 0 ? (
@@ -662,15 +679,16 @@ function SemanaContentMultiDay({ semana }: { semana: Semana }) {
                     {activeDia.entregable.titulo} • Fecha límite: {activeDia.entregable.fechaLimite}
                   </p>
                 </div>
-                <button onClick={() => toggle(ids.entregable)} className="complete-btn" style={{
-                  padding: '10px 16px', fontSize: '13px', fontWeight: 600,
-                  color: entregableCompleted ? '#22c55e' : '#fff',
-                  background: entregableCompleted ? 'rgba(34, 197, 94, 0.1)' : '#334155',
-                  border: `1px solid ${entregableCompleted ? 'rgba(34, 197, 94, 0.3)' : '#475569'}`,
-                  borderRadius: '8px', cursor: 'pointer', whiteSpace: 'nowrap'
-                }}>
-                  {entregableCompleted ? '✓ Completado' : 'Marcar completado'}
-                </button>
+                {entregableCompleted && (
+                  <span style={{
+                    padding: '10px 16px', fontSize: '13px', fontWeight: 600,
+                    color: '#22c55e', background: 'rgba(34, 197, 94, 0.1)',
+                    border: '1px solid rgba(34, 197, 94, 0.3)',
+                    borderRadius: '8px', whiteSpace: 'nowrap'
+                  }}>
+                    ✓ Completado
+                  </span>
+                )}
               </div>
 
               <p style={{
@@ -795,8 +813,8 @@ function SemanaContentMultiDay({ semana }: { semana: Semana }) {
 
 // === Standard single-day layout ===
 function SemanaContent({ semana }: { semana: Semana }) {
-  const { toggle, ids, preclaseCompleted, claseCompleted, entregableCompleted } = useSemanaProgress(semana.num)
-  const checklist = useChecklist(semana.num, semana.entregable.checklist.length)
+  const { toggle, markComplete, ids, preclaseCompleted, claseCompleted, entregableCompleted } = useSemanaProgress(semana.num)
+  const checklist = useChecklist(semana.num, semana.entregable.checklist.length, () => markComplete(ids.entregable))
   const [activeSection, setActiveSection] = useState<SectionKey>('preclase')
 
   const completedMap: Record<SectionKey, boolean> = {
@@ -1036,29 +1054,21 @@ function SemanaContent({ semana }: { semana: Semana }) {
                     {semana.preclase.titulo} • {semana.preclase.duracion}
                   </p>
                 </div>
-                <button
-                  onClick={() => toggle(ids.preclase)}
-                  className="complete-btn"
-                  style={{
-                    padding: '10px 16px',
-                    fontSize: '13px',
-                    fontWeight: 600,
-                    color: preclaseCompleted ? '#22c55e' : '#fff',
-                    background: preclaseCompleted ? 'rgba(34, 197, 94, 0.1)' : '#334155',
-                    border: `1px solid ${preclaseCompleted ? 'rgba(34, 197, 94, 0.3)' : '#475569'}`,
-                    borderRadius: '8px',
-                    cursor: 'pointer',
-                    transition: 'all 0.2s',
-                    whiteSpace: 'nowrap'
-                  }}
-                >
-                  {preclaseCompleted ? '✓ Completado' : 'Marcar completado'}
-                </button>
+                {preclaseCompleted && (
+                  <span style={{
+                    padding: '10px 16px', fontSize: '13px', fontWeight: 600,
+                    color: '#22c55e', background: 'rgba(34, 197, 94, 0.1)',
+                    border: '1px solid rgba(34, 197, 94, 0.3)',
+                    borderRadius: '8px', whiteSpace: 'nowrap'
+                  }}>
+                    ✓ Completado
+                  </span>
+                )}
               </div>
 
               {/* Content cards */}
               <div style={{ marginBottom: '20px' }}>
-                {renderPreclaseContent(semana.preclase.contenido)}
+                {renderPreclaseContent(semana.preclase.contenido, () => markComplete(ids.preclase))}
               </div>
 
               {/* Resources */}
@@ -1114,38 +1124,13 @@ function SemanaContent({ semana }: { semana: Semana }) {
           {/* ===== CLASE EN VIVO ===== */}
           {activeSection === 'clase' && (
             <section>
-              <div style={{
-                display: 'flex',
-                alignItems: 'flex-start',
-                justifyContent: 'space-between',
-                gap: '16px',
-                marginBottom: '28px'
-              }}>
-                <div>
-                  <h2 style={{ margin: '0 0 6px', fontSize: '24px', fontWeight: 700, color: '#0f172a' }}>
-                    Clase en vivo
-                  </h2>
-                  <p style={{ margin: 0, fontSize: '14px', color: '#64748b' }}>
-                    {semana.clase.fecha} • {semana.clase.hora} • {semana.clase.duracion}
-                  </p>
-                </div>
-                <button
-                  onClick={() => toggle(ids.clase)}
-                  className="complete-btn"
-                  style={{
-                    padding: '10px 16px',
-                    fontSize: '13px',
-                    fontWeight: 600,
-                    color: claseCompleted ? '#22c55e' : '#fff',
-                    background: claseCompleted ? 'rgba(34, 197, 94, 0.1)' : '#334155',
-                    border: `1px solid ${claseCompleted ? 'rgba(34, 197, 94, 0.3)' : '#475569'}`,
-                    borderRadius: '8px',
-                    cursor: 'pointer',
-                    whiteSpace: 'nowrap'
-                  }}
-                >
-                  {claseCompleted ? '✓ Vista' : 'Marcar como vista'}
-                </button>
+              <div style={{ marginBottom: '28px' }}>
+                <h2 style={{ margin: '0 0 6px', fontSize: '24px', fontWeight: 700, color: '#0f172a' }}>
+                  Clase en vivo
+                </h2>
+                <p style={{ margin: 0, fontSize: '14px', color: '#64748b' }}>
+                  {semana.clase.fecha} • {semana.clase.hora} • {semana.clase.duracion}
+                </p>
               </div>
 
               {/* Zoom card */}
@@ -1390,23 +1375,16 @@ function SemanaContent({ semana }: { semana: Semana }) {
                     {semana.entregable.titulo} • Fecha límite: {semana.entregable.fechaLimite}
                   </p>
                 </div>
-                <button
-                  onClick={() => toggle(ids.entregable)}
-                  className="complete-btn"
-                  style={{
-                    padding: '10px 16px',
-                    fontSize: '13px',
-                    fontWeight: 600,
-                    color: entregableCompleted ? '#22c55e' : '#fff',
-                    background: entregableCompleted ? 'rgba(34, 197, 94, 0.1)' : '#334155',
-                    border: `1px solid ${entregableCompleted ? 'rgba(34, 197, 94, 0.3)' : '#475569'}`,
-                    borderRadius: '8px',
-                    cursor: 'pointer',
-                    whiteSpace: 'nowrap'
-                  }}
-                >
-                  {entregableCompleted ? '✓ Completado' : 'Marcar completado'}
-                </button>
+                {entregableCompleted && (
+                  <span style={{
+                    padding: '10px 16px', fontSize: '13px', fontWeight: 600,
+                    color: '#22c55e', background: 'rgba(34, 197, 94, 0.1)',
+                    border: '1px solid rgba(34, 197, 94, 0.3)',
+                    borderRadius: '8px', whiteSpace: 'nowrap'
+                  }}>
+                    ✓ Completado
+                  </span>
+                )}
               </div>
 
               <p style={{

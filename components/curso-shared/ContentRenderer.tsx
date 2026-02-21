@@ -3,9 +3,10 @@ import { THEMES } from '../../lib/themes-data'
 
 // ============= PrepChecklistBlock =============
 
-function PrepChecklistBlock({ items }: { items: { text: string; checked: boolean }[] }) {
+function PrepChecklistBlock({ items, onAllCompleted }: { items: { text: string; checked: boolean }[]; onAllCompleted?: () => void }) {
   const storageKey = 'prep-checklist-' + items.map(i => i.text).join('|').slice(0, 80)
   const [checked, setChecked] = useState<Record<number, boolean>>({})
+  const [firedComplete, setFiredComplete] = useState(false)
 
   useEffect(() => {
     try {
@@ -18,6 +19,12 @@ function PrepChecklistBlock({ items }: { items: { text: string; checked: boolean
     const next = { ...checked, [index]: !checked[index] }
     setChecked(next)
     try { localStorage.setItem(storageKey, JSON.stringify(next)) } catch { /* ignore */ }
+    // Auto-complete when all items checked
+    const newCount = Object.values(next).filter(Boolean).length
+    if (newCount === items.length && !firedComplete && onAllCompleted) {
+      setFiredComplete(true)
+      onAllCompleted()
+    }
   }
 
   const completedCount = Object.values(checked).filter(Boolean).length
@@ -311,7 +318,7 @@ npm run dev`
 
 // ============= parseContentBlocks =============
 
-export function parseContentBlocks(text: string, codeBlocks: { lang: string; code: string }[]) {
+export function parseContentBlocks(text: string, codeBlocks: { lang: string; code: string }[], onChecklistAllCompleted?: () => void) {
   const elements: any[] = []
   const lines = text.split('\n')
   let i = 0
@@ -497,7 +504,7 @@ export function parseContentBlocks(text: string, codeBlocks: { lang: string; cod
         items.push({ text: lines[i].replace(/^- \[[ x]\] /, ''), checked: isChecked })
         i++
       }
-      elements.push(<PrepChecklistBlock key={key++} items={items} />)
+      elements.push(<PrepChecklistBlock key={key++} items={items} onAllCompleted={onChecklistAllCompleted} />)
       continue
     }
 
@@ -552,7 +559,7 @@ export function parseContentBlocks(text: string, codeBlocks: { lang: string; cod
 
 // ============= renderPreclaseContent =============
 
-export function renderPreclaseContent(contenido: string) {
+export function renderPreclaseContent(contenido: string, onChecklistAllCompleted?: () => void) {
   // Step 1: Extract code blocks and replace with placeholders
   const codeBlocks: { lang: string; code: string }[] = []
   const withPlaceholders = contenido.replace(/```(\w*)\n([\s\S]*?)```/g, (_, lang, code) => {
@@ -580,7 +587,7 @@ export function renderPreclaseContent(contenido: string) {
       bodyLines = lines
     }
 
-    const blocks = parseContentBlocks(bodyLines.join('\n'), codeBlocks)
+    const blocks = parseContentBlocks(bodyLines.join('\n'), codeBlocks, onChecklistAllCompleted)
 
     return (
       <div key={idx} style={{
