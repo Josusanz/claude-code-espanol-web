@@ -2,10 +2,9 @@ import { useState, useEffect, ReactNode } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { useTheme, ThemeToggleButton, THEME_GLOBAL_CSS } from '../lib/theme-utils'
-import { MODULOS_GRATIS, ModuloGratis } from '../lib/curso-gratis-data'
+import { MODULOS_GRATIS } from '../lib/curso-gratis-data'
 
 const PROGRESS_KEY = 'curso-gratis-progress'
-const SIDEBAR_WIDTH = 280
 
 function getLessonKey(moduleId: string, href: string): string {
   return `${moduleId}:${href}`
@@ -15,7 +14,6 @@ export default function CursoGratisLayout({ children }: { children: ReactNode })
   const router = useRouter()
   const { isDark, toggleTheme, t, mounted } = useTheme()
   const [progress, setProgress] = useState<Record<string, boolean>>({})
-  const [sidebarOpen, setSidebarOpen] = useState(false)
 
   const path = router.asPath.split(/[?#]/)[0]
 
@@ -47,11 +45,6 @@ export default function CursoGratisLayout({ children }: { children: ReactNode })
     } catch { /* ignore */ }
   }, [])
 
-  // Close sidebar on route change (mobile)
-  useEffect(() => {
-    setSidebarOpen(false)
-  }, [path])
-
   const handleToggleProgress = () => {
     if (!lessonKey) return
     try {
@@ -68,10 +61,6 @@ export default function CursoGratisLayout({ children }: { children: ReactNode })
   }
 
   if (!mounted) return null
-
-  const completedCount = modulo
-    ? modulo.lecciones.filter(l => progress[getLessonKey(modulo.id, l.href)]).length
-    : 0
 
   return (
     <div style={{
@@ -94,58 +83,32 @@ export default function CursoGratisLayout({ children }: { children: ReactNode })
         transition: 'all 0.3s',
       }}>
         <div style={{
-          maxWidth: '1200px',
+          maxWidth: '900px',
           margin: '0 auto',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
         }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            {/* Hamburger for mobile */}
-            {modulo && (
-              <button
-                className="cgl-hamburger"
-                onClick={() => setSidebarOpen(!sidebarOpen)}
-                aria-label="Abrir menu de lecciones"
-                style={{
-                  display: 'none', // shown via CSS on mobile
-                  width: '36px',
-                  height: '36px',
-                  borderRadius: '8px',
-                  border: `1px solid ${t.border}`,
-                  background: t.bgSecondary,
-                  color: t.textSecondary,
-                  cursor: 'pointer',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '18px',
-                  flexShrink: 0,
-                }}
-              >
-                {sidebarOpen ? '✕' : '☰'}
-              </button>
-            )}
-            <Link
-              href="/curso-gratis"
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-                textDecoration: 'none',
-                color: t.textSecondary,
-                fontSize: '14px',
-                fontWeight: 500,
-                transition: 'color 0.2s',
-              }}
-            >
-              <span style={{ fontSize: '16px' }}>←</span>
-              <span className="cgl-back-text">Volver al curso</span>
-            </Link>
-          </div>
+          <Link
+            href="/curso-gratis"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              textDecoration: 'none',
+              color: t.textSecondary,
+              fontSize: '14px',
+              fontWeight: 500,
+              transition: 'color 0.2s',
+            }}
+          >
+            <span style={{ fontSize: '16px' }}>←</span>
+            <span>Volver al curso</span>
+          </Link>
 
           {/* Breadcrumb center */}
           {modulo && leccion && (
-            <div className="cgl-breadcrumb" style={{
+            <div style={{
               display: 'flex',
               alignItems: 'center',
               gap: '8px',
@@ -159,312 +122,118 @@ export default function CursoGratisLayout({ children }: { children: ReactNode })
             </div>
           )}
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <ThemeToggleButton isDark={isDark} toggleTheme={toggleTheme} />
-          </div>
+          <ThemeToggleButton isDark={isDark} toggleTheme={toggleTheme} />
         </div>
       </header>
 
-      {/* Body with sidebar + content */}
-      <div style={{
-        maxWidth: '1200px',
+      {/* Main content — full width, centered */}
+      <main style={{
+        maxWidth: '900px',
         margin: '0 auto',
-        display: 'flex',
-        minHeight: 'calc(100vh - 61px)',
+        padding: '40px 24px 60px',
       }}>
-        {/* Left sidebar — desktop: sticky, mobile: overlay */}
-        {modulo && (
-          <>
-            {/* Mobile overlay backdrop */}
-            {sidebarOpen && (
-              <div
-                className="cgl-overlay"
-                onClick={() => setSidebarOpen(false)}
-                style={{
-                  display: 'none', // shown via CSS on mobile
-                  position: 'fixed',
-                  inset: 0,
-                  background: 'rgba(0,0,0,0.5)',
-                  zIndex: 150,
-                }}
-              />
-            )}
+        {/* MDX content */}
+        <div className="curso-gratis-content">
+          {children}
+        </div>
 
-            <aside
-              className={`cgl-sidebar ${sidebarOpen ? 'cgl-sidebar-open' : ''}`}
+        {/* Mark as completed button */}
+        {showProgress && (
+          <div style={{
+            marginTop: '40px',
+            paddingTop: '24px',
+            borderTop: `1px solid ${t.border}`,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+            <button
+              onClick={handleToggleProgress}
               style={{
-                width: SIDEBAR_WIDTH,
-                flexShrink: 0,
-                borderRight: `1px solid ${t.border}`,
-                background: t.bgSecondary,
-                position: 'sticky',
-                top: '61px',
-                height: 'calc(100vh - 61px)',
-                overflowY: 'auto',
-                padding: '20px 0',
-                transition: 'all 0.3s',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                padding: '12px 28px',
+                fontSize: '15px',
+                fontWeight: 600,
+                color: isCompleted ? '#fff' : '#059669',
+                background: isCompleted
+                  ? 'linear-gradient(135deg, #059669, #047857)'
+                  : 'transparent',
+                border: `2px solid ${isCompleted ? '#059669' : isDark ? 'rgba(5,150,105,0.3)' : '#d1fae5'}`,
+                borderRadius: '12px',
+                cursor: 'pointer',
+                transition: 'all 0.2s',
+                boxShadow: isCompleted ? '0 2px 8px rgba(5,150,105,0.3)' : 'none',
               }}
             >
-              {/* Module header in sidebar */}
-              <div style={{ padding: '0 16px 16px', borderBottom: `1px solid ${t.border}` }}>
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '10px',
-                  marginBottom: '8px',
-                }}>
-                  <span style={{
-                    width: '32px',
-                    height: '32px',
-                    background: `linear-gradient(135deg, ${t.accent}, ${t.accentHover})`,
-                    borderRadius: '8px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '16px',
-                    flexShrink: 0,
-                  }}>
-                    {modulo.emoji}
-                  </span>
-                  <div>
-                    <p style={{
-                      margin: 0,
-                      fontSize: '11px',
-                      fontWeight: 600,
-                      color: t.textTertiary,
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.05em',
-                    }}>
-                      Modulo {modulo.num}
-                    </p>
-                    <h3 style={{
-                      margin: 0,
-                      fontSize: '14px',
-                      fontWeight: 700,
-                      color: t.text,
-                    }}>
-                      {modulo.titulo}
-                    </h3>
-                  </div>
-                </div>
-
-                {/* Progress bar */}
-                {completedCount > 0 && (
-                  <div>
-                    <div style={{
-                      height: '4px',
-                      background: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)',
-                      borderRadius: '2px',
-                      overflow: 'hidden',
-                    }}>
-                      <div style={{
-                        height: '100%',
-                        width: `${Math.round((completedCount / modulo.totalLecciones) * 100)}%`,
-                        background: completedCount === modulo.totalLecciones ? '#22c55e' : t.accent,
-                        borderRadius: '2px',
-                        transition: 'width 0.3s ease',
-                      }} />
-                    </div>
-                    <p style={{
-                      margin: '4px 0 0',
-                      fontSize: '11px',
-                      color: t.textTertiary,
-                    }}>
-                      {completedCount}/{modulo.totalLecciones} completadas
-                    </p>
-                  </div>
-                )}
-              </div>
-
-              {/* Lesson list */}
-              <nav style={{ padding: '8px' }}>
-                {modulo.lecciones.map((l, i) => {
-                  const key = getLessonKey(modulo.id, l.href)
-                  const done = !!progress[key]
-                  const isCurrent = l.href === path
-                  return (
-                    <Link
-                      key={l.href}
-                      href={l.href}
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '10px',
-                        padding: '8px 12px',
-                        borderRadius: '8px',
-                        textDecoration: 'none',
-                        fontSize: '13px',
-                        lineHeight: 1.4,
-                        color: isCurrent ? t.accent : done ? t.textTertiary : t.textSecondary,
-                        fontWeight: isCurrent ? 600 : 400,
-                        background: isCurrent
-                          ? isDark ? 'rgba(94,106,210,0.12)' : 'rgba(94,106,210,0.06)'
-                          : 'transparent',
-                        transition: 'all 0.15s',
-                      }}
-                    >
-                      <span style={{
-                        width: '22px',
-                        height: '22px',
-                        borderRadius: '50%',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        fontSize: '11px',
-                        fontWeight: 700,
-                        flexShrink: 0,
-                        ...(done
-                          ? { background: '#059669', color: '#fff' }
-                          : isCurrent
-                            ? { background: t.accent, color: '#fff' }
-                            : { background: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)', color: t.textTertiary }
-                        ),
-                      }}>
-                        {done ? '✓' : isCurrent ? '→' : i + 1}
-                      </span>
-                      <span style={{
-                        textDecoration: done && !isCurrent ? 'line-through' : 'none',
-                        opacity: done && !isCurrent ? 0.6 : 1,
-                      }}>
-                        {l.titulo}
-                      </span>
-                    </Link>
-                  )
-                })}
-              </nav>
-
-              {/* Back to hub link */}
-              <div style={{ padding: '12px 16px', borderTop: `1px solid ${t.border}`, marginTop: '8px' }}>
-                <Link
-                  href="/curso-gratis"
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '6px',
-                    fontSize: '12px',
-                    fontWeight: 500,
-                    color: t.textTertiary,
-                    textDecoration: 'none',
-                    transition: 'color 0.2s',
-                  }}
-                >
-                  ← Todos los modulos
-                </Link>
-              </div>
-            </aside>
-          </>
+              <span style={{ fontSize: '18px' }}>{isCompleted ? '✓' : '○'}</span>
+              {isCompleted ? 'Completada' : 'Marcar como completada'}
+            </button>
+          </div>
         )}
 
-        {/* Main content */}
-        <main className="cgl-main" style={{
-          flex: 1,
-          minWidth: 0,
-          maxWidth: '800px',
-          padding: '32px 40px 40px',
-        }}>
-          {/* MDX content */}
-          <div className="curso-gratis-content">
-            {children}
-          </div>
-
-          {/* Mark as completed button */}
-          {showProgress && (
-            <div style={{
-              marginTop: '40px',
-              paddingTop: '24px',
-              borderTop: `1px solid ${t.border}`,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-              <button
-                onClick={handleToggleProgress}
+        {/* Prev / Next navigation */}
+        {modulo && (prevLeccion || nextLeccion) && (
+          <div style={{
+            marginTop: '32px',
+            display: 'grid',
+            gridTemplateColumns: prevLeccion && nextLeccion ? '1fr 1fr' : '1fr',
+            gap: '12px',
+          }}>
+            {prevLeccion && (
+              <Link
+                href={prevLeccion.href}
                 style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  padding: '12px 28px',
-                  fontSize: '15px',
-                  fontWeight: 600,
-                  color: isCompleted ? '#fff' : '#059669',
-                  background: isCompleted
-                    ? 'linear-gradient(135deg, #059669, #047857)'
-                    : 'transparent',
-                  border: `2px solid ${isCompleted ? '#059669' : isDark ? 'rgba(5,150,105,0.3)' : '#d1fae5'}`,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '4px',
+                  padding: '16px 20px',
+                  background: t.bgSecondary,
+                  border: `1px solid ${t.border}`,
                   borderRadius: '12px',
-                  cursor: 'pointer',
+                  textDecoration: 'none',
+                  color: 'inherit',
                   transition: 'all 0.2s',
-                  boxShadow: isCompleted ? '0 2px 8px rgba(5,150,105,0.3)' : 'none',
                 }}
               >
-                <span style={{ fontSize: '18px' }}>{isCompleted ? '✓' : '○'}</span>
-                {isCompleted ? 'Completada' : 'Marcar como completada'}
-              </button>
-            </div>
-          )}
-
-          {/* Prev / Next navigation */}
-          {modulo && (prevLeccion || nextLeccion) && (
-            <div style={{
-              marginTop: '32px',
-              display: 'grid',
-              gridTemplateColumns: prevLeccion && nextLeccion ? '1fr 1fr' : '1fr',
-              gap: '12px',
-            }}>
-              {prevLeccion && (
-                <Link
-                  href={prevLeccion.href}
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '4px',
-                    padding: '16px 20px',
-                    background: t.bgSecondary,
-                    border: `1px solid ${t.border}`,
-                    borderRadius: '12px',
-                    textDecoration: 'none',
-                    color: 'inherit',
-                    transition: 'all 0.2s',
-                  }}
-                >
-                  <span style={{ fontSize: '12px', color: t.textTertiary, fontWeight: 500 }}>
-                    ← Anterior
-                  </span>
-                  <span style={{ fontSize: '14px', fontWeight: 600, color: t.text }}>
-                    {prevLeccion.titulo}
-                  </span>
-                </Link>
-              )}
-              {nextLeccion && (
-                <Link
-                  href={nextLeccion.href}
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'flex-end',
-                    gap: '4px',
-                    padding: '16px 20px',
-                    background: t.bgSecondary,
-                    border: `1px solid ${t.border}`,
-                    borderRadius: '12px',
-                    textDecoration: 'none',
-                    color: 'inherit',
-                    transition: 'all 0.2s',
-                    gridColumn: !prevLeccion ? '1' : undefined,
-                  }}
-                >
-                  <span style={{ fontSize: '12px', color: t.textTertiary, fontWeight: 500 }}>
-                    Siguiente →
-                  </span>
-                  <span style={{ fontSize: '14px', fontWeight: 600, color: t.text }}>
-                    {nextLeccion.titulo}
-                  </span>
-                </Link>
-              )}
-            </div>
-          )}
-        </main>
-      </div>
+                <span style={{ fontSize: '12px', color: t.textTertiary, fontWeight: 500 }}>
+                  ← Anterior
+                </span>
+                <span style={{ fontSize: '14px', fontWeight: 600, color: t.text }}>
+                  {prevLeccion.titulo}
+                </span>
+              </Link>
+            )}
+            {nextLeccion && (
+              <Link
+                href={nextLeccion.href}
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'flex-end',
+                  gap: '4px',
+                  padding: '16px 20px',
+                  background: t.bgSecondary,
+                  border: `1px solid ${t.border}`,
+                  borderRadius: '12px',
+                  textDecoration: 'none',
+                  color: 'inherit',
+                  transition: 'all 0.2s',
+                  gridColumn: !prevLeccion ? '1' : undefined,
+                }}
+              >
+                <span style={{ fontSize: '12px', color: t.textTertiary, fontWeight: 500 }}>
+                  Siguiente →
+                </span>
+                <span style={{ fontSize: '14px', fontWeight: 600, color: t.text }}>
+                  {nextLeccion.titulo}
+                </span>
+              </Link>
+            )}
+          </div>
+        )}
+      </main>
 
       <style jsx global>{`
         ${THEME_GLOBAL_CSS}
@@ -608,51 +377,8 @@ export default function CursoGratisLayout({ children }: { children: ReactNode })
           border-color: ${t.border};
         }
 
-        /* Sidebar hover on lesson items */
-        .cgl-sidebar a:hover {
-          background: ${isDark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.03)'} !important;
-        }
-
-        /* Scrollbar for sidebar */
-        .cgl-sidebar::-webkit-scrollbar {
-          width: 4px;
-        }
-        .cgl-sidebar::-webkit-scrollbar-track {
-          background: transparent;
-        }
-        .cgl-sidebar::-webkit-scrollbar-thumb {
-          background: ${isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)'};
-          border-radius: 2px;
-        }
-
-        /* Desktop: sidebar visible, hamburger hidden */
-        @media (min-width: 769px) {
-          .cgl-hamburger { display: none !important; }
-          .cgl-overlay { display: none !important; }
-        }
-
-        /* Mobile: sidebar as overlay drawer */
+        /* Mobile */
         @media (max-width: 768px) {
-          .cgl-hamburger { display: flex !important; }
-          .cgl-sidebar {
-            position: fixed !important;
-            top: 0 !important;
-            left: 0 !important;
-            bottom: 0 !important;
-            height: 100vh !important;
-            z-index: 160;
-            transform: translateX(-100%);
-            box-shadow: none;
-          }
-          .cgl-sidebar-open {
-            transform: translateX(0) !important;
-            box-shadow: 4px 0 24px rgba(0,0,0,0.2) !important;
-          }
-          .cgl-overlay { display: block !important; }
-          .cgl-main {
-            padding: 24px 16px 40px !important;
-          }
-          .cgl-breadcrumb { display: none !important; }
           .curso-gratis-content h1 { font-size: 24px !important; }
           .curso-gratis-content h2 { font-size: 19px !important; }
         }
