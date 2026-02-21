@@ -472,18 +472,20 @@ function SemanaContentMultiDay({ semana }: { semana: Semana }) {
                 </p>
               </div>
 
-              {/* Session card */}
+              {/* Zoom card */}
               <div style={{
                 background: '#fff', border: '1px solid rgba(0,0,0,0.06)', borderRadius: '16px',
-                padding: '24px', marginBottom: '16px', boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
+                padding: '24px', marginBottom: '12px', boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
               }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '20px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '18px' }}>
                   <div style={{
                     width: '44px', height: '44px',
-                    background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+                    background: 'linear-gradient(135deg, #2D8CFF, #0066DC)',
                     borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontSize: '20px', flexShrink: 0,
-                  }}>📅</div>
+                    flexShrink: 0,
+                  }}>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14"/><rect x="1" y="6" width="14" height="12" rx="2" ry="2"/></svg>
+                  </div>
                   <div style={{ flex: 1 }}>
                     <p style={{ margin: 0, fontSize: '16px', fontWeight: 600, color: '#0f172a' }}>{activeDia.titulo}</p>
                     <p style={{ margin: '2px 0 0', fontSize: '13px', color: '#94a3b8' }}>
@@ -492,44 +494,54 @@ function SemanaContentMultiDay({ semana }: { semana: Semana }) {
                   </div>
                 </div>
 
-                {/* Action buttons */}
-                <div style={{ display: 'flex', gap: '10px' }}>
-                  {activeDia.clase.zoomUrl ? (
-                    <a href={activeDia.clase.zoomUrl} target="_blank" rel="noopener noreferrer" className="zoom-btn" style={{
-                      display: 'inline-flex', alignItems: 'center', gap: '8px',
-                      padding: '11px 20px', flex: 1,
-                      background: '#2D8CFF', color: '#fff', fontSize: '14px', fontWeight: 600,
-                      borderRadius: '10px', textDecoration: 'none', justifyContent: 'center',
-                      boxShadow: '0 2px 8px rgba(45, 140, 255, 0.25)',
-                      transition: 'all 0.2s',
-                    }}>
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14"/><rect x="1" y="6" width="14" height="12" rx="2" ry="2"/></svg>
-                      Unirse a Zoom
-                    </a>
-                  ) : (
-                    <div style={{
-                      display: 'flex', alignItems: 'center', gap: '8px', flex: 1,
-                      padding: '11px 20px', background: '#f8fafc',
-                      border: '1px dashed #cbd5e1', borderRadius: '10px',
-                      fontSize: '13px', color: '#94a3b8', justifyContent: 'center',
-                    }}>
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                      Enlace disponible antes de la clase
-                    </div>
-                  )}
-                  <Link href={`/curso/clase/${semana.num}?dia=${activeDayIndex + 1}`} className="pizarra-btn" style={{
-                    display: 'inline-flex', alignItems: 'center', gap: '8px',
-                    padding: '11px 20px',
-                    background: '#f8fafc', color: '#6366f1', fontSize: '14px', fontWeight: 600,
+                {activeDia.clase.zoomUrl ? (
+                  <a href={activeDia.clase.zoomUrl} target="_blank" rel="noopener noreferrer" className="zoom-btn" style={{
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+                    padding: '12px 24px', width: '100%',
+                    background: '#2D8CFF', color: '#fff', fontSize: '15px', fontWeight: 600,
                     borderRadius: '10px', textDecoration: 'none',
-                    border: '1px solid #e2e8f0',
+                    boxShadow: '0 2px 8px rgba(45, 140, 255, 0.25)',
                     transition: 'all 0.2s',
                   }}>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
-                    Pizarra
-                  </Link>
-                </div>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14"/><rect x="1" y="6" width="14" height="12" rx="2" ry="2"/></svg>
+                    Unirse a la clase en Zoom
+                  </a>
+                ) : (
+                  <div style={{
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+                    padding: '12px 24px', background: '#f8fafc',
+                    border: '1px dashed #cbd5e1', borderRadius: '10px',
+                    fontSize: '14px', color: '#94a3b8',
+                  }}>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    El enlace de Zoom se compartirá antes de la clase
+                  </div>
+                )}
               </div>
+
+              {/* Pizarra card */}
+              <Link href={`/curso/clase/${semana.num}?dia=${activeDayIndex + 1}`} className="pizarra-btn" style={{
+                display: 'flex', alignItems: 'center', gap: '14px',
+                padding: '20px 24px',
+                background: '#fff', borderRadius: '16px', textDecoration: 'none',
+                border: '1px solid rgba(0,0,0,0.06)',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
+                transition: 'all 0.2s',
+              }}>
+                <div style={{
+                  width: '44px', height: '44px',
+                  background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+                  borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  flexShrink: 0,
+                }}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                </div>
+                <div style={{ flex: 1 }}>
+                  <p style={{ margin: 0, fontSize: '15px', fontWeight: 600, color: '#0f172a' }}>Pizarra de clase</p>
+                  <p style={{ margin: '2px 0 0', fontSize: '13px', color: '#94a3b8' }}>Notas y contenido de la sesión en vivo</p>
+                </div>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </Link>
             </section>
           )}
 
@@ -754,7 +766,7 @@ function SemanaContentMultiDay({ semana }: { semana: Semana }) {
       </div>
 
       <style jsx global>{`
-        .pizarra-btn:hover { background: #eef2ff !important; border-color: #c7d2fe !important; }
+        .pizarra-btn:hover { background: #f5f3ff !important; border-color: #c7d2fe !important; box-shadow: 0 2px 8px rgba(99,102,241,0.1) !important; }
         .zoom-btn:hover { box-shadow: 0 4px 14px rgba(45, 140, 255, 0.35) !important; transform: translateY(-1px); }
         .nav-section-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.12) !important; }
         .sidebar-btn:hover { background: rgba(0,0,0,0.04) !important; }
@@ -1137,18 +1149,20 @@ function SemanaContent({ semana }: { semana: Semana }) {
                 </button>
               </div>
 
-              {/* Session card with actions */}
+              {/* Zoom card */}
               <div style={{
                 background: '#fff', border: '1px solid rgba(0,0,0,0.06)', borderRadius: '16px',
-                padding: '24px', marginBottom: '16px', boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
+                padding: '24px', marginBottom: '12px', boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
               }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '20px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '18px' }}>
                   <div style={{
                     width: '44px', height: '44px',
-                    background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+                    background: 'linear-gradient(135deg, #2D8CFF, #0066DC)',
                     borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontSize: '20px', flexShrink: 0,
-                  }}>📅</div>
+                    flexShrink: 0,
+                  }}>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14"/><rect x="1" y="6" width="14" height="12" rx="2" ry="2"/></svg>
+                  </div>
                   <div style={{ flex: 1 }}>
                     <p style={{ margin: 0, fontSize: '16px', fontWeight: 600, color: '#0f172a' }}>{semana.titulo}</p>
                     <p style={{ margin: '2px 0 0', fontSize: '13px', color: '#94a3b8' }}>
@@ -1157,44 +1171,54 @@ function SemanaContent({ semana }: { semana: Semana }) {
                   </div>
                 </div>
 
-                {/* Action buttons */}
-                <div style={{ display: 'flex', gap: '10px' }}>
-                  {semana.clase.zoomUrl ? (
-                    <a href={semana.clase.zoomUrl} target="_blank" rel="noopener noreferrer" className="zoom-btn" style={{
-                      display: 'inline-flex', alignItems: 'center', gap: '8px',
-                      padding: '11px 20px', flex: 1,
-                      background: '#2D8CFF', color: '#fff', fontSize: '14px', fontWeight: 600,
-                      borderRadius: '10px', textDecoration: 'none', justifyContent: 'center',
-                      boxShadow: '0 2px 8px rgba(45, 140, 255, 0.25)',
-                      transition: 'all 0.2s',
-                    }}>
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14"/><rect x="1" y="6" width="14" height="12" rx="2" ry="2"/></svg>
-                      Unirse a Zoom
-                    </a>
-                  ) : (
-                    <div style={{
-                      display: 'flex', alignItems: 'center', gap: '8px', flex: 1,
-                      padding: '11px 20px', background: '#f8fafc',
-                      border: '1px dashed #cbd5e1', borderRadius: '10px',
-                      fontSize: '13px', color: '#94a3b8', justifyContent: 'center',
-                    }}>
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                      Enlace disponible antes de la clase
-                    </div>
-                  )}
-                  <Link href={`/curso/clase/${semana.num}`} className="pizarra-btn" style={{
-                    display: 'inline-flex', alignItems: 'center', gap: '8px',
-                    padding: '11px 20px',
-                    background: '#f8fafc', color: '#6366f1', fontSize: '14px', fontWeight: 600,
+                {semana.clase.zoomUrl ? (
+                  <a href={semana.clase.zoomUrl} target="_blank" rel="noopener noreferrer" className="zoom-btn" style={{
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+                    padding: '12px 24px', width: '100%',
+                    background: '#2D8CFF', color: '#fff', fontSize: '15px', fontWeight: 600,
                     borderRadius: '10px', textDecoration: 'none',
-                    border: '1px solid #e2e8f0',
+                    boxShadow: '0 2px 8px rgba(45, 140, 255, 0.25)',
                     transition: 'all 0.2s',
                   }}>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
-                    Pizarra
-                  </Link>
-                </div>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14"/><rect x="1" y="6" width="14" height="12" rx="2" ry="2"/></svg>
+                    Unirse a la clase en Zoom
+                  </a>
+                ) : (
+                  <div style={{
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+                    padding: '12px 24px', background: '#f8fafc',
+                    border: '1px dashed #cbd5e1', borderRadius: '10px',
+                    fontSize: '14px', color: '#94a3b8',
+                  }}>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    El enlace de Zoom se compartirá antes de la clase
+                  </div>
+                )}
               </div>
+
+              {/* Pizarra card */}
+              <Link href={`/curso/clase/${semana.num}`} className="pizarra-btn" style={{
+                display: 'flex', alignItems: 'center', gap: '14px',
+                padding: '20px 24px', marginBottom: '16px',
+                background: '#fff', borderRadius: '16px', textDecoration: 'none',
+                border: '1px solid rgba(0,0,0,0.06)',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
+                transition: 'all 0.2s',
+              }}>
+                <div style={{
+                  width: '44px', height: '44px',
+                  background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+                  borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  flexShrink: 0,
+                }}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                </div>
+                <div style={{ flex: 1 }}>
+                  <p style={{ margin: 0, fontSize: '15px', fontWeight: 600, color: '#0f172a' }}>Pizarra de clase</p>
+                  <p style={{ margin: '2px 0 0', fontSize: '13px', color: '#94a3b8' }}>Notas y contenido de la sesión en vivo</p>
+                </div>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </Link>
 
               {/* Videos */}
               {semana.clase.videos && semana.clase.videos.length > 0 ? (
@@ -1580,7 +1604,7 @@ function SemanaContent({ semana }: { semana: Semana }) {
       </div>
 
       <style jsx global>{`
-        .pizarra-btn:hover { background: #eef2ff !important; border-color: #c7d2fe !important; }
+        .pizarra-btn:hover { background: #f5f3ff !important; border-color: #c7d2fe !important; box-shadow: 0 2px 8px rgba(99,102,241,0.1) !important; }
         .zoom-btn:hover { box-shadow: 0 4px 14px rgba(45, 140, 255, 0.35) !important; transform: translateY(-1px); }
         .nav-section-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.12) !important; }
         .sidebar-btn:hover { background: rgba(0,0,0,0.04) !important; }
