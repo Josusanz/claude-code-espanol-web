@@ -91,9 +91,12 @@ function PrimerProyectoContent() {
       setCompletedSteps([...completedSteps, paso.id])
     }
     if (currentStep < PASOS.length - 1) {
-      setCurrentStep(currentStep + 1)
-    } else if (!completed['primer-proyecto']) {
-      toggle('primer-proyecto')
+      const nextStep = currentStep + 1
+      setCurrentStep(nextStep)
+      // Si avanzamos al paso final, marcar como completado
+      if (PASOS[nextStep].final && !completed['primer-proyecto']) {
+        toggle('primer-proyecto')
+      }
     }
   }
 
