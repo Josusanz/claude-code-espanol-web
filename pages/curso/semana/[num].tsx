@@ -463,7 +463,7 @@ function SemanaContentMultiDay({ semana }: { semana: Semana }) {
           {/* === CLASE EN VIVO === */}
           {activeDia && activeSubSection === 'clase' && (
             <section>
-              <div style={{ marginBottom: '24px' }}>
+              <div style={{ marginBottom: '28px' }}>
                 <h2 style={{ margin: '0 0 6px', fontSize: '24px', fontWeight: 700, color: '#0f172a' }}>
                   🎥 Clase en vivo — Día {activeDayIndex + 1}
                 </h2>
@@ -472,56 +472,64 @@ function SemanaContentMultiDay({ semana }: { semana: Semana }) {
                 </p>
               </div>
 
-              {/* Zoom / session info */}
+              {/* Session card */}
               <div style={{
                 background: '#fff', border: '1px solid rgba(0,0,0,0.06)', borderRadius: '16px',
-                padding: '24px', marginBottom: '20px', boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
+                padding: '24px', marginBottom: '16px', boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
               }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '16px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '20px' }}>
                   <div style={{
-                    width: '48px', height: '48px',
+                    width: '44px', height: '44px',
                     background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
-                    borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontSize: '22px', flexShrink: 0,
+                    borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    fontSize: '20px', flexShrink: 0,
                   }}>📅</div>
-                  <div>
+                  <div style={{ flex: 1 }}>
                     <p style={{ margin: 0, fontSize: '16px', fontWeight: 600, color: '#0f172a' }}>{activeDia.titulo}</p>
-                    <p style={{ margin: '2px 0 0', fontSize: '14px', color: '#64748b' }}>
-                      {activeDia.clase.fecha} a las {activeDia.clase.hora} ({activeDia.clase.duracion})
+                    <p style={{ margin: '2px 0 0', fontSize: '13px', color: '#94a3b8' }}>
+                      {activeDia.clase.fecha} · {activeDia.clase.hora} · {activeDia.clase.duracion}
                     </p>
                   </div>
                 </div>
 
-                {activeDia.clase.zoomUrl && (
-                  <a href={activeDia.clase.zoomUrl} target="_blank" rel="noopener noreferrer" style={{
-                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
-                    padding: '14px 24px',
-                    background: '#2D8CFF', color: '#fff', fontSize: '15px', fontWeight: 600,
-                    borderRadius: '12px', textDecoration: 'none',
-                    boxShadow: '0 4px 12px rgba(45, 140, 255, 0.3)',
+                {/* Action buttons */}
+                <div style={{ display: 'flex', gap: '10px' }}>
+                  {activeDia.clase.zoomUrl ? (
+                    <a href={activeDia.clase.zoomUrl} target="_blank" rel="noopener noreferrer" className="zoom-btn" style={{
+                      display: 'inline-flex', alignItems: 'center', gap: '8px',
+                      padding: '11px 20px', flex: 1,
+                      background: '#2D8CFF', color: '#fff', fontSize: '14px', fontWeight: 600,
+                      borderRadius: '10px', textDecoration: 'none', justifyContent: 'center',
+                      boxShadow: '0 2px 8px rgba(45, 140, 255, 0.25)',
+                      transition: 'all 0.2s',
+                    }}>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14"/><rect x="1" y="6" width="14" height="12" rx="2" ry="2"/></svg>
+                      Unirse a Zoom
+                    </a>
+                  ) : (
+                    <div style={{
+                      display: 'flex', alignItems: 'center', gap: '8px', flex: 1,
+                      padding: '11px 20px', background: '#f8fafc',
+                      border: '1px dashed #cbd5e1', borderRadius: '10px',
+                      fontSize: '13px', color: '#94a3b8', justifyContent: 'center',
+                    }}>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                      Enlace disponible antes de la clase
+                    </div>
+                  )}
+                  <Link href={`/curso/clase/${semana.num}?dia=${activeDayIndex + 1}`} className="pizarra-btn" style={{
+                    display: 'inline-flex', alignItems: 'center', gap: '8px',
+                    padding: '11px 20px',
+                    background: '#f8fafc', color: '#6366f1', fontSize: '14px', fontWeight: 600,
+                    borderRadius: '10px', textDecoration: 'none',
+                    border: '1px solid #e2e8f0',
+                    transition: 'all 0.2s',
                   }}>
-                    🔗 Unirse a la clase en Zoom
-                  </a>
-                )}
-
-                {!activeDia.clase.zoomUrl && (
-                  <p style={{ margin: 0, fontSize: '14px', color: '#94a3b8', textAlign: 'center', padding: '12px' }}>
-                    El enlace de Zoom se compartirá antes de la clase
-                  </p>
-                )}
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                    Pizarra
+                  </Link>
+                </div>
               </div>
-
-              {/* Pizarra button */}
-              <Link href={`/curso/clase/${semana.num}?dia=${activeDayIndex + 1}`} className="pizarra-btn" style={{
-                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
-                padding: '14px 24px',
-                background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
-                color: '#fff', fontSize: '15px', fontWeight: 600,
-                borderRadius: '12px', textDecoration: 'none',
-                boxShadow: '0 4px 12px rgba(99, 102, 241, 0.3)',
-              }}>
-                📋 Abrir Pizarra de clase
-              </Link>
             </section>
           )}
 
@@ -746,10 +754,12 @@ function SemanaContentMultiDay({ semana }: { semana: Semana }) {
       </div>
 
       <style jsx global>{`
-        .pizarra-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4) !important; }
+        .pizarra-btn:hover { background: #eef2ff !important; border-color: #c7d2fe !important; }
+        .zoom-btn:hover { box-shadow: 0 4px 14px rgba(45, 140, 255, 0.35) !important; transform: translateY(-1px); }
         .nav-section-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.12) !important; }
         .sidebar-btn:hover { background: rgba(0,0,0,0.04) !important; }
         .complete-btn:hover { opacity: 0.9; }
+        .video-link:hover { border-color: rgba(99,102,241,0.3) !important; box-shadow: 0 2px 8px rgba(99,102,241,0.1) !important; }
         .sidebar::-webkit-scrollbar { width: 4px; }
         .sidebar::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 2px; }
         @media (min-width: 769px) {
@@ -1098,7 +1108,7 @@ function SemanaContent({ semana }: { semana: Semana }) {
                 alignItems: 'flex-start',
                 justifyContent: 'space-between',
                 gap: '16px',
-                marginBottom: '24px'
+                marginBottom: '28px'
               }}>
                 <div>
                   <h2 style={{ margin: '0 0 6px', fontSize: '24px', fontWeight: 700, color: '#0f172a' }}>
@@ -1127,9 +1137,68 @@ function SemanaContent({ semana }: { semana: Semana }) {
                 </button>
               </div>
 
+              {/* Session card with actions */}
+              <div style={{
+                background: '#fff', border: '1px solid rgba(0,0,0,0.06)', borderRadius: '16px',
+                padding: '24px', marginBottom: '16px', boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '20px' }}>
+                  <div style={{
+                    width: '44px', height: '44px',
+                    background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+                    borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    fontSize: '20px', flexShrink: 0,
+                  }}>📅</div>
+                  <div style={{ flex: 1 }}>
+                    <p style={{ margin: 0, fontSize: '16px', fontWeight: 600, color: '#0f172a' }}>{semana.titulo}</p>
+                    <p style={{ margin: '2px 0 0', fontSize: '13px', color: '#94a3b8' }}>
+                      {semana.clase.fecha} · {semana.clase.hora} · {semana.clase.duracion}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Action buttons */}
+                <div style={{ display: 'flex', gap: '10px' }}>
+                  {semana.clase.zoomUrl ? (
+                    <a href={semana.clase.zoomUrl} target="_blank" rel="noopener noreferrer" className="zoom-btn" style={{
+                      display: 'inline-flex', alignItems: 'center', gap: '8px',
+                      padding: '11px 20px', flex: 1,
+                      background: '#2D8CFF', color: '#fff', fontSize: '14px', fontWeight: 600,
+                      borderRadius: '10px', textDecoration: 'none', justifyContent: 'center',
+                      boxShadow: '0 2px 8px rgba(45, 140, 255, 0.25)',
+                      transition: 'all 0.2s',
+                    }}>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14"/><rect x="1" y="6" width="14" height="12" rx="2" ry="2"/></svg>
+                      Unirse a Zoom
+                    </a>
+                  ) : (
+                    <div style={{
+                      display: 'flex', alignItems: 'center', gap: '8px', flex: 1,
+                      padding: '11px 20px', background: '#f8fafc',
+                      border: '1px dashed #cbd5e1', borderRadius: '10px',
+                      fontSize: '13px', color: '#94a3b8', justifyContent: 'center',
+                    }}>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                      Enlace disponible antes de la clase
+                    </div>
+                  )}
+                  <Link href={`/curso/clase/${semana.num}`} className="pizarra-btn" style={{
+                    display: 'inline-flex', alignItems: 'center', gap: '8px',
+                    padding: '11px 20px',
+                    background: '#f8fafc', color: '#6366f1', fontSize: '14px', fontWeight: 600,
+                    borderRadius: '10px', textDecoration: 'none',
+                    border: '1px solid #e2e8f0',
+                    transition: 'all 0.2s',
+                  }}>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                    Pizarra
+                  </Link>
+                </div>
+              </div>
+
               {/* Videos */}
               {semana.clase.videos && semana.clase.videos.length > 0 ? (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '20px' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '16px' }}>
                   {semana.clase.videos.map((video, vi) => (
                     video.tipo === 'embed' ? (
                       <div key={vi}>
@@ -1167,11 +1236,12 @@ function SemanaContent({ semana }: { semana: Semana }) {
                         href={video.url}
                         target="_blank"
                         rel="noopener noreferrer"
+                        className="video-link"
                         style={{
                           display: 'flex',
                           alignItems: 'center',
                           gap: '14px',
-                          padding: '18px 20px',
+                          padding: '16px 20px',
                           background: '#fff',
                           border: '1px solid rgba(0,0,0,0.06)',
                           borderRadius: '14px',
@@ -1181,27 +1251,27 @@ function SemanaContent({ semana }: { semana: Semana }) {
                         }}
                       >
                         <span style={{
-                          width: '48px',
-                          height: '48px',
+                          width: '44px',
+                          height: '44px',
                           background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
-                          borderRadius: '12px',
+                          borderRadius: '10px',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          fontSize: '22px',
+                          fontSize: '20px',
                           flexShrink: 0,
                         }}>
                           ▶️
                         </span>
-                        <div>
+                        <div style={{ flex: 1 }}>
                           <p style={{ margin: 0, fontSize: '15px', fontWeight: 600, color: '#0f172a' }}>
                             {video.titulo}
                           </p>
                           <p style={{ margin: '2px 0 0', fontSize: '13px', color: '#64748b' }}>
-                            {video.passcode ? `Código: ${video.passcode} · ` : ''}Click para ver la grabación
+                            {video.passcode ? `Contraseña: ${video.passcode}` : 'Click para ver la grabación'}
                           </p>
                         </div>
-                        <span style={{ marginLeft: 'auto', fontSize: '18px', color: '#94a3b8' }}>↗</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
                       </a>
                     )
                   ))}
@@ -1214,7 +1284,7 @@ function SemanaContent({ semana }: { semana: Semana }) {
                   background: '#0f172a',
                   borderRadius: '12px',
                   overflow: 'hidden',
-                  marginBottom: '20px'
+                  marginBottom: '16px'
                 }}>
                   <iframe
                     src={semana.clase.videoUrl}
@@ -1235,37 +1305,17 @@ function SemanaContent({ semana }: { semana: Semana }) {
                   background: '#fff',
                   border: '1px solid rgba(0,0,0,0.06)',
                   borderRadius: '16px',
-                  padding: '40px',
+                  padding: '32px',
                   textAlign: 'center',
-                  marginBottom: '20px',
+                  marginBottom: '16px',
                   boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
                 }}>
-                  <span style={{ fontSize: '48px', display: 'block', marginBottom: '16px' }}>📹</span>
-                  <p style={{ margin: 0, fontSize: '15px', color: '#64748b' }}>
-                    El video de la clase se publicará después de la sesión en vivo
+                  <span style={{ fontSize: '40px', display: 'block', marginBottom: '12px' }}>📹</span>
+                  <p style={{ margin: 0, fontSize: '14px', color: '#94a3b8' }}>
+                    El video se publicará después de la sesión en vivo
                   </p>
                 </div>
               )}
-
-              {/* Pizarra button */}
-              <Link href={`/curso/clase/${semana.num}`} className="pizarra-btn" style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '8px',
-                padding: '14px 24px',
-                background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
-                color: '#fff',
-                fontSize: '15px',
-                fontWeight: 600,
-                borderRadius: '12px',
-                textDecoration: 'none',
-                boxShadow: '0 4px 12px rgba(99, 102, 241, 0.3)',
-                transition: 'all 0.2s',
-                marginBottom: '20px'
-              }}>
-                📋 Abrir Pizarra de clase
-              </Link>
 
               {/* Notas */}
               {semana.clase.notas && (
@@ -1530,10 +1580,12 @@ function SemanaContent({ semana }: { semana: Semana }) {
       </div>
 
       <style jsx global>{`
-        .pizarra-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4) !important; }
+        .pizarra-btn:hover { background: #eef2ff !important; border-color: #c7d2fe !important; }
+        .zoom-btn:hover { box-shadow: 0 4px 14px rgba(45, 140, 255, 0.35) !important; transform: translateY(-1px); }
         .nav-section-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.12) !important; }
         .sidebar-btn:hover { background: rgba(0,0,0,0.04) !important; }
         .complete-btn:hover { opacity: 0.9; }
+        .video-link:hover { border-color: rgba(99,102,241,0.3) !important; box-shadow: 0 2px 8px rgba(99,102,241,0.1) !important; }
         .sidebar::-webkit-scrollbar { width: 4px; }
         .sidebar::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 2px; }
         @media (min-width: 769px) {
