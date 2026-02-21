@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useState, useEffect } from 'react'
 import type { ReactElement } from 'react'
-import CursoLayout from '../../../components/CursoLayout'
+import CursoEmailGate from '../../../components/CursoEmailGate'
 import { CURSO_SEMANAS, getCursoTrackingIds, Semana, DiaSemana } from '../../../lib/curso-data'
 import { renderPreclaseContent } from '../../../components/curso-shared/ContentRenderer'
 import type { NextPageWithLayout } from '../../_app'
@@ -185,46 +185,34 @@ function SemanaContentMultiDay({ semana }: { semana: Semana }) {
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
       </Head>
 
-      {/* Header */}
-      <header style={{
-        background: 'rgba(255, 255, 255, 0.9)',
+      {/* Mobile header */}
+      <header className="mobile-header" style={{
+        display: 'none',
+        background: 'rgba(255, 255, 255, 0.95)',
         backdropFilter: 'blur(12px)',
         borderBottom: '1px solid rgba(0,0,0,0.06)',
-        padding: '16px 24px',
+        padding: '12px 16px',
         position: 'sticky',
         top: 0,
-        zIndex: 100,
-        display: 'flex',
+        zIndex: 200,
         alignItems: 'center',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-          <Link href="/curso" style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-            color: '#64748b',
-            textDecoration: 'none',
-            fontSize: '14px'
-          }}>
-            ← Volver
-          </Link>
-          <div style={{ width: '1px', height: '24px', background: 'rgba(0,0,0,0.08)' }} />
-          <h1 className="header-title" style={{ margin: 0, fontSize: '16px', fontWeight: 600, color: '#0f172a' }}>
-            {semana.emoji} Semana {semana.num}: {semana.titulo}
-          </h1>
-        </div>
-        <button onClick={handleLogout} style={{
-          padding: '8px 16px', fontSize: '13px', fontWeight: 500, color: '#64748b',
-          background: 'transparent', border: '1px solid rgba(0,0,0,0.1)', borderRadius: '8px', cursor: 'pointer'
-        }}>
+        <Link href="/curso" style={{ color: '#64748b', textDecoration: 'none', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="15 18 9 12 15 6"/></svg>
+          Curso
+        </Link>
+        <span className="header-title" style={{ fontWeight: 600, fontSize: '14px', color: '#0f172a' }}>
+          {semana.emoji} S{semana.num}: {semana.titulo}
+        </span>
+        <button onClick={handleLogout} style={{ padding: '6px 12px', fontSize: '12px', fontWeight: 500, color: '#64748b', background: 'transparent', border: '1px solid rgba(0,0,0,0.1)', borderRadius: '6px', cursor: 'pointer' }}>
           Salir
         </button>
       </header>
 
       {/* Mobile tabs */}
       <div className="mobile-tabs" style={{
-        display: 'none', gap: '6px', padding: '12px 16px', background: '#fff',
+        display: 'none', gap: '6px', padding: '10px 16px', background: '#fff',
         borderBottom: '1px solid rgba(0,0,0,0.06)', overflowX: 'auto',
       }}>
         {sections.map((s) => {
@@ -251,24 +239,43 @@ function SemanaContentMultiDay({ semana }: { semana: Semana }) {
       </div>
 
       <div className="layout-wrapper" style={{
-        display: 'flex', maxWidth: '1100px', margin: '0 auto', padding: '24px', gap: '24px',
+        display: 'flex', minHeight: '100vh',
       }}>
         {/* Sidebar */}
         <aside className="sidebar" style={{
-          width: '240px', flexShrink: 0, position: 'sticky', top: '80px', alignSelf: 'flex-start',
+          width: '260px', flexShrink: 0, borderRight: '1px solid rgba(0,0,0,0.06)',
+          background: '#f8f9fa', position: 'fixed', top: 0, left: 0, height: '100vh',
+          overflowY: 'auto', display: 'flex', flexDirection: 'column', zIndex: 50,
         }}>
-          <div style={{ padding: '16px', marginBottom: '12px' }}>
-            <p style={{ margin: '0 0 4px', fontSize: '12px', fontWeight: 600, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-              Semana {semana.num}
-            </p>
-            <p style={{ margin: 0, fontSize: '15px', fontWeight: 600, color: '#0f172a' }}>
-              {semana.titulo}
-            </p>
+          {/* Back link */}
+          <div style={{ padding: '20px 20px 16px', borderBottom: '1px solid rgba(0,0,0,0.06)' }}>
+            <Link href="/curso" style={{
+              display: 'flex', alignItems: 'center', gap: '8px',
+              color: '#64748b', textDecoration: 'none', fontSize: '13px', fontWeight: 500,
+              marginBottom: '16px',
+            }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="15 18 9 12 15 6"/></svg>
+              Volver al curso
+            </Link>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <span style={{ fontSize: '24px' }}>{semana.emoji}</span>
+              <div>
+                <p style={{ margin: 0, fontSize: '11px', fontWeight: 600, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                  Semana {semana.num}
+                </p>
+                <p style={{ margin: 0, fontSize: '14px', fontWeight: 700, color: '#0f172a' }}>
+                  {semana.titulo}
+                </p>
+              </div>
+            </div>
           </div>
 
-          <nav style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+          {/* Day/section tabs */}
+          <nav style={{ padding: '12px 8px', flex: 1 }}>
             {sections.map((s) => {
               const isActive = activeSection === s.key
+              const dayIndex = s.key !== 'entregable' ? parseInt(s.key.replace('dia', '')) - 1 : -1
+              const dayData = dayIndex >= 0 ? dias[dayIndex] : null
               return (
                 <button
                   key={s.key}
@@ -276,31 +283,36 @@ function SemanaContentMultiDay({ semana }: { semana: Semana }) {
                   className="sidebar-btn"
                   style={{
                     display: 'flex', alignItems: 'center', gap: '12px',
-                    padding: '12px 16px', fontSize: '14px',
+                    padding: '12px 16px', fontSize: '14px', width: '100%',
                     fontWeight: isActive ? 600 : 500,
-                    color: isActive ? '#0f172a' : '#64748b',
-                    background: isActive ? '#fff' : 'transparent',
-                    border: isActive ? '1px solid rgba(0,0,0,0.06)' : '1px solid transparent',
-                    borderRadius: '10px', cursor: 'pointer', textAlign: 'left',
+                    color: isActive ? s.color : '#64748b',
+                    background: isActive ? `${s.color}10` : 'transparent',
+                    border: 'none',
+                    borderLeft: isActive ? `3px solid ${s.color}` : '3px solid transparent',
+                    borderRadius: '0 10px 10px 0', cursor: 'pointer', textAlign: 'left',
                     transition: 'all 0.15s',
-                    boxShadow: isActive ? '0 1px 3px rgba(0,0,0,0.04)' : 'none',
+                    marginBottom: '2px',
                   }}
                 >
                   <span style={{
-                    width: '28px', height: '28px', borderRadius: '7px',
+                    width: '32px', height: '32px', borderRadius: '8px',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontSize: '14px', fontWeight: 700,
-                    color: isActive ? '#fff' : '#64748b',
-                    background: isActive ? s.color : '#e2e8f0',
+                    fontSize: '16px',
+                    background: isActive ? `${s.color}18` : '#e2e8f0',
                     flexShrink: 0, transition: 'all 0.15s',
                   }}>
                     {s.icon}
                   </span>
                   <span>
-                    {s.label}
-                    {s.key !== 'entregable' && (
-                      <span style={{ display: 'block', fontSize: '11px', color: '#94a3b8', fontWeight: 400, marginTop: '2px' }}>
-                        {dias[parseInt(s.key.replace('dia', '')) - 1]?.titulo}
+                    <span style={{ display: 'block' }}>{s.label}</span>
+                    {dayData && (
+                      <span style={{ display: 'block', fontSize: '11px', color: '#94a3b8', fontWeight: 400, marginTop: '1px' }}>
+                        {dayData.titulo}
+                      </span>
+                    )}
+                    {s.key === 'entregable' && (
+                      <span style={{ display: 'block', fontSize: '11px', color: '#94a3b8', fontWeight: 400, marginTop: '1px' }}>
+                        {semana.entregable.titulo}
                       </span>
                     )}
                   </span>
@@ -310,10 +322,7 @@ function SemanaContentMultiDay({ semana }: { semana: Semana }) {
           </nav>
 
           {/* Progress */}
-          <div style={{
-            marginTop: '16px', padding: '14px 16px', background: '#fff',
-            borderRadius: '10px', border: '1px solid rgba(0,0,0,0.06)',
-          }}>
+          <div style={{ padding: '12px 16px', borderTop: '1px solid rgba(0,0,0,0.06)' }}>
             <p style={{ margin: '0 0 8px', fontSize: '12px', fontWeight: 600, color: '#94a3b8' }}>Progreso</p>
             <div style={{ display: 'flex', gap: '6px' }}>
               <div style={{ flex: 1, height: '6px', borderRadius: '3px', background: preclaseCompleted ? '#22c55e' : '#e2e8f0', transition: 'background 0.3s' }} />
@@ -326,8 +335,11 @@ function SemanaContentMultiDay({ semana }: { semana: Semana }) {
           </div>
         </aside>
 
+        {/* Spacer for fixed sidebar */}
+        <div className="sidebar-spacer" style={{ width: '260px', flexShrink: 0 }} />
+
         {/* Content */}
-        <main style={{ flex: 1, minWidth: 0 }}>
+        <main style={{ flex: 1, minWidth: 0, maxWidth: '800px', margin: '0 auto', padding: '32px 24px 80px' }}>
           {/* Day sections (Día 1, Día 2) */}
           {activeDia && (
             <section>
@@ -653,13 +665,24 @@ function SemanaContentMultiDay({ semana }: { semana: Semana }) {
       <style jsx global>{`
         .pizarra-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4) !important; }
         .nav-section-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.12) !important; }
-        .sidebar-btn:hover { background: rgba(255,255,255,0.7) !important; }
+        .sidebar-btn:hover { background: rgba(0,0,0,0.04) !important; }
         .complete-btn:hover { opacity: 0.9; }
-        @media (min-width: 769px) { .mobile-tabs { display: none !important; } .sidebar { display: block !important; } }
+        .sidebar::-webkit-scrollbar { width: 4px; }
+        .sidebar::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 2px; }
+        @media (min-width: 769px) {
+          .mobile-tabs { display: none !important; }
+          .mobile-header { display: none !important; }
+          .sidebar { display: flex !important; }
+        }
         @media (max-width: 768px) {
-          .mobile-tabs { display: flex !important; } .sidebar { display: none !important; }
-          .layout-wrapper { padding: 16px !important; } .header-title { font-size: 14px !important; }
-          h2 { font-size: 20px !important; } .complete-btn { padding: 8px 12px !important; font-size: 12px !important; }
+          .mobile-tabs { display: flex !important; }
+          .mobile-header { display: flex !important; }
+          .sidebar { display: none !important; }
+          .sidebar-spacer { display: none !important; }
+          .layout-wrapper { padding: 0 !important; }
+          main { padding: 20px 16px 60px !important; }
+          h2 { font-size: 20px !important; }
+          .complete-btn { padding: 8px 12px !important; font-size: 12px !important; }
         }
       `}</style>
     </div>
@@ -719,53 +742,27 @@ function SemanaContent({ semana }: { semana: Semana }) {
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
       </Head>
 
-      {/* Header */}
-      <header style={{
-        background: 'rgba(255, 255, 255, 0.9)',
+      {/* Mobile header */}
+      <header className="mobile-header" style={{
+        display: 'none',
+        background: 'rgba(255, 255, 255, 0.95)',
         backdropFilter: 'blur(12px)',
         borderBottom: '1px solid rgba(0,0,0,0.06)',
-        padding: '16px 24px',
+        padding: '12px 16px',
         position: 'sticky',
         top: 0,
-        zIndex: 100,
-        display: 'flex',
+        zIndex: 200,
         alignItems: 'center',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-          <Link href="/curso" style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-            color: '#64748b',
-            textDecoration: 'none',
-            fontSize: '14px'
-          }}>
-            ← Volver
-          </Link>
-          <div style={{
-            width: '1px',
-            height: '24px',
-            background: 'rgba(0,0,0,0.08)'
-          }} />
-          <h1 className="header-title" style={{ margin: 0, fontSize: '16px', fontWeight: 600, color: '#0f172a' }}>
-            {semana.emoji} Semana {semana.num}: {semana.titulo}
-          </h1>
-        </div>
-
-        <button
-          onClick={handleLogout}
-          style={{
-            padding: '8px 16px',
-            fontSize: '13px',
-            fontWeight: 500,
-            color: '#64748b',
-            background: 'transparent',
-            border: '1px solid rgba(0,0,0,0.1)',
-            borderRadius: '8px',
-            cursor: 'pointer'
-          }}
-        >
+        <Link href="/curso" style={{ color: '#64748b', textDecoration: 'none', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="15 18 9 12 15 6"/></svg>
+          Curso
+        </Link>
+        <span className="header-title" style={{ fontWeight: 600, fontSize: '14px', color: '#0f172a' }}>
+          {semana.emoji} S{semana.num}: {semana.titulo}
+        </span>
+        <button onClick={handleLogout} style={{ padding: '6px 12px', fontSize: '12px', fontWeight: 500, color: '#64748b', background: 'transparent', border: '1px solid rgba(0,0,0,0.1)', borderRadius: '6px', cursor: 'pointer' }}>
           Salir
         </button>
       </header>
@@ -774,7 +771,7 @@ function SemanaContent({ semana }: { semana: Semana }) {
       <div className="mobile-tabs" style={{
         display: 'none',
         gap: '6px',
-        padding: '12px 16px',
+        padding: '10px 16px',
         background: '#fff',
         borderBottom: '1px solid rgba(0,0,0,0.06)',
         overflowX: 'auto',
@@ -812,38 +809,40 @@ function SemanaContent({ semana }: { semana: Semana }) {
 
       <div className="layout-wrapper" style={{
         display: 'flex',
-        maxWidth: '1100px',
-        margin: '0 auto',
-        padding: '24px',
-        gap: '24px',
+        minHeight: '100vh',
       }}>
-        {/* Sidebar — desktop only */}
+        {/* Sidebar — fixed contextual */}
         <aside className="sidebar" style={{
-          width: '240px',
-          flexShrink: 0,
-          position: 'sticky',
-          top: '80px',
-          alignSelf: 'flex-start',
+          width: '260px', flexShrink: 0, borderRight: '1px solid rgba(0,0,0,0.06)',
+          background: '#f8f9fa', position: 'fixed', top: 0, left: 0, height: '100vh',
+          overflowY: 'auto', display: 'flex', flexDirection: 'column', zIndex: 50,
         }}>
-          {/* Semana info */}
-          <div style={{
-            padding: '16px',
-            marginBottom: '12px',
-          }}>
-            <p style={{ margin: '0 0 4px', fontSize: '12px', fontWeight: 600, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-              Semana {semana.num}
-            </p>
-            <p style={{ margin: 0, fontSize: '15px', fontWeight: 600, color: '#0f172a' }}>
-              {semana.titulo}
-            </p>
-            <p style={{ margin: '6px 0 0', fontSize: '12px', color: '#64748b', lineHeight: 1.5 }}>
-              {semana.descripcion}
-            </p>
+          {/* Back link + semana info */}
+          <div style={{ padding: '20px 20px 16px', borderBottom: '1px solid rgba(0,0,0,0.06)' }}>
+            <Link href="/curso" style={{
+              display: 'flex', alignItems: 'center', gap: '8px',
+              color: '#64748b', textDecoration: 'none', fontSize: '13px', fontWeight: 500,
+              marginBottom: '16px',
+            }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="15 18 9 12 15 6"/></svg>
+              Volver al curso
+            </Link>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <span style={{ fontSize: '24px' }}>{semana.emoji}</span>
+              <div>
+                <p style={{ margin: 0, fontSize: '11px', fontWeight: 600, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                  Semana {semana.num}
+                </p>
+                <p style={{ margin: 0, fontSize: '14px', fontWeight: 700, color: '#0f172a' }}>
+                  {semana.titulo}
+                </p>
+              </div>
+            </div>
           </div>
 
-          {/* Nav items */}
-          <nav style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-            {SECTIONS.map((s, i) => {
+          {/* Section tabs */}
+          <nav style={{ padding: '12px 8px', flex: 1 }}>
+            {SECTIONS.map((s) => {
               const isActive = activeSection === s.key
               const isCompleted = completedMap[s.key]
               return (
@@ -852,51 +851,36 @@ function SemanaContent({ semana }: { semana: Semana }) {
                   onClick={() => { setActiveSection(s.key); window.scrollTo({ top: 0, behavior: 'smooth' }) }}
                   className="sidebar-btn"
                   style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '12px',
-                    padding: '12px 16px',
-                    fontSize: '14px',
+                    display: 'flex', alignItems: 'center', gap: '12px',
+                    padding: '12px 16px', fontSize: '14px', width: '100%',
                     fontWeight: isActive ? 600 : 500,
-                    color: isActive ? '#0f172a' : isCompleted ? '#16a34a' : '#64748b',
-                    background: isActive ? '#fff' : 'transparent',
-                    border: isActive ? '1px solid rgba(0,0,0,0.06)' : '1px solid transparent',
-                    borderRadius: '10px',
-                    cursor: 'pointer',
-                    textAlign: 'left',
-                    transition: 'all 0.15s',
-                    boxShadow: isActive ? '0 1px 3px rgba(0,0,0,0.04)' : 'none',
+                    color: isActive ? sidebarColors[s.key] : isCompleted ? '#16a34a' : '#64748b',
+                    background: isActive ? `${sidebarColors[s.key]}10` : 'transparent',
+                    border: 'none',
+                    borderLeft: isActive ? `3px solid ${sidebarColors[s.key]}` : '3px solid transparent',
+                    borderRadius: '0 10px 10px 0', cursor: 'pointer', textAlign: 'left',
+                    transition: 'all 0.15s', marginBottom: '2px',
                   }}
                 >
                   <span style={{
-                    width: '28px',
-                    height: '28px',
-                    borderRadius: '7px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: isCompleted ? '13px' : '14px',
-                    fontWeight: 700,
-                    color: isCompleted ? '#fff' : isActive ? '#fff' : '#64748b',
-                    background: isCompleted
-                      ? 'linear-gradient(135deg, #22c55e, #16a34a)'
-                      : isActive
-                        ? sidebarColors[s.key]
-                        : '#e2e8f0',
-                    flexShrink: 0,
-                    transition: 'all 0.15s',
+                    width: '32px', height: '32px', borderRadius: '8px',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    fontSize: isCompleted ? '14px' : '16px',
+                    background: isCompleted ? 'linear-gradient(135deg, #22c55e, #16a34a)' : isActive ? `${sidebarColors[s.key]}18` : '#e2e8f0',
+                    color: isCompleted ? '#fff' : 'inherit',
+                    flexShrink: 0, transition: 'all 0.15s',
                   }}>
                     {isCompleted ? '✓' : s.icon}
                   </span>
                   <span>
-                    {s.label}
+                    <span style={{ display: 'block' }}>{s.label}</span>
                     {s.key === 'preclase' && (
-                      <span style={{ display: 'block', fontSize: '11px', color: '#94a3b8', fontWeight: 400, marginTop: '2px' }}>
+                      <span style={{ display: 'block', fontSize: '11px', color: '#94a3b8', fontWeight: 400, marginTop: '1px' }}>
                         {semana.preclase.duracion}
                       </span>
                     )}
                     {s.key === 'clase' && (
-                      <span style={{ display: 'block', fontSize: '11px', color: '#94a3b8', fontWeight: 400, marginTop: '2px' }}>
+                      <span style={{ display: 'block', fontSize: '11px', color: '#94a3b8', fontWeight: 400, marginTop: '1px' }}>
                         {semana.clase.duracion}
                       </span>
                     )}
@@ -906,21 +890,13 @@ function SemanaContent({ semana }: { semana: Semana }) {
             })}
           </nav>
 
-          {/* Progress summary */}
-          <div style={{
-            marginTop: '16px',
-            padding: '14px 16px',
-            background: '#fff',
-            borderRadius: '10px',
-            border: '1px solid rgba(0,0,0,0.06)',
-          }}>
+          {/* Progress */}
+          <div style={{ padding: '12px 16px', borderTop: '1px solid rgba(0,0,0,0.06)' }}>
             <p style={{ margin: '0 0 8px', fontSize: '12px', fontWeight: 600, color: '#94a3b8' }}>Progreso</p>
             <div style={{ display: 'flex', gap: '6px' }}>
               {SECTIONS.map(s => (
                 <div key={s.key} style={{
-                  flex: 1,
-                  height: '6px',
-                  borderRadius: '3px',
+                  flex: 1, height: '6px', borderRadius: '3px',
                   background: completedMap[s.key] ? '#22c55e' : '#e2e8f0',
                   transition: 'background 0.3s',
                 }} />
@@ -932,8 +908,11 @@ function SemanaContent({ semana }: { semana: Semana }) {
           </div>
         </aside>
 
+        {/* Spacer for fixed sidebar */}
+        <div className="sidebar-spacer" style={{ width: '260px', flexShrink: 0 }} />
+
         {/* Content */}
-        <main style={{ flex: 1, minWidth: 0 }}>
+        <main style={{ flex: 1, minWidth: 0, maxWidth: '800px', margin: '0 auto', padding: '32px 24px 80px' }}>
           {/* ===== PRE-CLASE ===== */}
           {activeSection === 'preclase' && (
             <section>
@@ -1466,31 +1445,24 @@ function SemanaContent({ semana }: { semana: Semana }) {
       </div>
 
       <style jsx global>{`
-        .pizarra-btn:hover {
-          transform: translateY(-1px);
-          box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4) !important;
-        }
-        .nav-section-btn:hover {
-          transform: translateY(-1px);
-          box-shadow: 0 4px 12px rgba(0,0,0,0.12) !important;
-        }
-        .sidebar-btn:hover {
-          background: rgba(255,255,255,0.7) !important;
-        }
-        .complete-btn:hover {
-          opacity: 0.9;
-        }
-        /* Desktop: show sidebar, hide mobile tabs */
+        .pizarra-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4) !important; }
+        .nav-section-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.12) !important; }
+        .sidebar-btn:hover { background: rgba(0,0,0,0.04) !important; }
+        .complete-btn:hover { opacity: 0.9; }
+        .sidebar::-webkit-scrollbar { width: 4px; }
+        .sidebar::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 2px; }
         @media (min-width: 769px) {
           .mobile-tabs { display: none !important; }
-          .sidebar { display: block !important; }
+          .mobile-header { display: none !important; }
+          .sidebar { display: flex !important; }
         }
-        /* Mobile: hide sidebar, show mobile tabs */
         @media (max-width: 768px) {
           .mobile-tabs { display: flex !important; }
+          .mobile-header { display: flex !important; }
           .sidebar { display: none !important; }
-          .layout-wrapper { padding: 16px !important; }
-          .header-title { font-size: 14px !important; }
+          .sidebar-spacer { display: none !important; }
+          .layout-wrapper { padding: 0 !important; }
+          main { padding: 20px 16px 60px !important; }
           h2 { font-size: 20px !important; }
           .complete-btn { padding: 8px 12px !important; font-size: 12px !important; }
         }
@@ -1666,7 +1638,7 @@ function SemanaPage() {
 }
 
 (SemanaPage as NextPageWithLayout).getLayout = (page: ReactElement) => (
-  <CursoLayout>{page}</CursoLayout>
+  <CursoEmailGate>{page}</CursoEmailGate>
 )
 
 export default SemanaPage
