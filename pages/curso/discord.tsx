@@ -1,6 +1,9 @@
 import Modulo0Layout from '../../components/Modulo0Layout'
+import { usePrecursoProgress } from '../../lib/precurso-data'
 
 function DiscordContent() {
+  const { completed, toggle } = usePrecursoProgress()
+  const isPageComplete = completed['discord-completo']
   return (
     <>
       {/* Hero */}
@@ -275,6 +278,30 @@ function DiscordContent() {
           ))}
         </div>
       </section>
+
+      {/* Completion button */}
+      <div style={{ marginBottom: '32px', textAlign: 'center' }}>
+        <button
+          onClick={() => toggle('discord-completo')}
+          style={{
+            width: '100%',
+            padding: '16px 24px',
+            background: isPageComplete ? '#f0fdf4' : '#22c55e',
+            border: `1px solid ${isPageComplete ? '#22c55e' : '#22c55e'}`,
+            borderRadius: '12px',
+            color: isPageComplete ? '#16a34a' : 'white',
+            fontSize: '16px',
+            fontWeight: 600,
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '8px',
+          }}
+        >
+          {isPageComplete ? '✓ Completado' : '✓ Marcar como completado'}
+        </button>
+      </div>
 
       {/* CTA Final */}
       <div style={{

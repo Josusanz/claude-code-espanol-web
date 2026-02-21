@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import Modulo0Layout from '../../components/Modulo0Layout'
 import { usePrecursoProgress } from '../../lib/precurso-data'
 
@@ -350,6 +351,16 @@ function RequisitosContent() {
 
   const completedCount = REQUISITOS.filter(req => completed[req.id]).length
   const allCompleted = completedCount === REQUISITOS.length
+
+  // Auto-mark/unmark page completion when all 6 items are checked/unchecked
+  useEffect(() => {
+    if (allCompleted && !completed['requisitos-completo']) {
+      toggle('requisitos-completo')
+    } else if (!allCompleted && completed['requisitos-completo']) {
+      toggle('requisitos-completo')
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [allCompleted])
 
   return (
     <>

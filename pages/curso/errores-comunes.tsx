@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import Modulo0Layout from '../../components/Modulo0Layout'
+import { usePrecursoProgress } from '../../lib/precurso-data'
 
 const ERRORES = [
   {
@@ -194,6 +195,8 @@ const ERRORES = [
 ]
 
 function ErroresContent() {
+  const { completed, toggle } = usePrecursoProgress()
+  const isPageComplete = completed['errores-completo']
   const [searchQuery, setSearchQuery] = useState('')
   const [expandedError, setExpandedError] = useState<string | null>(null)
   const [filterCategoria, setFilterCategoria] = useState<string | null>(null)
@@ -503,9 +506,33 @@ function ErroresContent() {
           </div>
         </div>
 
+        {/* Completion button */}
+        <div style={{ marginTop: '32px', textAlign: 'center' }}>
+          <button
+            onClick={() => toggle('errores-completo')}
+            style={{
+              width: '100%',
+              padding: '16px 24px',
+              background: isPageComplete ? '#f0fdf4' : '#22c55e',
+              border: `1px solid ${isPageComplete ? '#22c55e' : '#22c55e'}`,
+              borderRadius: '12px',
+              color: isPageComplete ? '#16a34a' : 'white',
+              fontSize: '16px',
+              fontWeight: 600,
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '8px',
+            }}
+          >
+            {isPageComplete ? '✓ Completado' : '✓ Marcar como completado'}
+          </button>
+        </div>
+
         {/* Navigation */}
         <div style={{
-          marginTop: '32px',
+          marginTop: '16px',
           display: 'flex',
           justifyContent: 'space-between'
         }}>

@@ -10,21 +10,24 @@ export const PRECURSO_SECTIONS = {
   'req-vercel': 'Cuenta Vercel creada',
   'req-claude': 'Claude Code instalado',
   'req-pencil': 'Pencil instalado',
+  'requisitos-completo': 'Requisitos completados',
   'reglas-prompting': '7 Reglas de Prompting',
+  'errores-completo': 'Errores comunes leído',
   'quiz-aprobado': 'Quiz aprobado',
   'primer-proyecto': 'Primer proyecto completado',
+  'discord-completo': 'Guía Discord leída',
 }
 
 // Páginas del precurso (ahora bajo /curso/)
 export const PRECURSO_PAGES = [
   { href: '/curso/programar-con-ia', title: 'Programar con IA', emoji: '🤖', tiempo: '5 min', subtitle: 'Entiende cómo la IA ha cambiado las reglas del juego', trackingId: 'intro-completo', gradient: 'linear-gradient(135deg, #f59e0b, #d97706)' },
   { href: '/curso/glosario', title: 'Glosario', emoji: '📚', tiempo: '10 min', subtitle: 'Los conceptos esenciales para entender lo que hace Claude Code', trackingId: 'glosario-completo', gradient: 'linear-gradient(135deg, #6366f1, #8b5cf6)' },
-  { href: '/curso/requisitos', title: 'Requisitos técnicos', emoji: '🛠️', tiempo: '15 min', subtitle: 'Las herramientas y cuentas que necesitas antes de empezar', trackingId: null, gradient: 'linear-gradient(135deg, #22c55e, #16a34a)' },
+  { href: '/curso/requisitos', title: 'Requisitos técnicos', emoji: '🛠️', tiempo: '15 min', subtitle: 'Las herramientas y cuentas que necesitas antes de empezar', trackingId: 'requisitos-completo', gradient: 'linear-gradient(135deg, #22c55e, #16a34a)' },
   { href: '/curso/reglas-prompting', title: 'Las 7 Reglas de Prompting', emoji: '🎯', tiempo: '15 min', subtitle: 'Cómo hablar con Claude para obtener los mejores resultados', trackingId: 'reglas-prompting', gradient: 'linear-gradient(135deg, #f97316, #ea580c)' },
-  { href: '/curso/errores-comunes', title: 'Errores comunes', emoji: '🔧', tiempo: '5 min', subtitle: 'Soluciones a los problemas más frecuentes', trackingId: null, gradient: 'linear-gradient(135deg, #f59e0b, #d97706)' },
+  { href: '/curso/errores-comunes', title: 'Errores comunes', emoji: '🔧', tiempo: '5 min', subtitle: 'Soluciones a los problemas más frecuentes', trackingId: 'errores-completo', gradient: 'linear-gradient(135deg, #f59e0b, #d97706)' },
   { href: '/curso/quiz', title: 'Quiz de conceptos', emoji: '✅', tiempo: '5 min', subtitle: 'Verifica que entiendes lo básico (80% para aprobar)', trackingId: 'quiz-aprobado', gradient: 'linear-gradient(135deg, #8b5cf6, #7c3aed)' },
   { href: '/curso/primer-proyecto', title: 'Tu primer proyecto', emoji: '🚀', tiempo: '10 min', subtitle: 'Crea tu primera página web con Claude Code', trackingId: 'primer-proyecto', gradient: 'linear-gradient(135deg, #ec4899, #db2777)' },
-  { href: '/curso/discord', title: 'Guía del Discord', emoji: '💬', tiempo: '5 min', subtitle: 'Aprende a usar el servidor: canales, comandos, logros y más', trackingId: null, gradient: 'linear-gradient(135deg, #5865F2, #7289DA)' },
+  { href: '/curso/discord', title: 'Guía del Discord', emoji: '💬', tiempo: '5 min', subtitle: 'Aprende a usar el servidor: canales, comandos, logros y más', trackingId: 'discord-completo', gradient: 'linear-gradient(135deg, #5865F2, #7289DA)' },
 ]
 
 // Helper para obtener el email del usuario desde localStorage
@@ -151,8 +154,8 @@ export function usePrecursoProgress() {
     }
   }
 
-  const completedCount = Object.values(completed).filter(Boolean).length
-  const totalCount = Object.keys(PRECURSO_SECTIONS).length
+  const completedCount = PRECURSO_PAGES.filter(p => p.trackingId && completed[p.trackingId]).length
+  const totalCount = PRECURSO_PAGES.length
   const progress = totalCount > 0 ? (completedCount / totalCount) * 100 : 0
 
   return { completed, toggle, completedCount, totalCount, progress, initialized }
