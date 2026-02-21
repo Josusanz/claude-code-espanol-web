@@ -27,6 +27,7 @@ export interface ClaseEnVivo {
   duracion: string
   videoUrl?: string
   videos?: ClaseVideo[]
+  zoomUrl?: string
   notas?: string // Markdown
   slides?: string
 }
@@ -43,6 +44,7 @@ export interface DiaSemana {
   emoji: string
   preclase: PreClase
   clase: ClaseEnVivo
+  entregable?: Entregable
 }
 
 export interface Semana {
@@ -174,6 +176,15 @@ Prepara una mini-presentación para el Día 1:
 - Crear cuentas de Supabase y Vercel
 - Elegir un theme base de la galería
           `,
+        },
+        entregable: {
+          titulo: 'Rueda del Creador y presentación',
+          descripcion: 'Completa tu Rueda del Creador durante la clase y haz tu presentación al grupo.',
+          fechaLimite: '2026-02-19',
+          checklist: [
+            'Presentación hecha en la primera clase',
+            'Rueda del Creador completada (se hace en la clase del Día 1)',
+          ],
         },
       },
       {
@@ -406,6 +417,21 @@ La IA escribirá el código por ti. Tu trabajo es:
 - Creamos el panel admin
 - Desplegamos en Vercel
           `,
+        },
+        entregable: {
+          titulo: 'Waitlist desplegada',
+          descripcion: 'Tu waitlist funcionando en internet con formulario de captura de emails y base de datos conectada.',
+          fechaLimite: '2026-02-26',
+          checklist: [
+            'Theme base elegido y personalizado',
+            'Proyecto creado a partir del theme',
+            'Landing page personalizada con formulario',
+            'Base de datos conectada (Supabase)',
+            'Emails guardándose correctamente',
+            'Desplegado en Vercel',
+            'CLAUDE.md creado en la raíz del proyecto',
+            'URL compartida en Discord',
+          ],
         },
       },
     ],

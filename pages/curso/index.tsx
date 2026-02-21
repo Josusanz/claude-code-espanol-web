@@ -155,7 +155,7 @@ function CursoDashboard() {
   }
 
   return (
-    <div style={{ padding: '32px 40px', maxWidth: '960px' }}>
+    <div style={{ padding: '32px 40px' }}>
       <Head>
         <title>Dashboard | Curso</title>
       </Head>

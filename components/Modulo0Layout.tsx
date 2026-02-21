@@ -233,7 +233,6 @@ function Modulo0LayoutInner({ title, children }: Modulo0LayoutProps) {
           flex: 1,
           minWidth: 0,
           padding: '40px 48px 60px',
-          maxWidth: '900px',
         }}>
           {children}
 
