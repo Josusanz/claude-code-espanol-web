@@ -45,15 +45,15 @@ export default function DualRueda({ ruedas, onSave }: DualRuedaProps) {
   const activeWheel: 'creador' | 'vida' = activeTab === 'creador' ? 'creador' : 'vida'
   const activeRueda = activeTab === 'creador' ? creador : vida
 
-  // Auto-select time tab based on what's filled
+  // Auto-select time tab only on initial mount
   useEffect(() => {
-    if (activeTab === 'estadisticas') return
-    if (activeRueda.antes && activeRueda.despues) {
+    const initial = migrateDualRueda(ruedas)
+    const initialVida = initial.vida || {}
+    if (initialVida.antes && initialVida.despues) {
       setActiveTime('comparar')
-    } else {
-      setActiveTime('antes')
     }
-  }, [activeTab])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const formatDate = (dateStr: string) =>
     new Date(dateStr).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })
