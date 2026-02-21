@@ -1,4 +1,16 @@
 export default {
+  "*": {
+    theme: {
+      layout: "raw",
+      sidebar: false,
+      navbar: false,
+      toc: false,
+      footer: false,
+      breadcrumb: false,
+      pagination: false,
+      timestamp: false,
+    }
+  },
   "index": "Ralph Loop",
   "que-es-ralph": "3.1 ¿Qué es Ralph Loop?",
   "context-rot": "3.2 Context Rot",

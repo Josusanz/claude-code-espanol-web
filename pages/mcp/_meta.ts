@@ -1,6 +1,7 @@
 export default {
   "*": {
     theme: {
+      layout: "raw",
       sidebar: false,
       navbar: false,
       toc: false,
