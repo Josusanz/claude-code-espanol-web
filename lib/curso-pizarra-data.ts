@@ -17,6 +17,7 @@ export interface PasoClase {
 
 export interface PizarraSemana {
   semanaNum: number
+  dia?: number // Optional: for multi-day weeks (e.g. S1 Day 1 = dia:1, S1 Day 2 = dia:2)
   titulo: string
   emoji: string
   subtitulo: string
@@ -24,13 +25,16 @@ export interface PizarraSemana {
 }
 
 export const PIZARRAS: PizarraSemana[] = [
+  // ==========================================
+  // SEMANA 1 — DÍA 1: Bienvenida y Orientación
+  // ==========================================
   {
     semanaNum: 1,
-    titulo: 'LaunchPad - Proyecto Conjunto',
-    emoji: '🚀',
-    subtitulo: 'Personalizamos un theme premium y lo lanzamos al mundo',
+    dia: 1,
+    titulo: 'Bienvenida y Orientación',
+    emoji: '👋',
+    subtitulo: 'Nos conocemos, evaluamos dónde estamos y definimos nuestro proyecto',
     pasos: [
-      // — DÍA 1 (Jueves) — Bienvenida y Orientación
       {
         titulo: '📋 Día 1 (Jueves): Bienvenida y Orientación',
         descripcion: 'Hoy nos conocemos, evaluamos dónde estamos, definimos nuestro proyecto y nos preparamos para mañana.',
@@ -86,48 +90,79 @@ export const PIZARRAS: PizarraSemana[] = [
       },
       {
         titulo: '9. Tarea para mañana',
-        descripcion: 'Lee la pre-clase completa (setup técnico), ten terminal + Claude Code listos, crea cuentas de Supabase y Vercel, y elige un theme base de la galería.',
-        tip: 'Si tienes dudas con el setup, pregunta en Discord. Mañana arrancamos directamente a construir.',
+        descripcion: 'Lee la pre-clase del Día 2 (verificar setup), ten terminal + Claude Code listos, crea cuentas de Supabase y Vercel.',
+        tip: 'Si tienes dudas con el setup, pregunta en Discord. Mañana arrancamos con la configuración.',
       },
-      // — DÍA 2 (Viernes) — Tu Primera Web
+    ],
+  },
+  // ==========================================
+  // SEMANA 1 — DÍA 2: Setup Técnico
+  // ==========================================
+  {
+    semanaNum: 1,
+    dia: 2,
+    titulo: 'Setup Técnico',
+    emoji: '🛠️',
+    subtitulo: 'Verificamos el entorno, configuramos las herramientas y practicamos con Claude Code',
+    pasos: [
       {
-        titulo: '📋 Día 2 (Viernes): Tu Primera Web',
-        descripcion: 'Hoy personalizamos el theme que elegiste en la pre-clase con Claude Code, conectamos Supabase y desplegamos en Vercel.',
+        titulo: '📋 Día 2 (Viernes): Setup Técnico',
+        descripcion: 'Hoy verificamos que todos tenéis el entorno preparado, configuramos las herramientas y practicamos con Claude Code.',
       },
       {
-        titulo: '10. Tu proyecto + Claude Code + Personalizar',
-        descripcion: 'Sigue los 5 pasos: confirma tu theme, abre el proyecto, lanza Claude Code y genera el prompt perfecto para personalizarlo.',
-        componente: 'dia2-setup',
+        titulo: '1. Verificar terminal y Claude Code',
+        descripcion: 'Comprobamos que el terminal y Claude Code funcionan correctamente:',
+        bloques: [
+          {
+            lenguaje: 'bash',
+            archivo: '1. Comprueba tu versión de Claude Code',
+            codigo: 'claude --version',
+          },
+          {
+            lenguaje: 'bash',
+            archivo: '2. Inicia Claude Code',
+            codigo: 'claude',
+          },
+        ],
+        tip: 'Si no tienes Claude Code instalado, sigue la guía de instalación en /empezar.',
       },
       {
-        titulo: '11. Iterar el diseño',
-        descripcion: 'Si algo no te gusta, pídele cambios a Claude:',
+        titulo: '2. Crear carpeta del curso',
+        descripcion: 'Creamos la carpeta donde vivirán todos tus proyectos:',
+        bloques: [
+          {
+            lenguaje: 'bash',
+            codigo: 'mkdir ~/curso-ia\ncd ~/curso-ia',
+          },
+        ],
+      },
+      {
+        titulo: '3. Verificar cuentas',
+        descripcion: 'Comprobamos que todas las cuentas están creadas:',
         bloques: [
           {
             lenguaje: 'text',
-            codigo: 'Cambia el color principal a azul oscuro. Haz el título más grande. Añade una sección más de testimonios. Cambia la imagen del hero.',
+            codigo: 'Checklist de cuentas:\n✅ GitHub — github.com\n✅ Supabase — supabase.com\n✅ Vercel — vercel.com (conectada a GitHub)',
           },
         ],
-        tip: 'No hace falta ser técnico. Habla como si le explicaras a un diseñador humano. Itera hasta que te guste.',
-      },
-      {
-        titulo: '12. Crear CLAUDE.md',
-        descripcion: 'Esto es la "memoria" de tu proyecto. Claude lo lee cada vez que abres una sesión nueva.',
-        bloques: [
-          {
-            lenguaje: 'text',
-            codigo: `Crea un archivo CLAUDE.md en la raíz del proyecto con:
-- Nombre del proyecto y descripción
-- Arquitectura: Next.js 15, Tailwind, Supabase, Vercel
-- Estado actual del proyecto
-- Convenciones de código`,
-          },
+        links: [
+          { texto: 'GitHub', url: 'https://github.com' },
+          { texto: 'Supabase', url: 'https://supabase.com' },
+          { texto: 'Vercel', url: 'https://vercel.com' },
         ],
-        tip: 'Al final de cada sesión, dile a Claude: "Actualiza el CLAUDE.md con lo que hemos trabajado hoy"',
+        tip: 'Si no tienes alguna cuenta, la creamos juntos ahora.',
       },
       {
-        titulo: '13. Conectar Git con GitHub',
-        descripcion: 'Primero instala GitHub CLI y autentícate. Después configuramos git con tus datos de GitHub automáticamente.',
+        titulo: '4. Instalar y configurar Pencil',
+        descripcion: 'Pencil es una extensión de diseño visual que se conecta con Claude Code via MCP. Te permite diseñar interfaces y que Claude genere el código.',
+        links: [
+          { texto: 'Pencil — Instalar', url: 'https://pencil.dev' },
+        ],
+        tip: 'Pencil es gratuito. Se integra con Claude Code automáticamente via MCP.',
+      },
+      {
+        titulo: '5. Conectar Git con GitHub',
+        descripcion: 'Instalamos GitHub CLI y configuramos git con tus datos:',
         bloques: [
           {
             lenguaje: 'bash',
@@ -152,10 +187,98 @@ gh api user --jq '.email // empty' | xargs -I {} git config --global user.email 
 git config --global user.email`,
           },
         ],
-        tip: 'Al ejecutar "gh auth login", selecciona: GitHub.com → HTTPS → Login with a web browser. Se abrirá el navegador para autorizar. Solo necesitas hacer esto una vez. En Linux: sudo apt install gh. En Windows: winget install GitHub.cli. Si el email sale vacío, ponlo a mano: git config --global user.email "tu@email.com"',
+        tip: 'Al ejecutar "gh auth login", selecciona: GitHub.com → HTTPS → Login with a web browser. En Linux: sudo apt install gh. En Windows: winget install GitHub.cli. Si el email sale vacío, ponlo a mano: git config --global user.email "tu@email.com"',
       },
       {
-        titulo: '14. Crear repo y subir a GitHub',
+        titulo: '6. Practicar con Claude Code',
+        descripcion: 'Hacemos un ejercicio rápido para familiarizarnos:',
+        bloques: [
+          {
+            lenguaje: 'bash',
+            archivo: '1. Crea una carpeta de prueba',
+            codigo: 'mkdir ~/curso-ia/prueba\ncd ~/curso-ia/prueba',
+          },
+          {
+            lenguaje: 'bash',
+            archivo: '2. Inicia Claude Code',
+            codigo: 'claude',
+          },
+          {
+            lenguaje: 'text',
+            archivo: '3. Pídele algo sencillo',
+            codigo: 'Crea un archivo index.html con una página web que diga "Hola, soy [tu nombre] y estoy aprendiendo a crear software con IA"',
+          },
+        ],
+        tip: 'Este es solo un ejercicio de calentamiento. La semana que viene construiremos algo real.',
+      },
+      {
+        titulo: '7. Quitar confirmaciones de Claude Code',
+        descripcion: 'Para trabajar más rápido en clase, activamos el modo sin confirmaciones:',
+        bloques: [
+          {
+            lenguaje: 'bash',
+            archivo: 'Modo auto-accept (recomendado para clase)',
+            codigo: 'claude --dangerously-skip-permissions',
+          },
+        ],
+        tip: 'Para proyectos de cliente o producción, usa las confirmaciones normales o una allowlist.',
+      },
+      {
+        titulo: '8. Explorar la galería de themes',
+        descripcion: 'Echamos un vistazo a los 20 themes premium del curso. Para la próxima clase, ven con un theme elegido.',
+        links: [
+          { texto: 'Galería de themes', url: '/curso/themes' },
+        ],
+        tip: 'Elige un theme que se parezca a lo que quieres construir. En la Semana 2 lo personalizaremos con Claude Code.',
+      },
+    ],
+  },
+  // ==========================================
+  // SEMANA 2 — Tu Primera Web
+  // ==========================================
+  {
+    semanaNum: 2,
+    titulo: 'Tu Primera Web',
+    emoji: '🌐',
+    subtitulo: 'Personalizamos un theme premium y lo lanzamos al mundo',
+    pasos: [
+      {
+        titulo: '📋 Tu Primera Web',
+        descripcion: 'Hoy personalizamos el theme que elegiste, conectamos Supabase y desplegamos en Vercel.',
+      },
+      {
+        titulo: '1. Tu proyecto + Claude Code + Personalizar',
+        descripcion: 'Sigue los 5 pasos: confirma tu theme, abre el proyecto, lanza Claude Code y genera el prompt perfecto para personalizarlo.',
+        componente: 'dia2-setup',
+      },
+      {
+        titulo: '2. Iterar el diseño',
+        descripcion: 'Si algo no te gusta, pídele cambios a Claude:',
+        bloques: [
+          {
+            lenguaje: 'text',
+            codigo: 'Cambia el color principal a azul oscuro. Haz el título más grande. Añade una sección más de testimonios. Cambia la imagen del hero.',
+          },
+        ],
+        tip: 'No hace falta ser técnico. Habla como si le explicaras a un diseñador humano. Itera hasta que te guste.',
+      },
+      {
+        titulo: '3. Crear CLAUDE.md',
+        descripcion: 'Esto es la "memoria" de tu proyecto. Claude lo lee cada vez que abres una sesión nueva.',
+        bloques: [
+          {
+            lenguaje: 'text',
+            codigo: `Crea un archivo CLAUDE.md en la raíz del proyecto con:
+- Nombre del proyecto y descripción
+- Arquitectura: Next.js 15, Tailwind, Supabase, Vercel
+- Estado actual del proyecto
+- Convenciones de código`,
+          },
+        ],
+        tip: 'Al final de cada sesión, dile a Claude: "Actualiza el CLAUDE.md con lo que hemos trabajado hoy"',
+      },
+      {
+        titulo: '4. Crear repo y subir a GitHub',
         descripcion: 'Inicializa git y sube tu proyecto (sustituye "mi-proyecto" por el nombre de tu carpeta):',
         bloques: [
           {
@@ -172,7 +295,7 @@ git commit -m "Primera versión de mi landing"`,
         tip: 'Si prefieres repo privado, cambia --public por --private.',
       },
       {
-        titulo: '15. Crear proyecto en Supabase',
+        titulo: '5. Crear proyecto en Supabase',
         descripcion: 'Ve a Supabase y crea un nuevo proyecto.',
         links: [
           { texto: 'Abrir Supabase', url: 'https://supabase.com/dashboard' },
@@ -180,7 +303,7 @@ git commit -m "Primera versión de mi landing"`,
         tip: 'Apunta la contraseña de la base de datos. Usa el mismo nombre que tu proyecto local.',
       },
       {
-        titulo: '16. Crear tabla de emails',
+        titulo: '6. Crear tabla de emails',
         descripcion: 'En el SQL Editor de Supabase, ejecuta:',
         bloques: [
           {
@@ -201,7 +324,7 @@ CREATE POLICY "Allow public inserts" ON waitlist
         ],
       },
       {
-        titulo: '17. Instalar Supabase en el proyecto',
+        titulo: '7. Instalar Supabase en el proyecto',
         bloques: [
           {
             lenguaje: 'bash',
@@ -210,7 +333,7 @@ CREATE POLICY "Allow public inserts" ON waitlist
         ],
       },
       {
-        titulo: '18. Configurar variables de entorno',
+        titulo: '8. Configurar variables de entorno',
         descripcion: 'Conecta Vercel con Supabase desde el terminal (recomendado) o pega tus keys manualmente.',
         componente: 'env-configurator',
         links: [
@@ -218,7 +341,7 @@ CREATE POLICY "Allow public inserts" ON waitlist
         ],
       },
       {
-        titulo: '19. Conectar el formulario',
+        titulo: '9. Conectar el formulario',
         descripcion: 'Dile a Claude que conecte el formulario con Supabase:',
         bloques: [
           {
@@ -235,7 +358,7 @@ Usa las variables de entorno NEXT_PUBLIC_SUPABASE_URL y NEXT_PUBLIC_SUPABASE_ANO
         ],
       },
       {
-        titulo: '20. Crear panel admin',
+        titulo: '10. Crear panel admin',
         bloques: [
           {
             lenguaje: 'text',
@@ -248,7 +371,7 @@ Usa las variables de entorno NEXT_PUBLIC_SUPABASE_URL y NEXT_PUBLIC_SUPABASE_ANO
         ],
       },
       {
-        titulo: '21. Deploy en Vercel',
+        titulo: '11. Deploy en Vercel',
         descripcion: 'La forma más fácil: conecta tu repo de GitHub a Vercel.',
         links: [
           { texto: 'Abrir Vercel', url: 'https://vercel.com/new' },
@@ -267,15 +390,18 @@ Usa las variables de entorno NEXT_PUBLIC_SUPABASE_URL y NEXT_PUBLIC_SUPABASE_ANO
         tip: 'También puedes hacer: npx vercel (desde la terminal)',
       },
       {
-        titulo: '22. ¡Comparte tu URL!',
+        titulo: '12. ¡Comparte tu URL!',
         descripcion: 'Tu waitlist está en producción. Copia la URL de Vercel y compártela en el Discord del curso.',
         tip: 'Actualiza el CLAUDE.md: "Actualiza el CLAUDE.md con todo lo que hemos hecho. El proyecto está desplegado en [tu-url].vercel.app"',
       },
     ],
   },
+  // ==========================================
+  // SEMANA 3 — Tu Proyecto: Diseño + UI (era S2)
+  // ==========================================
   {
-    semanaNum: 2,
-    titulo: 'Tu Proyecto - Setup + UI',
+    semanaNum: 3,
+    titulo: 'Tu Proyecto — Diseño + UI',
     emoji: '🎨',
     subtitulo: 'Empezamos TU proyecto con shadcn/ui y Pencil',
     pasos: [
@@ -429,16 +555,20 @@ git push`,
       },
     ],
   },
+  // ==========================================
+  // SEMANA 4 — Base de Datos + Autenticación (FUSIÓN S3+S4)
+  // ==========================================
   {
-    semanaNum: 3,
-    titulo: 'Base de Datos con Supabase',
-    emoji: '🗄️',
-    subtitulo: 'Diseña tu schema y conecta tu app con datos reales',
+    semanaNum: 4,
+    titulo: 'Base de Datos + Autenticación',
+    emoji: '🔐',
+    subtitulo: 'Diseña tu schema, conecta Supabase, implementa auth y protege con RLS',
     pasos: [
       {
-        titulo: '📋 Conecta tu app con Supabase',
-        descripcion: 'Hoy diseñamos las tablas de tu proyecto y las conectamos con la UI que creamos la semana pasada.',
+        titulo: '📋 Base de datos + Auth completo',
+        descripcion: 'Hoy diseñamos las tablas de tu proyecto, las conectamos con la UI, y añadimos autenticación con RLS.',
       },
+      // — Primera mitad: Base de datos —
       {
         titulo: '1. Crear proyecto en Supabase',
         links: [
@@ -540,42 +670,20 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIs...`,
           },
         ],
       },
+      // — Segunda mitad: Autenticación —
       {
-        titulo: '8. Verificar',
-        descripcion: 'Prueba que todo funciona:',
-        bloques: [
-          {
-            lenguaje: 'text',
-            codigo: `Checklist:
-✅ Puedo crear un nuevo registro
-✅ Los registros aparecen en la tabla
-✅ Puedo editar un registro
-✅ Puedo eliminar un registro
-✅ Los datos persisten (refresca la página)`,
-          },
-        ],
-      },
-    ],
-  },
-  {
-    semanaNum: 4,
-    titulo: 'Autenticación de Usuarios',
-    emoji: '🔐',
-    subtitulo: 'Login, registro y protección de rutas con Supabase Auth',
-    pasos: [
-      {
-        titulo: '📋 Sistema de autenticación completo',
-        descripcion: 'Hoy añadimos login, registro, y protegemos las rutas para que cada usuario solo vea sus datos.',
+        titulo: '📋 Ahora añadimos autenticación',
+        descripcion: 'Con la base de datos conectada, es hora de proteger los datos con auth + RLS.',
       },
       {
-        titulo: '1. Configurar Supabase Auth',
+        titulo: '8. Configurar Supabase Auth',
         descripcion: 'En Supabase Dashboard → Authentication → Providers, habilita Email.',
         links: [
           { texto: 'Supabase Auth Settings', url: 'https://supabase.com/dashboard/project/_/auth/providers' },
         ],
       },
       {
-        titulo: '2. Instalar helpers de auth',
+        titulo: '9. Instalar helpers de auth',
         bloques: [
           {
             lenguaje: 'bash',
@@ -584,7 +692,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIs...`,
         ],
       },
       {
-        titulo: '3. Crear páginas de login/registro',
+        titulo: '10. Crear páginas de login/registro',
         bloques: [
           {
             lenguaje: 'text',
@@ -599,7 +707,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIs...`,
         ],
       },
       {
-        titulo: '4. Proteger rutas con middleware',
+        titulo: '11. Proteger rutas con middleware',
         bloques: [
           {
             lenguaje: 'text',
@@ -612,7 +720,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIs...`,
         ],
       },
       {
-        titulo: '5. Row Level Security (RLS)',
+        titulo: '12. Row Level Security (RLS)',
         descripcion: 'Protege tus datos a nivel de base de datos:',
         bloques: [
           {
@@ -641,11 +749,16 @@ USING (auth.uid() = user_id);`,
         tip: 'Crea policies similares para TODAS tus tablas. Sin RLS, cualquier usuario puede ver los datos de otros.',
       },
       {
-        titulo: '6. Verificar seguridad',
+        titulo: '13. Verificar todo',
         bloques: [
           {
             lenguaje: 'text',
-            codigo: `Checklist de seguridad:
+            codigo: `Checklist completo:
+✅ Puedo crear un nuevo registro
+✅ Los registros aparecen en la tabla
+✅ Puedo editar un registro
+✅ Puedo eliminar un registro
+✅ Los datos persisten (refresca la página)
 ✅ No puedo acceder a /dashboard sin login
 ✅ Después de login, veo solo MIS datos
 ✅ Si abro otra ventana de incógnito, no veo datos del otro usuario
@@ -656,6 +769,9 @@ USING (auth.uid() = user_id);`,
       },
     ],
   },
+  // ==========================================
+  // SEMANA 5 — APIs y Server Actions (sin cambios)
+  // ==========================================
   {
     semanaNum: 5,
     titulo: 'APIs y Server Actions',
@@ -741,6 +857,9 @@ Crea app/api/webhook/route.ts que:
       },
     ],
   },
+  // ==========================================
+  // SEMANA 6 — Pagos con Stripe (sin cambios)
+  // ==========================================
   {
     semanaNum: 6,
     titulo: 'Pagos con Stripe',
@@ -843,6 +962,9 @@ CVC: cualquier 3 dígitos`,
       },
     ],
   },
+  // ==========================================
+  // SEMANA 7 — Email y Notificaciones (sin cambios)
+  // ==========================================
   {
     semanaNum: 7,
     titulo: 'Email y Notificaciones',
@@ -907,6 +1029,9 @@ Usa Server Actions o los webhooks de Stripe para triggear los envíos.`,
       },
     ],
   },
+  // ==========================================
+  // SEMANA 8 — Testing y Calidad (sin cambios)
+  // ==========================================
   {
     semanaNum: 8,
     titulo: 'Testing y Calidad',
@@ -977,6 +1102,9 @@ Crea el archivo en .github/workflows/tests.yml`,
       },
     ],
   },
+  // ==========================================
+  // SEMANA 9 — Performance y SEO (sin cambios)
+  // ==========================================
   {
     semanaNum: 9,
     titulo: 'Performance y SEO',
@@ -1040,6 +1168,9 @@ Crea el archivo en .github/workflows/tests.yml`,
       },
     ],
   },
+  // ==========================================
+  // SEMANA 10 — Agent Swarms y Lanzamiento (sin cambios)
+  // ==========================================
   {
     semanaNum: 10,
     titulo: 'Agent Swarms y Lanzamiento',
@@ -1279,7 +1410,18 @@ Personaliza con el nombre de tu empresa y datos de contacto.`,
   },
 ]
 
-// Helper para obtener la pizarra de una semana
-export function getPizarra(semanaNum: number): PizarraSemana | undefined {
-  return PIZARRAS.find(p => p.semanaNum === semanaNum)
+// Helper para obtener la pizarra de una semana (con soporte para día específico)
+export function getPizarra(semanaNum: number, dia?: number): PizarraSemana | undefined {
+  if (dia) {
+    return PIZARRAS.find(p => p.semanaNum === semanaNum && p.dia === dia)
+  }
+  // For weeks without dia field, return the single pizarra
+  // For weeks with dia field but no dia specified, return dia 1 as default
+  return PIZARRAS.find(p => p.semanaNum === semanaNum && !p.dia) ||
+         PIZARRAS.find(p => p.semanaNum === semanaNum && p.dia === 1)
+}
+
+// Helper para obtener todas las pizarras de una semana (para semanas multi-día)
+export function getPizarrasForSemana(semanaNum: number): PizarraSemana[] {
+  return PIZARRAS.filter(p => p.semanaNum === semanaNum)
 }

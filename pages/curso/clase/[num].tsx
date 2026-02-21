@@ -2,8 +2,8 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import type { ReactElement } from 'react'
-import CursoLayout from '../../../components/CursoLayout'
-import { getPizarra } from '../../../lib/curso-pizarra-data'
+import CursoEmailGate from '../../../components/CursoEmailGate'
+import { getPizarra, getPizarrasForSemana } from '../../../lib/curso-pizarra-data'
 import { PasoComponent } from '../../../components/curso-shared/PasoRenderer'
 import type { NextPageWithLayout } from '../../_app'
 
@@ -12,21 +12,24 @@ const PizarraClasePage: NextPageWithLayout = () => {
 }
 
 PizarraClasePage.getLayout = (page: ReactElement) => (
-  <CursoLayout>{page}</CursoLayout>
+  <CursoEmailGate>{page}</CursoEmailGate>
 )
 
 export default PizarraClasePage
 
 function PizarraClaseContent() {
   const router = useRouter()
-  const { num } = router.query
+  const { num, dia } = router.query
   const semanaNum = parseInt(num as string, 10)
+  const diaNum = dia ? parseInt(dia as string, 10) : undefined
 
   if (!num || isNaN(semanaNum)) {
     return null
   }
 
-  const pizarra = getPizarra(semanaNum)
+  const pizarra = getPizarra(semanaNum, diaNum)
+  const allPizarras = getPizarrasForSemana(semanaNum)
+  const hasMultipleDays = allPizarras.length > 1
 
   if (!pizarra) {
     return (
@@ -60,7 +63,7 @@ function PizarraClaseContent() {
       fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
     }}>
       <Head>
-        <title>Clase S{pizarra.semanaNum}: {pizarra.titulo}</title>
+        <title>Clase S{pizarra.semanaNum}{pizarra.dia ? ` D${pizarra.dia}` : ''}: {pizarra.titulo}</title>
         <meta name="robots" content="noindex, nofollow" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -83,19 +86,27 @@ function PizarraClaseContent() {
           justifyContent: 'space-between',
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <span style={{ fontSize: '24px' }}>{pizarra.emoji}</span>
+            <Link href={`/curso/semana/${semanaNum}`} style={{
+              display: 'flex', alignItems: 'center', gap: '6px',
+              color: '#6366f1', textDecoration: 'none', fontSize: '13px', fontWeight: 500,
+            }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="15 18 9 12 15 6"/></svg>
+              Semana {semanaNum}
+            </Link>
+            <span style={{ color: '#cbd5e1' }}>|</span>
+            <span style={{ fontSize: '20px' }}>{pizarra.emoji}</span>
             <div>
               <h1 style={{
                 margin: 0,
-                fontSize: '16px',
+                fontSize: '15px',
                 fontWeight: 700,
                 color: '#1e293b',
               }}>
-                Semana {pizarra.semanaNum}: {pizarra.titulo}
+                {pizarra.titulo}
               </h1>
               <p style={{
                 margin: 0,
-                fontSize: '13px',
+                fontSize: '12px',
                 color: '#64748b',
               }}>
                 {pasosReales.length} pasos
@@ -103,32 +114,61 @@ function PizarraClaseContent() {
             </div>
           </div>
 
-          <div style={{ display: 'flex', gap: '8px' }}>
-            {semanaNum > 1 && (
-              <Link href={`/curso/clase/${semanaNum - 1}`} style={{
-                padding: '8px 14px',
-                fontSize: '13px',
-                color: '#64748b',
-                textDecoration: 'none',
-                border: '1px solid #e2e8f0',
-                borderRadius: '8px',
-                fontWeight: 500,
-              }}>
-                ← S{semanaNum - 1}
-              </Link>
-            )}
-            {semanaNum < 10 && (
-              <Link href={`/curso/clase/${semanaNum + 1}`} style={{
-                padding: '8px 14px',
-                fontSize: '13px',
-                color: '#64748b',
-                textDecoration: 'none',
-                border: '1px solid #e2e8f0',
-                borderRadius: '8px',
-                fontWeight: 500,
-              }}>
-                S{semanaNum + 1} →
-              </Link>
+          <div style={{ display: 'flex', gap: '6px' }}>
+            {/* Day tabs for multi-day weeks */}
+            {hasMultipleDays && allPizarras.map((p) => {
+              const isActive = p.dia === pizarra.dia
+              return (
+                <Link
+                  key={p.dia}
+                  href={`/curso/clase/${semanaNum}?dia=${p.dia}`}
+                  style={{
+                    padding: '6px 12px',
+                    fontSize: '12px',
+                    fontWeight: isActive ? 600 : 500,
+                    color: isActive ? '#fff' : '#64748b',
+                    background: isActive ? '#6366f1' : '#f8fafc',
+                    border: `1px solid ${isActive ? '#6366f1' : '#e2e8f0'}`,
+                    borderRadius: '6px',
+                    textDecoration: 'none',
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  {p.emoji} Día {p.dia}
+                </Link>
+              )
+            })}
+
+            {/* Prev/next semana nav */}
+            {!hasMultipleDays && (
+              <>
+                {semanaNum > 1 && (
+                  <Link href={`/curso/clase/${semanaNum - 1}`} style={{
+                    padding: '6px 12px',
+                    fontSize: '12px',
+                    color: '#64748b',
+                    textDecoration: 'none',
+                    border: '1px solid #e2e8f0',
+                    borderRadius: '6px',
+                    fontWeight: 500,
+                  }}>
+                    ← S{semanaNum - 1}
+                  </Link>
+                )}
+                {semanaNum < 10 && (
+                  <Link href={`/curso/clase/${semanaNum + 1}`} style={{
+                    padding: '6px 12px',
+                    fontSize: '12px',
+                    color: '#64748b',
+                    textDecoration: 'none',
+                    border: '1px solid #e2e8f0',
+                    borderRadius: '6px',
+                    fontWeight: 500,
+                  }}>
+                    S{semanaNum + 1} →
+                  </Link>
+                )}
+              </>
             )}
           </div>
         </div>
@@ -170,9 +210,14 @@ function PizarraClaseContent() {
           color: '#94a3b8',
           fontSize: '14px',
         }}>
-          <p style={{ margin: 0 }}>
+          <p style={{ margin: '0 0 12px' }}>
             ¿Atascado? Pregunta en el Discord del curso o levanta la mano en clase.
           </p>
+          <Link href={`/curso/semana/${semanaNum}`} style={{
+            color: '#6366f1', textDecoration: 'none', fontWeight: 500,
+          }}>
+            ← Volver a Semana {semanaNum}
+          </Link>
         </div>
       </main>
 

@@ -462,7 +462,7 @@ function SemanaContentMultiDay({ semana }: { semana: Semana }) {
               </div>
 
               {/* Pizarra button */}
-              <Link href={`/curso/clase/${semana.num}`} className="pizarra-btn" style={{
+              <Link href={`/curso/clase/${semana.num}?dia=${activeDayIndex + 1}`} className="pizarra-btn" style={{
                 display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
                 padding: '14px 24px',
                 background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',

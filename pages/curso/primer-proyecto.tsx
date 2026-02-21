@@ -328,7 +328,7 @@ function PrimerProyectoContent() {
                 Has creado tu primera página web con Claude Code usando "vibe coding" — describir lo que quieres y dejar que la IA lo construya.<br />
                 <strong>¡Ya estás listo para empezar el curso!</strong>
               </p>
-              <Link href="/empezar/introduccion" style={{
+              <Link href="/curso/semana/1" style={{
                 display: 'inline-block',
                 padding: '18px 48px',
                 background: '#22c55e',

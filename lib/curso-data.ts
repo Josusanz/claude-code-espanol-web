@@ -74,22 +74,27 @@ export const SEMANAS_FECHAS: Record<number, string> = {
 }
 
 export const CURSO_SEMANAS: Semana[] = [
+  // ==========================================
+  // SEMANA 1 — LaunchPad (2 días)
+  // ==========================================
   {
     num: 1,
-    titulo: 'LaunchPad - Proyecto Conjunto',
-    descripcion: 'Día 1 (Jue 19): Bienvenida y orientación · Día 2 (Vie 20): Tu primera web con Claude Code',
+    titulo: 'LaunchPad - Primeros Pasos',
+    descripcion: 'Día 1 (Jue 19): Bienvenida y orientación · Día 2 (Vie 20): Setup técnico completo',
     fechaInicio: '2026-02-19',
     emoji: '🚀',
-    // Main preclase/clase kept as summary for backward compat with progress tracking
     preclase: {
       titulo: 'Preparación para el LaunchPad',
-      duracion: '30 min',
+      duracion: '15 min',
       contenido: `
 ## Bienvenido a la Primera Promoción 🎉
 
 Este no es solo un curso técnico. Es un viaje de transformación donde vas a crear algo real, conectar con personas increíbles, y descubrir de qué eres capaz.
 
 La Semana 1 es especial: tiene **dos días**. Usa las pestañas de arriba para ver la preparación y grabación de cada día.
+
+- **Día 1 (Jueves):** Bienvenida, presentaciones y Rueda del Creador
+- **Día 2 (Viernes):** Setup técnico completo con Claude Code
       `,
       recursos: [
         { titulo: 'Crear cuenta en Supabase', url: 'https://supabase.com', tipo: 'link' },
@@ -100,22 +105,23 @@ La Semana 1 es especial: tiene **dos días**. Usa las pestañas de arriba para v
       fecha: '2026-02-19',
       hora: '19:00 CET',
       duracion: '2h + 2h',
+      zoomUrl: 'https://us02web.zoom.us/j/81636452979',
     },
     entregable: {
-      titulo: 'Waitlist desplegada + Rueda del Creador',
-      descripcion: 'Tu waitlist funcionando en internet y tu Rueda del Creador compartida en Discord.',
+      titulo: 'Rueda del Creador + Setup técnico',
+      descripcion: 'Tu Rueda del Creador compartida en Discord y tu setup técnico completo para empezar a construir.',
       fechaLimite: '2026-02-26',
       checklist: [
         'Rueda del Creador completada (se hace en la clase del Día 1)',
         'Presentación hecha en la primera clase',
-        'Theme base elegido y personalizado',
-        'Proyecto creado a partir del theme',
-        'Landing page personalizada con formulario',
-        'Base de datos conectada (Supabase)',
-        'Emails guardándose correctamente',
-        'Desplegado en Vercel',
-        'CLAUDE.md creado en la raíz del proyecto',
-        'URL compartida en Discord',
+        'Terminal funcionando correctamente',
+        'Claude Code responde a comandos (claude --version)',
+        'Cuenta de GitHub creada y autenticada',
+        'Cuenta de Supabase creada',
+        'Cuenta de Vercel conectada a GitHub',
+        'Carpeta ~/curso-ia creada',
+        'Pencil instalado',
+        'Galería de themes explorada',
       ],
     },
     dias: [
@@ -147,6 +153,7 @@ Prepara una mini-presentación para el Día 1:
           fecha: '2026-02-19',
           hora: '19:00 CET',
           duracion: '2h',
+          zoomUrl: 'https://us02web.zoom.us/j/81636452979',
           videos: [
             {
               titulo: 'Día 1 — Bienvenida y conexión',
@@ -170,11 +177,9 @@ Prepara una mini-presentación para el Día 1:
 - Cómo funciona la pre-clase y el entregable
 
 **Tarea para mañana**
-- Leer la pre-clase del Día 2 (setup técnico + elegir theme)
-- Tener el terminal + Claude Code + Pencil listos
-- Crear la carpeta \`~/curso-ia\` y clonar los themes
+- Leer la pre-clase del Día 2 (verificar setup)
+- Tener el terminal + Claude Code listos
 - Crear cuentas de Supabase y Vercel
-- Elegir un theme base de la galería
           `,
         },
         entregable: {
@@ -188,376 +193,138 @@ Prepara una mini-presentación para el Día 1:
         },
       },
       {
-        titulo: 'Tu primera web con Claude Code',
-        emoji: '💻',
+        titulo: 'Setup técnico',
+        emoji: '🛠️',
         preclase: {
-          titulo: 'Setup técnico para el Día 2',
-          duracion: '25 min',
+          titulo: 'Verificación antes de la clase',
+          duracion: '5 min',
           contenido: `
-## 📋 Antes del Día 2 (Viernes 20)
+## ✅ Verificación antes de la clase
 
-El Día 2 es 100% práctico. Vamos a construir tu primera web con Claude Code. Necesitas tener todo el setup técnico listo **antes de empezar**.
+Comprueba que tienes todo listo. Si algo falla, **tráelo a la clase y lo resolvemos juntos**.
 
-### 🛠️ Setup técnico obligatorio
+- [ ] Terminal abierta y funcionando
+- [ ] Claude Code instalado (\`claude --version\`)
+- [ ] Cuenta de GitHub creada
+- [ ] Cuenta de Supabase creada (supabase.com)
+- [ ] Cuenta de Vercel conectada a GitHub
 
-1. **Terminal** abierta y funcionando (la de tu Mac/PC)
-2. **Claude Code** instalado y funcionando (del precurso)
-3. **Pencil** instalado y conectado con Claude Code (extensión de diseño visual)
-4. **Cuenta de Supabase** creada (gratis)
-5. **Cuenta de Vercel** conectada a GitHub
-
-### Verificar que todo funciona
-
-Abre tu terminal y comprueba:
-
-\`\`\`bash
-claude --version
-\`\`\`
-
-Si ves un número de versión, Claude Code está listo. Si no, repasa la [guía de instalación](/empezar).
-
-Para **Pencil**, instálalo desde [pencil.dev](https://pencil.dev). Es una extensión que se conecta con Claude Code via MCP — Claude puede leer y escribir diseños directamente. Lo configuraremos en la Semana 2, pero déjalo instalado.
-
-### Lo que vamos a construir juntos en el Día 2:
-- Landing page atractiva (partiendo de un theme profesional)
-- Formulario de captura de emails
-- Base de datos con Supabase
-- Panel admin para ver registros
-- Desplegado en tu propio dominio
-
-### 📂 Tu carpeta de trabajo
-
-Antes de nada, crea una carpeta donde vivirán todos tus proyectos del curso. Abre el terminal y ejecuta:
-
-\`\`\`bash
-mkdir ~/curso-ia
-cd ~/curso-ia
-\`\`\`
-
-A partir de ahora, siempre que creemos un proyecto nuevo, lo haremos dentro de esta carpeta. Así tienes todo organizado en un solo sitio.
-
-### 🎨 Elige tu theme base
-
-En vez de empezar desde cero, vamos a usar uno de los **20 themes premium** incluidos en el curso. Son templates profesionales de Next.js + Tailwind que te dan un punto de partida espectacular.
-
-Entra a [/curso/themes](/curso/themes) para explorar la galería completa. Para tu primera landing, elige uno de los recomendados y sigue las instrucciones:
-
-{{THEME_SELECTOR}}
-
-En el Día 2, le diremos a Claude Code que personalice el theme con tu contenido.
-
-> **¿Por qué un theme?** Porque el diseño ya está resuelto. Tú te enfocas en tu mensaje y tu producto. Claude se encarga de adaptar colores, textos e imágenes.
-
----
-
-### 🧠 CLAUDE.md — El truco que marca la diferencia
-
-Cada vez que abres Claude Code en un proyecto, **empieza de cero**. No recuerda lo que hicieron ayer.
-
-La solución: crea un archivo \`CLAUDE.md\` en la raíz de tu proyecto. Claude lo lee automáticamente al iniciar.
-
-### Cómo crear tu CLAUDE.md
-
-Desde la carpeta de tu proyecto, ejecuta en el terminal:
-
-\`\`\`bash
-touch CLAUDE.md
-\`\`\`
-
-Esto crea el archivo vacío. Luego ábrelo con cualquier editor de texto y pega el contenido que quieras. O mejor aún, dile directamente a Claude Code:
-
-\`\`\`text
-Crea un archivo CLAUDE.md en la raíz del proyecto con la descripción del proyecto, la arquitectura que usamos y el estado actual
-\`\`\`
-
-Claude lo creará por ti con toda la info relevante. Aquí tienes un ejemplo de cómo queda:
-
-\`\`\`markdown
-# Mi Proyecto SaaS
-
-## Arquitectura
-- Next.js 15 App Router + TypeScript
-- Supabase (auth + DB)
-- shadcn/ui para componentes
-- Desplegado en Vercel
-
-## Estado actual
-- Landing page terminada
-- Formulario de captura funcionando
-- Pendiente: conectar pagos con Stripe
-
-## Convenciones
-- Componentes en /components
-- Servidor en /app/api
-- Estilos con Tailwind
-\`\`\`
-
-**Truco pro:** Al final de cada sesión de trabajo, dile a Claude:
-
-> "Actualiza el CLAUDE.md con lo que hemos trabajado hoy y el estado actual del proyecto"
-
-Así la próxima vez que abras el proyecto, Claude arranca con todo el contexto. Es como dejarle notas a tu "yo del futuro".
-
-También puedes tener un CLAUDE.md global en \`~/.claude/CLAUDE.md\` con tus preferencias generales (idioma, estilo de código, etc.) que aplica a todos tus proyectos.
-
----
-
-## 💻 Tu herramienta: el Terminal
-
-En este curso trabajamos directamente desde el **terminal**. Es el entorno nativo de Claude Code y el más eficiente para vibe coding.
-
-\`\`\`bash
-# Abres tu terminal y escribes:
-claude
-\`\`\`
-
-Eso es todo. No necesitas ningún editor de código, ni interfaz visual, ni extensiones. Claude Code lee, escribe y ejecuta todo desde el terminal.
-
-### ¿Por qué el terminal?
-
-- **Sin fricción** — abres, escribes \`claude\`, y a trabajar
-- **Pantalla completa** para Claude — ves todo el output sin distracciones
-- **Más rápido** — no carga editores ni UI adicional
-- **Es vibe coding real** — tú describes qué quieres, Claude lo construye
-
-### Alternativas que existen
-
-Claude Code no es la única opción para crear software con IA. En la primera clase veremos un panorama de las herramientas disponibles:
-
-- **Claude Code (terminal)** — Lo que usamos en el curso. Anthropic. Trabaja en tu código local desde el terminal.
-- **Claude Code en VS Code / Cursor** — El mismo Claude Code pero dentro de un editor visual. Puedes ver los archivos y los cambios en tiempo real. Útil si prefieres algo más visual.
-- **Antigravity** — Entorno visual para construir apps con IA. Enfoque más drag-and-drop.
-- **Codex (OpenAI)** — Agente de código de OpenAI que trabaja en un sandbox en la nube.
-
-> Lo importante: todas estas herramientas usan el terminal por debajo. Aprendiendo terminal, puedes usar cualquiera de ellas después. Por eso empezamos por la base.
-
----
-
-## ⚡ Quitar las confirmaciones de Claude Code
-
-Por defecto, Claude Code te pide confirmación cada vez que va a ejecutar un comando o editar un archivo. Esto está bien para empezar, pero cuando estás en flujo creativo es un freno constante.
-
-### Opción 1: Modo auto-accept (la más directa)
-
-\`\`\`bash
-claude --dangerously-skip-permissions
-\`\`\`
-
-Con esta flag, Claude ejecuta todo sin preguntar. Ideal para trabajar rápido.
-
-### Opción 2: Allowlist de herramientas (más segura)
-
-Crea o edita \`~/.claude/settings.json\`:
-
-\`\`\`json
-{
-  "permissions": {
-    "allow": [
-      "Bash(npm run*)",
-      "Bash(cd*)",
-      "Bash(ls*)",
-      "Bash(mkdir*)",
-      "Read",
-      "Write",
-      "Edit"
-    ]
-  }
-}
-\`\`\`
-
-Así solo le das permiso a los comandos habituales y el resto sí te lo pregunta.
-
-### Opción 3: "Always allow" durante la sesión
-
-Cuando Claude te pide confirmación, fíjate que a veces aparece la opción **"Always allow"**. Si la aceptas, no te vuelve a preguntar por esa acción en esa sesión.
-
-### ¿Cuál usar?
-
-| Situación | Recomendación |
-|-----------|---------------|
-| Clase en vivo / vibe coding | \`--dangerously-skip-permissions\` |
-| Proyecto personal | Allowlist en settings.json |
-| Proyecto de cliente / producción | Confirmaciones manuales |
-
-> **Para este curso**, usaremos \`--dangerously-skip-permissions\` en clase para que todo fluya sin interrupciones.
-
----
-
-### Mentalidad para esta semana
-
-> "No te preocupes por entender todo el código. Enfócate en el FLUJO: crear → conectar → desplegar."
-
-La IA escribirá el código por ti. Tu trabajo es:
-1. Saber qué quieres
-2. Revisar que funcione
-3. Iterar hasta que esté perfecto
+> No te preocupes si algo no funciona. En la clase lo configuramos todo juntos paso a paso.
           `,
           recursos: [
+            { titulo: 'Guía de instalación de Claude Code', url: '/empezar', tipo: 'link' },
             { titulo: 'Crear cuenta en Supabase', url: 'https://supabase.com', tipo: 'link' },
-            { titulo: 'Documentación Next.js App Router', url: 'https://nextjs.org/docs/app', tipo: 'link' },
+            { titulo: 'Crear cuenta en Vercel', url: 'https://vercel.com', tipo: 'link' },
           ],
         },
         clase: {
           fecha: '2026-02-20',
           hora: '19:00 CET',
           duracion: '2h',
+          zoomUrl: 'https://us02web.zoom.us/j/81636452979',
           videos: [
             {
-              titulo: 'Día 2 — Tu primera web con Claude Code',
+              titulo: 'Día 2 — Setup técnico + Tu primera web',
               url: 'https://us02web.zoom.us/rec/share/vlIuuI9VmGKf8F_BhBpFwcmB7BbQs3FNuIF8j-ZqBUMNt2vZlpOJCxfR32MJmhgF.R0cfGOCGCDLzP2Sh?startTime=1771614427000',
               tipo: 'link',
               passcode: '1l!Kz*ra',
             },
           ],
           notas: `
-- Elegimos el theme base y lo personalizamos con Claude Code
-- Personalizamos el theme con Claude Code (colores, textos, imágenes)
-- Implementamos el formulario de captura de emails
-- Conectamos Supabase
-- Creamos el panel admin
-- Desplegamos en Vercel
+- Verificamos el setup: terminal, Claude Code, cuentas
+- Instalamos y configuramos Pencil (MCP)
+- Configuramos Git y GitHub CLI
+- Creamos la carpeta ~/curso-ia
+- Primer ejercicio con Claude Code
+- Exploramos la galería de themes para la Semana 2
           `,
         },
         entregable: {
-          titulo: 'Waitlist desplegada',
-          descripcion: 'Tu waitlist funcionando en internet con formulario de captura de emails y base de datos conectada.',
-          fechaLimite: '2026-02-26',
+          titulo: 'Setup técnico completo',
+          descripcion: 'Terminal, Claude Code y todas las cuentas verificadas y funcionando.',
+          fechaLimite: '2026-02-20',
           checklist: [
-            'Theme base elegido y personalizado',
-            'Proyecto creado a partir del theme',
-            'Landing page personalizada con formulario',
-            'Base de datos conectada (Supabase)',
-            'Emails guardándose correctamente',
-            'Desplegado en Vercel',
-            'CLAUDE.md creado en la raíz del proyecto',
-            'URL compartida en Discord',
+            'Terminal funcionando correctamente',
+            'Claude Code responde a comandos (claude --version)',
+            'Cuenta de GitHub creada y autenticada',
+            'Cuenta de Supabase creada',
+            'Cuenta de Vercel conectada a GitHub',
+            'Carpeta ~/curso-ia creada',
+            'Pencil instalado',
           ],
         },
       },
     ],
   },
+  // ==========================================
+  // SEMANA 2 — Tu Primera Web (NUEVA)
+  // ==========================================
   {
     num: 2,
-    titulo: 'Tu Proyecto - Setup + UI',
-    descripcion: 'Empezamos TU proyecto. Crearás la estructura y diseñarás toda la interfaz con shadcn/ui.',
+    titulo: 'Tu Primera Web',
+    descripcion: 'Construimos juntos tu primera web: personalizamos un theme, conectamos Supabase y desplegamos en Vercel.',
     fechaInicio: '2026-02-27',
+    emoji: '🌐',
+    preclase: {
+      titulo: 'Verificación antes de la clase',
+      duracion: '5 min',
+      contenido: `
+## ✅ Verificación antes de la clase
+
+- [ ] Todo el setup del Día 2 funciona (terminal, Claude Code, cuentas)
+- [ ] Has explorado la [galería de themes](/curso/themes)
+- [ ] Tienes un theme elegido (o 2-3 candidatos)
+
+En clase construiremos tu primera web juntos paso a paso.
+      `,
+      recursos: [
+        { titulo: 'Galería de themes del curso', url: '/curso/themes', tipo: 'link' },
+        { titulo: 'Crear cuenta en Supabase', url: 'https://supabase.com', tipo: 'link' },
+        { titulo: 'Documentación Next.js App Router', url: 'https://nextjs.org/docs/app', tipo: 'link' },
+      ],
+    },
+    clase: {
+      fecha: '2026-02-27',
+      hora: '19:00 CET',
+      duracion: '2h',
+      zoomUrl: 'https://us02web.zoom.us/j/81636452979',
+    },
+    entregable: {
+      titulo: 'Waitlist desplegada',
+      descripcion: 'Tu waitlist funcionando en internet con formulario de captura de emails y base de datos conectada.',
+      fechaLimite: '2026-03-05',
+      checklist: [
+        'Theme base elegido y personalizado',
+        'Proyecto creado a partir del theme',
+        'Landing page personalizada con formulario',
+        'Base de datos conectada (Supabase)',
+        'Emails guardándose correctamente',
+        'Desplegado en Vercel',
+        'CLAUDE.md creado en la raíz del proyecto',
+        'URL compartida en Discord',
+      ],
+    },
+  },
+  // ==========================================
+  // SEMANA 3 — Tu Proyecto: Diseño + UI (era S2)
+  // ==========================================
+  {
+    num: 3,
+    titulo: 'Tu Proyecto — Diseño + UI',
+    descripcion: 'Empezamos TU proyecto. Diseñarás toda la interfaz con shadcn/ui y Pencil.',
+    fechaInicio: '2026-03-06',
     emoji: '🎨',
     preclase: {
-      titulo: 'Diseño de interfaces con shadcn/ui',
-      duracion: '30 min',
+      titulo: 'Verificación antes de la clase',
+      duracion: '5 min',
       contenido: `
-## ¿Qué es shadcn/ui?
+## ✅ Verificación antes de la clase
 
-shadcn/ui NO es una librería. Es una colección de componentes que copias directamente a tu proyecto.
+- [ ] Tu waitlist de S2 está desplegada y funcionando
+- [ ] Tienes una idea clara de tu proyecto propio
+- [ ] Claude Code funcionando en tu carpeta de proyecto
 
-### ¿Por qué shadcn/ui?
-- **No hay dependencias**: El código es tuyo
-- **Personalizable**: Puedes modificar todo
-- **Profesional**: Usado por empresas como Vercel
-- **Accesible**: Cumple estándares de accesibilidad
-
-### Componentes que usaremos:
-- Button, Input, Card
-- Dialog, Sheet, Dropdown
-- Table, Tabs, Toast
-- Form (con validación)
-
-### Inspiración: Los mejores diseños SaaS
-
-Antes de diseñar, observa estos referentes:
-- **Linear** — Minimalista y potente
-- **Notion** — Limpio y flexible
-- **Vercel** — Moderno y rápido
-
----
-
-## ✏️ Pencil: Diseño visual que Claude entiende
-
-Pencil es un canvas de diseño que se integra con Claude Code. La magia: Claude puede **leer y escribir** archivos \`.pen\` directamente desde el terminal.
-
-### ¿Por qué Pencil y no Figma?
-
-| | Figma | Pencil |
-|---|---|---|
-| ¿Dónde? | Navegador | Tu editor / terminal |
-| ¿Archivos? | En la nube | \`.pen\` en tu repo |
-| ¿Claude lo lee? | No | **Sí, directamente** |
-| ¿Git? | No | **Sí** |
-| ¿Precio? | De pago | **Gratis** |
-
-### El flujo de trabajo
-
-1. **Diseñas** en Pencil (arrastras componentes, ajustas layout)
-2. **Claude lee** el archivo \`.pen\` via MCP (Model Context Protocol)
-3. **Claude genera** el código React/Tailwind exacto de tu diseño
-4. **Iteras**: ajustas el diseño → Claude actualiza el código
-
-### Ejemplo práctico
-
-\`\`\`bash
-# 1. Crea un archivo de diseño
-touch mi-dashboard.pen
-# 2. Ábrelo en tu editor (se abre el canvas de Pencil)
-# 3. Diseña tu dashboard arrastrando componentes
-# 4. Luego dile a Claude:
-\`\`\`
-
-> "Mira mi diseño en mi-dashboard.pen y genera los componentes React con Tailwind"
-
-Claude lee las coordenadas exactas, colores, tipografía y estructura del \`.pen\` y genera código pixel-perfect.
-
-### Configurar Pencil con Claude Code (MCP)
-
-Pencil se conecta con Claude Code automáticamente via MCP. Cuando tienes la extensión instalada y un archivo \`.pen\` en tu proyecto, Claude puede:
-
-- **Leer** el diseño completo (layout, colores, componentes)
-- **Modificar** el diseño desde la terminal
-- **Generar screenshots** para verificar el resultado
-- **Extraer variables** de estilo (tokens de diseño)
-
-> "Pencil convierte tu diseño en código. Es como tener un diseñador y un frontend developer trabajando juntos."
-
----
-
-## 🛠️ Skills: enseña a Claude tus procesos
-
-En la Semana 1 creaste un \`CLAUDE.md\` para dar contexto general. Ahora vamos un paso más allá: las **Skills** son instrucciones especializadas que Claude consulta bajo demanda.
-
-### ¿Qué son?
-
-Son archivos Markdown en \`.claude/skills/\` que le dicen a Claude **cómo hacer tareas concretas** en tu proyecto. Piensa en ellas como recetas que Claude sigue automáticamente.
-
-### Ejemplo: Skill para crear componentes UI
-
-\`\`\`markdown
-# Crear Componente UI
-
-## Reglas
-- Usar shadcn/ui como base
-- Tailwind para estilos, nunca CSS inline
-- Componente responsive por defecto
-- Exportar desde /components
-\`\`\`
-
-Guárdalo como \`.claude/skills/crear-componente.md\` y la próxima vez que le pidas crear un componente, seguirá estas reglas.
-
-### ¿Por qué importa?
-
-Sin skills, tienes que repetir las mismas instrucciones cada vez: "usa shadcn", "hazlo responsive", "ponlo en /components"... Con skills, lo defines una vez y Claude lo aplica siempre.
-
-> Más info y ejemplos avanzados en la lección de Skills, Hooks y Plugins y en skills.sh (links abajo en recursos).
-
----
-
-### Tu tarea antes de la clase
-
-1. **Define tu proyecto**: ¿Qué problema resuelve?
-2. **Crea un archivo \`.pen\`** y dibuja 3 pantallas: Dashboard, formulario principal, settings
-3. **Elige colores**: Máximo 3 colores principales
-4. **Prueba el flujo**: Pídele a Claude que genere código desde tu \`.pen\`
-5. **Explora skills.sh**: Mira qué skills existen para inspirarte
-
-> "Un buen diseño no es decoración, es comunicación clara."
+En clase: diseñaremos toda la UI de tu proyecto con shadcn/ui y Pencil.
       `,
       recursos: [
         { titulo: 'Catálogo shadcn/ui', url: 'https://ui.shadcn.com', tipo: 'link' },
@@ -568,16 +335,17 @@ Sin skills, tienes que repetir las mismas instrucciones cada vez: "usa shadcn", 
       ],
     },
     clase: {
-      fecha: '2026-02-27',
+      fecha: '2026-03-06',
       hora: '19:00 CET',
       duracion: '2h',
+      zoomUrl: 'https://us02web.zoom.us/j/81636452979',
     },
     entregable: {
       titulo: 'UI completa de tu proyecto',
-      descripcion: 'Todas las pantallas de tu aplicación diseñadas (sin funcionalidad todavía).',
-      fechaLimite: '2026-03-05',
+      descripcion: 'Todas las pantallas de tu aplicación diseñadas con shadcn/ui (sin funcionalidad todavía).',
+      fechaLimite: '2026-03-12',
       checklist: [
-        'Proyecto creado en GitHub',
+        'Proyecto propio creado en GitHub',
         'shadcn/ui instalado y configurado',
         'Diseño en Pencil (.pen) de las pantallas principales',
         'Dashboard principal diseñado',
@@ -588,153 +356,31 @@ Sin skills, tienes que repetir las mismas instrucciones cada vez: "usa shadcn", 
       ],
     },
   },
-  {
-    num: 3,
-    titulo: 'Base de Datos con Supabase',
-    descripcion: 'Diseña tu schema de base de datos y conecta tu aplicación con Supabase.',
-    fechaInicio: '2026-03-06',
-    emoji: '🗄️',
-    preclase: {
-      titulo: 'Fundamentos de bases de datos',
-      duracion: '30 min',
-      contenido: `
-## ¿Qué es una base de datos?
-
-Piensa en Excel, pero más potente:
-- **Tablas** = Hojas de cálculo
-- **Filas** = Registros individuales
-- **Columnas** = Campos/propiedades
-- **Relaciones** = Conexiones entre tablas
-
-### SQL básico que necesitas saber
-
-No tienes que escribir SQL (Claude lo hará), pero entiende qué hace:
-
-\`\`\`sql
--- Obtener todos los usuarios
-SELECT * FROM users;
-
--- Insertar un nuevo usuario
-INSERT INTO users (name, email) VALUES ('Juan', 'juan@email.com');
-
--- Actualizar un usuario
-UPDATE users SET name = 'Juan Pablo' WHERE id = 1;
-
--- Eliminar un usuario
-DELETE FROM users WHERE id = 1;
-\`\`\`
-
-### ¿Por qué Supabase?
-
-1. **Gratis para empezar**: 500MB, suficiente para prototipos
-2. **PostgreSQL**: Base de datos profesional
-3. **API automática**: No tienes que crear endpoints
-4. **Autenticación incluida**: Login listo para usar
-5. **Tiempo real**: Actualizaciones en vivo
-
-### Diseñando tu schema
-
-Antes de crear tablas, piensa:
-1. ¿Qué datos necesito guardar?
-2. ¿Cómo se relacionan entre sí?
-3. ¿Qué campos son obligatorios?
-
-### Ejemplo: App de tareas
-
-\`\`\`
-users
-  - id (auto)
-  - email
-  - name
-  - created_at
-
-projects
-  - id (auto)
-  - user_id → users.id
-  - name
-  - created_at
-
-tasks
-  - id (auto)
-  - project_id → projects.id
-  - title
-  - completed
-  - due_date
-\`\`\`
-      `,
-      recursos: [
-        { titulo: 'Supabase Quickstart', url: 'https://supabase.com/docs/guides/getting-started', tipo: 'link' },
-        { titulo: 'SQL Cheatsheet', url: 'https://www.sqltutorial.org/sql-cheat-sheet/', tipo: 'link' },
-      ],
-    },
-    clase: {
-      fecha: '2026-03-06',
-      hora: '19:00 CET',
-      duracion: '2h',
-    },
-    entregable: {
-      titulo: 'Base de datos conectada',
-      descripcion: 'Tu aplicación leyendo y escribiendo datos de Supabase.',
-      fechaLimite: '2026-03-12',
-      checklist: [
-        'Proyecto Supabase creado',
-        'Al menos 3 tablas diseñadas',
-        'Relaciones configuradas (foreign keys)',
-        'CRUD funcionando desde la app',
-        'Variables de entorno configuradas',
-        'RLS básico habilitado',
-      ],
-    },
-  },
+  // ==========================================
+  // SEMANA 4 — Base de Datos + Autenticación (FUSIÓN S3+S4)
+  // ==========================================
   {
     num: 4,
-    titulo: 'Autenticación de Usuarios',
-    descripcion: 'Implementa login, registro, y protección de rutas con Supabase Auth.',
+    titulo: 'Base de Datos + Autenticación',
+    descripcion: 'Diseña tu schema, conecta Supabase, implementa auth y protege datos con RLS — todo en una sesión.',
     fechaInicio: '2026-03-13',
     emoji: '🔐',
     preclase: {
-      titulo: 'Seguridad y autenticación',
-      duracion: '25 min',
+      titulo: 'Verificación + concepto clave',
+      duracion: '10 min',
       contenido: `
-## ¿Qué es la autenticación?
+## ✅ Verificación (3 min)
 
-Autenticación = Verificar QUIÉN eres
-Autorización = Verificar QUÉ puedes hacer
+- [ ] Proyecto de S3 con UI funcionando
+- [ ] Cuenta de Supabase activa
+- [ ] Claude Code funcionando
 
-### Métodos de autenticación
+## 🧠 Concepto clave: Row Level Security (7 min)
 
-1. **Email + Password**: El clásico
-2. **Magic Link**: Email con enlace (sin password)
-3. **OAuth**: "Iniciar sesión con Google/GitHub"
-4. **SMS/OTP**: Código por mensaje
+RLS protege tus datos **a nivel de base de datos**. Cada fila tiene reglas de quién puede leerla o modificarla.
 
-### Supabase Auth
-
-Supabase incluye autenticación lista para usar:
-
-\`\`\`typescript
-// Registro
-await supabase.auth.signUp({
-  email: 'user@email.com',
-  password: 'password123'
-})
-
-// Login
-await supabase.auth.signInWithPassword({
-  email: 'user@email.com',
-  password: 'password123'
-})
-
-// Logout
-await supabase.auth.signOut()
-
-// Usuario actual
-const { data: { user } } = await supabase.auth.getUser()
-\`\`\`
-
-### Row Level Security (RLS)
-
-RLS protege tus datos A NIVEL DE BASE DE DATOS:
+**Ejemplo:** "Solo el dueño puede ver sus proyectos"
+→ La base de datos RECHAZA peticiones de otros usuarios automáticamente.
 
 \`\`\`sql
 -- Solo el dueño puede ver sus proyectos
@@ -743,21 +389,12 @@ ON projects FOR SELECT
 USING (auth.uid() = user_id);
 \`\`\`
 
-### Protegiendo rutas en Next.js
+¿Por qué importa? Sin RLS, cualquier usuario podría ver los datos de otros manipulando las peticiones. Con RLS, la base de datos se protege sola.
 
-Con middleware puedes redirigir usuarios no autenticados:
-
-\`\`\`typescript
-// middleware.ts
-export function middleware(request) {
-  const session = request.cookies.get('session')
-  if (!session) {
-    return NextResponse.redirect('/login')
-  }
-}
-\`\`\`
+👉 En clase implementaremos DB + Auth + RLS juntos.
       `,
       recursos: [
+        { titulo: 'Supabase Quickstart', url: 'https://supabase.com/docs/guides/getting-started', tipo: 'link' },
         { titulo: 'Supabase Auth Docs', url: 'https://supabase.com/docs/guides/auth', tipo: 'link' },
         { titulo: 'Next.js Middleware', url: 'https://nextjs.org/docs/app/building-your-application/routing/middleware', tipo: 'link' },
       ],
@@ -766,21 +403,29 @@ export function middleware(request) {
       fecha: '2026-03-13',
       hora: '19:00 CET',
       duracion: '2h',
+      zoomUrl: 'https://us02web.zoom.us/j/81636452979',
     },
     entregable: {
-      titulo: 'Sistema de auth completo',
-      descripcion: 'Usuarios pueden registrarse, loguearse, y solo ver sus propios datos.',
+      titulo: 'Base de datos + autenticación completa',
+      descripcion: 'Tu app con datos reales, usuarios autenticados y datos protegidos con RLS.',
       fechaLimite: '2026-03-19',
       checklist: [
+        'Proyecto Supabase creado',
+        'Al menos 3 tablas diseñadas',
+        'Relaciones configuradas (foreign keys)',
+        'CRUD funcionando desde la app',
         'Página de registro funcionando',
         'Página de login funcionando',
-        'Sesión persistente (refresh)',
+        'Sesión persistente',
         'Rutas protegidas con middleware',
         'RLS configurado en todas las tablas',
         'Logout funcionando',
       ],
     },
   },
+  // ==========================================
+  // SEMANA 5 — APIs y Server Actions
+  // ==========================================
   {
     num: 5,
     titulo: 'APIs y Server Actions',
@@ -788,69 +433,29 @@ export function middleware(request) {
     fechaInicio: '2026-03-20',
     emoji: '⚡',
     preclase: {
-      titulo: 'APIs modernas con Next.js',
-      duracion: '25 min',
+      titulo: 'Verificación + concepto clave',
+      duracion: '10 min',
       contenido: `
-## APIs en Next.js
+## ✅ Verificación (3 min)
 
-Tienes DOS formas de manejar lógica del servidor:
+- [ ] DB + Auth de S4 funcionando
+- [ ] CRUD operando correctamente
+- [ ] Login/logout funcionando
 
-### 1. Route Handlers (API tradicional)
+## 🧠 Concepto clave: Server Actions vs Route Handlers (7 min)
 
-\`\`\`typescript
-// app/api/users/route.ts
-export async function GET() {
-  const users = await db.query('SELECT * FROM users')
-  return Response.json(users)
-}
+Next.js te da DOS formas de manejar lógica del servidor:
 
-export async function POST(request: Request) {
-  const body = await request.json()
-  const user = await db.insert('users', body)
-  return Response.json(user)
-}
-\`\`\`
+| | Server Actions | Route Handlers |
+|---|---|---|
+| **Cuándo** | Formularios, mutaciones | Webhooks, APIs externas |
+| **Archivo** | \`app/actions.ts\` | \`app/api/*/route.ts\` |
+| **Dirección** | Cliente → Servidor | Cualquier → Servidor |
+| **Revalidación** | Automática con \`revalidatePath\` | Manual |
 
-### 2. Server Actions (Moderno, recomendado)
+**Regla simple:** Si es un formulario o botón → Server Action. Si es un webhook o API pública → Route Handler.
 
-\`\`\`typescript
-// app/actions.ts
-'use server'
-
-export async function createUser(formData: FormData) {
-  const name = formData.get('name')
-  await db.insert('users', { name })
-  revalidatePath('/users')
-}
-\`\`\`
-
-### ¿Cuándo usar cada uno?
-
-| Caso | Solución |
-|------|----------|
-| Formularios | Server Actions |
-| Mutaciones simples | Server Actions |
-| Webhooks externos | Route Handlers |
-| API pública | Route Handlers |
-| Integraciones | Route Handlers |
-
-### Validación con Zod
-
-Siempre valida los datos del usuario:
-
-\`\`\`typescript
-import { z } from 'zod'
-
-const UserSchema = z.object({
-  name: z.string().min(2),
-  email: z.string().email(),
-})
-
-export async function createUser(data: unknown) {
-  const validated = UserSchema.parse(data)
-  // Ahora 'validated' tiene tipos seguros
-}
-\`\`\`
+👉 En clase implementaremos ambos en tu proyecto.
       `,
       recursos: [
         { titulo: 'Server Actions Docs', url: 'https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions', tipo: 'link' },
@@ -861,6 +466,7 @@ export async function createUser(data: unknown) {
       fecha: '2026-03-20',
       hora: '19:00 CET',
       duracion: '2h',
+      zoomUrl: 'https://us02web.zoom.us/j/81636452979',
     },
     entregable: {
       titulo: 'APIs implementadas',
@@ -876,6 +482,9 @@ export async function createUser(data: unknown) {
       ],
     },
   },
+  // ==========================================
+  // SEMANA 6 — Pagos con Stripe
+  // ==========================================
   {
     num: 6,
     titulo: 'Pagos con Stripe',
@@ -883,58 +492,31 @@ export async function createUser(data: unknown) {
     fechaInicio: '2026-03-27',
     emoji: '💳',
     preclase: {
-      titulo: 'Monetización con Stripe',
-      duracion: '30 min',
+      titulo: 'Verificación + concepto clave',
+      duracion: '10 min',
       contenido: `
-## ¿Por qué Stripe?
+## ✅ Verificación (3 min)
 
-- Líder del mercado
-- Excelente documentación
-- API developer-friendly
-- Modo test para desarrollo
+- [ ] Cuenta de Stripe creada (dashboard.stripe.com)
+- [ ] Modo Test activado
+- [ ] API keys copiadas (test mode)
 
-### Conceptos clave
+## 🧠 Concepto clave: El flujo de pago (7 min)
 
-1. **Products**: Lo que vendes (Plan Pro, Plan Enterprise)
-2. **Prices**: El precio de un producto ($10/mes, $100/año)
-3. **Customers**: Tus usuarios en Stripe
-4. **Subscriptions**: Pagos recurrentes
-5. **Checkout**: Página de pago hosted
+Así funciona un pago online con Stripe:
 
-### Flujo de suscripción
-
-1. Usuario hace clic en "Suscribirse"
-2. Redirigimos a Stripe Checkout
-3. Usuario paga
-4. Stripe nos avisa (webhook)
-5. Actualizamos la base de datos
-
-### Webhooks
-
-Stripe te envía eventos cuando algo pasa:
-
-\`\`\`typescript
-// app/api/webhooks/stripe/route.ts
-export async function POST(request: Request) {
-  const event = await stripe.webhooks.constructEvent(...)
-
-  switch (event.type) {
-    case 'checkout.session.completed':
-      // Activar suscripción
-      break
-    case 'invoice.payment_failed':
-      // Notificar al usuario
-      break
-  }
-}
+\`\`\`
+Usuario → Click "Pagar" → Stripe Checkout → Paga → Webhook → Tu DB actualizada
 \`\`\`
 
-### Antes de la clase
+1. Tu app crea una **Checkout Session** (Server Action)
+2. El usuario va a la **página de pago de Stripe** (hosted, segura)
+3. Stripe te avisa con un **webhook** cuando el pago se completa
+4. Tu app **actualiza la base de datos** con el nuevo estado
 
-1. Crea cuenta en Stripe (link abajo en recursos)
-2. Activa el modo Test
-3. Copia tus API keys (test)
-4. Crea un producto de prueba
+> El webhook es clave: nunca confíes solo en el redirect del navegador para confirmar un pago.
+
+👉 En clase integraremos Stripe paso a paso.
       `,
       recursos: [
         { titulo: 'Stripe Dashboard', url: 'https://dashboard.stripe.com', tipo: 'link' },
@@ -946,6 +528,7 @@ export async function POST(request: Request) {
       fecha: '2026-03-27',
       hora: '19:00 CET',
       duracion: '2h',
+      zoomUrl: 'https://us02web.zoom.us/j/81636452979',
     },
     entregable: {
       titulo: 'Pagos funcionando',
@@ -961,6 +544,9 @@ export async function POST(request: Request) {
       ],
     },
   },
+  // ==========================================
+  // SEMANA 7 — Email y Notificaciones
+  // ==========================================
   {
     num: 7,
     titulo: 'Email y Notificaciones',
@@ -968,68 +554,36 @@ export async function POST(request: Request) {
     fechaInicio: '2026-04-03',
     emoji: '📧',
     preclase: {
-      titulo: 'Comunicación con usuarios',
-      duracion: '25 min',
+      titulo: 'Resumen rápido + verificación',
+      duracion: '15 min',
       contenido: `
-## Tipos de emails
+## ✅ Verificación (3 min)
 
-1. **Transaccionales**: Confirmaciones, recibos, reset password
-2. **Marketing**: Newsletters, promociones
-3. **Notificaciones**: Alertas, recordatorios
+- [ ] Cuenta de Resend creada (resend.com)
+- [ ] Pagos de S6 funcionando
 
-### Resend: Email moderno
+## 📖 Resumen rápido (12 min)
 
-Resend es como Stripe pero para emails:
-- API simple
-- React Email para templates
-- Tracking de opens/clicks
+### Tipos de emails
 
-\`\`\`typescript
-import { Resend } from 'resend'
+- **Transaccionales**: Se envían por una acción del usuario (registro, compra, reset password). Siempre se envían.
+- **Marketing**: Newsletters, promociones. El usuario puede desuscribirse.
+- **Notificaciones**: Alertas dentro de la app (no son emails).
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+### Resend + React Email
 
-await resend.emails.send({
-  from: 'Tu App <noreply@tuapp.com>',
-  to: 'usuario@email.com',
-  subject: 'Bienvenido!',
-  react: WelcomeEmail({ name: 'Juan' }),
-})
-\`\`\`
-
-### React Email: Templates con componentes
-
-\`\`\`tsx
-// emails/welcome.tsx
-import { Html, Button, Text } from '@react-email/components'
-
-export function WelcomeEmail({ name }) {
-  return (
-    <Html>
-      <Text>Hola {name}!</Text>
-      <Button href="https://tuapp.com/dashboard">
-        Ir al Dashboard
-      </Button>
-    </Html>
-  )
-}
-\`\`\`
-
-### Notificaciones in-app
-
-Para notificaciones dentro de la app:
-- Toasts para confirmaciones rápidas
-- Badge counter en el header
-- Lista de notificaciones
+Resend es el servicio que envía los emails. React Email es la librería para diseñar los templates como componentes React — igual que tu UI.
 
 ### Cuándo enviar cada tipo
 
 | Evento | Email | In-app |
 |--------|-------|--------|
-| Registro | ✅ | ✅ |
-| Pago recibido | ✅ | ✅ |
+| Registro | ✅ Bienvenida | ✅ |
+| Pago recibido | ✅ Recibo | ✅ |
 | Nuevo comentario | ❌ | ✅ |
 | Password reset | ✅ | ❌ |
+
+👉 En clase configuraremos Resend, crearemos templates con React Email y añadiremos notificaciones in-app.
       `,
       recursos: [
         { titulo: 'Resend', url: 'https://resend.com', tipo: 'link' },
@@ -1040,6 +594,7 @@ Para notificaciones dentro de la app:
       fecha: '2026-04-03',
       hora: '19:00 CET',
       duracion: '2h',
+      zoomUrl: 'https://us02web.zoom.us/j/81636452979',
     },
     entregable: {
       titulo: 'Sistema de emails',
@@ -1055,6 +610,9 @@ Para notificaciones dentro de la app:
       ],
     },
   },
+  // ==========================================
+  // SEMANA 8 — Testing y Calidad
+  // ==========================================
   {
     num: 8,
     titulo: 'Testing y Calidad',
@@ -1062,63 +620,35 @@ Para notificaciones dentro de la app:
     fechaInicio: '2026-04-10',
     emoji: '🧪',
     preclase: {
-      titulo: 'Testing para no-programadores',
-      duracion: '25 min',
+      titulo: 'Resumen rápido + verificación',
+      duracion: '15 min',
       contenido: `
-## ¿Por qué testear?
+## ✅ Verificación (3 min)
 
-- Detectar bugs antes de que los usuarios los vean
-- Refactorizar con confianza
-- Documentar cómo funciona tu código
+- [ ] Proyecto con todas las features de S1-S7
+- [ ] \`npm run dev\` funciona sin errores
+
+## 📖 Resumen rápido (12 min)
+
+### ¿Por qué testear?
+
+Los tests detectan bugs ANTES de que los vean tus usuarios. También te dan confianza para hacer cambios sin miedo a romper algo.
 
 ### Tipos de tests
 
-1. **Unit tests**: Prueban funciones individuales
-2. **Integration tests**: Prueban flujos completos
-3. **E2E tests**: Simulan usuarios reales
+1. **Unit tests** (Vitest): Prueban funciones individuales. Rápidos.
+2. **E2E tests** (Playwright): Simulan un usuario real navegando tu app. Más lentos pero más realistas.
 
-### Para SaaS, enfócate en:
+### ¿Qué testear primero?
 
-1. **Flujos críticos**: Login, pago, acciones principales
-2. **Validaciones**: Formularios, permisos
-3. **Integraciones**: Stripe webhooks, emails
+Enfócate en los **flujos críticos** de tu app:
+- Login/registro
+- El flujo principal (crear, editar, eliminar)
+- Pagos (si aplica)
 
-### Vitest: Tests rápidos
+> Regla de oro: "Testea comportamientos, no implementación."
 
-\`\`\`typescript
-// tests/utils.test.ts
-import { describe, it, expect } from 'vitest'
-import { formatPrice } from '@/lib/utils'
-
-describe('formatPrice', () => {
-  it('formatea correctamente', () => {
-    expect(formatPrice(1000)).toBe('$10.00')
-  })
-
-  it('maneja cero', () => {
-    expect(formatPrice(0)).toBe('$0.00')
-  })
-})
-\`\`\`
-
-### Playwright: Tests E2E
-
-\`\`\`typescript
-// tests/e2e/login.spec.ts
-import { test, expect } from '@playwright/test'
-
-test('usuario puede loguearse', async ({ page }) => {
-  await page.goto('/login')
-  await page.fill('input[name=email]', 'test@test.com')
-  await page.fill('input[name=password]', 'password')
-  await page.click('button[type=submit]')
-  await expect(page).toHaveURL('/dashboard')
-})
-\`\`\`
-
-### Regla de oro
-
-> "Testea comportamientos, no implementación"
+👉 En clase escribiremos tests de los flujos críticos de tu proyecto.
       `,
       recursos: [
         { titulo: 'Vitest', url: 'https://vitest.dev', tipo: 'link' },
@@ -1129,6 +659,7 @@ test('usuario puede loguearse', async ({ page }) => {
       fecha: '2026-04-10',
       hora: '19:00 CET',
       duracion: '2h',
+      zoomUrl: 'https://us02web.zoom.us/j/81636452979',
     },
     entregable: {
       titulo: 'Tests implementados',
@@ -1144,6 +675,9 @@ test('usuario puede loguearse', async ({ page }) => {
       ],
     },
   },
+  // ==========================================
+  // SEMANA 9 — Performance y SEO
+  // ==========================================
   {
     num: 9,
     titulo: 'Performance y SEO',
@@ -1151,72 +685,41 @@ test('usuario puede loguearse', async ({ page }) => {
     fechaInicio: '2026-04-17',
     emoji: '🚄',
     preclase: {
-      titulo: 'Optimización web',
-      duracion: '25 min',
+      titulo: 'Resumen rápido + verificación',
+      duracion: '15 min',
       contenido: `
-## Core Web Vitals
+## ✅ Verificación (3 min)
+
+- [ ] Tests de S8 pasando
+- [ ] App desplegada en Vercel
+
+## 📖 Resumen rápido (12 min)
+
+### Core Web Vitals
 
 Google mide tu web con 3 métricas:
+- **LCP** (Largest Contentful Paint): ¿Cuándo aparece el contenido principal? Meta: < 2.5s
+- **INP** (Interaction to Next Paint): ¿Cuánto tarda en responder? Meta: < 200ms
+- **CLS** (Cumulative Layout Shift): ¿Se mueve el contenido? Meta: < 0.1
 
-1. **LCP** (Largest Contentful Paint): ¿Cuándo aparece el contenido principal?
-2. **FID** (First Input Delay): ¿Cuándo responde a clicks?
-3. **CLS** (Cumulative Layout Shift): ¿Se mueve el contenido?
+### Optimizaciones rápidas en Next.js
 
-### Objetivos
-- LCP < 2.5s
-- FID < 100ms
-- CLS < 0.1
-
-### Optimizaciones en Next.js
-
-**Imágenes:**
-\`\`\`tsx
-import Image from 'next/image'
-
-<Image
-  src="/hero.jpg"
-  alt="Hero"
-  width={1200}
-  height={600}
-  priority // Para imágenes above the fold
-/>
-\`\`\`
-
-**Fonts:**
-\`\`\`tsx
-import { Inter } from 'next/font/google'
-const inter = Inter({ subsets: ['latin'] })
-\`\`\`
-
-**Loading states:**
-\`\`\`tsx
-import { Suspense } from 'react'
-
-<Suspense fallback={<Skeleton />}>
-  <SlowComponent />
-</Suspense>
-\`\`\`
+- **Imágenes**: Usa \`next/image\` en vez de \`<img>\`
+- **Fonts**: Usa \`next/font\` en vez de Google Fonts manual
+- **Lazy loading**: Usa \`Suspense\` para componentes pesados
 
 ### SEO básico
 
-\`\`\`tsx
-// app/layout.tsx
-export const metadata = {
-  title: 'Tu SaaS - Descripción corta',
-  description: 'Descripción de 150-160 caracteres...',
-  openGraph: {
-    title: 'Tu SaaS',
-    description: '...',
-    images: ['/og-image.png'],
-  },
-}
-\`\`\`
+- Title y description únicos por página
+- Open Graph tags para compartir en redes
+- Sitemap.xml generado automáticamente
 
 ### Herramientas
 
-- **PageSpeed Insights** — mide tu web en segundos
+- **PageSpeed Insights** — mide tu web al instante
 - **Lighthouse** — auditoría completa en Chrome DevTools
-- **Vercel Analytics** — gratis, integrado con tu deploy
+
+👉 En clase optimizaremos tu app para que pase PageSpeed >90.
       `,
       recursos: [
         { titulo: 'Next.js Image Optimization', url: 'https://nextjs.org/docs/app/building-your-application/optimizing/images', tipo: 'link' },
@@ -1227,6 +730,7 @@ export const metadata = {
       fecha: '2026-04-17',
       hora: '19:00 CET',
       duracion: '2h',
+      zoomUrl: 'https://us02web.zoom.us/j/81636452979',
     },
     entregable: {
       titulo: 'App optimizada',
@@ -1242,6 +746,9 @@ export const metadata = {
       ],
     },
   },
+  // ==========================================
+  // SEMANA 10 — Agent Swarms y Lanzamiento
+  // ==========================================
   {
     num: 10,
     titulo: 'Agent Swarms y Lanzamiento',
@@ -1249,140 +756,42 @@ export const metadata = {
     fechaInicio: '2026-04-24',
     emoji: '🤖',
     preclase: {
-      titulo: 'Agentes especializados y preparación del lanzamiento',
-      duracion: '30 min',
+      titulo: 'Pre-lanzamiento + verificación',
+      duracion: '15 min',
       contenido: `
-## Claude Code como tu equipo completo
+## ✅ Verificación (3 min)
 
-Hasta ahora has usado Claude Code como un asistente general: le pides algo y lo hace. Pero Claude Code puede ser mucho más. Puede funcionar como **un equipo entero de especialistas** trabajando en tu proyecto.
+- [ ] App optimizada de S9
+- [ ] Dominio propio (si lo tienes)
 
-### ¿Qué es un Agent Swarm?
+## 📖 Pre-lanzamiento (12 min)
 
-Un "swarm" (enjambre) es un grupo de agentes especializados que trabajan juntos. En vez de un Claude que hace todo, tienes:
+### Checklist técnico
 
-- **Agente Arquitecto**: diseña la estructura y toma decisiones técnicas
-- **Agente Frontend**: implementa UI y componentes
-- **Agente Backend**: APIs, base de datos, lógica de servidor
-- **Agente QA**: revisa código, busca bugs, escribe tests
-- **Agente DevOps**: deploy, CI/CD, monitorización
-
-### Cómo funciona en la práctica
-
-Claude Code ya tiene esta capacidad con **sub-agentes**. Cuando le das una tarea compleja, puede delegar partes a agentes especializados que trabajan en paralelo.
-
-La clave está en cómo configuras tu proyecto para que esto funcione bien:
-
-1. **CLAUDE.md robusto**: cuanto mejor describas tu arquitectura, mejores decisiones toma
-2. **Skills especializadas**: cada skill puede definir un "rol" diferente
-3. **Estructura clara del proyecto**: si tu código está bien organizado, los agentes pueden trabajar en paralelo sin pisarse
-
-### El archivo CLAUDE.md como "briefing del equipo"
-
-\`\`\`markdown
-# Mi SaaS
-
-## Arquitectura
-- Next.js 15 App Router
-- Supabase (auth + DB + storage)
-- Stripe (pagos)
-- Resend (emails)
-- Desplegado en Vercel
-
-## Roles y responsabilidades
-- Frontend: /app y /components (shadcn/ui + Tailwind)
-- Backend: /app/api y /app/actions.ts (Server Actions)
-- Base de datos: /supabase (migrations, types, policies)
-- Tests: /tests (Vitest unit, Playwright E2E)
-
-## Reglas
-- Siempre validar con Zod antes de insertar en DB
-- RLS obligatorio en todas las tablas
-- Componentes responsive por defecto
-- Commits descriptivos en español
-\`\`\`
-
-### Skills como especialistas
-
-Puedes crear skills que actúan como roles especializados:
-
-\`\`\`bash
-mkdir -p .claude/skills
-\`\`\`
-
-**Ejemplo: skill de QA**
-\`\`\`markdown
-# /review - Revisión de código
-
-Revisa el código del último commit:
-1. Busca vulnerabilidades de seguridad (SQL injection, XSS)
-2. Verifica que hay validación con Zod en todos los inputs
-3. Comprueba que las RLS policies cubren todos los casos
-4. Busca console.log o código de debug olvidado
-5. Verifica que los componentes nuevos son responsive
-\`\`\`
-
-**Ejemplo: skill de DevOps**
-\`\`\`markdown
-# /deploy-check - Pre-deploy checklist
-
-Antes de hacer deploy, verifica:
-1. npm run build sin errores
-2. Variables de entorno documentadas en .env.example
-3. No hay secrets hardcodeados en el código
-4. Tests pasando (npm test)
-5. Migrations de Supabase aplicadas
-\`\`\`
-
-### Gestión de contexto y tokens
-
-Cuando trabajas en sesiones largas, Claude puede perder contexto. Trucos:
-
-- **Sesiones cortas y enfocadas**: "Hoy solo trabajamos en el sistema de pagos"
-- **CLAUDE.md actualizado**: al final de cada sesión, actualiza el estado
-- **Compact**: Claude Code compacta automáticamente cuando el contexto es largo
-- **Una tarea a la vez**: mejor 5 sesiones de 1 tarea que 1 sesión de 5 tareas
-
-### Lo que vamos a hacer en clase
-
-Vamos a configurar tu proyecto para trabajar con agentes especializados y preparar el lanzamiento:
-1. Reforzar tu CLAUDE.md con roles y responsabilidades
-2. Crear 3-4 skills especializadas para tu proyecto
-3. Practicar delegación de tareas complejas
-4. Crear un flujo de revisión de código automatizado
-5. Preparar el checklist de lanzamiento
-6. ¡LANZAR!
-
----
-
-## Checklist pre-lanzamiento
-
-### Técnico
 - [ ] Dominio propio configurado
-- [ ] SSL activo (HTTPS)
-- [ ] Emails funcionando
-- [ ] Pagos en modo producción
+- [ ] HTTPS activo
+- [ ] Stripe en modo producción
+- [ ] Emails enviándose correctamente
 - [ ] Error tracking (Sentry)
 - [ ] Analytics configurado
 
-### Legal (básico)
+### Checklist legal (básico)
+
 - [ ] Términos de servicio
 - [ ] Política de privacidad
 - [ ] Aviso de cookies (si aplica)
 
-### Marketing
-- [ ] Landing page lista
-- [ ] Cuenta de Twitter/X
-- [ ] Post de lanzamiento preparado
+### Dónde lanzar
 
-## Dónde lanzar
+1. **Product Hunt** — El clásico para SaaS
+2. **Hacker News** — Comunidad tech
+3. **Reddit** — r/SaaS, r/startups
+4. **Twitter/X** — Tu audiencia personal
+5. **IndieHackers** — Comunidad de makers
 
-1. **Product Hunt**: El clásico para SaaS
-2. **Hacker News**: Comunidad tech
-3. **Reddit**: r/SaaS, r/startups, nichos específicos
-4. **Twitter/X**: Tu audiencia personal
-5. **IndieHackers**: Comunidad de makers
+> "Done is better than perfect. Ship it."
 
-> "Done is better than perfect. Ship it." Tu producto no tiene que ser perfecto. Tiene que resolver un problema real para personas reales.
+👉 En clase: Agent Swarms + ¡LANZAMOS!
       `,
       recursos: [
         { titulo: 'Lección: Agent Teams', url: '/ralph/agent-teams', tipo: 'link' },
@@ -1395,6 +804,7 @@ Vamos a configurar tu proyecto para trabajar con agentes especializados y prepar
       fecha: '2026-04-24',
       hora: '19:00 CET',
       duracion: '2h',
+      zoomUrl: 'https://us02web.zoom.us/j/81636452979',
     },
     entregable: {
       titulo: 'Agent Swarm + Producto lanzado',
