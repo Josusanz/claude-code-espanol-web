@@ -138,31 +138,7 @@ export const PIZARRAS: PizarraSemana[] = [
         ],
       },
       {
-        titulo: '3. Verificar cuentas',
-        descripcion: 'Comprobamos que todas las cuentas están creadas:',
-        bloques: [
-          {
-            lenguaje: 'text',
-            codigo: 'Checklist de cuentas:\n✅ GitHub — github.com\n✅ Supabase — supabase.com\n✅ Vercel — vercel.com (conectada a GitHub)',
-          },
-        ],
-        links: [
-          { texto: 'GitHub', url: 'https://github.com' },
-          { texto: 'Supabase', url: 'https://supabase.com' },
-          { texto: 'Vercel', url: 'https://vercel.com' },
-        ],
-        tip: 'Si no tienes alguna cuenta, la creamos juntos ahora.',
-      },
-      {
-        titulo: '4. Instalar y configurar Pencil',
-        descripcion: 'Pencil es una extensión de diseño visual que se conecta con Claude Code via MCP.',
-        links: [
-          { texto: 'Pencil — Instalar', url: 'https://pencil.dev' },
-        ],
-        tip: 'Pencil es gratuito. Se integra con Claude Code automáticamente via MCP.',
-      },
-      {
-        titulo: '5. Conectar Git con GitHub',
+        titulo: '3. Conectar Git con GitHub',
         descripcion: 'Instalamos GitHub CLI y configuramos git con tus datos:',
         bloques: [
           {
@@ -191,7 +167,7 @@ git config --global user.email`,
         tip: 'Al ejecutar "gh auth login", selecciona: GitHub.com → HTTPS → Login with a web browser. En Linux: sudo apt install gh. En Windows: winget install GitHub.cli. Si el email sale vacío, ponlo a mano: git config --global user.email "tu@email.com"',
       },
       {
-        titulo: '6. Quitar confirmaciones de Claude Code',
+        titulo: '4. Quitar confirmaciones de Claude Code',
         descripcion: 'Para trabajar más rápido en clase, activamos el modo sin confirmaciones:',
         bloques: [
           {
@@ -208,7 +184,7 @@ git config --global user.email`,
         descripcion: 'Setup listo. Ahora viene lo divertido: vamos a crear una web personalizada con Claude Code.',
       },
       {
-        titulo: '7. Elegir tu theme',
+        titulo: '5. Elegir tu theme',
         descripcion: 'Abre la galería de themes y elige el que más te guste. Va a ser la base de tu primera web.',
         links: [
           { texto: 'Galería de themes', url: '/curso/themes' },
@@ -216,12 +192,12 @@ git config --global user.email`,
         tip: 'Elige un theme que se parezca a lo que quieres construir. No te preocupes por los detalles, vamos a personalizarlo todo.',
       },
       {
-        titulo: '8. Crear proyecto desde el theme',
+        titulo: '6. Crear proyecto desde el theme',
         descripcion: 'Sigue los pasos del componente interactivo: confirma tu theme, crea el proyecto y lanza Claude Code.',
         componente: 'dia2-setup',
       },
       {
-        titulo: '9. Personalizar con Claude',
+        titulo: '7. Personalizar con Claude',
         descripcion: 'Ahora viene la magia. Pídele a Claude que personalice tu web:',
         bloques: [
           {
@@ -238,7 +214,7 @@ git config --global user.email`,
         tip: 'Habla en español, como si le explicaras a un diseñador. Claude entiende perfectamente.',
       },
       {
-        titulo: '10. Iterar y jugar con cambios',
+        titulo: '8. Iterar y jugar con cambios',
         descripcion: 'Si algo no te gusta, pídele cambios. Esto es "vibe coding" — describes lo que quieres y Claude lo hace:',
         bloques: [
           {
@@ -249,7 +225,7 @@ git config --global user.email`,
         tip: 'No hay límite de cambios. Itera hasta que te guste. Así es como trabajarás siempre con Claude Code.',
       },
       {
-        titulo: '11. Tarea para la Semana 2',
+        titulo: '9. Tarea para la Semana 2',
         descripcion: 'Para la semana que viene, sigue personalizando tu web en casa. En la Semana 2 la conectaremos con una base de datos y la desplegaremos en internet.',
         links: [
           { texto: 'Galería de themes (por si quieres cambiar)', url: '/curso/themes' },
@@ -417,29 +393,29 @@ Usa las variables de entorno NEXT_PUBLIC_SUPABASE_URL y NEXT_PUBLIC_SUPABASE_ANO
     ],
   },
   // ==========================================
-  // SEMANA 3 — Tu Proyecto: Diseño + UI (era S2)
+  // SEMANA 3 — Diseño + UI (guiado)
   // ==========================================
   {
     semanaNum: 3,
-    titulo: 'Tu Proyecto — Diseño + UI',
+    titulo: 'Diseño + UI',
     emoji: '🎨',
-    subtitulo: 'Empezamos TU proyecto con shadcn/ui y Pencil',
+    subtitulo: 'Diseñamos juntos una app completa con shadcn/ui y Pencil',
     pasos: [
       {
-        titulo: '📋 Diseña tu interfaz completa',
-        descripcion: 'Esta semana cada uno trabaja en SU proyecto. Vamos a crear toda la UI (sin funcionalidad todavía).',
+        titulo: '📋 Diseñamos juntos la interfaz',
+        descripcion: 'Esta semana todos diseñamos la misma app paso a paso. Aprenderás las técnicas para diseñar cualquier interfaz.',
       },
       {
-        titulo: '1. Crear tu proyecto',
+        titulo: '1. Crear el proyecto',
         bloques: [
           {
             lenguaje: 'bash',
-            codigo: `npx create-next-app@latest mi-proyecto
-cd mi-proyecto
+            codigo: `npx create-next-app@latest nuestra-app
+cd nuestra-app
 code .`,
           },
         ],
-        tip: 'Sustituye "mi-proyecto" por el nombre de tu SaaS.',
+        tip: 'Todos usamos el mismo nombre para seguir el paso juntos.',
       },
       {
         titulo: '2. Instalar shadcn/ui',
@@ -480,7 +456,7 @@ code .`,
         bloques: [
           {
             lenguaje: 'text',
-            codigo: `Crea un dashboard para [TU APP]. Necesito:
+            codigo: `Crea un dashboard para nuestra app. Necesito:
 - Sidebar con navegación (Dashboard, [Sección 1], [Sección 2], Settings)
 - Header con nombre de la app y avatar de usuario
 - Contenido principal con cards de estadísticas
@@ -495,7 +471,7 @@ code .`,
         bloques: [
           {
             lenguaje: 'text',
-            codigo: `Crea las siguientes páginas para mi app:
+            codigo: `Crea las siguientes páginas para nuestra app:
 1. /dashboard - Lo que ya tenemos
 2. /dashboard/[sección] - Lista/tabla de [datos]
 3. /dashboard/[sección]/new - Formulario para crear nuevo
@@ -582,11 +558,11 @@ git push`,
     semanaNum: 4,
     titulo: 'Base de Datos + Autenticación',
     emoji: '🔐',
-    subtitulo: 'Diseña tu schema, conecta Supabase, implementa auth y protege con RLS',
+    subtitulo: 'Añadimos datos reales y login a nuestra app guiada',
     pasos: [
       {
         titulo: '📋 Base de datos + Auth completo',
-        descripcion: 'Hoy diseñamos las tablas de tu proyecto, las conectamos con la UI, y añadimos autenticación con RLS.',
+        descripcion: 'Hoy añadimos base de datos y autenticación a nuestra app guiada. Diseñamos tablas, las conectamos con la UI, y protegemos con RLS.',
       },
       // — Primera mitad: Base de datos —
       {
@@ -594,7 +570,7 @@ git push`,
         links: [
           { texto: 'Abrir Supabase Dashboard', url: 'https://supabase.com/dashboard' },
         ],
-        tip: 'Nombre del proyecto = nombre de tu SaaS. Región: eu-west-1 (más cercano a España).',
+        tip: 'Usamos el mismo nombre de proyecto que en S3. Región: eu-west-1 (más cercano a España).',
       },
       {
         titulo: '2. Diseñar tu schema',
@@ -627,7 +603,7 @@ ALTER TABLE projects ENABLE ROW LEVEL SECURITY;
 ALTER TABLE tasks ENABLE ROW LEVEL SECURITY;`,
           },
         ],
-        tip: 'Adapta este ejemplo a TU proyecto. Si no sabes qué tablas crear, dile a Claude: "Ayúdame a diseñar el schema de base de datos para [tu idea]"',
+        tip: 'Todos seguimos el mismo schema para la app guiada. En tu proyecto propio (S6+) lo adaptarás.',
       },
       {
         titulo: '3. Instalar Supabase',
@@ -790,17 +766,18 @@ USING (auth.uid() = user_id);`,
     ],
   },
   // ==========================================
-  // SEMANA 5 — APIs y Server Actions (sin cambios)
+  // SEMANA 5 — DÍA 1: APIs y Server Actions
   // ==========================================
   {
     semanaNum: 5,
+    dia: 1,
     titulo: 'APIs y Server Actions',
     emoji: '⚡',
-    subtitulo: 'Server Actions, Route Handlers y validación con Zod',
+    subtitulo: 'Server Actions, Route Handlers y validación con Zod en la app guiada',
     pasos: [
       {
-        titulo: '📋 APIs modernas con Next.js',
-        descripcion: 'Hoy refactorizamos la lógica del servidor usando Server Actions y añadimos validación.',
+        titulo: '📋 Día 1 (Jueves): APIs modernas con Next.js',
+        descripcion: 'Hoy implementamos APIs en la app guiada usando Server Actions y añadimos validación.',
       },
       {
         titulo: '1. Instalar Zod',
@@ -816,7 +793,7 @@ USING (auth.uid() = user_id);`,
         bloques: [
           {
             lenguaje: 'text',
-            codigo: `Refactoriza las operaciones de mi app para usar Server Actions:
+            codigo: `Refactoriza las operaciones de nuestra app para usar Server Actions:
 1. Crea un archivo app/actions.ts con "use server"
 2. Mueve toda la lógica de crear/editar/eliminar a Server Actions
 3. Añade validación con Zod para cada action
@@ -845,7 +822,7 @@ export const TaskSchema = z.object({
 })`,
           },
         ],
-        tip: 'Adapta los schemas a TU proyecto. Siempre valida el input del usuario.',
+        tip: 'Siempre valida el input del usuario. Estos schemas los usarás luego en tu proyecto propio.',
       },
       {
         titulo: '4. Loading states',
@@ -865,7 +842,7 @@ export const TaskSchema = z.object({
         bloques: [
           {
             lenguaje: 'text',
-            codigo: `Si tu app necesita recibir datos externos (webhooks), crea un Route Handler:
+            codigo: `Si la app necesita recibir datos externos (webhooks), crea un Route Handler:
 
 Crea app/api/webhook/route.ts que:
 - Reciba POST requests
@@ -875,13 +852,227 @@ Crea app/api/webhook/route.ts que:
           },
         ],
       },
+      {
+        titulo: '6. Preparación para mañana',
+        descripcion: 'Mañana empieza TU proyecto propio. Lee la pre-clase del Día 2 y ven con tu idea clara.',
+        tip: 'Piensa: ¿Qué problema resuelve tu app? ¿Quién la usaría? ¿Cuáles son las 3 features mínimas?',
+      },
     ],
   },
   // ==========================================
-  // SEMANA 6 — Pagos con Stripe (sin cambios)
+  // SEMANA 5 — DÍA 2: Workshop — Arranca Tu Proyecto
+  // ==========================================
+  {
+    semanaNum: 5,
+    dia: 2,
+    titulo: 'Workshop — Arranca Tu Proyecto',
+    emoji: '🎯',
+    subtitulo: 'Aplicamos todo lo aprendido para crear TU proyecto desde cero',
+    pasos: [
+      {
+        titulo: '📋 Workshop: Tu Proyecto Propio',
+        descripcion: 'Hoy arrancas tu proyecto propio. Aplicamos todo lo que hemos aprendido en S1-S5 para crear algo tuyo desde cero.',
+      },
+      {
+        titulo: '1. Define tu MVP',
+        descripcion: 'Comparte tu idea con el grupo. Josu te ayuda a definir las 3 features mínimas.',
+        bloques: [
+          {
+            lenguaje: 'text',
+            codigo: `Mi proyecto es [NOMBRE]:
+- Problema que resuelve: [...]
+- Público objetivo: [...]
+- 3 features mínimas:
+  1. [...]
+  2. [...]
+  3. [...]`,
+          },
+        ],
+      },
+      {
+        titulo: '2. Crea el repositorio',
+        bloques: [
+          {
+            lenguaje: 'bash',
+            codigo: `cd ~/curso-ia
+npx create-next-app@latest mi-proyecto
+cd mi-proyecto
+gh repo create mi-proyecto --public --source=. --push`,
+          },
+        ],
+        tip: 'Sustituye "mi-proyecto" por el nombre de tu SaaS.',
+      },
+      {
+        titulo: '3. Setup Next.js + shadcn/ui',
+        bloques: [
+          {
+            lenguaje: 'bash',
+            codigo: `npx shadcn@latest init
+npx shadcn@latest add button card input table tabs dialog sheet dropdown-menu avatar badge`,
+          },
+        ],
+      },
+      {
+        titulo: '4. CLAUDE.md personalizado',
+        bloques: [
+          {
+            lenguaje: 'text',
+            codigo: `Crea un archivo CLAUDE.md en la raíz del proyecto con:
+- Nombre del proyecto y descripción
+- Arquitectura: Next.js 15, Tailwind, shadcn/ui, Supabase, Vercel
+- Features del MVP planificadas
+- Convenciones de código`,
+          },
+        ],
+      },
+      {
+        titulo: '5. Diseña las pantallas principales',
+        bloques: [
+          {
+            lenguaje: 'text',
+            codigo: `Crea las pantallas principales de mi app:
+1. Landing page con hero, features y CTA
+2. Dashboard con sidebar y contenido principal
+3. Al menos 1 página más específica de mi app
+Usa shadcn/ui y Tailwind. Hazlo responsive.`,
+          },
+        ],
+      },
+      {
+        titulo: '6. Conecta Supabase',
+        bloques: [
+          {
+            lenguaje: 'bash',
+            codigo: 'npm install @supabase/supabase-js',
+          },
+          {
+            lenguaje: 'text',
+            codigo: `Configura Supabase:
+1. Crea proyecto en supabase.com
+2. Copia las keys a .env.local
+3. Crea la tabla principal de tu app
+4. Conecta un formulario básico`,
+          },
+        ],
+      },
+      {
+        titulo: '7. Despliega en Vercel',
+        links: [
+          { texto: 'Abrir Vercel', url: 'https://vercel.com/new' },
+        ],
+        bloques: [
+          {
+            lenguaje: 'text',
+            codigo: `En Vercel:
+1. Import Git Repository → selecciona tu repo
+2. Añade las variables de entorno de Supabase
+3. Click Deploy`,
+          },
+        ],
+      },
+      {
+        titulo: '8. Comparte en Discord',
+        descripcion: '¡Tu proyecto propio está en internet! Comparte la URL en Discord y cuéntanos qué estás construyendo.',
+        tip: 'Actualiza el CLAUDE.md: "Actualiza el CLAUDE.md con el estado actual del proyecto"',
+      },
+    ],
+  },
+  // ==========================================
+  // SEMANA 6 — Tu Proyecto: De Idea a MVP
   // ==========================================
   {
     semanaNum: 6,
+    titulo: 'Tu Proyecto — De Idea a MVP',
+    emoji: '🎯',
+    subtitulo: 'Sprint de 2 horas para avanzar tu MVP con ayuda en tiempo real',
+    pasos: [
+      {
+        titulo: '📋 Sprint de MVP',
+        descripcion: 'Hoy es un sprint de 2 horas. Cada uno avanza su proyecto propio con ayuda de Josu en tiempo real.',
+      },
+      {
+        titulo: '1. Revisión de avance',
+        descripcion: 'Ronda rápida: cada uno comparte qué ha avanzado desde S5 y qué planea hacer hoy.',
+      },
+      {
+        titulo: '2. Feature principal',
+        bloques: [
+          {
+            lenguaje: 'text',
+            codigo: `Implementa la feature principal de tu MVP:
+- ¿Qué hace tu app que nadie más hace?
+- Enfócate en UNA cosa bien hecha
+- Usa Server Actions + Zod para formularios
+- Conecta con Supabase para datos`,
+          },
+        ],
+      },
+      {
+        titulo: '3. Base de datos (si aplica)',
+        bloques: [
+          {
+            lenguaje: 'text',
+            codigo: `Si necesitas más tablas:
+- Diseña el schema con Claude
+- Crea las tablas en Supabase
+- Habilita RLS en todas
+- Conecta con la UI`,
+          },
+        ],
+      },
+      {
+        titulo: '4. Autenticación (si aplica)',
+        bloques: [
+          {
+            lenguaje: 'text',
+            codigo: `Si tu app necesita login:
+- Configura Supabase Auth
+- Crea páginas de login/registro
+- Protege rutas con middleware
+- Añade RLS policies`,
+          },
+        ],
+      },
+      {
+        titulo: '5. APIs/Server Actions',
+        descripcion: 'Implementa las operaciones CRUD que necesite tu app.',
+      },
+      {
+        titulo: '6. Pulir UI',
+        bloques: [
+          {
+            lenguaje: 'text',
+            codigo: `Revisa la UI de tu app:
+- ¿Es responsive?
+- ¿Los loading states están implementados?
+- ¿Los errores se manejan bien?
+- ¿La navegación funciona?`,
+          },
+        ],
+      },
+      {
+        titulo: '7. Desplegar actualización',
+        bloques: [
+          {
+            lenguaje: 'bash',
+            codigo: `git add .
+git commit -m "MVP: feature principal implementada"
+git push`,
+          },
+        ],
+        tip: 'Vercel despliega automáticamente al hacer push. Verifica que funciona en producción.',
+      },
+      {
+        titulo: '8. Demo al grupo',
+        descripcion: 'Cada uno hace una demo de 2 minutos mostrando su MVP. Celebramos los avances.',
+      },
+    ],
+  },
+  // ==========================================
+  // SEMANA 7 — Pagos con Stripe
+  // ==========================================
+  {
+    semanaNum: 7,
     titulo: 'Pagos con Stripe',
     emoji: '💳',
     subtitulo: 'Integra Stripe para cobrar a tus usuarios',
@@ -983,17 +1174,22 @@ CVC: cualquier 3 dígitos`,
     ],
   },
   // ==========================================
-  // SEMANA 7 — Email y Notificaciones (sin cambios)
+  // SEMANA 8 — Email + Testing (fusión)
   // ==========================================
   {
-    semanaNum: 7,
-    titulo: 'Email y Notificaciones',
+    semanaNum: 8,
+    titulo: 'Email + Testing',
     emoji: '📧',
-    subtitulo: 'Emails transaccionales con Resend y notificaciones in-app',
+    subtitulo: 'Emails transaccionales con Resend + tests con Vitest y Playwright',
     pasos: [
       {
-        titulo: '📋 Comunícate con tus usuarios',
-        descripcion: 'Hoy añadimos emails automáticos y notificaciones dentro de la app.',
+        titulo: '📋 Emails + Tests en una sesión',
+        descripcion: 'Primera mitad: emails con Resend. Segunda mitad: tests con Vitest y Playwright.',
+      },
+      // — Primera mitad: Emails —
+      {
+        titulo: '📧 Bloque 1: Emails con Resend',
+        descripcion: 'Configuramos emails transaccionales para tu app (~1 hora).',
       },
       {
         titulo: '1. Crear cuenta en Resend',
@@ -1021,14 +1217,13 @@ CVC: cualquier 3 dígitos`,
         ],
       },
       {
-        titulo: '4. Crear template de email',
+        titulo: '4. Crear templates de email',
         bloques: [
           {
             lenguaje: 'text',
             codigo: `Crea un sistema de emails con Resend y React Email:
 1. Template de bienvenida (cuando se registra un usuario)
-2. Template de confirmación de pago
-3. Template de notificación genérica
+2. Al menos 1 template más (confirmación de pago, notificación, etc.)
 Usa React Email components para un diseño profesional.
 Crea los templates en una carpeta /emails.`,
           },
@@ -1041,29 +1236,18 @@ Crea los templates en una carpeta /emails.`,
             lenguaje: 'text',
             codigo: `Envía emails automáticamente en estos eventos:
 - Al registrarse → email de bienvenida
-- Al pagar → confirmación de pago
-- Al cancelar suscripción → email de feedback
-Usa Server Actions o los webhooks de Stripe para triggear los envíos.`,
+- Al pagar → confirmación de pago (si aplica)
+Usa Server Actions para triggear los envíos.`,
           },
         ],
       },
-    ],
-  },
-  // ==========================================
-  // SEMANA 8 — Testing y Calidad (sin cambios)
-  // ==========================================
-  {
-    semanaNum: 8,
-    titulo: 'Testing y Calidad',
-    emoji: '🧪',
-    subtitulo: 'Tests automatizados con Vitest y Playwright',
-    pasos: [
+      // — Segunda mitad: Testing —
       {
-        titulo: '📋 Asegura la calidad de tu código',
-        descripcion: 'Hoy añadimos tests para que tu app no se rompa cuando hagas cambios.',
+        titulo: '🧪 Bloque 2: Testing',
+        descripcion: 'Añadimos tests para los flujos críticos (~1 hora).',
       },
       {
-        titulo: '1. Instalar Vitest',
+        titulo: '6. Instalar Vitest',
         bloques: [
           {
             lenguaje: 'bash',
@@ -1072,7 +1256,7 @@ Usa Server Actions o los webhooks de Stripe para triggear los envíos.`,
         ],
       },
       {
-        titulo: '2. Primer unit test',
+        titulo: '7. Crear unit tests',
         bloques: [
           {
             lenguaje: 'text',
@@ -1080,43 +1264,34 @@ Usa Server Actions o los webhooks de Stripe para triggear los envíos.`,
 - Funciones de utilidad (formateo de precios, fechas, etc.)
 - Validaciones de Zod
 - Lógica de negocio pura
-Crea los tests en carpeta __tests__/ o junto a cada archivo con .test.ts`,
+Al menos 3 unit tests.`,
           },
         ],
       },
       {
-        titulo: '3. Instalar Playwright',
+        titulo: '8. Test E2E del flujo principal',
         bloques: [
           {
             lenguaje: 'bash',
             codigo: 'npm install -D @playwright/test\nnpx playwright install',
           },
-        ],
-      },
-      {
-        titulo: '4. Test E2E del flujo principal',
-        bloques: [
           {
             lenguaje: 'text',
-            codigo: `Crea tests E2E con Playwright para:
-1. Test de login (email + password → dashboard)
-2. Test del flujo principal de tu app (crear → ver → editar → eliminar)
-3. Test de que rutas protegidas redirigen a login
+            codigo: `Crea al menos 1 test E2E con Playwright:
+- Test de login (email + password → dashboard)
+- O test del flujo principal de tu app
 Pon los tests en tests/e2e/`,
           },
         ],
       },
       {
-        titulo: '5. CI con GitHub Actions',
+        titulo: '9. Subir todo',
         bloques: [
           {
-            lenguaje: 'text',
-            codigo: `Crea un workflow de GitHub Actions que:
-- Se ejecute en cada push y pull request
-- Corra los unit tests con Vitest
-- Corra los E2E tests con Playwright
-- Reporte si algo falla
-Crea el archivo en .github/workflows/tests.yml`,
+            lenguaje: 'bash',
+            codigo: `git add .
+git commit -m "Emails + tests implementados"
+git push`,
           },
         ],
       },

@@ -198,24 +198,31 @@ Prepara una mini-presentación para el Día 1:
         emoji: '🛠️',
         preclase: {
           titulo: 'Verificación antes de la clase',
-          duracion: '5 min',
+          duracion: '10 min',
           contenido: `
-## ✅ Verificación antes de la clase
+## ✅ Verificación antes de la clase (10 min)
 
-Comprueba que tienes todo listo. Si algo falla, **tráelo a la clase y lo resolvemos juntos**.
+Comprueba que tienes TODO listo. Si algo falla, pregunta en Discord ANTES de la clase.
 
+### Herramientas
 - [ ] Terminal abierta y funcionando
 - [ ] Claude Code instalado (\`claude --version\`)
-- [ ] Cuenta de GitHub creada
-- [ ] Cuenta de Supabase creada (supabase.com)
-- [ ] Cuenta de Vercel conectada a GitHub
 
-> No te preocupes si algo no funciona. En la clase lo configuramos todo juntos paso a paso.
+### Cuentas
+- [ ] Cuenta de GitHub creada (github.com)
+- [ ] Cuenta de Supabase creada (supabase.com)
+- [ ] Cuenta de Vercel creada y conectada a GitHub (vercel.com)
+
+### Pencil
+- [ ] Pencil instalado (pencil.dev) — extensión de diseño visual para Claude Code
+
+> Todo esto lo necesitas para la clase. Si algo falla, pregunta en Discord y te ayudamos ANTES de mañana.
           `,
           recursos: [
             { titulo: 'Guía de instalación de Claude Code', url: '/empezar', tipo: 'link' },
             { titulo: 'Crear cuenta en Supabase', url: 'https://supabase.com', tipo: 'link' },
             { titulo: 'Crear cuenta en Vercel', url: 'https://vercel.com', tipo: 'link' },
+            { titulo: 'Pencil — Diseño visual para Claude', url: 'https://www.pencil.dev/', tipo: 'link' },
           ],
         },
         clase: {
@@ -226,9 +233,9 @@ Comprueba que tienes todo listo. Si algo falla, **tráelo a la clase y lo resolv
           videos: [
             {
               titulo: 'Día 2 — Setup técnico + Tu primera web',
-              url: 'https://us02web.zoom.us/rec/share/vlIuuI9VmGKf8F_BhBpFwcmB7BbQs3FNuIF8j-ZqBUMNt2vZlpOJCxfR32MJmhgF.R0cfGOCGCDLzP2Sh?startTime=1771614427000',
+              url: 'https://us02web.zoom.us/rec/share/9pLJ99rztxAuKQYnmOF1Wc-HhoRt_pnv94Q870qjM3AUt9SedE2lnovkFQW_KB1i.F97T69_rcMwgkZ5o?startTime=1771610718000',
               tipo: 'link',
-              passcode: '1l!Kz*ra',
+              passcode: 'z?hF3Sn=',
             },
           ],
           notas: `
@@ -317,8 +324,8 @@ En clase conectaremos tu web con GitHub, Supabase y la desplegaremos en Vercel.
   // ==========================================
   {
     num: 3,
-    titulo: 'Tu Proyecto — Diseño + UI',
-    descripcion: 'Empezamos TU proyecto. Diseñarás toda la interfaz con shadcn/ui y Pencil.',
+    titulo: 'Diseño + UI',
+    descripcion: 'Todos diseñamos juntos la misma app con shadcn/ui y Pencil. Aprenderás las técnicas para diseñar cualquier interfaz.',
     fechaInicio: '2026-03-06',
     emoji: '🎨',
     preclase: {
@@ -328,10 +335,10 @@ En clase conectaremos tu web con GitHub, Supabase y la desplegaremos en Vercel.
 ## ✅ Verificación antes de la clase
 
 - [ ] Tu waitlist de S2 está desplegada y funcionando
-- [ ] Tienes una idea clara de tu proyecto propio
-- [ ] Claude Code funcionando en tu carpeta de proyecto
+- [ ] Claude Code funcionando
+- [ ] Has explorado el catálogo de shadcn/ui (ui.shadcn.com)
 
-En clase: diseñaremos toda la UI de tu proyecto con shadcn/ui y Pencil.
+En clase: diseñaremos juntos una app completa con shadcn/ui y Pencil. Todos hacemos lo mismo paso a paso.
       `,
       recursos: [
         { titulo: 'Catálogo shadcn/ui', url: 'https://ui.shadcn.com', tipo: 'link' },
@@ -348,11 +355,10 @@ En clase: diseñaremos toda la UI de tu proyecto con shadcn/ui y Pencil.
       zoomUrl: 'https://us02web.zoom.us/j/81636452979',
     },
     entregable: {
-      titulo: 'UI completa de tu proyecto',
-      descripcion: 'Todas las pantallas de tu aplicación diseñadas con shadcn/ui (sin funcionalidad todavía).',
+      titulo: 'UI completa de la app guiada',
+      descripcion: 'Todas las pantallas de la app guiada diseñadas con shadcn/ui (sin funcionalidad todavía).',
       fechaLimite: '2026-03-12',
       checklist: [
-        'Proyecto propio creado en GitHub',
         'shadcn/ui instalado y configurado',
         'Diseño en Pencil (.pen) de las pantallas principales',
         'Dashboard principal diseñado',
@@ -369,7 +375,7 @@ En clase: diseñaremos toda la UI de tu proyecto con shadcn/ui y Pencil.
   {
     num: 4,
     titulo: 'Base de Datos + Autenticación',
-    descripcion: 'Diseña tu schema, conecta Supabase, implementa auth y protege datos con RLS — todo en una sesión.',
+    descripcion: 'Añadimos datos reales y login a nuestra app. Diseñamos schema, conectamos Supabase, implementamos auth y protegemos con RLS.',
     fechaInicio: '2026-03-13',
     emoji: '🔐',
     preclase: {
@@ -378,7 +384,7 @@ En clase: diseñaremos toda la UI de tu proyecto con shadcn/ui y Pencil.
       contenido: `
 ## ✅ Verificación (3 min)
 
-- [ ] Proyecto de S3 con UI funcionando
+- [ ] App de S3 con UI funcionando
 - [ ] Cuenta de Supabase activa
 - [ ] Claude Code funcionando
 
@@ -431,18 +437,61 @@ USING (auth.uid() = user_id);
     },
   },
   // ==========================================
-  // SEMANA 5 — APIs y Server Actions
+  // SEMANA 5 — APIs + Tu Proyecto (2 días)
   // ==========================================
   {
     num: 5,
-    titulo: 'APIs y Server Actions',
-    descripcion: 'Crea endpoints de API y aprende a usar Server Actions de Next.js.',
+    titulo: 'APIs + Tu Proyecto',
+    descripcion: 'Día 1 (Jue): APIs y Server Actions en la app guiada · Día 2 (Vie): Workshop — arranca tu proyecto propio',
     fechaInicio: '2026-03-20',
     emoji: '⚡',
     preclase: {
-      titulo: 'Verificación + concepto clave',
+      titulo: 'Preparación para la Semana 5',
       duracion: '10 min',
       contenido: `
+## Semana 5: APIs + Tu Proyecto
+
+Esta semana tiene **dos días**. Usa las pestañas de arriba para ver la preparación y grabación de cada día.
+
+- **Día 1 (Jueves):** APIs y Server Actions en la app guiada
+- **Día 2 (Viernes):** Workshop — arranca tu proyecto propio desde cero
+      `,
+      recursos: [
+        { titulo: 'Server Actions Docs', url: 'https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions', tipo: 'link' },
+        { titulo: 'Zod Documentation', url: 'https://zod.dev', tipo: 'link' },
+      ],
+    },
+    clase: {
+      fecha: '2026-03-20',
+      hora: '19:00 CET',
+      duracion: '2h + 2h',
+      zoomUrl: 'https://us02web.zoom.us/j/81636452979',
+    },
+    entregable: {
+      titulo: 'APIs implementadas + Proyecto propio arrancado',
+      descripcion: 'APIs funcionando en la app guiada y tu proyecto propio creado, en GitHub y desplegado en Vercel.',
+      fechaLimite: '2026-03-26',
+      checklist: [
+        'Server Actions para formularios',
+        'Validación con Zod implementada',
+        'Manejo de errores apropiado',
+        'Loading states en la UI',
+        'Al menos 1 Route Handler (si aplica)',
+        'Revalidación de datos funcionando',
+        'Proyecto propio creado en GitHub',
+        'CLAUDE.md personalizado en la raíz',
+        'Desplegado en Vercel',
+        'URL compartida en Discord',
+      ],
+    },
+    dias: [
+      {
+        titulo: 'APIs y Server Actions',
+        emoji: '⚡',
+        preclase: {
+          titulo: 'Verificación + concepto clave',
+          duracion: '10 min',
+          contenido: `
 ## ✅ Verificación (3 min)
 
 - [ ] DB + Auth de S4 funcionando
@@ -462,41 +511,143 @@ Next.js te da DOS formas de manejar lógica del servidor:
 
 **Regla simple:** Si es un formulario o botón → Server Action. Si es un webhook o API pública → Route Handler.
 
-👉 En clase implementaremos ambos en tu proyecto.
+👉 En clase implementaremos ambos en la app guiada.
+          `,
+          recursos: [
+            { titulo: 'Server Actions Docs', url: 'https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions', tipo: 'link' },
+            { titulo: 'Zod Documentation', url: 'https://zod.dev', tipo: 'link' },
+          ],
+        },
+        clase: {
+          fecha: '2026-03-20',
+          hora: '19:00 CET',
+          duracion: '2h',
+          zoomUrl: 'https://us02web.zoom.us/j/81636452979',
+        },
+        entregable: {
+          titulo: 'APIs implementadas en la app guiada',
+          descripcion: 'La app guiada usando Server Actions y Route Handlers para todas las operaciones.',
+          fechaLimite: '2026-03-20',
+          checklist: [
+            'Server Actions para formularios',
+            'Validación con Zod implementada',
+            'Manejo de errores apropiado',
+            'Loading states en la UI',
+            'Al menos 1 Route Handler (si aplica)',
+            'Revalidación de datos funcionando',
+          ],
+        },
+      },
+      {
+        titulo: 'Workshop — Arranca Tu Proyecto',
+        emoji: '🎯',
+        preclase: {
+          titulo: 'Preparación para el Workshop',
+          duracion: '10 min',
+          contenido: `
+## ✅ Verificación (3 min)
+
+- [ ] APIs de la app guiada funcionando (Día 1)
+- [ ] Tienes clara tu idea de proyecto propio
+- [ ] Has pensado qué features necesita tu MVP
+
+## 🧠 Planifica tu MVP (7 min)
+
+Tu proyecto propio empieza HOY. Piensa en:
+1. ¿Qué problema resuelve tu app?
+2. ¿Quién la usaría?
+3. ¿Cuáles son las 3 features MÍNIMAS para que funcione?
+
+Escríbelo en papel o en notas. En clase lo convertimos en código.
+          `,
+          recursos: [],
+        },
+        clase: {
+          fecha: '2026-03-21',
+          hora: '19:00 CET',
+          duracion: '2h',
+          zoomUrl: 'https://us02web.zoom.us/j/81636452979',
+        },
+        entregable: {
+          titulo: 'Tu proyecto arrancado',
+          descripcion: 'Proyecto propio creado, en GitHub y desplegado en Vercel con estructura base.',
+          fechaLimite: '2026-03-21',
+          checklist: [
+            'Idea de proyecto definida',
+            'Repositorio creado en GitHub',
+            'Next.js + shadcn/ui configurado',
+            'CLAUDE.md personalizado en la raíz',
+            'Al menos 2 páginas creadas',
+            'Supabase conectado',
+            'Desplegado en Vercel',
+            'URL compartida en Discord',
+          ],
+        },
+      },
+    ],
+  },
+  // ==========================================
+  // SEMANA 6 — Tu Proyecto: De Idea a MVP
+  // ==========================================
+  {
+    num: 6,
+    titulo: 'Tu Proyecto — De Idea a MVP',
+    descripcion: 'Aplicas todo lo aprendido en S1-S5 para construir el MVP de TU proyecto. Sprint de 2 horas.',
+    fechaInicio: '2026-03-27',
+    emoji: '🎯',
+    preclase: {
+      titulo: 'Verificación + planificación del sprint',
+      duracion: '10 min',
+      contenido: `
+## ✅ Verificación (3 min)
+
+- [ ] Proyecto propio creado en S5 Día 2
+- [ ] Repo en GitHub
+- [ ] Deploy en Vercel funcionando
+
+## 🧠 Tu sprint de hoy (7 min)
+
+Hoy es un sprint de 2 horas para avanzar tu MVP. Planifica qué vas a hacer:
+
+1. ¿Qué feature principal construyes hoy?
+2. ¿Necesitas DB? ¿Auth? ¿APIs?
+3. ¿Qué componentes de shadcn/ui necesitas?
+
+Ven con un plan claro. Josu estará disponible para resolver dudas en tiempo real.
       `,
       recursos: [
-        { titulo: 'Server Actions Docs', url: 'https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions', tipo: 'link' },
-        { titulo: 'Zod Documentation', url: 'https://zod.dev', tipo: 'link' },
+        { titulo: 'Catálogo shadcn/ui', url: 'https://ui.shadcn.com', tipo: 'link' },
+        { titulo: 'Supabase Docs', url: 'https://supabase.com/docs', tipo: 'link' },
       ],
     },
     clase: {
-      fecha: '2026-03-20',
+      fecha: '2026-03-27',
       hora: '19:00 CET',
       duracion: '2h',
       zoomUrl: 'https://us02web.zoom.us/j/81636452979',
     },
     entregable: {
-      titulo: 'APIs implementadas',
-      descripcion: 'Tu app usando Server Actions o Route Handlers para todas las operaciones.',
-      fechaLimite: '2026-03-26',
+      titulo: 'MVP funcional',
+      descripcion: 'Tu app con la feature principal funcionando, datos reales y usuarios.',
+      fechaLimite: '2026-04-02',
       checklist: [
-        'Server Actions para formularios',
-        'Validación con Zod implementada',
-        'Manejo de errores apropiado',
-        'Loading states en la UI',
-        'Al menos 1 Route Handler (si aplica)',
-        'Revalidación de datos funcionando',
+        'Feature principal implementada',
+        'Base de datos con al menos 2 tablas',
+        'CRUD funcionando',
+        'Login/registro implementado',
+        'UI pulida con shadcn/ui',
+        'Desplegado en Vercel (actualizado)',
       ],
     },
   },
   // ==========================================
-  // SEMANA 6 — Pagos con Stripe
+  // SEMANA 7 — Pagos con Stripe
   // ==========================================
   {
-    num: 6,
+    num: 7,
     titulo: 'Pagos con Stripe',
     descripcion: 'Integra Stripe para cobrar a tus usuarios. Planes, suscripciones, y webhooks.',
-    fechaInicio: '2026-03-27',
+    fechaInicio: '2026-04-03',
     emoji: '💳',
     preclase: {
       titulo: 'Verificación + concepto clave',
@@ -507,6 +658,7 @@ Next.js te da DOS formas de manejar lógica del servidor:
 - [ ] Cuenta de Stripe creada (dashboard.stripe.com)
 - [ ] Modo Test activado
 - [ ] API keys copiadas (test mode)
+- [ ] Tu MVP de S6 funcionando
 
 ## 🧠 Concepto clave: El flujo de pago (7 min)
 
@@ -532,7 +684,7 @@ Usuario → Click "Pagar" → Stripe Checkout → Paga → Webhook → Tu DB act
       ],
     },
     clase: {
-      fecha: '2026-03-27',
+      fecha: '2026-04-03',
       hora: '19:00 CET',
       duracion: '2h',
       zoomUrl: 'https://us02web.zoom.us/j/81636452979',
@@ -540,7 +692,7 @@ Usuario → Click "Pagar" → Stripe Checkout → Paga → Webhook → Tu DB act
     entregable: {
       titulo: 'Pagos funcionando',
       descripcion: 'Usuarios pueden pagar y sus suscripciones se reflejan en la app.',
-      fechaLimite: '2026-04-02',
+      fechaLimite: '2026-04-09',
       checklist: [
         'Cuenta Stripe configurada (test mode)',
         'Productos y precios creados',
@@ -552,112 +704,40 @@ Usuario → Click "Pagar" → Stripe Checkout → Paga → Webhook → Tu DB act
     },
   },
   // ==========================================
-  // SEMANA 7 — Email y Notificaciones
+  // SEMANA 8 — Email + Testing
   // ==========================================
   {
-    num: 7,
-    titulo: 'Email y Notificaciones',
-    descripcion: 'Envía emails transaccionales con Resend y notificaciones en la app.',
-    fechaInicio: '2026-04-03',
+    num: 8,
+    titulo: 'Email + Testing',
+    descripcion: 'Emails transaccionales con Resend y tests automatizados con Vitest y Playwright.',
+    fechaInicio: '2026-04-10',
     emoji: '📧',
     preclase: {
-      titulo: 'Resumen rápido + verificación',
+      titulo: 'Verificación + resumen rápido',
       duracion: '15 min',
       contenido: `
 ## ✅ Verificación (3 min)
 
 - [ ] Cuenta de Resend creada (resend.com)
-- [ ] Pagos de S6 funcionando
-
-## 📖 Resumen rápido (12 min)
-
-### Tipos de emails
-
-- **Transaccionales**: Se envían por una acción del usuario (registro, compra, reset password). Siempre se envían.
-- **Marketing**: Newsletters, promociones. El usuario puede desuscribirse.
-- **Notificaciones**: Alertas dentro de la app (no son emails).
-
-### Resend + React Email
-
-Resend es el servicio que envía los emails. React Email es la librería para diseñar los templates como componentes React — igual que tu UI.
-
-### Cuándo enviar cada tipo
-
-| Evento | Email | In-app |
-|--------|-------|--------|
-| Registro | ✅ Bienvenida | ✅ |
-| Pago recibido | ✅ Recibo | ✅ |
-| Nuevo comentario | ❌ | ✅ |
-| Password reset | ✅ | ❌ |
-
-👉 En clase configuraremos Resend, crearemos templates con React Email y añadiremos notificaciones in-app.
-      `,
-      recursos: [
-        { titulo: 'Resend', url: 'https://resend.com', tipo: 'link' },
-        { titulo: 'React Email', url: 'https://react.email', tipo: 'link' },
-      ],
-    },
-    clase: {
-      fecha: '2026-04-03',
-      hora: '19:00 CET',
-      duracion: '2h',
-      zoomUrl: 'https://us02web.zoom.us/j/81636452979',
-    },
-    entregable: {
-      titulo: 'Sistema de emails',
-      descripcion: 'Tu app enviando emails automáticos en eventos clave.',
-      fechaLimite: '2026-04-09',
-      checklist: [
-        'Cuenta Resend configurada',
-        'Dominio verificado (o usar sandbox)',
-        'Email de bienvenida implementado',
-        'Al menos 2 templates creados',
-        'Emails enviándose en eventos reales',
-        'Notificaciones in-app funcionando',
-      ],
-    },
-  },
-  // ==========================================
-  // SEMANA 8 — Testing y Calidad
-  // ==========================================
-  {
-    num: 8,
-    titulo: 'Testing y Calidad',
-    descripcion: 'Añade tests a tu aplicación para asegurar que todo funciona correctamente.',
-    fechaInicio: '2026-04-10',
-    emoji: '🧪',
-    preclase: {
-      titulo: 'Resumen rápido + verificación',
-      duracion: '15 min',
-      contenido: `
-## ✅ Verificación (3 min)
-
-- [ ] Proyecto con todas las features de S1-S7
+- [ ] Pagos de S7 funcionando
 - [ ] \`npm run dev\` funciona sin errores
 
 ## 📖 Resumen rápido (12 min)
 
-### ¿Por qué testear?
+### Emails (primera mitad de clase)
+- Transaccionales: registro, compra, reset (Resend + React Email)
+- La clave: enviar en el momento correcto
 
-Los tests detectan bugs ANTES de que los vean tus usuarios. También te dan confianza para hacer cambios sin miedo a romper algo.
+### Testing (segunda mitad de clase)
+- Unit tests con Vitest: funciones individuales
+- E2E con Playwright: flujos completos
+- Regla: testea comportamientos, no implementación
 
-### Tipos de tests
-
-1. **Unit tests** (Vitest): Prueban funciones individuales. Rápidos.
-2. **E2E tests** (Playwright): Simulan un usuario real navegando tu app. Más lentos pero más realistas.
-
-### ¿Qué testear primero?
-
-Enfócate en los **flujos críticos** de tu app:
-- Login/registro
-- El flujo principal (crear, editar, eliminar)
-- Pagos (si aplica)
-
-> Regla de oro: "Testea comportamientos, no implementación."
-
-👉 En clase escribiremos tests de los flujos críticos de tu proyecto.
+👉 En clase: emails + tests de los flujos críticos.
       `,
       recursos: [
+        { titulo: 'Resend', url: 'https://resend.com', tipo: 'link' },
+        { titulo: 'React Email', url: 'https://react.email', tipo: 'link' },
         { titulo: 'Vitest', url: 'https://vitest.dev', tipo: 'link' },
         { titulo: 'Playwright', url: 'https://playwright.dev', tipo: 'link' },
       ],
@@ -669,16 +749,16 @@ Enfócate en los **flujos críticos** de tu app:
       zoomUrl: 'https://us02web.zoom.us/j/81636452979',
     },
     entregable: {
-      titulo: 'Tests implementados',
-      descripcion: 'Tu app con suite de tests cubriendo los flujos principales.',
+      titulo: 'Emails + Tests implementados',
+      descripcion: 'Tu app enviando emails automáticos y con tests de los flujos críticos.',
       fechaLimite: '2026-04-16',
       checklist: [
+        'Resend configurado',
+        'Email de bienvenida implementado',
+        'Al menos 1 template más creado',
         'Vitest configurado',
-        'Al menos 5 unit tests',
-        'Playwright instalado',
-        'Test E2E de login',
-        'Test E2E del flujo principal',
-        'Tests pasando en CI (GitHub Actions)',
+        'Al menos 3 unit tests',
+        'Al menos 1 test E2E (login o flujo principal)',
       ],
     },
   },
@@ -697,7 +777,7 @@ Enfócate en los **flujos críticos** de tu app:
       contenido: `
 ## ✅ Verificación (3 min)
 
-- [ ] Tests de S8 pasando
+- [ ] Features de S1-S8 funcionando
 - [ ] App desplegada en Vercel
 
 ## 📖 Resumen rápido (12 min)

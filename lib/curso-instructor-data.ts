@@ -358,12 +358,101 @@ Si alguien no puede asistir al Día 1, puede ver la grabación. Pero el Día 2 e
   {
     semanaNum: 2,
     antesDeClase: [
-      { texto: 'Revisar proyectos que subieron a GitHub' },
+      { texto: 'Revisar webs que personalizaron en casa' },
+      { texto: 'Tener Supabase y Vercel docs abiertos' },
+      { texto: 'Terminal con proyecto demo limpio' },
+      { texto: 'Revisar preguntas del Discord' },
+    ],
+    agenda: [
+      {
+        tiempo: '0:00-0:15',
+        titulo: 'Recap + Revisión de webs',
+        detalles: [
+          'Mostrar 2-3 webs personalizadas de alumnos',
+          'Destacar lo bueno de cada una',
+          'Resolver dudas pendientes de S1',
+        ],
+      },
+      {
+        tiempo: '0:15-0:35',
+        titulo: 'CLAUDE.md + Git/GitHub',
+        detalles: [
+          'Crear CLAUDE.md con contexto del proyecto',
+          'Configurar Git: git init, git config',
+          'Subir a GitHub: gh repo create',
+        ],
+      },
+      {
+        tiempo: '0:35-0:55',
+        titulo: 'Supabase: tabla de waitlist',
+        detalles: [
+          'Crear proyecto en Supabase',
+          'Crear tabla waitlist con SQL',
+          'Configurar .env.local',
+          'Conectar formulario',
+        ],
+      },
+      {
+        tiempo: '0:55-1:10',
+        titulo: 'DESCANSO',
+        detalles: [],
+      },
+      {
+        tiempo: '1:10-1:35',
+        titulo: 'Panel admin + pulir',
+        detalles: [
+          'Crear /admin con Claude',
+          'Verificar que emails se guardan',
+          'Mejoras rápidas a la landing',
+        ],
+      },
+      {
+        tiempo: '1:35-1:55',
+        titulo: 'Deploy en Vercel',
+        detalles: [
+          'Conectar repo en vercel.com/new',
+          'Añadir variables de entorno',
+          'Deploy y verificar en producción',
+          'Celebrar: ¡primera web en internet!',
+        ],
+      },
+      {
+        tiempo: '1:55-2:00',
+        titulo: 'Cierre + Entregable',
+        detalles: [
+          'Compartir URLs en Discord',
+          'Recordar: actualizar CLAUDE.md',
+          'Próxima clase: diseño + UI con shadcn/ui y Pencil',
+        ],
+      },
+    ],
+    frasesClave: [
+      'CLAUDE.md es la memoria de tu proyecto — actualízalo siempre',
+      'Git = control de versiones, GitHub = tu código en la nube',
+      'Supabase te da Postgres gratis para siempre',
+      'Deploy en Vercel: de local a internet en 2 minutos',
+    ],
+    erroresComunes: [
+      'No poner .env en .gitignore → secrets expuestos',
+      'Confundir anon key con service role key',
+      'Variables de entorno mal copiadas en Vercel',
+      'Puerto 3000 ocupado → cerrar otras apps',
+    ],
+    despuesDeClase: [
+      { texto: 'Subir grabación' },
+      { texto: 'Verificar que todos tienen URL de Vercel funcionando' },
+      { texto: 'Dar feedback individual en Discord' },
+      { texto: 'Preparar proyecto base para S3 (diseño guiado)' },
+    ],
+  },
+  {
+    semanaNum: 3,
+    antesDeClase: [
       { texto: 'Tener shadcn/ui docs abierto' },
       { texto: 'Preparar ejemplos de buenos UI (Linear, Notion)' },
       { texto: 'Terminal con proyecto demo limpio' },
       { texto: 'Tener skills.sh abierto para mostrar ejemplos' },
-      { texto: 'Revisar preguntas del Discord' },
+      { texto: 'Pencil instalado y funcionando para demo' },
     ],
     agenda: [
       {
@@ -372,7 +461,7 @@ Si alguien no puede asistir al Día 1, puede ver la grabación. Pero el Día 2 e
         detalles: [
           'Mostrar 2-3 waitlists de alumnos',
           'Destacar lo bueno de cada una',
-          'Resolver dudas pendientes de la semana pasada',
+          'Resolver dudas pendientes de S2',
         ],
       },
       {
@@ -387,10 +476,11 @@ Si alguien no puede asistir al Día 1, puede ver la grabación. Pero el Día 2 e
       },
       {
         tiempo: '0:40-1:00',
-        titulo: 'Diseño de dashboard + Pencil',
+        titulo: 'Diseño guiado: dashboard + Pencil',
         detalles: [
+          'TODOS hacemos el mismo dashboard juntos',
           'Estructura: sidebar + main content',
-          'Componentes: Card, Button, Input',
+          'Componentes: Card, Button, Input, Table',
           'Layout responsivo con Tailwind',
           'Opcional: diseñar en Pencil (.pen) y que Claude genere el código',
         ],
@@ -398,39 +488,33 @@ Si alguien no puede asistir al Día 1, puede ver la grabación. Pero el Día 2 e
       {
         tiempo: '1:00-1:15',
         titulo: 'DESCANSO',
-        detalles: [
-          'Preguntas sobre sus proyectos',
-          'Ayuda individual si alguien está bloqueado',
-        ],
+        detalles: [],
       },
       {
         tiempo: '1:15-1:30',
         titulo: 'Skills: enseña a Claude tus procesos',
         detalles: [
-          'Explicar: la semana pasada creamos CLAUDE.md (contexto general)',
           'Skills = instrucciones especializadas que Claude consulta bajo demanda',
           'Demo: crear .claude/skills/crear-componente.md',
           'Mostrar skills.sh: directorio de skills de la comunidad',
-          'Cada uno crea al menos 1 skill para su proyecto',
+          'Cada uno crea al menos 1 skill',
         ],
       },
       {
         tiempo: '1:30-1:50',
-        titulo: 'Práctica guiada: Cada uno diseña su UI',
+        titulo: 'Práctica guiada: páginas adicionales',
         detalles: [
-          'Cada alumno trabaja en SU proyecto',
-          'Ir pasando por breakout rooms o preguntas',
+          'Todos añadimos las mismas páginas a la app guiada',
+          'Responsive obligatorio',
           'Resolver problemas en tiempo real',
-          'Mostrar ejemplos de prompts efectivos para UI',
         ],
       },
       {
         tiempo: '1:50-2:00',
         titulo: 'Cierre + Entregable',
         detalles: [
-          'Explicar entregable: UI completa + al menos 1 skill',
-          'Recordar: responsive obligatorio',
-          'Próxima clase: base de datos con Supabase',
+          'Entregable: UI completa de la app guiada + al menos 1 skill',
+          'Próxima clase: base de datos + auth',
         ],
       },
     ],
@@ -450,102 +534,9 @@ Si alguien no puede asistir al Día 1, puede ver la grabación. Pero el Día 2 e
     ],
     despuesDeClase: [
       { texto: 'Subir grabación' },
-      { texto: 'Revisar proyectos subidos a GitHub' },
+      { texto: 'Revisar UIs de la app guiada subidas a GitHub' },
       { texto: 'Dar feedback individual en Discord' },
       { texto: 'Verificar que cada proyecto tiene al menos 1 skill creada' },
-      { texto: 'Preparar ejemplos de schemas para semana 3' },
-    ],
-  },
-  {
-    semanaNum: 3,
-    antesDeClase: [
-      { texto: 'Tener Supabase con proyecto demo' },
-      { texto: 'Preparar diagrama ER de ejemplo' },
-      { texto: 'SQL cheatsheet listo para compartir' },
-      { texto: 'Verificar que todos tienen cuenta Supabase' },
-    ],
-    agenda: [
-      {
-        tiempo: '0:00-0:10',
-        titulo: 'Bienvenida + Recap semana anterior',
-        detalles: [
-          'Preguntar: ¿Cómo os fue con el UI?',
-          'Resolver 2-3 dudas rápidas',
-          'Mostrar 1-2 UIs destacadas',
-        ],
-      },
-      {
-        tiempo: '0:10-0:30',
-        titulo: 'Teoría: Qué es una base de datos',
-        detalles: [
-          'Explicar tablas, filas, columnas',
-          'Mostrar diagrama ER simple',
-          'SQL básico: SELECT, INSERT, UPDATE',
-          'Analogía: Excel pero más potente',
-        ],
-      },
-      {
-        tiempo: '0:30-0:45',
-        titulo: 'Demo: Crear proyecto en Supabase',
-        detalles: [
-          'Ir a supabase.com → New Project',
-          'Crear tabla "users" con columnas',
-          'Mostrar Table Editor',
-          'Insertar datos de prueba',
-        ],
-      },
-      {
-        tiempo: '0:45-1:00',
-        titulo: 'DESCANSO',
-        detalles: [],
-      },
-      {
-        tiempo: '1:00-1:30',
-        titulo: 'Práctica guiada: Todos crean tabla',
-        detalles: [
-          'Cada alumno crea su proyecto Supabase',
-          'Crear tabla principal de su SaaS',
-          'Resolver problemas en tiempo real',
-          'Verificar que todos tienen datos insertados',
-        ],
-      },
-      {
-        tiempo: '1:30-1:50',
-        titulo: 'Conectar con Next.js',
-        detalles: [
-          'Instalar @supabase/supabase-js',
-          'Crear cliente en lib/supabase.ts',
-          'Hacer primera query',
-          'Mostrar datos en la UI',
-        ],
-      },
-      {
-        tiempo: '1:50-2:00',
-        titulo: 'Cierre + Tarea',
-        detalles: [
-          'Explicar entregable',
-          'Recordar: subir a Discord',
-          'Próxima clase: Autenticación',
-        ],
-      },
-    ],
-    frasesClave: [
-      'Una base de datos es como un Excel gigante con superpoderes',
-      'Supabase te da Postgres gratis para siempre',
-      'No te preocupes por optimizar, eso viene después',
-      'Las relaciones son la clave de un buen schema',
-    ],
-    erroresComunes: [
-      'Olvidar habilitar RLS → datos públicos',
-      'No poner .env en .gitignore → secrets expuestos',
-      'Confundir anon key con service role key',
-      'Tipos incorrectos en columnas (text vs int)',
-    ],
-    despuesDeClase: [
-      { texto: 'Subir grabación de Zoom' },
-      { texto: 'Escribir resumen en notas' },
-      { texto: 'Responder preguntas del Discord' },
-      { texto: 'Verificar que todos conectaron Supabase' },
     ],
   },
   {
@@ -555,89 +546,113 @@ Si alguien no puede asistir al Día 1, puede ver la grabación. Pero el Día 2 e
       { texto: 'Proyecto demo con auth listo' },
       { texto: 'Ejemplos de RLS policies preparados' },
       { texto: 'Next.js middleware docs' },
+      { texto: 'Diagrama ER de ejemplo para la app guiada' },
     ],
     agenda: [
       {
-        tiempo: '0:00-0:15',
-        titulo: 'Recap + Estado de proyectos',
+        tiempo: '0:00-0:10',
+        titulo: 'Recap + Estado de la app guiada',
         detalles: [
-          '¿Todos tienen datos en Supabase?',
-          'Resolver dudas de conexión',
-          'Introducir tema: seguridad',
+          '¿Todos tienen la UI de S3 funcionando?',
+          'Resolver dudas de shadcn/ui',
+          'Introducir: hoy añadimos datos reales y login',
         ],
       },
       {
-        tiempo: '0:15-0:40',
-        titulo: 'Supabase Auth setup',
+        tiempo: '0:10-0:30',
+        titulo: 'Base de datos: diseñar schema',
         detalles: [
-          'Habilitar providers (email)',
-          'Configurar redirect URLs',
-          'Crear página de login',
-          'signUp, signIn, signOut',
+          'Explicar tablas, filas, columnas',
+          'Crear schema para la app guiada (todos el mismo)',
+          'SQL básico: SELECT, INSERT, UPDATE',
+          'Instalar Supabase y conectar',
         ],
       },
       {
-        tiempo: '0:40-1:00',
-        titulo: 'Sesiones y protección de rutas',
+        tiempo: '0:30-0:50',
+        titulo: 'CRUD + conectar con la UI',
         detalles: [
-          'getUser() vs getSession()',
-          'Middleware para proteger rutas',
-          'Redirect a login si no autenticado',
+          'Crear cliente Supabase',
+          'Conectar datos con el dashboard',
+          'Implementar CREATE, READ, UPDATE, DELETE',
         ],
       },
       {
-        tiempo: '1:00-1:15',
+        tiempo: '0:50-1:05',
         titulo: 'DESCANSO',
         detalles: [],
       },
       {
-        tiempo: '1:15-1:45',
+        tiempo: '1:05-1:25',
+        titulo: 'Supabase Auth setup',
+        detalles: [
+          'Habilitar providers (email)',
+          'Crear páginas de login/registro',
+          'signUp, signIn, signOut',
+          'Middleware para proteger rutas',
+        ],
+      },
+      {
+        tiempo: '1:25-1:50',
         titulo: 'Row Level Security',
         detalles: [
           'Por qué RLS es crucial',
-          'Crear policies básicas',
+          'Crear policies para la app guiada',
           'Testear que funciona',
           'Debugging con Supabase dashboard',
         ],
       },
       {
-        tiempo: '1:45-2:00',
+        tiempo: '1:50-2:00',
         titulo: 'Cierre',
         detalles: [
-          'Entregable: auth completo',
-          'Próxima semana: APIs',
+          'Entregable: app guiada con DB + Auth completa',
+          'Próxima semana: APIs + arrancamos tu proyecto propio',
         ],
       },
     ],
     frasesClave: [
+      'Una base de datos es como un Excel gigante con superpoderes',
       'Autenticación = quién eres, Autorización = qué puedes hacer',
       'RLS protege a nivel de base de datos, no solo de UI',
       'Nunca confíes en el frontend para seguridad',
-      'El anon key es público, service role NUNCA',
     ],
     erroresComunes: [
-      'Redirect URL mal configurada',
-      'Olvidar refrescar sesión',
+      'Olvidar habilitar RLS → datos públicos',
+      'No poner .env en .gitignore → secrets expuestos',
+      'Confundir anon key con service role key',
+      'Redirect URL mal configurada para auth',
       'RLS muy permisivo o muy restrictivo',
-      'Confundir auth.uid() con custom user id',
     ],
     despuesDeClase: [
       { texto: 'Subir grabación' },
-      { texto: 'Verificar que todos tienen login funcionando' },
+      { texto: 'Verificar que todos tienen DB + Auth funcionando' },
       { texto: 'Revisar RLS de cada proyecto' },
     ],
   },
   {
     semanaNum: 5,
     antesDeClase: [
+      // Día 1
       { texto: 'Server Actions docs abierto' },
       { texto: 'Zod playground preparado' },
       { texto: 'Ejemplos de Route Handlers' },
+      // Día 2
+      { texto: 'Template de proyecto Next.js listo para demo' },
+      { texto: 'Lista de ideas de alumnos del Discord (si las compartieron)' },
     ],
     agenda: [
+      // — DÍA 1 (Jueves): APIs —
+      {
+        tiempo: '— DÍA 1 (JUEVES) —',
+        titulo: 'APIs y Server Actions',
+        detalles: [
+          'Objetivo: implementar APIs en la app guiada.',
+        ],
+      },
       {
         tiempo: '0:00-0:15',
-        titulo: 'Recap de auth',
+        titulo: 'Recap de DB + Auth',
         detalles: [
           '¿Todos tienen login funcionando?',
           'Resolver problemas de RLS',
@@ -669,18 +684,78 @@ Si alguien no puede asistir al Día 1, puede ver la grabación. Pero el Día 2 e
       },
       {
         tiempo: '1:15-1:45',
-        titulo: 'Route Handlers (cuando son necesarios)',
+        titulo: 'Route Handlers + práctica',
         detalles: [
-          'Webhooks externos',
-          'APIs públicas',
-          'Integraciones',
+          'Cuándo usar Route Handlers',
+          'Implementar en la app guiada',
+          'Verificar que todo funciona',
         ],
       },
       {
         tiempo: '1:45-2:00',
+        titulo: 'Cierre Día 1 + preparar Día 2',
+        detalles: [
+          'Recordar: mañana empieza TU proyecto propio',
+          'Leer la pre-clase del Día 2',
+          'Venir con una idea clara de proyecto',
+        ],
+      },
+      // — DÍA 2 (Viernes): Workshop —
+      {
+        tiempo: '— DÍA 2 (VIERNES) —',
+        titulo: 'Workshop — Arranca Tu Proyecto',
+        detalles: [
+          'Objetivo: cada alumno sale con su proyecto propio creado, en GitHub y desplegado.',
+        ],
+      },
+      {
+        tiempo: '0:00-0:15',
+        titulo: 'Ronda de ideas',
+        detalles: [
+          'Cada uno comparte su idea de proyecto (1 min)',
+          'Feedback rápido del grupo',
+          'Definir las 3 features mínimas del MVP',
+        ],
+      },
+      {
+        tiempo: '0:15-0:45',
+        titulo: 'Setup del proyecto',
+        detalles: [
+          'npx create-next-app + shadcn/ui',
+          'Crear repo en GitHub',
+          'CLAUDE.md personalizado',
+          'Ir pasando para ayudar individualmente',
+        ],
+      },
+      {
+        tiempo: '0:45-1:00',
+        titulo: 'DESCANSO',
+        detalles: [],
+      },
+      {
+        tiempo: '1:00-1:30',
+        titulo: 'Diseño + Supabase',
+        detalles: [
+          'Crear pantallas principales con Claude',
+          'Conectar Supabase (tabla principal)',
+          'Ayuda individual en tiempo real',
+        ],
+      },
+      {
+        tiempo: '1:30-1:50',
+        titulo: 'Deploy + compartir',
+        detalles: [
+          'Deploy en Vercel',
+          'Verificar que funciona en producción',
+          'Compartir URL en Discord',
+        ],
+      },
+      {
+        tiempo: '1:50-2:00',
         titulo: 'Cierre',
         detalles: [
-          'Entregable: todas las operaciones con Server Actions',
+          'Celebrar: todos tienen su proyecto propio en internet',
+          'Próxima semana: sprint de MVP',
         ],
       },
     ],
@@ -688,19 +763,92 @@ Si alguien no puede asistir al Día 1, puede ver la grabación. Pero el Día 2 e
       'Server Actions = la forma moderna de mutar datos',
       'Siempre valida, nunca confíes en el input',
       'Route Handlers para APIs, Server Actions para forms',
+      'Tu proyecto propio empieza AHORA — aplica todo lo que aprendiste',
     ],
     erroresComunes: [
       'Olvidar "use server" al inicio',
       'No manejar errores correctamente',
       'Olvidar revalidatePath después de mutación',
+      'Día 2: idea demasiado ambiciosa → ayudar a reducir a MVP',
+      'Día 2: bloqueo por "no sé qué hacer" → sugerir ideas',
     ],
     despuesDeClase: [
-      { texto: 'Subir grabación' },
-      { texto: 'Revisar implementación de cada proyecto' },
+      { texto: 'Subir grabaciones de ambos días' },
+      { texto: 'Verificar que todos tienen proyecto propio en GitHub + Vercel' },
+      { texto: 'Mensaje en Discord celebrando los proyectos' },
     ],
   },
   {
     semanaNum: 6,
+    antesDeClase: [
+      { texto: 'Revisar repos de proyectos propios creados en S5 Día 2' },
+      { texto: 'Preparar lista de quién necesita más ayuda' },
+      { texto: 'Tener Supabase y shadcn/ui docs abiertos' },
+    ],
+    agenda: [
+      {
+        tiempo: '0:00-0:15',
+        titulo: 'Ronda de avance',
+        detalles: [
+          'Cada uno comparte: qué avanzó desde S5 y qué planea hacer hoy',
+          'Identificar quién necesita más ayuda',
+          'Definir objetivos individuales para la sesión',
+        ],
+      },
+      {
+        tiempo: '0:15-0:55',
+        titulo: 'Sprint de MVP — Bloque 1',
+        detalles: [
+          'Cada uno trabaja en su proyecto',
+          'Josu pasa por cada alumno dando ayuda individual',
+          'Enfoque: feature principal + DB/Auth si necesitan',
+        ],
+      },
+      {
+        tiempo: '0:55-1:10',
+        titulo: 'DESCANSO',
+        detalles: [],
+      },
+      {
+        tiempo: '1:10-1:45',
+        titulo: 'Sprint de MVP — Bloque 2',
+        detalles: [
+          'Continuar con el MVP',
+          'Pulir UI',
+          'Resolver bugs',
+          'Preparar deploy',
+        ],
+      },
+      {
+        tiempo: '1:45-2:00',
+        titulo: 'Demos + Cierre',
+        detalles: [
+          'Cada uno hace demo de 2 min',
+          'Celebrar avances',
+          'Próxima semana: Stripe (pagos)',
+        ],
+      },
+    ],
+    frasesClave: [
+      'Hoy es TU día — construye lo que quieras',
+      'MVP = la versión más simple que funciona',
+      'No te preocupes por perfecto, preocúpate por funcional',
+      'Pide ayuda — para eso estamos aquí',
+    ],
+    erroresComunes: [
+      'Scope creep: querer hacer demasiado en 2 horas',
+      'Perfeccionismo: pulir detalles antes de tener lo básico',
+      'Bloqueo: no saber por dónde empezar → definir 1 feature y empezar por ahí',
+      'Problemas de deploy → verificar env vars en Vercel',
+    ],
+    despuesDeClase: [
+      { texto: 'Subir grabación' },
+      { texto: 'Revisar MVPs y dar feedback en Discord' },
+      { texto: 'Celebrar los avances del grupo' },
+    ],
+  },
+  {
+    semanaNum: 7,
     antesDeClase: [
       { texto: 'Stripe dashboard abierto (test mode)' },
       { texto: 'Productos de prueba creados' },
@@ -710,11 +858,11 @@ Si alguien no puede asistir al Día 1, puede ver la grabación. Pero el Día 2 e
     agenda: [
       {
         tiempo: '0:00-0:15',
-        titulo: 'Intro a Stripe',
+        titulo: 'Recap + estado de MVPs',
         detalles: [
-          'Tour del dashboard',
-          'Modo test vs producción',
-          'Conceptos: products, prices, customers',
+          '¿Cómo van los proyectos propios?',
+          'Resolver blockers rápidos',
+          'Intro a Stripe: tour del dashboard',
         ],
       },
       {
@@ -778,151 +926,91 @@ Si alguien no puede asistir al Día 1, puede ver la grabación. Pero el Día 2 e
     ],
   },
   {
-    semanaNum: 7,
+    semanaNum: 8,
     antesDeClase: [
       { texto: 'Resend dashboard abierto' },
       { texto: 'React Email docs' },
-      { texto: 'Templates de ejemplo preparados' },
+      { texto: 'Vitest configurado en proyecto demo' },
+      { texto: 'Playwright instalado' },
     ],
     agenda: [
       {
-        tiempo: '0:00-0:15',
+        tiempo: '0:00-0:10',
         titulo: 'Recap de Stripe',
         detalles: [
           '¿Todos tienen pagos funcionando?',
           'Resolver problemas de webhooks',
         ],
       },
+      // — Primera mitad: Emails —
       {
-        tiempo: '0:15-0:45',
-        titulo: 'Setup de Resend + React Email',
+        tiempo: '0:10-0:30',
+        titulo: 'Setup Resend + React Email',
         detalles: [
           'Crear cuenta Resend',
           'Verificar dominio o usar sandbox',
-          'Instalar React Email',
+          'Instalar dependencias',
           'Primer email de prueba',
         ],
       },
       {
-        tiempo: '0:45-1:00',
-        titulo: 'Crear templates',
+        tiempo: '0:30-0:55',
+        titulo: 'Templates + integración',
         detalles: [
-          'Welcome email',
-          'Payment confirmation',
-          'Password reset',
+          'Crear template de bienvenida',
+          'Integrar en flujo de registro',
+          'Crear al menos 1 template más',
         ],
       },
       {
-        tiempo: '1:00-1:15',
+        tiempo: '0:55-1:10',
         titulo: 'DESCANSO',
         detalles: [],
       },
+      // — Segunda mitad: Testing —
       {
-        tiempo: '1:15-1:45',
-        titulo: 'Integrar en flujos reales',
+        tiempo: '1:10-1:30',
+        titulo: 'Unit tests con Vitest',
         detalles: [
-          'Email en registro',
-          'Email en pago exitoso',
-          'Testing de envíos',
+          'Setup de Vitest',
+          'Primer unit test',
+          'Cada uno escribe 2-3 tests para su proyecto',
         ],
       },
       {
-        tiempo: '1:45-2:00',
-        titulo: 'Notificaciones in-app',
+        tiempo: '1:30-1:50',
+        titulo: 'E2E con Playwright',
         detalles: [
-          'Toast notifications',
-          'Sistema básico de notificaciones',
+          'Instalación rápida',
+          'Test del flujo principal (login o feature clave)',
+          'Al menos 1 test E2E funcionando',
+        ],
+      },
+      {
+        tiempo: '1:50-2:00',
+        titulo: 'Cierre',
+        detalles: [
+          'Entregable: emails + tests',
+          'Próxima semana: performance y SEO',
         ],
       },
     ],
     frasesClave: [
       'Los emails transaccionales aumentan confianza',
+      'Testea comportamientos, no implementación',
       'Menos es más en emails',
-      'Siempre incluye opción de unsubscribe',
+      'Un test que nunca falla es inútil',
     ],
     erroresComunes: [
-      'Dominio no verificado',
+      'Dominio no verificado en Resend',
       'Email en spam',
-      'HTML roto en algunos clientes',
-      'Rate limits excedidos',
+      'Tests muy frágiles (dependen de detalles)',
+      'Timeouts en E2E',
     ],
     despuesDeClase: [
       { texto: 'Subir grabación' },
       { texto: 'Recibir email de prueba de cada alumno' },
-    ],
-  },
-  {
-    semanaNum: 8,
-    antesDeClase: [
-      { texto: 'Vitest configurado en proyecto demo' },
-      { texto: 'Playwright instalado' },
-      { texto: 'GitHub Actions ejemplo' },
-    ],
-    agenda: [
-      {
-        tiempo: '0:00-0:15',
-        titulo: 'Por qué testear',
-        detalles: [
-          'Beneficios reales',
-          'Tipos de tests',
-          'Cuánto testear (pragmatismo)',
-        ],
-      },
-      {
-        tiempo: '0:15-0:45',
-        titulo: 'Unit tests con Vitest',
-        detalles: [
-          'Setup básico',
-          'Primer test',
-          'Testing utilities',
-          'Mocking',
-        ],
-      },
-      {
-        tiempo: '0:45-1:00',
-        titulo: 'Práctica: Tests para sus utils',
-        detalles: [
-          'Cada uno escribe 2-3 tests',
-          'Resolver errores',
-        ],
-      },
-      {
-        tiempo: '1:00-1:15',
-        titulo: 'DESCANSO',
-        detalles: [],
-      },
-      {
-        tiempo: '1:15-1:45',
-        titulo: 'E2E con Playwright',
-        detalles: [
-          'Instalación',
-          'Test de login',
-          'Test del flujo principal',
-        ],
-      },
-      {
-        tiempo: '1:45-2:00',
-        titulo: 'CI con GitHub Actions',
-        detalles: [
-          'Configurar workflow',
-          'Tests en cada push',
-        ],
-      },
-    ],
-    frasesClave: [
-      'Testea comportamientos, no implementación',
-      'Un test que nunca falla es inútil',
-      'E2E para flujos críticos, unit para lógica',
-    ],
-    erroresComunes: [
-      'Tests muy frágiles (dependen de detalles)',
-      'No limpiar estado entre tests',
-      'Timeouts en E2E',
-      'Mocking incorrecto',
-    ],
-    despuesDeClase: [
-      { texto: 'Subir grabación' },
-      { texto: 'Verificar que CI pasa en cada proyecto' },
+      { texto: 'Verificar que cada proyecto tiene al menos 1 test' },
     ],
   },
   {

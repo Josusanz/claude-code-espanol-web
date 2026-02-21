@@ -591,18 +591,18 @@ El curso de 10 semanas usa:
 - **Stripe** - Pagos (semana 7)
 
 ### Calendario del curso (Primera Promocion)
-- Semana 1: 19-20 Feb 2026 (Jue-Vie) - LaunchPad (proyecto conjunto)
-- Semana 2: 27 Feb (Vie) - Tu Proyecto - Setup + UI
-- Semana 3: 6 Mar (Vie) - Base de Datos con Supabase
-- Semana 4: 13 Mar (Vie) - Autenticacion de Usuarios
-- Semana 5: 20 Mar (Vie) - APIs y Server Actions
-- Semana 6: 27 Mar (Vie) - Pagos con Stripe
-- Semana 7: 3 Abr (Vie) - Email y Notificaciones
-- Semana 8: 10 Abr (Vie) - Testing y Calidad
+- Semana 1: 19-20 Feb 2026 (Jue-Vie) - LaunchPad (proyecto guiado)
+- Semana 2: 27 Feb (Jue) - Conectar y Desplegar
+- Semana 3: 6 Mar (Vie) - Diseño + UI (guiado)
+- Semana 4: 13 Mar (Vie) - Base de Datos + Auth (guiado)
+- Semana 5: 20-21 Mar (Jue-Vie) - APIs + Tu Proyecto
+- Semana 6: 27 Mar (Vie) - Tu Proyecto — De Idea a MVP
+- Semana 7: 3 Abr (Vie) - Pagos con Stripe
+- Semana 8: 10 Abr (Vie) - Email + Testing
 - Semana 9: 17 Abr (Vie) - Performance y SEO
 - Semana 10: 24 Abr (Vie) - Agent Swarms y Lanzamiento
 
-Clases: Viernes 19:00 CET (S1: Jue-Vie 19-20 Feb)
+Clases: Viernes 19:00 CET (S1 y S5: Jue-Vie)
 
 ## PRECURSO
 

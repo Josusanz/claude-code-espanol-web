@@ -9,9 +9,14 @@ const ZOOM_LINK = 'https://us06web.zoom.us/j/81059741055?pwd=Xqh8R7S3jwIYLo0gC8X
 const CLASES: Record<string, { semana: number; tema: string; hora: string }> = {}
 for (const s of CURSO_SEMANAS) {
   CLASES[s.clase.fecha] = { semana: s.num, tema: s.titulo, hora: s.clase.hora }
+  // Multi-day weeks: add Día 2 entries from dias array
+  if (s.dias && s.dias.length > 1) {
+    const dia2 = s.dias[1]
+    if (dia2.clase?.fecha) {
+      CLASES[dia2.clase.fecha] = { semana: s.num, tema: `${s.titulo} - Día 2`, hora: dia2.clase.hora }
+    }
+  }
 }
-// S1 tiene dos días: Día 2 el viernes
-CLASES['2026-02-20'] = { semana: 1, tema: 'LaunchPad - Día 2', hora: '19:00 CET' }
 
 function getMadridHour(): number {
   const now = new Date()
