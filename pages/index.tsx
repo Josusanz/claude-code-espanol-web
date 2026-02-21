@@ -737,7 +737,7 @@ export default function LandingPage() {
               </p>
 
               <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
-                <Link href="/curso-crea-tu-software" style={{
+                <Link href="/curso-negocio" style={{
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: '8px',

@@ -4,28 +4,61 @@ interface CursoGateProps {
   children: ReactNode
 }
 
+type GateState = 'loading' | 'login' | 'email_sent' | 'no_access' | 'access'
+
 export default function CursoEmailGate({ children }: CursoGateProps) {
-  const [loading, setLoading] = useState(true)
-  const [hasAccess, setHasAccess] = useState(false)
+  const [state, setState] = useState<GateState>('loading')
   const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [submitting, setSubmitting] = useState(false)
 
   useEffect(() => {
-    // Check if already authenticated (reutilizamos la sesión del precurso)
-    const savedAccess = localStorage.getItem('precurso-access')
-    if (savedAccess) {
+    async function checkAccess() {
+      // Primero comprobar sesión con cookie
       try {
-        const data = JSON.parse(savedAccess)
-        if (data.authenticated && data.email) {
-          setHasAccess(true)
+        const sessionRes = await fetch('/api/auth/session')
+        const sessionData = await sessionRes.json()
+
+        if (sessionData.authenticated && sessionData.user?.email) {
+          // Tiene sesión, comprobar autorización
+          const accessRes = await fetch('/api/auth/check-curso-access')
+          const accessData = await accessRes.json()
+
+          if (accessData.authorized) {
+            // Guardar en localStorage para compatibilidad con sync-progress
+            localStorage.setItem('precurso-access', JSON.stringify({
+              authenticated: true,
+              email: sessionData.user.email
+            }))
+            setState('access')
+            return
+          } else {
+            setState('no_access')
+            return
+          }
         }
       } catch {
-        // Invalid data, ignore
+        // Error de red, continuar al login
       }
+
+      // Sin sesión, comprobar localStorage como fallback
+      const savedAccess = localStorage.getItem('precurso-access')
+      if (savedAccess) {
+        try {
+          const data = JSON.parse(savedAccess)
+          if (data.authenticated && data.email) {
+            setState('access')
+            return
+          }
+        } catch {
+          // Invalid data
+        }
+      }
+
+      setState('login')
     }
-    setLoading(false)
+
+    checkAccess()
   }, [])
 
   const handleSubmit = async (e: FormEvent) => {
@@ -34,23 +67,21 @@ export default function CursoEmailGate({ children }: CursoGateProps) {
     setSubmitting(true)
 
     try {
-      // Reutilizamos el endpoint del precurso
-      const res = await fetch('/api/precurso/login', {
+      const res = await fetch('/api/auth/send-magic-link', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email.trim(), password })
+        body: JSON.stringify({
+          email: email.trim(),
+          redirect: '/curso'
+        })
       })
 
       const data = await res.json()
 
-      if (data.success) {
-        localStorage.setItem('precurso-access', JSON.stringify({
-          authenticated: true,
-          email: email.trim().toLowerCase()
-        }))
-        setHasAccess(true)
+      if (res.ok && data.success) {
+        setState('email_sent')
       } else {
-        setError(data.error || 'Credenciales incorrectas')
+        setError(data.error || 'Error enviando el email. Inténtalo de nuevo.')
       }
     } catch {
       setError('Error de conexión. Inténtalo de nuevo.')
@@ -60,7 +91,7 @@ export default function CursoEmailGate({ children }: CursoGateProps) {
   }
 
   // Loading state
-  if (loading) {
+  if (state === 'loading') {
     return (
       <div style={{
         minHeight: '100vh',
@@ -91,11 +122,175 @@ export default function CursoEmailGate({ children }: CursoGateProps) {
   }
 
   // User has access - show content
-  if (hasAccess) {
+  if (state === 'access') {
     return <>{children}</>
   }
 
-  // Login form - Premium Light Design
+  // No access - email not authorized
+  if (state === 'no_access') {
+    return (
+      <div style={{
+        minHeight: '100vh',
+        background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '24px',
+        fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif"
+      }}>
+        <div style={{
+          width: '100%',
+          maxWidth: '440px',
+          background: 'white',
+          borderRadius: '24px',
+          padding: '48px 40px',
+          boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 10px 15px -3px rgba(0, 0, 0, 0.08)',
+          border: '1px solid rgba(0,0,0,0.04)',
+          textAlign: 'center'
+        }}>
+          <div style={{
+            width: '80px',
+            height: '80px',
+            background: 'linear-gradient(135deg, #ef4444 0%, #f97316 100%)',
+            borderRadius: '20px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            margin: '0 auto 20px',
+            fontSize: '36px',
+            boxShadow: '0 10px 40px rgba(239, 68, 68, 0.3)'
+          }}>
+            🔒
+          </div>
+          <h1 style={{
+            fontSize: '24px',
+            fontWeight: 700,
+            color: '#0f172a',
+            margin: '0 0 12px 0'
+          }}>
+            Sin acceso al curso
+          </h1>
+          <p style={{
+            fontSize: '15px',
+            color: '#64748b',
+            margin: '0 0 24px 0',
+            lineHeight: 1.6
+          }}>
+            Tu email no está autorizado para este curso.
+            Si crees que es un error, contacta al instructor.
+          </p>
+          <a href="mailto:josu@yenze.io" style={{
+            display: 'inline-block',
+            padding: '14px 28px',
+            fontSize: '15px',
+            fontWeight: 600,
+            color: 'white',
+            background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)',
+            border: 'none',
+            borderRadius: '14px',
+            textDecoration: 'none',
+            boxShadow: '0 4px 14px rgba(99, 102, 241, 0.4)'
+          }}>
+            Contactar a Josu
+          </a>
+        </div>
+      </div>
+    )
+  }
+
+  // Email sent - check your inbox
+  if (state === 'email_sent') {
+    return (
+      <div style={{
+        minHeight: '100vh',
+        background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '24px',
+        fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif"
+      }}>
+        <div style={{
+          width: '100%',
+          maxWidth: '440px',
+          background: 'white',
+          borderRadius: '24px',
+          padding: '48px 40px',
+          boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 10px 15px -3px rgba(0, 0, 0, 0.08)',
+          border: '1px solid rgba(0,0,0,0.04)',
+          textAlign: 'center'
+        }}>
+          <div style={{
+            width: '80px',
+            height: '80px',
+            background: 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)',
+            borderRadius: '20px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            margin: '0 auto 20px',
+            fontSize: '36px',
+            boxShadow: '0 10px 40px rgba(34, 197, 94, 0.3)'
+          }}>
+            📧
+          </div>
+          <h1 style={{
+            fontSize: '24px',
+            fontWeight: 700,
+            color: '#0f172a',
+            margin: '0 0 12px 0'
+          }}>
+            Revisa tu email
+          </h1>
+          <p style={{
+            fontSize: '15px',
+            color: '#64748b',
+            margin: '0 0 8px 0',
+            lineHeight: 1.6
+          }}>
+            Hemos enviado un enlace de acceso a:
+          </p>
+          <p style={{
+            fontSize: '16px',
+            fontWeight: 600,
+            color: '#6366f1',
+            margin: '0 0 24px 0'
+          }}>
+            {email}
+          </p>
+          <p style={{
+            fontSize: '14px',
+            color: '#94a3b8',
+            margin: 0,
+            lineHeight: 1.6
+          }}>
+            El enlace expira en 15 minutos.
+            <br />
+            Revisa también la carpeta de spam.
+          </p>
+          <button
+            onClick={() => { setState('login'); setError('') }}
+            style={{
+              marginTop: '24px',
+              padding: '10px 20px',
+              fontSize: '14px',
+              fontWeight: 500,
+              color: '#6366f1',
+              background: 'transparent',
+              border: '1px solid #e2e8f0',
+              borderRadius: '10px',
+              cursor: 'pointer',
+              transition: 'all 0.2s'
+            }}
+          >
+            Usar otro email
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  // Login form - email only (magic link)
   return (
     <div style={{
       minHeight: '100vh',
@@ -213,13 +408,13 @@ export default function CursoEmailGate({ children }: CursoGateProps) {
               margin: 0,
               fontWeight: 400
             }}>
-              Accede a tu cuenta para continuar
+              Introduce tu email para acceder
             </p>
           </div>
 
           {/* Form */}
           <form onSubmit={handleSubmit}>
-            <div style={{ marginBottom: '20px' }}>
+            <div style={{ marginBottom: '28px' }}>
               <label style={{
                 display: 'block',
                 fontSize: '13px',
@@ -235,47 +430,6 @@ export default function CursoEmailGate({ children }: CursoGateProps) {
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 placeholder="tu@email.com"
-                required
-                style={{
-                  width: '100%',
-                  padding: '16px 18px',
-                  fontSize: '15px',
-                  border: '2px solid #e2e8f0',
-                  borderRadius: '14px',
-                  outline: 'none',
-                  transition: 'all 0.2s ease',
-                  boxSizing: 'border-box',
-                  background: '#f8fafc'
-                }}
-                onFocus={e => {
-                  e.target.style.borderColor = '#6366f1'
-                  e.target.style.background = '#ffffff'
-                  e.target.style.boxShadow = '0 0 0 4px rgba(99, 102, 241, 0.1)'
-                }}
-                onBlur={e => {
-                  e.target.style.borderColor = '#e2e8f0'
-                  e.target.style.background = '#f8fafc'
-                  e.target.style.boxShadow = 'none'
-                }}
-              />
-            </div>
-
-            <div style={{ marginBottom: '28px' }}>
-              <label style={{
-                display: 'block',
-                fontSize: '13px',
-                fontWeight: 600,
-                color: '#374151',
-                marginBottom: '8px',
-                letterSpacing: '0.3px'
-              }}>
-                Contraseña del curso
-              </label>
-              <input
-                type="password"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-                placeholder="••••••••"
                 required
                 style={{
                   width: '100%',
@@ -369,11 +523,16 @@ export default function CursoEmailGate({ children }: CursoGateProps) {
                     borderRadius: '50%',
                     animation: 'spin 0.8s linear infinite'
                   }} />
-                  Verificando...
+                  Enviando...
                 </span>
               ) : (
-                'Acceder al Curso'
+                'Enviar enlace de acceso'
               )}
+              <style jsx>{`
+                @keyframes spin {
+                  to { transform: rotate(360deg); }
+                }
+              `}</style>
             </button>
           </form>
 

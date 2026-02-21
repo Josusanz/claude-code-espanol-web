@@ -8,12 +8,15 @@ interface Course {
   subtitle: string
   description: string
   price: number
+  currency?: string
   icon: string
   color: string
   features: string[]
   href: string
   badge?: string
   popular?: boolean
+  highlight?: string
+  spots?: string
 }
 
 const courses: Course[] = [
@@ -54,6 +57,31 @@ const courses: Course[] = [
     href: '/premium/course-builder',
   },
 ]
+
+const flagshipCourse: Course = {
+  id: 'crea-tu-software',
+  title: 'Crea tu Software con IA',
+  subtitle: 'Curso personalizado con Josu Sanz',
+  description: 'El programa mas completo y personalizado. En 10 semanas pasas de cero a lanzar tu propio SaaS con Claude Code, con sesiones en directo, revision de codigo y acceso directo al instructor.',
+  price: 997,
+  currency: 'EUR',
+  icon: 'rocket_launch',
+  color: 'indigo',
+  features: [
+    'Maximo 10 plazas por edicion',
+    '10 semanas de formacion intensiva',
+    'Sesiones en directo con Josu Sanz',
+    'Revision personalizada de tu proyecto',
+    'Acceso directo al instructor por Discord',
+    'De cero a producto lanzado con pagos reales',
+    'Stack completo: auth, base de datos, Stripe, deploy',
+    'Comunidad privada de alumnos',
+  ],
+  href: '/curso-negocio',
+  badge: 'Plazas limitadas',
+  popular: true,
+  spots: 'Solo 10 plazas',
+}
 
 export default function PremiumHubPage() {
   return (
@@ -144,9 +172,94 @@ export default function PremiumHubPage() {
           </div>
         </section>
 
-        {/* Courses Grid */}
+        {/* Flagship Course */}
+        <section className="pb-12 px-6">
+          <div className="max-w-5xl mx-auto">
+            <div className="relative bg-white dark:bg-slate-900 rounded-3xl border-2 border-indigo-400 dark:border-indigo-500 shadow-2xl shadow-indigo-500/10 overflow-hidden transition-all hover:shadow-2xl">
+              {/* Top accent bar */}
+              <div className="h-1.5 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500" />
+
+              <div className="p-8 md:p-10">
+                <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
+                  {/* Left: info */}
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-6">
+                      <div className="w-14 h-14 rounded-2xl flex items-center justify-center bg-gradient-to-br from-indigo-500 to-purple-600">
+                        <span className="material-symbols-outlined text-white text-2xl">{flagshipCourse.icon}</span>
+                      </div>
+                      <div>
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-bold rounded-full bg-red-500 text-white">
+                          <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
+                          {flagshipCourse.spots}
+                        </span>
+                      </div>
+                    </div>
+
+                    <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white mb-2 tracking-tight">
+                      {flagshipCourse.title}
+                    </h2>
+                    <p className="text-indigo-600 dark:text-indigo-400 font-semibold mb-4">
+                      {flagshipCourse.subtitle}
+                    </p>
+                    <p className="text-slate-600 dark:text-slate-400 mb-8 text-lg leading-relaxed">
+                      {flagshipCourse.description}
+                    </p>
+
+                    <div className="grid sm:grid-cols-2 gap-3 mb-8">
+                      {flagshipCourse.features.map((feature, i) => (
+                        <div key={i} className="flex items-start gap-2 text-sm text-slate-700 dark:text-slate-300">
+                          <span className="text-indigo-500 mt-0.5 flex-shrink-0">&#10003;</span>
+                          <span>{feature}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Right: price + CTA */}
+                  <div className="lg:w-72 flex-shrink-0">
+                    <div className="lg:sticky lg:top-24 bg-slate-50 dark:bg-slate-800/50 rounded-2xl p-8 text-center border border-slate-200 dark:border-slate-700">
+                      <p className="text-sm font-medium text-slate-500 dark:text-slate-400 mb-2">Precio por edicion</p>
+                      <div className="mb-1">
+                        <span className="text-5xl font-extrabold text-slate-900 dark:text-white">{flagshipCourse.price}</span>
+                        <span className="text-xl font-semibold text-slate-500 dark:text-slate-400 ml-1">&euro;</span>
+                      </div>
+                      <p className="text-xs text-slate-400 dark:text-slate-500 mb-6">Pago unico &middot; IVA incluido</p>
+
+                      <Link
+                        href={flagshipCourse.href}
+                        className="block w-full px-6 py-4 rounded-xl font-bold text-lg transition-all bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white shadow-lg shadow-indigo-500/30 hover:shadow-xl hover:shadow-indigo-500/40 hover:-translate-y-0.5"
+                      >
+                        Ver programa completo
+                      </Link>
+
+                      <div className="mt-6 space-y-3 text-left">
+                        <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
+                          <span className="material-symbols-outlined text-indigo-500 text-lg">videocam</span>
+                          Sesiones en directo
+                        </div>
+                        <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
+                          <span className="material-symbols-outlined text-indigo-500 text-lg">person</span>
+                          Maximo 10 alumnos
+                        </div>
+                        <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
+                          <span className="material-symbols-outlined text-indigo-500 text-lg">verified</span>
+                          Garantia 14 dias
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Self-paced Courses */}
         <section className="pb-24 px-6">
           <div className="max-w-5xl mx-auto">
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-8 text-center">
+              Cursos a tu ritmo
+            </h2>
             <div className="grid md:grid-cols-2 gap-8">
               {courses.map((course) => (
                 <div
@@ -241,7 +354,7 @@ export default function PremiumHubPage() {
             </div>
 
             {/* Coming Soon */}
-            <div className="mt-12 text-center">
+            <div className="mt-10 text-center">
               <p className="text-slate-500 dark:text-slate-400 text-sm">
                 Mas cursos proximamente...
               </p>

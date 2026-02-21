@@ -105,7 +105,7 @@ function Dashboard() {
           </Link>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <ThemeToggleButton isDark={isDark} toggleTheme={toggleTheme} />
-            <Link href="/curso" style={{
+            <Link href="/curso-negocio" style={{
               padding: '8px 16px',
               fontSize: '13px',
               fontWeight: 600,
@@ -496,7 +496,7 @@ function Dashboard() {
               El curso de pago te lleva de cero a lanzar tu propio producto en 10 semanas.
             </p>
           </div>
-          <Link href="/curso" style={{
+          <Link href="/curso-negocio" style={{
             padding: '10px 20px',
             fontSize: '14px',
             fontWeight: 600,

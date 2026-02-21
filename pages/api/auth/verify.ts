@@ -17,25 +17,26 @@ export default async function handler(
 
   try {
     // Verificar token
-    const email = await verifyMagicLinkToken(token)
+    const result = await verifyMagicLinkToken(token)
 
-    if (!email) {
+    if (!result) {
       return res.redirect('/acceso?error=token_expirado')
     }
 
     // Crear o actualizar usuario
-    await upsertUser(email)
+    await upsertUser(result.email)
 
     // Crear sesión
-    const sessionToken = await createSession(email)
+    const sessionToken = await createSession(result.email)
 
     // Establecer cookie de sesión
     res.setHeader('Set-Cookie', [
       `session=${sessionToken}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${30 * 24 * 60 * 60}${process.env.NODE_ENV === 'production' ? '; Secure' : ''}`
     ])
 
-    // Redirigir al contenido
-    return res.redirect('/empezar/introduccion')
+    // Redirigir al contenido (usar redirect del token si existe)
+    const redirectUrl = result.redirect || '/empezar/introduccion'
+    return res.redirect(redirectUrl)
 
   } catch (error) {
     console.error('Error verifying magic link:', error)

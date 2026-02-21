@@ -14,6 +14,7 @@ export interface MagicLinkToken {
   email: string
   createdAt: string
   expiresAt: string
+  redirect?: string
 }
 
 // Generar token único para magic link
@@ -24,14 +25,15 @@ export function generateToken(): string {
 }
 
 // Guardar token de magic link (expira en 15 minutos)
-export async function saveMagicLinkToken(email: string, token: string): Promise<void> {
+export async function saveMagicLinkToken(email: string, token: string, redirect?: string): Promise<void> {
   const now = new Date()
   const expiresAt = new Date(now.getTime() + 15 * 60 * 1000) // 15 min
 
   const tokenData: MagicLinkToken = {
     email: email.toLowerCase(),
     createdAt: now.toISOString(),
-    expiresAt: expiresAt.toISOString()
+    expiresAt: expiresAt.toISOString(),
+    ...(redirect && { redirect })
   }
 
   // Guardar con TTL de 15 minutos
@@ -39,7 +41,7 @@ export async function saveMagicLinkToken(email: string, token: string): Promise<
 }
 
 // Verificar y consumir token
-export async function verifyMagicLinkToken(token: string): Promise<string | null> {
+export async function verifyMagicLinkToken(token: string): Promise<{ email: string; redirect?: string } | null> {
   const tokenData = await kv.get<MagicLinkToken>(`magic_link:${token}`)
 
   if (!tokenData) return null
@@ -53,7 +55,7 @@ export async function verifyMagicLinkToken(token: string): Promise<string | null
   // Eliminar token (single use)
   await kv.del(`magic_link:${token}`)
 
-  return tokenData.email
+  return { email: tokenData.email, redirect: tokenData.redirect }
 }
 
 // Crear o actualizar usuario
