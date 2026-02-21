@@ -80,7 +80,7 @@ export const CURSO_SEMANAS: Semana[] = [
   {
     num: 1,
     titulo: 'LaunchPad - Primeros Pasos',
-    descripcion: 'Día 1 (Jue 19): Bienvenida y orientación · Día 2 (Vie 20): Setup técnico completo',
+    descripcion: 'Día 1 (Jue 19): Bienvenida y orientación · Día 2 (Vie 20): Setup + tu primera web',
     fechaInicio: '2026-02-19',
     emoji: '🚀',
     preclase: {
@@ -108,8 +108,8 @@ La Semana 1 es especial: tiene **dos días**. Usa las pestañas de arriba para v
       zoomUrl: 'https://us02web.zoom.us/j/81636452979',
     },
     entregable: {
-      titulo: 'Rueda del Creador + Setup técnico',
-      descripcion: 'Tu Rueda del Creador compartida en Discord y tu setup técnico completo para empezar a construir.',
+      titulo: 'Rueda del Creador + Primera web',
+      descripcion: 'Tu Rueda del Creador compartida, setup técnico completo y tu primera web personalizada con Claude Code.',
       fechaLimite: '2026-02-26',
       checklist: [
         'Rueda del Creador completada (se hace en la clase del Día 1)',
@@ -121,7 +121,8 @@ La Semana 1 es especial: tiene **dos días**. Usa las pestañas de arriba para v
         'Cuenta de Vercel conectada a GitHub',
         'Carpeta ~/curso-ia creada',
         'Pencil instalado',
-        'Galería de themes explorada',
+        'Theme elegido de la galería',
+        'Web personalizada con Claude Code',
       ],
     },
     dias: [
@@ -193,7 +194,7 @@ Prepara una mini-presentación para el Día 1:
         },
       },
       {
-        titulo: 'Setup técnico',
+        titulo: 'Setup + Tu Primera Web',
         emoji: '🛠️',
         preclase: {
           titulo: 'Verificación antes de la clase',
@@ -231,17 +232,22 @@ Comprueba que tienes todo listo. Si algo falla, **tráelo a la clase y lo resolv
             },
           ],
           notas: `
+**Setup técnico (30 min)**
 - Verificamos el setup: terminal, Claude Code, cuentas
 - Instalamos y configuramos Pencil (MCP)
 - Configuramos Git y GitHub CLI
 - Creamos la carpeta ~/curso-ia
-- Primer ejercicio con Claude Code
-- Exploramos la galería de themes para la Semana 2
+
+**Tu primera web (1h 30 min)**
+- Elegimos theme de la [galería](/curso/themes)
+- Creamos el proyecto desde el theme
+- Personalizamos con Claude Code (colores, textos, secciones)
+- Iteramos el diseño pidiendo cambios a Claude
           `,
         },
         entregable: {
-          titulo: 'Setup técnico completo',
-          descripcion: 'Terminal, Claude Code y todas las cuentas verificadas y funcionando.',
+          titulo: 'Setup completo + web personalizada',
+          descripcion: 'Tu entorno técnico funcionando y tu primera web personalizada con Claude Code.',
           fechaLimite: '2026-02-20',
           checklist: [
             'Terminal funcionando correctamente',
@@ -251,6 +257,8 @@ Comprueba que tienes todo listo. Si algo falla, **tráelo a la clase y lo resolv
             'Cuenta de Vercel conectada a GitHub',
             'Carpeta ~/curso-ia creada',
             'Pencil instalado',
+            'Theme elegido de la galería',
+            'Web personalizada con Claude Code (colores, textos, secciones)',
           ],
         },
       },
@@ -261,8 +269,8 @@ Comprueba que tienes todo listo. Si algo falla, **tráelo a la clase y lo resolv
   // ==========================================
   {
     num: 2,
-    titulo: 'Tu Primera Web',
-    descripcion: 'Construimos juntos tu primera web: personalizamos un theme, conectamos Supabase y desplegamos en Vercel.',
+    titulo: 'Conectar y Desplegar',
+    descripcion: 'Tu web ya existe. Ahora la conectamos con GitHub, Supabase y Vercel para que sea real.',
     fechaInicio: '2026-02-27',
     emoji: '🌐',
     preclase: {
@@ -271,15 +279,14 @@ Comprueba que tienes todo listo. Si algo falla, **tráelo a la clase y lo resolv
       contenido: `
 ## ✅ Verificación antes de la clase
 
-- [ ] Todo el setup del Día 2 funciona (terminal, Claude Code, cuentas)
-- [ ] Has explorado la [galería de themes](/curso/themes)
-- [ ] Tienes un theme elegido (o 2-3 candidatos)
+- [ ] Tu web del Día 2 funciona en local (\`npm run dev\`)
+- [ ] Has seguido personalizando con Claude Code (colores, textos, secciones)
+- [ ] Setup del Día 2 completo (terminal, Claude Code, Git, cuentas)
 
-En clase construiremos tu primera web juntos paso a paso.
+En clase conectaremos tu web con GitHub, Supabase y la desplegaremos en Vercel.
       `,
       recursos: [
-        { titulo: 'Galería de themes del curso', url: '/curso/themes', tipo: 'link' },
-        { titulo: 'Crear cuenta en Supabase', url: 'https://supabase.com', tipo: 'link' },
+        { titulo: 'Galería de themes (por si quieres cambiar)', url: '/curso/themes', tipo: 'link' },
         { titulo: 'Documentación Next.js App Router', url: 'https://nextjs.org/docs/app', tipo: 'link' },
       ],
     },

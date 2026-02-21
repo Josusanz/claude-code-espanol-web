@@ -96,19 +96,20 @@ export const PIZARRAS: PizarraSemana[] = [
     ],
   },
   // ==========================================
-  // SEMANA 1 — DÍA 2: Setup Técnico
+  // SEMANA 1 — DÍA 2: Setup + Tu Primera Web
   // ==========================================
   {
     semanaNum: 1,
     dia: 2,
-    titulo: 'Setup Técnico',
+    titulo: 'Setup + Tu Primera Web',
     emoji: '🛠️',
-    subtitulo: 'Verificamos el entorno, configuramos las herramientas y practicamos con Claude Code',
+    subtitulo: 'Configuramos las herramientas, elegimos un theme y creamos tu primera web con Claude Code',
     pasos: [
       {
-        titulo: '📋 Día 2 (Viernes): Setup Técnico',
-        descripcion: 'Hoy verificamos que todos tenéis el entorno preparado, configuramos las herramientas y practicamos con Claude Code.',
+        titulo: '📋 Día 2 (Viernes): Setup + Tu Primera Web',
+        descripcion: 'Hoy configuramos todo, elegimos un theme y creamos tu primera web personalizada con Claude Code.',
       },
+      // — BLOQUE 1: Setup técnico (30 min) —
       {
         titulo: '1. Verificar terminal y Claude Code',
         descripcion: 'Comprobamos que el terminal y Claude Code funcionan correctamente:',
@@ -154,7 +155,7 @@ export const PIZARRAS: PizarraSemana[] = [
       },
       {
         titulo: '4. Instalar y configurar Pencil',
-        descripcion: 'Pencil es una extensión de diseño visual que se conecta con Claude Code via MCP. Te permite diseñar interfaces y que Claude genere el código.',
+        descripcion: 'Pencil es una extensión de diseño visual que se conecta con Claude Code via MCP.',
         links: [
           { texto: 'Pencil — Instalar', url: 'https://pencil.dev' },
         ],
@@ -190,29 +191,7 @@ git config --global user.email`,
         tip: 'Al ejecutar "gh auth login", selecciona: GitHub.com → HTTPS → Login with a web browser. En Linux: sudo apt install gh. En Windows: winget install GitHub.cli. Si el email sale vacío, ponlo a mano: git config --global user.email "tu@email.com"',
       },
       {
-        titulo: '6. Practicar con Claude Code',
-        descripcion: 'Hacemos un ejercicio rápido para familiarizarnos:',
-        bloques: [
-          {
-            lenguaje: 'bash',
-            archivo: '1. Crea una carpeta de prueba',
-            codigo: 'mkdir ~/curso-ia/prueba\ncd ~/curso-ia/prueba',
-          },
-          {
-            lenguaje: 'bash',
-            archivo: '2. Inicia Claude Code',
-            codigo: 'claude',
-          },
-          {
-            lenguaje: 'text',
-            archivo: '3. Pídele algo sencillo',
-            codigo: 'Crea un archivo index.html con una página web que diga "Hola, soy [tu nombre] y estoy aprendiendo a crear software con IA"',
-          },
-        ],
-        tip: 'Este es solo un ejercicio de calentamiento. La semana que viene construiremos algo real.',
-      },
-      {
-        titulo: '7. Quitar confirmaciones de Claude Code',
+        titulo: '6. Quitar confirmaciones de Claude Code',
         descripcion: 'Para trabajar más rápido en clase, activamos el modo sin confirmaciones:',
         bloques: [
           {
@@ -223,47 +202,88 @@ git config --global user.email`,
         ],
         tip: 'Para proyectos de cliente o producción, usa las confirmaciones normales o una allowlist.',
       },
+      // — BLOQUE 2: Tu primera web (1h 30 min) —
       {
-        titulo: '8. Explorar la galería de themes',
-        descripcion: 'Echamos un vistazo a los 20 themes premium del curso. Para la próxima clase, ven con un theme elegido.',
+        titulo: '📋 ¡Ahora creamos tu primera web!',
+        descripcion: 'Setup listo. Ahora viene lo divertido: vamos a crear una web personalizada con Claude Code.',
+      },
+      {
+        titulo: '7. Elegir tu theme',
+        descripcion: 'Abre la galería de themes y elige el que más te guste. Va a ser la base de tu primera web.',
         links: [
           { texto: 'Galería de themes', url: '/curso/themes' },
         ],
-        tip: 'Elige un theme que se parezca a lo que quieres construir. En la Semana 2 lo personalizaremos con Claude Code.',
+        tip: 'Elige un theme que se parezca a lo que quieres construir. No te preocupes por los detalles, vamos a personalizarlo todo.',
+      },
+      {
+        titulo: '8. Crear proyecto desde el theme',
+        descripcion: 'Sigue los pasos del componente interactivo: confirma tu theme, crea el proyecto y lanza Claude Code.',
+        componente: 'dia2-setup',
+      },
+      {
+        titulo: '9. Personalizar con Claude',
+        descripcion: 'Ahora viene la magia. Pídele a Claude que personalice tu web:',
+        bloques: [
+          {
+            lenguaje: 'text',
+            archivo: 'Ejemplo de prompt de personalización',
+            codigo: `Personaliza esta landing page:
+- Cambia el nombre a [TU PROYECTO]
+- Cambia la descripción a [LO QUE HACE]
+- Cambia los colores principales a [TUS COLORES]
+- Actualiza las secciones de features con [TUS FEATURES]
+- Cambia los testimonios por textos relevantes`,
+          },
+        ],
+        tip: 'Habla en español, como si le explicaras a un diseñador. Claude entiende perfectamente.',
+      },
+      {
+        titulo: '10. Iterar y jugar con cambios',
+        descripcion: 'Si algo no te gusta, pídele cambios. Esto es "vibe coding" — describes lo que quieres y Claude lo hace:',
+        bloques: [
+          {
+            lenguaje: 'text',
+            codigo: 'Cambia el color principal a azul oscuro.\nHaz el título más grande.\nAñade una sección más de testimonios.\nCambia la imagen del hero.\nPon el botón de CTA más llamativo.\nHaz que el footer tenga links a redes sociales.',
+          },
+        ],
+        tip: 'No hay límite de cambios. Itera hasta que te guste. Así es como trabajarás siempre con Claude Code.',
+      },
+      {
+        titulo: '11. Tarea para la Semana 2',
+        descripcion: 'Para la semana que viene, sigue personalizando tu web en casa. En la Semana 2 la conectaremos con una base de datos y la desplegaremos en internet.',
+        links: [
+          { texto: 'Galería de themes (por si quieres cambiar)', url: '/curso/themes' },
+        ],
+        tip: 'Si te atascas, pregunta en Discord. La semana que viene conectaremos Supabase, GitHub y Vercel.',
       },
     ],
   },
   // ==========================================
-  // SEMANA 2 — Tu Primera Web
+  // SEMANA 2 — Tu Primera Web: Conectar y Desplegar
   // ==========================================
   {
     semanaNum: 2,
-    titulo: 'Tu Primera Web',
+    titulo: 'Conectar y Desplegar',
     emoji: '🌐',
-    subtitulo: 'Personalizamos un theme premium y lo lanzamos al mundo',
+    subtitulo: 'Conectamos tu web con GitHub, Supabase y Vercel — tu primera web en producción',
     pasos: [
       {
-        titulo: '📋 Tu Primera Web',
-        descripcion: 'Hoy personalizamos el theme que elegiste, conectamos Supabase y desplegamos en Vercel.',
+        titulo: '📋 De web local a web en producción',
+        descripcion: 'Ya tienes tu web personalizada del Día 2. Hoy la conectamos con una base de datos, la subimos a GitHub y la desplegamos en internet.',
       },
       {
-        titulo: '1. Tu proyecto + Claude Code + Personalizar',
-        descripcion: 'Sigue los 5 pasos: confirma tu theme, abre el proyecto, lanza Claude Code y genera el prompt perfecto para personalizarlo.',
-        componente: 'dia2-setup',
-      },
-      {
-        titulo: '2. Iterar el diseño',
-        descripcion: 'Si algo no te gusta, pídele cambios a Claude:',
+        titulo: '1. Revisar tu web del Día 2',
+        descripcion: '¿Seguiste personalizando en casa? Si no, vamos a darle unos toques rápidos ahora:',
         bloques: [
           {
             lenguaje: 'text',
-            codigo: 'Cambia el color principal a azul oscuro. Haz el título más grande. Añade una sección más de testimonios. Cambia la imagen del hero.',
+            codigo: 'Revisa mi landing page y sugiere 3 mejoras rápidas de diseño. Implementa las que yo apruebe.',
           },
         ],
-        tip: 'No hace falta ser técnico. Habla como si le explicaras a un diseñador humano. Itera hasta que te guste.',
+        tip: 'Si no pudiste avanzar en casa, no pasa nada. Dedicamos 10 minutos a ponerla a punto.',
       },
       {
-        titulo: '3. Crear CLAUDE.md',
+        titulo: '2. Crear CLAUDE.md',
         descripcion: 'Esto es la "memoria" de tu proyecto. Claude lo lee cada vez que abres una sesión nueva.',
         bloques: [
           {
