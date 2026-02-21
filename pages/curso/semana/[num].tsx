@@ -124,6 +124,54 @@ function useChecklist(checklistKey: string | number, totalItems: number) {
   return { checked, toggleItem, completedCount, totalItems }
 }
 
+function PrepReadyButton({ storageKey }: { storageKey: string }) {
+  const [ready, setReady] = useState(false)
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(storageKey)
+      if (saved === 'true') setReady(true)
+    } catch { /* ignore */ }
+  }, [storageKey])
+
+  const toggle = () => {
+    const next = !ready
+    setReady(next)
+    try { localStorage.setItem(storageKey, String(next)) } catch { /* ignore */ }
+  }
+
+  return (
+    <div style={{
+      marginTop: '24px', padding: '20px',
+      background: ready ? 'linear-gradient(135deg, #f0fdf4, #dcfce7)' : '#fff',
+      border: `2px solid ${ready ? '#22c55e' : '#e2e8f0'}`,
+      borderRadius: '14px', textAlign: 'center',
+      transition: 'all 0.3s',
+    }}>
+      <button
+        onClick={toggle}
+        style={{
+          display: 'inline-flex', alignItems: 'center', gap: '10px',
+          padding: '14px 28px', fontSize: '15px', fontWeight: 700,
+          color: ready ? '#fff' : '#16a34a',
+          background: ready ? 'linear-gradient(135deg, #22c55e, #16a34a)' : 'transparent',
+          border: `2px solid ${ready ? '#22c55e' : '#22c55e'}`,
+          borderRadius: '12px', cursor: 'pointer', transition: 'all 0.2s',
+          boxShadow: ready ? '0 4px 12px rgba(34,197,94,0.3)' : 'none',
+        }}
+      >
+        <span style={{ fontSize: '20px' }}>{ready ? '✓' : '🚀'}</span>
+        {ready ? '¡Preparado!' : 'Estoy preparado para la sesión'}
+      </button>
+      {ready && (
+        <p style={{ margin: '10px 0 0', fontSize: '13px', color: '#16a34a', fontWeight: 500 }}>
+          ¡Genial! Nos vemos en la clase
+        </p>
+      )}
+    </div>
+  )
+}
+
 type SectionKey = 'preclase' | 'clase' | 'entregable'
 
 const SECTIONS: { key: SectionKey; label: string; icon: string; completedIcon: string }[] = [
@@ -407,6 +455,8 @@ function SemanaContentMultiDay({ semana }: { semana: Semana }) {
                   </div>
                 </div>
               )}
+
+              <PrepReadyButton storageKey={`prep-ready-${semana.num}-d${activeDayIndex + 1}`} />
             </section>
           )}
 
@@ -1035,6 +1085,8 @@ function SemanaContent({ semana }: { semana: Semana }) {
                   </div>
                 </div>
               )}
+
+              <PrepReadyButton storageKey={`prep-ready-${semana.num}`} />
             </section>
           )}
 

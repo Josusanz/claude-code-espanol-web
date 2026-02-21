@@ -1,5 +1,68 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { THEMES } from '../../lib/themes-data'
+
+// ============= PrepChecklistBlock =============
+
+function PrepChecklistBlock({ items }: { items: { text: string; checked: boolean }[] }) {
+  const storageKey = 'prep-checklist-' + items.map(i => i.text).join('|').slice(0, 80)
+  const [checked, setChecked] = useState<Record<number, boolean>>({})
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(storageKey)
+      if (saved) setChecked(JSON.parse(saved))
+    } catch { /* ignore */ }
+  }, [storageKey])
+
+  const toggleItem = (index: number) => {
+    const next = { ...checked, [index]: !checked[index] }
+    setChecked(next)
+    try { localStorage.setItem(storageKey, JSON.stringify(next)) } catch { /* ignore */ }
+  }
+
+  const completedCount = Object.values(checked).filter(Boolean).length
+  const allDone = completedCount === items.length
+
+  return (
+    <div style={{ margin: '12px 0' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
+        <span style={{ fontSize: '12px', fontWeight: 600, color: allDone ? '#16a34a' : '#94a3b8' }}>
+          {completedCount}/{items.length} completados
+        </span>
+      </div>
+      <ul style={{ margin: 0, padding: 0, listStyle: 'none' }}>
+        {items.map((item, i) => (
+          <li
+            key={i}
+            onClick={() => toggleItem(i)}
+            style={{
+              display: 'flex', alignItems: 'flex-start', gap: '12px',
+              padding: '10px 0',
+              borderBottom: i < items.length - 1 ? '1px solid rgba(0,0,0,0.04)' : 'none',
+              fontSize: '14px',
+              color: checked[i] ? '#94a3b8' : '#374151',
+              textDecoration: checked[i] ? 'line-through' : 'none',
+              cursor: 'pointer', userSelect: 'none', transition: 'all 0.15s',
+            }}
+          >
+            <span style={{
+              width: '20px', height: '20px',
+              border: checked[i] ? 'none' : '2px solid #cbd5e1',
+              background: checked[i] ? '#22c55e' : 'transparent',
+              borderRadius: '5px',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              flexShrink: 0, marginTop: '1px', fontSize: '12px', color: '#fff',
+              transition: 'all 0.15s',
+            }}>
+              {checked[i] ? '✓' : ''}
+            </span>
+            <span dangerouslySetInnerHTML={{ __html: renderInline(item.text) }} />
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
 
 // ============= CopyButton =============
 
@@ -423,6 +486,18 @@ export function parseContentBlocks(text: string, codeBlocks: { lang: string; cod
           ))}
         </ol>
       )
+      continue
+    }
+
+    // Checkbox list (- [ ] items)
+    if (line.match(/^- \[[ x]\] /)) {
+      const items: { text: string; checked: boolean }[] = []
+      while (i < lines.length && lines[i].match(/^- \[[ x]\] /)) {
+        const isChecked = lines[i].startsWith('- [x] ')
+        items.push({ text: lines[i].replace(/^- \[[ x]\] /, ''), checked: isChecked })
+        i++
+      }
+      elements.push(<PrepChecklistBlock key={key++} items={items} />)
       continue
     }
 
