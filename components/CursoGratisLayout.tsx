@@ -62,6 +62,10 @@ export default function CursoGratisLayout({ children }: { children: ReactNode })
 
   if (!mounted) return null
 
+  const completedCount = modulo
+    ? modulo.lecciones.filter(l => progress[getLessonKey(modulo.id, l.href)]).length
+    : 0
+
   return (
     <div style={{
       minHeight: '100vh',
@@ -83,8 +87,6 @@ export default function CursoGratisLayout({ children }: { children: ReactNode })
         transition: 'all 0.3s',
       }}>
         <div style={{
-          maxWidth: '900px',
-          margin: '0 auto',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
@@ -103,7 +105,7 @@ export default function CursoGratisLayout({ children }: { children: ReactNode })
             }}
           >
             <span style={{ fontSize: '16px' }}>←</span>
-            <span>Volver al curso</span>
+            <span className="cgl-back-text">Volver al curso</span>
           </Link>
 
           {/* Breadcrumb center */}
@@ -126,114 +128,264 @@ export default function CursoGratisLayout({ children }: { children: ReactNode })
         </div>
       </header>
 
-      {/* Main content — full width, centered */}
-      <main style={{
-        maxWidth: '900px',
-        margin: '0 auto',
-        padding: '40px 24px 60px',
+      {/* Body with sidebar + content */}
+      <div style={{
+        display: 'flex',
+        minHeight: 'calc(100vh - 57px)',
       }}>
-        {/* MDX content */}
-        <div className="curso-gratis-content">
-          {children}
-        </div>
-
-        {/* Mark as completed button */}
-        {showProgress && (
-          <div style={{
-            marginTop: '40px',
-            paddingTop: '24px',
-            borderTop: `1px solid ${t.border}`,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
+        {/* Left sidebar */}
+        {modulo && (
+          <aside className="cgl-sidebar" style={{
+            width: '260px',
+            flexShrink: 0,
+            borderRight: `1px solid ${t.border}`,
+            background: t.bgSecondary,
+            position: 'sticky',
+            top: '57px',
+            height: 'calc(100vh - 57px)',
+            overflowY: 'auto',
+            padding: '16px 0',
+            transition: 'background 0.3s',
           }}>
-            <button
-              onClick={handleToggleProgress}
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                padding: '12px 28px',
-                fontSize: '15px',
-                fontWeight: 600,
-                color: isCompleted ? '#fff' : '#059669',
-                background: isCompleted
-                  ? 'linear-gradient(135deg, #059669, #047857)'
-                  : 'transparent',
-                border: `2px solid ${isCompleted ? '#059669' : isDark ? 'rgba(5,150,105,0.3)' : '#d1fae5'}`,
-                borderRadius: '12px',
-                cursor: 'pointer',
-                transition: 'all 0.2s',
-                boxShadow: isCompleted ? '0 2px 8px rgba(5,150,105,0.3)' : 'none',
-              }}
-            >
-              <span style={{ fontSize: '18px' }}>{isCompleted ? '✓' : '○'}</span>
-              {isCompleted ? 'Completada' : 'Marcar como completada'}
-            </button>
-          </div>
-        )}
+            {/* Module header */}
+            <div style={{ padding: '0 16px 12px', borderBottom: `1px solid ${t.border}` }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px' }}>
+                <span style={{
+                  width: '32px',
+                  height: '32px',
+                  background: `linear-gradient(135deg, ${t.accent}, ${t.accentHover})`,
+                  borderRadius: '8px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '16px',
+                  flexShrink: 0,
+                }}>
+                  {modulo.emoji}
+                </span>
+                <div>
+                  <p style={{ margin: 0, fontSize: '11px', fontWeight: 600, color: t.textTertiary, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                    Módulo {modulo.num}
+                  </p>
+                  <h3 style={{ margin: 0, fontSize: '14px', fontWeight: 700, color: t.text }}>
+                    {modulo.titulo}
+                  </h3>
+                </div>
+              </div>
 
-        {/* Prev / Next navigation */}
-        {modulo && (prevLeccion || nextLeccion) && (
-          <div style={{
-            marginTop: '32px',
-            display: 'grid',
-            gridTemplateColumns: prevLeccion && nextLeccion ? '1fr 1fr' : '1fr',
-            gap: '12px',
-          }}>
-            {prevLeccion && (
+              {completedCount > 0 && (
+                <div>
+                  <div style={{
+                    height: '4px',
+                    background: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)',
+                    borderRadius: '2px',
+                    overflow: 'hidden',
+                  }}>
+                    <div style={{
+                      height: '100%',
+                      width: `${Math.round((completedCount / modulo.totalLecciones) * 100)}%`,
+                      background: completedCount === modulo.totalLecciones ? '#22c55e' : t.accent,
+                      borderRadius: '2px',
+                      transition: 'width 0.3s ease',
+                    }} />
+                  </div>
+                  <p style={{ margin: '4px 0 0', fontSize: '11px', color: t.textTertiary }}>
+                    {completedCount}/{modulo.totalLecciones} completadas
+                  </p>
+                </div>
+              )}
+            </div>
+
+            {/* Lesson list */}
+            <nav style={{ padding: '8px' }}>
+              {modulo.lecciones.map((l, i) => {
+                const key = getLessonKey(modulo.id, l.href)
+                const done = !!progress[key]
+                const isCurrent = l.href === path
+                return (
+                  <Link
+                    key={l.href}
+                    href={l.href}
+                    className="cgl-nav-item"
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '10px',
+                      padding: '8px 12px',
+                      borderRadius: '8px',
+                      textDecoration: 'none',
+                      fontSize: '13px',
+                      lineHeight: 1.4,
+                      color: isCurrent ? t.accent : done ? t.textTertiary : t.textSecondary,
+                      fontWeight: isCurrent ? 600 : 400,
+                      background: isCurrent
+                        ? isDark ? 'rgba(94,106,210,0.12)' : 'rgba(94,106,210,0.06)'
+                        : 'transparent',
+                      transition: 'all 0.15s',
+                    }}
+                  >
+                    <span style={{
+                      width: '22px',
+                      height: '22px',
+                      borderRadius: '50%',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '11px',
+                      fontWeight: 700,
+                      flexShrink: 0,
+                      ...(done
+                        ? { background: '#059669', color: '#fff' }
+                        : isCurrent
+                          ? { background: t.accent, color: '#fff' }
+                          : { background: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)', color: t.textTertiary }
+                      ),
+                    }}>
+                      {done ? '✓' : isCurrent ? '→' : i + 1}
+                    </span>
+                    <span style={{
+                      textDecoration: done && !isCurrent ? 'line-through' : 'none',
+                      opacity: done && !isCurrent ? 0.6 : 1,
+                    }}>
+                      {l.titulo}
+                    </span>
+                  </Link>
+                )
+              })}
+            </nav>
+
+            {/* Back link */}
+            <div style={{ padding: '12px 16px', borderTop: `1px solid ${t.border}`, marginTop: '8px' }}>
               <Link
-                href={prevLeccion.href}
+                href="/curso-gratis"
                 style={{
                   display: 'flex',
-                  flexDirection: 'column',
-                  gap: '4px',
-                  padding: '16px 20px',
-                  background: t.bgSecondary,
-                  border: `1px solid ${t.border}`,
-                  borderRadius: '12px',
+                  alignItems: 'center',
+                  gap: '6px',
+                  fontSize: '12px',
+                  fontWeight: 500,
+                  color: t.textTertiary,
                   textDecoration: 'none',
-                  color: 'inherit',
-                  transition: 'all 0.2s',
                 }}
               >
-                <span style={{ fontSize: '12px', color: t.textTertiary, fontWeight: 500 }}>
-                  ← Anterior
-                </span>
-                <span style={{ fontSize: '14px', fontWeight: 600, color: t.text }}>
-                  {prevLeccion.titulo}
-                </span>
+                ← Todos los módulos
               </Link>
-            )}
-            {nextLeccion && (
-              <Link
-                href={nextLeccion.href}
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'flex-end',
-                  gap: '4px',
-                  padding: '16px 20px',
-                  background: t.bgSecondary,
-                  border: `1px solid ${t.border}`,
-                  borderRadius: '12px',
-                  textDecoration: 'none',
-                  color: 'inherit',
-                  transition: 'all 0.2s',
-                  gridColumn: !prevLeccion ? '1' : undefined,
-                }}
-              >
-                <span style={{ fontSize: '12px', color: t.textTertiary, fontWeight: 500 }}>
-                  Siguiente →
-                </span>
-                <span style={{ fontSize: '14px', fontWeight: 600, color: t.text }}>
-                  {nextLeccion.titulo}
-                </span>
-              </Link>
-            )}
-          </div>
+            </div>
+          </aside>
         )}
-      </main>
+
+        {/* Main content — fills remaining width */}
+        <main className="cgl-main" style={{
+          flex: 1,
+          minWidth: 0,
+          padding: '40px 48px 60px',
+          maxWidth: '900px',
+        }}>
+          {/* MDX content */}
+          <div className="curso-gratis-content">
+            {children}
+          </div>
+
+          {/* Mark as completed button */}
+          {showProgress && (
+            <div style={{
+              marginTop: '40px',
+              paddingTop: '24px',
+              borderTop: `1px solid ${t.border}`,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+              <button
+                onClick={handleToggleProgress}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  padding: '12px 28px',
+                  fontSize: '15px',
+                  fontWeight: 600,
+                  color: isCompleted ? '#fff' : '#059669',
+                  background: isCompleted
+                    ? 'linear-gradient(135deg, #059669, #047857)'
+                    : 'transparent',
+                  border: `2px solid ${isCompleted ? '#059669' : isDark ? 'rgba(5,150,105,0.3)' : '#d1fae5'}`,
+                  borderRadius: '12px',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s',
+                  boxShadow: isCompleted ? '0 2px 8px rgba(5,150,105,0.3)' : 'none',
+                }}
+              >
+                <span style={{ fontSize: '18px' }}>{isCompleted ? '✓' : '○'}</span>
+                {isCompleted ? 'Completada' : 'Marcar como completada'}
+              </button>
+            </div>
+          )}
+
+          {/* Prev / Next navigation */}
+          {modulo && (prevLeccion || nextLeccion) && (
+            <div style={{
+              marginTop: '32px',
+              display: 'grid',
+              gridTemplateColumns: prevLeccion && nextLeccion ? '1fr 1fr' : '1fr',
+              gap: '12px',
+            }}>
+              {prevLeccion && (
+                <Link
+                  href={prevLeccion.href}
+                  className="cgl-nav-card"
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '4px',
+                    padding: '16px 20px',
+                    background: t.bgSecondary,
+                    border: `1px solid ${t.border}`,
+                    borderRadius: '12px',
+                    textDecoration: 'none',
+                    color: 'inherit',
+                    transition: 'all 0.2s',
+                  }}
+                >
+                  <span style={{ fontSize: '12px', color: t.textTertiary, fontWeight: 500 }}>
+                    ← Anterior
+                  </span>
+                  <span style={{ fontSize: '14px', fontWeight: 600, color: t.text }}>
+                    {prevLeccion.titulo}
+                  </span>
+                </Link>
+              )}
+              {nextLeccion && (
+                <Link
+                  href={nextLeccion.href}
+                  className="cgl-nav-card"
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'flex-end',
+                    gap: '4px',
+                    padding: '16px 20px',
+                    background: t.bgSecondary,
+                    border: `1px solid ${t.border}`,
+                    borderRadius: '12px',
+                    textDecoration: 'none',
+                    color: 'inherit',
+                    transition: 'all 0.2s',
+                    gridColumn: !prevLeccion ? '1' : undefined,
+                  }}
+                >
+                  <span style={{ fontSize: '12px', color: t.textTertiary, fontWeight: 500 }}>
+                    Siguiente →
+                  </span>
+                  <span style={{ fontSize: '14px', fontWeight: 600, color: t.text }}>
+                    {nextLeccion.titulo}
+                  </span>
+                </Link>
+              )}
+            </div>
+          )}
+        </main>
+      </div>
 
       <style jsx global>{`
         ${THEME_GLOBAL_CSS}
@@ -352,7 +504,7 @@ export default function CursoGratisLayout({ children }: { children: ReactNode })
           color: ${t.textSecondary};
         }
 
-        /* Nextra Callout styling in custom theme */
+        /* Nextra Callout styling */
         .curso-gratis-content .nextra-callout,
         .curso-gratis-content [class*="callout"] {
           border-radius: 10px !important;
@@ -377,8 +529,28 @@ export default function CursoGratisLayout({ children }: { children: ReactNode })
           border-color: ${t.border};
         }
 
-        /* Mobile */
+        /* Sidebar hover */
+        .cgl-nav-item:hover {
+          background: ${isDark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.03)'} !important;
+        }
+        .cgl-nav-card:hover {
+          border-color: ${isDark ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.12)'} !important;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
+        }
+
+        /* Scrollbar */
+        .cgl-sidebar::-webkit-scrollbar {
+          width: 4px;
+        }
+        .cgl-sidebar::-webkit-scrollbar-thumb {
+          background: ${isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)'};
+          border-radius: 2px;
+        }
+
+        /* Mobile: hide sidebar */
         @media (max-width: 768px) {
+          .cgl-sidebar { display: none !important; }
+          .cgl-main { padding: 24px 16px 40px !important; }
           .curso-gratis-content h1 { font-size: 24px !important; }
           .curso-gratis-content h2 { font-size: 19px !important; }
         }

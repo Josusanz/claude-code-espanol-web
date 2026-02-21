@@ -1,6 +1,4 @@
-import Head from 'next/head'
-import Link from 'next/link'
-import CursoEmailGate from '../../components/CursoEmailGate'
+import Modulo0Layout from '../../components/Modulo0Layout'
 import { usePrecursoProgress } from '../../lib/precurso-data'
 
 // Componente para mostrar screenshots
@@ -599,72 +597,15 @@ const SECCIONES = [
   }
 ]
 
+
 function GlosarioContent() {
   const { completed, toggle } = usePrecursoProgress()
 
   const glosarioCompleted = completed['glosario-completo']
 
   return (
-    <div style={{
-      minHeight: '100vh',
-      background: '#fafbfc',
-      fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
-      color: '#1e293b'
-    }}>
-      <Head>
-        <title>Glosario | Curso</title>
-        <meta name="robots" content="noindex, nofollow" />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-      </Head>
-
-      {/* Header */}
-      <header style={{
-        background: 'rgba(250, 251, 252, 0.9)',
-        backdropFilter: 'blur(12px)',
-        borderBottom: '1px solid rgba(0,0,0,0.06)',
-        padding: '12px 24px',
-        position: 'sticky',
-        top: 0,
-        zIndex: 100,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <Link href="/curso" style={{
-            color: '#94a3b8',
-            textDecoration: 'none',
-            display: 'flex',
-            alignItems: 'center',
-            padding: '8px',
-            borderRadius: '8px',
-          }}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <polyline points="15 18 9 12 15 6"/>
-            </svg>
-          </Link>
-          <span style={{ fontWeight: 600, fontSize: '16px', color: '#0f172a' }}>Glosario</span>
-        </div>
-        <button
-          onClick={() => { localStorage.removeItem('precurso-access'); window.location.href = '/curso' }}
-          style={{
-            padding: '8px 18px',
-            fontSize: '13px',
-            fontWeight: 600,
-            color: '#64748b',
-            background: 'white',
-            border: '1px solid rgba(0,0,0,0.06)',
-            borderRadius: '10px',
-            cursor: 'pointer',
-            boxShadow: '0 1px 2px rgba(0,0,0,0.04)'
-          }}
-        >
-          Salir
-        </button>
-      </header>
-
-      <main style={{ maxWidth: '800px', margin: '0 auto', padding: '40px 24px' }}>
-        {/* Hero */}
+    <>
+      {/* Hero */}
         <div style={{ marginBottom: '40px', textAlign: 'center' }}>
           <h1 style={{ fontSize: '36px', fontWeight: 700, marginBottom: '16px' }}>
             Todo lo que necesitas saber 📚
@@ -900,47 +841,14 @@ function GlosarioContent() {
             </>
           )}
         </div>
-
-        {/* Navegacion */}
-        <div style={{
-          marginTop: '32px',
-          display: 'flex',
-          justifyContent: 'space-between'
-        }}>
-          <Link href="/curso/programar-con-ia" style={{
-            padding: '14px 24px',
-            background: 'white',
-            border: '1px solid rgba(0,0,0,0.06)',
-            borderRadius: '12px',
-            color: '#64748b',
-            textDecoration: 'none',
-            fontSize: '15px',
-            fontWeight: 500
-          }}>
-            ← Programar con IA
-          </Link>
-          <Link href="/curso/requisitos" style={{
-            padding: '14px 24px',
-            background: '#5e6ad2',
-            border: 'none',
-            borderRadius: '12px',
-            color: 'white',
-            textDecoration: 'none',
-            fontSize: '15px',
-            fontWeight: 500
-          }}>
-            Requisitos →
-          </Link>
-        </div>
-      </main>
-    </div>
+    </>
   )
 }
 
 export default function GlosarioPage() {
   return (
-    <CursoEmailGate>
+    <Modulo0Layout title="Glosario">
       <GlosarioContent />
-    </CursoEmailGate>
+    </Modulo0Layout>
   )
 }
