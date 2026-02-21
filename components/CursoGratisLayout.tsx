@@ -436,6 +436,20 @@ export default function CursoGratisLayout({ children }: { children: ReactNode })
           text-decoration: underline;
           text-underline-offset: 2px;
         }
+
+        /* Button links — force correct styling over any Tailwind/global conflicts */
+        .curso-gratis-content a[class*="bg-"] {
+          color: white !important;
+          text-decoration: none !important;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+          transition: all 0.2s ease !important;
+        }
+        .curso-gratis-content a[class*="bg-"]:hover {
+          transform: translateY(-1px);
+          box-shadow: 0 4px 16px rgba(0,0,0,0.16);
+          text-decoration: none !important;
+          filter: brightness(1.08);
+        }
         .curso-gratis-content strong {
           color: ${t.text};
           font-weight: 600;
