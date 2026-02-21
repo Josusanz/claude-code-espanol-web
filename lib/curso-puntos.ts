@@ -157,7 +157,8 @@ export async function awardProgressPoints(
 
     // Módulo 0 lecciones
     if (key.startsWith('intro-') || key.startsWith('glosario-') || key.startsWith('req-') ||
-        key === 'reglas-prompting' || key === 'quiz-aprobado' || key === 'primer-proyecto') {
+        key === 'reglas-prompting' || key === 'quiz-aprobado' || key === 'primer-proyecto' ||
+        key === 'errores-completo' || key === 'discord-completo' || key === 'requisitos-completo') {
       await awardPoints(email, PUNTOS_TABLE['modulo0-leccion'], 'Lección del Módulo 0 completada', `m0:${key}`)
     }
 
@@ -194,8 +195,8 @@ export async function awardProgressPoints(
     }
   }
 
-  // Bonus Módulo 0 completo
-  const m0Keys = ['intro-completo', 'glosario-completo', 'req-vscode', 'req-nodejs', 'req-github', 'req-vercel', 'req-claude', 'req-pencil', 'reglas-prompting', 'quiz-aprobado', 'primer-proyecto']
+  // Bonus Módulo 0 completo (8 páginas del precurso)
+  const m0Keys = ['intro-completo', 'glosario-completo', 'requisitos-completo', 'reglas-prompting', 'errores-completo', 'quiz-aprobado', 'primer-proyecto', 'discord-completo']
   const m0WasComplete = m0Keys.every(k => oldProgress[k])
   const m0IsComplete = m0Keys.every(k => newProgress[k])
 

@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { syncUserProgress, getUserProgress, isEmailAuthorized, addAuthorizedEmail } from '../../../lib/precurso-kv'
+import { awardProgressPoints } from '../../../lib/curso-puntos'
 
 // Módulos requeridos para completar el precurso
 const PRECURSO_MODULES = [
@@ -58,8 +59,17 @@ export default async function handler(
         })
       }
 
+      // Get old progress before syncing to detect new completions for points
+      const oldUser = await getUserProgress(normalizedEmail)
+      const oldProgress = oldUser?.progress || {}
+
       const updatedUser = await syncUserProgress(normalizedEmail, progress)
       console.log(`[Sync Progress] Guardado para ${normalizedEmail}: ${Object.keys(progress).length} items`)
+
+      // Award points for newly completed items (best-effort)
+      awardProgressPoints(normalizedEmail, progress, oldProgress).catch(err => {
+        console.error('[Sync Progress] Error awarding points:', err)
+      })
 
       // Si completó el precurso, asignar rol en Discord (en background)
       assignPrecursoRoleIfComplete(normalizedEmail, updatedUser.progress).catch(console.error)
