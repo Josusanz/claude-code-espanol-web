@@ -144,6 +144,7 @@ function CursoDashboard() {
   const { semanasStatus, loading, getSemanaProgress, totalPercentage, completedItems, totalItems } = useCursoProgress()
   const precurso = usePrecursoProgress()
   const [userEmail, setUserEmail] = useState('')
+  const [modulo0Open, setModulo0Open] = useState(false)
   const currentWeek = getCurrentWeek()
 
   useEffect(() => {
@@ -450,93 +451,145 @@ function CursoDashboard() {
           </div>
         )}
 
-        {/* Módulo 0 — Preparación */}
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          marginBottom: '16px'
-        }}>
-          <h3 style={{ margin: 0, fontSize: '16px', fontWeight: 600, color: '#0f172a', letterSpacing: '-0.01em' }}>
-            Módulo 0 · Preparación
-          </h3>
-          <span style={{ fontSize: '13px', color: '#64748b' }}>
-            {PRECURSO_PAGES.length} lecciones
-          </span>
-        </div>
+        {/* Módulo 0 — Preparación (colapsable) */}
+        <div
+          className="semana-card"
+          onClick={() => setModulo0Open(!modulo0Open)}
+          style={{
+            background: precurso.progress === 100 ? '#f0fdf4' : 'white',
+            border: `1px solid ${precurso.progress === 100 ? 'rgba(34, 197, 94, 0.15)' : 'rgba(0,0,0,0.06)'}`,
+            borderRadius: '12px',
+            padding: '16px 20px',
+            marginBottom: modulo0Open ? '0' : '20px',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '16px',
+            boxShadow: '0 1px 2px rgba(0,0,0,0.03)',
+            borderBottomLeftRadius: modulo0Open ? 0 : '12px',
+            borderBottomRightRadius: modulo0Open ? 0 : '12px',
+          }}
+        >
+          <div style={{
+            width: '40px',
+            height: '40px',
+            background: precurso.progress === 100
+              ? 'linear-gradient(135deg, #22c55e, #16a34a)'
+              : 'linear-gradient(135deg, #5e6ad2, #8b5cf6)',
+            borderRadius: '10px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: precurso.progress === 100 ? '14px' : '13px',
+            fontWeight: 700,
+            color: 'white',
+            flexShrink: 0,
+          }}>
+            {precurso.progress === 100 ? '✓' : '0'}
+          </div>
 
-        <div style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '8px',
-          marginBottom: '32px'
-        }}>
-          {PRECURSO_PAGES.map((page, i) => {
-            const isComplete = page.trackingId ? precurso.completed[page.trackingId] : false
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ fontSize: '15px', fontWeight: 500, color: '#1e293b' }}>
+              Módulo 0 · Preparación
+            </div>
+            <div style={{ fontSize: '13px', color: '#94a3b8', marginTop: '2px' }}>
+              {PRECURSO_PAGES.length} lecciones · {precurso.completedCount} completadas
+            </div>
+          </div>
 
-            return (
-              <Link
-                key={page.href}
-                href={page.href}
-                className="semana-card"
-                style={{
-                  background: isComplete ? '#f0fdf4' : 'white',
-                  border: `1px solid ${isComplete ? 'rgba(34, 197, 94, 0.15)' : 'rgba(0,0,0,0.06)'}`,
-                  borderRadius: '12px',
-                  padding: '16px 20px',
-                  textDecoration: 'none',
-                  transition: 'all 0.2s',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '16px',
-                  boxShadow: '0 1px 2px rgba(0,0,0,0.03)'
-                }}
-              >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0 }}>
+            {precurso.completedCount > 0 && (
+              <>
                 <div style={{
-                  width: '40px',
-                  height: '40px',
-                  background: isComplete
-                    ? 'linear-gradient(135deg, #22c55e, #16a34a)'
-                    : page.gradient,
-                  borderRadius: '10px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: isComplete ? '14px' : '18px',
-                  fontWeight: 600,
-                  color: 'white',
-                  flexShrink: 0,
+                  width: '60px',
+                  height: '4px',
+                  background: '#f1f5f9',
+                  borderRadius: '100px',
+                  overflow: 'hidden'
                 }}>
-                  {isComplete ? '✓' : page.emoji}
-                </div>
-
-                <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{
-                    fontSize: '15px',
-                    fontWeight: 500,
-                    color: '#1e293b',
-                  }}>
-                    {isComplete && <span style={{ marginRight: '4px' }}>✓</span>}
-                    {page.title}
-                  </div>
-                  <div style={{ fontSize: '13px', color: '#94a3b8', marginTop: '2px' }}>
-                    {page.subtitle}
-                  </div>
+                    height: '100%',
+                    width: `${precurso.progress}%`,
+                    background: precurso.progress === 100 ? '#22c55e' : '#5e6ad2',
+                    borderRadius: '100px',
+                    transition: 'width 0.3s ease'
+                  }} />
                 </div>
-
                 <span style={{
                   fontSize: '12px',
-                  fontWeight: 500,
-                  color: isComplete ? '#16a34a' : '#94a3b8',
-                  flexShrink: 0,
+                  fontWeight: 600,
+                  color: precurso.progress === 100 ? '#16a34a' : '#5e6ad2',
+                  minWidth: '24px',
+                  textAlign: 'right'
                 }}>
-                  {isComplete ? 'Completado' : page.tiempo}
+                  {precurso.completedCount}/{PRECURSO_PAGES.length}
                 </span>
-              </Link>
-            )
-          })}
+              </>
+            )}
+            <span style={{
+              fontSize: '16px',
+              color: '#94a3b8',
+              transition: 'transform 0.2s',
+              transform: modulo0Open ? 'rotate(180deg)' : 'rotate(0deg)',
+            }}>
+              ▾
+            </span>
+          </div>
         </div>
+
+        {/* Lecciones del Módulo 0 (expandidas) */}
+        {modulo0Open && (
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '1px',
+            marginBottom: '20px',
+            background: 'rgba(0,0,0,0.04)',
+            borderRadius: '0 0 12px 12px',
+            overflow: 'hidden',
+            border: '1px solid rgba(0,0,0,0.06)',
+            borderTop: 'none',
+          }}>
+            {PRECURSO_PAGES.map((page) => {
+              const isComplete = page.trackingId ? precurso.completed[page.trackingId] : false
+
+              return (
+                <Link
+                  key={page.href}
+                  href={page.href}
+                  style={{
+                    background: isComplete ? '#f0fdf4' : 'white',
+                    padding: '12px 20px',
+                    textDecoration: 'none',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '12px',
+                    transition: 'background 0.15s',
+                  }}
+                >
+                  <span style={{ fontSize: '16px', flexShrink: 0 }}>
+                    {isComplete ? '✅' : page.emoji}
+                  </span>
+                  <span style={{
+                    fontSize: '14px',
+                    fontWeight: 500,
+                    color: isComplete ? '#16a34a' : '#1e293b',
+                    flex: 1,
+                  }}>
+                    {page.title}
+                  </span>
+                  <span style={{
+                    fontSize: '12px',
+                    color: isComplete ? '#16a34a' : '#94a3b8',
+                    flexShrink: 0,
+                  }}>
+                    {isComplete ? 'Completado' : page.tiempo}
+                  </span>
+                </Link>
+              )
+            })}
+          </div>
+        )}
 
         {/* Semanas header */}
         <div style={{
