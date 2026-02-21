@@ -88,7 +88,7 @@ function DudasPage() {
   }
 
   return (
-    <div style={{ padding: '32px 40px', maxWidth: '900px' }}>
+    <div style={{ padding: '32px 40px' }}>
       <Head><title>Dudas | Curso</title></Head>
 
       {/* Header */}

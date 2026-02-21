@@ -39,7 +39,7 @@ function RankingPage() {
   const MEDAL = ['🥇', '🥈', '🥉']
 
   return (
-    <div style={{ padding: '32px 40px', maxWidth: '700px' }}>
+    <div style={{ padding: '32px 40px' }}>
       <Head><title>Ranking | Curso</title></Head>
 
       <div style={{ textAlign: 'center', marginBottom: '32px' }}>
