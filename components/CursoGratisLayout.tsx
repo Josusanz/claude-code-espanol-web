@@ -390,14 +390,15 @@ export default function CursoGratisLayout({ children }: { children: ReactNode })
         ${THEME_GLOBAL_CSS}
 
         /* Reset Nextra wrappers when inside CursoGratisLayout */
-        .curso-gratis-content article {
-          padding: 0 !important;
-          margin: 0 !important;
-          max-width: none !important;
-        }
+        .curso-gratis-content,
+        .curso-gratis-content article,
+        .curso-gratis-content main,
+        .curso-gratis-content > div,
         .curso-gratis-content > article > main {
           padding: 0 !important;
           margin: 0 !important;
+          max-width: none !important;
+          width: 100% !important;
         }
 
         /* Typography in custom theme */
