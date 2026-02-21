@@ -431,7 +431,7 @@ export default function CursoGratisLayout({ children }: { children: ReactNode })
           line-height: 1.7;
           margin-bottom: 16px;
         }
-        .curso-gratis-content a {
+        .curso-gratis-content a:not([class*="bg-"]) {
           color: ${t.accent};
           text-decoration: underline;
           text-underline-offset: 2px;

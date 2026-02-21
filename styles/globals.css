@@ -290,17 +290,17 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Mejora de contraste para links */
-a {
+/* Mejora de contraste para links (excluir botones con bg-*) */
+a:not([class*="bg-"]) {
   color: var(--primary-700);
   text-decoration-color: var(--primary-300);
 }
 
-.dark a {
+.dark a:not([class*="bg-"]) {
   color: var(--primary-400);
 }
 
-a:hover {
+a:not([class*="bg-"]):hover {
   text-decoration: underline;
 }
 
