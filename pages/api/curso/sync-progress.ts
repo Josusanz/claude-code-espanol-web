@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { getCursoUser, syncCursoProgress, isEmailAuthorizedForCurso } from '../../../lib/curso-kv'
+import { awardProgressPoints } from '../../../lib/curso-puntos'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   // GET: obtener progreso
@@ -44,7 +45,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(403).json({ error: 'Email no autorizado' })
       }
 
+      // Get old progress before syncing to detect new completions
+      const oldUser = await getCursoUser(email)
+      const oldProgress = oldUser?.progress || {}
+
       const user = await syncCursoProgress(email, progress)
+
+      // Award points for newly completed items (best-effort, don't block response)
+      awardProgressPoints(email, progress, oldProgress).catch(err => {
+        console.error('Error awarding progress points:', err)
+      })
 
       return res.status(200).json({
         success: true,

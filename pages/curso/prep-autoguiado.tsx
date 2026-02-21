@@ -1,6 +1,8 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import CursoEmailGate from '../../components/CursoEmailGate'
+import type { ReactElement } from 'react'
+import CursoLayout from '../../components/CursoLayout'
+import type { NextPageWithLayout } from '../_app'
 
 function PrepContent() {
   return (
@@ -228,10 +230,10 @@ function PrepContent() {
   )
 }
 
-export default function PrepAutoguiadoPage() {
-  return (
-    <CursoEmailGate>
-      <PrepContent />
-    </CursoEmailGate>
-  )
-}
+const PrepAutoguiadoPage: NextPageWithLayout = () => <PrepContent />
+
+PrepAutoguiadoPage.getLayout = (page: ReactElement) => (
+  <CursoLayout>{page}</CursoLayout>
+)
+
+export default PrepAutoguiadoPage

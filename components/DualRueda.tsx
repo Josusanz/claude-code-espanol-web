@@ -35,22 +35,22 @@ interface DualRuedaProps {
 }
 
 export default function DualRueda({ ruedas, onSave }: DualRuedaProps) {
-  const [activeTab, setActiveTab] = useState<'vida' | 'creador' | 'estadisticas'>('vida')
-  const [activeTime, setActiveTime] = useState<'antes' | 'despues' | 'comparar'>('antes')
+  const [activeTab, setActiveTab] = useState<'antes' | 'despues' | 'estadisticas'>('antes')
 
   const migrated = migrateDualRueda(ruedas)
   const creador = migrated.creador || {}
   const vida = migrated.vida || {}
 
-  const activeWheel: 'creador' | 'vida' = activeTab === 'creador' ? 'creador' : 'vida'
-  const activeRueda = activeTab === 'creador' ? creador : vida
-
-  // Auto-select time tab only on initial mount
+  // Auto-select tab on mount
   useEffect(() => {
     const initial = migrateDualRueda(ruedas)
     const initialVida = initial.vida || {}
-    if (initialVida.antes && initialVida.despues) {
-      setActiveTime('comparar')
+    const initialCreador = initial.creador || {}
+    if ((initialVida.antes && initialVida.despues) || (initialCreador.antes && initialCreador.despues)) {
+      setActiveTab('estadisticas')
+    } else if (initialVida.antes || initialCreador.antes) {
+      // If already filled "antes", go to "despues" or stay on "antes"
+      setActiveTab('antes')
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -73,14 +73,14 @@ export default function DualRueda({ ruedas, onSave }: DualRuedaProps) {
     ? Math.round(((creadorDespues || 0) + (vidaDespues || 0)) / ((creadorDespues !== null ? 1 : 0) + (vidaDespues !== null ? 1 : 0)) * 10) / 10
     : null
 
-  const hasAnyData = creador.antes || vida.antes
+  const hasAnyAntes = !!(creador.antes || vida.antes)
+  const hasAnyDespues = !!(creador.despues || vida.despues)
+  const hasComparison = hasAnyAntes && hasAnyDespues
 
-  const RuedaComponent = activeTab === 'creador' ? RuedaCreador : RuedaVida
-
-  const tabs: { key: 'vida' | 'creador' | 'estadisticas'; label: string; emoji: string; color: string; show: boolean }[] = [
-    { key: 'vida', label: 'Persona', emoji: '🌿', color: '#22c55e', show: true },
-    { key: 'creador', label: 'Creador', emoji: '🎯', color: '#6366f1', show: true },
-    { key: 'estadisticas', label: 'Estadisticas', emoji: '📊', color: '#f59e0b', show: !!hasAnyData },
+  const tabs: { key: 'antes' | 'despues' | 'estadisticas'; label: string; emoji: string; color: string; show: boolean }[] = [
+    { key: 'antes', label: 'Antes del curso', emoji: '📍', color: '#6366f1', show: true },
+    { key: 'despues', label: 'Final del curso', emoji: '🏆', color: '#16a34a', show: true },
+    { key: 'estadisticas', label: 'Estadísticas', emoji: '📊', color: '#f59e0b', show: hasAnyAntes },
   ]
 
   return (
@@ -90,7 +90,8 @@ export default function DualRueda({ ruedas, onSave }: DualRuedaProps) {
         display: 'flex',
         gap: '8px',
         justifyContent: 'center',
-        marginBottom: '20px',
+        marginBottom: '24px',
+        flexWrap: 'wrap',
       }}>
         {tabs.filter(t => t.show).map(tab => (
           <button
@@ -109,383 +110,510 @@ export default function DualRueda({ ruedas, onSave }: DualRuedaProps) {
             }}
           >
             {tab.emoji} {tab.label}
-            {tab.key === 'vida' && vida.antes && <span style={{ marginLeft: '6px', opacity: 0.7 }}>✓</span>}
-            {tab.key === 'creador' && creador.antes && <span style={{ marginLeft: '6px', opacity: 0.7 }}>✓</span>}
+            {tab.key === 'antes' && hasAnyAntes && <span style={{ marginLeft: '6px', opacity: 0.7 }}>✓</span>}
+            {tab.key === 'despues' && hasAnyDespues && <span style={{ marginLeft: '6px', opacity: 0.7 }}>✓</span>}
+            {tab.key === 'estadisticas' && hasComparison && <span style={{ marginLeft: '6px', opacity: 0.7 }}>✓</span>}
           </button>
         ))}
       </div>
 
-      {/* Vida / Creador content */}
-      {(activeTab === 'vida' || activeTab === 'creador') && (
-        <>
-          {/* Time tabs */}
-          <div style={{
-            display: 'flex',
-            gap: '8px',
-            justifyContent: 'center',
+      {/* ===== ANTES DEL CURSO ===== */}
+      {activeTab === 'antes' && (
+        <div>
+          <p style={{
+            textAlign: 'center',
+            fontSize: '15px',
+            color: '#64748b',
             marginBottom: '24px',
+            lineHeight: 1.6,
           }}>
-            <button
-              onClick={() => setActiveTime('antes')}
-              style={{
-                padding: '10px 20px',
-                fontSize: '13px',
-                fontWeight: 600,
-                color: activeTime === 'antes' ? '#fff' : '#64748b',
-                background: activeTime === 'antes' ? '#5e6ad2' : '#f8fafc',
-                border: `1px solid ${activeTime === 'antes' ? '#5e6ad2' : 'rgba(0,0,0,0.08)'}`,
-                borderRadius: '8px',
-                cursor: 'pointer',
-                transition: 'all 0.2s',
-              }}
-            >
-              📍 Inicio del curso
-            </button>
-            <button
-              onClick={() => setActiveTime('despues')}
-              style={{
-                padding: '10px 20px',
-                fontSize: '13px',
-                fontWeight: 600,
-                color: activeTime === 'despues' ? '#fff' : '#64748b',
-                background: activeTime === 'despues' ? '#16a34a' : '#f8fafc',
-                border: `1px solid ${activeTime === 'despues' ? '#16a34a' : 'rgba(0,0,0,0.08)'}`,
-                borderRadius: '8px',
-                cursor: 'pointer',
-                transition: 'all 0.2s',
-              }}
-            >
-              🏆 Final del curso
-            </button>
-            {activeRueda.antes && activeRueda.despues && (
-              <button
-                onClick={() => setActiveTime('comparar')}
-                style={{
-                  padding: '10px 20px',
-                  fontSize: '13px',
-                  fontWeight: 600,
-                  color: activeTime === 'comparar' ? '#fff' : '#64748b',
-                  background: activeTime === 'comparar' ? '#f59e0b' : '#f8fafc',
-                  border: `1px solid ${activeTime === 'comparar' ? '#f59e0b' : 'rgba(0,0,0,0.08)'}`,
-                  borderRadius: '8px',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s',
-                }}
-              >
-                📊 Comparar
-              </button>
-            )}
+            Evalúa cómo te sientes ahora, al inicio del curso. Rellena ambas ruedas.
+          </p>
+
+          {/* Persona wheel */}
+          <div style={{
+            marginBottom: '32px',
+            padding: '24px',
+            background: '#fff',
+            borderRadius: '16px',
+            border: '1px solid rgba(0,0,0,0.06)',
+            boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
+          }}>
+            <h3 style={{
+              margin: '0 0 4px',
+              fontSize: '18px',
+              fontWeight: 700,
+              color: '#22c55e',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+            }}>
+              🌿 Persona
+              {vida.antes && (
+                <span style={{ fontSize: '13px', fontWeight: 500, color: '#22c55e', background: 'rgba(34,197,94,0.1)', padding: '2px 10px', borderRadius: '6px' }}>
+                  ✓ Completada{vida.antes.savedAt ? ` el ${formatDate(vida.antes.savedAt)}` : ''}
+                </span>
+              )}
+            </h3>
+            <p style={{ margin: '0 0 16px', fontSize: '13px', color: '#94a3b8' }}>
+              Tu bienestar personal: salud, relaciones, finanzas, propósito...
+            </p>
+            <RuedaVida
+              tipo="antes"
+              initialScores={vida.antes?.scores}
+              onSave={(scores) => onSave('vida', 'antes', scores)}
+              readOnly={false}
+            />
           </div>
 
-          {/* Wheel content */}
-          {activeTime === 'antes' && (
-            <div>
-              {activeRueda.antes && (
-                <p style={{ textAlign: 'center', fontSize: '14px', color: '#22c55e', marginBottom: '16px' }}>
-                  ✓ Completada el {formatDate(activeRueda.antes.savedAt)}
-                </p>
+          {/* Creador wheel */}
+          <div style={{
+            padding: '24px',
+            background: '#fff',
+            borderRadius: '16px',
+            border: '1px solid rgba(0,0,0,0.06)',
+            boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
+          }}>
+            <h3 style={{
+              margin: '0 0 4px',
+              fontSize: '18px',
+              fontWeight: 700,
+              color: '#6366f1',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+            }}>
+              🎯 Creador
+              {creador.antes && (
+                <span style={{ fontSize: '13px', fontWeight: 500, color: '#22c55e', background: 'rgba(34,197,94,0.1)', padding: '2px 10px', borderRadius: '6px' }}>
+                  ✓ Completada{creador.antes.savedAt ? ` el ${formatDate(creador.antes.savedAt)}` : ''}
+                </span>
               )}
-              <RuedaComponent
-                tipo="antes"
-                initialScores={activeRueda.antes?.scores}
-                onSave={(scores) => onSave(activeWheel, 'antes', scores)}
-                readOnly={false}
-              />
-            </div>
-          )}
+            </h3>
+            <p style={{ margin: '0 0 16px', fontSize: '13px', color: '#94a3b8' }}>
+              Tus habilidades como creador: técnicas, negocio, marketing, producto...
+            </p>
+            <RuedaCreador
+              tipo="antes"
+              initialScores={creador.antes?.scores}
+              onSave={(scores) => onSave('creador', 'antes', scores)}
+              readOnly={false}
+            />
+          </div>
+        </div>
+      )}
 
-          {activeTime === 'despues' && (
-            <div>
-              {!activeRueda.antes ? (
+      {/* ===== FINAL DEL CURSO ===== */}
+      {activeTab === 'despues' && (
+        <div>
+          {!hasAnyAntes ? (
+            <div style={{
+              textAlign: 'center',
+              padding: '60px 20px',
+              background: '#fff',
+              borderRadius: '16px',
+              border: '1px solid rgba(0,0,0,0.06)',
+            }}>
+              <span style={{ fontSize: '48px', display: 'block', marginBottom: '16px' }}>🔒</span>
+              <h3 style={{ margin: '0 0 8px', fontSize: '18px', color: '#0f172a' }}>
+                Primero completa tus ruedas iniciales
+              </h3>
+              <p style={{ margin: 0, color: '#64748b', fontSize: '14px' }}>
+                Necesitas un punto de partida para comparar al final del curso.
+              </p>
+              <button
+                onClick={() => setActiveTab('antes')}
+                style={{
+                  marginTop: '20px',
+                  padding: '12px 24px',
+                  fontSize: '14px',
+                  fontWeight: 600,
+                  color: '#fff',
+                  background: '#6366f1',
+                  border: 'none',
+                  borderRadius: '10px',
+                  cursor: 'pointer',
+                }}
+              >
+                Completar ruedas iniciales
+              </button>
+            </div>
+          ) : (
+            <>
+              <p style={{
+                textAlign: 'center',
+                fontSize: '15px',
+                color: '#64748b',
+                marginBottom: '24px',
+                lineHeight: 1.6,
+              }}>
+                Evalúa cómo te sientes al final del curso. ¿Cuánto has crecido?
+              </p>
+
+              {/* Persona wheel */}
+              <div style={{
+                marginBottom: '32px',
+                padding: '24px',
+                background: '#fff',
+                borderRadius: '16px',
+                border: '1px solid rgba(0,0,0,0.06)',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
+              }}>
+                <h3 style={{
+                  margin: '0 0 4px',
+                  fontSize: '18px',
+                  fontWeight: 700,
+                  color: '#22c55e',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                }}>
+                  🌿 Persona
+                  {vida.despues && (
+                    <span style={{ fontSize: '13px', fontWeight: 500, color: '#22c55e', background: 'rgba(34,197,94,0.1)', padding: '2px 10px', borderRadius: '6px' }}>
+                      ✓ Completada{vida.despues.savedAt ? ` el ${formatDate(vida.despues.savedAt)}` : ''}
+                    </span>
+                  )}
+                </h3>
+                <p style={{ margin: '0 0 16px', fontSize: '13px', color: '#94a3b8' }}>
+                  Tu bienestar personal ahora. Compara con tu punto de partida.
+                </p>
+                {vida.antes ? (
+                  <RuedaVida
+                    tipo="despues"
+                    initialScores={vida.despues?.scores}
+                    onSave={(scores) => onSave('vida', 'despues', scores)}
+                    compareTo={vida.despues ? vida.antes?.scores : undefined}
+                  />
+                ) : (
+                  <p style={{ textAlign: 'center', color: '#94a3b8', fontSize: '14px', padding: '24px' }}>
+                    Completa primero la rueda Persona en "Antes del curso"
+                  </p>
+                )}
+              </div>
+
+              {/* Creador wheel */}
+              <div style={{
+                padding: '24px',
+                background: '#fff',
+                borderRadius: '16px',
+                border: '1px solid rgba(0,0,0,0.06)',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
+              }}>
+                <h3 style={{
+                  margin: '0 0 4px',
+                  fontSize: '18px',
+                  fontWeight: 700,
+                  color: '#6366f1',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                }}>
+                  🎯 Creador
+                  {creador.despues && (
+                    <span style={{ fontSize: '13px', fontWeight: 500, color: '#22c55e', background: 'rgba(34,197,94,0.1)', padding: '2px 10px', borderRadius: '6px' }}>
+                      ✓ Completada{creador.despues.savedAt ? ` el ${formatDate(creador.despues.savedAt)}` : ''}
+                    </span>
+                  )}
+                </h3>
+                <p style={{ margin: '0 0 16px', fontSize: '13px', color: '#94a3b8' }}>
+                  Tus habilidades como creador ahora. Compara con tu punto de partida.
+                </p>
+                {creador.antes ? (
+                  <RuedaCreador
+                    tipo="despues"
+                    initialScores={creador.despues?.scores}
+                    onSave={(scores) => onSave('creador', 'despues', scores)}
+                    compareTo={creador.despues ? creador.antes?.scores : undefined}
+                  />
+                ) : (
+                  <p style={{ textAlign: 'center', color: '#94a3b8', fontSize: '14px', padding: '24px' }}>
+                    Completa primero la rueda Creador en "Antes del curso"
+                  </p>
+                )}
+              </div>
+            </>
+          )}
+        </div>
+      )}
+
+      {/* ===== ESTADÍSTICAS ===== */}
+      {activeTab === 'estadisticas' && (
+        <div>
+          {!hasAnyAntes ? (
+            <div style={{
+              textAlign: 'center',
+              padding: '60px 20px',
+              background: '#fff',
+              borderRadius: '16px',
+              border: '1px solid rgba(0,0,0,0.06)',
+            }}>
+              <span style={{ fontSize: '48px', display: 'block', marginBottom: '16px' }}>📊</span>
+              <h3 style={{ margin: '0 0 8px', fontSize: '18px', color: '#0f172a' }}>
+                No hay datos todavía
+              </h3>
+              <p style={{ margin: 0, color: '#64748b', fontSize: '14px' }}>
+                Completa tus ruedas iniciales para ver estadísticas.
+              </p>
+            </div>
+          ) : (
+            <>
+              {/* Global scores */}
+              <div style={{
+                display: 'flex',
+                gap: '16px',
+                justifyContent: 'center',
+                marginBottom: '32px',
+                flexWrap: 'wrap',
+              }}>
+                {globalAntes !== null && (
+                  <div style={{
+                    padding: '16px 28px',
+                    background: '#fff',
+                    borderRadius: '16px',
+                    border: '1px solid rgba(0,0,0,0.06)',
+                    textAlign: 'center',
+                    boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
+                    minWidth: '160px',
+                  }}>
+                    <p style={{ margin: 0, fontSize: '12px', color: '#64748b', fontWeight: 500 }}>Puntuación global (inicio)</p>
+                    <p style={{ margin: '6px 0 0', fontSize: '32px', fontWeight: 700, color: '#6366f1' }}>{globalAntes}</p>
+                  </div>
+                )}
+                {globalDespues !== null && (
+                  <div style={{
+                    padding: '16px 28px',
+                    background: '#fff',
+                    borderRadius: '16px',
+                    border: '1px solid rgba(0,0,0,0.06)',
+                    textAlign: 'center',
+                    boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
+                    minWidth: '160px',
+                  }}>
+                    <p style={{ margin: 0, fontSize: '12px', color: '#64748b', fontWeight: 500 }}>Puntuación global (final)</p>
+                    <p style={{ margin: '6px 0 0', fontSize: '32px', fontWeight: 700, color: '#22c55e' }}>{globalDespues}</p>
+                  </div>
+                )}
+                {globalAntes !== null && globalDespues !== null && (
+                  <div style={{
+                    padding: '16px 28px',
+                    background: '#fff',
+                    borderRadius: '16px',
+                    border: '1px solid rgba(0,0,0,0.06)',
+                    textAlign: 'center',
+                    boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
+                    minWidth: '160px',
+                  }}>
+                    <p style={{ margin: 0, fontSize: '12px', color: '#64748b', fontWeight: 500 }}>Cambio</p>
+                    <p style={{
+                      margin: '6px 0 0',
+                      fontSize: '32px',
+                      fontWeight: 700,
+                      color: globalDespues > globalAntes ? '#22c55e' : globalDespues < globalAntes ? '#ef4444' : '#64748b',
+                    }}>
+                      {globalDespues > globalAntes ? '+' : ''}{(globalDespues - globalAntes).toFixed(1)}
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              {/* Per-wheel breakdown */}
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
+                gap: '20px',
+                marginBottom: '24px',
+              }}>
+                {/* Vida Personal stats */}
                 <div style={{
-                  textAlign: 'center',
-                  padding: '60px 20px',
                   background: '#fff',
                   borderRadius: '16px',
                   border: '1px solid rgba(0,0,0,0.06)',
+                  padding: '24px',
+                  boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
                 }}>
-                  <span style={{ fontSize: '48px', display: 'block', marginBottom: '16px' }}>🔒</span>
-                  <h3 style={{ margin: '0 0 8px', fontSize: '18px', color: '#0f172a' }}>
-                    Primero completa tu rueda inicial
+                  <h3 style={{ margin: '0 0 16px', fontSize: '16px', fontWeight: 700, color: '#22c55e' }}>
+                    🌿 Persona
                   </h3>
-                  <p style={{ margin: 0, color: '#64748b', fontSize: '14px' }}>
-                    Necesitas un punto de partida para comparar al final.
+                  {vida.antes ? (
+                    <div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
+                        <span style={{ fontSize: '13px', color: '#64748b' }}>Inicio</span>
+                        <span style={{ fontSize: '15px', fontWeight: 700, color: '#6366f1' }}>{vidaAntes}</span>
+                      </div>
+                      {vida.despues && (
+                        <>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
+                            <span style={{ fontSize: '13px', color: '#64748b' }}>Final</span>
+                            <span style={{ fontSize: '15px', fontWeight: 700, color: '#22c55e' }}>{vidaDespues}</span>
+                          </div>
+                          <div style={{
+                            padding: '10px',
+                            background: '#f0fdf4',
+                            borderRadius: '8px',
+                            textAlign: 'center',
+                            fontSize: '14px',
+                            fontWeight: 600,
+                            color: vidaDespues! > vidaAntes! ? '#16a34a' : vidaDespues! < vidaAntes! ? '#dc2626' : '#64748b',
+                          }}>
+                            {vidaDespues! > vidaAntes!
+                              ? `+${(vidaDespues! - vidaAntes!).toFixed(1)} puntos`
+                              : vidaDespues! < vidaAntes!
+                                ? `${(vidaDespues! - vidaAntes!).toFixed(1)} puntos`
+                                : 'Sin cambios'}
+                          </div>
+                        </>
+                      )}
+                      {!vida.despues && (
+                        <p style={{ margin: 0, fontSize: '13px', color: '#94a3b8', fontStyle: 'italic' }}>
+                          Completa la rueda final para ver tu progreso
+                        </p>
+                      )}
+                    </div>
+                  ) : (
+                    <p style={{ margin: 0, fontSize: '13px', color: '#94a3b8', fontStyle: 'italic' }}>
+                      Aún no has completado esta rueda
+                    </p>
+                  )}
+                </div>
+
+                {/* Creador stats */}
+                <div style={{
+                  background: '#fff',
+                  borderRadius: '16px',
+                  border: '1px solid rgba(0,0,0,0.06)',
+                  padding: '24px',
+                  boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
+                }}>
+                  <h3 style={{ margin: '0 0 16px', fontSize: '16px', fontWeight: 700, color: '#6366f1' }}>
+                    🎯 Creador
+                  </h3>
+                  {creador.antes ? (
+                    <div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
+                        <span style={{ fontSize: '13px', color: '#64748b' }}>Inicio</span>
+                        <span style={{ fontSize: '15px', fontWeight: 700, color: '#6366f1' }}>{creadorAntes}</span>
+                      </div>
+                      {creador.despues && (
+                        <>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
+                            <span style={{ fontSize: '13px', color: '#64748b' }}>Final</span>
+                            <span style={{ fontSize: '15px', fontWeight: 700, color: '#22c55e' }}>{creadorDespues}</span>
+                          </div>
+                          <div style={{
+                            padding: '10px',
+                            background: '#eef2ff',
+                            borderRadius: '8px',
+                            textAlign: 'center',
+                            fontSize: '14px',
+                            fontWeight: 600,
+                            color: creadorDespues! > creadorAntes! ? '#16a34a' : creadorDespues! < creadorAntes! ? '#dc2626' : '#64748b',
+                          }}>
+                            {creadorDespues! > creadorAntes!
+                              ? `+${(creadorDespues! - creadorAntes!).toFixed(1)} puntos`
+                              : creadorDespues! < creadorAntes!
+                                ? `${(creadorDespues! - creadorAntes!).toFixed(1)} puntos`
+                                : 'Sin cambios'}
+                          </div>
+                        </>
+                      )}
+                      {!creador.despues && (
+                        <p style={{ margin: 0, fontSize: '13px', color: '#94a3b8', fontStyle: 'italic' }}>
+                          Completa la rueda final para ver tu progreso
+                        </p>
+                      )}
+                    </div>
+                  ) : (
+                    <p style={{ margin: 0, fontSize: '13px', color: '#94a3b8', fontStyle: 'italic' }}>
+                      Aún no has completado esta rueda
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              {/* Side-by-side comparison wheels */}
+              {hasComparison && (
+                <>
+                  <h3 style={{ textAlign: 'center', margin: '32px 0 20px', fontSize: '18px', fontWeight: 700, color: '#0f172a' }}>
+                    Comparación visual
+                  </h3>
+                  <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+                    gap: '20px',
+                  }}>
+                    {vida.antes && vida.despues && (
+                      <div>
+                        <h4 style={{ textAlign: 'center', margin: '0 0 12px', fontSize: '14px', fontWeight: 600, color: '#22c55e' }}>
+                          🌿 Persona — Final vs Inicio
+                        </h4>
+                        <RuedaVida
+                          tipo="despues"
+                          initialScores={vida.despues.scores}
+                          readOnly={true}
+                          compareTo={vida.antes.scores}
+                        />
+                      </div>
+                    )}
+                    {creador.antes && creador.despues && (
+                      <div>
+                        <h4 style={{ textAlign: 'center', margin: '0 0 12px', fontSize: '14px', fontWeight: 600, color: '#6366f1' }}>
+                          🎯 Creador — Final vs Inicio
+                        </h4>
+                        <RuedaCreador
+                          tipo="despues"
+                          initialScores={creador.despues.scores}
+                          readOnly={true}
+                          compareTo={creador.antes.scores}
+                        />
+                      </div>
+                    )}
+                  </div>
+                </>
+              )}
+
+              {/* Read-only wheels if only antes exists */}
+              {!hasComparison && (
+                <>
+                  <h3 style={{ textAlign: 'center', margin: '32px 0 20px', fontSize: '18px', fontWeight: 700, color: '#0f172a' }}>
+                    Tus ruedas actuales
+                  </h3>
+                  <p style={{ textAlign: 'center', fontSize: '14px', color: '#94a3b8', marginBottom: '20px' }}>
+                    Completa las ruedas finales para ver la comparación
                   </p>
-                  <button
-                    onClick={() => setActiveTime('antes')}
-                    style={{
-                      marginTop: '20px',
-                      padding: '12px 24px',
-                      fontSize: '14px',
-                      fontWeight: 600,
-                      color: '#fff',
-                      background: '#6366f1',
-                      border: 'none',
-                      borderRadius: '10px',
-                      cursor: 'pointer',
-                    }}
-                  >
-                    Completar rueda inicial
-                  </button>
-                </div>
-              ) : (
-                <div>
-                  {activeRueda.despues && (
-                    <p style={{ textAlign: 'center', fontSize: '14px', color: '#22c55e', marginBottom: '16px' }}>
-                      ✓ Completada el {formatDate(activeRueda.despues.savedAt)}
-                    </p>
-                  )}
-                  <RuedaComponent
-                    tipo="despues"
-                    initialScores={activeRueda.despues?.scores}
-                    onSave={(scores) => onSave(activeWheel, 'despues', scores)}
-                    compareTo={activeRueda.despues ? activeRueda.antes?.scores : undefined}
-                  />
-                </div>
-              )}
-            </div>
-          )}
-
-          {activeTime === 'comparar' && activeRueda.antes && activeRueda.despues && (
-            <div>
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-                gap: '24px',
-              }}>
-                <div>
-                  <h3 style={{ textAlign: 'center', margin: '0 0 16px', fontSize: '16px', color: '#6366f1' }}>
-                    📍 Inicio ({formatDate(activeRueda.antes.savedAt)})
-                  </h3>
-                  <RuedaComponent tipo="antes" initialScores={activeRueda.antes.scores} readOnly={true} />
-                </div>
-                <div>
-                  <h3 style={{ textAlign: 'center', margin: '0 0 16px', fontSize: '16px', color: '#22c55e' }}>
-                    🏆 Final ({formatDate(activeRueda.despues.savedAt)})
-                  </h3>
-                  <RuedaComponent
-                    tipo="despues"
-                    initialScores={activeRueda.despues.scores}
-                    readOnly={true}
-                    compareTo={activeRueda.antes.scores}
-                  />
-                </div>
-              </div>
-            </div>
-          )}
-        </>
-      )}
-
-      {/* Estadísticas tab */}
-      {activeTab === 'estadisticas' && (
-        <div>
-          {/* Global scores */}
-          <div style={{
-            display: 'flex',
-            gap: '16px',
-            justifyContent: 'center',
-            marginBottom: '32px',
-            flexWrap: 'wrap',
-          }}>
-            {globalAntes !== null && (
-              <div style={{
-                padding: '16px 28px',
-                background: '#fff',
-                borderRadius: '16px',
-                border: '1px solid rgba(0,0,0,0.06)',
-                textAlign: 'center',
-                boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
-                minWidth: '160px',
-              }}>
-                <p style={{ margin: 0, fontSize: '12px', color: '#64748b', fontWeight: 500 }}>Puntuacion global (inicio)</p>
-                <p style={{ margin: '6px 0 0', fontSize: '32px', fontWeight: 700, color: '#6366f1' }}>{globalAntes}</p>
-              </div>
-            )}
-            {globalDespues !== null && (
-              <div style={{
-                padding: '16px 28px',
-                background: '#fff',
-                borderRadius: '16px',
-                border: '1px solid rgba(0,0,0,0.06)',
-                textAlign: 'center',
-                boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
-                minWidth: '160px',
-              }}>
-                <p style={{ margin: 0, fontSize: '12px', color: '#64748b', fontWeight: 500 }}>Puntuacion global (final)</p>
-                <p style={{ margin: '6px 0 0', fontSize: '32px', fontWeight: 700, color: '#22c55e' }}>{globalDespues}</p>
-              </div>
-            )}
-            {globalAntes !== null && globalDespues !== null && (
-              <div style={{
-                padding: '16px 28px',
-                background: '#fff',
-                borderRadius: '16px',
-                border: '1px solid rgba(0,0,0,0.06)',
-                textAlign: 'center',
-                boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
-                minWidth: '160px',
-              }}>
-                <p style={{ margin: 0, fontSize: '12px', color: '#64748b', fontWeight: 500 }}>Cambio</p>
-                <p style={{
-                  margin: '6px 0 0',
-                  fontSize: '32px',
-                  fontWeight: 700,
-                  color: globalDespues > globalAntes ? '#22c55e' : globalDespues < globalAntes ? '#ef4444' : '#64748b',
-                }}>
-                  {globalDespues > globalAntes ? '+' : ''}{(globalDespues - globalAntes).toFixed(1)}
-                </p>
-              </div>
-            )}
-          </div>
-
-          {/* Per-wheel breakdown */}
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
-            gap: '20px',
-            marginBottom: '24px',
-          }}>
-            {/* Vida Personal stats */}
-            <div style={{
-              background: '#fff',
-              borderRadius: '16px',
-              border: '1px solid rgba(0,0,0,0.06)',
-              padding: '24px',
-              boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
-            }}>
-              <h3 style={{ margin: '0 0 16px', fontSize: '16px', fontWeight: 700, color: '#22c55e' }}>
-                🌿 Persona
-              </h3>
-              {vida.antes ? (
-                <div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
-                    <span style={{ fontSize: '13px', color: '#64748b' }}>Inicio</span>
-                    <span style={{ fontSize: '15px', fontWeight: 700, color: '#6366f1' }}>{vidaAntes}</span>
+                  <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+                    gap: '20px',
+                  }}>
+                    {vida.antes && (
+                      <div>
+                        <h4 style={{ textAlign: 'center', margin: '0 0 12px', fontSize: '14px', fontWeight: 600, color: '#22c55e' }}>
+                          🌿 Persona — Inicio
+                        </h4>
+                        <RuedaVida
+                          tipo="antes"
+                          initialScores={vida.antes.scores}
+                          readOnly={true}
+                        />
+                      </div>
+                    )}
+                    {creador.antes && (
+                      <div>
+                        <h4 style={{ textAlign: 'center', margin: '0 0 12px', fontSize: '14px', fontWeight: 600, color: '#6366f1' }}>
+                          🎯 Creador — Inicio
+                        </h4>
+                        <RuedaCreador
+                          tipo="antes"
+                          initialScores={creador.antes.scores}
+                          readOnly={true}
+                        />
+                      </div>
+                    )}
                   </div>
-                  {vida.despues && (
-                    <>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
-                        <span style={{ fontSize: '13px', color: '#64748b' }}>Final</span>
-                        <span style={{ fontSize: '15px', fontWeight: 700, color: '#22c55e' }}>{vidaDespues}</span>
-                      </div>
-                      <div style={{
-                        padding: '10px',
-                        background: '#f0fdf4',
-                        borderRadius: '8px',
-                        textAlign: 'center',
-                        fontSize: '14px',
-                        fontWeight: 600,
-                        color: vidaDespues! > vidaAntes! ? '#16a34a' : vidaDespues! < vidaAntes! ? '#dc2626' : '#64748b',
-                      }}>
-                        {vidaDespues! > vidaAntes!
-                          ? `📈 +${(vidaDespues! - vidaAntes!).toFixed(1)} puntos`
-                          : vidaDespues! < vidaAntes!
-                            ? `📉 ${(vidaDespues! - vidaAntes!).toFixed(1)} puntos`
-                            : '➡️ Sin cambios'}
-                      </div>
-                    </>
-                  )}
-                  {!vida.despues && (
-                    <p style={{ margin: 0, fontSize: '13px', color: '#94a3b8', fontStyle: 'italic' }}>
-                      Completa la rueda final para ver tu progreso
-                    </p>
-                  )}
-                </div>
-              ) : (
-                <p style={{ margin: 0, fontSize: '13px', color: '#94a3b8', fontStyle: 'italic' }}>
-                  Aun no has completado esta rueda
-                </p>
+                </>
               )}
-            </div>
-
-            {/* Creador stats */}
-            <div style={{
-              background: '#fff',
-              borderRadius: '16px',
-              border: '1px solid rgba(0,0,0,0.06)',
-              padding: '24px',
-              boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
-            }}>
-              <h3 style={{ margin: '0 0 16px', fontSize: '16px', fontWeight: 700, color: '#6366f1' }}>
-                🎯 Creador
-              </h3>
-              {creador.antes ? (
-                <div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
-                    <span style={{ fontSize: '13px', color: '#64748b' }}>Inicio</span>
-                    <span style={{ fontSize: '15px', fontWeight: 700, color: '#6366f1' }}>{creadorAntes}</span>
-                  </div>
-                  {creador.despues && (
-                    <>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
-                        <span style={{ fontSize: '13px', color: '#64748b' }}>Final</span>
-                        <span style={{ fontSize: '15px', fontWeight: 700, color: '#22c55e' }}>{creadorDespues}</span>
-                      </div>
-                      <div style={{
-                        padding: '10px',
-                        background: '#eef2ff',
-                        borderRadius: '8px',
-                        textAlign: 'center',
-                        fontSize: '14px',
-                        fontWeight: 600,
-                        color: creadorDespues! > creadorAntes! ? '#16a34a' : creadorDespues! < creadorAntes! ? '#dc2626' : '#64748b',
-                      }}>
-                        {creadorDespues! > creadorAntes!
-                          ? `📈 +${(creadorDespues! - creadorAntes!).toFixed(1)} puntos`
-                          : creadorDespues! < creadorAntes!
-                            ? `📉 ${(creadorDespues! - creadorAntes!).toFixed(1)} puntos`
-                            : '➡️ Sin cambios'}
-                      </div>
-                    </>
-                  )}
-                  {!creador.despues && (
-                    <p style={{ margin: 0, fontSize: '13px', color: '#94a3b8', fontStyle: 'italic' }}>
-                      Completa la rueda final para ver tu progreso
-                    </p>
-                  )}
-                </div>
-              ) : (
-                <p style={{ margin: 0, fontSize: '13px', color: '#94a3b8', fontStyle: 'italic' }}>
-                  Aun no has completado esta rueda
-                </p>
-              )}
-            </div>
-          </div>
-
-          {/* Side-by-side wheels (read-only) */}
-          {(vida.antes || creador.antes) && (
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-              gap: '20px',
-            }}>
-              {vida.antes && (
-                <div>
-                  <h4 style={{ textAlign: 'center', margin: '0 0 12px', fontSize: '14px', fontWeight: 600, color: '#22c55e' }}>
-                    🌿 Persona — {vida.despues ? 'Final' : 'Inicio'}
-                  </h4>
-                  <RuedaVida
-                    tipo={vida.despues ? 'despues' : 'antes'}
-                    initialScores={(vida.despues || vida.antes).scores}
-                    readOnly={true}
-                    compareTo={vida.despues ? vida.antes.scores : undefined}
-                  />
-                </div>
-              )}
-              {creador.antes && (
-                <div>
-                  <h4 style={{ textAlign: 'center', margin: '0 0 12px', fontSize: '14px', fontWeight: 600, color: '#6366f1' }}>
-                    🎯 Creador — {creador.despues ? 'Final' : 'Inicio'}
-                  </h4>
-                  <RuedaCreador
-                    tipo={creador.despues ? 'despues' : 'antes'}
-                    initialScores={(creador.despues || creador.antes).scores}
-                    readOnly={true}
-                    compareTo={creador.despues ? creador.antes.scores : undefined}
-                  />
-                </div>
-              )}
-            </div>
+            </>
           )}
         </div>
       )}

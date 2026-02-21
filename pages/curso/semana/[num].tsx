@@ -2,9 +2,11 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useState, useEffect } from 'react'
-import CursoEmailGate from '../../../components/CursoEmailGate'
-import { CURSO_SEMANAS, getCursoTrackingIds, Semana } from '../../../lib/curso-data'
+import type { ReactElement } from 'react'
+import CursoLayout from '../../../components/CursoLayout'
+import { CURSO_SEMANAS, getCursoTrackingIds, Semana, DiaSemana } from '../../../lib/curso-data'
 import { renderPreclaseContent } from '../../../components/curso-shared/ContentRenderer'
+import type { NextPageWithLayout } from '../../_app'
 
 function getUserEmail(): string | null {
   if (typeof window === 'undefined') return null
@@ -125,6 +127,546 @@ const SECTIONS: { key: SectionKey; label: string; icon: string; completedIcon: s
   { key: 'entregable', label: 'Entregable', icon: '📦', completedIcon: '✓' },
 ]
 
+// === Multi-day layout (for LaunchPad-style weeks) ===
+type MultiDaySection = 'dia1' | 'dia2' | 'entregable'
+
+function SemanaContentMultiDay({ semana }: { semana: Semana }) {
+  const { toggle, ids, preclaseCompleted, claseCompleted, entregableCompleted } = useSemanaProgress(semana.num)
+  const checklist = useChecklist(semana.num, semana.entregable.checklist.length)
+  const [activeSection, setActiveSection] = useState<MultiDaySection>('dia1')
+  const dias = semana.dias!
+
+  const sections: { key: MultiDaySection; label: string; icon: string; color: string }[] = [
+    ...dias.map((d, i) => ({
+      key: `dia${i + 1}` as MultiDaySection,
+      label: `Día ${i + 1}`,
+      icon: d.emoji,
+      color: i === 0 ? '#6366f1' : '#f59e0b',
+    })),
+    { key: 'entregable' as MultiDaySection, label: 'Entregable', icon: '📦', color: '#ec4899' },
+  ]
+
+  const sectionIndex = sections.findIndex(s => s.key === activeSection)
+
+  const goNext = () => {
+    if (sectionIndex < sections.length - 1) {
+      setActiveSection(sections[sectionIndex + 1].key)
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+  }
+
+  const goPrev = () => {
+    if (sectionIndex > 0) {
+      setActiveSection(sections[sectionIndex - 1].key)
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+  }
+
+  const handleLogout = () => {
+    localStorage.removeItem('precurso-access')
+    localStorage.removeItem('curso-progress')
+    window.location.href = '/curso'
+  }
+
+  // Active day (0-indexed, or -1 for entregable)
+  const activeDayIndex = activeSection === 'entregable' ? -1 : parseInt(activeSection.replace('dia', '')) - 1
+  const activeDia = activeDayIndex >= 0 ? dias[activeDayIndex] : null
+
+  return (
+    <div style={{
+      minHeight: '100vh',
+      background: 'linear-gradient(135deg, #f8fafc, #eef2f6)',
+      fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
+      color: '#0f172a'
+    }}>
+      <Head>
+        <title>Semana {semana.num}: {semana.titulo} | Curso</title>
+        <meta name="robots" content="noindex, nofollow" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+      </Head>
+
+      {/* Header */}
+      <header style={{
+        background: 'rgba(255, 255, 255, 0.9)',
+        backdropFilter: 'blur(12px)',
+        borderBottom: '1px solid rgba(0,0,0,0.06)',
+        padding: '16px 24px',
+        position: 'sticky',
+        top: 0,
+        zIndex: 100,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+          <Link href="/curso" style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            color: '#64748b',
+            textDecoration: 'none',
+            fontSize: '14px'
+          }}>
+            ← Volver
+          </Link>
+          <div style={{ width: '1px', height: '24px', background: 'rgba(0,0,0,0.08)' }} />
+          <h1 className="header-title" style={{ margin: 0, fontSize: '16px', fontWeight: 600, color: '#0f172a' }}>
+            {semana.emoji} Semana {semana.num}: {semana.titulo}
+          </h1>
+        </div>
+        <button onClick={handleLogout} style={{
+          padding: '8px 16px', fontSize: '13px', fontWeight: 500, color: '#64748b',
+          background: 'transparent', border: '1px solid rgba(0,0,0,0.1)', borderRadius: '8px', cursor: 'pointer'
+        }}>
+          Salir
+        </button>
+      </header>
+
+      {/* Mobile tabs */}
+      <div className="mobile-tabs" style={{
+        display: 'none', gap: '6px', padding: '12px 16px', background: '#fff',
+        borderBottom: '1px solid rgba(0,0,0,0.06)', overflowX: 'auto',
+      }}>
+        {sections.map((s) => {
+          const isActive = activeSection === s.key
+          return (
+            <button
+              key={s.key}
+              onClick={() => { setActiveSection(s.key); window.scrollTo({ top: 0, behavior: 'smooth' }) }}
+              style={{
+                display: 'flex', alignItems: 'center', gap: '6px',
+                padding: '8px 14px', fontSize: '13px', fontWeight: isActive ? 600 : 500,
+                color: isActive ? '#fff' : '#64748b',
+                background: isActive ? s.color : '#f8fafc',
+                border: `1px solid ${isActive ? s.color : 'rgba(0,0,0,0.08)'}`,
+                borderRadius: '8px', cursor: 'pointer', whiteSpace: 'nowrap',
+                transition: 'all 0.2s', flexShrink: 0,
+              }}
+            >
+              <span style={{ fontSize: '14px' }}>{s.icon}</span>
+              {s.label}
+            </button>
+          )
+        })}
+      </div>
+
+      <div className="layout-wrapper" style={{
+        display: 'flex', maxWidth: '1100px', margin: '0 auto', padding: '24px', gap: '24px',
+      }}>
+        {/* Sidebar */}
+        <aside className="sidebar" style={{
+          width: '240px', flexShrink: 0, position: 'sticky', top: '80px', alignSelf: 'flex-start',
+        }}>
+          <div style={{ padding: '16px', marginBottom: '12px' }}>
+            <p style={{ margin: '0 0 4px', fontSize: '12px', fontWeight: 600, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+              Semana {semana.num}
+            </p>
+            <p style={{ margin: 0, fontSize: '15px', fontWeight: 600, color: '#0f172a' }}>
+              {semana.titulo}
+            </p>
+          </div>
+
+          <nav style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+            {sections.map((s) => {
+              const isActive = activeSection === s.key
+              return (
+                <button
+                  key={s.key}
+                  onClick={() => { setActiveSection(s.key); window.scrollTo({ top: 0, behavior: 'smooth' }) }}
+                  className="sidebar-btn"
+                  style={{
+                    display: 'flex', alignItems: 'center', gap: '12px',
+                    padding: '12px 16px', fontSize: '14px',
+                    fontWeight: isActive ? 600 : 500,
+                    color: isActive ? '#0f172a' : '#64748b',
+                    background: isActive ? '#fff' : 'transparent',
+                    border: isActive ? '1px solid rgba(0,0,0,0.06)' : '1px solid transparent',
+                    borderRadius: '10px', cursor: 'pointer', textAlign: 'left',
+                    transition: 'all 0.15s',
+                    boxShadow: isActive ? '0 1px 3px rgba(0,0,0,0.04)' : 'none',
+                  }}
+                >
+                  <span style={{
+                    width: '28px', height: '28px', borderRadius: '7px',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    fontSize: '14px', fontWeight: 700,
+                    color: isActive ? '#fff' : '#64748b',
+                    background: isActive ? s.color : '#e2e8f0',
+                    flexShrink: 0, transition: 'all 0.15s',
+                  }}>
+                    {s.icon}
+                  </span>
+                  <span>
+                    {s.label}
+                    {s.key !== 'entregable' && (
+                      <span style={{ display: 'block', fontSize: '11px', color: '#94a3b8', fontWeight: 400, marginTop: '2px' }}>
+                        {dias[parseInt(s.key.replace('dia', '')) - 1]?.titulo}
+                      </span>
+                    )}
+                  </span>
+                </button>
+              )
+            })}
+          </nav>
+
+          {/* Progress */}
+          <div style={{
+            marginTop: '16px', padding: '14px 16px', background: '#fff',
+            borderRadius: '10px', border: '1px solid rgba(0,0,0,0.06)',
+          }}>
+            <p style={{ margin: '0 0 8px', fontSize: '12px', fontWeight: 600, color: '#94a3b8' }}>Progreso</p>
+            <div style={{ display: 'flex', gap: '6px' }}>
+              <div style={{ flex: 1, height: '6px', borderRadius: '3px', background: preclaseCompleted ? '#22c55e' : '#e2e8f0', transition: 'background 0.3s' }} />
+              <div style={{ flex: 1, height: '6px', borderRadius: '3px', background: claseCompleted ? '#22c55e' : '#e2e8f0', transition: 'background 0.3s' }} />
+              <div style={{ flex: 1, height: '6px', borderRadius: '3px', background: entregableCompleted ? '#22c55e' : '#e2e8f0', transition: 'background 0.3s' }} />
+            </div>
+            <p style={{ margin: '8px 0 0', fontSize: '12px', color: '#64748b' }}>
+              {[preclaseCompleted, claseCompleted, entregableCompleted].filter(Boolean).length}/3 completados
+            </p>
+          </div>
+        </aside>
+
+        {/* Content */}
+        <main style={{ flex: 1, minWidth: 0 }}>
+          {/* Day sections (Día 1, Día 2) */}
+          {activeDia && (
+            <section>
+              <div style={{
+                display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '16px', marginBottom: '24px'
+              }}>
+                <div>
+                  <h2 style={{ margin: '0 0 6px', fontSize: '24px', fontWeight: 700, color: '#0f172a' }}>
+                    {activeDia.emoji} Día {activeDayIndex + 1}: {activeDia.titulo}
+                  </h2>
+                  <p style={{ margin: 0, fontSize: '14px', color: '#64748b' }}>
+                    {activeDia.clase.fecha} • {activeDia.clase.hora} • {activeDia.clase.duracion}
+                  </p>
+                </div>
+              </div>
+
+              {/* Preclase content */}
+              <div style={{ marginBottom: '32px' }}>
+                <div style={{
+                  display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px',
+                }}>
+                  <h3 style={{ margin: 0, fontSize: '18px', fontWeight: 700, color: '#0f172a' }}>
+                    📚 Preparación
+                  </h3>
+                  {activeDayIndex === 0 && (
+                    <button
+                      onClick={() => toggle(ids.preclase)}
+                      className="complete-btn"
+                      style={{
+                        padding: '8px 14px', fontSize: '12px', fontWeight: 600,
+                        color: preclaseCompleted ? '#22c55e' : '#fff',
+                        background: preclaseCompleted ? 'rgba(34, 197, 94, 0.1)' : '#334155',
+                        border: `1px solid ${preclaseCompleted ? 'rgba(34, 197, 94, 0.3)' : '#475569'}`,
+                        borderRadius: '8px', cursor: 'pointer', whiteSpace: 'nowrap'
+                      }}
+                    >
+                      {preclaseCompleted ? '✓ Pre-clase completada' : 'Marcar pre-clase completada'}
+                    </button>
+                  )}
+                </div>
+                <p style={{ margin: '0 0 12px', fontSize: '13px', color: '#94a3b8' }}>
+                  {activeDia.preclase.titulo} • {activeDia.preclase.duracion}
+                </p>
+                {renderPreclaseContent(activeDia.preclase.contenido)}
+
+                {activeDia.preclase.recursos.length > 0 && (
+                  <div style={{
+                    background: '#fff', border: '1px solid rgba(0,0,0,0.06)', borderRadius: '16px',
+                    padding: '20px', marginTop: '16px', boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
+                  }}>
+                    <h4 style={{ margin: '0 0 12px', fontSize: '14px', fontWeight: 600, color: '#64748b' }}>
+                      📎 Recursos
+                    </h4>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                      {activeDia.preclase.recursos.map((recurso, i) => (
+                        <a key={i} href={recurso.url} target="_blank" rel="noopener noreferrer" style={{
+                          display: 'flex', alignItems: 'center', gap: '10px',
+                          padding: '12px 16px', background: '#f8fafc',
+                          border: '1px solid rgba(0,0,0,0.06)', borderRadius: '10px',
+                          color: '#6366f1', textDecoration: 'none', fontSize: '14px',
+                        }}>
+                          <span>{recurso.tipo === 'pdf' ? '📄' : recurso.tipo === 'video' ? '🎥' : recurso.tipo === 'github' ? '💻' : '🔗'}</span>
+                          {recurso.titulo}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Divider */}
+              <hr style={{ border: 'none', borderTop: '1px solid rgba(0,0,0,0.06)', margin: '0 0 32px' }} />
+
+              {/* Clase recording */}
+              <div>
+                <div style={{
+                  display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px',
+                }}>
+                  <h3 style={{ margin: 0, fontSize: '18px', fontWeight: 700, color: '#0f172a' }}>
+                    🎥 Grabación de la clase
+                  </h3>
+                  {activeDayIndex === dias.length - 1 && (
+                    <button
+                      onClick={() => toggle(ids.clase)}
+                      className="complete-btn"
+                      style={{
+                        padding: '8px 14px', fontSize: '12px', fontWeight: 600,
+                        color: claseCompleted ? '#22c55e' : '#fff',
+                        background: claseCompleted ? 'rgba(34, 197, 94, 0.1)' : '#334155',
+                        border: `1px solid ${claseCompleted ? 'rgba(34, 197, 94, 0.3)' : '#475569'}`,
+                        borderRadius: '8px', cursor: 'pointer', whiteSpace: 'nowrap'
+                      }}
+                    >
+                      {claseCompleted ? '✓ Clases vistas' : 'Marcar clases como vistas'}
+                    </button>
+                  )}
+                </div>
+
+                {activeDia.clase.videos && activeDia.clase.videos.length > 0 ? (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '20px' }}>
+                    {activeDia.clase.videos.map((video, vi) => (
+                      video.tipo === 'embed' ? (
+                        <div key={vi}>
+                          <div style={{
+                            position: 'relative', paddingBottom: '56.25%', height: 0,
+                            background: '#0f172a', borderRadius: '12px', overflow: 'hidden',
+                          }}>
+                            <iframe
+                              src={video.url}
+                              style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }}
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                              allowFullScreen
+                            />
+                          </div>
+                        </div>
+                      ) : (
+                        <a key={vi} href={video.url} target="_blank" rel="noopener noreferrer" style={{
+                          display: 'flex', alignItems: 'center', gap: '14px',
+                          padding: '18px 20px', background: '#fff',
+                          border: '1px solid rgba(0,0,0,0.06)', borderRadius: '14px',
+                          textDecoration: 'none', boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
+                        }}>
+                          <span style={{
+                            width: '48px', height: '48px',
+                            background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+                            borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                            fontSize: '22px', flexShrink: 0,
+                          }}>▶️</span>
+                          <div>
+                            <p style={{ margin: 0, fontSize: '15px', fontWeight: 600, color: '#0f172a' }}>{video.titulo}</p>
+                            <p style={{ margin: '2px 0 0', fontSize: '13px', color: '#64748b' }}>
+                              {video.passcode ? `Código: ${video.passcode} · ` : ''}Click para ver la grabación
+                            </p>
+                          </div>
+                          <span style={{ marginLeft: 'auto', fontSize: '18px', color: '#94a3b8' }}>↗</span>
+                        </a>
+                      )
+                    ))}
+                  </div>
+                ) : (
+                  <div style={{
+                    background: '#fff', border: '1px solid rgba(0,0,0,0.06)', borderRadius: '16px',
+                    padding: '40px', textAlign: 'center', marginBottom: '20px',
+                    boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
+                  }}>
+                    <span style={{ fontSize: '48px', display: 'block', marginBottom: '16px' }}>📹</span>
+                    <p style={{ margin: 0, fontSize: '15px', color: '#64748b' }}>
+                      El video de la clase se publicará después de la sesión en vivo
+                    </p>
+                  </div>
+                )}
+
+                {/* Pizarra button (only on last day) */}
+                {activeDayIndex === dias.length - 1 && (
+                  <Link href={`/curso/clase/${semana.num}`} className="pizarra-btn" style={{
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+                    padding: '14px 24px',
+                    background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+                    color: '#fff', fontSize: '15px', fontWeight: 600,
+                    borderRadius: '12px', textDecoration: 'none',
+                    boxShadow: '0 4px 12px rgba(99, 102, 241, 0.3)',
+                    marginBottom: '20px'
+                  }}>
+                    📋 Abrir Pizarra de clase
+                  </Link>
+                )}
+
+                {/* Notas */}
+                {activeDia.clase.notas && (
+                  <div style={{
+                    background: '#fff', border: '1px solid rgba(0,0,0,0.06)', borderRadius: '16px',
+                    padding: '20px', boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
+                  }}>
+                    <h4 style={{ margin: '0 0 12px', fontSize: '14px', fontWeight: 600, color: '#64748b' }}>
+                      📝 Notas de la clase
+                    </h4>
+                    <div style={{ fontSize: '14px', lineHeight: 1.7, color: '#374151' }}>
+                      <div dangerouslySetInnerHTML={{
+                        __html: activeDia.clase.notas
+                          .replace(/^### (.+)$/gm, '<h5 style="font-size: 15px; font-weight: 600; color: #1e293b; margin: 20px 0 8px;">$1</h5>')
+                          .replace(/^- (.+)$/gm, '<li style="margin-left: 16px; margin-bottom: 4px;">$1</li>')
+                          .replace(/\*\*([^*]+)\*\*/g, '<strong style="color: #0f172a;">$1</strong>')
+                          .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" style="color: #6366f1; text-decoration: underline;">$1</a>')
+                          .replace(/\n\n/g, '<br/>')
+                      }} />
+                    </div>
+                  </div>
+                )}
+              </div>
+            </section>
+          )}
+
+          {/* Entregable */}
+          {activeSection === 'entregable' && (
+            <section>
+              <div style={{
+                display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '16px', marginBottom: '24px'
+              }}>
+                <div>
+                  <h2 style={{ margin: '0 0 6px', fontSize: '24px', fontWeight: 700, color: '#0f172a' }}>Entregable</h2>
+                  <p style={{ margin: 0, fontSize: '14px', color: '#64748b' }}>
+                    {semana.entregable.titulo} • Fecha límite: {semana.entregable.fechaLimite}
+                  </p>
+                </div>
+                <button onClick={() => toggle(ids.entregable)} className="complete-btn" style={{
+                  padding: '10px 16px', fontSize: '13px', fontWeight: 600,
+                  color: entregableCompleted ? '#22c55e' : '#fff',
+                  background: entregableCompleted ? 'rgba(34, 197, 94, 0.1)' : '#334155',
+                  border: `1px solid ${entregableCompleted ? 'rgba(34, 197, 94, 0.3)' : '#475569'}`,
+                  borderRadius: '8px', cursor: 'pointer', whiteSpace: 'nowrap'
+                }}>
+                  {entregableCompleted ? '✓ Completado' : 'Marcar completado'}
+                </button>
+              </div>
+
+              <p style={{
+                margin: '0 0 20px', fontSize: '15px', color: '#374151', lineHeight: 1.6,
+                background: '#fff', border: '1px solid rgba(0,0,0,0.06)', borderRadius: '16px',
+                padding: '20px', boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
+              }}>
+                {semana.entregable.descripcion}
+              </p>
+
+              <div style={{
+                background: '#fff', border: '1px solid rgba(0,0,0,0.06)', borderRadius: '16px',
+                padding: '20px', boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
+                  <h4 style={{ margin: 0, fontSize: '15px', fontWeight: 600, color: '#0f172a' }}>Checklist</h4>
+                  <span style={{
+                    fontSize: '13px', fontWeight: 600,
+                    color: checklist.completedCount === checklist.totalItems ? '#22c55e' : '#64748b',
+                    background: checklist.completedCount === checklist.totalItems ? 'rgba(34,197,94,0.1)' : 'rgba(0,0,0,0.04)',
+                    padding: '4px 10px', borderRadius: '6px'
+                  }}>
+                    {checklist.completedCount}/{checklist.totalItems}
+                  </span>
+                </div>
+                <ul style={{ margin: 0, padding: 0, listStyle: 'none' }}>
+                  {semana.entregable.checklist.map((item, i) => (
+                    <li key={i} onClick={() => checklist.toggleItem(i)} style={{
+                      display: 'flex', alignItems: 'flex-start', gap: '12px',
+                      padding: '10px 0',
+                      borderBottom: i < semana.entregable.checklist.length - 1 ? '1px solid rgba(0,0,0,0.04)' : 'none',
+                      fontSize: '14px', color: checklist.checked[i] ? '#94a3b8' : '#374151',
+                      textDecoration: checklist.checked[i] ? 'line-through' : 'none',
+                      cursor: 'pointer', userSelect: 'none',
+                    }}>
+                      <span style={{
+                        width: '20px', height: '20px',
+                        border: checklist.checked[i] ? 'none' : '2px solid #cbd5e1',
+                        background: checklist.checked[i] ? '#22c55e' : 'transparent',
+                        borderRadius: '5px', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        flexShrink: 0, marginTop: '1px', fontSize: '12px', color: '#fff',
+                      }}>
+                        {checklist.checked[i] ? '✓' : ''}
+                      </span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </section>
+          )}
+
+          {/* Section navigation */}
+          <div style={{
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+            marginTop: '28px', paddingTop: '20px', borderTop: '1px solid rgba(0,0,0,0.06)',
+          }}>
+            {sectionIndex > 0 ? (
+              <button onClick={goPrev} className="nav-section-btn" style={{
+                display: 'flex', alignItems: 'center', gap: '8px',
+                padding: '12px 20px', fontSize: '14px', fontWeight: 500, color: '#64748b',
+                background: '#fff', border: '1px solid rgba(0,0,0,0.1)', borderRadius: '10px', cursor: 'pointer',
+              }}>
+                ← {sections[sectionIndex - 1].label}
+              </button>
+            ) : <div />}
+
+            {sectionIndex < sections.length - 1 ? (
+              <button onClick={goNext} className="nav-section-btn next-btn" style={{
+                display: 'flex', alignItems: 'center', gap: '8px',
+                padding: '12px 20px', fontSize: '14px', fontWeight: 600, color: '#fff',
+                background: sections[sectionIndex + 1].color,
+                border: 'none', borderRadius: '10px', cursor: 'pointer',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+              }}>
+                {sections[sectionIndex + 1].label} →
+              </button>
+            ) : (
+              <div style={{ display: 'flex', gap: '12px' }}>
+                {semana.num < 10 && (
+                  <Link href={`/curso/semana/${semana.num + 1}`} className="nav-section-btn next-btn" style={{
+                    display: 'flex', alignItems: 'center', gap: '8px',
+                    padding: '12px 20px', fontSize: '14px', fontWeight: 600, color: '#fff',
+                    background: '#6366f1', borderRadius: '10px', textDecoration: 'none',
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                  }}>
+                    Semana {semana.num + 1} →
+                  </Link>
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* Semana nav bottom */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '16px', fontSize: '13px' }}>
+            {semana.num > 1 ? (
+              <Link href={`/curso/semana/${semana.num - 1}`} style={{ color: '#94a3b8', textDecoration: 'none' }}>
+                ← Semana {semana.num - 1}
+              </Link>
+            ) : <div />}
+            {semana.num < 10 ? (
+              <Link href={`/curso/semana/${semana.num + 1}`} style={{ color: '#94a3b8', textDecoration: 'none' }}>
+                Semana {semana.num + 1} →
+              </Link>
+            ) : <div />}
+          </div>
+        </main>
+      </div>
+
+      <style jsx global>{`
+        .pizarra-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4) !important; }
+        .nav-section-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.12) !important; }
+        .sidebar-btn:hover { background: rgba(255,255,255,0.7) !important; }
+        .complete-btn:hover { opacity: 0.9; }
+        @media (min-width: 769px) { .mobile-tabs { display: none !important; } .sidebar { display: block !important; } }
+        @media (max-width: 768px) {
+          .mobile-tabs { display: flex !important; } .sidebar { display: none !important; }
+          .layout-wrapper { padding: 16px !important; } .header-title { font-size: 14px !important; }
+          h2 { font-size: 20px !important; } .complete-btn { padding: 8px 12px !important; font-size: 12px !important; }
+        }
+      `}</style>
+    </div>
+  )
+}
+
+// === Standard single-day layout ===
 function SemanaContent({ semana }: { semana: Semana }) {
   const { toggle, ids, preclaseCompleted, claseCompleted, entregableCompleted } = useSemanaProgress(semana.num)
   const checklist = useChecklist(semana.num, semana.entregable.checklist.length)
@@ -1117,12 +1659,14 @@ function SemanaPage() {
   }
 
   return (
-    <CursoEmailGate>
-      <SemanaLockGuard semana={semana}>
-        <SemanaContent semana={semana} />
-      </SemanaLockGuard>
-    </CursoEmailGate>
+    <SemanaLockGuard semana={semana}>
+      {semana.dias ? <SemanaContentMultiDay semana={semana} /> : <SemanaContent semana={semana} />}
+    </SemanaLockGuard>
   )
 }
+
+(SemanaPage as NextPageWithLayout).getLayout = (page: ReactElement) => (
+  <CursoLayout>{page}</CursoLayout>
+)
 
 export default SemanaPage

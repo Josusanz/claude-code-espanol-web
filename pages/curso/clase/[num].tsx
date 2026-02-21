@@ -1,10 +1,23 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import type { ReactElement } from 'react'
+import CursoLayout from '../../../components/CursoLayout'
 import { getPizarra } from '../../../lib/curso-pizarra-data'
 import { PasoComponent } from '../../../components/curso-shared/PasoRenderer'
+import type { NextPageWithLayout } from '../../_app'
 
-export default function PizarraClasePage() {
+const PizarraClasePage: NextPageWithLayout = () => {
+  return <PizarraClaseContent />
+}
+
+PizarraClasePage.getLayout = (page: ReactElement) => (
+  <CursoLayout>{page}</CursoLayout>
+)
+
+export default PizarraClasePage
+
+function PizarraClaseContent() {
   const router = useRouter()
   const { num } = router.query
   const semanaNum = parseInt(num as string, 10)

@@ -1,7 +1,9 @@
 import Head from 'next/head'
 import { useState, useEffect } from 'react'
-import CursoEmailGate from '../../components/CursoEmailGate'
+import type { ReactElement } from 'react'
+import CursoLayout from '../../components/CursoLayout'
 import { THEMES, CATEGORIAS, type Theme } from '../../lib/themes-data'
+import type { NextPageWithLayout } from '../_app'
 
 function CopyButton({ text }: { text: string }) {
   const [copied, setCopied] = useState(false)
@@ -780,10 +782,10 @@ function ThemesGallery() {
   )
 }
 
-export default function ThemesPage() {
-  return (
-    <CursoEmailGate>
-      <ThemesGallery />
-    </CursoEmailGate>
-  )
-}
+const ThemesPage: NextPageWithLayout = () => <ThemesGallery />
+
+ThemesPage.getLayout = (page: ReactElement) => (
+  <CursoLayout>{page}</CursoLayout>
+)
+
+export default ThemesPage

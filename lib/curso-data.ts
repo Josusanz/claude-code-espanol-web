@@ -38,6 +38,13 @@ export interface Entregable {
   checklist: string[]
 }
 
+export interface DiaSemana {
+  titulo: string
+  emoji: string
+  preclase: PreClase
+  clase: ClaseEnVivo
+}
+
 export interface Semana {
   num: number
   titulo: string
@@ -47,6 +54,7 @@ export interface Semana {
   preclase: PreClase
   clase: ClaseEnVivo
   entregable: Entregable
+  dias?: DiaSemana[] // For multi-day weeks (e.g. LaunchPad)
 }
 
 // Fechas de inicio de cada semana (para desbloqueo automático)
@@ -70,6 +78,7 @@ export const CURSO_SEMANAS: Semana[] = [
     descripcion: 'Día 1 (Jue 19): Bienvenida y orientación · Día 2 (Vie 20): Tu primera web con Claude Code',
     fechaInicio: '2026-02-19',
     emoji: '🚀',
+    // Main preclase/clase kept as summary for backward compat with progress tracking
     preclase: {
       titulo: 'Preparación para el LaunchPad',
       duracion: '30 min',
@@ -78,17 +87,46 @@ export const CURSO_SEMANAS: Semana[] = [
 
 Este no es solo un curso técnico. Es un viaje de transformación donde vas a crear algo real, conectar con personas increíbles, y descubrir de qué eres capaz.
 
-La Semana 1 es especial: tiene **dos días**.
-- **Día 1 (Jueves 19)** — Nos conocemos, exploramos el ecosistema y nos orientamos
-- **Día 2 (Viernes 20)** — Construimos juntos tu primera web con Claude Code
+La Semana 1 es especial: tiene **dos días**. Usa las pestañas de arriba para ver la preparación y grabación de cada día.
+      `,
+      recursos: [
+        { titulo: 'Crear cuenta en Supabase', url: 'https://supabase.com', tipo: 'link' },
+        { titulo: 'Documentación Next.js App Router', url: 'https://nextjs.org/docs/app', tipo: 'link' },
+      ],
+    },
+    clase: {
+      fecha: '2026-02-19',
+      hora: '19:00 CET',
+      duracion: '2h + 2h',
+    },
+    entregable: {
+      titulo: 'Waitlist desplegada + Rueda del Creador',
+      descripcion: 'Tu waitlist funcionando en internet y tu Rueda del Creador compartida en Discord.',
+      fechaLimite: '2026-02-26',
+      checklist: [
+        'Rueda del Creador completada (se hace en la clase del Día 1)',
+        'Presentación hecha en la primera clase',
+        'Theme base elegido y personalizado',
+        'Proyecto creado a partir del theme',
+        'Landing page personalizada con formulario',
+        'Base de datos conectada (Supabase)',
+        'Emails guardándose correctamente',
+        'Desplegado en Vercel',
+        'CLAUDE.md creado en la raíz del proyecto',
+        'URL compartida en Discord',
+      ],
+    },
+    dias: [
+      {
+        titulo: 'Bienvenida y orientación',
+        emoji: '👋',
+        preclase: {
+          titulo: 'Preparación Día 1',
+          duracion: '10 min',
+          contenido: `
+## 📋 Antes del Día 1 (Jueves 19)
 
-Esta pre-clase tiene dos partes: lo que necesitas preparar para cada día.
-
----
-
-## 📋 ANTES DEL DÍA 1 (Jueves 19)
-
-El Día 1 es una sesión de bienvenida y orientación. No hay código. Ven preparado para conectar con el grupo.
+El Día 1 es una sesión de bienvenida y orientación. **No hay código.** Ven preparado para conectar con el grupo.
 
 ### 📝 Tu Presentación (2 minutos)
 
@@ -100,10 +138,52 @@ Prepara una mini-presentación para el Día 1:
 4. **Un dato curioso** — Algo personal que nos ayude a conocerte
 
 > No necesitas preparar nada técnico ni completar ningún ejercicio antes del Día 1. Solo tu presentación. La Rueda del Creador la haremos juntos durante la clase.
+          `,
+          recursos: [],
+        },
+        clase: {
+          fecha: '2026-02-19',
+          hora: '19:00 CET',
+          duracion: '2h',
+          videos: [
+            {
+              titulo: 'Día 1 — Bienvenida y conexión',
+              url: 'https://us02web.zoom.us/rec/share/1sjG06twWJxAgcoEFeGf5RZLRo8Ib8Ab1gTJ1FyOgU7J1DLe_-PZJO79KMtuEDJ0.75Kr_1vBWsqhEV7U?startTime=1771528087000',
+              tipo: 'link',
+              passcode: 'MH+%g63Q',
+            },
+          ],
+          notas: `
+**Bienvenida y conexión**
+- Bienvenida al curso y contexto
+- Ronda de presentaciones (2 min cada uno)
+- Hacemos juntos la Rueda del Creador
+- Ejercicio: dificultades y miedos — ¿qué te frena?
 
----
+**Conocer el ecosistema**
+- Tour del [dashboard del curso](/curso): semanas, progreso, pizarra
+- Cómo funciona la [pizarra de clase](/curso/clase/1): pasos en vivo
+- La [galería de themes](/curso/themes): 20 templates premium
+- La comunidad de [Discord](/precurso/discord): canales, cómo pedir ayuda
+- Cómo funciona la pre-clase y el entregable
 
-## 📋 ANTES DEL DÍA 2 (Viernes 20)
+**Tarea para mañana**
+- Leer la pre-clase del Día 2 (setup técnico + elegir theme)
+- Tener el terminal + Claude Code + Pencil listos
+- Crear la carpeta \`~/curso-ia\` y clonar los themes
+- Crear cuentas de Supabase y Vercel
+- Elegir un theme base de la galería
+          `,
+        },
+      },
+      {
+        titulo: 'Tu primera web con Claude Code',
+        emoji: '💻',
+        preclase: {
+          titulo: 'Setup técnico para el Día 2',
+          duracion: '25 min',
+          contenido: `
+## 📋 Antes del Día 2 (Viernes 20)
 
 El Día 2 es 100% práctico. Vamos a construir tu primera web con Claude Code. Necesitas tener todo el setup técnico listo **antes de empezar**.
 
@@ -156,6 +236,8 @@ Entra a [/curso/themes](/curso/themes) para explorar la galería completa. Para 
 En el Día 2, le diremos a Claude Code que personalice el theme con tu contenido.
 
 > **¿Por qué un theme?** Porque el diseño ya está resuelto. Tú te enfocas en tu mensaje y tu producto. Claude se encarga de adaptar colores, textos e imágenes.
+
+---
 
 ### 🧠 CLAUDE.md — El truco que marca la diferencia
 
@@ -298,73 +380,35 @@ La IA escribirá el código por ti. Tu trabajo es:
 1. Saber qué quieres
 2. Revisar que funcione
 3. Iterar hasta que esté perfecto
-      `,
-      recursos: [
-        { titulo: 'Crear cuenta en Supabase', url: 'https://supabase.com', tipo: 'link' },
-        { titulo: 'Documentación Next.js App Router', url: 'https://nextjs.org/docs/app', tipo: 'link' },
-      ],
-    },
-    clase: {
-      fecha: '2026-02-19',
-      hora: '19:00 CET',
-      duracion: '2h + 2h',
-      videos: [
-        {
-          titulo: 'Día 1 — Bienvenida y conexión',
-          url: 'https://us02web.zoom.us/rec/share/1sjG06twWJxAgcoEFeGf5RZLRo8Ib8Ab1gTJ1FyOgU7J1DLe_-PZJO79KMtuEDJ0.75Kr_1vBWsqhEV7U?startTime=1771528087000',
-          tipo: 'link',
-          passcode: 'MH+%g63Q',
+          `,
+          recursos: [
+            { titulo: 'Crear cuenta en Supabase', url: 'https://supabase.com', tipo: 'link' },
+            { titulo: 'Documentación Next.js App Router', url: 'https://nextjs.org/docs/app', tipo: 'link' },
+          ],
         },
-      ],
-      notas: `
-### Día 1 (Jueves 19)
-
-**Bienvenida y conexión**
-- Bienvenida al curso y contexto
-- Ronda de presentaciones (2 min cada uno)
-- Hacemos juntos la Rueda del Creador
-- Ejercicio: dificultades y miedos — ¿qué te frena?
-
-**Conocer el ecosistema**
-- Tour del [dashboard del curso](/curso): semanas, progreso, pizarra
-- Cómo funciona la [pizarra de clase](/curso/clase/1): pasos en vivo
-- La [galería de themes](/curso/themes): 20 templates premium
-- La comunidad de [Discord](/precurso/discord): canales, cómo pedir ayuda
-- Cómo funciona la pre-clase y el entregable
-
-**Tarea para mañana**
-- Leer la pre-clase completa (setup técnico + elegir theme)
-- Tener el terminal + Claude Code + Pencil listos
-- Crear la carpeta \`~/curso-ia\` y clonar los themes
-- Crear cuentas de Supabase y Vercel
-- Elegir un theme base de la galería
-
-### Día 2 (Viernes 20)
+        clase: {
+          fecha: '2026-02-20',
+          hora: '19:00 CET',
+          duracion: '2h',
+          videos: [
+            {
+              titulo: 'Día 2 — Tu primera web con Claude Code',
+              url: 'https://us02web.zoom.us/rec/share/vlIuuI9VmGKf8F_BhBpFwcmB7BbQs3FNuIF8j-ZqBUMNt2vZlpOJCxfR32MJmhgF.R0cfGOCGCDLzP2Sh?startTime=1771614427000',
+              tipo: 'link',
+              passcode: '1l!Kz*ra',
+            },
+          ],
+          notas: `
 - Elegimos el theme base y lo personalizamos con Claude Code
 - Personalizamos el theme con Claude Code (colores, textos, imágenes)
 - Implementamos el formulario de captura de emails
 - Conectamos Supabase
 - Creamos el panel admin
 - Desplegamos en Vercel
-      `,
-    },
-    entregable: {
-      titulo: 'Waitlist desplegada + Rueda del Creador',
-      descripcion: 'Tu waitlist funcionando en internet y tu Rueda del Creador compartida en Discord.',
-      fechaLimite: '2026-02-26',
-      checklist: [
-        'Rueda del Creador completada (se hace en la clase del Día 1)',
-        'Presentación hecha en la primera clase',
-        'Theme base elegido y personalizado',
-        'Proyecto creado a partir del theme',
-        'Landing page personalizada con formulario',
-        'Base de datos conectada (Supabase)',
-        'Emails guardándose correctamente',
-        'Desplegado en Vercel',
-        'CLAUDE.md creado en la raíz del proyecto',
-        'URL compartida en Discord',
-      ],
-    },
+          `,
+        },
+      },
+    ],
   },
   {
     num: 2,

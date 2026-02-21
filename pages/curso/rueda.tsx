@@ -1,8 +1,10 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
-import CursoEmailGate from '../../components/CursoEmailGate'
+import type { ReactElement } from 'react'
+import CursoLayout from '../../components/CursoLayout'
 import DualRueda, { DualRuedaState } from '../../components/DualRueda'
+import type { NextPageWithLayout } from '../_app'
 
 function getUserEmail(): string | null {
   if (typeof window === 'undefined') return null
@@ -171,10 +173,10 @@ function RuedaPageContent() {
   )
 }
 
-export default function RuedaPage() {
-  return (
-    <CursoEmailGate>
-      <RuedaPageContent />
-    </CursoEmailGate>
-  )
-}
+const RuedaPage: NextPageWithLayout = () => <RuedaPageContent />
+
+RuedaPage.getLayout = (page: ReactElement) => (
+  <CursoLayout activeNav="rueda">{page}</CursoLayout>
+)
+
+export default RuedaPage

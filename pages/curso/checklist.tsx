@@ -1,6 +1,8 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import CursoEmailGate from '../../components/CursoEmailGate'
+import type { ReactElement } from 'react'
+import CursoLayout from '../../components/CursoLayout'
+import type { NextPageWithLayout } from '../_app'
 
 const CHECKLIST_ITEMS = [
   {
@@ -335,10 +337,10 @@ function ChecklistContent() {
   )
 }
 
-export default function ChecklistPage() {
-  return (
-    <CursoEmailGate>
-      <ChecklistContent />
-    </CursoEmailGate>
-  )
-}
+const ChecklistPage: NextPageWithLayout = () => <ChecklistContent />
+
+ChecklistPage.getLayout = (page: ReactElement) => (
+  <CursoLayout>{page}</CursoLayout>
+)
+
+export default ChecklistPage
