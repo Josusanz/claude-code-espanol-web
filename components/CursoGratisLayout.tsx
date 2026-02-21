@@ -279,7 +279,6 @@ export default function CursoGratisLayout({ children }: { children: ReactNode })
           flex: 1,
           minWidth: 0,
           padding: '40px 48px 60px',
-          maxWidth: '900px',
         }}>
           {/* MDX content */}
           <div className="curso-gratis-content">
