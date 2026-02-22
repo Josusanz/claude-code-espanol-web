@@ -44,9 +44,12 @@ export default function AdminCursoDashboard() {
         const data = await progressRes.json()
         setUsers(data.users || [])
         setStats(data.stats || null)
+        if ((data.users || []).length === 0) {
+          setError('La API respondió OK pero devolvió 0 alumnos. Puede que precurso:emails esté vacío en KV.')
+        }
       } else {
         const errData = await progressRes.json().catch(() => ({}))
-        setError(`Error cargando alumnos: ${errData.error || `HTTP ${progressRes.status}`}`)
+        setError(`Error cargando alumnos: ${errData.error || `HTTP ${progressRes.status}`}${errData.details ? ` — ${errData.details}` : ''}`)
       }
       if (configRes.ok) {
         const data = await configRes.json()

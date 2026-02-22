@@ -14,7 +14,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   try {
     const users = await getAllCursoUsers()
-    const stats = await getCursoStats()
+    const stats = await getCursoStats(users)
 
     return res.status(200).json({
       success: true,
@@ -23,6 +23,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     })
   } catch (error) {
     console.error('Error getting curso progress:', error)
-    return res.status(500).json({ error: 'Error obteniendo progreso' })
+    return res.status(500).json({ error: 'Error obteniendo progreso', details: String(error) })
   }
 }

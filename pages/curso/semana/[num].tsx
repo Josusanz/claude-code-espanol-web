@@ -336,7 +336,7 @@ function SemanaContentMultiDay({ semana }: { semana: Semana }) {
   const handleLogout = () => {
     localStorage.removeItem('precurso-access')
     localStorage.removeItem('curso-progress')
-    window.location.href = '/curso'
+    window.location.href = '/curso/contenido'
   }
 
   // Parse active key (format: d1-prep, d1-clase, d1-grab, d1-entregable, d2-prep, etc.)
@@ -378,7 +378,7 @@ function SemanaContentMultiDay({ semana }: { semana: Semana }) {
         alignItems: 'center',
         justifyContent: 'space-between',
       }}>
-        <Link href="/curso" style={{ color: '#64748b', textDecoration: 'none', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+        <Link href="/curso/contenido" style={{ color: '#64748b', textDecoration: 'none', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '6px' }}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="15 18 9 12 15 6"/></svg>
           Curso
         </Link>
@@ -430,7 +430,7 @@ function SemanaContentMultiDay({ semana }: { semana: Semana }) {
         }}>
           {/* Back link + title */}
           <div style={{ padding: '20px 20px 16px', borderBottom: '1px solid rgba(0,0,0,0.06)' }}>
-            <Link href="/curso" style={{
+            <Link href="/curso/contenido" style={{
               display: 'flex', alignItems: 'center', gap: '8px',
               color: '#64748b', textDecoration: 'none', fontSize: '13px', fontWeight: 500,
               marginBottom: '16px',
@@ -959,7 +959,7 @@ function SemanaContent({ semana }: { semana: Semana }) {
   const handleLogout = () => {
     localStorage.removeItem('precurso-access')
     localStorage.removeItem('curso-progress')
-    window.location.href = '/curso'
+    window.location.href = '/curso/contenido'
   }
 
   const sidebarColors: Record<SectionKey, string> = {
@@ -994,7 +994,7 @@ function SemanaContent({ semana }: { semana: Semana }) {
         alignItems: 'center',
         justifyContent: 'space-between',
       }}>
-        <Link href="/curso" style={{ color: '#64748b', textDecoration: 'none', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+        <Link href="/curso/contenido" style={{ color: '#64748b', textDecoration: 'none', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '6px' }}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="15 18 9 12 15 6"/></svg>
           Curso
         </Link>
@@ -1058,7 +1058,7 @@ function SemanaContent({ semana }: { semana: Semana }) {
         }}>
           {/* Back link + semana info */}
           <div style={{ padding: '20px 20px 16px', borderBottom: '1px solid rgba(0,0,0,0.06)' }}>
-            <Link href="/curso" style={{
+            <Link href="/curso/contenido" style={{
               display: 'flex', alignItems: 'center', gap: '8px',
               color: '#64748b', textDecoration: 'none', fontSize: '13px', fontWeight: 500,
               marginBottom: '16px',
@@ -1836,7 +1836,7 @@ function SemanaLockGuard({ semana, children }: { semana: Semana; children: React
           <p style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.6, marginBottom: '28px' }}>
             Esta semana aún no está disponible. Se desbloqueará cuando el instructor la active.
           </p>
-          <Link href="/curso" style={{
+          <Link href="/curso/contenido" style={{
             display: 'inline-flex',
             alignItems: 'center',
             gap: '8px',
@@ -1895,7 +1895,7 @@ function SemanaPage() {
       }}>
         <div style={{ textAlign: 'center' }}>
           <h1 style={{ fontSize: '24px', marginBottom: '16px' }}>Semana no encontrada</h1>
-          <Link href="/curso" style={{ color: '#6366f1' }}>← Volver al curso</Link>
+          <Link href="/curso/contenido" style={{ color: '#6366f1' }}>← Volver al curso</Link>
         </div>
       </div>
     )
@@ -1916,7 +1916,7 @@ function SemanaPage() {
       }}>
         <div style={{ textAlign: 'center' }}>
           <h1 style={{ fontSize: '24px', marginBottom: '16px' }}>Semana no encontrada</h1>
-          <Link href="/curso" style={{ color: '#6366f1' }}>← Volver al curso</Link>
+          <Link href="/curso/contenido" style={{ color: '#6366f1' }}>← Volver al curso</Link>
         </div>
       </div>
     )

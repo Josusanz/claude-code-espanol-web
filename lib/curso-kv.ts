@@ -107,21 +107,19 @@ export async function getAllCursoUsers(): Promise<CursoUser[]> {
   // Usar siempre los emails del precurso como fuente de verdad
   const emails = await getCursoEmails()
 
-  const users: CursoUser[] = []
+  // Fetch all users in parallel instead of sequentially
+  const userResults = await Promise.all(
+    emails.map(email => getCursoUser(email).then(user => ({ email, user })))
+  )
 
-  for (const email of emails) {
-    const user = await getCursoUser(email)
-    if (user) {
-      users.push(user)
-    } else {
-      // Si hay un email pero no tiene registro de usuario del curso, crear uno básico
-      users.push({
-        email,
-        enrolledAt: new Date().toISOString(),
-        progress: {},
-      })
+  const users: CursoUser[] = userResults.map(({ email, user }) => {
+    if (user) return user
+    return {
+      email,
+      enrolledAt: new Date().toISOString(),
+      progress: {},
     }
-  }
+  })
 
   // Ordenar por fecha de registro (más recientes primero)
   return users.sort((a, b) =>
@@ -185,8 +183,8 @@ export interface CursoStats {
   porSemana: Record<number, { completados: number; enProgreso: number }>
 }
 
-export async function getCursoStats(): Promise<CursoStats> {
-  const users = await getAllCursoUsers()
+export async function getCursoStats(preloadedUsers?: CursoUser[]): Promise<CursoStats> {
+  const users = preloadedUsers || await getAllCursoUsers()
   const ahora = new Date()
   const haceUnaSemana = new Date(ahora.getTime() - 7 * 24 * 60 * 60 * 1000)
 
