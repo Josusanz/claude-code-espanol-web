@@ -24,18 +24,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       ? `semana-${semanaNum}-d${dayNum}-clase`
       : `semana-${semanaNum}-clase`
 
-    // Get current user progress
+    // Get current user progress (may be null if KV entry is corrupted)
     const user = await getCursoUser(email)
-    if (!user) {
-      return res.status(404).json({ error: 'Usuario no encontrado' })
-    }
-
-    const oldProgress = { ...user.progress }
+    const currentProgress = user?.progress || {}
+    const oldProgress = { ...currentProgress }
 
     // Update the specific attendance key
-    const updatedProgress = { ...user.progress, [trackingKey]: attended }
+    const updatedProgress = { ...currentProgress, [trackingKey]: attended }
 
-    // Sync progress
+    // Sync progress (creates user if doesn't exist)
     await syncCursoProgress(email, updatedProgress)
 
     // Award points for the new attendance (best-effort)
