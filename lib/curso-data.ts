@@ -922,7 +922,7 @@ export function isSemanaDesbloqueadaPorFecha(semanaNum: number): boolean {
   return hoy >= fechaSemana
 }
 
-// IDs de tracking para el progreso
+// IDs de tracking para el progreso (backward compatible — single-day format)
 export function getCursoTrackingIds(semanaNum: number): {
   preclase: string
   clase: string
@@ -933,4 +933,26 @@ export function getCursoTrackingIds(semanaNum: number): {
     clase: `semana-${semanaNum}-clase`,
     entregable: `semana-${semanaNum}-entregable`,
   }
+}
+
+// IDs de tracking por semana — genera IDs multi-día para S1/S5
+export function getCursoTrackingIdsForSemana(semanaNum: number): string[] {
+  const semana = CURSO_SEMANAS.find(s => s.num === semanaNum)
+  if (semana?.dias) {
+    return semana.dias.flatMap((_, i) => [
+      `semana-${semanaNum}-d${i + 1}-preclase`,
+      `semana-${semanaNum}-d${i + 1}-clase`,
+      `semana-${semanaNum}-d${i + 1}-entregable`,
+    ])
+  }
+  return [
+    `semana-${semanaNum}-preclase`,
+    `semana-${semanaNum}-clase`,
+    `semana-${semanaNum}-entregable`,
+  ]
+}
+
+// Total de items de tracking en todo el curso
+export function getCursoTotalItems(): number {
+  return CURSO_SEMANAS.reduce((acc, s) => acc + (s.dias ? s.dias.length * 3 : 3), 0)
 }

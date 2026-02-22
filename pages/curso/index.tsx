@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import type { ReactElement } from 'react'
 import CursoLayout from '../../components/CursoLayout'
 import CursoEmailGate from '../../components/CursoEmailGate'
-import { CURSO_SEMANAS, getCursoTrackingIds } from '../../lib/curso-data'
+import { CURSO_SEMANAS, getCursoTrackingIdsForSemana, getCursoTotalItems } from '../../lib/curso-data'
 import { PRECURSO_PAGES, usePrecursoProgress } from '../../lib/precurso-data'
 import { getLevel } from '../../lib/curso-puntos'
 import type { NextPageWithLayout } from '../_app'
@@ -87,14 +87,18 @@ function useCursoProgress() {
   }
 
   const getSemanaProgress = (semanaNum: number) => {
-    const ids = getCursoTrackingIds(semanaNum)
-    const completed = [ids.preclase, ids.clase, ids.entregable].filter(id => progress[id]).length
-    return { completed, total: 3, percentage: (completed / 3) * 100 }
+    const ids = getCursoTrackingIdsForSemana(semanaNum)
+    const completed = ids.filter(id => progress[id]).length
+    const total = ids.length
+    return { completed, total, percentage: total > 0 ? (completed / total) * 100 : 0 }
   }
 
-  const totalItems = 30
-  const completedItems = Object.values(progress).filter(Boolean).length
-  const totalPercentage = (completedItems / totalItems) * 100
+  const totalItems = getCursoTotalItems()
+  const completedItems = CURSO_SEMANAS.reduce((acc, s) => {
+    const ids = getCursoTrackingIdsForSemana(s.num)
+    return acc + ids.filter(id => progress[id]).length
+  }, 0)
+  const totalPercentage = totalItems > 0 ? (completedItems / totalItems) * 100 : 0
 
   return {
     progress, semanasStatus, loading, toggleProgress, getSemanaProgress,
@@ -464,7 +468,7 @@ function CursoDashboard() {
                     }} />
                   </div>
                   <span style={{ fontSize: '12px', fontWeight: 600, color: isComplete ? '#16a34a' : '#5e6ad2', minWidth: '24px', textAlign: 'right' }}>
-                    {completed}/3
+                    {completed}/{getSemanaProgress(semana.num).total}
                   </span>
                 </div>
               )}

@@ -1,5 +1,9 @@
 import { kv } from '@vercel/kv'
 
+// ============= Admin =============
+
+const ADMIN_EMAIL = (process.env.ADMIN_EMAIL || 'j.sanzuriz@gmail.com').toLowerCase().trim()
+
 // ============= Tipos =============
 
 export interface PuntosHistorial {
@@ -125,8 +129,8 @@ export async function awardPoints(
 }
 
 export async function getRanking(limit: number = 20): Promise<RankingEntry[]> {
-  // zrange con rev para obtener de mayor a menor
-  const members = await kv.zrange<string[]>(RANKING_KEY, 0, limit - 1, { rev: true, withScores: true })
+  // Fetch extra to account for admin being filtered out
+  const members = await kv.zrange<string[]>(RANKING_KEY, 0, limit + 1, { rev: true, withScores: true })
 
   if (!members || members.length === 0) return []
 
@@ -135,6 +139,8 @@ export async function getRanking(limit: number = 20): Promise<RankingEntry[]> {
   for (let i = 0; i < members.length; i += 2) {
     const email = members[i] as string
     const total = Number(members[i + 1])
+    // Excluir admin del ranking público
+    if (email === ADMIN_EMAIL) continue
     entries.push({
       email,
       total,
@@ -142,7 +148,7 @@ export async function getRanking(limit: number = 20): Promise<RankingEntry[]> {
     })
   }
 
-  return entries
+  return entries.slice(0, limit)
 }
 
 // Helper para calcular puntos de progreso completado
@@ -162,33 +168,37 @@ export async function awardProgressPoints(
       await awardPoints(email, PUNTOS_TABLE['modulo0-leccion'], 'Lección del Módulo 0 completada', `m0:${key}`)
     }
 
-    // Preclase semanal
-    if (key.match(/^semana-\d+-preclase$/)) {
-      const num = key.match(/\d+/)![0]
-      await awardPoints(email, PUNTOS_TABLE['preclase-semanal'], `Pre-clase Semana ${num}`, key)
+    // Preclase semanal (single-day: semana-X-preclase, multi-day: semana-X-dY-preclase)
+    if (key.match(/^semana-\d+-preclase$/) || key.match(/^semana-\d+-d\d+-preclase$/)) {
+      const semNum = key.match(/^semana-(\d+)/)![1]
+      const dayMatch = key.match(/d(\d+)/)
+      const label = dayMatch ? `Pre-clase Semana ${semNum} Día ${dayMatch[1]}` : `Pre-clase Semana ${semNum}`
+      await awardPoints(email, PUNTOS_TABLE['preclase-semanal'], label, key)
     }
 
-    // Clase semanal
-    if (key.match(/^semana-\d+-clase$/)) {
-      const num = key.match(/\d+/)![0]
-      await awardPoints(email, PUNTOS_TABLE['clase-semanal'], `Clase Semana ${num}`, key)
+    // Clase semanal (single-day + multi-day)
+    if (key.match(/^semana-\d+-clase$/) || key.match(/^semana-\d+-d\d+-clase$/)) {
+      const semNum = key.match(/^semana-(\d+)/)![1]
+      const dayMatch = key.match(/d(\d+)/)
+      const label = dayMatch ? `Clase Semana ${semNum} Día ${dayMatch[1]}` : `Clase Semana ${semNum}`
+      await awardPoints(email, PUNTOS_TABLE['clase-semanal'], label, key)
     }
 
-    // Entregable semanal
-    if (key.match(/^semana-\d+-entregable$/)) {
-      const num = key.match(/\d+/)![0]
-      await awardPoints(email, PUNTOS_TABLE['entregable-semanal'], `Entregable Semana ${num}`, key)
+    // Entregable semanal (single-day + multi-day)
+    if (key.match(/^semana-\d+-entregable$/) || key.match(/^semana-\d+-d\d+-entregable$/)) {
+      const semNum = key.match(/^semana-(\d+)/)![1]
+      const dayMatch = key.match(/d(\d+)/)
+      const label = dayMatch ? `Entregable Semana ${semNum} Día ${dayMatch[1]}` : `Entregable Semana ${semNum}`
+      await awardPoints(email, PUNTOS_TABLE['entregable-semanal'], label, key)
     }
   }
 
-  // Bonus semana completa (3/3)
+  // Bonus semana completa — check all tracking IDs for the week
+  const { getCursoTrackingIdsForSemana } = await import('./curso-data')
   for (let i = 1; i <= 10; i++) {
-    const pre = `semana-${i}-preclase`
-    const cls = `semana-${i}-clase`
-    const ent = `semana-${i}-entregable`
-
-    const wasComplete = oldProgress[pre] && oldProgress[cls] && oldProgress[ent]
-    const isComplete = newProgress[pre] && newProgress[cls] && newProgress[ent]
+    const ids = getCursoTrackingIdsForSemana(i)
+    const wasComplete = ids.every(id => oldProgress[id])
+    const isComplete = ids.every(id => newProgress[id])
 
     if (isComplete && !wasComplete) {
       await awardPoints(email, PUNTOS_TABLE['bonus-semana-completa'], `Bonus: Semana ${i} completa`, `bonus-semana-${i}`)

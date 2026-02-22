@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import React, { useState, useEffect, useRef } from 'react'
 import type { ReactElement } from 'react'
 import CursoEmailGate from '../../../components/CursoEmailGate'
-import { CURSO_SEMANAS, getCursoTrackingIds, Semana, DiaSemana } from '../../../lib/curso-data'
+import { CURSO_SEMANAS, getCursoTrackingIds, getCursoTrackingIdsForSemana, Semana, DiaSemana } from '../../../lib/curso-data'
 import { renderPreclaseContent } from '../../../components/curso-shared/ContentRenderer'
 import type { NextPageWithLayout } from '../../_app'
 
@@ -27,6 +27,9 @@ function useSemanaProgress(semanaNum: number) {
   const [loading, setLoading] = useState(true)
   const [userEmail, setUserEmail] = useState<string | null>(null)
   const ids = getCursoTrackingIds(semanaNum)
+  const allIds = getCursoTrackingIdsForSemana(semanaNum)
+  const semana = CURSO_SEMANAS.find(s => s.num === semanaNum)
+  const isMultiDay = !!semana?.dias
 
   useEffect(() => {
     const email = getUserEmail()
@@ -99,15 +102,25 @@ function useSemanaProgress(semanaNum: number) {
     }
   }
 
+  // Multi-day helpers
+  const getDayIds = (dayNum: number) => ({
+    preclase: `semana-${semanaNum}-d${dayNum}-preclase`,
+    clase: `semana-${semanaNum}-d${dayNum}-clase`,
+    entregable: `semana-${semanaNum}-d${dayNum}-entregable`,
+  })
+
   return {
     progress,
     loading,
     toggle,
     markComplete,
     ids,
+    allIds,
+    isMultiDay,
+    getDayIds,
     preclaseCompleted: progress[ids.preclase] || false,
     claseCompleted: progress[ids.clase] || false,
-    entregableCompleted: progress[ids.entregable] || false
+    entregableCompleted: progress[ids.entregable] || false,
   }
 }
 
@@ -227,7 +240,7 @@ const DAY_SUB_SECTIONS = [
 ]
 
 function SemanaContentMultiDay({ semana }: { semana: Semana }) {
-  const { toggle, markComplete, ids, preclaseCompleted, claseCompleted, entregableCompleted } = useSemanaProgress(semana.num)
+  const { toggle, markComplete, progress, getDayIds } = useSemanaProgress(semana.num)
   const [activeKey, setActiveKey] = useState<MultiDayNavKey>('d1-prep')
   const dias = semana.dias!
 
@@ -235,7 +248,24 @@ function SemanaContentMultiDay({ semana }: { semana: Semana }) {
   const activeDayIdx = parseInt(activeKey.split('-')[0].replace('d', '')) - 1
   const activeDayEntregable = dias[activeDayIdx]?.entregable
   const checklistKey = `${semana.num}-d${activeDayIdx + 1}`
-  const checklist = useChecklist(checklistKey, activeDayEntregable?.checklist.length || 0, () => markComplete(ids.entregable))
+  const dayIds = getDayIds(activeDayIdx + 1)
+  const checklist = useChecklist(checklistKey, activeDayEntregable?.checklist.length || 0, () => markComplete(dayIds.entregable))
+
+  // Per-day progress
+  const dayProgress = (dayNum: number) => {
+    const dIds = getDayIds(dayNum)
+    return {
+      preclase: progress[dIds.preclase] || false,
+      clase: progress[dIds.clase] || false,
+      entregable: progress[dIds.entregable] || false,
+    }
+  }
+  const currentDayProgress = dayProgress(activeDayIdx + 1)
+  const totalCompleted = dias.reduce((acc, _, i) => {
+    const dp = dayProgress(i + 1)
+    return acc + [dp.preclase, dp.clase, dp.entregable].filter(Boolean).length
+  }, 0)
+  const totalItems = dias.length * 3
 
   // Build flat nav list for prev/next navigation
   const allNavKeys: MultiDayNavKey[] = []
@@ -424,13 +454,16 @@ function SemanaContentMultiDay({ semana }: { semana: Semana }) {
           {/* Progress */}
           <div style={{ padding: '12px 16px', borderTop: '1px solid rgba(0,0,0,0.06)' }}>
             <p style={{ margin: '0 0 8px', fontSize: '12px', fontWeight: 600, color: '#94a3b8' }}>Progreso</p>
-            <div style={{ display: 'flex', gap: '6px' }}>
-              <div style={{ flex: 1, height: '6px', borderRadius: '3px', background: preclaseCompleted ? '#22c55e' : '#e2e8f0', transition: 'background 0.3s' }} />
-              <div style={{ flex: 1, height: '6px', borderRadius: '3px', background: claseCompleted ? '#22c55e' : '#e2e8f0', transition: 'background 0.3s' }} />
-              <div style={{ flex: 1, height: '6px', borderRadius: '3px', background: entregableCompleted ? '#22c55e' : '#e2e8f0', transition: 'background 0.3s' }} />
+            <div style={{ display: 'flex', gap: '4px' }}>
+              {dias.map((_, i) => {
+                const dp = dayProgress(i + 1)
+                return [dp.preclase, dp.clase, dp.entregable].map((done, j) => (
+                  <div key={`${i}-${j}`} style={{ flex: 1, height: '6px', borderRadius: '3px', background: done ? '#22c55e' : '#e2e8f0', transition: 'background 0.3s' }} />
+                ))
+              })}
             </div>
             <p style={{ margin: '8px 0 0', fontSize: '12px', color: '#64748b' }}>
-              {[preclaseCompleted, claseCompleted, entregableCompleted].filter(Boolean).length}/3 completados
+              {totalCompleted}/{totalItems} completados
             </p>
           </div>
         </aside>
@@ -452,7 +485,7 @@ function SemanaContentMultiDay({ semana }: { semana: Semana }) {
                     {activeDia.preclase.titulo} • {activeDia.preclase.duracion}
                   </p>
                 </div>
-                {preclaseCompleted && (
+                {currentDayProgress.preclase && (
                   <span style={{
                     padding: '8px 14px', fontSize: '12px', fontWeight: 600,
                     color: '#22c55e', background: 'rgba(34, 197, 94, 0.1)',
@@ -464,7 +497,7 @@ function SemanaContentMultiDay({ semana }: { semana: Semana }) {
                 )}
               </div>
 
-              {renderPreclaseContent(activeDia.preclase.contenido, () => markComplete(ids.preclase))}
+              {renderPreclaseContent(activeDia.preclase.contenido, () => markComplete(dayIds.preclase))}
 
               {activeDia.preclase.recursos.length > 0 && (
                 <div style={{
@@ -502,6 +535,24 @@ function SemanaContentMultiDay({ semana }: { semana: Semana }) {
                 <p style={{ margin: 0, fontSize: '14px', color: '#64748b' }}>
                   {activeDia.clase.fecha} • {activeDia.clase.hora} • {activeDia.clase.duracion}
                 </p>
+              </div>
+
+              {/* Attendance status (readonly — marked by instructor) */}
+              <div style={{
+                background: currentDayProgress.clase ? '#f0fdf4' : '#fffbeb',
+                border: `1px solid ${currentDayProgress.clase ? 'rgba(34, 197, 94, 0.2)' : 'rgba(245, 158, 11, 0.2)'}`,
+                borderRadius: '12px', padding: '14px 18px', marginBottom: '12px',
+                display: 'flex', alignItems: 'center', gap: '12px',
+              }}>
+                <span style={{ fontSize: '18px' }}>{currentDayProgress.clase ? '✅' : '⏳'}</span>
+                <div>
+                  <p style={{ margin: 0, fontSize: '14px', fontWeight: 600, color: currentDayProgress.clase ? '#16a34a' : '#92400e' }}>
+                    {currentDayProgress.clase ? 'Asistencia confirmada' : 'Pendiente de confirmación'}
+                  </p>
+                  <p style={{ margin: '2px 0 0', fontSize: '12px', color: currentDayProgress.clase ? '#22c55e' : '#b45309' }}>
+                    {currentDayProgress.clase ? 'El instructor ha confirmado tu asistencia' : 'El instructor confirmará tu asistencia después de la clase'}
+                  </p>
+                </div>
               </div>
 
               {/* Zoom card */}
@@ -679,7 +730,7 @@ function SemanaContentMultiDay({ semana }: { semana: Semana }) {
                     {activeDia.entregable.titulo} • Fecha límite: {activeDia.entregable.fechaLimite}
                   </p>
                 </div>
-                {entregableCompleted && (
+                {currentDayProgress.entregable && (
                   <span style={{
                     padding: '10px 16px', fontSize: '13px', fontWeight: 600,
                     color: '#22c55e', background: 'rgba(34, 197, 94, 0.1)',
@@ -813,7 +864,7 @@ function SemanaContentMultiDay({ semana }: { semana: Semana }) {
 
 // === Standard single-day layout ===
 function SemanaContent({ semana }: { semana: Semana }) {
-  const { toggle, markComplete, ids, preclaseCompleted, claseCompleted, entregableCompleted } = useSemanaProgress(semana.num)
+  const { toggle, markComplete, ids, progress, preclaseCompleted, claseCompleted, entregableCompleted } = useSemanaProgress(semana.num)
   const checklist = useChecklist(semana.num, semana.entregable.checklist.length, () => markComplete(ids.entregable))
   const [activeSection, setActiveSection] = useState<SectionKey>('preclase')
 
@@ -1131,6 +1182,24 @@ function SemanaContent({ semana }: { semana: Semana }) {
                 <p style={{ margin: 0, fontSize: '14px', color: '#64748b' }}>
                   {semana.clase.fecha} • {semana.clase.hora} • {semana.clase.duracion}
                 </p>
+              </div>
+
+              {/* Attendance status (readonly — marked by instructor) */}
+              <div style={{
+                background: claseCompleted ? '#f0fdf4' : '#fffbeb',
+                border: `1px solid ${claseCompleted ? 'rgba(34, 197, 94, 0.2)' : 'rgba(245, 158, 11, 0.2)'}`,
+                borderRadius: '12px', padding: '14px 18px', marginBottom: '12px',
+                display: 'flex', alignItems: 'center', gap: '12px',
+              }}>
+                <span style={{ fontSize: '18px' }}>{claseCompleted ? '✅' : '⏳'}</span>
+                <div>
+                  <p style={{ margin: 0, fontSize: '14px', fontWeight: 600, color: claseCompleted ? '#16a34a' : '#92400e' }}>
+                    {claseCompleted ? 'Asistencia confirmada' : 'Pendiente de confirmación'}
+                  </p>
+                  <p style={{ margin: '2px 0 0', fontSize: '12px', color: claseCompleted ? '#22c55e' : '#b45309' }}>
+                    {claseCompleted ? 'El instructor ha confirmado tu asistencia' : 'El instructor confirmará tu asistencia después de la clase'}
+                  </p>
+                </div>
               </div>
 
               {/* Zoom card */}
