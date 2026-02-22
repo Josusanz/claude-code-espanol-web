@@ -202,6 +202,53 @@ function PizarraClaseContent() {
           ))}
         </div>
 
+        {/* Video embed */}
+        {pizarra.videoEmbed && (
+          <div style={{
+            marginTop: '32px',
+            background: 'white',
+            borderRadius: '12px',
+            padding: '24px',
+            border: '1px solid #e2e8f0',
+            boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
+          }}>
+            <h3 style={{
+              margin: '0 0 16px',
+              fontSize: '18px',
+              fontWeight: 600,
+              color: '#1e293b',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+            }}>
+              <span>🎬</span> Grabación de la clase
+            </h3>
+            <div style={{
+              position: 'relative',
+              paddingBottom: '62.5%',
+              height: 0,
+              background: '#0f172a',
+              borderRadius: '10px',
+              overflow: 'hidden',
+            }}>
+              <iframe
+                src={pizarra.videoEmbed}
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  border: 'none',
+                }}
+                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+              />
+            </div>
+          </div>
+        )}
+
         {/* Footer */}
         <div style={{
           marginTop: '48px',
