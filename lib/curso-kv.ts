@@ -77,7 +77,13 @@ export async function isEmailAuthorizedForCurso(email: string): Promise<boolean>
 
 export async function getCursoUser(email: string): Promise<CursoUser | null> {
   const normalizedEmail = email.toLowerCase().trim()
-  return await kv.get<CursoUser>(`${USER_KEY_PREFIX}${normalizedEmail}`)
+  try {
+    return await kv.get<CursoUser>(`${USER_KEY_PREFIX}${normalizedEmail}`)
+  } catch {
+    // WRONGTYPE or other KV error — treat as no user data
+    console.error(`Error reading curso user ${normalizedEmail}, skipping`)
+    return null
+  }
 }
 
 export async function createOrGetCursoUser(email: string): Promise<CursoUser> {
