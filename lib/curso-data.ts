@@ -232,7 +232,12 @@ Comprueba que tienes TODO listo. Si algo falla, pregunta en Discord ANTES de la 
           zoomUrl: 'https://us02web.zoom.us/j/81636452979',
           videos: [
             {
-              titulo: 'Día 2 — Setup técnico + Tu primera web',
+              titulo: 'Setup + Tu Primera Web',
+              url: 'https://player.vimeo.com/video/1167179208?badge=0&autopause=0&player_id=0&app_id=58479',
+              tipo: 'embed',
+            },
+            {
+              titulo: 'Día 2 — Grabación completa (Zoom)',
               url: 'https://us02web.zoom.us/rec/share/9pLJ99rztxAuKQYnmOF1Wc-HhoRt_pnv94Q870qjM3AUt9SedE2lnovkFQW_KB1i.F97T69_rcMwgkZ5o?startTime=1771610718000',
               tipo: 'link',
               passcode: 'z?hF3Sn=',
