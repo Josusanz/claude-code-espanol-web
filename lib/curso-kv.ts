@@ -104,12 +104,8 @@ export async function syncCursoProgress(
 }
 
 export async function getAllCursoUsers(): Promise<CursoUser[]> {
-  // Primero obtener emails del curso, si no hay, usar los del precurso
-  let emails = await kv.smembers(EMAILS_SET_KEY) as string[]
-
-  if (emails.length === 0) {
-    emails = await getCursoEmails()
-  }
+  // Usar siempre los emails del precurso como fuente de verdad
+  const emails = await getCursoEmails()
 
   const users: CursoUser[] = []
 
