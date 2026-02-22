@@ -57,8 +57,11 @@ function useCursoProgress() {
           if (res.ok) {
             const data = await res.json()
             if (data.progress) {
-              setProgress(prev => ({ ...prev, ...data.progress }))
-              localStorage.setItem('curso-progress', JSON.stringify({ ...data.progress }))
+              setProgress(prev => {
+                const merged = { ...prev, ...data.progress }
+                localStorage.setItem('curso-progress', JSON.stringify(merged))
+                return merged
+              })
             }
           }
         } catch { /* ignore */ }

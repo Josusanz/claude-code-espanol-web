@@ -1,4 +1,5 @@
 import { kv } from '@vercel/kv'
+import { getCursoTrackingIdsForSemana, getCursoTotalItems } from './curso-data'
 
 // Tipos
 export interface CursoUser {
@@ -202,29 +203,29 @@ export async function getCursoStats(): Promise<CursoStats> {
     porSemana[i] = { completados: 0, enProgreso: 0 }
   }
 
+  const totalItems = getCursoTotalItems()
+
   for (const user of users) {
     // Verificar si es activo
     if (user.lastSyncAt && new Date(user.lastSyncAt) >= haceUnaSemana) {
       alumnosActivos++
     }
 
-    // Calcular progreso de este usuario
-    const progressKeys = Object.keys(user.progress).filter(k => user.progress[k])
-    const userProgress = (progressKeys.length / 30) * 100 // 30 items totales (3 por semana * 10)
-    totalProgreso += userProgress
-
-    // Por semana
+    // Calcular progreso de este usuario usando IDs dinámicos
+    let userCompleted = 0
     for (let i = 1; i <= 10; i++) {
-      const preclase = user.progress[`semana-${i}-preclase`]
-      const clase = user.progress[`semana-${i}-clase`]
-      const entregable = user.progress[`semana-${i}-entregable`]
+      const ids = getCursoTrackingIdsForSemana(i)
+      const semanaCompleted = ids.filter(id => user.progress[id]).length
+      userCompleted += semanaCompleted
 
-      if (preclase && clase && entregable) {
+      if (semanaCompleted === ids.length) {
         porSemana[i].completados++
-      } else if (preclase || clase || entregable) {
+      } else if (semanaCompleted > 0) {
         porSemana[i].enProgreso++
       }
     }
+    const userProgress = totalItems > 0 ? (userCompleted / totalItems) * 100 : 0
+    totalProgreso += userProgress
   }
 
   return {

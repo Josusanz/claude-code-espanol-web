@@ -109,6 +109,10 @@ function useSemanaProgress(semanaNum: number) {
     entregable: `semana-${semanaNum}-d${dayNum}-entregable`,
   })
 
+  // Backward compat: for multi-day weeks, old IDs (semana-X-preclase) count as day 1
+  const checkProgress = (id: string, fallbackId?: string) =>
+    progress[id] || (fallbackId ? progress[fallbackId] : false) || false
+
   return {
     progress,
     loading,
@@ -118,6 +122,7 @@ function useSemanaProgress(semanaNum: number) {
     allIds,
     isMultiDay,
     getDayIds,
+    checkProgress,
     preclaseCompleted: progress[ids.preclase] || false,
     claseCompleted: progress[ids.clase] || false,
     entregableCompleted: progress[ids.entregable] || false,
@@ -518,6 +523,26 @@ function SemanaContentMultiDay({ semana }: { semana: Semana }) {
                       </a>
                     ))}
                   </div>
+                </div>
+              )}
+
+              {/* Manual mark-complete button (for preps without checkboxes) */}
+              {!currentDayProgress.preclase && (
+                <div style={{ marginTop: '24px', textAlign: 'center' }}>
+                  <button
+                    onClick={() => markComplete(dayIds.preclase)}
+                    className="complete-btn"
+                    style={{
+                      display: 'inline-flex', alignItems: 'center', gap: '8px',
+                      padding: '12px 24px', fontSize: '14px', fontWeight: 600,
+                      color: '#fff', background: 'linear-gradient(135deg, #22c55e, #16a34a)',
+                      border: 'none', borderRadius: '10px', cursor: 'pointer',
+                      boxShadow: '0 2px 8px rgba(34,197,94,0.3)',
+                    }}
+                  >
+                    <span style={{ fontSize: '16px' }}>✓</span>
+                    Marcar preparación como completada
+                  </button>
                 </div>
               )}
 
@@ -1165,6 +1190,26 @@ function SemanaContent({ semana }: { semana: Semana }) {
                       </a>
                     ))}
                   </div>
+                </div>
+              )}
+
+              {/* Manual mark-complete button */}
+              {!preclaseCompleted && (
+                <div style={{ marginTop: '24px', textAlign: 'center' }}>
+                  <button
+                    onClick={() => markComplete(ids.preclase)}
+                    className="complete-btn"
+                    style={{
+                      display: 'inline-flex', alignItems: 'center', gap: '8px',
+                      padding: '12px 24px', fontSize: '14px', fontWeight: 600,
+                      color: '#fff', background: 'linear-gradient(135deg, #22c55e, #16a34a)',
+                      border: 'none', borderRadius: '10px', cursor: 'pointer',
+                      boxShadow: '0 2px 8px rgba(34,197,94,0.3)',
+                    }}
+                  >
+                    <span style={{ fontSize: '16px' }}>✓</span>
+                    Marcar preparación como completada
+                  </button>
                 </div>
               )}
 

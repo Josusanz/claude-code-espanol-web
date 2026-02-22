@@ -194,9 +194,20 @@ export async function awardProgressPoints(
   }
 
   // Bonus semana completa — check all tracking IDs for the week
-  const { getCursoTrackingIdsForSemana } = await import('./curso-data')
+  // Multi-day weeks (1, 5): check per-day IDs
+  // Single-day weeks: check standard IDs
+  const MULTI_DAY_WEEKS: Record<number, number> = { 1: 2, 5: 2 }
   for (let i = 1; i <= 10; i++) {
-    const ids = getCursoTrackingIdsForSemana(i)
+    let ids: string[]
+    if (MULTI_DAY_WEEKS[i]) {
+      const numDays = MULTI_DAY_WEEKS[i]
+      ids = []
+      for (let d = 1; d <= numDays; d++) {
+        ids.push(`semana-${i}-d${d}-preclase`, `semana-${i}-d${d}-clase`, `semana-${i}-d${d}-entregable`)
+      }
+    } else {
+      ids = [`semana-${i}-preclase`, `semana-${i}-clase`, `semana-${i}-entregable`]
+    }
     const wasComplete = ids.every(id => oldProgress[id])
     const isComplete = ids.every(id => newProgress[id])
 
