@@ -15,21 +15,55 @@ const USER_KEY_PREFIX = 'precurso:user:'
 // ============= Emails autorizados =============
 
 export async function getAuthorizedEmails(): Promise<string[]> {
-  const emails = await kv.smembers(EMAILS_SET_KEY)
-  return emails as string[]
+  try {
+    const emails = await kv.smembers(EMAILS_SET_KEY)
+    return emails as string[]
+  } catch (err: any) {
+    // Si la key se guardó como string/JSON en vez de Set, leer como valor
+    if (err?.message?.includes('WRONGTYPE')) {
+      const data = await kv.get<string[]>(EMAILS_SET_KEY)
+      return Array.isArray(data) ? data : []
+    }
+    throw err
+  }
 }
 
 export async function isEmailAuthorized(email: string): Promise<boolean> {
   const normalizedEmail = email.toLowerCase().trim()
-  const result = await kv.sismember(EMAILS_SET_KEY, normalizedEmail)
-  return result === 1
+  try {
+    const result = await kv.sismember(EMAILS_SET_KEY, normalizedEmail)
+    return result === 1
+  } catch (err: any) {
+    if (err?.message?.includes('WRONGTYPE')) {
+      const emails = await getAuthorizedEmails()
+      return emails.includes(normalizedEmail)
+    }
+    throw err
+  }
 }
 
 export async function addAuthorizedEmail(email: string): Promise<boolean> {
   const normalizedEmail = email.toLowerCase().trim()
 
-  // Añadir al set de emails
-  await kv.sadd(EMAILS_SET_KEY, normalizedEmail)
+  // Añadir al set de emails (o al array si la key es de tipo incorrecto)
+  try {
+    await kv.sadd(EMAILS_SET_KEY, normalizedEmail)
+  } catch (err: any) {
+    if (err?.message?.includes('WRONGTYPE')) {
+      // Key es un array JSON, no un Set — migrar
+      const existing = await kv.get<string[]>(EMAILS_SET_KEY) || []
+      if (!existing.includes(normalizedEmail)) {
+        existing.push(normalizedEmail)
+      }
+      // Borrar la key vieja y recrear como Set
+      await kv.del(EMAILS_SET_KEY)
+      for (const e of existing) {
+        await kv.sadd(EMAILS_SET_KEY, e)
+      }
+    } else {
+      throw err
+    }
+  }
 
   // Crear registro de usuario si no existe
   const existingUser = await kv.get<PrecursoUser>(`${USER_KEY_PREFIX}${normalizedEmail}`)
@@ -49,6 +83,24 @@ export async function addAuthorizedEmails(emails: string[]): Promise<{ added: nu
   let added = 0
   let skipped = 0
 
+  // Check if key needs migration first
+  let needsMigration = false
+  try {
+    await kv.sismember(EMAILS_SET_KEY, '__test__')
+  } catch (err: any) {
+    if (err?.message?.includes('WRONGTYPE')) {
+      needsMigration = true
+    }
+  }
+
+  if (needsMigration) {
+    const existing = await kv.get<string[]>(EMAILS_SET_KEY) || []
+    await kv.del(EMAILS_SET_KEY)
+    for (const e of existing) {
+      await kv.sadd(EMAILS_SET_KEY, e)
+    }
+  }
+
   for (const email of emails) {
     const normalizedEmail = email.toLowerCase().trim()
     if (!normalizedEmail || !normalizedEmail.includes('@')) {
@@ -59,7 +111,6 @@ export async function addAuthorizedEmails(emails: string[]): Promise<{ added: nu
     const wasNew = await kv.sadd(EMAILS_SET_KEY, normalizedEmail)
     if (wasNew) {
       added++
-      // Crear registro de usuario
       const newUser: PrecursoUser = {
         email: normalizedEmail,
         addedAt: new Date().toISOString(),
@@ -76,7 +127,20 @@ export async function addAuthorizedEmails(emails: string[]): Promise<{ added: nu
 
 export async function removeAuthorizedEmail(email: string): Promise<boolean> {
   const normalizedEmail = email.toLowerCase().trim()
-  await kv.srem(EMAILS_SET_KEY, normalizedEmail)
+  try {
+    await kv.srem(EMAILS_SET_KEY, normalizedEmail)
+  } catch (err: any) {
+    if (err?.message?.includes('WRONGTYPE')) {
+      const existing = await kv.get<string[]>(EMAILS_SET_KEY) || []
+      const filtered = existing.filter(e => e !== normalizedEmail)
+      await kv.del(EMAILS_SET_KEY)
+      for (const e of filtered) {
+        await kv.sadd(EMAILS_SET_KEY, e)
+      }
+    } else {
+      throw err
+    }
+  }
   await kv.del(`${USER_KEY_PREFIX}${normalizedEmail}`)
   return true
 }

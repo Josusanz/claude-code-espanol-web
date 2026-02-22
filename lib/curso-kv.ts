@@ -46,15 +46,31 @@ export async function updateCursoConfig(updates: Partial<CursoConfig>): Promise<
 
 export async function getCursoEmails(): Promise<string[]> {
   // Usamos los mismos emails que el precurso
-  const emails = await kv.smembers('precurso:emails')
-  return emails as string[]
+  try {
+    const emails = await kv.smembers('precurso:emails')
+    return emails as string[]
+  } catch (err: any) {
+    // Si precurso:emails se guardó como string/JSON en vez de Set, leer como valor
+    if (err?.message?.includes('WRONGTYPE')) {
+      const data = await kv.get<string[]>('precurso:emails')
+      return Array.isArray(data) ? data : []
+    }
+    throw err
+  }
 }
 
 export async function isEmailAuthorizedForCurso(email: string): Promise<boolean> {
   const normalizedEmail = email.toLowerCase().trim()
-  // Verificamos contra el set de precurso
-  const result = await kv.sismember('precurso:emails', normalizedEmail)
-  return result === 1
+  try {
+    const result = await kv.sismember('precurso:emails', normalizedEmail)
+    return result === 1
+  } catch (err: any) {
+    if (err?.message?.includes('WRONGTYPE')) {
+      const emails = await getCursoEmails()
+      return emails.includes(normalizedEmail)
+    }
+    throw err
+  }
 }
 
 // ============= Usuarios del curso =============
