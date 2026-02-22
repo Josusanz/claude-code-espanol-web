@@ -179,6 +179,15 @@ function useChecklist(checklistKey: string | number, totalItems: number, onAllCo
   const key = String(checklistKey)
   const firedCompleteRef = useRef(false)
 
+  // Count only valid indices (0 to totalItems-1) to avoid stale keys
+  const countChecked = (obj: Record<number, boolean>) => {
+    let count = 0
+    for (let i = 0; i < totalItems; i++) {
+      if (obj[i]) count++
+    }
+    return count
+  }
+
   useEffect(() => {
     try {
       const saved = localStorage.getItem('curso-checklist')
@@ -186,9 +195,12 @@ function useChecklist(checklistKey: string | number, totalItems: number, onAllCo
         const all = JSON.parse(saved)
         if (all[key]) {
           setChecked(all[key])
-          // Initialize firedCompleteRef based on whether all items are already checked
-          const savedCount = Object.values(all[key] as Record<number, boolean>).filter(Boolean).length
-          firedCompleteRef.current = savedCount >= totalItems
+          const savedCount = countChecked(all[key])
+          firedCompleteRef.current = totalItems > 0 && savedCount >= totalItems
+          // If all are already checked, fire the callback to ensure KV is in sync
+          if (totalItems > 0 && savedCount >= totalItems && onAllCompleted) {
+            onAllCompleted()
+          }
         } else {
           setChecked({})
           firedCompleteRef.current = false
@@ -198,7 +210,7 @@ function useChecklist(checklistKey: string | number, totalItems: number, onAllCo
         firedCompleteRef.current = false
       }
     } catch {
-      // Ignore
+      setChecked({})
       firedCompleteRef.current = false
     }
   }, [key, totalItems])
@@ -214,9 +226,9 @@ function useChecklist(checklistKey: string | number, totalItems: number, onAllCo
     } catch {
       // Ignore
     }
-    const newCount = Object.values(newChecked).filter(Boolean).length
+    const newCount = countChecked(newChecked)
     // Auto-complete when all items checked
-    if (newCount === totalItems && !firedCompleteRef.current && onAllCompleted) {
+    if (newCount === totalItems && totalItems > 0 && !firedCompleteRef.current && onAllCompleted) {
       firedCompleteRef.current = true
       onAllCompleted()
     }
@@ -227,7 +239,7 @@ function useChecklist(checklistKey: string | number, totalItems: number, onAllCo
     }
   }
 
-  const completedCount = Object.values(checked).filter(Boolean).length
+  const completedCount = countChecked(checked)
 
   return { checked, toggleItem, completedCount, totalItems }
 }

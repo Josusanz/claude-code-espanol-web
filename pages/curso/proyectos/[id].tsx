@@ -41,6 +41,7 @@ function ProyectoDetailPage() {
   const [hitoTitulo, setHitoTitulo] = useState('')
   const [hitoDesc, setHitoDesc] = useState('')
   const [submitting, setSubmitting] = useState(false)
+  const [deleting, setDeleting] = useState(false)
   const userEmail = getUserEmail()
 
   const loadProyecto = async () => {
@@ -116,10 +117,41 @@ function ProyectoDetailPage() {
             </p>
           </div>
           {isOwner && (
-            <Link href="/curso/mi-proyecto" style={{
-              padding: '8px 16px', background: '#f1f5f9', borderRadius: '8px',
-              fontSize: '13px', fontWeight: 500, color: '#64748b', textDecoration: 'none',
-            }}>Editar</Link>
+            <div style={{ display: 'flex', gap: '8px' }}>
+              <Link href="/curso/mi-proyecto" style={{
+                padding: '8px 16px', background: '#f1f5f9', borderRadius: '8px',
+                fontSize: '13px', fontWeight: 500, color: '#64748b', textDecoration: 'none',
+              }}>Editar</Link>
+              <button
+                onClick={async () => {
+                  if (!confirm('¿Seguro que quieres borrar este proyecto? Esta acción no se puede deshacer.')) return
+                  setDeleting(true)
+                  try {
+                    const res = await fetch(`/api/curso/proyectos/${id}`, {
+                      method: 'DELETE',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({ email: userEmail }),
+                    })
+                    if (res.ok) {
+                      router.push('/curso/proyectos')
+                    } else {
+                      alert('Error al borrar el proyecto')
+                    }
+                  } catch {
+                    alert('Error de conexión')
+                  }
+                  setDeleting(false)
+                }}
+                disabled={deleting}
+                style={{
+                  padding: '8px 16px', background: '#fef2f2', borderRadius: '8px',
+                  fontSize: '13px', fontWeight: 500, color: '#dc2626', border: '1px solid #fecaca',
+                  cursor: 'pointer', opacity: deleting ? 0.5 : 1,
+                }}
+              >
+                {deleting ? 'Borrando...' : 'Borrar'}
+              </button>
+            </div>
           )}
         </div>
 

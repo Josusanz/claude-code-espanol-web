@@ -123,5 +123,33 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
   }
 
+  // DELETE — borrar proyecto
+  if (req.method === 'DELETE') {
+    const { email } = req.body
+
+    if (!email) {
+      return res.status(400).json({ error: 'Email requerido' })
+    }
+
+    try {
+      const proyecto = await kv.get<Proyecto>(proyectoKey)
+      if (!proyecto) return res.status(404).json({ error: 'Proyecto no encontrado' })
+
+      if (proyecto.email !== email.toLowerCase().trim()) {
+        return res.status(403).json({ error: 'Solo el dueño puede borrar' })
+      }
+
+      await kv.del(proyectoKey)
+
+      // Remove from project list
+      await kv.srem('curso:proyectos', id)
+
+      return res.json({ success: true })
+    } catch (error) {
+      console.error('Error deleting proyecto:', error)
+      return res.status(500).json({ error: 'Error borrando proyecto' })
+    }
+  }
+
   return res.status(405).json({ error: 'Method not allowed' })
 }
