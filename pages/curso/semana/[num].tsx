@@ -49,7 +49,11 @@ function useSemanaProgress(semanaNum: number) {
         .then(res => res.json())
         .then(data => {
           if (data.progress) {
-            setProgress(prev => ({ ...prev, ...data.progress }))
+            setProgress(prev => {
+              const merged = { ...prev, ...data.progress }
+              try { localStorage.setItem('curso-progress', JSON.stringify(merged)) } catch {}
+              return merged
+            })
           }
         })
         .catch(() => {})
@@ -102,6 +106,32 @@ function useSemanaProgress(semanaNum: number) {
     }
   }
 
+  const markIncomplete = async (id: string) => {
+    let shouldSync = false
+    let newProgress: Record<string, boolean> = {}
+
+    setProgress(prev => {
+      if (!prev[id]) return prev // Already not completed
+      shouldSync = true
+      newProgress = { ...prev, [id]: false }
+      return newProgress
+    })
+
+    if (!shouldSync) return
+
+    try { localStorage.setItem('curso-progress', JSON.stringify(newProgress)) } catch {}
+
+    if (userEmail) {
+      try {
+        await fetch('/api/curso/sync-progress', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: userEmail, progress: newProgress })
+        })
+      } catch {}
+    }
+  }
+
   // Multi-day helpers
   const getDayIds = (dayNum: number) => ({
     preclase: `semana-${semanaNum}-d${dayNum}-preclase`,
@@ -118,6 +148,7 @@ function useSemanaProgress(semanaNum: number) {
     loading,
     toggle,
     markComplete,
+    markIncomplete,
     ids,
     allIds,
     isMultiDay,
@@ -129,29 +160,34 @@ function useSemanaProgress(semanaNum: number) {
   }
 }
 
-function useChecklist(checklistKey: string | number, totalItems: number, onAllCompleted?: () => void) {
+function useChecklist(checklistKey: string | number, totalItems: number, onAllCompleted?: () => void, onIncomplete?: () => void) {
   const [checked, setChecked] = useState<Record<number, boolean>>({})
   const key = String(checklistKey)
   const firedCompleteRef = useRef(false)
 
   useEffect(() => {
-    firedCompleteRef.current = false
     try {
       const saved = localStorage.getItem('curso-checklist')
       if (saved) {
         const all = JSON.parse(saved)
         if (all[key]) {
           setChecked(all[key])
+          // Initialize firedCompleteRef based on whether all items are already checked
+          const savedCount = Object.values(all[key] as Record<number, boolean>).filter(Boolean).length
+          firedCompleteRef.current = savedCount >= totalItems
         } else {
           setChecked({})
+          firedCompleteRef.current = false
         }
       } else {
         setChecked({})
+        firedCompleteRef.current = false
       }
     } catch {
       // Ignore
+      firedCompleteRef.current = false
     }
-  }, [key])
+  }, [key, totalItems])
 
   const toggleItem = (index: number) => {
     const newChecked = { ...checked, [index]: !checked[index] }
@@ -164,11 +200,16 @@ function useChecklist(checklistKey: string | number, totalItems: number, onAllCo
     } catch {
       // Ignore
     }
-    // Auto-complete when all items checked
     const newCount = Object.values(newChecked).filter(Boolean).length
+    // Auto-complete when all items checked
     if (newCount === totalItems && !firedCompleteRef.current && onAllCompleted) {
       firedCompleteRef.current = true
       onAllCompleted()
+    }
+    // Un-complete when items unchecked
+    if (newCount < totalItems && firedCompleteRef.current && onIncomplete) {
+      firedCompleteRef.current = false
+      onIncomplete()
     }
   }
 
@@ -245,7 +286,7 @@ const DAY_SUB_SECTIONS = [
 ]
 
 function SemanaContentMultiDay({ semana }: { semana: Semana }) {
-  const { toggle, markComplete, progress, getDayIds } = useSemanaProgress(semana.num)
+  const { toggle, markComplete, markIncomplete, progress, getDayIds } = useSemanaProgress(semana.num)
   const [activeKey, setActiveKey] = useState<MultiDayNavKey>('d1-prep')
   const dias = semana.dias!
 
@@ -254,7 +295,7 @@ function SemanaContentMultiDay({ semana }: { semana: Semana }) {
   const activeDayEntregable = dias[activeDayIdx]?.entregable
   const checklistKey = `${semana.num}-d${activeDayIdx + 1}`
   const dayIds = getDayIds(activeDayIdx + 1)
-  const checklist = useChecklist(checklistKey, activeDayEntregable?.checklist.length || 0, () => markComplete(dayIds.entregable))
+  const checklist = useChecklist(checklistKey, activeDayEntregable?.checklist.length || 0, () => markComplete(dayIds.entregable), () => markIncomplete(dayIds.entregable))
 
   // Per-day progress
   const dayProgress = (dayNum: number) => {
@@ -889,8 +930,8 @@ function SemanaContentMultiDay({ semana }: { semana: Semana }) {
 
 // === Standard single-day layout ===
 function SemanaContent({ semana }: { semana: Semana }) {
-  const { toggle, markComplete, ids, progress, preclaseCompleted, claseCompleted, entregableCompleted } = useSemanaProgress(semana.num)
-  const checklist = useChecklist(semana.num, semana.entregable.checklist.length, () => markComplete(ids.entregable))
+  const { toggle, markComplete, markIncomplete, ids, progress, preclaseCompleted, claseCompleted, entregableCompleted } = useSemanaProgress(semana.num)
+  const checklist = useChecklist(semana.num, semana.entregable.checklist.length, () => markComplete(ids.entregable), () => markIncomplete(ids.entregable))
   const [activeSection, setActiveSection] = useState<SectionKey>('preclase')
 
   const completedMap: Record<SectionKey, boolean> = {

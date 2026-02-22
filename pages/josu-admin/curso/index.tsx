@@ -16,7 +16,23 @@ export default function AdminCursoDashboard() {
   const [attendanceLoading, setAttendanceLoading] = useState<string | null>(null)
   const [activeView, setActiveView] = useState<View>('dashboard')
 
-  useEffect(() => { loadData() }, [])
+  useEffect(() => {
+    // Verificar autenticación primero
+    fetch('/api/admin/precurso/auth')
+      .then(res => res.json())
+      .then(data => {
+        if (data.authenticated) {
+          loadData()
+        } else {
+          setError('No autenticado. Inicia sesión en el panel admin primero.')
+          setLoading(false)
+        }
+      })
+      .catch(() => {
+        setError('Error verificando autenticación')
+        setLoading(false)
+      })
+  }, [])
 
   const loadData = async () => {
     try {
@@ -28,6 +44,9 @@ export default function AdminCursoDashboard() {
         const data = await progressRes.json()
         setUsers(data.users || [])
         setStats(data.stats || null)
+      } else {
+        const errData = await progressRes.json().catch(() => ({}))
+        setError(`Error cargando alumnos: ${errData.error || `HTTP ${progressRes.status}`}`)
       }
       if (configRes.ok) {
         const data = await configRes.json()
@@ -248,6 +267,13 @@ export default function AdminCursoDashboard() {
         {error && (
           <div style={{ background: '#fef2f2', border: '1px solid #fecaca', borderRadius: '8px', padding: '16px', marginBottom: '24px', color: '#dc2626' }}>
             {error}
+            {error.includes('No autenticado') && (
+              <div style={{ marginTop: '12px' }}>
+                <Link href="/josu-admin" style={{ color: '#6366f1', fontWeight: 600 }}>
+                  Ir al panel admin para iniciar sesión →
+                </Link>
+              </div>
+            )}
           </div>
         )}
 

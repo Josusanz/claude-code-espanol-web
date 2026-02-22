@@ -161,10 +161,13 @@ export async function awardProgressPoints(
   for (const [key, value] of Object.entries(newProgress)) {
     if (!value || oldProgress[key]) continue // ya estaba completado o no es true
 
-    // Módulo 0 lecciones
-    if (key.startsWith('intro-') || key.startsWith('glosario-') || key.startsWith('req-') ||
-        key === 'reglas-prompting' || key === 'quiz-aprobado' || key === 'primer-proyecto' ||
-        key === 'errores-completo' || key === 'discord-completo' || key === 'requisitos-completo') {
+    // Módulo 0 lecciones — solo IDs de página completa, NO sub-items (req-vscode, etc.)
+    const MODULO0_PAGE_IDS = [
+      'intro-completo', 'glosario-completo', 'requisitos-completo',
+      'reglas-prompting', 'errores-completo', 'quiz-aprobado',
+      'primer-proyecto', 'discord-completo'
+    ]
+    if (MODULO0_PAGE_IDS.includes(key)) {
       await awardPoints(email, PUNTOS_TABLE['modulo0-leccion'], 'Lección del Módulo 0 completada', `m0:${key}`)
     }
 
