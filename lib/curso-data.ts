@@ -232,8 +232,13 @@ Comprueba que tienes TODO listo. Si algo falla, pregunta en Discord ANTES de la 
           zoomUrl: 'https://us02web.zoom.us/j/81636452979',
           videos: [
             {
-              titulo: 'Setup + Tu Primera Web',
+              titulo: 'Setup + Tu Primera Web (Parte 1)',
               url: 'https://player.vimeo.com/video/1167179208?badge=0&autopause=0&player_id=0&app_id=58479',
+              tipo: 'embed',
+            },
+            {
+              titulo: 'Setup + Tu Primera Web (Parte 2)',
+              url: 'https://player.vimeo.com/video/1167179528?badge=0&autopause=0&player_id=0&app_id=58479',
               tipo: 'embed',
             },
             {
