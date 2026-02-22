@@ -165,10 +165,13 @@ export function Dia2Setup() {
   const theme = THEMES.find(t => t.slug === selectedTheme)
   const folder = projectName || (selectedTheme ? `mi-${selectedTheme.replace(/-next$/, '')}` : 'mi-proyecto')
 
+  const [themeInstalled, setThemeInstalled] = useState(false)
+
   const step1Done = !!selectedTheme
   const step2Done = step1Done && !!folder
-  const step3Done = step2Done
-  const step4Done = !!nombre && !!queHace && !!paraQuien && !!beneficios
+  const step3Done = step2Done && themeInstalled
+  const step4Done = step3Done
+  const step5Done = !!nombre && !!queHace && !!paraQuien && !!beneficios
 
   const prompt = `Mira la web actual y personalízala completamente para mi proyecto.
 
@@ -330,10 +333,85 @@ ${beneficios ? beneficios.split('\n').filter(l => l.trim()).map(l => `- ${l.trim
         <p style={hintStyle}>Este es el nombre de la carpeta dentro de ~/curso-ia/. Puedes cambiarlo si le pusiste otro nombre.</p>
       </div>
 
-      {/* PASO 3: Comandos */}
+      {/* PASO 3: Instalar el theme */}
       <div style={{ ...sectionStyle, opacity: step2Done ? 1 : 0.4, pointerEvents: step2Done ? 'auto' : 'none' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '14px' }}>
-          <StepNumber n={3} done={step3Done} />
+          <StepNumber n={3} done={themeInstalled} />
+          <div style={{ fontSize: '16px', fontWeight: 600, color: '#1e293b' }}>Instala el theme en tu carpeta</div>
+        </div>
+
+        <p style={{ margin: '0 0 12px', fontSize: '14px', color: '#64748b', lineHeight: 1.6 }}>
+          Ejecuta estos comandos en orden. Si ya clonaste el repo de themes antes, salta al segundo comando.
+        </p>
+
+        <CodeBlock
+          label="1. Clona el repositorio de themes (solo la primera vez)"
+          codigo="cd ~/curso-ia && git clone https://github.com/Josusanz/aprende-themes.git"
+        />
+
+        <CodeBlock
+          label={`2. Copia el theme "${theme?.nombre || ''}" a tu carpeta de proyecto`}
+          codigo={`cd ~/curso-ia && cp -r aprende-themes/${selectedTheme} ${folder}`}
+        />
+
+        <CodeBlock
+          label="3. Instala las dependencias"
+          codigo={`cd ~/curso-ia/${folder} && npm install`}
+        />
+
+        <div style={{
+          marginTop: '12px',
+          padding: '10px 14px',
+          background: '#eef2ff',
+          border: '1px solid #c7d2fe',
+          borderRadius: '8px',
+          fontSize: '13px',
+          color: '#3730a3',
+          lineHeight: 1.5,
+        }}>
+          <strong>Nota:</strong> Si al clonar te dice que no tienes acceso, ve a la <a href="/curso/themes" target="_blank" rel="noopener noreferrer" style={{ color: '#4338ca', fontWeight: 600 }}>galería de themes</a> y pide acceso con tu usuario de GitHub.
+        </div>
+
+        {!themeInstalled ? (
+          <button
+            onClick={() => setThemeInstalled(true)}
+            style={{
+              marginTop: '14px',
+              padding: '10px 20px',
+              fontSize: '14px',
+              fontWeight: 600,
+              color: '#fff',
+              background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+              border: 'none',
+              borderRadius: '10px',
+              cursor: 'pointer',
+              transition: 'all 0.2s',
+              fontFamily: 'inherit',
+              boxShadow: '0 2px 8px rgba(99, 102, 241, 0.3)',
+            }}
+          >
+            Ya he instalado el theme
+          </button>
+        ) : (
+          <div style={{
+            marginTop: '14px',
+            padding: '10px 14px',
+            background: '#f0fdf4',
+            border: '1px solid #bbf7d0',
+            borderRadius: '8px',
+            fontSize: '13px',
+            color: '#166534',
+            fontWeight: 500,
+          }}>
+            Theme instalado. Sigue al siguiente paso.
+          </div>
+        )}
+      </div>
+
+      {/* PASO 4: Comandos */}
+      <div style={{ ...sectionStyle, opacity: step3Done ? 1 : 0.4, pointerEvents: step3Done ? 'auto' : 'none' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '14px' }}>
+          <StepNumber n={4} done={step4Done} />
           <div style={{ fontSize: '16px', fontWeight: 600, color: '#1e293b' }}>Abre tu proyecto y lanza Claude Code</div>
         </div>
 
@@ -361,10 +439,10 @@ ${beneficios ? beneficios.split('\n').filter(l => l.trim()).map(l => `- ${l.trim
         </div>
       </div>
 
-      {/* PASO 4: Describe tu proyecto */}
-      <div style={{ ...sectionStyle, opacity: step3Done ? 1 : 0.4, pointerEvents: step3Done ? 'auto' : 'none' }}>
+      {/* PASO 5: Describe tu proyecto */}
+      <div style={{ ...sectionStyle, opacity: step4Done ? 1 : 0.4, pointerEvents: step4Done ? 'auto' : 'none' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '14px' }}>
-          <StepNumber n={4} done={step4Done} />
+          <StepNumber n={5} done={step5Done} />
           <div style={{ fontSize: '16px', fontWeight: 600, color: '#1e293b' }}>Describe tu proyecto para Claude</div>
         </div>
 
@@ -425,13 +503,13 @@ ${beneficios ? beneficios.split('\n').filter(l => l.trim()).map(l => `- ${l.trim
         </div>
       </div>
 
-      {/* PASO 5: Prompt generado */}
-      <div style={{ ...sectionStyle, opacity: step3Done ? 1 : 0.4, pointerEvents: step3Done ? 'auto' : 'none', background: '#f0fdf4', borderColor: step4Done ? '#86efac' : '#e2e8f0' }}>
+      {/* PASO 6: Prompt generado */}
+      <div style={{ ...sectionStyle, opacity: step4Done ? 1 : 0.4, pointerEvents: step4Done ? 'auto' : 'none', background: '#f0fdf4', borderColor: step5Done ? '#86efac' : '#e2e8f0' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '14px' }}>
-          <StepNumber n={5} done={step4Done} />
+          <StepNumber n={6} done={step5Done} />
           <div style={{ fontSize: '16px', fontWeight: 600, color: '#1e293b' }}>
             Copia y pega en Claude Code
-            {step4Done && <span style={{ color: '#22c55e', fontWeight: 500, fontSize: '13px', marginLeft: '8px' }}>✓ Listo</span>}
+            {step5Done && <span style={{ color: '#22c55e', fontWeight: 500, fontSize: '13px', marginLeft: '8px' }}>✓ Listo</span>}
           </div>
         </div>
         <CodeBlock codigo={prompt} />
