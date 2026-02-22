@@ -270,7 +270,7 @@ type SectionKey = 'preclase' | 'clase' | 'entregable'
 
 const SECTIONS: { key: SectionKey; label: string; icon: string; completedIcon: string }[] = [
   { key: 'preclase', label: 'Pre-clase', icon: '📚', completedIcon: '✓' },
-  { key: 'clase', label: 'Clase en vivo', icon: '🎥', completedIcon: '✓' },
+  { key: 'clase', label: 'Link de la clase', icon: '🎥', completedIcon: '✓' },
   { key: 'entregable', label: 'Entregable', icon: '📦', completedIcon: '✓' },
 ]
 
@@ -280,8 +280,8 @@ type MultiDayNavKey = string
 
 const DAY_SUB_SECTIONS = [
   { suffix: 'prep', label: 'Preparación', icon: '📚' },
-  { suffix: 'clase', label: 'Clase en vivo', icon: '🎥' },
-  { suffix: 'grab', label: 'Grabación', icon: '📹' },
+  { suffix: 'clase', label: 'Link de la clase', icon: '🎥' },
+  { suffix: 'grab', label: 'Grabación + pizarra', icon: '📹' },
   { suffix: 'entregable', label: 'Entregable', icon: '📦' },
 ]
 
@@ -596,7 +596,7 @@ function SemanaContentMultiDay({ semana }: { semana: Semana }) {
             <section>
               <div style={{ marginBottom: '28px' }}>
                 <h2 style={{ margin: '0 0 6px', fontSize: '24px', fontWeight: 700, color: '#0f172a' }}>
-                  🎥 Clase en vivo — Día {activeDayIndex + 1}
+                  🎥 Link de la clase — Día {activeDayIndex + 1}
                 </h2>
                 <p style={{ margin: 0, fontSize: '14px', color: '#64748b' }}>
                   {activeDia.clase.fecha} • {activeDia.clase.hora} • {activeDia.clase.duracion}
@@ -667,38 +667,15 @@ function SemanaContentMultiDay({ semana }: { semana: Semana }) {
                 </div>
               </div>
 
-              {/* Pizarra card */}
-              <Link href={`/curso/clase/${semana.num}?dia=${activeDayIndex + 1}`} className="pizarra-btn" style={{
-                display: 'flex', alignItems: 'center', gap: '14px',
-                padding: '20px 24px',
-                background: '#fff', borderRadius: '16px', textDecoration: 'none',
-                border: '1px solid rgba(0,0,0,0.06)',
-                boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
-                transition: 'all 0.2s',
-              }}>
-                <div style={{
-                  width: '44px', height: '44px',
-                  background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
-                  borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  flexShrink: 0,
-                }}>
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
-                </div>
-                <div style={{ flex: 1 }}>
-                  <p style={{ margin: 0, fontSize: '15px', fontWeight: 600, color: '#0f172a' }}>Pizarra de clase</p>
-                  <p style={{ margin: '2px 0 0', fontSize: '13px', color: '#94a3b8' }}>Notas y contenido de la sesión en vivo</p>
-                </div>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-              </Link>
             </section>
           )}
 
-          {/* === GRABACIÓN === */}
+          {/* === GRABACIÓN + PIZARRA === */}
           {activeDia && activeSubSection === 'grab' && (
             <section>
               <div style={{ marginBottom: '24px' }}>
                 <h2 style={{ margin: '0 0 6px', fontSize: '24px', fontWeight: 700, color: '#0f172a' }}>
-                  📹 Grabación — Día {activeDayIndex + 1}
+                  📹 Grabación + pizarra — Día {activeDayIndex + 1}
                 </h2>
                 <p style={{ margin: 0, fontSize: '14px', color: '#64748b' }}>
                   {activeDia.titulo} • {activeDia.clase.fecha}
@@ -761,6 +738,30 @@ function SemanaContentMultiDay({ semana }: { semana: Semana }) {
                   </p>
                 </div>
               )}
+
+              {/* Pizarra card */}
+              <Link href={`/curso/clase/${semana.num}?dia=${activeDayIndex + 1}`} className="pizarra-btn" style={{
+                display: 'flex', alignItems: 'center', gap: '14px',
+                padding: '20px 24px', marginBottom: '12px',
+                background: '#fff', borderRadius: '16px', textDecoration: 'none',
+                border: '1px solid rgba(0,0,0,0.06)',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
+                transition: 'all 0.2s',
+              }}>
+                <div style={{
+                  width: '44px', height: '44px',
+                  background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+                  borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  flexShrink: 0,
+                }}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                </div>
+                <div style={{ flex: 1 }}>
+                  <p style={{ margin: 0, fontSize: '15px', fontWeight: 600, color: '#0f172a' }}>Pizarra de clase</p>
+                  <p style={{ margin: '2px 0 0', fontSize: '13px', color: '#94a3b8' }}>Notas y contenido de la sesión en vivo</p>
+                </div>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </Link>
 
               {/* Notas */}
               {activeDia.clase.notas && (
@@ -1258,12 +1259,12 @@ function SemanaContent({ semana }: { semana: Semana }) {
             </section>
           )}
 
-          {/* ===== CLASE EN VIVO ===== */}
+          {/* ===== LINK DE LA CLASE ===== */}
           {activeSection === 'clase' && (
             <section>
               <div style={{ marginBottom: '28px' }}>
                 <h2 style={{ margin: '0 0 6px', fontSize: '24px', fontWeight: 700, color: '#0f172a' }}>
-                  Clase en vivo
+                  Link de la clase
                 </h2>
                 <p style={{ margin: 0, fontSize: '14px', color: '#64748b' }}>
                   {semana.clase.fecha} • {semana.clase.hora} • {semana.clase.duracion}
@@ -1333,30 +1334,6 @@ function SemanaContent({ semana }: { semana: Semana }) {
                   )}
                 </div>
               </div>
-
-              {/* Pizarra card */}
-              <Link href={`/curso/clase/${semana.num}`} className="pizarra-btn" style={{
-                display: 'flex', alignItems: 'center', gap: '14px',
-                padding: '20px 24px', marginBottom: '16px',
-                background: '#fff', borderRadius: '16px', textDecoration: 'none',
-                border: '1px solid rgba(0,0,0,0.06)',
-                boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
-                transition: 'all 0.2s',
-              }}>
-                <div style={{
-                  width: '44px', height: '44px',
-                  background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
-                  borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  flexShrink: 0,
-                }}>
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
-                </div>
-                <div style={{ flex: 1 }}>
-                  <p style={{ margin: 0, fontSize: '15px', fontWeight: 600, color: '#0f172a' }}>Pizarra de clase</p>
-                  <p style={{ margin: '2px 0 0', fontSize: '13px', color: '#94a3b8' }}>Notas y contenido de la sesión en vivo</p>
-                </div>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-              </Link>
 
               {/* Videos */}
               {semana.clase.videos && semana.clase.videos.length > 0 ? (
@@ -1478,6 +1455,30 @@ function SemanaContent({ semana }: { semana: Semana }) {
                   </p>
                 </div>
               )}
+
+              {/* Pizarra card */}
+              <Link href={`/curso/clase/${semana.num}`} className="pizarra-btn" style={{
+                display: 'flex', alignItems: 'center', gap: '14px',
+                padding: '20px 24px', marginBottom: '16px',
+                background: '#fff', borderRadius: '16px', textDecoration: 'none',
+                border: '1px solid rgba(0,0,0,0.06)',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
+                transition: 'all 0.2s',
+              }}>
+                <div style={{
+                  width: '44px', height: '44px',
+                  background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+                  borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  flexShrink: 0,
+                }}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                </div>
+                <div style={{ flex: 1 }}>
+                  <p style={{ margin: 0, fontSize: '15px', fontWeight: 600, color: '#0f172a' }}>Pizarra de clase</p>
+                  <p style={{ margin: '2px 0 0', fontSize: '13px', color: '#94a3b8' }}>Notas y contenido de la sesión en vivo</p>
+                </div>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </Link>
 
               {/* Notas */}
               {semana.clase.notas && (
