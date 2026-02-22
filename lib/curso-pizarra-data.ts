@@ -211,18 +211,24 @@ git config --global user.email`,
 - Cambia los testimonios por textos relevantes`,
           },
         ],
-        tip: 'Habla en español, como si le explicaras a un diseñador. Claude entiende perfectamente.',
+        tip: 'Habla en español, como si le explicaras a un diseñador. Claude entiende perfectamente. Si tienes Pencil instalado y Claude te abre el canvas en vez de cambiar el código directamente, dile: "Haz los cambios directamente en el código, sin usar Pencil".',
       },
       {
         titulo: '8. Iterar y jugar con cambios',
-        descripcion: 'Si algo no te gusta, pídele cambios. Esto es "vibe coding" — describes lo que quieres y Claude lo hace:',
+        descripcion: `Si algo no te gusta, pídele cambios. Esto es "vibe coding" — describes lo que quieres y Claude lo hace.
+
+Tienes 3 formas de hacer cambios de diseño:
+- **Directo en código** — Claude cambia el código sin abrir Pencil. Ideal para cambios rápidos.
+- **Diseñar en Pencil** — Abres el archivo .pen y diseñas visualmente. Luego Claude genera el código.
+- **Que Claude diseñe en Pencil** — Le pides que cree un diseño nuevo en un .pen y tú lo revisas.`,
         bloques: [
           {
             lenguaje: 'text',
+            archivo: 'Cambios directos en código (sin Pencil)',
             codigo: 'Cambia el color principal a azul oscuro.\nHaz el título más grande.\nAñade una sección más de testimonios.\nCambia la imagen del hero.\nPon el botón de CTA más llamativo.\nHaz que el footer tenga links a redes sociales.',
           },
         ],
-        tip: 'No hay límite de cambios. Itera hasta que te guste. Así es como trabajarás siempre con Claude Code.',
+        tip: 'Si quieres controlar cuándo se abre Pencil, añade esto en tu CLAUDE.md: "Antes de usar Pencil o crear archivos .pen, pregúntame si quiero diseñar en Pencil o hacer los cambios directamente en el código."',
       },
       {
         titulo: '9. Tarea para la Semana 2',
