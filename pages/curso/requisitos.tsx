@@ -143,6 +143,21 @@ const TerminalSection = () => (
         }}>
           💡 Alternativa: Click derecho en el menu inicio → "Terminal" o "PowerShell"
         </div>
+        <div style={{
+          marginTop: '8px',
+          padding: '12px',
+          background: '#eff6ff',
+          borderRadius: '8px',
+          fontSize: '13px',
+          color: '#3b82f6',
+          border: '1px solid #bfdbfe'
+        }}>
+          ⚠️ <strong>¿No puedes copiar y pegar?</strong> Instala{' '}
+          <a href="https://apps.microsoft.com/detail/9n0dx20hk701" target="_blank" rel="noopener noreferrer" style={{ color: '#2563eb', textDecoration: 'underline' }}>
+            Windows Terminal
+          </a>{' '}
+          (gratis en la Microsoft Store). Copiar/pegar funciona perfecto con Ctrl+V.
+        </div>
       </div>
 
       {/* Linux */}

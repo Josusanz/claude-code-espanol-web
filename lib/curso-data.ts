@@ -325,7 +325,7 @@ En clase conectaremos tu web con GitHub, Supabase y la desplegaremos en Vercel.
   {
     num: 3,
     titulo: 'Diseño + UI',
-    descripcion: 'Todos diseñamos juntos la misma app con shadcn/ui y Pencil. Aprenderás las técnicas para diseñar cualquier interfaz.',
+    descripcion: 'Todos diseñamos juntos la misma app con shadcn/ui. Aprenderás 3 formas de diseñar interfaces: visualmente en Pencil, directo en código, o dejando que Claude diseñe por ti.',
     fechaInicio: '2026-03-06',
     emoji: '🎨',
     preclase: {
@@ -338,7 +338,9 @@ En clase conectaremos tu web con GitHub, Supabase y la desplegaremos en Vercel.
 - [ ] Claude Code funcionando
 - [ ] Has explorado el catálogo de shadcn/ui (ui.shadcn.com)
 
-En clase: diseñaremos juntos una app completa con shadcn/ui y Pencil. Todos hacemos lo mismo paso a paso.
+En clase: diseñaremos juntos una app completa con shadcn/ui. Verás 3 formas de trabajar el diseño: en Pencil (visual), directo en código, o que Claude diseñe por ti. Tú eliges cómo prefieres trabajar.
+
+**Tip:** Si tienes Pencil instalado y quieres controlar cuándo se activa, añade en tu CLAUDE.md: *"Antes de usar Pencil, pregúntame si quiero diseñar en Pencil, hacerlo directo en código, o que generes un diseño nuevo."*
       `,
       recursos: [
         { titulo: 'Catálogo shadcn/ui', url: 'https://ui.shadcn.com', tipo: 'link' },
@@ -360,7 +362,7 @@ En clase: diseñaremos juntos una app completa con shadcn/ui y Pencil. Todos hac
       fechaLimite: '2026-03-12',
       checklist: [
         'shadcn/ui instalado y configurado',
-        'Diseño en Pencil (.pen) de las pantallas principales',
+        'Diseño de las pantallas principales (en Pencil, en código, o ambos)',
         'Dashboard principal diseñado',
         'Al menos 3 páginas creadas',
         'Navegación funcionando',

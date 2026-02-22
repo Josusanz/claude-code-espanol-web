@@ -441,15 +441,32 @@ code .`,
         ],
       },
       {
-        titulo: '4. Diseñar en Pencil (opcional pero recomendado)',
-        descripcion: 'Crea un archivo .pen para diseñar tu dashboard visualmente:',
+        titulo: '4. Diseñar tu interfaz (elige tu camino)',
+        descripcion: `Tienes 3 formas de trabajar el diseño con Claude. Elige la que prefieras:
+
+**Opción A: Diseñar visualmente en Pencil**
+Crea un archivo .pen, diseña arrastrando componentes en el canvas, y luego pídele a Claude que genere el código desde tu diseño.
+
+**Opción B: Directo en código (sin Pencil)**
+Descríbele a Claude lo que quieres y que genere el código directamente. Ideal si prefieres iterar viendo el resultado en el navegador.
+
+**Opción C: Que Claude diseñe en Pencil por ti**
+Pídele a Claude que cree un diseño nuevo en un archivo .pen. Él lo genera, tú lo revisas en el canvas, y luego generas el código.`,
         bloques: [
           {
-            lenguaje: 'bash',
-            codigo: 'touch diseño-dashboard.pen',
+            lenguaje: 'text',
+            codigo: `# Si eliges Opción A (diseñar tú en Pencil):
+touch diseño-dashboard.pen
+# Ábrelo en VS Code y diseña en el canvas
+
+# Si eliges Opción B (directo en código):
+# Simplemente pídele a Claude que cree el dashboard (paso 5)
+
+# Si eliges Opción C (que Claude diseñe):
+# Pídele: "Crea un diseño en diseño-dashboard.pen con un layout de dashboard moderno"`,
           },
         ],
-        tip: 'Los archivos .pen se abren en el canvas de Pencil. Arrastra componentes y diseña tu layout. Luego Claude puede leer este diseño desde el terminal y generar el código exacto.',
+        tip: 'Si tienes Pencil instalado, Claude lo usará automáticamente cuando hables de diseño. Para controlarlo, añade esto en tu CLAUDE.md: "Antes de usar Pencil o crear archivos .pen, pregúntame si quiero diseñar en Pencil, hacerlo directo en código, o que generes un diseño nuevo."',
       },
       {
         titulo: '5. Crear el dashboard con Claude',
@@ -519,14 +536,22 @@ Mantén el mismo layout (sidebar + header) en todas.`,
         ],
       },
       {
-        titulo: '9. Generar código desde Pencil',
-        descripcion: 'Si diseñaste en Pencil, pídele a Claude que genere el código:',
+        titulo: '9. Iterar el diseño',
+        descripcion: 'Según el camino que elegiste en el paso 4:',
         bloques: [
           {
             lenguaje: 'text',
-            codigo: 'Mira mi diseño en diseño-dashboard.pen y genera los componentes React con Tailwind CSS y shadcn/ui. Respeta los colores, espaciado y layout exactos del diseño.',
+            codigo: `# Si usaste Pencil (Opción A o C):
+Mira mi diseño en diseño-dashboard.pen y genera los componentes React con Tailwind CSS y shadcn/ui. Respeta los colores, espaciado y layout exactos del diseño.
+
+# Si fuiste directo en código (Opción B):
+Revisa el dashboard actual y mejora: ajusta los colores, el espaciado y la tipografía para que se vea más profesional. Usa la paleta de Tailwind.
+
+# Para iterar en cualquier caso:
+Quiero cambiar [describe lo que quieres]. Hazlo directamente en el código sin abrir Pencil.`,
           },
         ],
+        tip: 'Recuerda: siempre puedes cambiar de método. Si empezaste en código y quieres usar Pencil para un rediseño grande, o viceversa, simplemente dile a Claude cómo quieres trabajar.',
       },
       {
         titulo: '10. Inspiración',
