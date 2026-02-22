@@ -1334,6 +1334,148 @@ Evalúa mi idea:
   )
 }
 
+// ============= DesignMethodPicker =============
+
+const DESIGN_METHODS = [
+  {
+    id: 'codigo',
+    emoji: '💻',
+    label: 'Directo en código',
+    desc: 'Claude cambia el código sin abrir Pencil. Ideal para cambios rápidos.',
+    prompt: `Quiero hacer estos cambios en el diseño de mi web. Hazlos directamente en el código, sin usar Pencil ni crear archivos .pen:
+
+- Cambia el color principal a [TU COLOR]
+- Haz el título más grande
+- Mejora el espaciado entre secciones
+- [DESCRIBE OTROS CAMBIOS QUE QUIERAS]
+
+Usa Tailwind CSS. Muéstrame el resultado en localhost:3000.`,
+  },
+  {
+    id: 'pencil',
+    emoji: '🎨',
+    label: 'Diseñar en Pencil',
+    desc: 'Tú diseñas visualmente en el canvas de Pencil. Luego Claude genera el código.',
+    prompt: `Mira mi diseño en diseño-dashboard.pen y genera los componentes React con Tailwind CSS y shadcn/ui. Respeta los colores, espaciado y layout exactos del diseño.`,
+  },
+  {
+    id: 'claude-pencil',
+    emoji: '🤖',
+    label: 'Que Claude diseñe en Pencil',
+    desc: 'Claude crea un diseño nuevo en un .pen. Tú lo revisas y luego genera el código.',
+    prompt: `Crea un diseño en diseño-dashboard.pen con un layout moderno para mi app. Incluye:
+- Header con logo y navegación
+- Contenido principal con cards de estadísticas
+- Sidebar con menú de navegación
+- Footer con links
+
+Cuando lo tengas, avísame para revisarlo antes de generar el código.`,
+  },
+]
+
+function DesignMethodPicker() {
+  const [selected, setSelected] = useState<string | null>(null)
+  const method = DESIGN_METHODS.find(m => m.id === selected)
+
+  return (
+    <div style={{ marginTop: '16px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      {/* Options */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+        {DESIGN_METHODS.map(m => (
+          <button
+            key={m.id}
+            onClick={() => setSelected(m.id)}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '14px',
+              padding: '16px 20px',
+              border: selected === m.id ? '2px solid #6366f1' : '1px solid #d1d5db',
+              borderRadius: '12px',
+              background: selected === m.id ? '#eef2ff' : 'white',
+              cursor: 'pointer',
+              fontFamily: 'inherit',
+              textAlign: 'left',
+              transition: 'all 0.15s',
+            }}
+          >
+            <span style={{ fontSize: '28px', flexShrink: 0 }}>{m.emoji}</span>
+            <div>
+              <div style={{
+                fontSize: '15px',
+                fontWeight: 600,
+                color: selected === m.id ? '#4338ca' : '#1e293b',
+              }}>
+                {m.label}
+              </div>
+              <div style={{
+                fontSize: '13px',
+                color: '#64748b',
+                marginTop: '2px',
+                lineHeight: 1.4,
+              }}>
+                {m.desc}
+              </div>
+            </div>
+            {selected === m.id && (
+              <span style={{
+                marginLeft: 'auto',
+                width: '24px',
+                height: '24px',
+                borderRadius: '50%',
+                background: '#6366f1',
+                color: 'white',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '14px',
+                fontWeight: 700,
+                flexShrink: 0,
+              }}>
+                ✓
+              </span>
+            )}
+          </button>
+        ))}
+      </div>
+
+      {/* Selected prompt */}
+      {method && (
+        <div style={{
+          padding: '20px',
+          background: '#f0fdf4',
+          border: '1px solid #86efac',
+          borderRadius: '12px',
+        }}>
+          <div style={{
+            fontSize: '14px',
+            fontWeight: 600,
+            color: '#166534',
+            marginBottom: '10px',
+          }}>
+            ✨ Copia este prompt en Claude Code:
+          </div>
+          <CodeBlock codigo={method.prompt} />
+        </div>
+      )}
+
+      {/* CLAUDE.md tip */}
+      <div style={{
+        padding: '12px 16px',
+        background: '#fef9c3',
+        border: '1px solid #fde047',
+        borderRadius: '8px',
+        fontSize: '14px',
+        color: '#854d0e',
+        lineHeight: 1.6,
+      }}>
+        <strong>💡 Tip:</strong> Si quieres que Claude siempre te pregunte antes de abrir Pencil, añade esto en tu CLAUDE.md:
+        <CodeBlock codigo='Antes de usar Pencil o crear archivos .pen, pregúntame si quiero diseñar en Pencil, hacerlo directo en código, o que generes un diseño nuevo.' />
+      </div>
+    </div>
+  )
+}
+
 // ============= PasoComponent =============
 
 export function PasoComponent({ paso, index }: { paso: PasoClase; index: number }) {
@@ -1406,6 +1548,7 @@ export function PasoComponent({ paso, index }: { paso: PasoClase; index: number 
       {paso.componente === 'prompt-builder' && <ProjectPromptBuilder />}
       {paso.componente === 'visualizacion' && <Visualizacion />}
       {paso.componente === 'env-configurator' && <EnvConfigurator />}
+      {paso.componente === 'design-method-picker' && <DesignMethodPicker />}
 
       {paso.bloques?.map((bloque, i) => (
         <BloqueCodigoComponent key={i} bloque={bloque} />
