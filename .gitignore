@@ -40,3 +40,4 @@ next-env.d.ts
 
 # Premium content (served via API, not in public repo)
 content/premium/
+.env*.local
