@@ -52,7 +52,12 @@ function useCursoProgress() {
             const data = await res.json()
             if (data.progress) {
               setProgress(prev => {
-                const merged = { ...prev, ...data.progress }
+                // Merge: true always wins (never downgrade a local completion)
+                const merged = { ...data.progress }
+                for (const key of Object.keys(prev)) {
+                  if (prev[key] === true) merged[key] = true
+                  else if (!(key in merged)) merged[key] = prev[key]
+                }
                 localStorage.setItem('curso-progress', JSON.stringify(merged))
                 return merged
               })

@@ -50,7 +50,12 @@ function useSemanaProgress(semanaNum: number) {
         .then(data => {
           if (data.progress) {
             setProgress(prev => {
-              const merged = { ...prev, ...data.progress }
+              // Merge: true always wins (never downgrade a local completion)
+              const merged = { ...data.progress }
+              for (const key of Object.keys(prev)) {
+                if (prev[key] === true) merged[key] = true
+                else if (!(key in merged)) merged[key] = prev[key]
+              }
               try { localStorage.setItem('curso-progress', JSON.stringify(merged)) } catch {}
               return merged
             })
@@ -63,72 +68,81 @@ function useSemanaProgress(semanaNum: number) {
   }, [semanaNum])
 
   const toggle = async (id: string) => {
-    const newProgress = { ...progress, [id]: !progress[id] }
-    setProgress(newProgress)
-    localStorage.setItem('curso-progress', JSON.stringify(newProgress))
+    let newValue = false
+    let updatedProgress: Record<string, boolean> = {}
+
+    setProgress(prev => {
+      newValue = !prev[id]
+      updatedProgress = { ...prev, [id]: newValue }
+      return updatedProgress
+    })
+
+    try { localStorage.setItem('curso-progress', JSON.stringify(updatedProgress)) } catch {}
 
     if (userEmail) {
       try {
         await fetch('/api/curso/sync-progress', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: userEmail, progress: newProgress })
+          body: JSON.stringify({ email: userEmail, progress: { [id]: newValue } })
         })
-      } catch {
-        // Ignore
-      }
+      } catch {}
     }
   }
 
   const markComplete = async (id: string) => {
     let shouldSync = false
-    let newProgress: Record<string, boolean> = {}
+    let updatedProgress: Record<string, boolean> = {}
 
     setProgress(prev => {
       if (prev[id]) return prev // Already completed
       shouldSync = true
-      newProgress = { ...prev, [id]: true }
-      return newProgress
+      updatedProgress = { ...prev, [id]: true }
+      return updatedProgress
     })
 
     if (!shouldSync) return
 
-    try { localStorage.setItem('curso-progress', JSON.stringify(newProgress)) } catch {}
+    try { localStorage.setItem('curso-progress', JSON.stringify(updatedProgress)) } catch {}
 
     if (userEmail) {
       try {
         await fetch('/api/curso/sync-progress', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: userEmail, progress: newProgress })
+          body: JSON.stringify({ email: userEmail, progress: { [id]: true } })
         })
-      } catch {}
+      } catch (err) {
+        console.error('Error syncing markComplete:', err)
+      }
     }
   }
 
   const markIncomplete = async (id: string) => {
     let shouldSync = false
-    let newProgress: Record<string, boolean> = {}
+    let updatedProgress: Record<string, boolean> = {}
 
     setProgress(prev => {
       if (!prev[id]) return prev // Already not completed
       shouldSync = true
-      newProgress = { ...prev, [id]: false }
-      return newProgress
+      updatedProgress = { ...prev, [id]: false }
+      return updatedProgress
     })
 
     if (!shouldSync) return
 
-    try { localStorage.setItem('curso-progress', JSON.stringify(newProgress)) } catch {}
+    try { localStorage.setItem('curso-progress', JSON.stringify(updatedProgress)) } catch {}
 
     if (userEmail) {
       try {
         await fetch('/api/curso/sync-progress', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: userEmail, progress: newProgress })
+          body: JSON.stringify({ email: userEmail, progress: { [id]: false } })
         })
-      } catch {}
+      } catch (err) {
+        console.error('Error syncing markIncomplete:', err)
+      }
     }
   }
 
