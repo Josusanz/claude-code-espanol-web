@@ -51,8 +51,8 @@ export const PUNTOS_TABLE = {
   'entregable-semanal': 20,
   'bonus-semana-completa': 10,
   'bonus-modulo0-completo': 20,
-  'publicar-duda': 5,
-  'responder-duda': 5,
+  'publicar-duda': 0,
+  'responder-duda': 10,
   'crear-proyecto': 20,
   'añadir-hito': 10,
 } as const

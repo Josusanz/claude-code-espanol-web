@@ -65,8 +65,7 @@ function RankingPage() {
           <span>Pre-clase: +15</span>
           <span>Clase: +15</span>
           <span>Entregable: +20</span>
-          <span>Publicar duda: +5</span>
-          <span>Responder duda: +5</span>
+          <span>Responder duda: +10</span>
           <span>Crear proyecto: +20</span>
           <span>Añadir hito: +10</span>
         </div>

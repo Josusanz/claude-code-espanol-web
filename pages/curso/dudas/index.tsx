@@ -159,7 +159,7 @@ function DudasPage() {
               borderRadius: '10px', fontSize: '14px', fontWeight: 600, cursor: 'pointer',
               opacity: submitting || !pregunta.trim() ? 0.6 : 1,
             }}>
-              {submitting ? 'Publicando...' : 'Publicar duda (+5 pts)'}
+              {submitting ? 'Publicando...' : 'Publicar duda'}
             </button>
           </div>
         </form>
