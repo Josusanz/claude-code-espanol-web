@@ -1551,7 +1551,7 @@ function DesignMethodPicker() {
         lineHeight: 1.6,
       }}>
         <strong>💡 Tip:</strong> Si quieres que Claude siempre te pregunte antes de abrir Pencil, añade esto en tu CLAUDE.md:
-        <CodeBlock codigo='Antes de usar Pencil o crear archivos .pen, pregúntame si quiero diseñar en Pencil, hacerlo directo en código, o que generes un diseño nuevo.' />
+        <CodeBlock codigo='Antes de usar Pencil o crear archivos .pen, pregúntame si quiero editar en Pencil, hacerlo directo en código, o que rediseñes la web actual en Pencil.' />
       </div>
     </div>
   )
