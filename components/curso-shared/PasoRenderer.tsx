@@ -1419,7 +1419,7 @@ const DESIGN_METHODS = [
     id: 'codigo',
     emoji: '💻',
     label: 'Directo en código',
-    desc: 'Claude cambia el código sin abrir Pencil. Ideal para cambios rápidos.',
+    desc: 'Claude cambia el código directamente. Ideal para cambios rápidos de colores, textos o layout.',
     prompt: `Quiero hacer estos cambios en el diseño de mi web. Hazlos directamente en el código, sin usar Pencil ni crear archivos .pen:
 
 - Cambia el color principal a [TU COLOR]
@@ -1430,24 +1430,27 @@ const DESIGN_METHODS = [
 Usa Tailwind CSS. Muéstrame el resultado en localhost:3000.`,
   },
   {
-    id: 'pencil',
+    id: 'exportar-pencil',
     emoji: '🎨',
-    label: 'Diseñar en Pencil',
-    desc: 'Tú diseñas visualmente en el canvas de Pencil. Luego Claude genera el código.',
-    prompt: `Mira mi diseño en diseño-dashboard.pen y genera los componentes React con Tailwind CSS y shadcn/ui. Respeta los colores, espaciado y layout exactos del diseño.`,
+    label: 'Exportar a Pencil y editar',
+    desc: 'Claude exporta tu web actual a un archivo .pen. Tú lo editas visualmente y luego Claude aplica los cambios al código.',
+    prompt: `Exporta el diseño actual de mi web a un archivo llamado diseño-actual.pen. Quiero ver cómo se ve en Pencil para poder hacer cambios visuales antes de que los apliques al código.
+
+Cuando lo tengas, avísame para que lo revise y te diga qué quiero cambiar.`,
   },
   {
-    id: 'claude-pencil',
+    id: 'claude-rediseñar',
     emoji: '🤖',
-    label: 'Que Claude diseñe en Pencil',
-    desc: 'Claude crea un diseño nuevo en un .pen. Tú lo revisas y luego genera el código.',
-    prompt: `Crea un diseño en diseño-dashboard.pen con un layout moderno para mi app. Incluye:
-- Header con logo y navegación
-- Contenido principal con cards de estadísticas
-- Sidebar con menú de navegación
-- Footer con links
+    label: 'Que Claude rediseñe en Pencil',
+    desc: 'Claude crea una versión mejorada del diseño actual en un .pen. Tú lo revisas y apruebas antes de aplicar.',
+    prompt: `Mira el diseño actual de mi web y crea una versión mejorada en un archivo llamado rediseño.pen. Mantén la estructura general pero mejora:
 
-Cuando lo tengas, avísame para revisarlo antes de generar el código.`,
+- La jerarquía visual
+- El espaciado y la proporción
+- Los colores y la tipografía
+- La experiencia en móvil
+
+Cuando lo tengas, avísame para revisarlo antes de que apliques los cambios al código.`,
   },
 ]
 
