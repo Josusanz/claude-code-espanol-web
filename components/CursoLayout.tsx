@@ -5,7 +5,7 @@ import Head from 'next/head'
 import CursoEmailGate from './CursoEmailGate'
 import { getLevel } from '../lib/curso-puntos'
 
-type NavItem = 'dashboard' | 'dudas' | 'proyectos' | 'rueda' | 'ranking'
+type NavItem = 'dashboard' | 'curso' | 'dudas' | 'proyectos' | 'rueda' | 'ranking'
 
 interface CursoLayoutProps {
   children: ReactNode
@@ -14,6 +14,7 @@ interface CursoLayoutProps {
 
 const NAV_ITEMS: { id: NavItem; label: string; href: string; emoji: string }[] = [
   { id: 'dashboard', label: 'Dashboard', href: '/curso', emoji: '📊' },
+  { id: 'curso', label: 'Curso', href: '/curso/contenido', emoji: '📚' },
   { id: 'dudas', label: 'Dudas', href: '/curso/dudas', emoji: '❓' },
   { id: 'proyectos', label: 'Proyectos', href: '/curso/proyectos', emoji: '🏗️' },
   { id: 'rueda', label: 'Rueda del Creador', href: '/curso/rueda', emoji: '🎯' },
