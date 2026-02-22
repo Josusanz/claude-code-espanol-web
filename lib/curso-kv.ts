@@ -45,18 +45,20 @@ export async function updateCursoConfig(updates: Partial<CursoConfig>): Promise<
 // ============= Emails autorizados (reutiliza los del precurso) =============
 
 export async function getCursoEmails(): Promise<string[]> {
-  // Usamos los mismos emails que el precurso
+  // Try as Redis Set first, then as JSON string value
   try {
     const emails = await kv.smembers('precurso:emails')
     return emails as string[]
-  } catch (err: any) {
-    // Si precurso:emails se guardó como string/JSON en vez de Set, leer como valor
-    if (err?.message?.includes('WRONGTYPE')) {
-      const data = await kv.get<string[]>('precurso:emails')
-      return Array.isArray(data) ? data : []
-    }
-    throw err
+  } catch {
+    // smembers failed — try reading as plain value
   }
+  try {
+    const data = await kv.get<string[]>('precurso:emails')
+    return Array.isArray(data) ? data : []
+  } catch {
+    // get also failed
+  }
+  return []
 }
 
 export async function isEmailAuthorizedForCurso(email: string): Promise<boolean> {
@@ -64,13 +66,11 @@ export async function isEmailAuthorizedForCurso(email: string): Promise<boolean>
   try {
     const result = await kv.sismember('precurso:emails', normalizedEmail)
     return result === 1
-  } catch (err: any) {
-    if (err?.message?.includes('WRONGTYPE')) {
-      const emails = await getCursoEmails()
-      return emails.includes(normalizedEmail)
-    }
-    throw err
+  } catch {
+    // sismember failed — fallback to full list check
   }
+  const emails = await getCursoEmails()
+  return emails.includes(normalizedEmail)
 }
 
 // ============= Usuarios del curso =============
