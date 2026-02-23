@@ -1,103 +1,70 @@
-# 🔄 Ralph Setup para aprende.software
+# aprende.software — Curso de Claude Code en Español
 
-Este es tu setup de Ralph para construir automáticamente los Módulos 2 y 3 del curso.
+Plataforma educativa en español para aprender a crear software con IA usando Claude Code. Dirigida a personas sin experiencia en programación que quieren construir sus propias aplicaciones ("vibe coding").
 
-## Archivos incluidos
-
-| Archivo | Descripción |
-|---------|-------------|
-| `loop.sh` | El script que ejecuta Ralph en loop |
-| `PROMPT_build.md` | Las instrucciones que Ralph sigue en cada iteración |
-| `PLAN.md` | Las tareas a completar (27 tareas totales) |
-| `PROGRESS.md` | Donde Ralph registra aprendizajes |
-| `AGENTS.md` | Guía del proyecto para Ralph |
-
-## Instalación
-
-1. **Copia estos archivos a tu repo:**
-
-```bash
-# Desde la raíz de claude-code-espanol-web/
-cp -r /ruta/a/ralph-setup/* .
-```
-
-2. **Haz ejecutable el loop:**
-
-```bash
-chmod +x loop.sh
-```
-
-3. **Verifica que tienes Claude Code instalado:**
-
-```bash
-claude --version
-```
-
-## Uso
-
-### Opción A: Loop completo (autónomo)
-
-```bash
-./loop.sh
-```
-
-Ralph ejecutará todas las tareas una por una. Puedes dejarlo corriendo y hacer otra cosa.
-
-### Opción B: Una iteración manual
-
-```bash
-claude --dangerously-skip-permissions -p "$(cat PROMPT_build.md)"
-```
-
-Esto ejecuta UNA sola tarea. Útil para probar o cuando quieres más control.
-
-## Monitorear el progreso
-
-- Revisa `PLAN.md` para ver qué tareas están completadas `[x]`
-- Revisa `git log --oneline` para ver los commits de Ralph
-- Revisa `PROGRESS.md` para ver qué ha aprendido Ralph
-
-## Si algo sale mal
-
-1. **Ralph se atasca en una tarea:**
-   - Revisa `PLAN.md`, la tarea estará marcada como `[BLOCKED]`
-   - Puedes arreglarla manualmente y volver a correr Ralph
-
-2. **Error de build:**
-   - Ralph debería detectarlo y arreglarlo
-   - Si no, haz `npm run build` manualmente y corrige
-
-3. **Quieres pausar:**
-   - `Ctrl+C` para detener el loop
-   - El progreso se guarda en commits de git
-
-## Seguridad
-
-⚠️ **`--dangerously-skip-permissions`** da acceso completo a Claude.
-
-Para proyectos sensibles, considera:
-- Ejecutar en una VM o Docker
-- No tener credenciales en el repo
-- Revisar los commits antes de pushear
-
-## Tareas incluidas
-
-**Módulo 2 - Proyectos (12 tareas):**
-- Landing Page (3 lecciones)
-- Automatizaciones (3 lecciones)
-- Investigación (2 lecciones)
-- Análisis de Datos (2 lecciones)
-
-**Módulo 3 - Ralph Loop (10 tareas):**
-- Conceptos básicos (3 lecciones)
-- Las 3 fases (3 lecciones)
-- Proyecto práctico (1 lección)
-- Consejos avanzados (1 lección)
-
-**Finales (2 tareas):**
-- Actualizar landing
-- Testing
+**URL:** [aprende.software](https://aprende.software)
+**Creado por:** Josu Sanz
 
 ---
 
-¡Happy Ralphing! 🚀
+## Contenido del repositorio
+
+Este repositorio contiene el sitio web público con los módulos gratuitos del curso.
+
+### Módulos disponibles
+
+| Módulo | Ruta | Descripción |
+|--------|------|-------------|
+| Modo Fácil | `/modo-facil` | 8 lecciones para usar Claude desde el navegador, sin terminal |
+| Empezar | `/empezar` | Guía de instalación de Claude Code |
+| Fundamentos | `/fundamentos` | Módulo 1: 10 lecciones sobre fundamentos de Claude Code |
+| Proyectos | `/proyectos` | Módulo 2: Proyectos prácticos con Claude Code |
+| Ralph Loop | `/ralph` | Módulo 3: Ralph Loop y agentes autónomos |
+| ClawdBot | `/clawdbot` | Crear un bot de Discord con Claude |
+| Course Builder | `/course-builder` | Crear y distribuir cursos con IA |
+| Blog | `/blog` | Artículos sobre IA y desarrollo |
+
+### Lecciones de Fundamentos (Módulo 1)
+- ¿Qué es Claude Code?
+- Exploración del código
+- Crear y editar archivos
+- Comandos esenciales
+- Memoria y contexto
+- Visualizar el código
+- Agentes
+- Subagentes
+- Próximos pasos
+
+### Lecciones de Ralph Loop (Módulo 3)
+- ¿Qué es Ralph?
+- Anatomía del loop
+- Fase Specs
+- Fase Plan
+- Fase Ejecutar
+- Context rot
+- Proyecto práctico
+- Consejos avanzados
+
+---
+
+## Stack técnico
+
+- **Framework:** Next.js (Pages Router) + TypeScript
+- **Docs/MDX:** Nextra (tema `nextra-theme-docs`)
+- **Estilos:** Tailwind CSS
+- **Deploy:** Vercel
+
+## Desarrollo local
+
+```bash
+npm install
+npm run dev
+```
+
+Abre [http://localhost:3000](http://localhost:3000) en tu navegador.
+
+---
+
+## Licencia
+
+Contenido educativo © Josu Sanz / aprende.software
